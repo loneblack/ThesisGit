@@ -51,45 +51,25 @@
                             <div class="col-sm-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        All Suppliers
+                                        All Assets
                                     </header>
                                     <div class="panel-body">
                                         <section id="unseen">
                                             <table class="table table-bordered table-striped table-condensed table-hover">
                                                 <thead>
                                                     <tr>
-                                                        <th>Company Name</th>
-                                                        <th>Contact Person</th>
-                                                        <th>Email</th>
-                                                        <th>Contact Number</th>
-                                                        <th>Address</th>
+                                                        <th>Asset Name</th>
+                                                        <th>Description</th>
+                                                        <th>Status</th>
                                                         <th>Edit</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>Marvin and Sons Company</td>
-                                                        <td>Marvin Lao</td>
-                                                        <td>marvin_lao@dlsu.edu.ph</td>
-                                                        <td>09178328851</td>
-                                                        <td>1222 Taft Avenue, Manila City</td>
-                                                        <td><a href="procurement_edit_supplier.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Edit</button></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Marvin and Sons Company</td>
-                                                        <td>Marvin Lao</td>
-                                                        <td>marvin_lao@dlsu.edu.ph</td>
-                                                        <td>09178328851</td>
-                                                        <td>1222 Taft Avenue, Manila City</td>
-                                                        <td><a href="procurement_edit_supplier.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Edit</button></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Marvin and Sons Company</td>
-                                                        <td>Marvin Lao</td>
-                                                        <td>marvin_lao@dlsu.edu.ph</td>
-                                                        <td>09178328851</td>
-                                                        <td>1222 Taft Avenue, Manila City</td>
-                                                        <td><a href="procurement_edit_supplier.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Edit</button></a></td>
+                                                        <td>Samsung 17" TV</td>
+                                                        <td>Color Blue</td>
+                                                        <td>Active</td>
+                                                        <td><a href="procurement_edit_asset.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Edit</button></a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

@@ -50,43 +50,32 @@
                         <div class="col-lg-12">
                             <section class="panel">
                                 <header class="panel-heading">
-                                    Add A Supplier
+                                    Add An Asset
                                 </header>
                                 <div class="panel-body">
                                     <div class="form" method="post">
                                         <form class="cmxform form-horizontal " id="signupForm" method="get" action="">
                                             <div class="form-group ">
-                                                <label for="companyName" class="control-label col-lg-3">Company Name</label>
+                                                <label for="assetName" class="control-label col-lg-3">Asset Name</label>
                                                 <div class="col-lg-6">
-                                                    <input class=" form-control" id="companyName" name="companyName" type="text" />
+                                                    <input class=" form-control" id="assetName" name="assetName" type="text" />
                                                 </div>
                                             </div>
 
                                             <div class="form-group ">
-                                                <label for="contactPerson" class="control-label col-lg-3">Contact Person</label>
+                                                <label for="description" class="control-label col-lg-3">Description</label>
                                                 <div class="col-lg-6">
-                                                    <input class=" form-control" id="contactPerson" name="contactPerson" type="text" />
+                                                    <input class=" form-control" id="description" name="description" type="text" />
                                                 </div>
                                             </div>
 
                                             <div class="form-group ">
-                                                <label for="lastname" class="control-label col-lg-3">Contact Number</label>
+                                                <label for="status" class="control-label col-lg-3">Status</label>
                                                 <div class="col-lg-6">
-                                                    <input class=" form-control" id="number" name="number" type="number" min="0.00" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group ">
-                                                <label for="email" class="control-label col-lg-3">Email (DLSU)</label>
-                                                <div class="col-lg-6">
-                                                    <input class="form-control " id="email" name="email" type="email" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-sm-3 control-label">Address</label>
-                                                <div class="col-sm-6" name="address" id="address">
-                                                    <textarea class="form-control" rows="6"></textarea>
+                                                    <select class="form-control m-bot15" name="status" id="status">
+                                                        <option>Active</option>
+                                                        <option>Inactive</option>
+                                                    </select>
                                                 </div>
                                             </div>
 

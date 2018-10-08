@@ -121,7 +121,7 @@
                                             
                                             
 <!--                                            START NA NG MODAL DITO-->
-                                            <a class="btn btn-success btn-lg" data-toggle="modal" data-target="#canvasModal"><i class="fa fa-check"></i> Start Canvas </a>
+                                            <a href="procurement_start_canvas.php" class="btn btn-success btn-lg" ><i class="fa fa-check"></i> Start Canvas </a>
 
                                             <div class="modal" id="canvasModal">
                                                 <div class="modal-dialog" style="width:1000px">
