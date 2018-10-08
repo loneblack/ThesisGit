@@ -13,7 +13,7 @@
                         
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-tags"></i>
+                                <i class="fa fa-ticket"></i>
                                 <span>Ticket</span>
                             </a>
                             <ul class="sub">

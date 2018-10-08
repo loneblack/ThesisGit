@@ -53,8 +53,8 @@
                                     Register A User
                                 </header>
                                 <div class="panel-body">
-                                    <div class="form" method="post">
-                                        <form class="cmxform form-horizontal " id="signupForm" method="get" action="">
+                                    <div class="form">
+                                        <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
                                             <div class="form-group ">
                                                 <label for="firstname" class="control-label col-lg-3">Firstname</label>
                                                 <div class="col-lg-6">
