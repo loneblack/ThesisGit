@@ -39,7 +39,7 @@
         </header>
         <!--header end-->
         <?php include 'admin_navbar.php' ?>
-        
+
         <!--main content-->
         <section id="main-content">
             <section class="wrapper">
@@ -47,6 +47,8 @@
 
                 <div class="row">
                     <div class="col-sm-12">
+                        <div class="col-sm-12">
+                        </div>
                     </div>
                 </div>
                 <!-- page end-->
