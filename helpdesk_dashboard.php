@@ -152,6 +152,7 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Title</th>
+                                                    <th>Category</th>
                                                     <th>Updated</th>
                                                     <th>Action</th>
                                                     <th>Status</th>
@@ -161,6 +162,7 @@
                                                 <tr>
                                                     <td>1</td>
                                                     <td>Need Help Here</td>
+                                                    <td>Inquiry</td>
                                                     <td>10/9/18</td>
                                                     <td><span class="label label-success">Solved</span></td>
                                                     <td><span class="label label-danger">Closed</span></td>
@@ -169,6 +171,7 @@
                                                 <tr>
                                                     <td>2</td>
                                                     <td>Need Help Here</td>
+                                                    <td>Inquiry</td>
                                                     <td>10/9/18</td>
                                                     <td><span class="label label-warning">Un-answered</span></td>
                                                     <td><span class="label label-success">Opened</span></td>
@@ -177,6 +180,7 @@
                                                 <tr>
                                                     <td>3</td>
                                                     <td>Need Help Here</td>
+                                                    <td>Inquiry</td>
                                                     <td>10/9/18</td>
                                                     <td><span class="label label-danger">New Ticket</span></td>
                                                     <td><span class="label label-success">Opened</span></td>

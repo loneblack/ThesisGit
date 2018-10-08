@@ -12,17 +12,10 @@
                         
                         
                         <li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="helpdesk_all_ticket.php">
                                 <i class="fa fa-ticket"></i>
-                                <span>Ticket</span>
+                                <span>Tickets</span>
                             </a>
-                            <ul class="sub">
-                                <li><a href="helpdesk.php">All Ticket</a></li>
-                                <li><a href="helpdesk.php">Priority</a></li>
-                                <li><a href="helpdesk.php">Unresponded</a></li>
-                                <li><a href="helpdesk.php">Pending</a></li>
-                                <li><a href="helpdesk.php">Today</a></li>
-                            </ul>
                         </li>
                         
                         
