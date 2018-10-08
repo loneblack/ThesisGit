@@ -59,19 +59,23 @@
                                                 <table class="table table-bordered table-striped table-condensed table-hover">
                                                     <thead>
                                                         <tr>
-                                                            <th>Name</th>
+                                                            <th>Brand</th>
+                                                            <th>Model</th>
                                                             <th>Description</th>
                                                             <th>Category</th>
                                                             <th>Quantity on Hand</th>
+                                                            <th>Quantity Burrowed</th>
                                                             <th>Status</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td>Samsung 17" TV</td>
+                                                            <td>Samsung</td>
+                                                            <td>L120 17" TV</td>
                                                             <td>Color Blue</td>
                                                             <td>Television</td>
                                                             <td>50</td>
+                                                            <td>25</td>
                                                             <td>Active</td>
                                                         </tr>
                                                     </tbody>

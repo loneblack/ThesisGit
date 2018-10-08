@@ -56,29 +56,41 @@
                                     <table class="table table-bordered table-striped table-condensed table-hover" id="ctable">
                                         <thead>
                                             <tr>
-                                                <th>
-                                                    <div class="checkbox single-row">
-                                                        <input type="checkbox" >
-                                                    </div>
-                                                </th>
-                                                <th>Status</th>
                                                 <th>Title of Request</th>
+                                                <th>Status</th>
                                                 <th>Requestor</th>
                                                 <th>Date Needed</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>
-                                                    <div class="checkbox single-row">
-                                                        <input type="checkbox" >
-                                                    </div>
-                                                </td>
-                                                <td></td>
-                                                <td>Marvin Lao</td>
+                                                <td>Need More PC</td>
+                                                <td><span class="badge bg-important">Disapproved</span></td>
+                                                <td>Marvin La</td>
                                                 <td>12/23/1997</td>
                                             </tr>
                                         </tbody>
+                                        
+                                        <tbody>
+                                            <tr>
+                                                <td>Need More PC</td>
+                                                <td><span class="badge bg-success">Approved</span></td>
+                                                <td>Marvin La</td>
+                                                <td>1/3/2018</td>
+                                            </tr>
+                                        </tbody>
+                                        
+                                        
+                                        <tbody>
+                                            <tr>
+                                                <td>Need More PC</td>
+                                                <td><span class="badge bg-warning">Pending</span></td>
+                                                <td>Marvin La</td>
+                                                <td>1/3/2018</td>
+                                            </tr>
+                                        </tbody>
+                                        
+                                        
                                     </table>
                                 </section>
                             </div>

@@ -68,14 +68,14 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><a href="procurement_view_request.php">12/23/2018</a></td>
+                                                    <td>12/23/2018</td>
                                                     <td><span class="label label-success label-mini">Completed</span></td>
                                                     <td>We Need 500 more laptops PLSSS!!</td>
                                                     <td>Marvin Lao</td>
                                                     <td>1/1/2018</td>
                                                 </tr>
                                                 <tr>
-                                                    <td><a href="procurement_view_request.php">12/23/2018</a></td>
+                                                    <td>12/23/2018</td>
                                                     <td><span class="label label-danger label-mini">Incomplete</span></td>
                                                     <td>We Need 500 more laptops PLSSS!!</td>
                                                     <td>Marvin Lao</td>

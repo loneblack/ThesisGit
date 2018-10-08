@@ -38,7 +38,7 @@
 
         </header>
         <!--header end-->
-        <?php include 'admin_navbar.php' ?>
+        <?php include 'requestor_navbar.php' ?>
 
         <!--main content-->
         <section id="main-content">
@@ -48,79 +48,81 @@
                 <div class="row">
                     <div class="row">
                         <div class="col-lg-12">
-                            <section class="panel">
-                                <header class="panel-heading">
-                                    Conforme
-                                </header>
-                                <div class="panel-body">
-                                    <div class="form" method="post">
-                                        <form class="cmxform form-horizontal " id="signupForm" method="get" action="">
-											
-											<div class="form-group">
-												<label for="responseTime" class="control-label col-lg-3">Response Time</label>
-												<div class="col-lg-6">
-													<label class="radio"><input type="radio" name="responseTime" value="5"checked>Outstanding</label>
-													<label class="radio"><input type="radio" name="responseTime" value="4">Highly Satisfactory</label>
-													<label class="radio"><input type="radio" name="responseTime" value="3">Satisfactory</label>
-													<label class="radio"><input type="radio" name="responseTime" value="2">Moderately Satisfactory</label>
-													<label class="radio"><input type="radio" name="responseTime" value="1">Poor</label>
-													<label class="radio"><input type="radio" name="responseTime" value="0">Not applicable</label>
-												</div>
-											</div>
-											
-											<div class="form-group">
-												<label for="efficiency" class="control-label col-lg-3">Efficiency</label>
-												<div class="col-lg-6">
-													<label class="radio"><input type="radio" name="efficiency" value="5"checked>Outstanding</label>
-													<label class="radio"><input type="radio" name="efficiency" value="4">Highly Satisfactory</label>
-													<label class="radio"><input type="radio" name="efficiency" value="3">Satisfactory</label>
-													<label class="radio"><input type="radio" name="efficiency" value="2">Moderately Satisfactory</label>
-													<label class="radio"><input type="radio" name="efficiency" value="1">Poor</label>
-													<label class="radio"><input type="radio" name="efficiency" value="0">Not applicable</label>
-												</div>
-											</div>
-											
-											<div class="form-group">
-												<label for="accuracy" class="control-label col-lg-3">Accuracy</label>
-												<div class="col-lg-6">
-													<label class="radio"><input type="radio" name="accuracy" value="5"checked>Outstanding</label>
-													<label class="radio"><input type="radio" name="accuracy" value="4">Highly Satisfactory</label>
-													<label class="radio"><input type="radio" name="accuracy" value="3">Satisfactory</label>
-													<label class="radio"><input type="radio" name="accuracy" value="2">Moderately Satisfactory</label>
-													<label class="radio"><input type="radio" name="accuracy" value="1">Poor</label>
-													<label class="radio"><input type="radio" name="accuracy" value="0">Not applicable</label>
-												</div>
-											</div>
-											
-											<div class="form-group">
-												<label for="responseTime" class="control-label col-lg-3">Courtesy</label>
-												<div class="col-lg-6">
-													<label class="radio"><input type="radio" name="courtesy" value="5"checked>Outstanding</label>
-													<label class="radio"><input type="radio" name="courtesy" value="4">Highly Satisfactory</label>
-													<label class="radio"><input type="radio" name="courtesy" value="3">Satisfactory</label>
-													<label class="radio"><input type="radio" name="courtesy" value="2">Moderately Satisfactory</label>
-													<label class="radio"><input type="radio" name="courtesy" value="1">Poor</label>
-													<label class="radio"><input type="radio" name="courtesy" value="0">Not applicable</label>
-												</div>
-											</div>
-											
-                                            <div class="form-group ">
-                                                <label for="comments" class="control-label col-lg-3">Comments</label>
-                                                <div class="col-lg-6">
-                                                    <textarea class="form-control" rows="5" name="comments" style="resize:none"></textarea>
+                            <div class="col-lg-12">
+                                <section class="panel">
+                                    <header class="panel-heading">
+                                        Conforme
+                                    </header>
+                                    <div class="panel-body">
+                                        <div class="form" method="post">
+                                            <form class="cmxform form-horizontal " id="signupForm" method="get" action="">
+
+                                                <div class="form-group">
+                                                    <label for="responseTime" class="control-label col-lg-3">Response Time</label>
+                                                    <div class="col-lg-6">
+                                                        <label class="radio"><input type="radio" name="responseTime" value="5" checked>Outstanding</label>
+                                                        <label class="radio"><input type="radio" name="responseTime" value="4">Highly Satisfactory</label>
+                                                        <label class="radio"><input type="radio" name="responseTime" value="3">Satisfactory</label>
+                                                        <label class="radio"><input type="radio" name="responseTime" value="2">Moderately Satisfactory</label>
+                                                        <label class="radio"><input type="radio" name="responseTime" value="1">Poor</label>
+                                                        <label class="radio"><input type="radio" name="responseTime" value="0">Not applicable</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <div class="col-lg-offset-3 col-lg-6">
-                                                    <button class="btn btn-primary" type="submit">Save</button>
-                                                    <button class="btn btn-default" type="button">Cancel</button>
+
+                                                <div class="form-group">
+                                                    <label for="efficiency" class="control-label col-lg-3">Efficiency</label>
+                                                    <div class="col-lg-6">
+                                                        <label class="radio"><input type="radio" name="efficiency" value="5" checked>Outstanding</label>
+                                                        <label class="radio"><input type="radio" name="efficiency" value="4">Highly Satisfactory</label>
+                                                        <label class="radio"><input type="radio" name="efficiency" value="3">Satisfactory</label>
+                                                        <label class="radio"><input type="radio" name="efficiency" value="2">Moderately Satisfactory</label>
+                                                        <label class="radio"><input type="radio" name="efficiency" value="1">Poor</label>
+                                                        <label class="radio"><input type="radio" name="efficiency" value="0">Not applicable</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </form>
+
+                                                <div class="form-group">
+                                                    <label for="accuracy" class="control-label col-lg-3">Accuracy</label>
+                                                    <div class="col-lg-6">
+                                                        <label class="radio"><input type="radio" name="accuracy" value="5" checked>Outstanding</label>
+                                                        <label class="radio"><input type="radio" name="accuracy" value="4">Highly Satisfactory</label>
+                                                        <label class="radio"><input type="radio" name="accuracy" value="3">Satisfactory</label>
+                                                        <label class="radio"><input type="radio" name="accuracy" value="2">Moderately Satisfactory</label>
+                                                        <label class="radio"><input type="radio" name="accuracy" value="1">Poor</label>
+                                                        <label class="radio"><input type="radio" name="accuracy" value="0">Not applicable</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="responseTime" class="control-label col-lg-3">Courtesy</label>
+                                                    <div class="col-lg-6">
+                                                        <label class="radio"><input type="radio" name="courtesy" value="5" checked>Outstanding</label>
+                                                        <label class="radio"><input type="radio" name="courtesy" value="4">Highly Satisfactory</label>
+                                                        <label class="radio"><input type="radio" name="courtesy" value="3">Satisfactory</label>
+                                                        <label class="radio"><input type="radio" name="courtesy" value="2">Moderately Satisfactory</label>
+                                                        <label class="radio"><input type="radio" name="courtesy" value="1">Poor</label>
+                                                        <label class="radio"><input type="radio" name="courtesy" value="0">Not applicable</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group ">
+                                                    <label for="comments" class="control-label col-lg-3">Comments</label>
+                                                    <div class="col-lg-6">
+                                                        <textarea class="form-control" rows="5" name="comments" style="resize:none"></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-lg-offset-3 col-lg-6">
+                                                        <button class="btn btn-primary" type="submit">Save</button>
+                                                        <button class="btn btn-default" type="button">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
-                            </section>
+                                </section>
+                            </div>
                         </div>
                     </div>
                 </div>
