@@ -140,7 +140,7 @@
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
 
-
+    
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
 

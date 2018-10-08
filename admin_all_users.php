@@ -53,7 +53,7 @@
                             </header>
                             <div class="panel-body">
                                 <section id="unseen">
-                                    <table class="table table-bordered table-striped table-condensed table-hover">
+                                    <table class="table table-bordered table-striped table-condensed table-hover" id="ctable">
                                         <thead>
                                             <tr>
                                                 <th>First Name</th>

@@ -53,7 +53,7 @@
                             </header>
                             <div class="panel-body">
                                 <section id="unseen">
-                                    <table class="table table-bordered table-striped table-condensed table-hover">
+                                    <table class="table table-bordered table-striped table-condensed table-hover" id="ctable">
                                         <thead>
                                             <tr>
                                                 <th>
@@ -101,7 +101,12 @@
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
 
+    <script>
+        $('#ctable').on('dblclick', function() {
+            window.location.replace("director_view_request.php");
+        })
 
+    </script>
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
 

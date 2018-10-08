@@ -48,42 +48,47 @@
                 <div class="row">
                     <div class="row">
                         <div class="col-sm-12">
-                            <section class="panel">
-                                <header class="panel-heading">
-                                    Canvas List
-                                </header>
-                                <div class="panel-body">
-                                    <section id="unseen">
-                                        <table class="table table-bordered table-striped table-condensed table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>Date Needed</th>
-                                                    <th>Status</th>
-                                                    <th>Description</th>
-                                                    <th>Requestor</th>
-                                                    <th>Requested Date</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><a href="procurement_view_request.php">12/23/2018</a></td>
-                                                    <td><span class="label label-success label-mini">Completed</span></td>
-                                                    <td>We Need 500 more laptops PLSSS!!</td>
-                                                    <td>Marvin Lao</td>
-                                                    <td>1/1/2018</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><a href="procurement_view_request.php">12/23/2018</a></td>
-                                                    <td><span class="label label-danger label-mini">Re-check Canvas</span></td>
-                                                    <td>We Need 500 more laptops PLSSS!!</td>
-                                                    <td>Marvin Lao</td>
-                                                    <td>1/1/2018</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </section>
-                                </div>
-                            </section>
+                            <div class="col-sm-12">
+                                <section class="panel">
+                                    <header class="panel-heading">
+                                        Canvas List
+                                    </header>
+                                    <div class="panel-body">
+                                        <section id="unseen">
+                                            <div class="adv-table">
+                                            <table class="table table-bordered table-striped table-condensed table-hover " id="ctable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date Needed</th>
+                                                        <th>Status</th>
+                                                        <th>Description</th>
+                                                        <th >Requestor</th>
+                                                        <th>Requested Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><a href="procurement_view_request.php">12/23/2018</a></td>
+                                                        <td><span class="label label-success label-mini">Completed</span></td>
+                                                        <td>We Need 500 more laptops PLSSS!!</td>
+                                                        <td>Marvin Lao</td>
+                                                        <td>1/1/2018</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><a href="procurement_view_request.php">12/23/2018</a></td>
+                                                        <td><span class="label label-danger label-mini">Re-check Canvas</span></td>
+                                                        <td>We Need 500 more laptops PLSSS!!</td>
+                                                        <td>Marvin Lao</td>
+                                                        <td>1/1/2018</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                        </section>
+
+                                    </div>
+                                </section>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,7 +109,12 @@
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
 
+    <script>
+        $('#ctable').on('dblclick', function() {
+            window.location.replace("procurement_view_request.php");
+        })
 
+    </script>
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
 
