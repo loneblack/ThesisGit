@@ -66,24 +66,27 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Marvin</td>
-                                                <td>Lao</td>
-                                                <td>marvin_lao@dlsu.edu.ph</td>
-                                                <td>09178328851</td>
-                                                <td>admin</td>
-                                                <td>Super Admin</td>
-                                                <td><a href="admin_edit_user.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Edit</button></a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Marvin</td>
-                                                <td>Lao</td>
-                                                <td>marvin_lao@dlsu.edu.ph</td>
-                                                <td>09178328851</td>
-                                                <td>admin</td>
-                                                <td>Help Desk</td>
-                                                <td><a href="admin_edit_user.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Edit</button></a></td>
-                                            </tr>
+											<?php
+												
+												require_once('mysql_connect.php');
+												$key = "Fusion";
+												
+												$query="Select UserID, Convert(AES_DECRYPT(username,'".$key."')USING utf8) as 'username',Convert(AES_DECRYPT(password,'".$key."')USING utf8) as 'password',Convert(AES_DECRYPT(firstName,'".$key."')USING utf8) as 'firstname',Convert(AES_DECRYPT(lastName,'".$key."')USING utf8) as 'lastname',Convert(AES_DECRYPT(email,'".$key."')USING utf8) as 'email',Convert(AES_DECRYPT(contactNo,'".$key."')USING utf8) as 'contactNo',ru.description from user u join ref_usertype ru on u.userType=ru.id";
+												$result=mysqli_query($dbc,$query);
+												while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+													echo "<tr>
+															<td>".$row['firstname']."</td>
+															<td>".$row['lastname']."</td>
+															<td>".$row['email']."</td>
+															<td>".$row['contactNo']."</td>
+															<td>".$row['username']."</td>
+															<td>".$row['description']."</td>
+															<td><a href='admin_edit_user.php?userid=".$row['UserID']."'><button type='button' class='btn btn-primary'><i class='glyphicon glyphicon-pencil'></i> Edit</button></a></td>
+															
+														</tr>";
+														
+												}
+											?>
                                         </tbody>
                                     </table>
                                 </section>
