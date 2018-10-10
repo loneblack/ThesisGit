@@ -33,17 +33,26 @@
 	    	unset($_SESSION["message"]);
 	    	echo "log-in successful";
 
-	    	if($userType = '1'){
-				//header("Location:dashboardDatabaseManager.php");
+	    	if($userType == '1'){
+				header("Location:admin_dashboard.php");
 	    	}
-	        if($userType = '2'){
-				//header("Location:dashboardSystemAdmin.php");
+	        if($userType == '2'){
+				header("Location:it_dashboard.php");
 	    	}
-	        if($userType = '3'){
-				//header("Location:dashboardBankManager.php");
+	        if($userType == '3'){
+				header("Location:helpdesk_dashboard.php");
 	    	}
-	        if($userType = '4'){
-				//header("Location:dashboardClient.php");
+	        if($userType == '4'){
+				header("Location:engineer_dashboard.php");
+	    	}
+	    	if($userType == '5'){
+				header("Location:requestor_dashboard.php");
+	    	}
+	    	if($userType == '6'){
+				header("Location:procurement_dashboard.php");
+	    	}
+	    	if($userType == '7'){
+				header("Location:director_dashboard.php");
 	    	}
 	        
 	        exit;
