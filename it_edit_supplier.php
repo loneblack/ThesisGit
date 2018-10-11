@@ -110,7 +110,7 @@
                         <div class="col-sm-12">
                             <section class="panel">
                                 <header class="panel-heading">
-                                    Add A Supplier
+                                    Edit A Supplier
                                 </header>
                                 <div class="panel-body">
                                     <div class="form" method="post">
