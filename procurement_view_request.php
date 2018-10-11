@@ -56,7 +56,7 @@
                                     <section id="unseen">
                                         <div class="row invoice-to">
                                             <div class="col-md-4 col-sm-4 pull-left">
-                                                <h4>Invoice To:</h4>
+                                                <h4>Sent To:</h4>
                                                 <h2>Procurement</h2>
                                                 <h5>Status: For Canvas</h5>
                                             </div>

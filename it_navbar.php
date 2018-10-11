@@ -18,6 +18,13 @@
                         </li>
                         
                         <li>
+                            <a href="it_po_list.php">
+                                <i class="fa fa-money"></i>
+                                <span>Purchase Orders</span>
+                            </a>
+                        </li>
+                        
+                        <li>
                             <a href="it_inventory.php">
                                 <i class="fa fa-dropbox"></i>
                                 <span>Inventory</span>
