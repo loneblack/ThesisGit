@@ -66,30 +66,28 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>Marvin and Sons Company</td>
-                                                    <td>Marvin Lao</td>
-                                                    <td>marvin_lao@dlsu.edu.ph</td>
-                                                    <td>09178328851</td>
-                                                    <td>1222 Taft Avenue, Manila City</td>
-                                                    <td><a href="it_edit_supplier.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Edit</button></a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Marvin and Sons Company</td>
-                                                    <td>Marvin Lao</td>
-                                                    <td>marvin_lao@dlsu.edu.ph</td>
-                                                    <td>09178328851</td>
-                                                    <td>1222 Taft Avenue, Manila City</td>
-                                                    <td><a href="it_edit_supplier.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Edit</button></a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Marvin and Sons Company</td>
-                                                    <td>Marvin Lao</td>
-                                                    <td>marvin_lao@dlsu.edu.ph</td>
-                                                    <td>09178328851</td>
-                                                    <td>1222 Taft Avenue, Manila City</td>
-                                                    <td><a href="it_edit_supplier.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Edit</button></a></td>
-                                                </tr>
+												
+												<?php
+												
+													require_once('mysql_connect.php');
+													$query="SELECT * FROM thesis.supplier";
+													$result=mysqli_query($dbc,$query);
+													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														echo "<tr>
+															<td>{$row['name']}</td>
+															<td>{$row['contactPerson']}</td>
+															<td>{$row['email']}</td>
+															<td>{$row['contactNo']}</td>
+															<td>{$row['address']}</td>
+															<td><a href='it_edit_supplier.php?supplierid={$row['supplierID']}'><button type='button' class='btn btn-primary'><i class='glyphicon glyphicon-pencil'></i> Edit</button></a></td>
+														</tr>";
+														
+														
+														
+													}
+												
+												?>
+												
                                             </tbody>
                                         </table>
                                     </section>
