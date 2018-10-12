@@ -59,7 +59,7 @@
                                                 <div class="form-group ">
                                                     <label for="serviceType" class="control-label col-lg-3">Type of Service Requested</label>
                                                     <div class="col-lg-6">
-                                                        <select name="serviceType" class="form-control m-bot15">
+                                                        <select name="serviceType" onchange='checkvalue(this.value)' class="form-control m-bot15">
                                                             <option>Select Service Type</option>
                                                             <option value="1">Access regulation/permission</option>
                                                             <option value="2">Activation/Deactivation of MyLasalle account</option>
@@ -87,8 +87,10 @@
                                                             <option value="24">Website updating</option>
                                                             <option value="25">Others</option>
                                                         </select>
+														<input type="text" class="form-control" name="others" id="others" placeholder="Specify request" style='display:none'/>
                                                     </div>
                                                 </div>
+												
                                                 <div class="form-group ">
                                                     <label for="details" class="control-label col-lg-3">Details</label>
                                                     <div class="col-lg-6">
@@ -127,7 +129,16 @@
         <!--main content end-->
 
     </section>
-
+	
+	<script>
+		function checkvalue(val){
+			if(val==="25")
+			   document.getElementById('others').style.display='block';
+			else
+			   document.getElementById('others').style.display='none'; 
+		}
+	</script>
+	
     <!-- WAG GALAWIN PLS LANG -->
 
     <!--Core js-->
