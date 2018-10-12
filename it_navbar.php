@@ -31,6 +31,13 @@
                             </a>
                         </li>
                         
+                        <li>
+                            <a href="it_asset_checklist_list.php">
+                                <i class="fa fa-list"></i>
+                                <span>Checklist List</span>
+                            </a>
+                        </li>
+                        
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-group"></i>
