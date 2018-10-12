@@ -821,6 +821,16 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assetaudit` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+-- -----------------------------------------------------
+-- Table `thesis`.`ref_procurmentstatus`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`ref_procurmentstatus` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`ref_procurmentstatus` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `thesis`.`procurement`
@@ -832,16 +842,20 @@ CREATE TABLE IF NOT EXISTS `thesis`.`procurement` (
   `requestID` INT(11) NOT NULL,
   `date` DATE NULL DEFAULT NULL,
   `totalCost` DOUBLE NULL DEFAULT NULL,
+  `statusID` INT NOT NULL,
   PRIMARY KEY (`procurementID`),
-  INDEX `fk_Procurement_Request1_idx` (`requestID` ASC),
+  INDEX `fk_Procurement_Request1_idx` (`requestID` ASC) VISIBLE,
+  INDEX `fk_procurement_ref_procurmentstatus1_idx` (`statusID` ASC) VISIBLE,
   CONSTRAINT `fk_Procurement_Request1`
     FOREIGN KEY (`requestID`)
-    REFERENCES `thesis`.`request` (`requestID`)
+    REFERENCES `thesis`.`request` (`requestID`),
+  CONSTRAINT `fk_procurement_ref_procurmentstatus1`
+    FOREIGN KEY (`statusID`)
+    REFERENCES `thesis`.`ref_procurmentstatus` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
 
 -- -----------------------------------------------------
 -- Table `thesis`.`assetdocument`
