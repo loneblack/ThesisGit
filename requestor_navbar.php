@@ -14,13 +14,20 @@
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="glyphicon glyphicon-envelope"></i>
-                                <span>Request</span>
+                                <span>Create New Request</span>
                             </a>
                             <ul class="sub">
                                 <li><a href="requestor_service_request_form.php">Service</a></li>
                                 <li><a href="requestor.php">Donation</a></li>
                                 <li><a href="requestor_request_for_procurement_service_material.php">Procurement of Service or Material</a></li>
                             </ul>
+                        </li>
+						
+						<li class="sub-menu">
+                            <a href="requestor_requests.php">
+                                <i class="glyphicon glyphicon-tasks"></i>
+                                <span>View Requests</span>
+                            </a>
                         </li>
                         
                         <li>
