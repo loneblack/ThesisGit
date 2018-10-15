@@ -81,6 +81,15 @@
                                                         <td>Marvin Lao</td>
                                                         <td>1/1/2018</td>
                                                     </tr>
+                                                    
+                                                    <tr id="rowrowboat">
+                                                        <td><a href="procurement_view_request.php">12/23/2018</a></td>
+                                                        <td><span class="label label-primary label-mini">Ready for PO</span></td>
+                                                        <td>We Need 500 more laptops PLSSS!!</td>
+                                                        <td>Marvin Lao</td>
+                                                        <td>1/1/2018</td>
+                                                    </tr>
+                                                    
                                                 </tbody>
                                             </table>
                                             </div>
@@ -113,7 +122,8 @@
         $('#ctable').on('dblclick', function() {
             window.location.replace("procurement_view_request.php");
         })
-
+        
+        
     </script>
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>

@@ -154,6 +154,7 @@
                                                     <th>Title</th>
                                                     <th>Category</th>
                                                     <th>Updated</th>
+                                                    <th>Date Needed</th>
                                                     <th>Action</th>
                                                     <th>Status</th>
                                                 </tr>
@@ -164,6 +165,7 @@
                                                     <td>Need Help Here</td>
                                                     <td>Inquiry</td>
                                                     <td>10/9/18</td>
+                                                    <td>10/9/18</td>
                                                     <td><span class="label label-success">Solved</span></td>
                                                     <td><span class="label label-danger">Closed</span></td>
                                                 </tr>
@@ -173,6 +175,7 @@
                                                     <td>Need Help Here</td>
                                                     <td>Inquiry</td>
                                                     <td>10/9/18</td>
+                                                    <td>10/9/18</td>
                                                     <td><span class="label label-warning">Un-answered</span></td>
                                                     <td><span class="label label-success">Opened</span></td>
                                                 </tr>
@@ -181,6 +184,77 @@
                                                     <td>3</td>
                                                     <td>Need Help Here</td>
                                                     <td>Inquiry</td>
+                                                    <td>10/9/18</td>
+                                                    <td>10/9/18</td>
+                                                    <td><span class="label label-danger">New Ticket</span></td>
+                                                    <td><span class="label label-success">Opened</span></td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Need Help Here</td>
+                                                    <td>Inquiry</td>
+                                                    <td>10/9/18</td>
+                                                    <td>10/9/18</td>
+                                                    <td><span class="label label-success">Solved</span></td>
+                                                    <td><span class="label label-danger">Closed</span></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>5</td>
+                                                    <td>Need Help Here</td>
+                                                    <td>Inquiry</td>
+                                                    <td>10/9/18</td>
+                                                    <td>10/9/18</td>
+                                                    <td><span class="label label-warning">Un-answered</span></td>
+                                                    <td><span class="label label-success">Opened</span></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>6</td>
+                                                    <td>Need Help Here</td>
+                                                    <td>Inquiry</td>
+                                                    <td>10/9/18</td>
+                                                    <td>10/9/18</td>
+                                                    <td><span class="label label-danger">New Ticket</span></td>
+                                                    <td><span class="label label-success">Opened</span></td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td>7</td>
+                                                    <td>Need Help Here</td>
+                                                    <td>Inquiry</td>
+                                                    <td>10/9/18</td>
+                                                    <td>10/9/18</td>
+                                                    <td><span class="label label-success">Solved</span></td>
+                                                    <td><span class="label label-danger">Closed</span></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>8</td>
+                                                    <td>Need Help Here</td>
+                                                    <td>Inquiry</td>
+                                                    <td>10/9/18</td>
+                                                    <td>10/9/18</td>
+                                                    <td><span class="label label-warning">Un-answered</span></td>
+                                                    <td><span class="label label-success">Opened</span></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>9</td>
+                                                    <td>Need Help Here</td>
+                                                    <td>Inquiry</td>
+                                                    <td>10/9/18</td>
+                                                    <td>10/9/18</td>
+                                                    <td><span class="label label-danger">New Ticket</span></td>
+                                                    <td><span class="label label-success">Opened</span></td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td>10</td>
+                                                    <td>Need Help Here</td>
+                                                    <td>Inquiry</td>
+                                                    <td>10/9/18</td>
                                                     <td>10/9/18</td>
                                                     <td><span class="label label-danger">New Ticket</span></td>
                                                     <td><span class="label label-success">Opened</span></td>

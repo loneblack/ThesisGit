@@ -58,7 +58,7 @@
                                         <div class="row invoice-to">
                                             <div class="col-md-4 col-sm-4 pull-left">
                                                 <h4>Purchase Order To:</h4>
-                                                <h2>CDR Kingina Company</h2>
+                                                <h2>CDR King Company</h2>
                                                 <h5>Address: 554 Dimaunahan Street, Quezon City</h5>
                                             </div>
                                             <div class="col-md-4 col-sm-5 pull-right">
@@ -76,6 +76,8 @@
 
                                             </div>
                                         </div>
+                                        
+                                        <h5>*Note: If Items are complete, please leave the comment field blank. If items are incomplete, just place the quantity received in the comment box.</h5>
                                         <table class="table table-invoice">
                                             <thead>
                                                 <tr>

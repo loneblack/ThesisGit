@@ -54,6 +54,10 @@
                                         Purchase Order
                                     </header>
                                     <div class="panel-body">
+                                        <div class="text-center invoice-btn">
+
+                                            <a href="#" class="btn btn-success btn-lg"><i class="fa fa-check"></i> Send All </a>
+                                        </div>
                                         <section id="unseen">
                                             <div class="row invoice-to">
                                                 <div class="col-md-4 col-sm-4 pull-left">
@@ -120,10 +124,6 @@
 
                                                 </tbody>
                                             </table>
-                                            <div class="text-center invoice-btn">
-
-                                                <a href="#" class="btn btn-primary btn-lg"><i class="fa fa-print"></i> Print </a>
-                                            </div>
                                         </section>
                                     </div>
                                 </section>
@@ -205,10 +205,7 @@
 
                                                 </tbody>
                                             </table>
-                                            <div class="text-center invoice-btn">
 
-                                                <a href="#" class="btn btn-primary btn-lg"><i class="fa fa-print"></i> Print </a>
-                                            </div>
                                         </section>
                                     </div>
                                 </section>

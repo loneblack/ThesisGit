@@ -14,6 +14,8 @@
     <link href="bs3/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-reset.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css" />
+    <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
@@ -47,54 +49,61 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-                        <section class="panel">
-                            <header class="panel-heading">
-                                Request List
-                            </header>
-                            <div class="panel-body">
-                                <section id="unseen">
-                                    <table class="table table-bordered table-striped table-condensed table-hover" id="ctable">
-                                        <thead>
-                                            <tr>
-                                                <th>Title of Request</th>
-                                                <th>Status</th>
-                                                <th>Requestor</th>
-                                                <th>Date Needed</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Need More PC</td>
-                                                <td><span class="badge bg-important">Disapproved</span></td>
-                                                <td>Marvin La</td>
-                                                <td>12/23/1997</td>
-                                            </tr>
-                                        </tbody>
-                                        
-                                        <tbody>
-                                            <tr>
-                                                <td>Need More PC</td>
-                                                <td><span class="badge bg-success">Approved</span></td>
-                                                <td>Marvin La</td>
-                                                <td>1/3/2018</td>
-                                            </tr>
-                                        </tbody>
-                                        
-                                        
-                                        <tbody>
-                                            <tr>
-                                                <td>Need More PC</td>
-                                                <td><span class="badge bg-warning">Pending</span></td>
-                                                <td>Marvin La</td>
-                                                <td>1/3/2018</td>
-                                            </tr>
-                                        </tbody>
-                                        
-                                        
-                                    </table>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <section class="panel">
+                                    <header class="panel-heading">
+                                        Request List
+                                    </header>
+                                    <div class="panel-body">
+                                        <div class="adv-table" id="ctable">
+                                            <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Title of Request</th>
+                                                        <th>Status</th>
+                                                        <th>Requestor</th>
+                                                        <th class="hidden-phone">Date Needed</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="gradeA">
+                                                        <td>Need More PC</td>
+                                                        <td><span class="badge bg-important">Disapproved</span></td>
+                                                        <td>Marvin La</td>
+                                                        <td>12/23/1997</td>
+                                                    </tr>
+                                                    
+                                                    <tr class="gradeA">
+                                                        <td>Need More PC</td>
+                                                        <td><span class="badge bg-success">Approved</span></td>
+                                                        <td>Marvin La</td>
+                                                        <td>1/3/2018</td>
+                                                    </tr>
+                                                    
+                                                    <tr class="gradeA">
+                                                        <td>Need More PC</td>
+                                                        <td><span class="badge bg-warning">Pending</span></td>
+                                                        <td>Marvin La</td>
+                                                        <td>1/3/2018</td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Title of Request</th>
+                                                        <th>Status</th>
+                                                        <th>Requestor</th>
+                                                        <th class="hidden-phone">Date Needed</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </section>
                             </div>
-                        </section>
+                        </div>
+
                     </div>
                 </div>
                 <!-- page end-->
@@ -112,12 +121,13 @@
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
-
+    <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+    <script src="js/dynamic_table_init.js"></script>
     <script>
         $('#ctable').on('dblclick', function() {
             window.location.replace("director_view_request.php");
         })
-
     </script>
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>

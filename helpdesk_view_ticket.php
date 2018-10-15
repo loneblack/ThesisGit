@@ -14,6 +14,9 @@
     <link href="bs3/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-reset.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-datepicker/css/datepicker.css" />
+
+    <link rel="stylesheet" type="text/css" href="js/select2/select2.css" />
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
@@ -47,7 +50,7 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="col-sm-9">
+                        <div class="col-sm-8">
                             <section class="panel">
                                 <header class="panel-heading wht-bg">
                                     <h4 class="gen-case"> <a class="btn btn-success">Opened</a>
@@ -70,13 +73,13 @@
                                         </div>
                                     </div>
                                     <div class="view-mail">
-                                        <p>Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. Hello I would like to repair my shit. </p>
+                                        <p>Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. </p>
                                     </div>
                                 </div>
                             </section>
                         </div>
 
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
 
                             <section class="panel">
                                 <div class="panel-body">
@@ -99,7 +102,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="form-group ">
                                                 <label for="priority" class="control-label col-lg-3">Priority</label>
                                                 <div class="col-lg-6">
@@ -111,23 +114,32 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="form-group ">
                                                 <label for="assign" class="control-label col-lg-3">Assigned</label>
                                                 <div class="col-lg-6">
                                                     <select class="form-control m-bot15">
-                                                        <option>Admin</option>
-                                                        <option>IT Office</option>
-                                                        <option>Helpdesk</option>
-                                                        <option>Procurement</option>
-                                                        <option>Engineer</option>
+                                                        <option>Eng. Marvin Lao</option>
+                                                        <option>Eng. Marvin Lao</option>
+                                                        <option>Eng. Marvin Lao</option>
+                                                        <option>Eng. Marvin Lao</option>
+                                                        <option>Eng. Marvin Lao</option>
+                                                        <option>Eng. Marvin Lao</option>
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-3">Due Date</label>
+                                                <div class="col-lg-6">
+                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="" />
+                                                </div>
+                                            </div>
+
                                             <button class="btn btn-success">Update</button>
                                         </form>
                                     </div>
-                                    
+
                                 </div>
                             </section>
                         </div>
@@ -147,20 +159,15 @@
 
     <!--Core js-->
     <script src="js/jquery.js"></script>
+    <script src="js/jquery-1.8.3.min.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="js/jquery.scrollTo.min.js"></script>
-    <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-    <script src="js/jquery.nicescroll.js"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+   
+    <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
-    <script>
-        $('#ctable').on('dblclick', function() {
-            window.location.replace("helpdesk_view_ticket.php");
-        })
-    </script>
 
-    <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
+    <script src="js/advanced-form.js"></script>
 
 </body>
 
