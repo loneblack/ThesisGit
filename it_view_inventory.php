@@ -52,11 +52,11 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Inventory List
+                                            Place Here the Product Name
                                         </header>
                                         <div class="panel-body">
                                             <section id="unseen">
-                                                <table class="table table-bordered table-striped table-condensed table-hover" id="ctable">
+                                                <table class="table table-bordered table-striped table-condensed table-hover" id="">
                                                     <thead>
                                                         <tr>
                                                             <th>Brand</th>
