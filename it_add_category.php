@@ -48,39 +48,35 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <section class="panel">
-                                        <header class="panel-heading">
-                                            Software List
-                                        </header>
-                                        <div class="panel-body">
-                                            <section id="unseen">
-                                                <table class="table table-bordered table-striped table-condensed table-hover" id="ctable">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Product Name</th>
-                                                            <th>Version</th>
-                                                            <th>Vendor</th>
-                                                            <th># of Licenses</th>
-                                                            <th># Installed</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Bootstrap</td>
-                                                            <td>4</td>
-                                                            <td> Bootstrap Corp.</td>
-                                                            <td>100</td>
-                                                            <td>50</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </section>
-                                        </div>
-                                    </section>
+
+
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    Add A Category
+                                </header>
+                                <div class="panel-body">
+                                    <div class="position-center">
+                                        <form class="form-horizontal" role="form">
+
+                                            <div class="form-group">
+                                                <label for="category" class="col-lg-2 col-sm-2 control-label">Category Name</label>
+                                                <div class="col-lg-10">
+                                                    <input type="text" class="form-control" id="category" placeholder="Category Name">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-2 col-lg-10">
+                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+                            </section>
+
+
+
                         </div>
                     </div>
                 </div>

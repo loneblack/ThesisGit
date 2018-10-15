@@ -53,9 +53,6 @@
                                     <section class="panel">
                                         <header class="panel-heading">
                                             Inventory List
-                                            <span class="tools pull-right">
-                                                <a class="fa fa-plus" href="it_add_asset.php"></a>
-                                            </span>
                                         </header>
                                         <div class="panel-body">
                                             <section id="unseen">

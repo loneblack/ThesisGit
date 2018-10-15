@@ -52,9 +52,9 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Inventory List
+                                            Brand List
                                             <span class="tools pull-right">
-                                                <a class="fa fa-plus" href="it_add_software.php"></a>
+                                                <a class="fa fa-plus" href="it_add_brand.php"></a>
                                             </span>
                                         </header>
                                         <div class="panel-body">
@@ -62,20 +62,12 @@
                                                 <table class="table table-bordered table-striped table-condensed table-hover" id="ctable">
                                                     <thead>
                                                         <tr>
-                                                            <th>Product Name</th>
-                                                            <th>Version</th>
-                                                            <th>Vendor</th>
-                                                            <th># of Licenses</th>
-                                                            <th># Installed</th>
+                                                            <th>Brand</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td>Bootstrap</td>
-                                                            <td>4</td>
-                                                            <td> Bootstrap Corp.</td>
-                                                            <td>100</td>
-                                                            <td>50</td>
+                                                            <td>Samsung</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -103,7 +95,13 @@
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
+    
+    <script>
+        $('#ctable').on('dblclick', function() {
+            window.location.replace("it_edit_brand.php");
+        })
 
+    </script>
 
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
