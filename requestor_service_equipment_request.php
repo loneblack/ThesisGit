@@ -61,6 +61,21 @@
                                                     <div class="col-lg-6">
                                                         <select name="serviceType" class="form-control m-bot15">
                                                             <option>Select</option>
+                                                            <?php
+
+                                                            require_once("db/mysql_connect.php");
+                                                            $sql = "SELECT * FROM thesis.offices;";
+
+                                                            $result = mysqli_query($dbc, $sql);
+
+                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                            {
+                                                                
+                                                                echo "<option value ={$row['officeID']}>";
+                                                                echo "{$row['Name']}</option>";
+
+                                                            }
+                                                           ?>
                                                             
                                                         </select>
                                                     </div>
@@ -92,28 +107,43 @@
 												<div class="form-group ">
                                                     <label for="building" class="control-label col-lg-3">Building</label>
                                                     <div class="col-lg-6">
-                                                        <select name="building" class="form-control m-bot15">
+                                                        <select name="building" class="form-control m-bot15" onChange="getRooms(this.value)">
                                                             <option>Select building</option>
-                                                            
+                                                            <?php
+
+                                                            require_once("db/mysql_connect.php");
+                                                            $sql = "SELECT * FROM thesis.building;";
+
+                                                            $result = mysqli_query($dbc, $sql);
+
+                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                            {
+                                                                
+                                                                echo "<option value ={$row['BuildingID']}>";
+                                                                echo "{$row['name']}</option>";
+
+                                                            }
+                                                           ?>
                                                         </select>
                                                     </div>
                                                 </div>
 												<div class="form-group">
 													<label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
 													<div class="col-lg-6">
-														<select name="floorRoom" class="form-control m-bot15">
-															<option>Select floor & room</option>
+														<select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15">
+															<option valu=''>Select floor & room</option>
 														</select>
 													</div>
 												</div>
-												<div class="form-group">
-													<label for="tblCustomers" class="control-label col-lg-3">Equipment to be borrowed</label>
+                                                <hr>
+												<div class="container-fluid">
+													<h4>Equipment to be borrowed</h4>
 													
-													<table id="tblCustomers" cellpadding="0" cellspacing="0" border="1">
+													<table style="width:670px" class="table table-bordered table-striped table-condensed table-hover" id="tblCustomers" align="center" cellpadding="0" cellspacing="0" border="1">
 														<thead>
 															<tr>
-																<th>Equipment</th>
-																<th>Quantity</th>
+																<th style="width:500px">Equipment</th>
+																<th style="width:150px">Quantity</th>
 																<th></th>
 															</tr>
 														</thead>
@@ -121,31 +151,37 @@
 														</tbody>
 														<tfoot>
 															<tr>
-																<td><input type="text" id="txtName"/></td>
-																<td><input type="number" min="1" id="txtCountry" /></td>
-																<td><input type="button" onclick="Add()" value="Add" /></td>
+																<td>
+                                                                    <select class="form-control" id="txtName">
+                                                                        <option>Select</option>
+                                                                    </select>
+                                                                </td>
+																<td><input class="form-control" type="number" min="1" id="txtCountry" /></td>
+																<td style="text-align:center"><input class="btn btn-primary" type="button" onclick="Add()" value="Add" /></td>
 															</tr>
 														</tfoot>
 													</table>
 												</div>
 												<hr>
-												<h4>Endorsement (if applicable)</h4>
-												<div class="form-group ">
-                                                    <label for="representative" class="control-label col-lg-3">Representative</label>
-                                                    <div class="col-lg-6">
-                                                        <input class="form-control" id="representative" name="representative" type="text" />
+                                                <div class="container-fluid">
+    												<h4>Endorsement (if applicable)</h4>
+    												<div class="form-group ">
+                                                        <label for="representative" class="control-label col-lg-3">Representative</label>
+                                                        <div class="col-lg-6">
+                                                            <input class="form-control" id="representative" name="representative" type="text" />
+                                                        </div>
                                                     </div>
-                                                </div>
-												<div class="form-group ">
-                                                    <label for="idNum" class="control-label col-lg-3">ID Number</label>
-                                                    <div class="col-lg-6">
-                                                        <input class="form-control" id="idNum" name="idNum" type="text" />
+    												<div class="form-group ">
+                                                        <label for="idNum" class="control-label col-lg-3">ID Number</label>
+                                                        <div class="col-lg-6">
+                                                            <input class="form-control" id="idNum" name="idNum" type="text" />
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="col-lg-offset-3 col-lg-6">
-                                                        <button class="btn btn-primary" type="submit">Save</button>
-                                                        <button class="btn btn-default" type="button">Cancel</button>
+                                                    <div class="form-group">
+                                                        <div class="col-lg-offset-3 col-lg-6">
+                                                            <button class="btn btn-primary" type="submit">Save</button>
+                                                            <button class="btn btn-default" type="button">Cancel</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </form>
@@ -219,7 +255,22 @@
             btnRemove.type = "button";
             btnRemove.value = "Remove";
             btnRemove.setAttribute("onclick", "Remove(this);");
+            btnRemove.setAttribute("class", "btn btn-primary");
+            btnRemove.setAttribute("style", "text-align:center");
+
             cell.appendChild(btnRemove);
+        }
+
+        function getRooms(val){
+            $.ajax({
+            type:"POST",
+            url:"requestor_service_equipment_request_getRooms.php",
+            data: 'buildingID='+val,
+            success: function(data){
+                $("#FloorAndRoomID").html(data);
+
+                }
+            });
         }
     </script>
 
