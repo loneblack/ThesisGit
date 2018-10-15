@@ -27,7 +27,14 @@
                         <li>
                             <a href="it_inventory.php">
                                 <i class="fa fa-dropbox"></i>
-                                <span>Inventory</span>
+                                <span>Assets</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="it_software.php">
+                                <i class="fa fa-cloud-download"></i>
+                                <span>Software Assets</span>
                             </a>
                         </li>
                         
