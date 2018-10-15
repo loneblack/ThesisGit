@@ -91,6 +91,18 @@
                                     <div class="form">
                                         <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
                                             <div class="form-group ">
+                                                <div class="form-group ">
+                                                <label for="category" class="control-label col-lg-3">Category</label>
+                                                <div class="col-lg-6">
+                                                    <select class="form-control m-bot15">
+                                                        <option>Request</option>
+                                                        <option>Repair</option>
+                                                        <option>Maintenance</option>
+                                                        <option>Replacement</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                                
                                                 <label for="status" class="control-label col-lg-3">Status</label>
                                                 <div class="col-lg-6">
                                                     <select class="form-control m-bot15">

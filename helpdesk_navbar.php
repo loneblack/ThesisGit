@@ -20,18 +20,10 @@
                         
                         
                         <li class="sub-menu">
-                            <a href="javascript:;">
-                                <i class="fa fa-qrcode"></i>
+                            <a href="helpdesk_category.php">
+                                <i class="fa fa-list-ol"></i>
                                 <span>Categories</span>
                             </a>
-                            <ul class="sub">
-                                <li><a href="helpdesk.php">Asset Testing</a></li>
-                                <li><a href="helpdesk.php">Acknowledgment Receipt</a></li>
-                                <li><a href="helpdesk.php">Service Requests</a></li>
-                                <li><a href="helpdesk.php">Repair</a></li>
-                                <li><a href="helpdesk.php">Maintenance</a></li>
-                                <li><a href="helpdesk.php">Donation</a></li>
-                            </ul>
                         </li>
                         
                         

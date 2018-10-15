@@ -28,7 +28,7 @@
             <div class="brand">
 
                 <a href="#" class="logo">
-                    Welcome IT Officer!
+                    Welcome Helpdesk!
                 </a>
             </div>
 
@@ -38,7 +38,7 @@
 
         </header>
         <!--header end-->
-        <?php include 'it_navbar.php' ?>
+        <?php include 'helpdesk_navbar.php' ?>
 
         <!--main content-->
         <section id="main-content">
@@ -52,10 +52,35 @@
 
                             <section class="panel">
                                 <header class="panel-heading">
-                                    Build an Asset
+                                    Add Category
                                 </header>
-                                
-                                
+                                <div class="panel-body">
+                                    <div class="position-center">
+                                        <form class="form-horizontal" role="form">
+
+                                            <div class="form-group">
+                                                <label for="name" class="col-lg-2 col-sm-2 control-label">Name</label>
+                                                <div class="col-lg-10">
+                                                    <input type="text" class="form-control" id="name" placeholder="Name">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group ">
+                                                <label for="ccomment" class="col-lg-2 col-sm-2 control-label">Description</label>
+                                                <div class="col-lg-10">
+                                                    <textarea class="form-control " id="description" name="description"></textarea>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-2 col-lg-10">
+                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </section>
 
 
