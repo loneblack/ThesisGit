@@ -52,7 +52,7 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Inventory List
+                                            Software List
                                             <span class="tools pull-right">
                                                 <a class="fa fa-plus" href="it_add_software.php"></a>
                                             </span>

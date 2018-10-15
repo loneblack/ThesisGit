@@ -24,19 +24,20 @@
                             </a>
                         </li>
                         
-                        <li>
-                            <a href="it_inventory.php">
+                        
+                        <li class="sub-menu">
+                            <a href="javascript:;">
                                 <i class="fa fa-dropbox"></i>
-                                <span>Assets</span>
+                                <span>Inventory</span>
                             </a>
+                            <ul class="sub">
+                                <li><a href="it_inventory.php">Assets</a></li>
+                                <li><a href="it_software.php">All Softwares</a></li>
+                                <li><a href="it_products.php">Products</a></li>
+                                <li><a href="it_categories.php">Categories</a></li>
+                            </ul>
                         </li>
                         
-                        <li>
-                            <a href="it_software.php">
-                                <i class="fa fa-cloud-download"></i>
-                                <span>Software Assets</span>
-                            </a>
-                        </li>
                         
                         <li>
                             <a href="it_asset_checklist_list.php">
