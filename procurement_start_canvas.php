@@ -135,7 +135,7 @@
                                                             </select>
                                                         </td>
                                                         <td><input type="number" class="form-control" min="0.00" required></td>
-                                                        <td><button class="btn btn-primary"     onclick="addTest(1)"> Add </button></td>
+                                                        <td><button class="btn btn-primary" onclick="addTest(1)"> Add </button></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -176,72 +176,58 @@
 
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
-    
-        <script type="text/javascript">
-     
-            
-     
+
+    <script type="text/javascript">
         // Shorthand for $( document ).ready()
         $(function() {
-          
+
         });
 
 
-            
-            
-        function addTest(){
-            var row_index = 0;
-                var isRenderd = false;
-            
-               $("td").click(function(){
-                        row_index = $(this).parent().index();  
 
-               });   
-             
+
+        function addTest() {
+            var row_index = 0;
+            var isRenderd = false;
+
+            $("td").click(function() {
+                row_index = $(this).parent().index();
+
+            });
+
             var delayInMilliseconds = 300; //1 second
 
-setTimeout(function() {
-  //your code to be executed after 1 second
-    
-              appendTableRow(row_index);
-}, delayInMilliseconds);
-            
-//           var tr = $('#tableTest').find('tr');
-       
-//           var rowCount = $("#tableTest tr").click(function(){
-//            return this.rowIndex;
-//           });
-//            alert(tr)
-//            alert(rowCount)
-            
-          
-         
+            setTimeout(function() {
+
+                appendTableRow(row_index);
+            }, delayInMilliseconds);
+
+
+
         }
-            
-      var appendTableRow = function(rowCount){
-          var cnt = 0
-            var tr = "<tr>"+
-            "<td style='width:50px;'></td>" +
-                    "<td></td>" +
-                    "<td></td>" +
-                    "<td>"+
-                        "<select class='form-control' id='exampleFormControlSelect1' required>"+
-                           " <option>Select Supplier</option>"+
-                            "<option>ABC Corp.</option>"+
-                            "<option>Philippine Sports Commission</option>"+
-                            "<option>CDR-King</option>"+
-                          "<option>Huawei</option>"+
-                            "<option>Samsung</option>"+
-                        "</select>"+
-                    "</td>"+
-                    "<td><input type='number' class='form-control' min='0.00' required></td>"+
-            "</tr>";
+
+        var appendTableRow = function(rowCount) {
+            var cnt = 0
+            var tr = "<tr>" +
+                "<td style='width:50px;'></td>" +
+                "<td></td>" +
+                "<td></td>" +
+                "<td>" +
+                "<select class='form-control' id='exampleFormControlSelect1' required>" +
+                " <option>Select Supplier</option>" +
+                "<option>ABC Corp.</option>" +
+                "<option>Philippine Sports Commission</option>" +
+                "<option>CDR-King</option>" +
+                "<option>Huawei</option>" +
+                "<option>Samsung</option>" +
+                "</select>" +
+                "</td>" +
+                "<td><input type='number' class='form-control' min='0.00' required></td>" +
+                "</tr>";
             $('#tableTest tbody tr').eq(rowCount).after(tr);
-            }
-            
-         
+        }
     </script>
-    
+
 
 </body>
 

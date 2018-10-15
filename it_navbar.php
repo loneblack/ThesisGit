@@ -36,6 +36,7 @@
                                 <li><a href="it_brands.php">Brands</a></li>
                                 <li><a href="it_products.php">Products</a></li>
                                 <li><a href="it_categories.php">Categories</a></li>
+                                <li><a href="it_build_asset.php">Build Asset</a></li>
                             </ul>
                         </li>
                         
