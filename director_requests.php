@@ -158,7 +158,7 @@
     <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
     <script src="js/dynamic_table_init.js"></script>
     <script>
-        $('#ctable').on('dblclick', function() {
+        $('#ctable').on('click', function() {
 			$('.gradeA').on('click', function() {
 				var a = this.getAttribute("id");
 				window.location.replace("director_view_request.php?requestid=" + a);
