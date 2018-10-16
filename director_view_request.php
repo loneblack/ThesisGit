@@ -1,4 +1,24 @@
 <!DOCTYPE html>
+<?php
+
+	require_once('mysql_connect.php');
+	$_SESSION['requestid']=$_GET['requestid'];
+	$query="SELECT * FROM thesis.request r join thesis.employee e on r.employeeID=e.employeeID where r.requestID='{$_SESSION['requestid']}'";
+	$result=mysqli_query($dbc,$query);
+	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+	
+	if(isset($_POST['approve'])){
+		$query="UPDATE `thesis`.`request` SET `status`='Approved' WHERE `requestID`='{$_SESSION['requestid']}'";
+		$result=mysqli_query($dbc,$query);
+		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
+	}
+	elseif(isset($_POST['disapprove'])){
+		$query="UPDATE `thesis`.`request` SET `status`='Disapproved' WHERE `requestID`='{$_SESSION['requestid']}'";
+		$result=mysqli_query($dbc,$query);
+		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
+	}
+	
+?>
 <html lang="en">
 
 <head>
@@ -48,7 +68,16 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
-                            <h2>Status: <span class="label label-success">Aprroved</span></h2>
+                            <h2>Status: <?php 
+											if($row['status']=='Disapproved'){
+												echo "<span class='label label-important'>{$row['status']}</span>";
+											}
+											elseif($row['status']=='Approved'){
+												echo "<span class='label label-success'>{$row['status']}</span>";
+											}
+											else{
+												echo "<span class='label label-warning'>{$row['status']}</span>";
+											} ?></h2>
                             <center><img src="img/logo.png" width="150" height="150"> </center>
                             <center><b>
                                     <h3>De La Salle University</h3>
@@ -67,11 +96,30 @@
                                         <th>Quantity</th>
                                         <th>Hardware/ Software Requirements</th>
                                         <th>Estimated Cost</th>
-                                        <th>Source of Budget</th>
+                                        <!-- <th>Source of Budget</th> -->
                                         <th>Recommended Supplier</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+									<?php
+									
+										require_once('mysql_connect.php');
+										$query="SELECT * FROM thesis.requestdetails rd join supplier s on rd.supplierID=s.supplierID where rd.requestID='{$_SESSION['requestid']}'";
+										$result=mysqli_query($dbc,$query);
+										while($row1=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+											echo "<tr>
+												<td>{$row1['quantityRequired']}</td>
+												<td>{$row1['hwswrequirements']}</td>
+												<td>{$row1['estimatedCost']}</td>
+												<td>{$row1['name']}</td>
+											</tr>";
+											
+											
+											
+										}
+
+									?>
+									<!--
                                     <tr>
                                         <td>10</td>
                                         <td>Shabu</td>
@@ -87,6 +135,7 @@
                                         <td>Sponsor</td>
                                         <td>CDR King</td>
                                     </tr>
+									-->
                                 </tbody>
                             </table>
                         </div>
@@ -113,9 +162,10 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <button type="button" class="btn btn-success"><i class="fa fa-check"></i> Approve</button>
-                            <button type="button" class="btn btn-danger"><i class="fa fa-ban"></i> Disapprove</button>
-
+							<form method="post">
+								<button type="submit" class="btn btn-success" name="approve" <?php if($row['status'] == 'Approved' || $row['status'] == 'Disapproved') echo "disabled"; ?> ><i class="fa fa-check"></i> Approve</button>
+								<button type="submit" class="btn btn-danger" name="disapprove" <?php if($row['status'] == 'Approved' || $row['status'] == 'Disapproved') echo "disabled"; ?> ><i class="fa fa-ban"></i> Disapprove</button>
+							</form>
                     </div>
                 </div>
                 <!-- page end-->
