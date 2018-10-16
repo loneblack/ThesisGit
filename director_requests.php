@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -68,6 +69,38 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+													
+													<?php
+													
+														require_once('mysql_connect.php');
+														$query="SELECT * FROM thesis.request r join thesis.employee e on r.employeeID=e.employeeID";
+														$result=mysqli_query($dbc,$query);
+														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+															
+															echo "<tr class='gradeA' id='{$row['requestID']}' >
+																	<td>{$row['description']}</td>";
+									
+																if($row['status']=='Disapproved'){
+																	echo "<td><span class='badge bg-important'>{$row['status']}</span></td>";
+																}
+																elseif($row['status']=='Approved'){
+																	echo "<td><span class='badge bg-success'>{$row['status']}</span></td>";
+																}
+																else{
+																	echo "<td><span class='badge bg-warning'>{$row['status']}</span></td>";
+																}
+															
+															echo"
+																<td>{$row['name']}</td>
+																<td>{$row['dateNeeded']}</td>
+																</tr>";
+													}
+													
+													
+													
+													
+													?>
+													
                                                     <tr class="gradeA">
                                                         <td>Need More PC</td>
                                                         <td><span class="badge bg-important">Disapproved</span></td>
@@ -126,8 +159,11 @@
     <script src="js/dynamic_table_init.js"></script>
     <script>
         $('#ctable').on('dblclick', function() {
-            window.location.replace("director_view_request.php");
-        })
+			$('.gradeA').on('click', function() {
+				var a = this.getAttribute("id");
+				window.location.replace("director_view_request.php?requestid=" + a);
+			})
+        })	
     </script>
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
