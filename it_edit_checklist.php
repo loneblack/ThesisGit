@@ -70,34 +70,26 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td style="width:50px;">5</td>
-                                                        <td>MAC Laptop</td>
-                                                        <td>IPAD</td>
-                                                        <td>
-															<div>
-																Check more stuff
-															</div>
-                                                        </td>
+                                                        <td style="width:50px;"><input type="number" min="1" class="form-control" value="5"></td>
+                                                        <td><input type="text" class="form-control" value="MAC Laptop"></td>
+                                                        <td><input type="text" class="form-control" value="iPad"></td>
+                                                        <td><input type="text" class="form-control" value="Check more stuff"></td>
                                                         <td><button class="btn btn-danger" onclick="removeRow(this)"> Remove </button></td>
 														<td><button class='btn btn-primary' onclick='addTest(3)'>Add</button></td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="width:50px;">5</td>
-                                                        <td>Windows</td>
-                                                        <td>Windows 10</td>
-                                                        <td>
-                                                            Check stuff
-                                                        </td>
+                                                        <td style="width:50px;"><input type="number" min="1" class="form-control" value="5"></td>
+                                                        <td><input type="text" class="form-control" value="Windows"></td>
+                                                        <td><input type="text" class="form-control" value="Windows 10"></td>
+                                                        <td><input type="text" class="form-control" value="Check more stuff"></td>
                                                         <td><button class="btn btn-danger" onclick="removeRow(this)"> Remove </button></td>
 														<td><button class='btn btn-primary' onclick='addTest(3)'> Add </button></td>
                                                     </tr>
 													<tr>
-                                                        <td style="width:50px;">2</td>
-                                                        <td>Smartphone</td>
-                                                        <td>Samsung Galaxy J7 Pro</td>
-                                                        <td>
-                                                            Responsiveness of touchscreen
-                                                        </td>
+                                                        <td style="width:50px;"><input type="number" min="1" class="form-control" value="2"></td>
+                                                        <td><input type="text" class="form-control" value="Smartphone"></td>
+                                                        <td><input type="text" class="form-control" value="Samsung Galaxy J7 Pro"></td>
+														<td><input type="text" class="form-control" value="Responsiveness of touchscreen"></td>
                                                         <td><button class="btn btn-danger" onclick="removeRow(this)"> Remove </button></td>
 														<td><button class='btn btn-primary' onclick='addTest(3)'> Add </button></td>
                                                     </tr>
@@ -105,7 +97,7 @@
                                             </table>
 											
 											<div style="text-align:right">
-												<button id="addRow" name="addRow" class="btn btn-info editBtn"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
+												
 												<button id="addRow" name="addRow" class="btn btn-primary" onclick="AddRow()"> Add Item</button>
 											</div>
 
@@ -136,28 +128,6 @@
          p.parentNode.removeChild(p);
     }
 	
-	//Edit button
-	$(document).ready(function (){
-        $('.editBtn').click(function () {
-			
-            var currentTD = $(this).parents('tr').find('td');
-			alert($(this).html());
-            if ($(this).html() == 'Edit') {
-				currentTD = $(this).parents('tr').find('td');
-				$.each(currentTD, function () {
-					$(this).prop('contenteditable', true)
-					});
-            } 
-			else{
-				$.each(currentTD, function () {
-					$(this).prop('contenteditable', false)
-				});
-			}
-    
-            $(this).html($(this).html() == 'Edit' ? 'Save' : 'Edit')
-    
-        });
-    });
 	
 	//Add new button
 	function AddRow() {
@@ -245,6 +215,7 @@
 				"<label class='form-inline'>" +
 				"<input type='checkbox' class='form-check-input' hidden><input style='width:300px' type='text' class='form-control'></label></div>" +
                 "</td>" +
+				"<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
                 "</tr>";
             $('#tableTest tbody tr').eq(rowCount).after(tr);
         }
