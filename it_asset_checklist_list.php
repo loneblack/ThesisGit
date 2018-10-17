@@ -75,12 +75,15 @@
                                                         <tr>
                                                             <td>Laptop</td>
                                                             <td>To do this you will need beer.</td>
-                                                            <td><a href="it_add_checklist.php"><button class="btn btn-success" type="button">Add</button></a></td>
+                                                            <td><a href="it_view_checklist.php"><button class="btn btn-primary" type="button">View</button></a></td>
                                                             <td><a href="it_edit_checklist.php"><button class="btn btn-info" type="button">Edit</button></a></td>
                                                         </tr>
 
                                                     </tbody>
                                                 </table>
+												<div style="text-align:right">
+													<a href="it_add_checklist.php"><button class="btn btn-success" type="button">Add New</button></a>
+												</div>
                                             </section>
                                         </div>
                                     </section>
