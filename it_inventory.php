@@ -53,6 +53,7 @@
                                     <section class="panel">
                                         <header class="panel-heading">
                                             Inventory List
+                                            
                                         </header>
                                         <div class="panel-body">
                                             <section id="unseen">

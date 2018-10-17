@@ -52,6 +52,70 @@
                 <!-- page start-->
                 <div class="row">
                     <div class="col-sm-12">
+
+                        <section class="panel">
+                            <header class="panel-heading">
+                                ETO PARA SA MGA HINDI COMBINABLE NA ASSET (NASA BABA UNG FORMAT NG COMBINABLE)
+                            </header>
+                            <div class="panel-body">
+                                <div class="adv-table">
+                                    <table class="display table table-bordered table-striped" id="dynamic-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Property Code</th>
+                                                <th>Brand</th>
+                                                <th>Model</th>
+                                                <th class="hidden-phone">Category</th>
+                                                <th class="hidden-phone">Checked Out</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="gradeX">
+                                                <td>121213121212121</td>
+                                                <td>Samsung</td>
+                                                <td>Galaxy S9</td>
+                                                <td class="center hidden-phone">Phone</td>
+                                                <td class="center hidden-phone">Marvin Lao</td>
+                                            </tr>
+                                            
+                                            <tr class="gradeX">
+                                                <td>121213121212121</td>
+                                                <td>Huawei</td>
+                                                <td>Nova 2</td>
+                                                <td class="center hidden-phone">Phone</td>
+                                                <td class="center hidden-phone"></td>
+                                            </tr>
+                                            
+                                            <tr class="gradeX">
+                                                <td>121213121212121</td>
+                                                <td>Xiami</td>
+                                                <td>Note S3</td>
+                                                <td class="center hidden-phone">Phone</td>
+                                                <td class="center hidden-phone">Arvin Lao</td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Property Code</th>
+                                                <th>Brand</th>
+                                                <th>Model</th>
+                                                <th class="hidden-phone">Category</th>
+                                                <th class="hidden-phone">Checked Out</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+
+
+
+
+
+
+
+
                         <section class="panel">
                             <header class="panel-heading">
                                 Place Product name that is combinable here
@@ -71,6 +135,7 @@
                                                 <th class="hidden-phone">Keyboard</th>
                                                 <th class="hidden-phone">Hardrive</th>
                                                 <th class="hidden-phone">Monitor</th>
+                                                <th class="hidden-phone">Checked Out</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -80,28 +145,16 @@
                                                 <td class="hidden-phone">Acer</td>
                                                 <td class="hidden-phone">Seagate</td>
                                                 <td class="hidden-phone">Samsung LCD 40"</td>
+                                                <td>Vin Lao</td>
                                             </tr>
-                                            
+
                                             <tr class="gradeA">
                                                 <td class="center">972573</td>
                                                 <td class="hidden-phone">Acer</td>
                                                 <td class="hidden-phone">Acer</td>
                                                 <td class="hidden-phone">Seagate</td>
                                                 <td class="hidden-phone">Samsung LCD 40"</td>
-                                            </tr>
-                                            <tr class="gradeA">
-                                                <td class="center">972573</td>
-                                                <td class="hidden-phone">Acer</td>
-                                                <td class="hidden-phone">Acer</td>
-                                                <td class="hidden-phone">Seagate</td>
-                                                <td class="hidden-phone">Samsung LCD 40"</td>
-                                            </tr>
-                                            <tr class="gradeA">
-                                                <td class="center">972573</td>
-                                                <td class="hidden-phone">Acer</td>
-                                                <td class="hidden-phone">Acer</td>
-                                                <td class="hidden-phone">Seagate</td>
-                                                <td class="hidden-phone">Samsung LCD 40"</td>
+                                                <td>Arvin Lao</td>
                                             </tr>
                                             <tr class="gradeA">
                                                 <td class="center">972573</td>
@@ -109,6 +162,7 @@
                                                 <td class="hidden-phone">Acer</td>
                                                 <td class="hidden-phone">Seagate</td>
                                                 <td class="hidden-phone">Samsung LCD 40"</td>
+                                                <td>Marvin Loa</td>
                                             </tr>
                                             <tr class="gradeA">
                                                 <td class="center">972573</td>
@@ -116,6 +170,7 @@
                                                 <td class="hidden-phone">Acer</td>
                                                 <td class="hidden-phone">Seagate</td>
                                                 <td class="hidden-phone">Samsung LCD 40"</td>
+                                                <td>Marvin Lao</td>
                                             </tr>
                                             <tr class="gradeA">
                                                 <td class="center">972573</td>
@@ -123,6 +178,7 @@
                                                 <td class="hidden-phone">Acer</td>
                                                 <td class="hidden-phone">Seagate</td>
                                                 <td class="hidden-phone">Samsung LCD 40"</td>
+                                                <td></td>
                                             </tr>
                                             <tr class="gradeA">
                                                 <td class="center">972573</td>
@@ -130,6 +186,7 @@
                                                 <td class="hidden-phone">Acer</td>
                                                 <td class="hidden-phone">Seagate</td>
                                                 <td class="hidden-phone">Samsung LCD 40"</td>
+                                                <td></td>
                                             </tr>
                                             <tr class="gradeA">
                                                 <td class="center">972573</td>
@@ -137,6 +194,7 @@
                                                 <td class="hidden-phone">Acer</td>
                                                 <td class="hidden-phone">Seagate</td>
                                                 <td class="hidden-phone">Samsung LCD 40"</td>
+                                                <td></td>
                                             </tr>
                                             <tr class="gradeA">
                                                 <td class="center">972573</td>
@@ -144,8 +202,25 @@
                                                 <td class="hidden-phone">Acer</td>
                                                 <td class="hidden-phone">Seagate</td>
                                                 <td class="hidden-phone">Samsung LCD 40"</td>
+                                                <td></td>
                                             </tr>
-                                            
+                                            <tr class="gradeA">
+                                                <td class="center">972573</td>
+                                                <td class="hidden-phone">Acer</td>
+                                                <td class="hidden-phone">Acer</td>
+                                                <td class="hidden-phone">Seagate</td>
+                                                <td class="hidden-phone">Samsung LCD 40"</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr class="gradeA">
+                                                <td class="center">972573</td>
+                                                <td class="hidden-phone">Acer</td>
+                                                <td class="hidden-phone">Acer</td>
+                                                <td class="hidden-phone">Seagate</td>
+                                                <td class="hidden-phone">Samsung LCD 40"</td>
+                                                <td></td>
+                                            </tr>
+
                                         </tbody>
                                     </table>
 

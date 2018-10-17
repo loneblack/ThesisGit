@@ -50,16 +50,19 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
-                            
-                            
+
+
                             <section class="panel">
-                                    <header class="panel-heading">
-                                        All Ticket
-                                    </header>
-                                    <div class="panel-body">
-                                        <div class="adv-table" id="ctable">
-                                            <table class="display table table-bordered table-striped" id="dynamic-table">
-                                                <thead>
+                                <header class="panel-heading">
+                                    All Ticket
+                                    <span class="tools pull-right">
+                                        <a href="helpdesk_create_ticket.php" class="fa fa-plus"></a>
+                                    </span>
+                                </header>
+                                <div class="panel-body">
+                                    <div class="adv-table" id="ctable">
+                                        <table class="display table table-bordered table-striped" id="dynamic-table">
+                                            <thead>
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Title</th>
@@ -172,21 +175,21 @@
                                                 </tr>
 
                                             </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <th>#</th>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>#</th>
                                                     <th>Title</th>
                                                     <th>Category</th>
                                                     <th>Updated</th>
                                                     <th>Date Needed</th>
                                                     <th>Action</th>
                                                     <th class="hidden-phone">Status</th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>
-                                        </div>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
                                     </div>
-                                </section>
+                                </div>
+                            </section>
 
                         </div>
                     </div>
