@@ -67,6 +67,19 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+														<?php
+															require_once('mysql_connect.php');
+															$query="SELECT * FROM thesis.ref_servicetype";
+															$result=mysqli_query($dbc,$query);
+															
+															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+																echo "<tr class='categoryid' id='{$row['id']}'>
+																		<td>{$row['serviceType']}</td>
+																		<td>{$row['description']}</td>
+																	</tr>";
+															}
+														
+														?>
                                                         <tr>
                                                             <td>Repair</td>
                                                             <td>This is pressed when the bla blla is bla bla. This is pressed when the bla blla is bla bla. </td>
@@ -98,8 +111,11 @@
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
     <script>
-        $('#ctable').on('dblclick', function() {
-            window.location.replace("helpdesk_edit_category.php");
+        $('#ctable').on('click', function() {
+			$('.categoryid').on('click', function() {
+				var a = this.getAttribute("id");
+				window.location.replace("helpdesk_edit_category.php?categoryid=" + a);
+			})
         })
 
     </script>

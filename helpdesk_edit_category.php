@@ -1,4 +1,32 @@
 <!DOCTYPE html>
+<?php
+
+	require_once('mysql_connect.php');
+	$_SESSION['categoryid']=$_GET['categoryid'];
+	
+	$query="SELECT * FROM thesis.ref_servicetype where id='{$_SESSION['categoryid']}'";
+	$result=mysqli_query($dbc,$query);
+	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+	
+	if (isset($_POST['submit'])){
+		
+		$categoryName=$_POST['categoryName'];
+		$description=$_POST['description'];
+
+		$query1="UPDATE `thesis`.`ref_servicetype` SET `serviceType`='{$categoryName}', `description`='{$description}' WHERE `id`='{$_SESSION['categoryid']}'";
+		$result1=mysqli_query($dbc,$query1);
+			
+		echo "<script type='text/javascript'>alert('Success');</script>"; // Show modal
+		$flag=1;
+		
+		$query="SELECT * FROM thesis.ref_servicetype where id='{$_SESSION['categoryid']}'";
+		$result=mysqli_query($dbc,$query);
+		$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+		
+		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/helpdesk_edit_category.php?categoryid={$_SESSION['categoryid']}");
+	}
+
+?>
 <html lang="en">
 
 <head>
@@ -56,26 +84,26 @@
                                 </header>
                                 <div class="panel-body">
                                     <div class="position-center">
-                                        <form class="form-horizontal" role="form">
+                                        <form class="form-horizontal" role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']."?categoryid={$_SESSION['categoryid']}"; ?>">
 
                                             <div class="form-group">
                                                 <label for="name" class="col-lg-2 col-sm-2 control-label">Name</label>
                                                 <div class="col-lg-10">
-                                                    <input type="text" class="form-control" id="name" placeholder="Name">
+                                                    <input type="text" class="form-control" id="name" name="categoryName" value="<?php echo $row['serviceType'];  ?>" required>
                                                 </div>
                                             </div>
 
                                             <div class="form-group ">
                                                 <label for="ccomment" class="col-lg-2 col-sm-2 control-label">Description</label>
                                                 <div class="col-lg-10">
-                                                    <textarea class="form-control " id="description" name="description"></textarea>
+                                                    <textarea class="form-control " id="description" name="description" required><?php echo $row['description']; ?></textarea>
                                                 </div>
                                             </div>
 
 
                                             <div class="form-group">
                                                 <div class="col-lg-offset-2 col-lg-10">
-                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                    <button type="submit" class="btn btn-success" name="submit">Submit</button>
                                                 </div>
                                             </div>
                                         </form>

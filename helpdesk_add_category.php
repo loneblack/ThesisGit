@@ -1,4 +1,23 @@
 <!DOCTYPE html>
+<?php
+
+	$flag=0;
+	require_once('mysql_connect.php');
+
+	if (isset($_POST['submit'])){
+		
+		$categoryName=$_POST['categoryName'];
+		$description=$_POST['description'];
+		
+		$query="INSERT INTO `thesis`.`ref_servicetype` (`serviceType`, `description`) VALUES ('{$categoryName}', '{$description}')";
+		$result=mysqli_query($dbc,$query);
+			
+		echo "<script type='text/javascript'>alert('Success');</script>"; // Show modal
+		$flag=1;
+		
+	}
+
+?>
 <html lang="en">
 
 <head>
@@ -56,26 +75,26 @@
                                 </header>
                                 <div class="panel-body">
                                     <div class="position-center">
-                                        <form class="form-horizontal" role="form">
+                                        <form class="form-horizontal" role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
                                             <div class="form-group">
                                                 <label for="name" class="col-lg-2 col-sm-2 control-label">Name</label>
                                                 <div class="col-lg-10">
-                                                    <input type="text" class="form-control" id="name" placeholder="Name">
+                                                    <input type="text" class="form-control" id="name" placeholder="Name" name="categoryName" value="<?php if (isset($_POST['categoryName']) && !$flag) echo $_POST['categoryName']; ?>" required>
                                                 </div>
                                             </div>
 
                                             <div class="form-group ">
                                                 <label for="ccomment" class="col-lg-2 col-sm-2 control-label">Description</label>
                                                 <div class="col-lg-10">
-                                                    <textarea class="form-control " id="description" name="description"></textarea>
+                                                    <textarea class="form-control" id="description" name="description" value="<?php if (isset($_POST['description']) && !$flag) echo $_POST['description']; ?>" required></textarea>
                                                 </div>
                                             </div>
 
 
                                             <div class="form-group">
                                                 <div class="col-lg-offset-2 col-lg-10">
-                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                    <button type="submit" class="btn btn-success" name="submit">Submit</button>
                                                 </div>
                                             </div>
                                         </form>
