@@ -249,7 +249,7 @@
 			sectionYear.value="";
         };
 
-        function Remove(button) {
+        function Remove1(button) {
             //Determine the reference of the Row using the Button.
             var row = button.parentNode.parentNode;
             var name = row.getElementsByTagName("TD")[0].innerHTML;
@@ -295,7 +295,7 @@
             var btnRemove1 = document.createElement("INPUT");
             btnRemove1.type = "button";
             btnRemove1.value = "Remove";
-            btnRemove1.setAttribute("onclick", "Remove(this);");
+            btnRemove1.setAttribute("onclick", "Remove1(this);");
 			btnRemove1.setAttribute("class", "btn btn-primary");
             cell.appendChild(btnRemove1);
         }
