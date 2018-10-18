@@ -55,7 +55,7 @@
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
-                                            <form class="cmxform form-horizontal " id="signupForm" method="get" action="">
+                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_request_form_DB.php">
                                                 <div class="form-group ">
                                                     <label for="serviceType" class="control-label col-lg-3">Type of Service Requested</label>
                                                     <div class="col-lg-6">
