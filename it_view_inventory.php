@@ -60,23 +60,29 @@
                                                         <th>Brand</th>
                                                         <th>Model</th>
                                                         <th class="hidden-phone">Category</th>
-                                                        <th class="hidden-phone">Checked-out</th>
+                                                        <th class="hidden-phone">Checked-out To</th>
+                                                        <th>Location</th>
+                                                        <th>Checkin/ Checkout</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr class="gradeX">
+                                                    <tr class="gradeA">
                                                         <td>1726312368</td>
                                                         <td>Dell</td>
                                                         <td>GT19291</td>
                                                         <td class="center hidden-phone">Laptop</td>
                                                         <td class="center hidden-phone">Austin Pementel</td>
+                                                        <td>Andrew 1105</td>
+                                                        <td class="center"><a href="it_checkin.php"><button type="button" class="btn btn-info">Checkin</button></a></td>
                                                     </tr>
-                                                    <tr class="gradeC">
+                                                    <tr class="gradeA">
                                                         <td>838423479</td>
                                                         <td>Samsung</td>
                                                         <td>Curve 55"</td>
                                                         <td class="center hidden-phone">Television</td>
                                                         <td class="center hidden-phone">Marvin Lao</td>
+                                                        <td>Goks Lobby</td>
+                                                        <td class="center"><a href="it_checkin.php"><button type="button" class="btn btn-info">Checkin</button></a></td>
                                                     </tr>
                                                     <tr class="gradeA">
                                                         <td>123123123</td>
@@ -84,6 +90,8 @@
                                                         <td>Galaxy S9</td>
                                                         <td class="center hidden-phone">Smartphone</td>
                                                         <td class="center hidden-phone"></td>
+                                                        <td></td>
+                                                        <td class="center"><a href="it_checkout.php"><button type="button" class="btn btn-danger">Checkout</button></a></td>
                                                     </tr>
                                                 </tbody>
                                                 <tfoot>
@@ -91,7 +99,8 @@
                                                         <th>Brand</th>
                                                         <th>Model</th>
                                                         <th class="hidden-phone">Category</th>
-                                                        <th class="hidden-phone">Checked-out</th>
+                                                        <th class="hidden-phone">Checked-out To</th>
+                                                        <th>Location</th>
                                                 </tfoot>
                                             </table>
                                         </div>
