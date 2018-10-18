@@ -66,7 +66,7 @@
                                                 <tbody>
                                                     <tr class="gradeX">
                                                         <td>1726312368</td>
-                                                        <td>Dell/td>
+                                                        <td>Dell</td>
                                                         <td>GT19291</td>
                                                         <td class="center hidden-phone">Laptop</td>
                                                         <td class="center hidden-phone">Austin Pementel</td>
