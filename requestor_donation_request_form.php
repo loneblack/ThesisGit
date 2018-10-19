@@ -51,7 +51,7 @@
                             <div class="col-lg-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        Service Equipment Request 
+                                        Donation Request
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
