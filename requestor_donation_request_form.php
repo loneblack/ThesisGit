@@ -57,27 +57,9 @@
                                         <div class="form" method="post">
                                             <form class="cmxform form-horizontal " id="signupForm" method="get" action="">
                                                 <div class="form-group ">
-                                                    <label for="serviceType" class="control-label col-lg-3">Office/Department/School Organization</label>
+                                                    <label for="organization" class="control-label col-lg-3">Office/Department/School Organization</label>
                                                     <div class="col-lg-6">
-                                                        <select name="serviceType" class="form-control m-bot15">
-                                                            <option>Select</option>
-                                                            <?php
-
-                                                            require_once("db/mysql_connect.php");
-                                                            $sql = "SELECT * FROM thesis.offices;";
-
-                                                            $result = mysqli_query($dbc, $sql);
-
-                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                            {
-                                                                
-                                                                echo "<option value ={$row['officeID']}>";
-                                                                echo "{$row['Name']}</option>";
-
-                                                            }
-                                                           ?>
-                                                            
-                                                        </select>
+                                                        <input type="text" name="organization" class="form-control m-bot15" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -92,12 +74,6 @@
                                                         <input class="form-control" id="dateNeeded" name="dateNeeded" type="datetime-local" />
                                                     </div>
                                                 </div>
-                                                <div class="form-group ">
-                                                    <label for="endDate" class="control-label col-lg-3">End date & time</label>
-                                                    <div class="col-lg-6">
-                                                        <input class=" form-control" id="endDate" name="endDate" type="datetime-local" />
-                                                    </div>
-                                                </div>
 												<div class="form-group ">
                                                     <label for="purpose" class="control-label col-lg-3">Purpose</label>
                                                     <div class="col-lg-6">
@@ -107,7 +83,7 @@
 												
                                                 <hr>
 												<div class="container-fluid">
-													<h4>Equipment to be borrowed</h4>
+													<h4>Requested Equipment</h4>
 													
 													<table style="width:670px" class="table table-bordered table-striped table-condensed table-hover" id="tblCustomers" align="center" cellpadding="0" cellspacing="0" border="1">
 														<thead>
