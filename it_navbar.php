@@ -37,6 +37,7 @@
                                 <li><a href="it_products.php">Products</a></li>
                                 <li><a href="it_categories.php">Categories</a></li>
                                 <li><a href="it_build_asset.php">Build Asset</a></li>
+                                <li><a href="it_bulk_checkout.php">Bulk Checkout</a></li>
                             </ul>
                         </li>
                         
