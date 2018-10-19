@@ -239,7 +239,7 @@
 			
 			//Add Country cell.
             var cell = row.insertCell(-1);
-            cell.innerHTML = "<td><input class='form-control' value='" + country + "'></input></td>";
+            cell.innerHTML = "<td><input class='form-control' type='number' value='" + country + "'></input></td>";
 			
 			//Add Country cell.
             cell = row.insertCell(-1);
