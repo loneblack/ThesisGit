@@ -133,7 +133,9 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('12', 'Com
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('13', 'Ticketed');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('14', 'For Refurbish');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('15', 'Refurbishing');
-
+INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('16', 'For Repair');
+INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('17', 'Broken - Fixable');
+INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('18', 'Broken - Not Fixable');
 
 -- ref_ticketstatus
 INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('1', 'Open');
