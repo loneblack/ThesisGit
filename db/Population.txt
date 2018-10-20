@@ -59,59 +59,59 @@ INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('21', 'Urbano J. 
 INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('22', 'Warehouse');
 INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('23', 'William J. Shaw Hall (WH)');
 
--- ref_assetclass
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Access Point');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Accessories');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Adaptor');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Automatic Voltage Regulator (AVR)');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Barcode Reader/Scanner');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Battery');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Cables');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Camera');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Connectors');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Consumables');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Contactless Reader');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('DELSAN Printer');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Desktop');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Earphone / Headset');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Flash Drive');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Hard Disk Drive (External)');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Hard Disk Drive (Internal)');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Keyboard');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('LAN Card');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Laptop');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Media Player');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Memory');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Monitor');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Motherboard');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Mouse');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Nettop');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Network Switch');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Non- IT Equipment');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Optical Drive (External)');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Optical Drive (Internal)');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Pocket Wifi');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Power Supply');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Printer');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Processor');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Projector');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Projector Bulbs');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Projector Screen');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Router');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Scanner (Document)');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Server');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Smart Card Reader');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Software');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Speaker');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Tablet');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Tape Drive');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Thin Client');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Turnstile');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('UPS');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Video Card');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Voice Recorder (Digital)');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Webcam');
-INSERT INTO `thesis`.`ref_assetclass` (`name`) VALUES ('Wireless Presenter');
+-- ref_assetcategory
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Access Point');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Accessories');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Adaptor');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Automatic Voltage Regulator (AVR)');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Barcode Reader/Scanner');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Battery');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Cables');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Camera');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Connectors');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Consumables');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Contactless Reader');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('DELSAN Printer');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Desktop');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Earphone / Headset');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Flash Drive');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Hard Disk Drive (External)');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Hard Disk Drive (Internal)');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Keyboard');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('LAN Card');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Laptop');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Media Player');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Memory');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Monitor');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Motherboard');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Mouse');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Nettop');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Network Switch');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Non- IT Equipment');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Optical Drive (External)');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Optical Drive (Internal)');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Pocket Wifi');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Power Supply');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Printer');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Processor');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Projector');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Projector Bulbs');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Projector Screen');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Router');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Scanner (Document)');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Server');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Smart Card Reader');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Software');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Speaker');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Tablet');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Tape Drive');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Thin Client');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Turnstile');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('UPS');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Video Card');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Voice Recorder (Digital)');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Webcam');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Wireless Presenter');
 
 -- ref_status
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('1', 'Stocked');
@@ -123,9 +123,13 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('6', 'For 
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('7', 'Donated');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('8', 'Disposed');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For Testing');
+
+
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('10', 'Pending');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('11', 'Ongoing');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('12', 'Completed');
+
+
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('13', 'Ticketed');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('14', 'For Refurbish');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('15', 'Refurbishing');
@@ -377,17 +381,17 @@ INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('12', 'Intel');
 INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('13', 'Smart');
 
 
--- assettype
-INSERT INTO `thesis`.`assettype` (`assetTypeID`, `assetClass`, `brand`, `itemSpecification`) VALUES ('1', '20', '1', '4gb Ram 500gb storage');
-INSERT INTO `thesis`.`assettype` (`assetTypeID`, `assetClass`, `brand`, `itemSpecification`) VALUES ('2', '8', '2', '12 mega pixels');
-INSERT INTO `thesis`.`assettype` (`assetTypeID`, `assetClass`, `brand`, `itemSpecification`) VALUES ('3', '18', '3', 'Wireless ');
-INSERT INTO `thesis`.`assettype` (`assetTypeID`, `assetClass`, `brand`, `itemSpecification`) VALUES ('4', '15', '11', '32gb USB 3.0');
-INSERT INTO `thesis`.`assettype` (`assetTypeID`, `assetClass`, `brand`, `itemSpecification`) VALUES ('5', '18', '12', 'Ocatacore');
-INSERT INTO `thesis`.`assettype` (`assetTypeID`, `assetClass`, `brand`, `itemSpecification`) VALUES ('6', '48', '12', 'HD 2000');
-INSERT INTO `thesis`.`assettype` (`assetTypeID`, `assetClass`, `brand`, `itemSpecification`) VALUES ('7', '31', '13', '2.4Ghz');
-INSERT INTO `thesis`.`assettype` (`assetTypeID`, `assetClass`, `brand`, `itemSpecification`) VALUES ('8', '23', '8', '18 inch Retina Display');
-INSERT INTO `thesis`.`assettype` (`assetTypeID`, `assetClass`, `brand`, `itemSpecification`) VALUES ('9', '21', '10', 'Blu-ray');
-INSERT INTO `thesis`.`assettype` (`assetTypeID`, `assetClass`, `brand`, `itemSpecification`) VALUES ('10', '44', '5', '4gb Ram 128gb storage');
+-- assetModel
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('1', '20', '1', '4gb Ram 500gb storage');
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('2', '8', '2', '12 mega pixels');
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('3', '18', '3', 'Wireless ');
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('4', '15', '11', '32gb USB 3.0');
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('5', '18', '12', 'Ocatacore');
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('6', '48', '12', 'HD 2000');
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('7', '31', '13', '2.4Ghz');
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('8', '23', '8', '18 inch Retina Display');
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('9', '21', '10', 'Blu-ray');
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('10', '44', '5', '4gb Ram 128gb storage');
 
 -- Employee
 INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Sir Jojo', 'Asset Manager', '09999999999', 'jojo.soliva@dlsu.edu.ph');
@@ -401,16 +405,16 @@ INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`
 INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Lecturer Phil', 'Assistant Professor', '09876543210', 'filipino.lecturer@dlsu.edu.ph');
 
 -- asset
-INSERT INTO `thesis`.`asset` (`assetTypeID`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('1', 'LaptopPropertyCode', 'SerialNumberLaptop', 'MACADDRESSLAPTOP', '2');
-INSERT INTO `thesis`.`asset` (`assetTypeID`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('2', 'CameraPropertyCode', 'SerialNumberCamera', 'MACCamera', '1');
-INSERT INTO `thesis`.`asset` (`assetTypeID`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('3', 'KeyboardPropertyCode', 'SerialNumberKeyboard', 'MacKeyboard', '1');
-INSERT INTO `thesis`.`asset` (`assetTypeID`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('4', 'FlashdrivePropertyCode', 'SerialNumberFlashdrive', 'MacFlashdrive', '1');
-INSERT INTO `thesis`.`asset` (`assetTypeID`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('5', 'ProcessorPropertyCode', 'SerialNumberProcessor', 'MacProcessor', '1');
-INSERT INTO `thesis`.`asset` (`assetTypeID`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('6', 'VideoCardPropertyCode', 'SerialNumberVideoCard', 'MacVideoCard', '1');
-INSERT INTO `thesis`.`asset` (`assetTypeID`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('7', 'PocketWifiPropertyCode', 'SerialNumberPocketWifi', 'MacPocketWifi', '1');
-INSERT INTO `thesis`.`asset` (`assetTypeID`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('8', 'MonitorPropertyCode', 'SerialNumberMonitor', 'MacMonitor', '1');
-INSERT INTO `thesis`.`asset` (`assetTypeID`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('9', 'MediaPlayerPropertyCode', 'SerialNumberMediaPlayer', 'MacMediaPlayer', '1');
-INSERT INTO `thesis`.`asset` (`assetTypeID`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('10', 'TabletPropertyCode', 'SerialNumberTablet', 'MacTablet', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('1', 'LaptopPropertyCode', 'SerialNumberLaptop', 'MACADDRESSLAPTOP', '2');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('2', 'CameraPropertyCode', 'SerialNumberCamera', 'MACCamera', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('3', 'KeyboardPropertyCode', 'SerialNumberKeyboard', 'MacKeyboard', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('4', 'FlashdrivePropertyCode', 'SerialNumberFlashdrive', 'MacFlashdrive', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('5', 'ProcessorPropertyCode', 'SerialNumberProcessor', 'MacProcessor', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('6', 'VideoCardPropertyCode', 'SerialNumberVideoCard', 'MacVideoCard', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('7', 'PocketWifiPropertyCode', 'SerialNumberPocketWifi', 'MacPocketWifi', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('8', 'MonitorPropertyCode', 'SerialNumberMonitor', 'MacMonitor', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('9', 'MediaPlayerPropertyCode', 'SerialNumberMediaPlayer', 'MacMediaPlayer', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('10', 'TabletPropertyCode', 'SerialNumberTablet', 'MacTablet', '1');
 
 
 -- asset audit for new items
