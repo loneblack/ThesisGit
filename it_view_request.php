@@ -46,23 +46,76 @@
                 <!-- page start-->
 
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="row">
                         <div class="col-sm-12">
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    Request
+                                </header>
+                                <div class="panel-body">
+                                    <section id="unseen">
+                                        <div class="row invoice-to">
+                                            <div class="col-md-4 col-sm-4 pull-left">
+                                                <h4>Status:</h4>
+                                                <h2>Completed</h2>
+                                            </div>
+                                            <div class="col-md-4 col-sm-5 pull-right">
+                                                <div class="row">
+                                                    <div class="col-md-4 col-sm-5 inv-label">Request #</div>
+                                                    <div class="col-md-8 col-sm-7">221</div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-4 col-sm-5 inv-label">Date Needed </div>
+                                                    <div class="col-md-8 col-sm-7">21 December 2018</div>
+                                                </div>
+                                                <br>
+
+
+                                            </div>
+                                        </div>
+                                        <table class="table table-invoice">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Item Description</th>
+                                                    <th class="text-center">Specifications</th>
+                                                    <th class="text-center">Quantity</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>
+                                                        <h4>MAC Laptop</h4>
+                                                    </td>
+                                                    <td class="text-center">4Gb RAM</td>
+                                                    <td class="text-center">4</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>
+                                                        <h4>MAC Laptop</h4>
+                                                    </td>
+                                                    <td class="text-center">4Gb RAM</td>
+                                                    <td class="text-center">4</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>
+                                                        <h4>MAC Laptop</h4>
+                                                    </td>
+                                                    <td class="text-center">4Gb RAM</td>
+                                                    <td class="text-center">4</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div style="align-text:left">	
+											<a href="it_requests.php"><button type="button" class="btn btn-danger glyphicon glyphicon-chevron-left"> Back</button></a>
+                                        </div>
+                                    </section>
+                                </div>
+                            </section>
                         </div>
                     </div>
                 </div>
@@ -86,7 +139,15 @@
 
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
+    <script>
+        $(":input").bind('keyup change click', function(e) {
 
+            if ($(this).val() < 0) {
+                $(this).val('')
+            }
+
+        });
+    </script>
 </body>
 
 </html>

@@ -74,6 +74,60 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+											
+												<?php
+												
+													require_once('mysql_connect.php');
+													$query="SELECT t.ticketID,t.summary,rst.serviceType,t.lastUpdateDate,t.dueDate,rts.status,t.action FROM thesis.ticket t 
+																						join thesis.ref_ticketstatus rts on t.status=rts.ticketID
+																						join thesis.ref_servicetype rst on t.serviceType=rst.id";
+													$result=mysqli_query($dbc,$query);
+												
+													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														echo "<tr class='gradeA' id='{$row['ticketID']}'>
+															<td>{$row['ticketID']}</td>
+															<td>{$row['summary']}</td>
+															<td>{$row['serviceType']}</td>
+															<td>{$row['lastUpdateDate']}</td>
+															<td>{$row['dueDate']}</td>";
+															
+														if($row['action']=='Unanswered'){
+															echo "<td><span class='label label-warning'>Unanswered</span></td>";
+														}
+														elseif($row['action']=='Answered'){
+															echo "<td><span class='label label-danger'>Answered</span></td>";
+														}	
+														else{
+															echo "<td><span class='label label-success'>New Ticket</span></td>";
+														}
+
+														if($row['status']=='Open'){
+															echo "<td><span class='label label-success'>{$row['status']}</span></td>";
+														}
+														elseif($row['status']=='Closed'){
+															echo "<td><span class='label label-danger'>{$row['status']}</span></td>";
+														}
+														elseif($row['status']=='Assigned'){
+															echo "<td><span class='label label-info'>{$row['status']}</span></td>";
+														}
+														
+														elseif($row['status']=='In Progress'||$row['status']=='Waiting for Parts'){
+															echo "<td><span class='label label-warning'>{$row['status']}</span></td>";
+														}
+														elseif($row['status']=='Transferred'){
+															echo "<td><span class='label label-primary'>{$row['status']}</span></td>";
+														}
+														elseif($row['status']=='Escalated'){
+															echo "<td><span class='label label-default'>{$row['status']}</span></td>";
+														}
+														
+													}
+												
+												?>
+											
+												
+											
+											
                                                 <tr class="gradeA">
                                                     <td>1</td>
                                                     <td>Need Help Here</td>
@@ -215,8 +269,11 @@
     <script src="js/dynamic_table_init.js"></script>
 
     <script>
-        $('#ctable').on('dblclick', function() {
-            window.location.replace("helpdesk_view_ticket.php");
+        $('#ctable').on('click', function() {
+			$('.gradeA').on('click', function() {
+				var a = this.getAttribute("id");
+				window.location.replace("helpdesk_view_ticket.php?ticketID=" + a);
+			})
         })
     </script>
 

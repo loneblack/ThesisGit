@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+$_SESSION['previousPage'] = "requestor_service_request_form.php";
+?>
 
 <head>
     <meta charset="utf-8">
@@ -57,6 +61,16 @@
                                         <div class="form" method="post">
                                             <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_request_form_DB.php">
                                                 <div class="form-group ">
+                                                    <?php
+                                                        if (isset($_SESSION['submitMessage'])){
+
+                                                            echo "<div class='alert alert-success'>
+                                                                    {$_SESSION['submitMessage']}
+                                                                  </div>";
+
+                                                            unset($_SESSION['submitMessage']);
+                                                        }
+                                                    ?>
                                                     <label for="serviceType" class="control-label col-lg-3">Type of Service Requested</label>
                                                     <div class="col-lg-6">
                                                         <select name="serviceType" onchange='checkvalue(this.value)' class="form-control m-bot15">

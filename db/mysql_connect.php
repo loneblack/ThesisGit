@@ -7,6 +7,6 @@ $dbc = MYSQLI_CONNECT("localhost", "root", "1234", "thesis");
     }
 
     if($dbc){
-      echo "Connection successful ";
+      //echo "Connection successful ";
     }
 ?>

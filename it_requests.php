@@ -81,6 +81,13 @@
                                                     <td>Marvin Lao</td>
                                                     <td>1/1/2018</td>
                                                 </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-default">In Testing</span></td>
+                                                    <td>Being tested</td>
+                                                    <td>Jane Doe</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </section>
@@ -98,6 +105,29 @@
         <!--main content end-->
 
     </section>
+	
+	<script>
+		function addRowHandlers() {
+			var table = document.getElementById("ctable");
+			var rows = table.getElementsByTagName("tr");
+			for (i = 1; i < rows.length; i++) {
+				var currentRow = table.rows[i];
+				var createClickHandler = function(row) {
+					return function() {
+						var cell = row.getElementsByTagName("td")[1];
+						var id = cell.textContent;
+						
+						if(id == "Incomplete"){
+							window.location.replace("it_view_incomplete_request.php");
+						}
+						else window.location.replace("it_view_request.php");
+					};
+				};
+				currentRow.onclick = createClickHandler(currentRow);
+			}
+		}
+		window.onload = addRowHandlers();
+	</script>
 
     <!-- WAG GALAWIN PLS LANG -->
 
@@ -109,12 +139,7 @@
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
 
-    <script>
-        $('#ctable').on('dblclick', function() {
-            window.location.replace("it_view_request.php");
-        })
-
-    </script>
+    
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
 

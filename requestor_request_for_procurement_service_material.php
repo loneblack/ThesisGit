@@ -99,7 +99,7 @@
                                                 </section>
                                                 <hr>
                                                 <section>
-                                                    <h4>Delivery Information</h4>
+                                                    <h4>User Location Information</h4>
                                                     <div class="form-group ">
                                                         <label for="building" class="control-label col-lg-3">Building</label>
                                                         <div class="col-lg-6">
@@ -131,62 +131,44 @@
                                                         </div>
                                                     </div>
                                                 </section>
-                                                <hr>
-                                                <section>
-                                                    <h4>Funding Source</h4>
-                                                    <div class="form-group ">
-                                                        <label for="accountNum" class="control-label col-lg-3">Account Number</label>
-                                                        <div class="col-lg-6">
-                                                            <input class=" form-control" id="accountNum" name="accountNum" type="number" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group ">
-                                                        <label for="accountName" class="control-label col-lg-3">Account Name</label>
-                                                        <div class="col-lg-6">
-                                                            <input class=" form-control" id="accountName" name="accountName" type="text" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group ">
-                                                        <label for="chargeAY" class="control-label col-lg-3">Charged to</label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" id="chargeAY" name="chargeAY" type="text" placeholder="Design tentative" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group ">
-                                                        <label for="budget" class="control-label col-lg-3">Budget Encumbrance Amount (For Accounting Use Only)</label>
-                                                        <div class="col-lg-6">
-                                                            <input class=" form-control" id="budget" name="budget" type="number" min="0.00" step="0.01" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group ">
-                                                        <label for="certified" class="control-label col-lg-3">Certified By</label>
-                                                        <div class="col-lg-6">
-                                                            <input class=" form-control" id="certified" name="certified" type="text" />
-                                                        </div>
-                                                    </div>
-                                                </section>
+												<hr>
 
                                                 <section>
                                                     <h4>Requested Services/Materials</h4>
-                                                    <table class="table" align="center" id="tblCustomers" cellpadding="0" cellspacing="0" border="1">
+                                                    <table class="table-bordered" align="center" id="tblCustomers" border="1">
                                                         <thead>
                                                             <tr>
+																<th>Quantity</th>
+																<th style="width:47%">Category dropdown</th>
                                                                 <th>Description</th>
-                                                                <th>Quantity</th>
-                                                                <th>Amount</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
+
                                                         <tbody>
-                                                        </tbody>
-                                                        <tfoot>
                                                             <tr>
-                                                                <td><input style="border:0; border-bottom:1px solid gray" type="text" id="txtName" placeholder="Item name" /></td>
-                                                                <td><input style="border:0; border-bottom:1px solid gray" type="number" id="txtCountry" min="1" step="1" placeholder="Quantity" /></td>
-                                                                <td><input style="border:0; border-bottom:1px solid gray" type="number" id="amount" min="0.01" step="0.01" placeholder="Amount" /></td>
-                                                                <td><input type="button" onclick="Add()" value="Add" /></td>
+																<td>
+																	<div class="col-lg-12">
+																		<input class="form-control" type="number" id="txtCountry" min="1" step="1" placeholder="Quantity" />
+																	</div>
+																</td>
+                                                                <td>
+																	<div class="col-lg-12">
+																		<select class="form-control" id="amount">
+																			<option>Select</option>
+																			<option>1</option>
+																			<option>Yes</option>
+																		</select>
+																	</div>
+																</td>
+                                                                <td style="padding-top:5px; padding-bottom:5px">
+																	<div class="col-lg-12">
+																		<input class="form-control" type="text" id="txtName" placeholder="Item description" />
+																	</div>
+																</td>
+																<td style="text-align:center"><input class="btn btn-primary" type="button" onclick="Add()" value="Add" /></td>
                                                             </tr>
-                                                        </tfoot>
+                                                        </tbody>
                                                     </table>
                                                     <br>
                                                 </section>
@@ -254,18 +236,18 @@
 
             //Add Row.
             row = tBody.insertRow(-1);
+			
+			//Add Country cell.
+            var cell = row.insertCell(-1);
+            cell.innerHTML = "<td><input class='form-control' type='number' min='1' value='" + country + "'></input></td>";
+			
+			//Add Country cell.
+            cell = row.insertCell(-1);
+            cell.innerHTML = "<td><input class='form-control' value='" + amount + "'></input></td>";
 
             //Add Name cell.
-            var cell = row.insertCell(-1);
-            cell.innerHTML = name;
-
-            //Add Country cell.
             cell = row.insertCell(-1);
-            cell.innerHTML = country;
-
-            //Add Country cell.
-            cell = row.insertCell(-1);
-            cell.innerHTML = amount;
+            cell.innerHTML = "<td><input class='form-control' value='" + name + "'></input></td>";;
 
             //Add Button cell.
             cell = row.insertCell(-1);
@@ -273,6 +255,7 @@
             btnRemove.type = "button";
             btnRemove.value = "Remove";
             btnRemove.setAttribute("onclick", "Remove(this);");
+			btnRemove.setAttribute("class", "btn btn-primary");
             cell.appendChild(btnRemove);
         }
     </script>

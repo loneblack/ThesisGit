@@ -1,4 +1,46 @@
 <!DOCTYPE html>
+<?php
+
+	$flag=0;
+	$key = "Fusion";
+	require_once('mysql_connect.php');
+	
+	//temporary userID
+	$userID='3';
+	
+	if (isset($_POST['submit'])){
+		$message=NULL;
+		$date=date("Y-m-d H:i:s");
+		$title=$_POST['title'];
+		$category=$_POST['category'];
+		$status=$_POST['status'];
+		$priority=$_POST['priority'];
+		$assigned=$_POST['assigned'];
+		$description=$_POST['description'];
+		
+		if($_POST['dueDate']<$date){
+			$dueDate=FALSE;
+			$message="Invalid due date input.";
+		}
+		else{
+			$dueDate=$_POST['dueDate'];
+		}
+		
+		if(!isset($message)){
+			echo "<script type='text/javascript'>alert('Success');</script>"; // Show modal
+			
+			$query="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `summary`, `description`, `serviceType`, `action`) VALUES ('{$status}', '{$assigned}', '{$userID}', now(), now(), '{$dueDate}', '{$priority}', '{$title}', '{$description}', '{$category}', 'New Ticket')";
+			$result=mysqli_query($dbc,$query);
+			$flag=1;
+		}
+		else{
+			echo "<script type='text/javascript'>alert('".$message."');</script>";
+		}
+	}
+
+
+
+?>
 <html lang="en">
 
 <head>
@@ -59,16 +101,28 @@
                                 </header>
                                 <div class="panel-body">
                                     <div class="position-center">
-                                        <form class="form-horizontal" role="form">
-
+                                        <form class="form-horizontal" role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+											
+											<div class="form-group ">
+                                                <label for="ccomment" class="col-lg-2 col-sm-2 control-label">Title</label>
+                                                <div class="col-lg-10">
+													<input class=" form-control" name="title" type="text" value="<?php if (isset($_POST['title']) && !$flag) echo $_POST['title']; ?>" required />
+                                                </div>
+                                            </div>
+											
                                             <div class="form-group">
                                                 <label for="name" class="col-lg-2 col-sm-2 control-label">Category</label>
                                                 <div class="col-lg-10">
-                                                    <select class="form-control m-bot15">
-                                                        <option>Request</option>
-                                                        <option>Repair</option>
-                                                        <option>Maintenance</option>
-                                                        <option>Replacement</option>
+                                                    <select class="form-control m-bot15" name="category" value="<?php if (isset($_POST['category']) && !$flag) echo $_POST['category'];  ?>" required>
+														<?php
+															$query1="SELECT * FROM thesis.ref_servicetype";
+															$result1=mysqli_query($dbc,$query1);
+														
+															while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
+																echo "<option value='{$row1['id']}'>{$row1['serviceType']}</option>";
+															}
+
+														?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -76,12 +130,15 @@
                                             <div class="form-group">
                                                 <label for="name" class="col-lg-2 col-sm-2 control-label">Status</label>
                                                 <div class="col-lg-10">
-                                                    <select class="form-control m-bot15">
-                                                        <option>New</option>
-                                                        <option>Pending</option>
-                                                        <option>In Progress</option>
-                                                        <option>Solved</option>
-                                                        <option>Closed</option>
+                                                    <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status']) && !$flag) echo $_POST['status'];  ?>" required>
+														<?php
+															$query2="SELECT * FROM thesis.ref_ticketstatus";
+															$result2=mysqli_query($dbc,$query2);
+															
+															while($row2=mysqli_fetch_array($result2,MYSQLI_ASSOC)){
+																echo "<option value='{$row2['ticketID']}'>{$row2['status']}</option>";
+															}
+														?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -89,11 +146,11 @@
                                             <div class="form-group">
                                                 <label for="name" class="col-lg-2 col-sm-2 control-label">Priority</label>
                                                 <div class="col-lg-10">
-                                                    <select class="form-control m-bot15">
-                                                        <option>Low</option>
-                                                        <option>Medium</option>
-                                                        <option>High</option>
-                                                        <option>Urgent</option>
+                                                    <select class="form-control m-bot15" name="priority" value="<?php if (isset($_POST['priority']) && !$flag) echo $_POST['priority'];  ?>" required>
+                                                        <option value='Low'>Low</option>
+                                                        <option value='Medium'>Medium</option>
+                                                        <option value='High'>High</option>
+                                                        <option value='Urgent'>Urgent</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -101,13 +158,17 @@
                                             <div class="form-group">
                                                 <label for="name" class="col-lg-2 col-sm-2 control-label">Assigned</label>
                                                 <div class="col-lg-10">
-                                                    <select class="form-control m-bot15">
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
+                                                    <select class="form-control m-bot15" name="assigned" value="<?php if (isset($_POST['assigned']) && !$flag) echo $_POST['assigned'];  ?>" required>
+														<?php
+															$query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer'";
+															$result3=mysqli_query($dbc,$query3);
+															
+															while($row3=mysqli_fetch_array($result3,MYSQLI_ASSOC)){
+																echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
+															}										
+														
+														?>
+                                                        
                                                     </select>
                                                 </div>
                                             </div>
@@ -115,21 +176,21 @@
                                             <div class="form-group">
                                                 <label for="name" class="col-lg-2 col-sm-2 control-label">Due Date</label>
                                                 <div class="col-lg-10">
-                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="" />
+                                                    <!-- class="form-control form-control-inline input-medium default-date-picker" -->
+                                                    <input class="form-control m-bot15" size="10" name="dueDate" type="datetime-local" value="<?php if (isset($_POST['dueDate']) && !$flag) echo $_POST['dueDate']; ?>" required />
                                                 </div>
                                             </div>
 
                                             <div class="form-group ">
                                                 <label for="ccomment" class="col-lg-2 col-sm-2 control-label">Notes</label>
                                                 <div class="col-lg-10">
-                                                    <textarea class="form-control " id="description" name="description"></textarea>
+                                                    <textarea class="form-control " id="description" name="description" required><?php if (isset($_POST['description']) && !$flag) echo $_POST['description']; ?></textarea>
                                                 </div>
                                             </div>
 
-
                                             <div class="form-group">
                                                 <div class="col-lg-offset-2 col-lg-10">
-                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                    <button type="submit" class="btn btn-success" name="submit">Submit</button>
                                                 </div>
                                             </div>
                                         </form>
