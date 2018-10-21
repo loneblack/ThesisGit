@@ -82,7 +82,7 @@
                                                     <th class="text-center">Brand</th>
 													<th class="text-center">Model</th>
                                                     <th class="text-center">Specification</th>
-													<th class="text-center"></th>
+                                                    <th>Price</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -92,7 +92,8 @@
                                                     <td class="text-center">Acer</td>
                                                     <td class="text-center">Aspire E14</td>
 													<td class="text-center">4 GB RAM, 1 TB Hard Drive, Some Processor, Some graphics card</td>
-													<td class="text-center"><button id="remove" class="btn btn-warning" onclick="removeRow(this)">Remove</button></td>
+                                                    <td>P 1,300.00</td>
+													
                                                 </tr>
                                                 <tr>
                                                     <td class="text-center">3</td>
@@ -100,7 +101,8 @@
                                                     <td class="text-center">Acer</td>
                                                     <td class="text-center">Aspire E14</td>
 													<td class="text-center">4 GB RAM, 1 TB Hard Drive, Some Processor, Some graphics card</td>
-													<td class="text-center"><button id="remove" class="btn btn-warning" onclick="removeRow(this)">Remove</button></td>
+                                                    <td>P 2,500.00</td>
+													
                                                 </tr>
                                                 <tr>
                                                     <td class="text-center">3</td>
@@ -108,7 +110,7 @@
                                                     <td class="text-center">Acer</td>
                                                     <td class="text-center">Aspire E14</td>
 													<td class="text-center">4 GB RAM, 1 TB Hard Drive, Some Processor, Some graphics card</td>
-													<td class="text-center"><button id="remove" class="btn btn-warning" onclick="removeRow(this)">Remove</button></td>
+                                                    <td>P 3,000.00</td>
                                                 </tr>
                                             </tbody>
                                         </table>
