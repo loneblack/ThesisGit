@@ -208,10 +208,12 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   `FloorAndRoomID` INT(11) NULL DEFAULT NULL,
   `BuildingID` INT(11) NULL DEFAULT NULL,
   `dateNeeded` DATE NULL DEFAULT NULL,
+  `statusID` INT(11) NOT NULL,
   PRIMARY KEY (`requestID`),
-  INDEX `fk_Request_Employee1_idx` (`employeeID` ASC),
-  INDEX `fk_Request_FloorAndRoom1_idx` (`FloorAndRoomID` ASC),
-  INDEX `fk_Request_Building1_idx` (`BuildingID` ASC),
+  INDEX `fk_Request_Employee1_idx` (`employeeID` ASC) VISIBLE,
+  INDEX `fk_Request_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) VISIBLE,
+  INDEX `fk_Request_Building1_idx` (`BuildingID` ASC) VISIBLE,
+  INDEX `fk_request_ref_status1_idx` (`statusID` ASC) VISIBLE,
   CONSTRAINT `fk_Request_Building1`
     FOREIGN KEY (`BuildingID`)
     REFERENCES `thesis`.`building` (`BuildingID`),
@@ -220,7 +222,12 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
     REFERENCES `thesis`.`employee` (`employeeID`),
   CONSTRAINT `fk_Request_FloorAndRoom1`
     FOREIGN KEY (`FloorAndRoomID`)
-    REFERENCES `thesis`.`floorandroom` (`FloorAndRoomID`))
+    REFERENCES `thesis`.`floorandroom` (`FloorAndRoomID`),
+  CONSTRAINT `fk_request_ref_status1`
+    FOREIGN KEY (`statusID`)
+    REFERENCES `thesis`.`ref_status` (`statusID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

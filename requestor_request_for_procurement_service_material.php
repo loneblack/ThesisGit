@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php
+require_once("db/mysql_connect.php");
+$_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.php";
+?>
 <head>
     <meta charset="utf-8">
 
@@ -64,10 +67,21 @@
                                                         <div class="col-lg-6">
                                                             <select name="department" class="form-control m-bot15">
                                                                 <option>Select department</option>
-                                                                <option>IT</option>
-                                                                <option>Philosophy</option>
-                                                                <option>Yes</option>
-                                                                <option>test</option>
+                                                                <?php
+
+                                                                    
+                                                                    $sql = "SELECT * FROM thesis.department;";
+
+                                                                    $result = mysqli_query($dbc, $sql);
+
+                                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                    {
+                                                                        
+                                                                        echo "<option value ={$row['DepartmentID']}>";
+                                                                        echo "{$row['name']}</option>";
+
+                                                                    }
+                                                               ?>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -103,19 +117,31 @@
                                                     <div class="form-group ">
                                                         <label for="building" class="control-label col-lg-3">Building</label>
                                                         <div class="col-lg-6">
-                                                            <select name="building" class="form-control m-bot15">
+                                                            <select name="buildingID" id="buildingID" class="form-control m-bot15" onChange="getRooms(this.value)">
                                                                 <option>Select department</option>
-                                                                <option>Angelo King International Center</option>
-                                                                <option>Br. Andrew B. Gonzalez FSC Hall (AGH)</option>
-                                                                <option>Br. Celba John FSC Hall (JH)</option>
-                                                                <option>Br. Gabriel Connon FSC Hall (CH)</option>
+                                                                <?php
+
+                                                                    $sql = "SELECT * FROM thesis.building;";
+
+                                                                    $result = mysqli_query($dbc, $sql);
+
+                                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                    {
+                                                                        
+                                                                        echo "<option value ={$row['BuildingID']}>";
+                                                                        echo "{$row['name']}</option>";
+
+                                                                    }
+                                                                ?>
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group ">
-                                                        <label for="floorRoom" class="control-label col-lg-3">Floor & Room Number</label>
+                                                    <div class="form-group">
+                                                        <label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
                                                         <div class="col-lg-6">
-                                                            <input class=" form-control" id="floorRoom" name="floorRoom" type="number" min="101" />
+                                                            <select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15">
+                                                                <option valu=''>Select floor & room</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="form-group ">
@@ -131,15 +157,15 @@
                                                         </div>
                                                     </div>
                                                 </section>
-												<hr>
+                                                <hr>
 
                                                 <section>
                                                     <h4>Requested Services/Materials</h4>
                                                     <table class="table-bordered" align="center" id="tblCustomers" border="1">
                                                         <thead>
                                                             <tr>
-																<th>Quantity</th>
-																<th style="width:47%">Category dropdown</th>
+                                                                <th>Quantity</th>
+                                                                <th style="width:47%">Category dropdown</th>
                                                                 <th>Description</th>
                                                                 <th></th>
                                                             </tr>
@@ -147,26 +173,38 @@
 
                                                         <tbody>
                                                             <tr>
-																<td>
-																	<div class="col-lg-12">
-																		<input class="form-control" type="number" id="txtCountry" min="1" step="1" placeholder="Quantity" />
-																	</div>
-																</td>
                                                                 <td>
-																	<div class="col-lg-12">
-																		<select class="form-control" id="amount">
-																			<option>Select</option>
-																			<option>1</option>
-																			<option>Yes</option>
-																		</select>
-																	</div>
-																</td>
+                                                                    <div class="col-lg-12">
+                                                                        <input class="form-control" type="number" id="txtCountry" min="1" step="1" placeholder="Quantity" />
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="col-lg-12">
+                                                                        <select class="form-control" id="amount">
+                                                                            <option>Select</option>
+                                                                            <?php
+
+                                                                                $sql = "SELECT * FROM thesis.ref_assetcategory;";
+
+                                                                                $result = mysqli_query($dbc, $sql);
+
+                                                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                                {
+                                                                                    
+                                                                                    echo "<option value ={$row['assetCategoryID']}>";
+                                                                                    echo "{$row['name']}</option>";
+
+                                                                                }
+                                                                           ?>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
                                                                 <td style="padding-top:5px; padding-bottom:5px">
-																	<div class="col-lg-12">
-																		<input class="form-control" type="text" id="txtName" placeholder="Item description" />
-																	</div>
-																</td>
-																<td style="text-align:center"><input class="btn btn-primary" type="button" onclick="Add()" value="Add" /></td>
+                                                                    <div class="col-lg-12">
+                                                                        <input class="form-control" type="text" id="txtName" placeholder="Item description" />
+                                                                    </div>
+                                                                </td>
+                                                                <td style="text-align:center"><input class="btn btn-primary" type="button" onclick="Add()" value="Add" /></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -236,12 +274,12 @@
 
             //Add Row.
             row = tBody.insertRow(-1);
-			
-			//Add Country cell.
+            
+            //Add Country cell.
             var cell = row.insertCell(-1);
             cell.innerHTML = "<td><input class='form-control' type='number' min='1' value='" + country + "'></input></td>";
-			
-			//Add Country cell.
+            
+            //Add Country cell.
             cell = row.insertCell(-1);
             cell.innerHTML = "<td><input class='form-control' value='" + amount + "'></input></td>";
 
@@ -255,8 +293,21 @@
             btnRemove.type = "button";
             btnRemove.value = "Remove";
             btnRemove.setAttribute("onclick", "Remove(this);");
-			btnRemove.setAttribute("class", "btn btn-primary");
+            btnRemove.setAttribute("class", "btn btn-primary");
             cell.appendChild(btnRemove);
+        }
+
+         function getRooms(val){
+            $.ajax({
+            type:"POST",
+            url:"requestor_getRooms.php",
+            data: 'buildingID='+val,
+            success: function(data){
+                $("#FloorAndRoomID").html(data);
+                
+
+                }
+            });
         }
     </script>
 

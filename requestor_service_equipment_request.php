@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php
+  require_once("db/mysql_connect.php");
+?>
 <head>
     <meta charset="utf-8">
 
@@ -63,7 +65,7 @@
                                                             <option>Select</option>
                                                             <?php
 
-                                                            require_once("db/mysql_connect.php");
+                                                          
                                                             $sql = "SELECT * FROM thesis.offices;";
 
                                                             $result = mysqli_query($dbc, $sql);
@@ -111,7 +113,6 @@
                                                             <option>Select building</option>
                                                             <?php
 
-                                                            require_once("db/mysql_connect.php");
                                                             $sql = "SELECT * FROM thesis.building;";
 
                                                             $result = mysqli_query($dbc, $sql);
@@ -264,7 +265,7 @@
         function getRooms(val){
             $.ajax({
             type:"POST",
-            url:"requestor_service_equipment_request_getRooms.php",
+            url:"requestor_getRooms.php",
             data: 'buildingID='+val,
             success: function(data){
                 $("#FloorAndRoomID").html(data);
