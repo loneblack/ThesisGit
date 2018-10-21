@@ -74,39 +74,41 @@
 
                                             </div>
                                         </div>
-                                        <table class="table table-invoice">
+                                        <table class="table table-invoice" id="mytable">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
-                                                    <th>Item Description</th>
-                                                    <th class="text-center">Specifications</th>
-                                                    <th class="text-center">Quantity</th>
+                                                    <th class="text-center" style="width:84px">Quantity</th>
+                                                    <th class="text-center" >Category</th>
+                                                    <th class="text-center">Brand</th>
+													<th class="text-center">Model</th>
+                                                    <th class="text-center">Specification</th>
+													<th class="text-center"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>
-                                                        <h4>MAC Laptop</h4>
-                                                    </td>
-                                                    <td class="text-center">4Gb RAM</td>
-                                                    <td class="text-center">4</td>
+                                                    <td class="text-center">3</td>
+                                                    <td class="text-center">Laptop</td>
+                                                    <td class="text-center">Acer</td>
+                                                    <td class="text-center">Aspire E14</td>
+													<td class="text-center">4 GB RAM, 1 TB Hard Drive, Some Processor, Some graphics card</td>
+													<td class="text-center"><button id="remove" class="btn btn-warning" onclick="removeRow(this)">Remove</button></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>2</td>
-                                                    <td>
-                                                        <h4>MAC Laptop</h4>
-                                                    </td>
-                                                    <td class="text-center">4Gb RAM</td>
-                                                    <td class="text-center">4</td>
+                                                    <td class="text-center">3</td>
+                                                    <td class="text-center">Laptop</td>
+                                                    <td class="text-center">Acer</td>
+                                                    <td class="text-center">Aspire E14</td>
+													<td class="text-center">4 GB RAM, 1 TB Hard Drive, Some Processor, Some graphics card</td>
+													<td class="text-center"><button id="remove" class="btn btn-warning" onclick="removeRow(this)">Remove</button></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>3</td>
-                                                    <td>
-                                                        <h4>MAC Laptop</h4>
-                                                    </td>
-                                                    <td class="text-center">4Gb RAM</td>
-                                                    <td class="text-center">4</td>
+                                                    <td class="text-center">3</td>
+                                                    <td class="text-center">Laptop</td>
+                                                    <td class="text-center">Acer</td>
+                                                    <td class="text-center">Aspire E14</td>
+													<td class="text-center">4 GB RAM, 1 TB Hard Drive, Some Processor, Some graphics card</td>
+													<td class="text-center"><button id="remove" class="btn btn-warning" onclick="removeRow(this)">Remove</button></td>
                                                 </tr>
                                             </tbody>
                                         </table>
