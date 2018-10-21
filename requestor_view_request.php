@@ -53,51 +53,11 @@
                             
                             <section class="panel">
                                 <header class="panel-heading">
-                                    All Requests
+                                    PANGALAN NG REQUEST
                                 </header>
-                                <div class="panel-body">
-                                    <div class="adv-table" id="ctable">
-                                        <table class="display table table-bordered table-striped" id="dynamic-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Type of Request</th>
-                                                    <th>Date Made</th>
-                                                    <th>Date Needed</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="gradeA">
-                                                    <td>1</td>
-                                                    <td>Request for Service</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-warning">Pending</span></td>
-                                                </tr>
-
-                                                <tr class="gradeA">
-                                                    <td>2</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-success">Completed</span></td>
-                                                </tr>
-
-                                                
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Type of Request</th>
-                                                    <th>Date Made</th>
-                                                    <th>Date Needed</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
+                                
+                                DISPLAY NG REQUEST NA NON EDITABLE
+                                
                             </section>
                             
                             

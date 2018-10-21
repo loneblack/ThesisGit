@@ -57,13 +57,13 @@
                                 <div class="panel-body">
                                     <div class="position-center">
                                         <form class="form-horizontal" role="form">
-                                            
+
                                             <div class="form-group">
                                                 <label class="col-lg-2 col-sm-2 control-label">Brand</label>
                                                 <div class="col-lg-10">
                                                     <select class="form-control m-bot15">
                                                         <option>Select Brand</option>
-                                                    <option>Samsung</option>
+                                                        <option>Samsung</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -86,14 +86,15 @@
                                                 <div class="col-lg-10">
                                                     <select class="form-control m-bot15">
                                                         <option>Select Category</option>
-                                                    <option>LCD</option>
-                                                    <option>Laptop</option>
-                                                    <option>Software</option>
-                                                    <option>VGA</option>
-                                                    <option>HDMI</option>
+                                                        <option>LCD</option>
+                                                        <option>Laptop</option>
+                                                        <option>Software</option>
+                                                        <option>VGA</option>
+                                                        <option>HDMI</option>
                                                     </select>
                                                 </div>
                                             </div>
+
 
                                             <div class="form-group">
                                                 <div class="col-lg-offset-2 col-lg-10">
@@ -121,15 +122,44 @@
 
     <!--Core js-->
     <script src="js/jquery.js"></script>
+    <script src="js/jquery-1.8.3.min.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
     <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/easypiechart/jquery.easypiechart.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
+    <script src="js/jquery.nicescroll.js"></script>
+
+    <script src="js/bootstrap-switch.js"></script>
+
+    <script type="text/javascript" src="js/fuelux/js/spinner.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+    <script type="text/javascript" src="js/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
+    <script type="text/javascript" src="js/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-daterangepicker/moment.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+    <script type="text/javascript" src="js/jquery-multi-select/js/jquery.multi-select.js"></script>
+    <script type="text/javascript" src="js/jquery-multi-select/js/jquery.quicksearch.js"></script>
+
+    <script type="text/javascript" src="js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+
+    <script src="js/jquery-tags-input/jquery.tagsinput.js"></script>
+
+    <script src="js/select2/select2.js"></script>
+    <script src="js/select-init.js"></script>
 
 
-    <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
+
+    <script src="js/toggle-init.js"></script>
+
+    <script src="js/advanced-form.js"></script>
 
 </body>
 

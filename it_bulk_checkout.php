@@ -125,22 +125,22 @@
                                                     <textarea class="form-control" rows="5" id="notes" placeholder="Notes"></textarea>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="form-group">
-                                <label class="col-lg-2 col-sm-2 control-label">Select Asset</label>
-                                <div class="col-lg-6">
-                                    <select multiple name="e9" id="e9" style="width:300px" class="populate">
-                                        <optgroup label="Individual Assets">
-                                            <option value="AK">(123456) - Dell VGA Adapter</option>
-                                            <option value="HI">(324234) - Apple HMDI</option>
-                                        </optgroup>
-                                        <optgroup label="Combined Assets">
-                                            <option value="CA">(123324) - ROG Gaming Series</option>
-                                            <option value="NV">(543232) - Nevada</option>
-                                        </optgroup>
-                                    </select>
-                                </div>
-                            </div>
+                                                <label class="col-lg-2 col-sm-2 control-label">Select Asset</label>
+                                                <div class="col-lg-6">
+                                                    <select multiple name="e9" id="e9" style="width:300px" class="populate">
+                                                        <optgroup label="Individual Assets">
+                                                            <option value="AK">(123456) - Dell VGA Adapter</option>
+                                                            <option value="HI">(324234) - Apple HMDI</option>
+                                                        </optgroup>
+                                                        <optgroup label="Combined Assets">
+                                                            <option value="CA">(123324) - ROG Gaming Series</option>
+                                                            <option value="NV">(543232) - Nevada</option>
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+                                            </div>
 
                                             <div class="form-group">
                                                 <div class="col-lg-offset-2 col-lg-10">
@@ -169,44 +169,44 @@
 
     <!--Core js-->
     <script src="js/jquery.js"></script>
-<script src="js/jquery-1.8.3.min.js"></script>
-<script src="bs3/js/bootstrap.min.js"></script>
-<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
-<script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
-<script src="js/jquery.scrollTo.min.js"></script>
-<script src="js/easypiechart/jquery.easypiechart.js"></script>
-<script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-<script src="js/jquery.nicescroll.js"></script>
-<script src="js/jquery.nicescroll.js"></script>
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="bs3/js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/easypiechart/jquery.easypiechart.js"></script>
+    <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
+    <script src="js/jquery.nicescroll.js"></script>
+    <script src="js/jquery.nicescroll.js"></script>
 
-<script src="js/bootstrap-switch.js"></script>
+    <script src="js/bootstrap-switch.js"></script>
 
-<script type="text/javascript" src="js/fuelux/js/spinner.min.js"></script>
-<script type="text/javascript" src="js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
-<script type="text/javascript" src="js/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
-<script type="text/javascript" src="js/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
-<script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-<script type="text/javascript" src="js/bootstrap-daterangepicker/moment.min.js"></script>
-<script type="text/javascript" src="js/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script type="text/javascript" src="js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-<script type="text/javascript" src="js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-<script type="text/javascript" src="js/jquery-multi-select/js/jquery.multi-select.js"></script>
-<script type="text/javascript" src="js/jquery-multi-select/js/jquery.quicksearch.js"></script>
+    <script type="text/javascript" src="js/fuelux/js/spinner.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+    <script type="text/javascript" src="js/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
+    <script type="text/javascript" src="js/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-daterangepicker/moment.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+    <script type="text/javascript" src="js/jquery-multi-select/js/jquery.multi-select.js"></script>
+    <script type="text/javascript" src="js/jquery-multi-select/js/jquery.quicksearch.js"></script>
 
-<script type="text/javascript" src="js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
 
-<script src="js/jquery-tags-input/jquery.tagsinput.js"></script>
+    <script src="js/jquery-tags-input/jquery.tagsinput.js"></script>
 
-<script src="js/select2/select2.js"></script>
-<script src="js/select-init.js"></script>
+    <script src="js/select2/select2.js"></script>
+    <script src="js/select-init.js"></script>
 
 
-<script src="js/scripts.js"></script>
+    <script src="js/scripts.js"></script>
 
-<script src="js/toggle-init.js"></script>
+    <script src="js/toggle-init.js"></script>
 
-<script src="js/advanced-form.js"></script>
+    <script src="js/advanced-form.js"></script>
 
 </body>
 

@@ -24,12 +24,6 @@
                             </ul>
                         </li>
 						
-						<li class="sub-menu">
-                            <a href="requestor_requests.php">
-                                <i class="glyphicon glyphicon-tasks"></i>
-                                <span>View Requests</span>
-                            </a>
-                        </li>
                         
                         <li>
                             <a href="logout.php">
