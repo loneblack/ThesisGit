@@ -67,6 +67,43 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+												<?php
+												
+													require_once('mysql_connect.php');
+													$query="SELECT r.requestID,r.description as `requestDesc`,e.name as `employeeName`,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc` FROM thesis.request r 
+																		join ref_status rs on r.statusID=rs.statusID
+																		join employee e on r.employeeID=e.employeeID";
+													$result=mysqli_query($dbc,$query);
+													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														echo "<tr id='{$row['requestID']}'>
+															<td>{$row['dateNeeded']}</td>";
+															
+															
+															if($row['statusDesc']=='Completed'){
+																echo "<td><span class='label label-success label-mini'>{$row['statusDesc']}</span></td>";
+															}
+															
+															elseif($row['statusDesc']=='Canvas Completed'){
+																echo "<td><span class='label label-info'>{$row['statusDesc']}</span></td>";
+															}
+															elseif($row['statusDesc']=='Incomplete'){
+																echo "<td><span class='label label-danger label-mini'>{$row['statusDesc']}</span></td>";
+															}
+															else{
+																echo "<td><span class='label label-default'>{$row['statusDesc']}</span></td>";
+															}
+															
+															
+														echo "<td>{$row['requestDesc']}</td>
+															<td>{$row['employeeName']}</td>
+															<td>{$row['requestedDate']}</td>
+														</tr>";
+														
+														
+														
+													}
+
+												?>
                                                 <tr>
                                                     <td>12/23/2018</td>
                                                     <td><span class="label label-success label-mini">Completed</span></td>
@@ -126,12 +163,12 @@
 						var id = cell.textContent;
 						
 						if(id == "Incomplete"){
-							window.location.replace("it_view_incomplete_request.php");
+							window.location.replace("it_view_incomplete_request.php?requestID=" + row.getAttribute("id"));
 						}
                         else if(id == "Canvas Completed"){
-                            window.location.replace("it_view_canvas_completed.php")
+                            window.location.replace("it_view_canvas_completed.php?requestID=" + row.getAttribute("id"))
                         }
-						else window.location.replace("it_view_request.php");
+						else window.location.replace("it_view_request.php?requestID=" + row.getAttribute("id"));
 					};
 				};
 				currentRow.onclick = createClickHandler(currentRow);
