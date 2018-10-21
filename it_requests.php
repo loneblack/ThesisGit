@@ -88,6 +88,14 @@
                                                     <td>Jane Doe</td>
                                                     <td>1/1/2018</td>
                                                 </tr>
+                                                <tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-info">Canvas Completed</span></td>
+                                                    <td>Burrow these please</td>
+                                                    <td>John Doe</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+                                                
                                             </tbody>
                                         </table>
                                     </section>
@@ -120,6 +128,9 @@
 						if(id == "Incomplete"){
 							window.location.replace("it_view_incomplete_request.php");
 						}
+                        else if(id == "Canvas Completed"){
+                            window.location.replace("it_view_canvas_completed.php")
+                        }
 						else window.location.replace("it_view_request.php");
 					};
 				};

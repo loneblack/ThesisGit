@@ -90,6 +90,14 @@
                                                         <td>1/1/2018</td>
                                                     </tr>
                                                     
+                                                    <tr id="rowrowboat">
+                                                        <td><a href="procurement_view_request.php">12/23/2018</a></td>
+                                                        <td><span class="label label-warning label-mini">For Canvas</span></td>
+                                                        <td>We Need 500 more laptops PLSSS!!</td>
+                                                        <td>Marvin Lao</td>
+                                                        <td>1/1/2018</td>
+                                                    </tr>
+                                                    
                                                 </tbody>
                                             </table>
                                             </div>
@@ -117,14 +125,34 @@
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
-
     <script>
-        $('#ctable').on('dblclick', function() {
-            window.location.replace("procurement_view_request.php");
-        })
-        
-        
-    </script>
+		function addRowHandlers() {
+			var table = document.getElementById("ctable");
+			var rows = table.getElementsByTagName("tr");
+			for (i = 1; i < rows.length; i++) {
+				var currentRow = table.rows[i];
+				var createClickHandler = function(row) {
+					return function() {
+						var cell = row.getElementsByTagName("td")[1];
+						var id = cell.textContent;
+						
+						if(id == "Ready for PO"){
+							window.location.replace("procurement_purchase_order.php");
+						}
+                        else if(id == "For Canvas"){
+                            window.location.replace("procurement_view_request.php");
+                        }
+						else if(id == "Completed"){
+                            window.location.replace("procurement_view_completed.php");
+                        }
+					};
+				};
+				currentRow.onclick = createClickHandler(currentRow);
+			}
+		}
+		window.onload = addRowHandlers();
+	</script>
+
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
 

@@ -51,12 +51,11 @@
                             <div class="col-sm-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        Purchase Order
+                                        Completed
                                     </header>
                                     <div class="panel-body">
                                         <div class="text-center invoice-btn">
-
-                                            <a href="#" class="btn btn-success btn-lg"><i class="fa fa-check"></i> Send </a>
+                                            <h2>Procurement Completed</h2>
                                         </div>
                                         <section id="unseen">
                                             <div class="row invoice-to">
