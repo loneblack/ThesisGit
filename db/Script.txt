@@ -203,17 +203,21 @@ DROP TABLE IF EXISTS `thesis`.`request` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   `requestID` INT(11) NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(45) NULL DEFAULT NULL,
-  `employeeID` INT(11) NOT NULL,
+  `DepartmentID` INT(11) NOT NULL,
+  `unitHead` VARCHAR(45) NULL,
+  `recipient` VARCHAR(45) NULL,
+  `employeeID` INT(11) NULL,
   `date` DATE NULL DEFAULT NULL,
   `FloorAndRoomID` INT(11) NULL DEFAULT NULL,
   `BuildingID` INT(11) NULL DEFAULT NULL,
   `dateNeeded` DATE NULL DEFAULT NULL,
-  `statusID` INT(11) NOT NULL,
+  `UserID` INT(11) NULL,
   PRIMARY KEY (`requestID`),
-  INDEX `fk_Request_Employee1_idx` (`employeeID` ASC) VISIBLE,
-  INDEX `fk_Request_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) VISIBLE,
-  INDEX `fk_Request_Building1_idx` (`BuildingID` ASC) VISIBLE,
-  INDEX `fk_request_ref_status1_idx` (`statusID` ASC) VISIBLE,
+  INDEX `fk_Request_Employee1_idx` (`employeeID` ASC),
+  INDEX `fk_Request_FloorAndRoom1_idx` (`FloorAndRoomID` ASC),
+  INDEX `fk_Request_Building1_idx` (`BuildingID` ASC),
+  INDEX `fk_request_department1_idx` (`DepartmentID` ASC),
+  INDEX `fk_request_user1_idx` (`UserID` ASC) VISIBLE,
   CONSTRAINT `fk_Request_Building1`
     FOREIGN KEY (`BuildingID`)
     REFERENCES `thesis`.`building` (`BuildingID`),
@@ -223,9 +227,14 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   CONSTRAINT `fk_Request_FloorAndRoom1`
     FOREIGN KEY (`FloorAndRoomID`)
     REFERENCES `thesis`.`floorandroom` (`FloorAndRoomID`),
-  CONSTRAINT `fk_request_ref_status1`
-    FOREIGN KEY (`statusID`)
-    REFERENCES `thesis`.`ref_status` (`statusID`)
+  CONSTRAINT `fk_request_department1`
+    FOREIGN KEY (`DepartmentID`)
+    REFERENCES `thesis`.`department` (`DepartmentID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_request_user1`
+    FOREIGN KEY (`UserID`)
+    REFERENCES `thesis`.`user` (`UserID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -1110,25 +1119,20 @@ DROP TABLE IF EXISTS `thesis`.`requestdetails` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`requestdetails` (
   `requestID` INT(11) NOT NULL,
-  `hwswrequirements` VARCHAR(45) NULL DEFAULT NULL,
-  `estimatedCost` FLOAT NULL DEFAULT NULL,
-  `sourceOfBudget` FLOAT NULL DEFAULT NULL,
+  `quantity` INT(11) NULL DEFAULT NULL,
+  `assetCategory` INT(11) NOT NULL,
   `description` VARCHAR(45) NULL DEFAULT NULL,
-  `quantityRequired` INT(11) NULL DEFAULT NULL,
-  `estimatedAmount` DOUBLE NULL DEFAULT NULL,
-  `unitPrice` DOUBLE NULL DEFAULT NULL,
-  `subtotal` DOUBLE NULL DEFAULT NULL,
-  `prsNo` VARCHAR(45) NULL DEFAULT NULL,
-  `supplierID` INT(11) NOT NULL,
   PRIMARY KEY (`requestID`),
-  INDEX `fk_RequestDetails_Request1_idx` (`requestID` ASC),
-  INDEX `fk_RequestDetails_Supplier1_idx` (`supplierID` ASC),
+  INDEX `fk_RequestDetails_Request1_idx` (`requestID` ASC) VISIBLE,
+  INDEX `fk_requestdetails_ref_assetcategory1_idx` (`assetCategory` ASC),
   CONSTRAINT `fk_RequestDetails_Request1`
     FOREIGN KEY (`requestID`)
     REFERENCES `thesis`.`request` (`requestID`),
-  CONSTRAINT `fk_RequestDetails_Supplier1`
-    FOREIGN KEY (`supplierID`)
-    REFERENCES `thesis`.`supplier` (`supplierID`))
+  CONSTRAINT `fk_requestdetails_ref_assetcategory1`
+    FOREIGN KEY (`assetCategory`)
+    REFERENCES `thesis`.`ref_assetcategory` (`assetCategoryID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
