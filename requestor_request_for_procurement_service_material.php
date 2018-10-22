@@ -161,7 +161,7 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
 
                                                 <section>
                                                     <h4>Requested Services/Materials</h4>
-                                                    <table class="table-bordered" align="center" id="tblCustomers" border="1">
+                                                    <table class="table-bordered" align="center" id="tblRequest" border="1">
                                                         <thead>
                                                             <tr>
                                                                 <th>Quantity</th>
@@ -175,12 +175,12 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                                                             <tr>
                                                                 <td>
                                                                     <div class="col-lg-12">
-                                                                        <input class="form-control" type="number" id="txtCountry" min="1" step="1" placeholder="Quantity" />
+                                                                        <input class="form-control" type="number" id="quantity" min="1" step="1" placeholder="Quantity" />
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="col-lg-12">
-                                                                        <select class="form-control" id="amount">
+                                                                        <select class="form-control" id="category">
                                                                             <option>Select</option>
                                                                             <?php
 
@@ -201,7 +201,7 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                                                                 </td>
                                                                 <td style="padding-top:5px; padding-bottom:5px">
                                                                     <div class="col-lg-12">
-                                                                        <input class="form-control" type="text" id="txtName" placeholder="Item description" />
+                                                                        <input class="form-control" type="text" id="description" placeholder="Item description" />
                                                                     </div>
                                                                 </td>
                                                                 <td style="text-align:center"><input class="btn btn-primary" type="button" onclick="Add()" value="Add" /></td>
@@ -213,7 +213,7 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
 
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-3 col-lg-6">
-                                                        <button class="btn btn-primary" type="submit">Save</button>
+                                                        <button class="btn btn-primary" type="submit" onclick="getData('tblRequest');">Save</button>
                                                         <button class="btn btn-default" type="button">Cancel</button>
                                                     </div>
                                                 </div>
@@ -245,13 +245,16 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
         };
 
         function Add() {
-            var txtName = document.getElementById("txtName");
-            var txtCountry = document.getElementById("txtCountry");
-            var amount = document.getElementById("amount");
-            AddRow(txtName.value, txtCountry.value, amount.value);
-            txtName.value = "";
-            txtCountry.value = "";
-            amount.value = "";
+            var description = document.getElementById("description");
+            var quantity = document.getElementById("quantity");
+            var categoryValue = document.getElementById("category");
+            var categoryText = categoryValue.options[categoryValue.selectedIndex].text;
+            AddRow(description.value, quantity.value, categoryValue.value, categoryText);
+            description.value = "";
+            quantity.value = "";
+            categoryValue.value = "";
+            categoryText = "";
+
         };
 
         function Remove(button) {
@@ -261,31 +264,35 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
             if (confirm("Remove " + name)) {
 
                 //Get the reference of the Table.
-                var table = document.getElementById("tblCustomers");
+                var table = document.getElementById("tblRequest");
 
                 //Delete the Table row using it's Index.
                 table.deleteRow(row.rowIndex);
             }
         };
 
-        function AddRow(name, country, amount) {
+        function AddRow(description, quantity, categoryValue, categoryText) {
             //Get the reference of the Table's TBODY element.
-            var tBody = document.getElementById("tblCustomers").getElementsByTagName("TBODY")[0];
+            var tBody = document.getElementById("tblRequest").getElementsByTagName("TBODY")[0];
 
             //Add Row.
             row = tBody.insertRow(-1);
             
-            //Add Country cell.
-            var cell = row.insertCell(-1);
-            cell.innerHTML = "<td><input class='form-control' type='number' min='1' value='" + country + "'></input></td>";
             
-            //Add Country cell.
+            var cell = row.insertCell(-1);
+            cell.innerHTML = "<td>" + quantity + "</td>";
+            
+           
             cell = row.insertCell(-1);
-            cell.innerHTML = "<td><input class='form-control' value='" + amount + "'></input></td>";
+            cell.innerHTML = "<td>" + categoryText + "</td>";
 
-            //Add Name cell.
             cell = row.insertCell(-1);
-            cell.innerHTML = "<td><input class='form-control' value='" + name + "'></input></td>";;
+            cell.innerHTML = "<td>" + categoryValue + "</td>";
+            cell.setAttribute("style", "display: none")
+
+            
+            cell = row.insertCell(-1);
+            cell.innerHTML = "<td>" + description + "</td>";
 
             //Add Button cell.
             cell = row.insertCell(-1);
@@ -309,6 +316,22 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                 }
             });
         }
+
+        function getData(tableID) {
+             var table = $("table tbody");
+
+    table.find('tr').each(function (i) {
+        var $tds = $(this).find('td'),
+            productId = $tds.eq(0).text(),
+            product = $tds.eq(1).text(),
+            Quantity = $tds.eq(2).text();
+        // do something with productId, product, Quantity
+            alert('Row ' + (i + 1) + ':\nId: ' + productId
+                  + '\nProduct: ' + product
+                  + '\nQuantity: ' + Quantity);
+        });
+
+         }
     </script>
 
     <!-- WAG GALAWIN PLS LANG -->
