@@ -113,29 +113,30 @@ INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Voice Recorder (Digit
 INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Webcam');
 INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Wireless Presenter');
 
+-- ref_assetstatus
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('1', 'Stocked');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('2', 'Deployed');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('3', 'Moving');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('4', 'Broken - Not Fixable');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('5', 'Broken - Fixable');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('6', 'Donated');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('7', 'Disposed');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('8', 'For Testing');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('9', 'For Repair');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('10', 'For Refurbish');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('11', 'For Disposal');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('12', 'in Testing');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('13', 'In Repair');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('14', 'Ticketed');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('15', 'Refurbishing');
+
 -- ref_status
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('1', 'Stocked');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('2', 'Deployed');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('3', 'Moving');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('4', 'in Testing');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('5', 'In Repair');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('6', 'For Disposal');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('7', 'Donated');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('8', 'Disposed');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For Testing');
+INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('1', 'Pending');
+INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('2', 'Ongoing');
+INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('3', 'Completed');
 
 
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('10', 'Pending');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('11', 'Ongoing');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('12', 'Completed');
 
-
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('13', 'Ticketed');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('14', 'For Refurbish');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('15', 'Refurbishing');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('16', 'For Repair');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('17', 'Broken - Fixable');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('18', 'Broken - Not Fixable');
 
 -- ref_ticketstatus
 INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('1', 'Open');
@@ -407,36 +408,36 @@ INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`
 INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Lecturer Phil', 'Assistant Professor', '09876543210', 'filipino.lecturer@dlsu.edu.ph');
 
 -- asset
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('1', 'LaptopPropertyCode', 'SerialNumberLaptop', 'MACADDRESSLAPTOP', '2');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('2', 'CameraPropertyCode', 'SerialNumberCamera', 'MACCamera', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('3', 'KeyboardPropertyCode', 'SerialNumberKeyboard', 'MacKeyboard', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('4', 'FlashdrivePropertyCode', 'SerialNumberFlashdrive', 'MacFlashdrive', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('5', 'ProcessorPropertyCode', 'SerialNumberProcessor', 'MacProcessor', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('6', 'VideoCardPropertyCode', 'SerialNumberVideoCard', 'MacVideoCard', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('7', 'PocketWifiPropertyCode', 'SerialNumberPocketWifi', 'MacPocketWifi', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('8', 'MonitorPropertyCode', 'SerialNumberMonitor', 'MacMonitor', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('9', 'MediaPlayerPropertyCode', 'SerialNumberMediaPlayer', 'MacMediaPlayer', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `status`) VALUES ('10', 'TabletPropertyCode', 'SerialNumberTablet', 'MacTablet', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('1', 'LaptopPropertyCode', 'SerialNumberLaptop', 'MACADDRESSLAPTOP', '2');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('2', 'CameraPropertyCode', 'SerialNumberCamera', 'MACCamera', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('3', 'KeyboardPropertyCode', 'SerialNumberKeyboard', 'MacKeyboard', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('4', 'FlashdrivePropertyCode', 'SerialNumberFlashdrive', 'MacFlashdrive', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('5', 'ProcessorPropertyCode', 'SerialNumberProcessor', 'MacProcessor', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('6', 'VideoCardPropertyCode', 'SerialNumberVideoCard', 'MacVideoCard', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('7', 'PocketWifiPropertyCode', 'SerialNumberPocketWifi', 'MacPocketWifi', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('8', 'MonitorPropertyCode', 'SerialNumberMonitor', 'MacMonitor', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('9', 'MediaPlayerPropertyCode', 'SerialNumberMediaPlayer', 'MacMediaPlayer', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('10', 'TabletPropertyCode', 'SerialNumberTablet', 'MacTablet', '1');
 
 
 -- asset audit for new items
-INSERT INTO `thesis`.`assetaudit` (`status`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');
-INSERT INTO `thesis`.`assetaudit` (`status`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '2');
-INSERT INTO `thesis`.`assetaudit` (`status`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '3');
-INSERT INTO `thesis`.`assetaudit` (`status`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '4');
-INSERT INTO `thesis`.`assetaudit` (`status`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '5');
-INSERT INTO `thesis`.`assetaudit` (`status`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '6');
-INSERT INTO `thesis`.`assetaudit` (`status`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '7');
-INSERT INTO `thesis`.`assetaudit` (`status`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '8');
-INSERT INTO `thesis`.`assetaudit` (`status`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '9');
-INSERT INTO `thesis`.`assetaudit` (`status`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '10');
+INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');
+INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '2');
+INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '3');
+INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '4');
+INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '5');
+INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '6');
+INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '7');
+INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '8');
+INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '9');
+INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '10');
 
 
 -- Asset Assignment
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('1', '2018-07-24', '2018-07-25', '1', '11');
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('1', '2018-07-24', '2018-07-25', '1', '2');
 
 -- asseet audit for asset assignment
-INSERT INTO `thesis`.`assetaudit` (`status`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '1', '1');
+INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '1', '1');
 
 
 

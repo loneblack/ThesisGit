@@ -105,7 +105,7 @@ DROP TABLE IF EXISTS `thesis`.`ref_status` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`ref_status` (
   `statusID` INT(11) NOT NULL,
-  `description` VARCHAR(45) NULL DEFAULT NULL,
+  `description` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`statusID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -204,20 +204,22 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   `requestID` INT(11) NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(45) NULL DEFAULT NULL,
   `DepartmentID` INT(11) NOT NULL,
-  `unitHead` VARCHAR(45) NULL,
-  `recipient` VARCHAR(45) NULL,
-  `employeeID` INT(11) NULL,
+  `unitHead` VARCHAR(45) NULL DEFAULT NULL,
+  `recipient` VARCHAR(45) NULL DEFAULT NULL,
+  `employeeID` INT(11) NULL DEFAULT NULL,
   `date` DATE NULL DEFAULT NULL,
   `FloorAndRoomID` INT(11) NULL DEFAULT NULL,
   `BuildingID` INT(11) NULL DEFAULT NULL,
   `dateNeeded` DATE NULL DEFAULT NULL,
-  `UserID` INT(11) NULL,
+  `UserID` INT(11) NULL DEFAULT NULL,
+  `status` INT(11) NOT NULL,
   PRIMARY KEY (`requestID`),
   INDEX `fk_Request_Employee1_idx` (`employeeID` ASC),
   INDEX `fk_Request_FloorAndRoom1_idx` (`FloorAndRoomID` ASC),
   INDEX `fk_Request_Building1_idx` (`BuildingID` ASC),
   INDEX `fk_request_department1_idx` (`DepartmentID` ASC),
-  INDEX `fk_request_user1_idx` (`UserID` ASC) VISIBLE,
+  INDEX `fk_request_user1_idx` (`UserID` ASC),
+  INDEX `fk_request_ref_status1_idx` (`status` ASC),
   CONSTRAINT `fk_Request_Building1`
     FOREIGN KEY (`BuildingID`)
     REFERENCES `thesis`.`building` (`BuildingID`),
@@ -229,12 +231,13 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
     REFERENCES `thesis`.`floorandroom` (`FloorAndRoomID`),
   CONSTRAINT `fk_request_department1`
     FOREIGN KEY (`DepartmentID`)
-    REFERENCES `thesis`.`department` (`DepartmentID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `thesis`.`department` (`DepartmentID`),
   CONSTRAINT `fk_request_user1`
     FOREIGN KEY (`UserID`)
-    REFERENCES `thesis`.`user` (`UserID`)
+    REFERENCES `thesis`.`user` (`UserID`),
+  CONSTRAINT `fk_request_ref_status1`
+    FOREIGN KEY (`status`)
+    REFERENCES `thesis`.`ref_status` (`statusID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -262,6 +265,57 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `thesis`.`ref_brand`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`ref_brand` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`ref_brand` (
+  `brandID` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`brandID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`ref_assetcategory`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`ref_assetcategory` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`ref_assetcategory` (
+  `assetCategoryID` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`assetCategoryID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`assetmodel`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`assetmodel` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`assetmodel` (
+  `assetModelID` INT(11) NOT NULL AUTO_INCREMENT,
+  `brand` INT(11) NULL DEFAULT NULL,
+  `assetCategory` INT(11) NULL DEFAULT NULL,
+  `itemSpecification` LONGTEXT NULL DEFAULT NULL,
+  `softwareName` VARCHAR(45) NULL DEFAULT NULL,
+  `description` LONGTEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`assetModelID`),
+  INDEX `fk_AssetType_ref_brand_idx` (`brand` ASC),
+  INDEX `fk_assettype_ref_assetCategory1_idx` (`assetCategory` ASC),
+  CONSTRAINT `fk_AssetType_ref_brand`
+    FOREIGN KEY (`brand`)
+    REFERENCES `thesis`.`ref_brand` (`brandID`),
+  CONSTRAINT `fk_assettype_ref_assetCategory1`
+    FOREIGN KEY (`assetCategory`)
+    REFERENCES `thesis`.`ref_assetcategory` (`assetCategoryID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `thesis`.`supplier`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `thesis`.`supplier` ;
@@ -279,56 +333,15 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `thesis`.`ref_brand`
+-- Table `thesis`.`ref_assetstatus`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `thesis`.`ref_brand` ;
+DROP TABLE IF EXISTS `thesis`.`ref_assetstatus` ;
 
-CREATE TABLE IF NOT EXISTS `thesis`.`ref_brand` (
-  `brandID` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`brandID`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `thesis`.`ref_assetCategory`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `thesis`.`ref_assetCategory` ;
-
-CREATE TABLE IF NOT EXISTS `thesis`.`ref_assetCategory` (
-  `assetCategoryID` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`assetCategoryID`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `thesis`.`assetModel`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `thesis`.`assetModel` ;
-
-CREATE TABLE IF NOT EXISTS `thesis`.`assetModel` (
-  `assetModelID` INT(11) NOT NULL AUTO_INCREMENT,
-  `brand` INT(11) NULL DEFAULT NULL,
-  `assetCategory` INT(11) NULL,
-  `itemSpecification` LONGTEXT NULL DEFAULT NULL,
-  `softwareName` VARCHAR(45) NULL DEFAULT NULL,
-  `description` LONGTEXT NULL DEFAULT NULL,
-  PRIMARY KEY (`assetModelID`),
-  INDEX `fk_AssetType_ref_brand_idx` (`brand` ASC),
-  INDEX `fk_assettype_ref_assetCategory1_idx` (`assetCategory` ASC),
-  CONSTRAINT `fk_AssetType_ref_brand`
-    FOREIGN KEY (`brand`)
-    REFERENCES `thesis`.`ref_brand` (`brandID`),
-  CONSTRAINT `fk_assettype_ref_assetCategory1`
-    FOREIGN KEY (`assetCategory`)
-    REFERENCES `thesis`.`ref_assetCategory` (`assetCategoryID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+CREATE TABLE IF NOT EXISTS `thesis`.`ref_assetstatus` (
+  `id` INT NOT NULL,
+  `description` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -339,8 +352,7 @@ DROP TABLE IF EXISTS `thesis`.`asset` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`asset` (
   `assetID` INT(11) NOT NULL AUTO_INCREMENT,
   `supplierID` INT(11) NULL DEFAULT NULL,
-  `status` INT(11) NULL DEFAULT NULL,
-  `assetModel` INT(11) NULL,
+  `assetModel` INT(11) NULL DEFAULT NULL,
   `propertyCode` VARCHAR(45) NULL DEFAULT NULL,
   `serialNo` VARCHAR(45) NULL DEFAULT NULL,
   `macAddress` VARCHAR(45) NULL DEFAULT NULL,
@@ -352,19 +364,20 @@ CREATE TABLE IF NOT EXISTS `thesis`.`asset` (
   `contractEndDate` DATE NULL DEFAULT NULL,
   `swStartDate` DATE NULL DEFAULT NULL,
   `swEndDate` DATE NULL DEFAULT NULL,
+  `assetStatus` INT NOT NULL,
   PRIMARY KEY (`assetID`),
-  INDEX `fk_Asset_ref_status1_idx` (`status` ASC),
   INDEX `fk_asset_supplier1_idx` (`supplierID` ASC),
   INDEX `fk_asset_assetModel1_idx` (`assetModel` ASC),
-  CONSTRAINT `fk_Asset_ref_status1`
-    FOREIGN KEY (`status`)
-    REFERENCES `thesis`.`ref_status` (`statusID`),
+  INDEX `fk_asset_ref_assetstatus1_idx` (`assetStatus` ASC),
+  CONSTRAINT `fk_asset_assetModel1`
+    FOREIGN KEY (`assetModel`)
+    REFERENCES `thesis`.`assetmodel` (`assetModelID`),
   CONSTRAINT `fk_asset_supplier1`
     FOREIGN KEY (`supplierID`)
     REFERENCES `thesis`.`supplier` (`supplierID`),
-  CONSTRAINT `fk_asset_assetModel1`
-    FOREIGN KEY (`assetModel`)
-    REFERENCES `thesis`.`assetModel` (`assetModelID`)
+  CONSTRAINT `fk_asset_ref_assetstatus1`
+    FOREIGN KEY (`assetStatus`)
+    REFERENCES `thesis`.`ref_assetstatus` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -378,14 +391,16 @@ DROP TABLE IF EXISTS `thesis`.`computer` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`computer` (
   `computerID` INT(11) NOT NULL AUTO_INCREMENT,
-  `statusID` INT(11) NOT NULL,
   `dateDelivered` DATE NULL DEFAULT NULL,
   `unitCost` DECIMAL(10,0) NULL DEFAULT NULL,
+  `assetStatus` INT NULL,
   PRIMARY KEY (`computerID`),
-  INDEX `fk_computer_ref_status1_idx` (`statusID` ASC),
-  CONSTRAINT `fk_computer_ref_status1`
-    FOREIGN KEY (`statusID`)
-    REFERENCES `thesis`.`ref_status` (`statusID`))
+  INDEX `fk_computer_ref_assetstatus1_idx` (`assetStatus` ASC),
+  CONSTRAINT `fk_computer_ref_assetstatus1`
+    FOREIGN KEY (`assetStatus`)
+    REFERENCES `thesis`.`ref_assetstatus` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -687,7 +702,6 @@ DROP TABLE IF EXISTS `thesis`.`assetaudit` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`assetaudit` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `status` INT(11) NOT NULL,
   `UserID` INT(11) NOT NULL,
   `date` DATETIME NULL DEFAULT NULL,
   `assetID` INT(11) NULL DEFAULT NULL,
@@ -695,17 +709,15 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assetaudit` (
   `computerID` INT(11) NULL DEFAULT NULL,
   `computerAssignmentID` INT(11) NULL DEFAULT NULL,
   `ticketID` INT(11) NULL DEFAULT NULL,
+  `assetStatus` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_AssetAudit_ref_status1_idx` (`status` ASC),
   INDEX `fk_assetaudit_assetassignment1_idx` (`assetAssignmentID` ASC),
   INDEX `fk_assetaudit_computer1_idx` (`computerID` ASC),
   INDEX `fk_assetaudit_asset1_idx` (`assetID` ASC),
   INDEX `fk_assetaudit_computerassignment1_idx` (`computerAssignmentID` ASC),
   INDEX `fk_assetaudit_user1_idx` (`UserID` ASC),
   INDEX `fk_assetaudit_ticket1_idx` (`ticketID` ASC),
-  CONSTRAINT `fk_AssetAudit_ref_status1`
-    FOREIGN KEY (`status`)
-    REFERENCES `thesis`.`ref_status` (`statusID`),
+  INDEX `fk_assetaudit_ref_assetstatus1_idx` (`assetStatus` ASC),
   CONSTRAINT `fk_assetaudit_asset1`
     FOREIGN KEY (`assetID`)
     REFERENCES `thesis`.`asset` (`assetID`),
@@ -723,7 +735,12 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assetaudit` (
     REFERENCES `thesis`.`ticket` (`ticketID`),
   CONSTRAINT `fk_assetaudit_user1`
     FOREIGN KEY (`UserID`)
-    REFERENCES `thesis`.`user` (`UserID`))
+    REFERENCES `thesis`.`user` (`UserID`),
+  CONSTRAINT `fk_assetaudit_ref_assetstatus1`
+    FOREIGN KEY (`assetStatus`)
+    REFERENCES `thesis`.`ref_assetstatus` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -1123,16 +1140,14 @@ CREATE TABLE IF NOT EXISTS `thesis`.`requestdetails` (
   `assetCategory` INT(11) NOT NULL,
   `description` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`requestID`),
-  INDEX `fk_RequestDetails_Request1_idx` (`requestID` ASC) VISIBLE,
+  INDEX `fk_RequestDetails_Request1_idx` (`requestID` ASC),
   INDEX `fk_requestdetails_ref_assetcategory1_idx` (`assetCategory` ASC),
   CONSTRAINT `fk_RequestDetails_Request1`
     FOREIGN KEY (`requestID`)
     REFERENCES `thesis`.`request` (`requestID`),
   CONSTRAINT `fk_requestdetails_ref_assetcategory1`
     FOREIGN KEY (`assetCategory`)
-    REFERENCES `thesis`.`ref_assetcategory` (`assetCategoryID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `thesis`.`ref_assetcategory` (`assetCategoryID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
