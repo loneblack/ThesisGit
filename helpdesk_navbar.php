@@ -18,6 +18,13 @@
                             </a>
                         </li>
                         
+                        <li class="sub-menu">
+                            <a href="helpdesk_all_request.php">
+                                <i class="fa fa-question"></i>
+                                <span>Requests</span>
+                            </a>
+                        </li>
+                        
                         
                         <li class="sub-menu">
                             <a href="helpdesk_category.php">
