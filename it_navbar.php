@@ -24,6 +24,13 @@
                             </a>
                         </li>
                         
+                        <li>
+                            <a href="it_testing_list.php">
+                                <i class="fa fa-tasks"></i>
+                                <span>Testing</span>
+                            </a>
+                        </li>
+                        
                         
                         <li class="sub-menu">
                             <a href="javascript:;">
