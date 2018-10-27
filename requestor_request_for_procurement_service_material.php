@@ -65,8 +65,8 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                                                     <div class="form-group ">
                                                         <label for="department" class="control-label col-lg-3">Department</label>
                                                         <div class="col-lg-6">
-                                                            <select name="department" class="form-control m-bot15">
-                                                                <option>Select department</option>
+                                                            <select name="department" id="department"class="form-control m-bot15" required>
+                                                                <option value=''>Select department</option>
                                                                 <?php
 
                                                                     
@@ -88,7 +88,7 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                                                     <div class="form-group ">
                                                         <label for="unitHead" class="control-label col-lg-3">Unit Head/Fund Owner</label>
                                                         <div class="col-lg-6">
-                                                            <input class="form-control" rows="5" name="details" style="resize:none" type="text">
+                                                            <input class="form-control" rows="5" id="unitHead" style="resize:none" type="text">
                                                         </div>
                                                     </div>
                                                     <div class="form-group ">
@@ -117,8 +117,8 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                                                     <div class="form-group ">
                                                         <label for="building" class="control-label col-lg-3">Building</label>
                                                         <div class="col-lg-6">
-                                                            <select name="buildingID" id="buildingID" class="form-control m-bot15" onChange="getRooms(this.value)">
-                                                                <option>Select department</option>
+                                                            <select name="buildingID" id="buildingID" class="form-control m-bot15" onChange="getRooms(this.value)" required>
+                                                                <option value="">Select building</option>
                                                                 <?php
 
                                                                     $sql = "SELECT * FROM thesis.building;";
@@ -139,8 +139,8 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                                                     <div class="form-group">
                                                         <label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
                                                         <div class="col-lg-6">
-                                                            <select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15">
-                                                                <option valu=''>Select floor & room</option>
+                                                            <select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15" required>
+                                                                <option value=''>Select floor & room</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -157,6 +157,20 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                                                         </div>
                                                     </div>
                                                 </section>
+                                                <hr>
+
+                                                <section>
+                                                    <h4>Request Details</h4>
+                                                    <div class="form-group ">
+                                                        <label for="building" class="control-label col-lg-3">Reason of Request</label>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                              <textarea class="form-control" rows="5" id="comment"  style="resize: none" required></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+
                                                 <hr>
 
                                                 <section>
@@ -234,15 +248,6 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
 
     <!--Function for table-->
     <script type="text/javascript">
-        window.onload = function() {
-            //Build an array containing Customer records.
-            var customers = new Array();
-
-            //Add the data rows.
-            for (var i = 0; i < customers.length; i++) {
-                AddRow(customers[i][0], customers[i][1], customers[i][2]);
-            }
-        };
 
         function Add() {
             var description = document.getElementById("description");
@@ -318,19 +323,45 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
         }
 
         function getData(tableID) {
+
+            var department = document.getElementById('department').value
+            var unitHead = document.getElementById('unitHead').value
+            var contactPerson = document.getElementById('contactPerson').value
+            var email = document.getElementById('email').value
+            var number = document.getElementById('number').value
+            var buildingID = document.getElementById('buildingID').value
+            var FloorAndRoomID = document.getElementById('FloorAndRoomID').value
+            var dateNeeded = document.getElementById('dateNeeded').value
+            var recipient = document.getElementById('recipient').value
+            var comment = document.getElementById('comment').value
+
+            var quantityArray = []; 
+            var categoryArray = []; 
+            var descriptionArray = []; 
              var table = $("table tbody");
 
     table.find('tr').each(function (i) {
         var $tds = $(this).find('td'),
-            productId = $tds.eq(0).text(),
-            product = $tds.eq(1).text(),
-            Quantity = $tds.eq(2).text();
-        // do something with productId, product, Quantity
-            alert('Row ' + (i + 1) + ':\nId: ' + productId
-                  + '\nProduct: ' + product
-                  + '\nQuantity: ' + Quantity);
+            quantity = $tds.eq(0).text(),
+            category = $tds.eq(2).text(),
+            description = $tds.eq(3).text();
+
+            quantityArray.push(quantity);
+            categoryArray.push(category);
+            descriptionArray.push(description);
         });
 
+         $.ajax({
+            type:"POST",
+            url:"requestor_request_for_procurement_service_material_DB.php",
+            data: {quantityArray: quantityArray, categoryArray: categoryArray, descriptionArray: descriptionArray, department: department, unitHead: unitHead, contactPerson: contactPerson, email: email, number: number, buildingID: buildingID, FloorAndRoomID: FloorAndRoomID, dateNeeded: dateNeeded, recipient: recipient, comment: comment},
+            success: function(data){
+                alert(data);
+                window.location="requestor_request_for_procurement_service_material.php";
+            
+
+                }
+            });
          }
     </script>
 
