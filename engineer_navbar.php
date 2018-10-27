@@ -11,28 +11,10 @@
                         </li>
                         
                         <li>
-                            <a href="">
+                            <a href="engineer_all_ticket.php">
                                 <i class="fa fa-envelope-o"></i>
                                 <span>Tickets</span>
                             </a>
-                        </li>
-                        
-                        <li>
-                            <a href="it_inventory.php">
-                                <i class="fa fa-dropbox"></i>
-                                <span>Inventory</span>
-                            </a>
-                        </li>
-                        
-                        <li class="sub-menu">
-                            <a href="javascript:;">
-                                <i class="fa fa-group"></i>
-                                <span>Supplier</span>
-                            </a>
-                            <ul class="sub">
-                                <li><a href="it_all_supplier.php">All Suppliers</a></li>
-                                <li><a href="it_add_supplier.php">Add Supplier</a></li>
-                            </ul>
                         </li>
                         
                         <li>
