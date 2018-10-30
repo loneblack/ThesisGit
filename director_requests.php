@@ -72,7 +72,7 @@
 													
 													<?php
 														$key = "Fusion";
-														require_once('mysql_connect.php');
+														require_once('db/mysql_connect.php');
 														$query="SELECT r.requestID as `requestID`,r.description as `reqDesc`,rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(lastName,'{$key}')USING utf8)) as `requestor`, r.dateNeeded as `dateNeeded` FROM thesis.request r 
 																		join thesis.ref_status rs on r.status=rs.statusID
 																		join thesis.user u on r.UserID=u.UserID";
