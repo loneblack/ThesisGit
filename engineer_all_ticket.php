@@ -123,6 +123,16 @@
                                                     <td><span class="label label-warning">Un-answered</span></td>
                                                     <td><span class="label label-success">Opened</span></td>
                                                 </tr>
+                                                
+                                                <tr class="gradeA">
+                                                    <td>5</td>
+                                                    <td>Need Help Here</td>
+                                                    <td>Repair</td>
+                                                    <td>10/9/18</td>
+                                                    <td>10/9/18</td>
+                                                    <td><span class="label label-warning">Un-answered</span></td>
+                                                    <td><span class="label label-success">Opened</span></td>
+                                                </tr>
 
                                                 <tr class="gradeA">
                                                     <td>6</td>
@@ -233,6 +243,16 @@
 							
 							if(id == "Closed"){
 								window.location.replace("engineer_view_ticket_assettesting_closed.php");
+							}
+						}
+                        
+                        if(idx == "Repair"){
+                            if(id == "Opened"){
+								window.location.replace("engineer_view_ticket_repair_opened.php");
+							}
+							
+							if(id == "Closed"){
+								window.location.replace("engineer_view_ticket_repair_closed.php");
 							}
 						}
 						
