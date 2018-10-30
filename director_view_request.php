@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <?php
-
-	require_once('mysql_connect.php');
+	session_start();
+	require_once('db/mysql_connect.php');
 	$_SESSION['requestid']=$_GET['requestid'];
-	$query="SELECT * FROM thesis.request r join thesis.employee e on r.employeeID=e.employeeID where r.requestID='{$_SESSION['requestid']}'";
+	$query="SELECT rs.description as `statusDesc` FROM thesis.request r join thesis.ref_status rs on r.status=rs.statusID
+										   join thesis.user u on r.UserID=u.UserID
+										   where r.requestID='{$_SESSION['requestid']}'";
 	$result=mysqli_query($dbc,$query);
 	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 	
-	if(isset($_POST['approve'])){
-		$query="UPDATE `thesis`.`request` SET `status`='Approved' WHERE `requestID`='{$_SESSION['requestid']}'";
-		$result=mysqli_query($dbc,$query);
-		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
-	}
-	elseif(isset($_POST['disapprove'])){
-		$query="UPDATE `thesis`.`request` SET `status`='Disapproved' WHERE `requestID`='{$_SESSION['requestid']}'";
-		$result=mysqli_query($dbc,$query);
-		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
-	}
+	//if(isset($_POST['approve'])){
+		//$query="UPDATE `thesis`.`request` SET `status`='Approved' WHERE `requestID`='{$_SESSION['requestid']}'";
+		//$result=mysqli_query($dbc,$query);
+		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
+	//}
+	//elseif(isset($_POST['disapprove'])){
+		//$query="UPDATE `thesis`.`request` SET `status`='Disapproved' WHERE `requestID`='{$_SESSION['requestid']}'";
+		//$result=mysqli_query($dbc,$query);
+		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
+	//}
 	
 ?>
 <html lang="en">
@@ -69,14 +71,14 @@
                     <div class="col-sm-12">
                         <div class="col-sm-12">
                             <h2>Status: <?php 
-											if($row['status']=='Disapproved'){
-												echo "<span class='label label-important'>{$row['status']}</span>";
+											if($row['statusDesc']=='Pending'){
+												echo "<span class='label label-warning'>{$row['statusDesc']}</span>";
 											}
-											elseif($row['status']=='Approved'){
-												echo "<span class='label label-success'>{$row['status']}</span>";
+											elseif($row['statusDesc']=='Completed'){
+												echo "<span class='label label-success'>{$row['statusDesc']}</span>";
 											}
 											else{
-												echo "<span class='label label-warning'>{$row['status']}</span>";
+												echo "<span class='label label-danger'>{$row['statusDesc']}</span>";
 											} ?></h2>
                             <center><img src="img/logo.png" width="150" height="150"> </center>
                             <center><b>
@@ -95,23 +97,25 @@
                                     <tr>
                                         <th>Quantity</th>
                                         <th>Hardware/ Software Requirements</th>
-                                        <th>Estimated Cost</th>
+										<th>Description</th>
+                                        <!-- <th>Estimated Cost</th> -->
                                         <!-- <th>Source of Budget</th> -->
-                                        <th>Recommended Supplier</th>
+                                        <!-- <th>Recommended Supplier</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
 									<?php
 									
-										require_once('mysql_connect.php');
-										$query="SELECT * FROM thesis.requestdetails rd join supplier s on rd.supplierID=s.supplierID where rd.requestID='{$_SESSION['requestid']}'";
-										$result=mysqli_query($dbc,$query);
-										while($row1=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+										require_once('db/mysql_connect.php');
+										$query1="SELECT rd.requestID,rd.quantity,rd.description as `reqDetDesc`,rac.name as `categoryName` FROM thesis.requestdetails rd
+															join thesis.ref_assetcategory rac on rd.assetCategory=rac.assetCategoryID
+															where rd.requestID='{$_SESSION['requestid']}}'";
+										$result1=mysqli_query($dbc,$query1);
+										while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
 											echo "<tr>
-												<td>{$row1['quantityRequired']}</td>
-												<td>{$row1['hwswrequirements']}</td>
-												<td>{$row1['estimatedCost']}</td>
-												<td>{$row1['name']}</td>
+												<td>{$row1['quantity']}</td>
+												<td>{$row1['categoryName']}</td>
+												<td>{$row1['reqDetDesc']}</td>
 											</tr>";
 											
 											
@@ -163,8 +167,8 @@
                                 </tbody>
                             </table>
 							<form method="post">
-								<button type="submit" class="btn btn-success" name="approve" <?php if($row['status'] == 'Approved' || $row['status'] == 'Disapproved') echo "disabled"; ?> ><i class="fa fa-check"></i> Approve</button>
-								<button type="submit" class="btn btn-danger" name="disapprove" <?php if($row['status'] == 'Approved' || $row['status'] == 'Disapproved') echo "disabled"; ?> ><i class="fa fa-ban"></i> Disapprove</button>
+								<button type="submit" class="btn btn-success" name="approve" <?php if($row['statusDesc'] == 'Completed') echo "disabled"; ?> ><i class="fa fa-check"></i> Approve</button>
+								<button type="submit" class="btn btn-danger" name="disapprove" <?php if($row['statusDesc'] == 'Completed') echo "disabled"; ?> ><i class="fa fa-ban"></i> Disapprove</button>
 							</form>
                     </div>
                 </div>
