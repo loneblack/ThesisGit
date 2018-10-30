@@ -71,27 +71,29 @@
                                                 <tbody>
 													
 													<?php
-													
+														$key = "Fusion";
 														require_once('mysql_connect.php');
-														$query="SELECT * FROM thesis.request r join thesis.employee e on r.employeeID=e.employeeID";
+														$query="SELECT r.requestID as `requestID`,r.description as `reqDesc`,rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(lastName,'{$key}')USING utf8)) as `requestor`, r.dateNeeded as `dateNeeded` FROM thesis.request r 
+																		join thesis.ref_status rs on r.status=rs.statusID
+																		join thesis.user u on r.UserID=u.UserID";
 														$result=mysqli_query($dbc,$query);
 														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 															
 															echo "<tr class='gradeA' id='{$row['requestID']}' >
-																	<td>{$row['description']}</td>";
+																	<td>{$row['reqDesc']}</td>";
 									
-																if($row['status']=='Disapproved'){
-																	echo "<td><span class='badge bg-important'>{$row['status']}</span></td>";
+																if($row['statusDesc']=='Pending'){
+																	echo "<td><span class='badge bg-warning'>{$row['statusDesc']}</span></td>";
 																}
-																elseif($row['status']=='Approved'){
-																	echo "<td><span class='badge bg-success'>{$row['status']}</span></td>";
+																elseif($row['statusDesc']=='Completed'){
+																	echo "<td><span class='badge bg-success'>{$row['statusDesc']}</span></td>";
 																}
 																else{
-																	echo "<td><span class='badge bg-warning'>{$row['status']}</span></td>";
+																	echo "<td><span class='badge bg-important'>{$row['statusDesc']}</span></td>";
 																}
 															
 															echo"
-																<td>{$row['name']}</td>
+																<td>{$row['requestor']}</td>
 																<td>{$row['dateNeeded']}</td>
 																</tr>";
 													}
