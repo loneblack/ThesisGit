@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
+session_start();
 require_once("db/mysql_connect.php");
 $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.php";
+$_SESSION['count'] = 0;
 ?>
 
 <head>
@@ -59,7 +61,7 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
-                                            <form class="cmxform form-horizontal " id="signupForm" method="get" action="">
+                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_request_for_procurement_service_material_DB.php">
                                                 <section>
                                                     <h4>Contact Information</h4>
 
@@ -89,7 +91,7 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                                                     <div class="form-group ">
                                                         <label for="unitHead" class="control-label col-lg-3">Unit Head/Fund Owner</label>
                                                         <div class="col-lg-6">
-                                                            <input class="form-control" rows="5" id="unitHead" style="resize:none" type="text">
+                                                            <input class="form-control" rows="5" id="unitHead" name="unitHead" style="resize:none" type="text">
                                                         </div>
                                                     </div>
                                                     <div class="form-group ">
@@ -166,7 +168,7 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                                                         <label for="building" class="control-label col-lg-3">Reason of Request</label>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <textarea class="form-control" rows="5" id="comment" style="resize: none" required></textarea>
+                                                                <textarea class="form-control" rows="5" id="comment" name= "comment" style="resize: none" required></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -190,12 +192,13 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                                                             <tr>
                                                                 <td>
                                                                     <div class="col-lg-12">
-                                                                        <input class="form-control" type="number" id="quantity" min="1" step="1" placeholder="Quantity" />
+                                                                        <input style="display: none" type="number" id="count" value=<?php echo $_SESSION['count'];?>/>
+                                                                        <input class="form-control" type="number"  name="quantity0" id="quantity0" min="1" step="1" placeholder="Quantity" />
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="col-lg-12">
-                                                                        <select class="form-control" id="category">
+                                                                        <select class="form-control" name="category0" id="category0">
                                                                             <option>Select</option>
                                                                             <?php
 
@@ -217,13 +220,13 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
 
                                                                 <td style="padding-top:5px; padding-bottom:5px">
                                                                     <div class="col-lg-12">
-                                                                        <input class="form-control" type="text" id="description" placeholder="Item description" />
+                                                                        <input class="form-control" type="text" name="description0" id="description0" placeholder="Item description" />
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                 </td>
                                                                 <td>
-                                                                <button type='button' class='btn btn-primary' onclick='addTest()'> Add </button>
+                                                                <button type='button' class='btn btn-primary' onclick='addTest();'> Add </button>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -270,75 +273,121 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
     <script src="js/scripts.js"></script>
     
     <script type="text/javascript">
-						// Shorthand for $( document ).ready()
-                        $(function() {
+        var count = 1;
+		// Shorthand for $( document ).ready()
+        $(function() {
 
-                        });
-
-
-                        function removeRow(o) {
-                            var p = o.parentNode.parentNode;
-                            p.parentNode.removeChild(p);
-                        }
-
-                        function addTest() {
-                            var row_index = 0;
-                            var isRenderd = false;
-
-                            $("td").click(function() {
-                                row_index = $(this).parent().index();
-
-                            });
-
-                            var delayInMilliseconds = 300; //1 second
-
-                            setTimeout(function() {
-
-                                appendTableRow(row_index);
-                            }, delayInMilliseconds);
+        });
 
 
+        function removeRow(o) {
+            var p = o.parentNode.parentNode;
+            p.parentNode.removeChild(p);
+        }
 
-                        }
-						
-						
-                        var appendTableRow = function(rowCount) {
-                            var cnt = 0;
-                            var tr = 
-                                
-                                                        "<tr>" +
-                                                                "<td>" +
-                                                                   " <div class='col-lg-12'>" +
-                                                                        "<input class='form-control' type='number' id='quantity' min='1'" + "step='1' placeholder='Quantity' />" +
-                                                                    "</div>" +
-                                                                "</td>" +
-                                                                "<td>" +
-                                                                    "<div class='col-lg-12'>" +
-                                                                        "<select class='form-control' id='category'>" +
-                                                                            "<option>Select</option>" +
-                                                                        "</select>" +
-                                                                    "</div>" +
-                                                                "</td>" +
-                                                                "<td style='padding-top:5px; padding-bottom:5px'>" +
-                                                                    "<div class='col-lg-12'>" +
-                                                "<input class='form-control' type='text' id='description' placeholder='Item description' />" +
-                                                                    "</div>" +
-                                                                "</td>" +
-                                                                "<td>" +
-                                    "<button id='remove' class='btn btn-danger' type='button' onClick='removeRow(this)'>Remove</button>" +
-                                                                "</td>" +
-                                                                "<td>" +
-                                                                "</td>" +
-                                                                "</tr>"
-								
-								
-								
-								
-                            $('#tableTest tbody tr').eq(rowCount).after(tr);
-							
-                        }
-						
-					</script>
+        function addTest() {
+
+
+           
+            var row_index = 0;
+            var isRenderd = false;
+
+            $("td").click(function() {
+                row_index = $(this).parent().index();
+
+            });
+
+            var delayInMilliseconds = 300; //1 second
+
+            setTimeout(function() {
+
+                appendTableRow(row_index);
+            }, delayInMilliseconds);
+
+
+
+        }
+		
+		
+        var appendTableRow = function(rowCount) {
+
+             $("#count").val(count);
+
+            var tr = 
+                
+                            "<tr>" +
+                                    "<td>" +
+                                       " <div class='col-lg-12'>" +
+                                            "<input class='form-control' type='number' id='quantity"+count+"' name = 'quantity"+count+"' min='1'" + "step='1' placeholder='Quantity' />" +
+                                        "</div>" +
+                                    "</td>" +
+                                    "<td>" +
+                                        "<div class='col-lg-12'>" +
+                                            "<select class='form-control' id='category"+count+"' name = 'category"+count+"'>" +
+                                                "<option>Select</option>" +
+
+                                                '<?php
+
+                                                    $sql = "SELECT * FROM thesis.ref_assetcategory;";
+
+                                                    $result = mysqli_query($dbc, $sql);
+
+                                                    $_SESSION['count'] += 1;
+
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                        
+                                                        echo "<option value ={$row['assetCategoryID']}>";
+                                                        echo "{$row['name']}</option>";
+
+                                                    }
+                                                ?>'
+
+                                            +"</select>" +
+                                        "</div>" +
+                                    "</td>" +
+                                    "<td style='padding-top:5px; padding-bottom:5px'>" +
+                                        "<div class='col-lg-12'>" +
+                    "<input class='form-control' type='text' id='description"+count+"' name ='description"+count+"' placeholder='Item description' />" +
+                                        "</div>" +
+                                    "</td>" +
+                                    "<td>" +
+        "<button id='remove' class='btn btn-danger' type='button' onClick='removeRow(this)'>Remove</button>" +
+                                    "</td>" +
+                                    "<td>" +
+                                    "</td>" +
+                                    "</tr>"
+				
+				
+				
+				
+            $('#tableTest tbody tr').eq(rowCount).after(tr);
+
+            count++;
+
+             $.ajax({
+            type:"POST",
+            url:"count.php",
+            data: 'count='+count,
+            success: function(data){
+                $("#count").html(data);
+
+                }
+            });
+			
+        }
+			function getRooms(val){
+            $.ajax({
+            type:"POST",
+            url:"requestor_getRooms.php",
+            data: 'buildingID='+val,
+            success: function(data){
+                $("#FloorAndRoomID").html(data);
+
+                }
+            });
+        }
+	</script>
 
 </body>
 

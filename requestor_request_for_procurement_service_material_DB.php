@@ -16,9 +16,6 @@
     $dateNeeded = $_POST['dateNeeded'];
     $comment = $_POST['comment'];
 
-    $quantityArray = $_POST['quantityArray'];
-    $categoryArray = $_POST['categoryArray'];
-    $descriptionArray = $_POST['descriptionArray'];
 
     date_default_timezone_set("Asia/Singapore");
 
@@ -26,45 +23,46 @@
     $time = date("h:i:sa");
     $date = date('Y-m-d H:i:s', strtotime($value." ".$time));
 
-    $count = sizeof($quantityArray);
+    $count = $_SESSION['count'];
 
-    $id = 0;
-
-    echo $department." ".$unitHead." ".$contactPerson." ".$email." ".$number." ".$buildingID." ".$FloorAndRoomID." ".$recipient." ".$dateNeeded." ".$comment." ".$date;
+    $id = 0;    
 
     //insertion to request table
-    $sql0 = "INSERT INTO `thesis`.`request` (`description`, `DepartmentID`, `unitHead`, `recipient`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`) VALUES ('{$comment}', '{$department}', '{$unitHead}', '{$recipient}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1');";//status is set to 1 for pending status
+    $sql0 = "INSERT INTO `thesis`.`request` (`description`, `DepartmentID`, `unitHead`, `recipient`, `employeeID`, `datetime`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`) VALUES ('{$comment}', '{$department}', '{$unitHead}', '{$recipient}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1');";//status is set to 1 for pending status
+   // $result0 = mysqli_query($dbc, $sql0);
 
-    //$result0 = mysqli_query($dbc, $sql0);
+    if (!mysqli_query($dbc,$sql0))
+      {
+      echo("Error description: " . mysqli_error($dbc));
+      }
 
     $sql2 = "SELECT * FROM `thesis`.`request` order by requestID DESC LIMIT 1;";
     $result2 = mysqli_query($dbc, $sql2);
 
-    echo "after!!";
-
     //get the id of the recently inserted item to request table
     $sql1 = "SELECT * FROM `thesis`.`request` order by requestID DESC LIMIT 1;";
     $result1 = mysqli_query($dbc, $sql1);
-    echo "ahh i need help here";
 
     while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC)){
         $id = $row['requestID'];
-        echo " this is id: ".$id;
     }
    
    //insertion to requestdetails table using the id taken earlier
-   for ($i=1; $i < $count; $i++) { 
+   for ($i=0; $i < $count; $i++) { 
 
-    echo " items: ".$quantityArray[$i]. " ". $categoryArray[$i]. " ".$descriptionArray[$i];
+    $quantity = $_POST['quantity'.$i];
+    $category = $_POST['category'.$i];
+    $description = $_POST['description'.$i];
+
 
         $sql = "INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `assetCategory`, `description`) 
-                VALUES ('{$id}', '{$quantityArray[$i]}', '{$categoryArray[$i]}', '{$descriptionArray[$i]}');";
+                VALUES ('{$id}', '{$quantity}', '{$category}', '{$description}');";
         $result = mysqli_query($dbc, $sql);       
 
    }
-   echo "omylord";
     $message = "Form submitted!";
-    $_SESSION['submitMessage'] = $message
-
+    $_SESSION['submitMessage'] = $message;
     
+
+  unset($_SESSION['count']);  
 ?>

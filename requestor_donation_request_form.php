@@ -198,7 +198,7 @@
         function getRooms(val){
             $.ajax({
             type:"POST",
-            url:"requestor_service_equipment_request_getRooms.php",
+            url:"requestor_getRooms.php",
             data: 'buildingID='+val,
             success: function(data){
                 $("#FloorAndRoomID").html(data);
