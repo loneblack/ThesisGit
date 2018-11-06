@@ -1083,7 +1083,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`procurementdetails` (
   `quantity` INT(11) NULL DEFAULT NULL,
   `cost` DOUBLE NULL DEFAULT NULL,
   `subtotal` DOUBLE NULL DEFAULT NULL,
-  PRIMARY KEY (`procurementID`),
   CONSTRAINT `fk_ProcurementDetails_Procurement1`
     FOREIGN KEY (`procurementID`)
     REFERENCES `thesis`.`procurement` (`procurementID`))
@@ -1281,7 +1280,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`canvasitemdetails` (
   `price` DECIMAL NULL,
   `status` INT(11) NULL,
   `comment` VARCHAR(45) NULL,
-  PRIMARY KEY (`cavasItemID`),
   INDEX `fk_canvasitemdetails_supplier1_idx` (`supplier_supplierID` ASC),
   INDEX `fk_canvasitemdetails_ref_status1_idx` (`status` ASC),
   CONSTRAINT `fk_canvasitemdetails_canvasitem1`
