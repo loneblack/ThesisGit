@@ -193,17 +193,6 @@
 
 
                         <div class="col-sm-12">
-                            <section class="panel">
-                                <div class="panel-body ">
-
-                                    <div>
-                                        <h4>Comments or Request For Parts (if needed)</h4>
-                                    </div>
-                                    <div class="view-mail">
-                                        <textarea class="form-control" style="resize:none" rows="5" readonly></textarea>
-                                    </div>
-                                </div>
-                            </section>
                             <button onclick="#" class="btn btn-success">Send</button></a>
                             <a href="engineer_all_ticket.php"><button class="btn btn-danger">Back</button></a>
                         </div>

@@ -214,7 +214,7 @@
 
                             });
 
-                            var delayInMilliseconds = 300; //1 second
+                            var delayInMilliseconds = 0; //1 second
 
                             setTimeout(function() {
 

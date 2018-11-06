@@ -83,17 +83,15 @@
                                     <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Quantity</th>
                                             <th>Asset/ Software Name</th>
                                             <th>Property Code</th>
                                             <th>Building</th>
                                             <th>Room</th>
-                                            <th>Comments</th>
+                                            <th>Comments/ Request for Parts</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>1</td>
                                             <td>PC</td>
                                             <td>123456</td>
                                             <td>Br. Andrew</td>
@@ -136,10 +134,11 @@
                                                 <label for="status" class="control-label col-lg-4">Status</label>
                                                 <div class="col-lg-8">
                                                     <select class="form-control m-bot15">
-                                                        <option>New</option>
-                                                        <option>Pending</option>
-                                                        <option selected="selected">In Progress</option>
-                                                        <option>Solved</option>
+                                                        <option>Assigned</option>
+                                                        <option>In Progress</option>
+                                                        <option selected="selected">Transferred</option>
+                                                        <option>Escalated</option>
+                                                        <option>Waiting For Parts</option>
                                                         <option>Closed</option>
                                                     </select>
                                                 </div>
@@ -158,9 +157,9 @@
                                             </div>
 
                                             <div class="form-group ">
-                                                <label for="assign" class="control-label col-lg-4">Assigned</label>
+                                                <label for="assign" class="control-label col-lg-4">Escalate To</label>
                                                 <div class="col-lg-8">
-                                                    <select class="form-control m-bot15" disabled>
+                                                    <select class="form-control m-bot15">
                                                         <option selected="selected">Eng. Marvin Lao</option>
                                                         <option>Eng. Marvin Lao</option>
                                                         <option>Eng. Marvin Lao</option>
@@ -194,17 +193,6 @@
 
 
                         <div class="col-sm-12">
-                            <section class="panel">
-                                <div class="panel-body ">
-
-                                    <div>
-                                        <h4>Comments or Request For Parts (if needed)</h4>
-                                    </div>
-                                    <div class="view-mail">
-                                        <textarea class="form-control" style="resize:none" rows="5"></textarea>
-                                    </div>
-                                </div>
-                            </section>
                             <button onclick="#" class="btn btn-success">Send</button></a>
                             <a href="engineer_all_ticket.php"><button class="btn btn-danger">Back</button></a>
                         </div>
