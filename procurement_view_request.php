@@ -84,7 +84,9 @@
                                                     <th class="text-center">Quantity</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+											
+                                            <!-- 
+												<tbody>
                                                 <tr>
                                                     <td>1</td>
                                                     <td>
@@ -112,7 +114,37 @@
                                                     <td class="text-center">4Gb RAM</td>
                                                     <td class="text-center">4</td>
                                                 </tr>
-                                            </tbody>
+                                            </tbody> -->
+											<tbody>
+												<?php
+													require_once('db/mysql_connect.php');
+													$canvasID=$_GET['canvasID'];
+													$query="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,ci.quantity,am.itemSpecification,ci.description FROM thesis.canvasitem ci 
+															join assetmodel am on ci.assetModel=am.assetModelID
+															join ref_brand rb on am.brand=rb.brandID
+															join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
+															where ci.canvasID='{$canvasID}'";
+													$result=mysqli_query($dbc,$query);
+													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														echo "<tr>
+															<td>{$row['cavasItemID']}</td>
+															<td>
+																<h4>{$row['itemName']}</h4>
+																<p>{$row['description']}</p>
+															</td>
+															<td class='text-center'>{$row['itemSpecification']}</td>
+															<td class='text-center'>{$row['quantity']}</td>
+														</tr>";
+													}
+												
+												
+												
+												
+												?>
+											
+											
+											
+											</tbody>
                                         </table>
                                         <div class="text-center invoice-btn">
                                             
@@ -121,7 +153,7 @@
                                             
                                             
 <!--                                            START NA NG MODAL DITO-->
-                                            <a href="procurement_start_canvas.php" class="btn btn-success btn-lg" ><i class="fa fa-check"></i> Start Canvas </a>
+                                            <a href="procurement_start_canvas.php?canvasID=<?php echo $canvasID; ?>" class="btn btn-success btn-lg" ><i class="fa fa-check"></i> Start Canvas </a>
 
                                             <div class="modal" id="canvasModal">
                                                 <div class="modal-dialog" style="width:1000px">

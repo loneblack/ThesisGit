@@ -1,4 +1,35 @@
 <!DOCTYPE html>
+<!--Notes
+1. Check the PK of supplier_supplierID on canvasitemdetails table 
+
+ -->
+<?php
+	$canvasID=$_GET['canvasID'];
+	require_once('db/mysql_connect.php');
+	if (isset($_POST['submit'])){
+		$canvasItemID=$_POST['cavasItemID'];
+		$supplier=$_POST['supplier'];
+		$unitPrice=$_POST['unitPrice'];
+		$count = sizeof($canvasItemID);
+		for ($i=0; $i < $count; $i++) { 
+			$querya="INSERT INTO `thesis`.`canvasitemdetails` (`cavasItemID`, `supplier_supplierID`, `price`, `status`) VALUES ('{$canvasItemID[$i]}', '{$supplier[$i]}', '{$unitPrice[$i]}', '1')";
+			$resulta=mysqli_query($dbc,$querya);
+		}
+		$queryb="UPDATE `thesis`.`canvas` SET `status`='6' WHERE `canvasID`='{$canvasID}'";
+		$resultb=mysqli_query($dbc,$queryb);
+		
+		$queryc="SELECT requestID FROM thesis.canvas where canvasID='{$canvasID}'";
+		$resultc=mysqli_query($dbc,$queryc);
+		$rowc=mysqli_fetch_array($resultc,MYSQLI_ASSOC);
+		
+		$queryd="UPDATE `thesis`.`request` SET `status`='6' WHERE `requestID`='{$rowc['requestID']}'";
+		$resultd=mysqli_query($dbc,$queryd);
+	}
+
+
+
+
+?>
 <html lang="en">
 
 <head>
@@ -57,6 +88,7 @@
                                     </header>
                                     <div class="panel-body">
                                         <section id="unseen">
+											<form method="post">
                                             <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                 <thead>
                                                     <tr>
@@ -68,7 +100,45 @@
                                                         <th></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+												<tbody>
+													<?php
+														
+														
+														$query="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,ci.quantity,am.itemSpecification,ci.description FROM thesis.canvasitem ci 
+															join assetmodel am on ci.assetModel=am.assetModelID
+															join ref_brand rb on am.brand=rb.brandID
+															join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
+															where ci.canvasID='{$canvasID}'";
+														$result=mysqli_query($dbc,$query);
+														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+															echo "<tr>
+															<input type='hidden' name='cavasItemID[]' value='{$row['cavasItemID']}'>
+															<td style='width:50px;'>{$row['quantity']}</td>
+															<td>{$row['itemName']}</td>
+															<td>{$row['itemSpecification']}</td>
+															<td>
+																<select class='form-control' id='exampleFormControlSelect1' name='supplier[]' required>
+																<option selected disabled>Select Supplier</option>";
+;
+																$query1="SELECT * FROM thesis.supplier";
+																$result1=mysqli_query($dbc,$query1);
+																while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
+																	echo "<option value='{$row1['supplierID']}'>{$row1['name']}</option>";
+																}
+															echo "</select>
+															</td>
+															<td><input type='number' class='form-control' min='0.00' name='unitPrice[]' required></td>
+															<td><button type='button' class='btn btn-primary' onclick='addTest({$row['cavasItemID']})'> Add </button></td>
+														</tr>";
+														}
+													
+													
+													
+													
+													
+													?>
+												</tbody>
+                                                <!-- <tbody>
                                                     <tr>
                                                         <td style="width:50px;">5</td>
                                                         <td>MAC Laptop</td>
@@ -137,14 +207,14 @@
                                                         <td><input type="number" class="form-control" min="0.00" required></td>
                                                         <td><button class="btn btn-primary" onclick="addTest(1)"> Add </button></td>
                                                     </tr>
-                                                </tbody>
+                                                </tbody> -->
                                             </table>
 
                                             <div>
-                                                <button type="button" class="btn btn-success" data-dismiss="modal">Send</button>
+                                                <button type="submit" class="btn btn-success" name="submit" data-dismiss="modal">Send</button>
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                                             </div>
-
+											</form>
                                         </section>
                                     </div>
                                 </section>
@@ -186,8 +256,9 @@
 
 
 
-        function addTest() {
+        function addTest(cavasItemID) {
             var row_index = 0;
+			var canvasItemID=cavasItemID;
             var isRenderd = false;
 
             $("td").click(function() {
@@ -199,30 +270,32 @@
 
             setTimeout(function() {
 
-                appendTableRow(row_index);
+                appendTableRow(row_index,canvasItemID);
             }, delayInMilliseconds);
 
 
 
         }
 
-        var appendTableRow = function(rowCount) {
-            var cnt = 0
+        var appendTableRow = function(rowCount,canvasItemID) {
+            var cnt = 0;
             var tr = "<tr>" +
+				"<input type='hidden' name='cavasItemID[]' value='"+ canvasItemID +"'>"+
                 "<td style='width:50px;'></td>" +
                 "<td></td>" +
                 "<td></td>" +
                 "<td>" +
-                "<select class='form-control' id='exampleFormControlSelect1' required>" +
-                " <option>Select Supplier</option>" +
-                "<option>ABC Corp.</option>" +
-                "<option>Philippine Sports Commission</option>" +
-                "<option>CDR-King</option>" +
-                "<option>Huawei</option>" +
-                "<option>Samsung</option>" +
+                "<select class='form-control' id='exampleFormControlSelect1' name='supplier[]' required>" +
+                "<option selected disabled>Select Supplier</option>" +
+                "<?php 
+						$query2="SELECT * FROM thesis.supplier";
+						$result2=mysqli_query($dbc,$query2);
+						while($row2=mysqli_fetch_array($result2,MYSQLI_ASSOC)){
+							echo "<option value='{$row2['supplierID']}'>{$row2['name']}</option>";
+						} ?>" +
                 "</select>" +
                 "</td>" +
-                "<td><input type='number' class='form-control' min='0.00' required></td>" +
+                "<td><input type='number' class='form-control' min='0.00' name='unitPrice[]' required></td>" +
                 "</tr>";
             $('#tableTest tbody tr').eq(rowCount).after(tr);
         }
