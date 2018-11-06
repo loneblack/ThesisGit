@@ -1,4 +1,22 @@
 <!DOCTYPE html>
+<?php
+	require_once('db/mysql_connect.php');
+	$canvasID=$_GET['canvasID'];
+	if(isset($_POST['submit'])){
+		$queryb="UPDATE `thesis`.`canvas` SET `status`='3' WHERE `canvasID`='{$canvasID}'";
+		$resultb=mysqli_query($dbc,$queryb);
+		
+		$queryc="SELECT requestID FROM thesis.canvas where canvasID='{$canvasID}'";
+		$resultc=mysqli_query($dbc,$queryc);
+		$rowc=mysqli_fetch_array($resultc,MYSQLI_ASSOC);
+		
+		$queryd="UPDATE `thesis`.`request` SET `status`='3' WHERE `requestID`='{$rowc['requestID']}'";
+		$resultd=mysqli_query($dbc,$queryd);
+		
+		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/procurement_view_completed.php?canvasID=".$canvasID);
+	}
+	
+?>
 <html lang="en">
 
 <head>
@@ -44,9 +62,104 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-
+				
+				
+				
                 <div class="row">
-                    <div class="row">
+					<div class='text-center invoice-btn'>
+						<form method='post'>
+							<button type="submit" class="btn btn-success btn-lg" name="submit"><i class='fa fa-check'></i> Send </button>
+						</form>
+					</div>
+					<?php
+						
+						$query="SELECT cid.supplier_supplierID as `supplierID`,s.name as `supplierName`,s.address FROM thesis.canvasitem ci 
+							join canvasitemdetails cid on ci.cavasItemID=cid.cavasItemID 
+							join supplier s on cid.supplier_supplierID=s.supplierID
+							where ci.canvasID='{$canvasID}' 
+							group by cid.supplier_supplierID";
+						$result=mysqli_query($dbc,$query);
+						
+						while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+							echo "<div class='row'>
+							<div class='col-sm-12'>
+								<div class='col-sm-12'>
+									<section class='panel'>
+										<header class='panel-heading'>
+											Purchase Order
+										</header>
+										<div class='panel-body'>
+											<section id='unseen'>
+												<div class='row invoice-to'>
+													<div class='col-md-4 col-sm-4 pull-left'>
+														<h4>Purchase Order To:</h4>
+														<h2>{$row['supplierName']}</h2>
+														<h5>Address: {$row['address']}</h5>
+													</div>
+													<div class='col-md-4 col-sm-5 pull-right'>
+														<div class='row'>
+															<div class='col-md-4 col-sm-5 inv-label'>Purchase Order #</div>
+															<div class='col-md-8 col-sm-7'>233426</div>
+														</div>
+														<br>
+														<div class='row'>
+															<div class='col-md-4 col-sm-5 inv-label'>Date </div>
+															<div class='col-md-8 col-sm-7'>21 December 2018</div>
+														</div>
+														<br>
+
+
+													</div>
+												</div>
+												<table class='table table-invoice'>
+													<thead>
+														<tr>
+															<th>#</th>
+															<th>Item Description</th>
+															<th class='text-center'>Unit Cost</th>
+															<th class='text-center'>Quantity</th>
+															<th class='text-center'>Total</th>
+														</tr>
+													</thead>
+													<tbody>";
+													
+													
+													$querya="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,am.itemSpecification,ci.description,ci.quantity,cid.price,(ci.quantity*cid.price) as `totalPrice` FROM thesis.canvasitemdetails cid
+																join canvasitem ci on cid.cavasItemID=ci.cavasItemID 
+																join assetModel am on ci.assetModel=am.assetModelID
+																join ref_brand rb on am.brand=rb.brandID
+																join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
+																where ci.canvasID='{$canvasID}' and cid.supplier_supplierID='{$row['supplierID']}'";
+													$resulta=mysqli_query($dbc,$querya);
+													while($rowa=mysqli_fetch_array($resulta,MYSQLI_ASSOC)){
+														echo "<tr>
+															<td>{$rowa['cavasItemID']}</td>
+															<td>
+																<h4>{$rowa['itemName']}</h4>
+																<p>{$rowa['description']}</p>
+															</td>
+															<td class='text-center'>₱ {$rowa['price']}</td>
+															<td class='text-center'>{$rowa['quantity']}</td>
+															<td class='text-center'>₱ {$rowa['totalPrice']}</td>
+														</tr>";
+													}
+													
+													echo "</tbody>
+												</table>
+											</section>
+										</div>
+									</section>
+								</div>
+							</div>
+						</div>";
+						}
+					
+					
+					
+					?>
+					
+                    <!-- 
+						<div class="row">
                         <div class="col-sm-12">
                             <div class="col-sm-12">
                                 <section class="panel">
@@ -211,7 +324,7 @@
                                 </section>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- page end-->
             </section>
