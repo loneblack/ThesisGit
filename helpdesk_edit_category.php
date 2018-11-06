@@ -11,9 +11,9 @@
 	if (isset($_POST['submit'])){
 		
 		$categoryName=$_POST['categoryName'];
-		$description=$_POST['description'];
+		
 
-		$query1="UPDATE `thesis`.`ref_servicetype` SET `serviceType`='{$categoryName}', `description`='{$description}' WHERE `id`='{$_SESSION['categoryid']}'";
+		$query1="UPDATE `thesis`.`ref_servicetype` SET `serviceType`='{$categoryName}' WHERE `id`='{$_SESSION['categoryid']}'";
 		$result1=mysqli_query($dbc,$query1);
 			
 		echo "<script type='text/javascript'>alert('Success');</script>"; // Show modal
@@ -92,15 +92,6 @@
                                                     <input type="text" class="form-control" id="name" name="categoryName" value="<?php echo $row['serviceType'];  ?>" required>
                                                 </div>
                                             </div>
-
-                                            <div class="form-group ">
-                                                <label for="ccomment" class="col-lg-2 col-sm-2 control-label">Description</label>
-                                                <div class="col-lg-10">
-                                                    <textarea class="form-control " id="description" name="description" required><?php echo $row['description']; ?></textarea>
-                                                </div>
-                                            </div>
-
-
                                             <div class="form-group">
                                                 <div class="col-lg-offset-2 col-lg-10">
                                                     <button type="submit" class="btn btn-success" name="submit">Submit</button>

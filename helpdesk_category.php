@@ -63,7 +63,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Name</th>
-                                                            <th>Description</th>
+                                                        <!-- <th>Description</th> -->
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -75,15 +75,14 @@
 															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 																echo "<tr class='categoryid' id='{$row['id']}'>
 																		<td>{$row['serviceType']}</td>
-																		<td>{$row['description']}</td>
 																	</tr>";
 															}
 														
 														?>
-                                                        <tr>
+                                                        <!-- <tr>
                                                             <td>Repair</td>
                                                             <td>This is pressed when the bla blla is bla bla. This is pressed when the bla blla is bla bla. </td>
-                                                        </tr>
+                                                        </tr> -->
                                                     </tbody>
                                                 </table>
                                             </section>
