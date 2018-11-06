@@ -75,35 +75,35 @@
                                                 <tr class="gradeA">
                                                     <td>1</td>
                                                     <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
+                                                    <td>Donation</td>
                                                     <td>10/9/18</td>
                                                 </tr>
 
                                                 <tr class="gradeA">
                                                     <td>2</td>
                                                     <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
+                                                    <td>Hardware Software Request</td>
                                                     <td>10/9/18</td>
                                                 </tr>
 
                                                 <tr class="gradeA">
                                                     <td>3</td>
                                                     <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
+                                                    <td>Procurement of Service and Material</td>
                                                     <td>10/9/18</td>
                                                 </tr>
 
                                                 <tr class="gradeA">
                                                     <td>4</td>
                                                     <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
+                                                    <td>Service Equipment Request</td>
                                                     <td>10/9/18</td>
                                                 </tr>
 
                                                 <tr class="gradeA">
                                                     <td>5</td>
                                                     <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
+                                                    <td>Service Request</td>
                                                     <td>10/9/18</td>
                                                 </tr>
                                             <tfoot>
@@ -143,10 +143,44 @@
     <script src="js/dynamic_table_init.js"></script>
 
     <script>
-        $('#ctable').on('dblclick', function() {
-            window.location.replace("helpdesk_view_request.php");
-        })
-    </script>
+		function addRowHandlers() {
+			var table = document.getElementById("dynamic-table");
+			var rows = table.getElementsByTagName("tr");
+			for (i = 1; i < rows.length; i++) {
+				var currentRow = table.rows[i];
+				var createClickHandler = function(row) {
+					return function() {
+						var cell = row.getElementsByTagName("td")[2];
+						var idx = cell.textContent;
+						
+						
+						if(idx == "Hardware Software Request"){
+							window.location.replace("helpdesk_view_hardware_software_request.php");
+						}
+						
+						if(idx == "Donation"){
+							window.location.replace("helpdesk_view_donation_request.php");
+						}
+                        
+                        if(idx == "Procurement of Service and Material"){
+                            window.location.replace("helpdesk_view_procurement_service_material_request.php");
+						}
+						
+						if(idx == "Service Equipment Request"){
+							window.location.replace("helpdesk_view_service_equipment_request.php");
+						}
+						
+						if(idx == "Service Request"){
+							window.location.replace("helpdesk_view_service_request.php");
+						}
+						
+					};
+				};
+				currentRow.onclick = createClickHandler(currentRow);
+			}
+		}
+		window.onload = addRowHandlers();
+	</script>
 
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
