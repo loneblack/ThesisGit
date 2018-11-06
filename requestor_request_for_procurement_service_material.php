@@ -4,6 +4,7 @@
 require_once("db/mysql_connect.php");
 $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.php";
 ?>
+
 <head>
     <meta charset="utf-8">
 
@@ -65,7 +66,7 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                                                     <div class="form-group ">
                                                         <label for="department" class="control-label col-lg-3">Department</label>
                                                         <div class="col-lg-6">
-                                                            <select name="department" id="department"class="form-control m-bot15" required>
+                                                            <select name="department" id="department" class="form-control m-bot15" required>
                                                                 <option value=''>Select department</option>
                                                                 <?php
 
@@ -165,7 +166,7 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                                                         <label for="building" class="control-label col-lg-3">Reason of Request</label>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                              <textarea class="form-control" rows="5" id="comment"  style="resize: none" required></textarea>
+                                                                <textarea class="form-control" rows="5" id="comment" style="resize: none" required></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -175,28 +176,51 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
 
                                                 <section>
                                                     <h4>Requested Services/Materials</h4>
-                                                    <table class="table-bordered" align="center" id="tblRequest" border="1">
+                                                    <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                         <thead>
                                                             <tr>
                                                                 <th>Quantity</th>
-                                                                <th style="width:47%">Category dropdown</th>
+                                                                <th>Category</th>
                                                                 <th>Description</th>
-                                                                <th></th>
+                                                                <th>Remove</th>
+                                                                <th>Add</th>
                                                             </tr>
                                                         </thead>
-
                                                         <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="col-lg-12">
-                                                                        <input class="form-control" type="number" id="quantity" min="1" step="1" placeholder="Quantity" />
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="col-lg-12">
-                                                                        <select class="form-control" id="category">
-                                                                            <option>Select</option>
-                                                                            <?php
+                                                        </tbody>
+                                                    </table>
+                                
+
+
+
+
+
+
+
+
+
+                                                            <table class="table-bordered" align="center" id="tblRequest" border="1">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Quantity</th>
+                                                                        <th style="width:47%">Category dropdown</th>
+                                                                        <th>Description</th>
+                                                                        <th></th>
+                                                                    </tr>
+                                                                </thead>
+
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="col-lg-12">
+                                                                                <input class="form-control" type="number" id="quantity" min="1" step="1" placeholder="Quantity" />
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="col-lg-12">
+                                                                                <select class="form-control" id="category">
+                                                                                    <option>Select</option>
+                                                                                    <?php
 
                                                                                 $sql = "SELECT * FROM thesis.ref_assetcategory;";
 
@@ -210,19 +234,19 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
 
                                                                                 }
                                                                            ?>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                                <td style="padding-top:5px; padding-bottom:5px">
-                                                                    <div class="col-lg-12">
-                                                                        <input class="form-control" type="text" id="description" placeholder="Item description" />
-                                                                    </div>
-                                                                </td>
-                                                                <td style="text-align:center"><input class="btn btn-primary" type="button" onclick="Add()" value="Add" /></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <br>
+                                                                                </select>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="padding-top:5px; padding-bottom:5px">
+                                                                            <div class="col-lg-12">
+                                                                                <input class="form-control" type="text" id="description" placeholder="Item description" />
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="text-align:center"><input class="btn btn-primary" type="button" onclick="Add()" value="Add" /></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <br>
                                                 </section>
 
                                                 <div class="form-group">
@@ -248,7 +272,6 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
 
     <!--Function for table-->
     <script type="text/javascript">
-
         function Add() {
             var description = document.getElementById("description");
             var quantity = document.getElementById("quantity");
@@ -282,12 +305,12 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
 
             //Add Row.
             row = tBody.insertRow(-1);
-            
-            
+
+
             var cell = row.insertCell(-1);
             cell.innerHTML = "<td>" + quantity + "</td>";
-            
-           
+
+
             cell = row.insertCell(-1);
             cell.innerHTML = "<td>" + categoryText + "</td>";
 
@@ -295,7 +318,7 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
             cell.innerHTML = "<td>" + categoryValue + "</td>";
             cell.setAttribute("style", "display: none")
 
-            
+
             cell = row.insertCell(-1);
             cell.innerHTML = "<td>" + description + "</td>";
 
@@ -309,14 +332,14 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
             cell.appendChild(btnRemove);
         }
 
-         function getRooms(val){
+        function getRooms(val) {
             $.ajax({
-            type:"POST",
-            url:"requestor_getRooms.php",
-            data: 'buildingID='+val,
-            success: function(data){
-                $("#FloorAndRoomID").html(data);
-                
+                type: "POST",
+                url: "requestor_getRooms.php",
+                data: 'buildingID=' + val,
+                success: function(data) {
+                    $("#FloorAndRoomID").html(data);
+
 
                 }
             });
@@ -335,34 +358,48 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
             var recipient = document.getElementById('recipient').value
             var comment = document.getElementById('comment').value
 
-            var quantityArray = []; 
-            var categoryArray = []; 
-            var descriptionArray = []; 
-             var table = $("table tbody");
+            var quantityArray = [];
+            var categoryArray = [];
+            var descriptionArray = [];
+            var table = $("table tbody");
 
-    table.find('tr').each(function (i) {
-        var $tds = $(this).find('td'),
-            quantity = $tds.eq(0).text(),
-            category = $tds.eq(2).text(),
-            description = $tds.eq(3).text();
+            table.find('tr').each(function(i) {
+                var $tds = $(this).find('td'),
+                    quantity = $tds.eq(0).text(),
+                    category = $tds.eq(2).text(),
+                    description = $tds.eq(3).text();
 
-            quantityArray.push(quantity);
-            categoryArray.push(category);
-            descriptionArray.push(description);
-        });
+                quantityArray.push(quantity);
+                categoryArray.push(category);
+                descriptionArray.push(description);
+            });
 
-         $.ajax({
-            type:"POST",
-            url:"requestor_request_for_procurement_service_material_DB.php",
-            data: {quantityArray: quantityArray, categoryArray: categoryArray, descriptionArray: descriptionArray, department: department, unitHead: unitHead, contactPerson: contactPerson, email: email, number: number, buildingID: buildingID, FloorAndRoomID: FloorAndRoomID, dateNeeded: dateNeeded, recipient: recipient, comment: comment},
-            success: function(data){
-                alert(data);
-                window.location="requestor_request_for_procurement_service_material.php";
-            
+            $.ajax({
+                type: "POST",
+                url: "requestor_request_for_procurement_service_material_DB.php",
+                data: {
+                    quantityArray: quantityArray,
+                    categoryArray: categoryArray,
+                    descriptionArray: descriptionArray,
+                    department: department,
+                    unitHead: unitHead,
+                    contactPerson: contactPerson,
+                    email: email,
+                    number: number,
+                    buildingID: buildingID,
+                    FloorAndRoomID: FloorAndRoomID,
+                    dateNeeded: dateNeeded,
+                    recipient: recipient,
+                    comment: comment
+                },
+                success: function(data) {
+                    alert(data);
+                    window.location = "requestor_request_for_procurement_service_material.php";
+
 
                 }
             });
-         }
+        }
     </script>
 
     <!-- WAG GALAWIN PLS LANG -->
