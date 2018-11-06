@@ -214,12 +214,12 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   `UserID` INT(11) NULL DEFAULT NULL,
   `status` INT(11) NOT NULL,
   PRIMARY KEY (`requestID`),
-  INDEX `fk_Request_Employee1_idx` (`employeeID` ASC) VISIBLE,
-  INDEX `fk_Request_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) VISIBLE,
-  INDEX `fk_Request_Building1_idx` (`BuildingID` ASC) VISIBLE,
-  INDEX `fk_request_department1_idx` (`DepartmentID` ASC) VISIBLE,
-  INDEX `fk_request_user1_idx` (`UserID` ASC) VISIBLE,
-  INDEX `fk_request_ref_status1_idx` (`status` ASC) VISIBLE,
+  INDEX `fk_Request_Employee1_idx` (`employeeID` ASC),
+  INDEX `fk_Request_FloorAndRoom1_idx` (`FloorAndRoomID` ASC),
+  INDEX `fk_Request_Building1_idx` (`BuildingID` ASC),
+  INDEX `fk_request_department1_idx` (`DepartmentID` ASC),
+  INDEX `fk_request_user1_idx` (`UserID` ASC),
+  INDEX `fk_request_ref_status1_idx` (`status` ASC),
   CONSTRAINT `fk_Request_Building1`
     FOREIGN KEY (`BuildingID`)
     REFERENCES `thesis`.`building` (`BuildingID`),
@@ -1280,8 +1280,11 @@ CREATE TABLE IF NOT EXISTS `thesis`.`canvasitemdetails` (
   `cavasItemID` INT(11) NOT NULL,
   `supplier_supplierID` INT(11) NOT NULL,
   `price` DECIMAL NULL,
+  `status` INT(11) NULL,
+  `comment` VARCHAR(45) NULL,
   PRIMARY KEY (`cavasItemID`),
   INDEX `fk_canvasitemdetails_supplier1_idx` (`supplier_supplierID` ASC),
+  INDEX `fk_canvasitemdetails_ref_status1_idx` (`status` ASC),
   CONSTRAINT `fk_canvasitemdetails_canvasitem1`
     FOREIGN KEY (`cavasItemID`)
     REFERENCES `thesis`.`canvasitem` (`cavasItemID`)
@@ -1291,9 +1294,13 @@ CREATE TABLE IF NOT EXISTS `thesis`.`canvasitemdetails` (
     FOREIGN KEY (`supplier_supplierID`)
     REFERENCES `thesis`.`supplier` (`supplierID`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_canvasitemdetails_ref_status1`
+    FOREIGN KEY (`status`)
+    REFERENCES `thesis`.`ref_status` (`statusID`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

@@ -69,10 +69,9 @@
                                             <tbody>
 												<?php
 												
-													require_once('mysql_connect.php');
-													$query="SELECT r.requestID,r.description as `requestDesc`,e.name as `employeeName`,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc` FROM thesis.request r 
-																		join ref_status rs on r.statusID=rs.statusID
-																		join employee e on r.employeeID=e.employeeID";
+													require_once('db/mysql_connect.php');
+													$query="SELECT r.requestID,r.description as `requestDesc`,r.recipient,r.datetime as `requestedDate`,r.dateNeeded,rs.description as `statusDesc` FROM thesis.request r 
+																		join ref_status rs on r.status=rs.statusID";
 													$result=mysqli_query($dbc,$query);
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 														echo "<tr id='{$row['requestID']}'>
@@ -95,7 +94,7 @@
 															
 															
 														echo "<td>{$row['requestDesc']}</td>
-															<td>{$row['employeeName']}</td>
+															<td>{$row['recipient']}</td>
 															<td>{$row['requestedDate']}</td>
 														</tr>";
 														

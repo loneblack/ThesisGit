@@ -1,4 +1,18 @@
 <!DOCTYPE html>
+
+<?php
+session_start();
+require_once('mysql_connect.php');
+$_SESSION['requestID']=$_GET['requestID'];
+
+$query="SELECT * FROM thesis.canvas 
+				 where requestID='{$_SESSION['requestID']}'";
+$result=mysqli_query($dbc,$query);
+$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+
+?>
+
 <html lang="en">
 
 <head>
@@ -86,6 +100,30 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+											
+												<?php
+												
+												$query1="SELECT ci.quantity as `canvasQty`,rac.name as `categoryName`,rb.name as `brandName`,am.description as 'modelDesc',am.itemSpecification as `itemSpec`,cid.price as `itemPrice` FROM thesis.canvasitem ci join canvasitemdetails cid on ci.cavasItemID=cid.cavasItemID
+																				   join assetmodel am on ci.assetModel=am.assetModelID
+																				   join ref_brand rb on am.brand=rb.brandID
+																				   join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+												where ci.canvasID='{$row['canvasID']}'";
+												$result1=mysqli_query($dbc,$query1);
+												
+												while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
+													
+													echo "<tr>
+														<td class='text-center'>{$row1['canvasQty']}</td>
+														<td class='text-center'>{$row1['categoryName']}</td>
+														<td class='text-center'>{$row1['brandName']}</td>
+														<td class='text-center'>{$row1['modelDesc']}</td>
+														<td class='text-center'>{$row1['itemSpec']}</td>
+														<td>{$row1['itemPrice']}</td>
+													
+													</tr>";	
+												}
+											?>
+											
                                                 <tr>
                                                     <td class="text-center">3</td>
                                                     <td class="text-center">Laptop</td>
