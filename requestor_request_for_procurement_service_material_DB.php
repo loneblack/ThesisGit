@@ -2,6 +2,8 @@
     session_start();
     require_once("db/mysql_connect.php");
 
+    $header =  $_SESSION['previousPage'];
+
     $employeeID = 1;
     $userID = $_SESSION['userID'];
 
@@ -65,4 +67,6 @@
     
 
   unset($_SESSION['count']);  
+
+  header('Location: '.$header);
 ?>

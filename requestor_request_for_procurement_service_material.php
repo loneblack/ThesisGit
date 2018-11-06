@@ -62,6 +62,16 @@ $_SESSION['count'] = 0;
                                     <div class="panel-body">
                                         <div class="form" method="post">
                                             <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_request_for_procurement_service_material_DB.php">
+                                                <?php
+                                                    if (isset($_SESSION['submitMessage'])){
+
+                                                        echo "<div class='alert alert-success'>
+                                                                {$_SESSION['submitMessage']}
+                                                              </div>";
+
+                                                        unset($_SESSION['submitMessage']);
+                                                    }
+                                                ?>
                                                 <section>
                                                     <h4>Contact Information</h4>
 
