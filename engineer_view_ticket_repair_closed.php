@@ -83,7 +83,6 @@
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th>Quantity</th>
                                             <th>Asset/ Software Name</th>
                                             <th>Property Code</th>
                                             <th>Building</th>
@@ -95,7 +94,6 @@
                                             <td align="center">
                                                 <input type="checkbox" value="" disabled>
                                             </td>
-                                            <td>1</td>
                                             <td>PC</td>
                                             <td>123456</td>
                                             <td>Br. Andrew</td>
