@@ -187,40 +187,17 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                        </tbody>
-                                                    </table>
-                                
-
-
-
-
-
-
-
-
-
-                                                            <table class="table-bordered" align="center" id="tblRequest" border="1">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Quantity</th>
-                                                                        <th style="width:47%">Category dropdown</th>
-                                                                        <th>Description</th>
-                                                                        <th></th>
-                                                                    </tr>
-                                                                </thead>
-
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="col-lg-12">
-                                                                                <input class="form-control" type="number" id="quantity" min="1" step="1" placeholder="Quantity" />
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="col-lg-12">
-                                                                                <select class="form-control" id="category">
-                                                                                    <option>Select</option>
-                                                                                    <?php
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="col-lg-12">
+                                                                        <input class="form-control" type="number" id="quantity" min="1" step="1" placeholder="Quantity" />
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="col-lg-12">
+                                                                        <select class="form-control" id="category">
+                                                                            <option>Select</option>
+                                                                            <?php
 
                                                                                 $sql = "SELECT * FROM thesis.ref_assetcategory;";
 
@@ -234,19 +211,26 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
 
                                                                                 }
                                                                            ?>
-                                                                                </select>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td style="padding-top:5px; padding-bottom:5px">
-                                                                            <div class="col-lg-12">
-                                                                                <input class="form-control" type="text" id="description" placeholder="Item description" />
-                                                                            </div>
-                                                                        </td>
-                                                                        <td style="text-align:center"><input class="btn btn-primary" type="button" onclick="Add()" value="Add" /></td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                            <br>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td style="padding-top:5px; padding-bottom:5px">
+                                                                    <div class="col-lg-12">
+                                                                        <input class="form-control" type="text" id="description" placeholder="Item description" />
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                </td>
+                                                                <td>
+                                                                <button type='button' class='btn btn-primary' onclick='addTest()'> Add </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+
+                                                    <br>
                                                 </section>
 
                                                 <div class="form-group">
@@ -270,138 +254,7 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
 
     </section>
 
-    <!--Function for table-->
-    <script type="text/javascript">
-        function Add() {
-            var description = document.getElementById("description");
-            var quantity = document.getElementById("quantity");
-            var categoryValue = document.getElementById("category");
-            var categoryText = categoryValue.options[categoryValue.selectedIndex].text;
-            AddRow(description.value, quantity.value, categoryValue.value, categoryText);
-            description.value = "";
-            quantity.value = "";
-            categoryValue.value = "";
-            categoryText = "";
-
-        };
-
-        function Remove(button) {
-            //Determine the reference of the Row using the Button.
-            var row = button.parentNode.parentNode;
-            var name = row.getElementsByTagName("TD")[0].innerHTML;
-            if (confirm("Remove " + name)) {
-
-                //Get the reference of the Table.
-                var table = document.getElementById("tblRequest");
-
-                //Delete the Table row using it's Index.
-                table.deleteRow(row.rowIndex);
-            }
-        };
-
-        function AddRow(description, quantity, categoryValue, categoryText) {
-            //Get the reference of the Table's TBODY element.
-            var tBody = document.getElementById("tblRequest").getElementsByTagName("TBODY")[0];
-
-            //Add Row.
-            row = tBody.insertRow(-1);
-
-
-            var cell = row.insertCell(-1);
-            cell.innerHTML = "<td>" + quantity + "</td>";
-
-
-            cell = row.insertCell(-1);
-            cell.innerHTML = "<td>" + categoryText + "</td>";
-
-            cell = row.insertCell(-1);
-            cell.innerHTML = "<td>" + categoryValue + "</td>";
-            cell.setAttribute("style", "display: none")
-
-
-            cell = row.insertCell(-1);
-            cell.innerHTML = "<td>" + description + "</td>";
-
-            //Add Button cell.
-            cell = row.insertCell(-1);
-            var btnRemove = document.createElement("INPUT");
-            btnRemove.type = "button";
-            btnRemove.value = "Remove";
-            btnRemove.setAttribute("onclick", "Remove(this);");
-            btnRemove.setAttribute("class", "btn btn-primary");
-            cell.appendChild(btnRemove);
-        }
-
-        function getRooms(val) {
-            $.ajax({
-                type: "POST",
-                url: "requestor_getRooms.php",
-                data: 'buildingID=' + val,
-                success: function(data) {
-                    $("#FloorAndRoomID").html(data);
-
-
-                }
-            });
-        }
-
-        function getData(tableID) {
-
-            var department = document.getElementById('department').value
-            var unitHead = document.getElementById('unitHead').value
-            var contactPerson = document.getElementById('contactPerson').value
-            var email = document.getElementById('email').value
-            var number = document.getElementById('number').value
-            var buildingID = document.getElementById('buildingID').value
-            var FloorAndRoomID = document.getElementById('FloorAndRoomID').value
-            var dateNeeded = document.getElementById('dateNeeded').value
-            var recipient = document.getElementById('recipient').value
-            var comment = document.getElementById('comment').value
-
-            var quantityArray = [];
-            var categoryArray = [];
-            var descriptionArray = [];
-            var table = $("table tbody");
-
-            table.find('tr').each(function(i) {
-                var $tds = $(this).find('td'),
-                    quantity = $tds.eq(0).text(),
-                    category = $tds.eq(2).text(),
-                    description = $tds.eq(3).text();
-
-                quantityArray.push(quantity);
-                categoryArray.push(category);
-                descriptionArray.push(description);
-            });
-
-            $.ajax({
-                type: "POST",
-                url: "requestor_request_for_procurement_service_material_DB.php",
-                data: {
-                    quantityArray: quantityArray,
-                    categoryArray: categoryArray,
-                    descriptionArray: descriptionArray,
-                    department: department,
-                    unitHead: unitHead,
-                    contactPerson: contactPerson,
-                    email: email,
-                    number: number,
-                    buildingID: buildingID,
-                    FloorAndRoomID: FloorAndRoomID,
-                    dateNeeded: dateNeeded,
-                    recipient: recipient,
-                    comment: comment
-                },
-                success: function(data) {
-                    alert(data);
-                    window.location = "requestor_request_for_procurement_service_material.php";
-
-
-                }
-            });
-        }
-    </script>
-
+    
     <!-- WAG GALAWIN PLS LANG -->
 
     <!--Core js-->
@@ -415,6 +268,77 @@ $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.
 
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
+    
+    <script type="text/javascript">
+						// Shorthand for $( document ).ready()
+                        $(function() {
+
+                        });
+
+
+                        function removeRow(o) {
+                            var p = o.parentNode.parentNode;
+                            p.parentNode.removeChild(p);
+                        }
+
+                        function addTest() {
+                            var row_index = 0;
+                            var isRenderd = false;
+
+                            $("td").click(function() {
+                                row_index = $(this).parent().index();
+
+                            });
+
+                            var delayInMilliseconds = 300; //1 second
+
+                            setTimeout(function() {
+
+                                appendTableRow(row_index);
+                            }, delayInMilliseconds);
+
+
+
+                        }
+						
+						
+                        var appendTableRow = function(rowCount) {
+                            var cnt = 0;
+                            var tr = 
+                                
+                                                        "<tr>" +
+                                                                "<td>" +
+                                                                   " <div class='col-lg-12'>" +
+                                                                        "<input class='form-control' type='number' id='quantity' min='1'" + "step='1' placeholder='Quantity' />" +
+                                                                    "</div>" +
+                                                                "</td>" +
+                                                                "<td>" +
+                                                                    "<div class='col-lg-12'>" +
+                                                                        "<select class='form-control' id='category'>" +
+                                                                            "<option>Select</option>" +
+                                                                        "</select>" +
+                                                                    "</div>" +
+                                                                "</td>" +
+                                                                "<td style='padding-top:5px; padding-bottom:5px'>" +
+                                                                    "<div class='col-lg-12'>" +
+                                                "<input class='form-control' type='text' id='description' placeholder='Item description' />" +
+                                                                    "</div>" +
+                                                                "</td>" +
+                                                                "<td>" +
+                                    "<button id='remove' class='btn btn-danger' type='button' onClick='removeRow(this)'>Remove</button>" +
+                                                                "</td>" +
+                                                                "<td>" +
+                                                                "</td>" +
+                                                                "</tr>"
+								
+								
+								
+								
+                            $('#tableTest tbody tr').eq(rowCount).after(tr);
+							
+                        }
+						
+					</script>
 
 </body>
 
