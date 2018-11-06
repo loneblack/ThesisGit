@@ -79,26 +79,28 @@
 
                             <section class="panel">
                                 <div class="panel-body ">
-                                    <h5><b>** Leave Comments Blank if Asset is Repaired</b></h5>
+                                    <h5><b>** Check the Checkbox if item is repaired</b></h5>
                                     <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Asset/ Software Name</th>
-                                            <th>Property Code</th>
-                                            <th>Building</th>
-                                            <th>Room</th>
-                                            <th>Comments/ Request for Parts</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>PC</td>
-                                            <td>123456</td>
-                                            <td>Br. Andrew</td>
-                                            <td>A 1702</td>
-                                            <td><input class="form-control" type="text"></td>
-                                        </tr>
-                                    </tbody>
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Asset/ Software Name</th>
+                                                <th>Property Code</th>
+                                                <th>Building</th>
+                                                <th>Room</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td align="center">
+                                                    <input type="checkbox" value="">
+                                                </td>
+                                                <td>PC</td>
+                                                <td>123456</td>
+                                                <td>Br. Andrew</td>
+                                                <td>A 1702</td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                             </section>
@@ -176,11 +178,11 @@
                                                     <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018" disabled />
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4">Repair Date *</label>
                                                 <div class="col-lg-8">
-                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018" required  />
+                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018" required />
                                                 </div>
                                             </div>
                                         </form>
@@ -193,6 +195,17 @@
 
 
                         <div class="col-sm-12">
+                            <section class="panel">
+                                <div class="panel-body ">
+
+                                    <div>
+                                        <h4>Comments or Request For Parts (if needed)</h4>
+                                    </div>
+                                    <div class="view-mail">
+                                        <textarea class="form-control" style="resize:none" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </section>
                             <button onclick="#" class="btn btn-success">Send</button></a>
                             <a href="engineer_all_ticket.php"><button class="btn btn-danger">Back</button></a>
                         </div>

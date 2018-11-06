@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
-require_once('mysql_connect.php');
+require_once('db/mysql_connect.php');
 $_SESSION['requestID']=$_GET['requestID'];
 
 $query="SELECT * FROM thesis.canvas 

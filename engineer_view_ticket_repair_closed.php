@@ -82,22 +82,24 @@
                                     <table class="table table-hover">
                                     <thead>
                                         <tr>
+                                            <th></th>
                                             <th>Quantity</th>
                                             <th>Asset/ Software Name</th>
                                             <th>Property Code</th>
                                             <th>Building</th>
                                             <th>Room</th>
-                                            <th>Comments</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
+                                            <td align="center">
+                                                <input type="checkbox" value="" disabled>
+                                            </td>
                                             <td>1</td>
                                             <td>PC</td>
                                             <td>123456</td>
                                             <td>Br. Andrew</td>
                                             <td>A 1702</td>
-                                            <td><input class="form-control" type="text" readonly></td>
                                         </tr>
                                     </tbody>
                                     </table>
@@ -193,6 +195,17 @@
 
 
                         <div class="col-sm-12">
+                            <section class="panel">
+                                <div class="panel-body ">
+
+                                    <div>
+                                        <h4>Comments or Request For Parts (if needed)</h4>
+                                    </div>
+                                    <div class="view-mail">
+                                        <textarea class="form-control" style="resize:none" rows="5" readonly></textarea>
+                                    </div>
+                                </div>
+                            </section>
                             <button onclick="#" class="btn btn-success">Send</button></a>
                             <a href="engineer_all_ticket.php"><button class="btn btn-danger">Back</button></a>
                         </div>
