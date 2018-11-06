@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<!--Notes
+1. Apply auto-increment to ref_servicetype table for it to work -->
 <?php
 
 	$flag=0;
@@ -7,9 +9,9 @@
 	if (isset($_POST['submit'])){
 		
 		$categoryName=$_POST['categoryName'];
-		$description=$_POST['description'];
 		
-		$query="INSERT INTO `thesis`.`ref_servicetype` (`serviceType`, `description`) VALUES ('{$categoryName}', '{$description}')";
+		
+		$query="INSERT INTO `thesis`.`ref_servicetype` (`serviceType`) VALUES ('{$categoryName}')";
 		$result=mysqli_query($dbc,$query);
 			
 		echo "<script type='text/javascript'>alert('Success');</script>"; // Show modal
@@ -83,14 +85,6 @@
                                                     <input type="text" class="form-control" id="name" placeholder="Name" name="categoryName" value="<?php if (isset($_POST['categoryName']) && !$flag) echo $_POST['categoryName']; ?>" required>
                                                 </div>
                                             </div>
-
-                                            <div class="form-group ">
-                                                <label for="ccomment" class="col-lg-2 col-sm-2 control-label">Description</label>
-                                                <div class="col-lg-10">
-                                                    <textarea class="form-control" id="description" name="description" value="<?php if (isset($_POST['description']) && !$flag) echo $_POST['description']; ?>" required></textarea>
-                                                </div>
-                                            </div>
-
 
                                             <div class="form-group">
                                                 <div class="col-lg-offset-2 col-lg-10">

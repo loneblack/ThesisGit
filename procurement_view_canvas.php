@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<!--Notes
+1. Added 
+INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('7', 'Re-check Canvas');
+INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('8', 'Ready for PO');
+INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For Canvas');
+
+ -->
 <html lang="en">
 
 <head>
@@ -82,7 +89,7 @@
                                                         <td>1/1/2018</td>
                                                     </tr>
                                                     
-                                                    <tr id="rowrowboat">
+                                                    <tr>
                                                         <td><a href="procurement_view_request.php">12/23/2018</a></td>
                                                         <td><span class="label label-primary label-mini">Ready for PO</span></td>
                                                         <td>We Need 500 more laptops PLSSS!!</td>
@@ -90,7 +97,7 @@
                                                         <td>1/1/2018</td>
                                                     </tr>
                                                     
-                                                    <tr id="rowrowboat">
+                                                    <tr>
                                                         <td><a href="procurement_view_request.php">12/23/2018</a></td>
                                                         <td><span class="label label-warning label-mini">For Canvas</span></td>
                                                         <td>We Need 500 more laptops PLSSS!!</td>
@@ -98,6 +105,42 @@
                                                         <td>1/1/2018</td>
                                                     </tr>
                                                     
+													<?php
+													
+														require_once('db/mysql_connect.php');
+														$query="SELECT c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.recipient,r.datetime as `requestedDate` FROM thesis.canvas c 
+																   join ref_status rs on c.status=rs.statusID
+                                                                   join request r on c.requestID=r.requestID";
+														$result=mysqli_query($dbc,$query);
+														
+														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+															echo "<tr id='{$row['canvasID']}'>
+																<td>{$row['dateNeeded']}</td>";
+																
+															if($row['status']=='Completed'){
+																echo "<td><span class='label label-success label-mini'>{$row['status']}</span></td>";
+															}
+															elseif($row['status']=='Re-check Canvas'){
+																echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
+															}
+															elseif($row['status']=='For Canvas'){
+																echo "<td><span class='label label-warning label-mini'>{$row['status']}</span></td>";
+															}
+															else{
+																echo "<td><span class='label label-primary label-mini'>{$row['status']}</span></td>";
+															}
+																
+															echo "<td>{$row['description']}</td>
+																<td>{$row['recipient']}</td>
+																<td>{$row['requestedDate']}</td>
+															</tr>";
+														}
+													
+													
+													
+													
+													?>
+													
                                                 </tbody>
                                             </table>
                                             </div>
@@ -137,13 +180,13 @@
 						var id = cell.textContent;
 						
 						if(id == "Ready for PO"){
-							window.location.replace("procurement_purchase_order.php");
+							window.location.replace("procurement_purchase_order.php?canvasID="+ row.getAttribute("id"));
 						}
                         else if(id == "For Canvas"){
-                            window.location.replace("procurement_view_request.php");
+                            window.location.replace("procurement_view_request.php?canvasID="+ row.getAttribute("id"));
                         }
 						else if(id == "Completed"){
-                            window.location.replace("procurement_view_completed.php");
+                            window.location.replace("procurement_view_completed.php?canvasID="+ row.getAttribute("id"));
                         }
 					};
 				};
