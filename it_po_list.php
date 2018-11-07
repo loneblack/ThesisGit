@@ -70,14 +70,14 @@
                                                 <tr>
                                                     <td>232323232</td>
                                                     <td>1/1/2018</td>
-                                                    <td><span class="label label-success label-mini"> Orders Completed</span></td>
+                                                    <td><span class="label label-success label-mini">Open</span></td>
                                                     <td>Marvin Lao</td>
                                                     <td>1/1/2018</td>
                                                 </tr>
                                                 <tr>
                                                     <td>232323232</td>
                                                     <td>1/1/2018</td>
-                                                    <td><span class="label label-danger label-mini">Incomplete</span></td>
+                                                    <td><span class="label label-danger label-mini">Closed</span></td>
                                                     <td>Marvin Lao</td>
                                                     <td>1/1/2018</td>
                                                 </tr>
@@ -110,11 +110,30 @@
     <script src="js/jquery.nicescroll.js"></script>
 
     <script>
-        $('#ctable').on('dblclick', function() {
-            window.location.replace("it_view_po.php");
-        })
-
-    </script>
+	function addRowHandlers() {
+		var table = document.getElementById("ctable");
+		var rows = table.getElementsByTagName("tr");
+		for (i = 1; i < rows.length; i++) {
+			var currentRow = table.rows[i];
+			var createClickHandler = function(row) {
+				return function() {
+					var cell = row.getElementsByTagName("td")[2];
+					var status = cell.textContent;
+					
+					if(status == "Open"){
+						window.location.replace("it_view_open_po.php");
+					}
+					
+					if(status == "Closed"){
+						window.location.replace("it_view_closed_po.php");
+					}
+				};
+			};
+			currentRow.onclick = createClickHandler(currentRow);
+		}
+	}
+	window.onload = addRowHandlers();
+	</script>
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
 
