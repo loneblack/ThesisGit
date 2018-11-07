@@ -665,6 +665,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
   `testingID` INT(11) NULL DEFAULT NULL,
   `serviceType` INT(11) NULL DEFAULT NULL,
   `others` LONGTEXT NULL DEFAULT NULL,
+  `comment` LONGTEXT NULL,
   PRIMARY KEY (`ticketID`),
   INDEX `fk_Ticket_ref_TicketStatus1_idx` (`status` ASC),
   INDEX `fk_Ticket_User1_idx` (`creatorUserID` ASC),
@@ -688,6 +689,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
     REFERENCES `thesis`.`ref_servicetype` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
 
 
 -- -----------------------------------------------------

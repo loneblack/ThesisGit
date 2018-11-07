@@ -174,7 +174,10 @@ INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('23', 'Web 
 INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('24', 'Web site updating');
 INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('25', 'Asset Testing');
 INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('26', 'Refurbishing');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('27', 'Others');
+INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('27', 'repair');
+INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('28', 'Maintenance');
+INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('29', 'Others');
+
 
 
 

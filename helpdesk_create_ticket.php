@@ -3,7 +3,7 @@
 
 	$flag=0;
 	$key = "Fusion";
-	require_once('mysql_connect.php');
+	require_once('db/mysql_connect.php');
 	
 	//temporary userID
 	$userID='3';
