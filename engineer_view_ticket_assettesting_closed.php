@@ -48,9 +48,9 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-
+						
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-9">
                                 <section class="panel">
                                     <header class="panel-heading">
                                         Asset Testing Checklist
@@ -66,43 +66,51 @@
                                                 <thead>
                                                     <tr>
 														<th></th>
-                                                        <th>Quantity</th>
+                                                        <th>Property Code</th>
                                                         <th>Item</th>
                                                         <th>Specification</th>
-                                                        <th style="width:380px">What to check</th>
                                                         <th>Comments</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-														<td style="text-align:center"><input type='checkbox' class='form-check-input' checked disabled></td>
-                                                        <td style="text-align:center">5</td>
+														<td style="text-align:center"><input type='checkbox' class='form-check-input' disabled></td>
+                                                        <td style="text-align:center">TBLT-001</td>
                                                         <td style="text-align:center">Apple Tablet</td>
                                                         <td style="text-align:center">iPad</td>
-                                                        <td style="text-align:center">Touchscreen</td>
-														<th><input style="text" class="form-control" disabled></input></th>
+														<th><input style="text" class="form-control" disabled></th>
                                                         
                                                     </tr>
                                                     <tr >
 														<td style="text-align:center"><input type='checkbox' class='form-check-input' disabled></td>
-                                                        <td style="text-align:center; width:50px;">5</td>
+                                                        <td style="text-align:center; width:50px;">PC-0023</td>
                                                         <td style="text-align:center">Windows</td>
                                                         <td style="text-align:center">Windows 10</td>
-                                                        <td style="text-align:center">Task</td>
-                                                        <th><input style="text" class="form-control" value="Broken" disabled></th>
+                                                        <th><input style="text" class="form-control" disabled></th>
                                                     </tr>
 													<tr>
                                                         <td style="text-align:center"><input type='checkbox' class='form-check-input' disabled></td>
-														<td style="text-align:center">1</td>
+														<td style="text-align:center">PHN-0312</td>
                                                         <td style="text-align:center">Smartphone</td>
                                                         <td style="text-align:center">Samsung Galaxy J7 Pro</td>
-														<td style="text-align:center">Check touchscreen</td>
-                                                        <th><input style="text" class="form-control" value="Lorem ipsum dolor" disabled></th>
+                                                        <th><input style="text" class="form-control" disabled></th>
                                                     </tr>
                                                 </tbody>
                                             </table>
+											
+											<div>
+												<label>Name: </label><input type="text" class="form-control">
+												<br>
+												<label>Office Building: </label><input type="text" class="form-control">
+												<br>
+												<label>Room Number: </label><input type="text" class="form-control">
+												<br>
+												<br>
+											</div>
+											
 
                                             <div>
+												<button onclick="return confirm('Confirm checklist?')" type="button" class="btn btn-success" data-dismiss="modal">Save</button>
                                                 <a href="engineer_all_ticket.php"><button type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
                                             </div>
 
@@ -110,6 +118,90 @@
                                     </div>
                                 </section>
                             </div>
+							
+							
+							<div class="col-sm-3">
+								<section class="panel">
+									<div class="panel-body">
+										<ul class="nav nav-pills nav-stacked labels-info ">
+											<li>
+												<h4>Properties</h4>
+											</li>
+										</ul>
+										<div class="form">
+											<form class="cmxform form-horizontal " id="signupForm" method="post" action="">
+												<div class="form-group ">
+													<div class="form-group ">
+														<label style="padding-left:22px" for="category" class="control-label col-lg-4">Category</label>
+														<div class="col-lg-8" style="padding-right:30px">
+															<select class="form-control m-bot15" disabled>
+																<option selected="selected">Repair</option>
+																<option>Repair</option>
+																<option>Maintenance</option>
+																<option>Replacement</option>
+															</select>
+														</div>
+													</div>
+
+													<label for="status" class="control-label col-lg-4">Status</label>
+													<div class="col-lg-8">
+														<select class="form-control m-bot15" disabled>
+															<option>Assigned</option>
+															<option>In Progress</option>
+															<option selected="selected">Transferred</option>
+															<option>Escalated</option>
+															<option>Waiting For Parts</option>
+															<option>Closed</option>
+														</select>
+													</div>
+												</div>
+
+												<div class="form-group ">
+													<label for="priority" class="control-label col-lg-4">Priority</label>
+													<div class="col-lg-8">
+														<select class="form-control m-bot15" disabled>
+															<option selected="selected">Low</option>
+															<option>Medium</option>
+															<option>High</option>
+															<option>Urgent</option>
+														</select>
+													</div>
+												</div>
+
+												<div class="form-group ">
+													<label for="assign" class="control-label col-lg-4">Escalate To</label>
+													<div class="col-lg-8">
+														<select class="form-control m-bot15" disabled>
+															<option selected="selected">Eng. Marvin Lao</option>
+															<option>Eng. Marvin Lao</option>
+															<option>Eng. Marvin Lao</option>
+															<option>Eng. Marvin Lao</option>
+															<option>Eng. Marvin Lao</option>
+															<option>Eng. Marvin Lao</option>
+														</select>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="control-label col-lg-4">Due Date</label>
+													<div class="col-lg-8">
+														<input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018" disabled />
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label class="control-label col-lg-4">Repair Date *</label>
+													<div class="col-lg-8">
+														<input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018" disabled required />
+													</div>
+												</div>
+											</form>
+										</div>
+
+									</div>
+								</section>
+							</div>
+							
                         </div>
                     </div>
                 </div>
