@@ -66,7 +66,7 @@
                                                 <thead>
                                                     <tr>
 														<th></th>
-                                                        <th>Quantity</th>
+                                                        <th>Property Code</th>
                                                         <th>Item</th>
                                                         <th>Specification</th>
                                                         <th style="width:380px">What to check</th>
@@ -76,7 +76,7 @@
                                                 <tbody>
                                                     <tr>
 														<td style="text-align:center"><input type='checkbox' class='form-check-input'></td>
-                                                        <td style="text-align:center">5</td>
+                                                        <td style="text-align:center">TBLT-001</td>
                                                         <td style="text-align:center">Apple Tablet</td>
                                                         <td style="text-align:center">iPad</td>
                                                         <td style="text-align:center">Touchscreen</td>
@@ -85,7 +85,7 @@
                                                     </tr>
                                                     <tr >
 														<td style="text-align:center"><input type='checkbox' class='form-check-input'></td>
-                                                        <td style="text-align:center; width:50px;">5</td>
+                                                        <td style="text-align:center; width:50px;">PC-0023</td>
                                                         <td style="text-align:center">Windows</td>
                                                         <td style="text-align:center">Windows 10</td>
                                                         <td style="text-align:center">Task</td>
@@ -93,7 +93,7 @@
                                                     </tr>
 													<tr>
                                                         <td style="text-align:center"><input type='checkbox' class='form-check-input'></td>
-														<td style="text-align:center">1</td>
+														<td style="text-align:center">PHN-0312</td>
                                                         <td style="text-align:center">Smartphone</td>
                                                         <td style="text-align:center">Samsung Galaxy J7 Pro</td>
 														<td style="text-align:center">Check touchscreen</td>
