@@ -17,6 +17,13 @@
                             </a>
                         </li>
                         
+                        <li>
+                            <a href="engineer_maintenance.php">
+                                <i class="fa fa-cogs"></i>
+                                <span>Maintenance</span>
+                            </a>
+                        </li>
+                        
                         
                         <li>
                             <a href="logout.php">
