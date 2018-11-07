@@ -1,4 +1,50 @@
 <!DOCTYPE html>
+<?php
+	require_once('db/mysql_connect.php');
+	$canvasID=$_GET['canvasID'];
+	
+	if (isset($_POST['submit'])){
+		
+		$supplierArray=$_POST['supplier'];
+		$unitPriceArray=$_POST['unitPrice'];
+		$canvasItemIDArray=$_POST['canvasItemIDArr'];
+		$canvasItemIDArray2=$_POST['canvasItemIDArr'];
+		$supplierIDArray=$_POST['supplierIDArr'];
+		
+		
+		$count = sizeof($supplierArray);
+		
+		//$countq = sizeof($supplierArray);
+		//$countw = sizeof($unitPriceArray);
+		//$counte = sizeof($canvasItemIDArray);
+		
+		
+		echo "<script>alert('supplierArray:{$supplierArray[0]} unitPriceArray:{$unitPriceArray[0]} canvasItemIDArray{$canvasItemIDArray[0]}');</script>";
+		
+		$mi = new MultipleIterator();
+		$mi->attachIterator(new ArrayIterator($supplierArray));
+		$mi->attachIterator(new ArrayIterator($unitPriceArray));
+		$mi->attachIterator(new ArrayIterator($canvasItemIDArray));
+		
+		//for ($i=0; $i < $count; $i++) { 
+			
+		//}
+		
+		foreach ( $mi as $value ) {
+			list($supplierArray, $unitPriceArray, $canvasItemIDArray) = $value;
+			$querya="INSERT INTO `thesis`.`canvasitemdetails` (`cavasItemID`, `supplier_supplierID`, `price`, `status`) VALUES ('{$canvasItemIDArray}', '{$supplierArray}', '{$unitPriceArray}', '1')";
+			$resulta=mysqli_query($dbc,$querya);
+		}
+		
+		$result = array_unique($canvasItemIDArray2);
+		$count2 = sizeof($result);
+		
+		for ($j=0; $j < $count2; $j++){
+			$queryb="DELETE FROM `thesis`.`canvasitemdetails` WHERE `cavasItemID`='{$result[$j]}' and status='11'";
+			$resultb=mysqli_query($dbc,$queryb);
+		}
+	}
+?>
 <html lang="en">
 
 <head>
@@ -57,6 +103,7 @@
                                     </header>
                                     <div class="panel-body">
                                         <section id="unseen">
+											<form method="post">
                                             <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                 <thead>
                                                     <tr>
@@ -69,7 +116,65 @@
                                                         <th></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+												<?php
+														$query="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,ci.quantity,am.itemSpecification,ci.description,s.name as `supplierName`,rs.description as `itemStatus`,cid.price,(ci.quantity*cid.price) as `totalPrice`,cid.supplier_supplierID as `supplierID` FROM thesis.canvasitemdetails cid
+															join supplier s on cid.supplier_supplierID=s.supplierID
+                                                            join ref_status rs on cid.status=rs.statusID
+                                                            join canvasitem ci on cid.cavasItemID=ci.cavasItemID
+															join assetmodel am on ci.assetModel=am.assetModelID
+															join ref_brand rb on am.brand=rb.brandID
+															join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
+															where ci.canvasID='{$canvasID}'";
+														$result=mysqli_query($dbc,$query);
+														$count=0;
+														$stringRow="canvasItemRow";
+														$idRow="";
+														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+															$idRow=$stringRow."".$count;
+															if($row['itemStatus']=='Approved'){
+																echo "<tr class='canvasItemRows'>
+																		<td><input type='checkbox' checked disabled></td>
+																		<td style='width:50px;'>{$row['quantity']}</td>
+																		<td>{$row['itemName']}</td>
+																		<td>{$row['itemSpecification']}</td>
+																		<td>
+																		<select class='form-control' disabled>
+																			<option selected value='{$row['supplierID']}'>{$row['supplierName']}</option>
+																		</select>
+																		</td>
+																		<td><input type='number' class='form-control' min='0.00' value='{$row['price']}' disabled></td>
+																		<td><button type='button' class='btn btn-primary' onclick='addTest({$row['cavasItemID']},{$row['supplierID']})' disabled> Add </button></td>
+																	</tr>";
+															}
+															else{
+																echo "<tr class='canvasItemRows'>
+																		<td><input type='checkbox' disabled></td>
+																		<td style='width:50px;'>{$row['quantity']}</td>
+																		<td>{$row['itemName']}</td>
+																		<td>{$row['itemSpecification']}</td>
+																		<td>
+																		<select class='form-control' disabled>
+																			<option selected value='{$row['supplierID']}'>{$row['supplierName']}</option>
+																		</select>
+																		</td>
+																		<td><input type='number' class='form-control' min='0.00' value='{$row['price']}' disabled></td>
+																		<td><button type='button' class='btn btn-primary' onclick='addTest({$row['cavasItemID']},{$row['supplierID']})'> Add </button></td>
+																		</tr>
+																		";
+															}
+															$count++;
+														}
+													
+													
+													
+													
+													
+													
+													
+													?>
+												
+												
+                                                <!--<tbody>
                                                     <tr>
                                                         <td><input type="checkbox" checked disabled></td>
                                                         <td style="width:50px;">5</td>
@@ -135,14 +240,14 @@
                                                         </td>
                                                         <td><input type="number" class="form-control" min="0.00" value="1000" disabled></td><td><button class="btn btn-primary" onclick="addTest(1)"> Add </button></td>
                                                     </tr>
-                                                </tbody>
+                                                </tbody> -->
                                             </table>
 
                                             <div>
-                                                <button type="button" class="btn btn-success" data-dismiss="modal">Send</button>
+                                                <button type="submit" name="submit" class="btn btn-success" data-dismiss="modal">Send</button>
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                                             </div>
-
+											</form>
                                         </section>
                                     </div>
                                 </section>
@@ -176,54 +281,56 @@
     <script src="js/scripts.js"></script>
 
     <script type="text/javascript">
+		
         // Shorthand for $( document ).ready()
         $(function() {
-
         });
-
-
-
-
-        function addTest() {
+        function addTest(cavasItemID,suppID) {
+			//var rowID=""+ idRow;
+			var canvasItemID=cavasItemID;
+			var supplierID=suppID;
             var row_index = 0;
             var isRenderd = false;
-
             $("td").click(function() {
                 row_index = $(this).parent().index();
-
             });
-
             var delayInMilliseconds = 300; //1 second
-
             setTimeout(function() {
-
-                appendTableRow(row_index);
+                appendTableRow(row_index,canvasItemID,supplierID);
             }, delayInMilliseconds);
-
-
-
         }
-
-        var appendTableRow = function(rowCount) {
-            var cnt = 0
+		
+		function getDisabledSupplier(rowCount,rowClass,canvasItemID){
+			//var rowID=""+idRow;
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				//document.getElementById("exampleFormControlSelect2").innerHTML = this.responseText;
+				document.getElementsByClassName(rowClass)[0].innerHTML = this.responseText;
+			}
+			};
+			xmlhttp.open("GET", "disabled_supplier_ajax.php?canvasItemID=" + canvasItemID, true);
+			xmlhttp.send();
+		}
+		
+        var appendTableRow = function(rowCount,canvasItemID,supplierID) {
+			var rowClass = "newCanvasRow"+rowCount;
+            var cnt = 0;
             var tr = "<tr>" +
+				"<input type='hidden' name='canvasItemIDArr[]' value='"+ canvasItemID +"'>" +
+				"<input type='hidden' name='supplierIDArr[]' value='"+ supplierID +"'>" +
                 "<td style='width:50px;'></td>" +
                 "<td></td>" +
-                "<td></td>" +
+				"<td></td>" +
                 "<td></td>" +
                 "<td>" +
-                "<select class='form-control' id='exampleFormControlSelect1' required>" +
-                " <option>Select Supplier</option>" +
-                "<option>ABC Corp.</option>" +
-                "<option>Philippine Sports Commission</option>" +
-                "<option>CDR-King</option>" +
-                "<option>Huawei</option>" +
-                "<option>Samsung</option>" +
+                "<select class='form-control "+ rowClass +"'  name='supplier[]' required>" +
                 "</select>" +
                 "</td>" +
-                "<td><input type='number' class='form-control' min='0.00' required></td>" +
+                "<td><input type='number' class='form-control' min='0.00' name='unitPrice[]' required></td>" +
                 "</tr>";
             $('#tableTest tbody tr').eq(rowCount).after(tr);
+			getDisabledSupplier(rowCount,rowClass,canvasItemID);
         }
     </script>
 

@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php
+	require_once('db/mysql_connect.php');
+	$canvasID=$_GET['canvasID'];
+?>
 <html lang="en">
 
 <head>
@@ -83,10 +87,12 @@
                                                     <th class="text-center">Specifications</th>
                                                     <th class="text-center">Quantity</th>
                                                     <th class="text-center">Supplier</th>
-                                                    <th class="text-center">Price</th>
+                                                    <th class="text-center">Unit Cost</th>
+													<th class="text-center">Total Price</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+											
+                                            <!-- <tbody>
                                                 <tr>
                                                     <td><input type="checkbox" disabled></td>
                                                     <td>
@@ -120,7 +126,44 @@
                                                     <td class="text-center">ABC Co.</td>
                                                     <td class="text-center">P 4 000.00</td>
                                                 </tr>
+                                            </tbody> -->
+											
+											<tbody>
+                                                <?php
+												
+													$query="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,ci.quantity,am.itemSpecification,ci.description,s.name as `supplierName`,rs.description as `itemStatus`,cid.price,(ci.quantity*cid.price) as `totalPrice`,cid.supplier_supplierID as `supplierID` FROM thesis.canvasitemdetails cid
+															join supplier s on cid.supplier_supplierID=s.supplierID
+                                                            join ref_status rs on cid.status=rs.statusID
+                                                            join canvasitem ci on cid.cavasItemID=ci.cavasItemID
+															join assetmodel am on ci.assetModel=am.assetModelID
+															join ref_brand rb on am.brand=rb.brandID
+															join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
+															where ci.canvasID='{$canvasID}'";
+													$result=mysqli_query($dbc,$query);
+													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														if($row['itemStatus']=='Approved'){
+															echo "<tr><td><input type='checkbox' checked disabled></td>";
+														}
+														else{
+															echo "<tr><td><input type='checkbox' disabled></td>";
+														}
+														echo "<td>
+															<h4>{$row['itemName']}</h4>
+															<p>{$row['description']}</p>
+															</td>
+															<td class='text-center'>{$row['itemSpecification']}</td>
+															<td class='text-center'>{$row['quantity']}</td>
+															<td class='text-center'>{$row['supplierName']}</td>
+															<td class='text-center'>P {$row['price']}</td>
+															<td class='text-center'>P {$row['totalPrice']}</td>";
+													}
+												
+												
+												
+												
+												?>
                                             </tbody>
+											
                                         </table>
                                         <div class="text-center invoice-btn">
                                             
@@ -129,7 +172,7 @@
                                             
                                             
 <!--                                            START NA NG MODAL DITO-->
-                                            <a href="procurement_restart_canvas.php" class="btn btn-success btn-lg" ><i class="fa fa-check"></i> Start Canvas </a>
+                                            <a href="procurement_restart_canvas.php?canvasID=<?php echo $canvasID; ?>" class="btn btn-success btn-lg" ><i class="fa fa-check"></i> Start Canvas </a>
 
                                             
                                             
@@ -164,11 +207,9 @@
     <script src="js/scripts.js"></script>
     <script>
         $(":input").bind('keyup change click', function(e) {
-
             if ($(this).val() < 0) {
                 $(this).val('')
             }
-
         });
     </script>
 </body>
