@@ -77,7 +77,7 @@
 											
 												<?php
 												
-													require_once('mysql_connect.php');
+													require_once('db/mysql_connect.php');
 													$query="SELECT t.ticketID,t.summary,rst.serviceType,t.lastUpdateDate,t.dueDate,rts.status,t.action FROM thesis.ticket t 
 																						join thesis.ref_ticketstatus rts on t.status=rts.ticketID
 																						join thesis.ref_servicetype rst on t.serviceType=rst.id";

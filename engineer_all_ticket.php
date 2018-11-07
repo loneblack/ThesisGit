@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+$userId = $_SESSION['userID'];
+require_once("db/mysql_connect.php");
+?>
 
 <head>
     <meta charset="utf-8">
@@ -69,11 +74,73 @@
                                                     <th>Category</th>
                                                     <th>Updated</th>
                                                     <th>Date Needed</th>
-                                                    <th>Action</th>
+                                                    <th>Priority</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
+
                                             <tbody>
+
+                                                 <?php
+                                                    $count = 1;
+
+                                                    $query = "SELECT t.ticketID, (convert(aes_decrypt(cu.firstName, 'Fusion') using utf8)) AS 'cfirstName' ,(convert(aes_decrypt(cu.lastName, 'Fusion')using utf8)) AS 'clastName',
+                                                              lastUpdateDate, dateCreated, dateClosed, dueDate, priority,summary, t.description, t.serviceType as 'serviceTypeID', st.serviceType,t.status as 'statusID', s.status FROM thesis.ticket t
+                                                              JOIN ref_ticketstatus s
+                                                                ON t.status = s.ticketID
+                                                              JOIN user cu
+                                                                ON t.creatorUserID = cu.UserID
+                                                            JOIN ref_servicetype st
+                                                                ON t.serviceType = st.id;";
+                                                                  
+                                                    $result = mysqli_query($dbc, $query);
+                                                    
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                      
+                                                      echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$row['ticketID']}</td>
+                                                            <td>{$count}</td>
+                                                            <td>{$row['summary']}</td>
+                                                            <tdstyle='display: none'>{$row['serviceTypeID']}</td>
+                                                            <td>{$row['serviceType']}</td>
+                                                            <td>{$row['lastUpdateDate']}</td>
+                                                            <td>{$row['dueDate']}</td>";
+
+                                                        if($row['priority'] == "high"){
+                                                            echo "<td><span class='label label-danger'>{$row['priority']}</span></td>";
+                                                        }
+                                                        if($row['priority'] == "medium"){
+                                                            echo "<td><span class='label label-warning'>{$row['priority']}</span></td>";
+                                                        }
+                                                        if($row['priority'] == "low"){
+                                                            echo "<td><span class='label label-success'>{$row['priority']}</span></td>";
+                                                        }
+
+                                                        if($row['statusID'] == "1"){
+                                                            echo "<td><span class='label label-success'>{$row['status']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == "2"){
+                                                            echo "<td><span class='label label-default'>{$row['status']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == "3"){
+                                                            echo "<td><span class='label label-primary'>{$row['status']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == "4" || $row['statusID'] == "5"){
+                                                            echo "<td><span class='label label-info'>{$row['status']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == "6"){
+                                                            echo "<td><span class='label label-warning'>{$row['status']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == "7"){
+                                                            echo "<td><span class='label label-danger'>{$row['status']}</span></td>";
+                                                        }
+                                                    
+                                                        echo "</tr>";
+
+                                                          $count++;
+                                                    }
+                                                  ?>
                                                 <tr class="gradeA">
                                                     <td>1</td>
                                                     <td>Need Help Here</td>
@@ -219,40 +286,46 @@
 				var currentRow = table.rows[i];
 				var createClickHandler = function(row) {
 					return function() {
-						var cell = row.getElementsByTagName("td")[6];
-						var id = cell.textContent;
-						var cell = row.getElementsByTagName("td")[2];
-						var idx = cell.textContent;
-						alert(idx +" - " + id);
+						var cell1 = row.getElementsByTagName("td")[0];
+						var id = cell1.textContent;
+
+                        var cell2 = row.getElementsByTagName("td")[3];
+                        var serviceTypeID = cell2.textContent;
+
+                        var cell3 = row.getElementsByTagName("td")[8];
+                        var serviceTypeID = cell2.textContent;
+
+						alert(id);
 						
 						
 						if(idx == "Service"){
 							if(id == "Closed"){
-								window.location.replace("engineer_view_ticket_service_closed.php");
+								window.location.replace("engineer_view_ticket_service_closed.php?id=" + id);
 							}
 								
-							if(id == "Opened"){
-								window.location.replace("engineer_view_ticket_service_opened.php");
+							else{
+								window.location.replace("engineer_view_ticket_service_opened.php?id=" + id);
 							}
 						}
 						
 						if(idx == "Asset Testing"){
-							if(id == "Opened"){
-								window.location.replace("engineer_view_ticket_assettesting_opened.php");
-							}
-							
 							if(id == "Closed"){
-								window.location.replace("engineer_view_ticket_assettesting_closed.php");
+								window.location.replace("engineer_view_ticket_assettesting_closed.php?id=" + id);
 							}
+
+                            else{
+                                window.location.replace("engineer_view_ticket_assettesting_opened.php?id=" + id);
+                            }
+                            
 						}
                         
                         if(idx == "Repair"){
-                            if(id == "Opened"){
-								window.location.replace("engineer_view_ticket_repair_opened.php");
-							}
-							
-							if(id == "Closed"){
-								window.location.replace("engineer_view_ticket_repair_closed.php");
+                            
+                            if(id == "Closed"){
+                                window.location.replace("engineer_view_ticket_repair_closed.php?id=" + id);
+                            }
+                            else{
+								window.location.replace("engineer_view_ticket_repair_opened.php?id=" + id);
 							}
 						}
 						
