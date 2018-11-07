@@ -48,7 +48,7 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-						
+
                         <div class="row">
                             <div class="col-sm-12">
                                 <section class="panel">
@@ -66,7 +66,7 @@
                                                 <thead>
                                                     <tr>
 														<th></th>
-                                                        <th>Property Code</th>
+                                                        <th>Product Code</th>
                                                         <th>Item</th>
                                                         <th>Specification</th>
                                                         <th style="width:380px">What to check</th>
@@ -75,35 +75,34 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-														<td style="text-align:center"><input type='checkbox' class='form-check-input'></td>
-                                                        <td style="text-align:center">TBLT-001</td>
+														<td style="text-align:center"><input type='checkbox' class='form-check-input' checked disabled></td>
+                                                        <td style="text-align:center">5</td>
                                                         <td style="text-align:center">Apple Tablet</td>
                                                         <td style="text-align:center">iPad</td>
                                                         <td style="text-align:center">Touchscreen</td>
-														<th><input style="text" class="form-control"></th>
+														<th><input style="text" class="form-control" disabled></input></th>
                                                         
                                                     </tr>
                                                     <tr >
-														<td style="text-align:center"><input type='checkbox' class='form-check-input'></td>
-                                                        <td style="text-align:center; width:50px;">PC-0023</td>
+														<td style="text-align:center"><input type='checkbox' class='form-check-input' disabled></td>
+                                                        <td style="text-align:center; width:50px;">5</td>
                                                         <td style="text-align:center">Windows</td>
                                                         <td style="text-align:center">Windows 10</td>
                                                         <td style="text-align:center">Task</td>
-                                                        <th><input style="text" class="form-control"></th>
+                                                        <th><input style="text" class="form-control" value="Broken" disabled></th>
                                                     </tr>
 													<tr>
-                                                        <td style="text-align:center"><input type='checkbox' class='form-check-input'></td>
-														<td style="text-align:center">PHN-0312</td>
+                                                        <td style="text-align:center"><input type='checkbox' class='form-check-input' disabled></td>
+														<td style="text-align:center">1</td>
                                                         <td style="text-align:center">Smartphone</td>
                                                         <td style="text-align:center">Samsung Galaxy J7 Pro</td>
 														<td style="text-align:center">Check touchscreen</td>
-                                                        <th><input style="text" class="form-control"></th>
+                                                        <th><input style="text" class="form-control" value="Lorem ipsum dolor" disabled></th>
                                                     </tr>
                                                 </tbody>
                                             </table>
 
                                             <div>
-												<button onclick="return confirm('Confirm checklist?')" type="button" class="btn btn-success" data-dismiss="modal">Save</button>
                                                 <a href="engineer_all_ticket.php"><button type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
                                             </div>
 
