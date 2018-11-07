@@ -96,7 +96,7 @@
                                                         <p>Product Key is 11111111</p>
                                                     </td>
                                                     <td class="text-center">1</td>
-                                                    <td class="text-center">All Good</td>
+                                                    <td class="text-center"><input type="text" class="form-control"></td>
                                                 </tr>
                                                 <tr>
                                                     <td>2</td>
@@ -105,7 +105,7 @@
                                                         <p>Green Laptop with 4Gb Ram</p>
                                                     </td>
                                                     <td class="text-center">2</td>
-                                                    <td class="text-center">All Good</td>
+                                                    <td class="text-center"><input type="text" class="form-control"></td>
                                                 </tr>
                                                 <tr>
                                                     <td>3</td>
@@ -114,7 +114,7 @@
                                                         <p>Blue ang ulo</p>
                                                     </td>
                                                     <td class="text-center">1</td>
-                                                    <td class="text-center">All Good</td>
+                                                    <td class="text-center"><input type="text" class="form-control"></td>
                                                 </tr>
 
                                             </tbody>
@@ -122,6 +122,7 @@
                                     </section>
                                 </div>
                             </section>
+							<button class="btn btn-info" onclick="window.history.back();" id="back">Back</button>
                         </div>
 
 
@@ -145,9 +146,9 @@
     <script src="js/jquery.nicescroll.js"></script>
 
     <script>
-        $('#ctable').on('dblclick', function() {
-            window.location.replace("it_view_testing.php");
-        })
+        function goBack(){
+			window.history.back();
+		}
     </script>
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
