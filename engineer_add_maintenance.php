@@ -58,18 +58,45 @@
                                             <form class="cmxform form-horizontal " id="signupForm" method="post">
 
                                                 <div class="form-group">
-                                                    <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Location Type</label>
-                                                    <div class="col-lg-8">
+                                                    <label class="col-lg-2 col-sm-2 control-label">Location Type</label>
+                                                    <div class="col-lg-10">
                                                         <input type="text" class="form-control" placeholder="Location Type">
                                                     </div>
                                                 </div>
                                                 
                                                 <div class="form-group ">
                                                     <label for="details" class="col-lg-2 col-sm-2 control-label">Description</label>
-                                                    <div class="col-lg-8">
+                                                    <div class="col-lg-10">
                                                         <textarea class="form-control" rows="5" name="Description" style="resize:none"></textarea>
                                                     </div>
                                                 </div>
+                                                
+                                                <button class="btn btn-primary" onclick="addTest2(5)">Add Asset</button>
+                                                <br>
+                                                <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Asset Type</th>
+                                                        <th>To Check</th>
+                                                        <th>Add</th>
+                                                        <th>Remove</th>
+                                                    </tr>
+                                                </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>Computer</td>
+                                                        <td contenteditable="true">Open Mo Lang tapos tingnan mo pag may nag subscribe</td>
+                                                        <td><button class="btn btn-primary" onclick="addTest(4)"> Add </button></td>
+                                                        <td><button class="btn btn-danger" onclick="removeRow(this)"> Remove </button></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Mouse</td>
+                                                        <td contenteditable="true">Check mo Pag gumagalaw pa ung arrow sa screen</td>
+                                                        <td><button class="btn btn-primary" onclick="addTest(3)"> Add </button></td>
+                                                        <td><button class="btn btn-danger" onclick="removeRow(this)"> Remove </button></td>
+                                                    </tr>
+                                                </tbody>
+                                                </table>
 
 
 
