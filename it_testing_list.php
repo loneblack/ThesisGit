@@ -119,7 +119,7 @@
 				var currentRow = table.rows[i];
 				var createClickHandler = function(row) {
 					return function() {
-						var cell = row.getElementsByTagName("td")[1];
+						var cell = row.getElementsByTagName("td")[2];
 						var id = cell.textContent;
 						
 						if(id == "Finished"){
