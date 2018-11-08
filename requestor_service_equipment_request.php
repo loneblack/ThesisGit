@@ -154,7 +154,7 @@
 															<tr>
 																<td>
                                                                     <select class="form-control" id="txtName">
-                                                                        <option>Select</option>
+                                                                        <option selected="selected">Select</option>
                                                                     </select>
                                                                 </td>
 																<td><input class="form-control" type="number" min="1" id="txtCountry" /></td>
