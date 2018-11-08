@@ -85,7 +85,7 @@
                                                 <div class="form-group ">
                                                     <label for="number" class="control-label col-lg-3">Contact No.</label>
                                                     <div class="col-lg-6">
-                                                        <input class="form-control" rows="5" name="details" style="resize:none" type="text" required></input>
+                                                        <input class="form-control" rows="5" name="details" style="resize:none" type="text" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -187,7 +187,7 @@
                                                 </div>
                                             </form>
                                         </div>
-                                    </div>
+                                        </div>
                                 </section>
                             </div>
                         </div>
