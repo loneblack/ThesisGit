@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`employee` (
   `position` VARCHAR(45) NOT NULL,
   `contactNo` VARCHAR(45) NULL DEFAULT NULL,
   `email` VARCHAR(45) NULL DEFAULT NULL,
-  `UserID` INT(11) NOT NULL,
+  `UserID` INT(11) NULL,
   PRIMARY KEY (`employeeID`),
   INDEX `fk_Employee_Department1_idx` (`DepartmentID` ASC),
   INDEX `fk_employee_user1_idx` (`UserID` ASC),
@@ -758,15 +758,22 @@ CREATE TABLE IF NOT EXISTS `thesis`.`procurement` (
   `totalCost` DOUBLE NULL DEFAULT NULL,
   `status` INT(11) NOT NULL,
   `deliveryDate` DATE NULL,
+  `preparedBy` INT(11) NULL,
   PRIMARY KEY (`procurementID`),
   INDEX `fk_Procurement_Request1_idx` (`requestID` ASC),
   INDEX `fk_procurement_ref_status1_idx` (`status` ASC),
+  INDEX `fk_procurement_employee1_idx` (`preparedBy` ASC),
   CONSTRAINT `fk_Procurement_Request1`
     FOREIGN KEY (`requestID`)
     REFERENCES `thesis`.`request` (`requestID`),
   CONSTRAINT `fk_procurement_ref_status1`
     FOREIGN KEY (`status`)
     REFERENCES `thesis`.`ref_status` (`statusID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_procurement_employee1`
+    FOREIGN KEY (`preparedBy`)
+    REFERENCES `thesis`.`employee` (`employeeID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -1096,6 +1103,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`procurementdetails` (
   `subtotal` DOUBLE NULL DEFAULT NULL,
   `assetCategoryID` INT(11) NOT NULL,
   `assetModelID` INT(11) NOT NULL,
+  `comment` VARCHAR(45) NULL,
   INDEX `fk_procurementdetails_ref_assetcategory1_idx` (`assetCategoryID` ASC),
   INDEX `fk_procurementdetails_assetmodel1_idx` (`assetModelID` ASC),
   CONSTRAINT `fk_ProcurementDetails_Procurement1`

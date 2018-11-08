@@ -12,26 +12,34 @@ INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('6', 'Procurem
 INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('7', 'Director');
 
 -- user
+-- 
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`)
-VALUES ( AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '1', AES_ENCRYPT('add', 'Fusion'), AES_ENCRYPT('mhin', 'Fusion'), AES_ENCRYPT('admin@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
+VALUES ( AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '1', 
+AES_ENCRYPT('add', 'Fusion'), AES_ENCRYPT('mhin', 'Fusion'), AES_ENCRYPT('admin@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
 
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`)
-VALUES ( AES_ENCRYPT('ITOffice', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Ayti', 'Fusion'), AES_ENCRYPT('Opis', 'Fusion'), AES_ENCRYPT('ITOffice@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
+VALUES ( AES_ENCRYPT('ITOffice', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Ayti', 'Fusion'),
+ AES_ENCRYPT('Opis', 'Fusion'), AES_ENCRYPT('ITOffice@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
 
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`)
-VALUES ( AES_ENCRYPT('Helpdesk', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '3', AES_ENCRYPT('help', 'Fusion'), AES_ENCRYPT('desk', 'Fusion'), AES_ENCRYPT('halpdesk@tdlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
+VALUES ( AES_ENCRYPT('Helpdesk', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '3', AES_ENCRYPT('help', 'Fusion'),
+ AES_ENCRYPT('desk', 'Fusion'), AES_ENCRYPT('halpdesk@tdlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
 
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`)
-VALUES ( AES_ENCRYPT('Engineer', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Enn', 'Fusion'), AES_ENCRYPT('jineer', 'Fusion'), AES_ENCRYPT('engineer@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
+VALUES ( AES_ENCRYPT('Engineer', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Enn', 'Fusion'),
+ AES_ENCRYPT('jineer', 'Fusion'), AES_ENCRYPT('engineer@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
 
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`)
-VALUES ( AES_ENCRYPT('Requestor', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('rekwest', 'Fusion'), AES_ENCRYPT('thor', 'Fusion'), AES_ENCRYPT('requestor@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
+VALUES ( AES_ENCRYPT('Requestor', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('rekwest', 'Fusion'),
+ AES_ENCRYPT('thor', 'Fusion'), AES_ENCRYPT('requestor@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
 
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`)
-VALUES ( AES_ENCRYPT('Procurement', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '6', AES_ENCRYPT('pro', 'Fusion'), AES_ENCRYPT('curement', 'Fusion'), AES_ENCRYPT('purchasing@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
+VALUES ( AES_ENCRYPT('Procurement', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '6', AES_ENCRYPT('pro', 'Fusion'),
+ AES_ENCRYPT('curement', 'Fusion'), AES_ENCRYPT('purchasing@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
 
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`)
-VALUES ( AES_ENCRYPT('Director', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '7', AES_ENCRYPT('Allan', 'Fusion'), AES_ENCRYPT('Borja', 'Fusion'), AES_ENCRYPT('director@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
+VALUES ( AES_ENCRYPT('Director', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '7', AES_ENCRYPT('Allan', 'Fusion'),
+ AES_ENCRYPT('Borja', 'Fusion'), AES_ENCRYPT('director@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
 
 
 -- building
@@ -402,7 +410,7 @@ INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `it
 INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('10', '44', '5', '4gb Ram 128gb storage');
 
 -- Employee
-INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Sir Jojo', 'Asset Manager', '09999999999', 'jojo.soliva@dlsu.edu.ph');
+INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, UserID) VALUES ('20', 'Sir Jojo', 'Asset Manager', '09999999999', 'jojo.soliva@dlsu.edu.ph', '2');
 INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Test Employee', 'Test Employee', '09999999999', 'test@test');
 INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Giligan Crissa', 'Assistan Asset Manager', '0456789299', 'crissa.giligan@dlsu.edu.ph');
 INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Helph Dyesk', 'Helpdesk', '09876543210', 'helpless.desk@dlsu.edu.ph');
