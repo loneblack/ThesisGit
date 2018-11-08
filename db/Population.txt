@@ -134,6 +134,8 @@ INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('15', 'Refu
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('1', 'Pending');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('2', 'Ongoing');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('3', 'Completed');
+INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('4', 'Disapproved');
+
 
 
 

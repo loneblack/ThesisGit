@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+$userID = $_SESSION['userID'];
+require_once("db/mysql_connect.php");
+?>
 
 <head>
     <meta charset="utf-8">
@@ -67,7 +72,89 @@
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
+
                                             <tbody>
+
+
+                                                 <?php
+                                                    $count = 1;
+
+                                                    $query = "SELECT *, s.description as'statusName' FROM thesis.request r JOIN ref_status s ON r.status = s.statusID WHERE UserID = {$userID};";
+                                                                  
+                                                    $result = mysqli_query($dbc, $query);
+                                                    
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                      
+                                                      echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$row['requestID']}</td>
+                                                            <td>{$count}</td>
+                                                            <td>Request for Purchase</td>
+                                                            <td>{$row['datetime']}</td>
+                                                            <td>{$row['dateNeeded']}</td>
+                                                            <td style='display: none'>{$row['statusID']}</td>";
+
+                                                        if($row['statusID'] == '1'){//pending
+                                                            echo "<td><span class='label label-warning'>{$row['statusName']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '2'){//ongoing
+                                                            echo "<td><span class='label label-info'>{$row['statusName']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '3'){//completed
+                                                            echo "<td><span class='label label-success'>{$row['statusName']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '4'){//disapproved
+                                                            echo "<td><span class='label label-danger'>{$row['statusName']}</span></td>";
+                                                        }
+
+
+                                                        echo "</tr>";
+
+                                                          $count++;
+                                                    }
+                                                  ?>
+
+                                                  <?php
+
+                                                    $query = "SELECT * FROM thesis.service sr JOIN ref_status st ON sr.status = st.statusID WHERE UserID = {$userID};";
+                                                                  
+                                                    $result = mysqli_query($dbc, $query);
+                                                    
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                      
+                                                      echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$row['requestID']}</td>
+                                                            <td>{$count}</td>
+                                                            <td>Request for Service</td>
+                                                            <td>{$row['dateReceived']}</td>
+                                                            <td>{$row['dateNeed']}</td>
+                                                            <td style='display: none'>{$row['statusID']}</td>";
+
+                                                        if($row['statusID'] == '1'){//pending
+                                                            echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '2'){//ongoing
+                                                            echo "<td><span class='label label-info'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '3'){//completed
+                                                            echo "<td><span class='label label-success'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '4'){//disapproved
+                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
+                                                        }
+
+
+                                                        echo "</tr>";
+
+                                                          $count++;
+                                                    }
+                                                  ?>
+
+
+
+
+
                                                 <tr class="gradeA">
                                                     <td>1</td>
                                                     <td>Request for Service</td>
@@ -78,9 +165,9 @@
 
                                                 <tr class="gradeA">
                                                     <td>2</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
+                                                    <td>Need notHere</td>
+                                                    <td>10/9/28</td>
+                                                    <td>10/9/288</td>
                                                     <td><span class="label label-success">Completed</span></td>
                                                 </tr>
 

@@ -207,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   `unitHead` VARCHAR(45) NULL DEFAULT NULL,
   `recipient` VARCHAR(45) NULL DEFAULT NULL,
   `employeeID` INT(11) NULL DEFAULT NULL,
-  `datetime` DATETIME NULL DEFAULT NULL,
+  `date` DATE NULL DEFAULT NULL,
   `FloorAndRoomID` INT(11) NULL DEFAULT NULL,
   `BuildingID` INT(11) NULL DEFAULT NULL,
   `dateNeeded` DATE NULL DEFAULT NULL,
@@ -691,7 +691,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
-
 -- -----------------------------------------------------
 -- Table `thesis`.`assetaudit`
 -- -----------------------------------------------------
@@ -751,6 +750,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`procurement` (
   `date` DATE NULL DEFAULT NULL,
   `totalCost` DOUBLE NULL DEFAULT NULL,
   `status` INT(11) NOT NULL,
+  `deliveryDate` DATE NULL,
   PRIMARY KEY (`procurementID`),
   INDEX `fk_Procurement_Request1_idx` (`requestID` ASC),
   INDEX `fk_procurement_ref_status1_idx` (`status` ASC),
@@ -892,11 +892,13 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request_borrow` (
   `computerID` INT(11) NULL DEFAULT NULL,
   `FloorAndRoomID` INT(11) NULL DEFAULT NULL,
   `DepartmentID` INT(11) NULL DEFAULT NULL,
-  `startDate` DATE NULL DEFAULT NULL,
-  `endDate` DATE NULL DEFAULT NULL,
+  `startDate` DATETIME NULL DEFAULT NULL,
+  `endDate` DATETIME NULL DEFAULT NULL,
   `personresponsibleID` INT(11) NULL DEFAULT NULL,
   `personrepresentativeID` INT(11) NULL DEFAULT NULL,
   `persondirectlyID` INT(11) NULL DEFAULT NULL,
+  `dateCreated` DATETIME NULL,
+  `purpose` VARCHAR(45) NULL,
   `statusID` INT(11) NOT NULL,
   PRIMARY KEY (`borrowID`),
   INDEX `fk_AssetAssignment_FloorAndRoom1_idx` (`FloorAndRoomID` ASC),
@@ -1085,9 +1087,23 @@ CREATE TABLE IF NOT EXISTS `thesis`.`procurementdetails` (
   `quantity` INT(11) NULL DEFAULT NULL,
   `cost` DOUBLE NULL DEFAULT NULL,
   `subtotal` DOUBLE NULL DEFAULT NULL,
+  `assetCategoryID` INT(11) NOT NULL,
+  `assetModelID` INT(11) NOT NULL,
+  INDEX `fk_procurementdetails_ref_assetcategory1_idx` (`assetCategoryID` ASC),
+  INDEX `fk_procurementdetails_assetmodel1_idx` (`assetModelID` ASC),
   CONSTRAINT `fk_ProcurementDetails_Procurement1`
     FOREIGN KEY (`procurementID`)
-    REFERENCES `thesis`.`procurement` (`procurementID`))
+    REFERENCES `thesis`.`procurement` (`procurementID`),
+  CONSTRAINT `fk_procurementdetails_ref_assetcategory1`
+    FOREIGN KEY (`assetCategoryID`)
+    REFERENCES `thesis`.`ref_assetcategory` (`assetCategoryID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_procurementdetails_assetmodel1`
+    FOREIGN KEY (`assetModelID`)
+    REFERENCES `thesis`.`assetmodel` (`assetModelID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -1300,6 +1316,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`canvasitemdetails` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
