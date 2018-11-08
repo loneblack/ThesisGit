@@ -46,45 +46,72 @@
                 <!-- page start-->
 
                 <div class="row">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="col-lg-12">
-                                <section class="panel">
-                                    <header class="panel-heading">
-                                        Service Request Form
-                                    </header>
-                                    <div class="panel-body">
-                                        <div class="form" method="post">
-                                            <form class="cmxform form-horizontal " id="signupForm" method="post">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <section class="panel">
+                                        <header class="panel-heading">
+                                            View Maintenance List
+                                        </header>
+                                        <div class="panel-body">
+                                            <section id="unseen">
 
-                                                <div class="form-group">
-                                                    <label for="inputPassword1" class="col-lg-2 col-sm-2 control-label">Location Type</label>
-                                                    <div class="col-lg-8">
-                                                        <input type="text" class="form-control" placeholder="Location Type">
+                                                <form class="cmxform form-horizontal " id="signupForm" method="post">
+
+                                                    <div class="form-group">
+                                                        <div class="col-lg-10">
+                                                            <label class="col-lg-2 col-sm-2 control-label">Location Type</label>
+                                                            <div class="col-lg-10">
+                                                                <input type="text" class="form-control" placeholder="Location Type">
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                
-                                                <div class="form-group ">
-                                                    <label for="details" class="col-lg-2 col-sm-2 control-label">Description</label>
-                                                    <div class="col-lg-8">
-                                                        <textarea class="form-control" rows="5" name="Description" style="resize:none"></textarea>
+                                                    
+                                                    <div class="form-group">
+                                                        <div class="col-lg-10">
+                                                            <label class="col-lg-2 col-sm-2 control-label">Description</label>
+                                                            <div class="col-lg-10">
+                                                                <textarea class="form-control" rows="5" name="Description" placeholder="Description" style="resize:none"></textarea>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
 
 
 
 
-
-                                                <div class="form-group">
-                                                    <div class="col-lg-offset-8 col-lg-6">
-                                                        <button class="btn btn-primary" type="submit">Save</button>
-                                                        <button class="btn btn-default" type="button">Cancel</button>
-                                                    </div>
-                                                </div>
-                                            </form>
+                                                        <button class="btn btn-primary" onclick="addTest2(5)">Add Asset</button>
+                                                        <br>
+                                                        <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Asset Type</th>
+                                                                    <th>To Check</th>
+                                                                    <th>Add</th>
+                                                                    <th>Remove</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                    <select class="form-control">
+                                                                        <option>Select Asset Type</option>
+                                                                        <option>Computer</option>
+                                                                    </select>
+                                                                    </td>
+                                                                    <td contenteditable="true"><input type="text" class="form-control" placeholder="Location Type"></td>
+                                                                    <td><button class="btn btn-primary" onclick="addTest(4)"> Add </button></td>
+                                                                    <td><button class="btn btn-danger" onclick="removeRow(this)"> Remove </button></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <button class="btn btn-success" onclick="">Save</button>
+                                                        <button class="btn btn-danger" onClick="location.href='engineer_maintenance.php'">Back</button>
+                                                </form>
+                                            </section>
                                         </div>
-                                    </div>
-                                </section>
+                                    </section>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -109,6 +136,64 @@
 
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
+
+    <script type="text/javascript">
+        function removeRow(o) {
+            var p = o.parentNode.parentNode;
+            p.parentNode.removeChild(p);
+        }
+
+
+        function addTest(cavasItemID) {
+            var row_index = 0;
+            var canvasItemID = cavasItemID;
+            var isRenderd = false;
+            $("td").click(function() {
+                row_index = $(this).parent().index();
+            });
+            var delayInMilliseconds = 0; //1 second
+            setTimeout(function() {
+                appendTableRow(row_index, canvasItemID);
+            }, delayInMilliseconds);
+        }
+        var appendTableRow = function(rowCount, canvasItemID) {
+            var cnt = 0;
+            var tr = "<tr>" +
+                "<td></td>" +
+                "<td contenteditable='true'><input type='text' class='form-control' placeholder='To Check'></td>" +
+                "<td></td>" +
+                "<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
+                "</tr>";
+            $('#tableTest tbody tr').eq(rowCount).after(tr);
+        }
+
+
+
+        function addTest2(cavasItemID) {
+            var row_index = 1;
+            var canvasItemID = cavasItemID;
+            var isRenderd = false;
+            $("td").click(function() {
+                row_index = $(this).parent().index();
+            });
+            var delayInMilliseconds = 0; //1 second
+            setTimeout(function() {
+                appendTableRow2(row_index, canvasItemID);
+            }, delayInMilliseconds);
+        }
+        var appendTableRow2 = function(rowCount, canvasItemID) {
+            var cnt = 0;
+            var tr = "<tr>" +
+                "<td><select class='form-control' id='assetType' required>" +
+                "<option>Select Asset Type</option>" +
+                "</select></td>" +
+                "<td contenteditable='true'><input type='text' class='form-control' placeholder='To Check'></td>" +
+                "<td><button class='btn btn-primary' onclick='addTest(this)'> Add </button></td>" +
+                "<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
+                "</tr>";
+            $('#tableTest tbody tr').eq(rowCount).after(tr);
+        }
+    </script>
 
 </body>
 
