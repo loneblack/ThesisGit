@@ -99,11 +99,11 @@
                                             </table>
 											
 											<div>
-												<label>Name: </label><input type="text" class="form-control">
+												<label>Name: </label><input type="text" class="form-control" disabled>
 												<br>
-												<label>Office Building: </label><input type="text" class="form-control">
+												<label>Office Building: </label><input type="text" class="form-control" disabled>
 												<br>
-												<label>Room Number: </label><input type="text" class="form-control">
+												<label>Room Number: </label><input type="text" class="form-control" disabled>
 												<br>
 												<br>
 											</div>
