@@ -759,10 +759,12 @@ CREATE TABLE IF NOT EXISTS `thesis`.`procurement` (
   `status` INT(11) NOT NULL,
   `deliveryDate` DATE NULL,
   `preparedBy` INT(11) NULL,
+  `supplierID` INT(11) NOT NULL,
   PRIMARY KEY (`procurementID`),
   INDEX `fk_Procurement_Request1_idx` (`requestID` ASC),
   INDEX `fk_procurement_ref_status1_idx` (`status` ASC),
   INDEX `fk_procurement_employee1_idx` (`preparedBy` ASC),
+  INDEX `fk_procurement_supplier1_idx` (`supplierID` ASC),
   CONSTRAINT `fk_Procurement_Request1`
     FOREIGN KEY (`requestID`)
     REFERENCES `thesis`.`request` (`requestID`),
@@ -774,6 +776,11 @@ CREATE TABLE IF NOT EXISTS `thesis`.`procurement` (
   CONSTRAINT `fk_procurement_employee1`
     FOREIGN KEY (`preparedBy`)
     REFERENCES `thesis`.`employee` (`employeeID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_procurement_supplier1`
+    FOREIGN KEY (`supplierID`)
+    REFERENCES `thesis`.`supplier` (`supplierID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
