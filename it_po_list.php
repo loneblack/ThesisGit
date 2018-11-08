@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<?php
+	require_once('db/mysql_connect.php');
+
+
+
+
+?>
 <html lang="en">
 
 <head>
@@ -67,6 +74,41 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+												<?php
+													require_once('db/mysql_connect.php');
+													$query="SELECT p.procurementID,p.date,p.totalCost,rs.description as `status`,p.deliveryDate,e.name as 'employeeName' FROM thesis.procurement p join ref_status rs on p.status=rs.statusID
+																																										  join employee e on p.preparedBy=e.employeeID";
+													$result=mysqli_query($dbc,$query);
+													
+													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														echo "<tr id='{$row['procurementID']}'>
+															<td>{$row['procurementID']}</td>
+															<td>{$row['date']}</td>";
+															
+														//if($row['status']=="Open"){
+															//echo "<td><span class='label label-success label-mini'>{$row['status']}</span></td>";
+														//}
+														//else{
+															//echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
+														//}
+														
+														if($row['status']=="Pending"){
+															echo "<td><span class='label label-success label-mini'>{$row['status']}</span></td>";
+														}
+														else{
+															echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
+														}
+														
+														echo "<td>{$row['employeeName']}</td>
+															<td>{$row['deliveryDate']}</td>
+														</tr>";
+													}
+												
+												
+												
+												
+												?>
+												
                                                 <tr>
                                                     <td>232323232</td>
                                                     <td>1/1/2018</td>
@@ -120,13 +162,22 @@
 					var cell = row.getElementsByTagName("td")[2];
 					var status = cell.textContent;
 					
-					if(status == "Open"){
-						window.location.replace("it_view_open_po.php");
+					//if(status == "Open"){
+						//window.location.replace("it_view_open_po.php");
+					//}
+					
+					//if(status == "Closed"){
+						//window.location.replace("it_view_closed_po.php");
+					//}
+					
+					if(status == "Pending"){
+						window.location.replace("it_view_open_po.php?procID=" + row.getAttribute("id"));
 					}
 					
-					if(status == "Closed"){
-						window.location.replace("it_view_closed_po.php");
+					if(status == "Completed"){
+						window.location.replace("it_view_closed_po.php?procID=" + row.getAttribute("id"));
 					}
+					
 				};
 			};
 			currentRow.onclick = createClickHandler(currentRow);
