@@ -28,7 +28,7 @@
             <div class="brand">
 
                 <a href="#" class="logo">
-                    Welcome IT Officer!
+                    Welcome it officer!
                 </a>
             </div>
 
@@ -61,6 +61,7 @@
                                                 <tr>
                                                     <th>Date Needed</th>
                                                     <th>Status</th>
+													<th>Request Type</th>
                                                     <th>Description</th>
                                                     <th>Requestor</th>
                                                     <th>Requested Date</th>
@@ -93,7 +94,8 @@
 															}
 															
 															
-														echo "<td>{$row['requestDesc']}</td>
+														echo "
+															<td>{$row['requestDesc']}</td>
 															<td>{$row['recipient']}</td>
 															<td>{$row['requestedDate']}</td>
 														</tr>";
@@ -101,44 +103,239 @@
 														
 														
 													}
-
 												?>
                                                 <tr>
                                                     <td>12/23/2018</td>
                                                     <td><span class="label label-success label-mini">Completed</span></td>
-                                                    <td>We Need 500 more laptops PLSSS!!</td>
+													<td>Donation</td>
+                                                    <td>We ed 500 more laptops PLSSS!!</td>
+                                                    <td>Marvin Lao</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-danger label-mini">Incomplete</span></td>
+													<td>Donation</td>
+                                                    <td>We need 500 more laptops PLSSS!!</td>
+                                                    <td>Marvin Lao</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-default label-mini">Ongoing</span></td>
+													<td>Donation</td>
+                                                    <td>We need 500 more laptops PLSSS!!</td>
+                                                    <td>Marvin Lao</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-warning label-mini">Pending</span></td>
+													<td>Donation</td>
+                                                    <td>We need 500 more laptops PLSSS!!</td>
                                                     <td>Marvin Lao</td>
                                                     <td>1/1/2018</td>
                                                 </tr>
                                                 <tr>
                                                     <td>12/23/2018</td>
                                                     <td><span class="label label-danger label-mini">Incomplete</span></td>
-                                                    <td>We Need 500 more laptops PLSSS!!</td>
-                                                    <td>Marvin Lao</td>
+													<td>Asset Request</td>
+                                                    <td>Replacement needed</td>
+                                                    <td>requestor</td>
                                                     <td>1/1/2018</td>
                                                 </tr>
 												<tr>
                                                     <td>12/23/2018</td>
-                                                    <td><span class="label label-default">In Testing</span></td>
+                                                    <td><span class="label label-default label-mini">Ongoing</span></td>
+													<td>Asset Request</td>
+                                                    <td>Items received</td>
+                                                    <td>requestor</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-default label-mini">Ongoing</span></td>
+													<td>Asset Request</td>
+                                                    <td>Testing checklist needed</td>
+                                                    <td>requestor</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-default label-mini">Ongoing</span></td>
+													<td>Asset Request</td>
+                                                    <td>Replacement needed</td>
+                                                    <td>requestor</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-default label-mini">Ongoing</span></td>
+													<td>Asset Request</td>
+                                                    <td>Conforme pending</td>
+                                                    <td>requestor</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-success label-mini">Completed</span></td>
+													<td>Asset Request</td>
+                                                    <td></td>
+                                                    <td>requestor</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-success label-mini">Completed</span></td>
+													<td>Asset Request</td>
+                                                    <td></td>
+                                                    <td>requestor</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-warning label-mini">Pending</span></td>
+													<td>Asset Request</td>
+                                                    <td>We need 500 more laptops PLSSS!!</td>
+                                                    <td>requestor</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-warning label-mini">Pending</span></td>
+													<td>Asset Request</td>
+                                                    <td>Canvas completed</td>
+                                                    <td>requestor</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-warning label-mini">Pending</span></td>
+													<td>Asset Request</td>
+                                                    <td>Purchase order completed</td>
+                                                    <td>requestor</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-warning label-mini">Pending</span></td>
+													<td>Testing</td>
+                                                    <td>We need 500 more laptops PLSSS!!</td>
+                                                    <td>Jane Doe</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-default">Ongoing</span></td>
+													<td>Testing</td>
+                                                    <td>Being tested</td>
+                                                    <td>Jane Doe</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+												<tr>
+                                                    <td>12/23/2018</td>
+                                                    <td><span class="label label-success">Completed</span></td>
+													<td>Testing</td>
                                                     <td>Being tested</td>
                                                     <td>Jane Doe</td>
                                                     <td>1/1/2018</td>
                                                 </tr>
                                                 <tr>
                                                     <td>12/23/2018</td>
-                                                    <td><span class="label label-info">Canvas Completed</span></td>
+                                                    <td><span class="label label-danger">Incomplete</span></td>
+													<td>Testing</td>
                                                     <td>Burrow these please</td>
                                                     <td>John Doe</td>
                                                     <td>1/1/2018</td>
                                                 </tr>
+												<tr>
+													<td>12/25/2019</td>
+													<td><span class="label label-success">Completed</span></td>
+													<td>Repair</td>
+													<td>Need more equipment</td>
+													<td>Requestor person</td>
+													<td>12/32/8102</td>
+												</tr>
+												<tr>
+													<td>12/25/2019</td>
+													<td><span class="label label-default">Ongoing</span></td>
+													<td>Repair</td>
+													<td>Need more equipment</td>
+													<td>Requestor person</td>
+													<td>12/32/8102</td>
+												</tr>
+												<tr>
+													<td>12/25/2019</td>
+													<td><span class="label label-default">Ongoing</span></td>
+													<td>Repair</td>
+													<td></td>
+													<td>Requestor person</td>
+													<td>12/32/8102</td>
+												</tr>
+												<tr>
+													<td>12/25/2019</td>
+													<td><span class="label label-warning">Pending</span></td>
+													<td>Repair</td>
+													<td>Need more equipment</td>
+													<td>Requestor person</td>
+													<td>12/32/8102</td>
+												</tr>
+												<tr>
+													<td>12/25/2019</td>
+													<td><span class="label label-warning">Pending</span></td>
+													<td>Repair</td>
+													<td></td>
+													<td>Requestor person</td>
+													<td>12/32/8102</td>
+												</tr>
+												<tr>
+													<td>12/25/2019</td>
+													<td><span class="label label-danger">Incomplete</span></td>
+													<td>Repair</td>
+													<td>Need more equipment</td>
+													<td>Requestor person</td>
+													<td>12/32/8102</td>
+												</tr>
+												<tr>
+													<td>12/25/2019</td>
+													<td><span class="label label-danger">Incomplete</span></td>
+													<td>Repair</td>
+													<td></td>
+													<td>Requestor person</td>
+													<td>12/32/8102</td>
+												</tr>
                                                 <tr>
-                                                    <td>12/23/2018</td>
-                                                    <td><span class="label label-danger">Incompleted</span></td>
-                                                    <td>Donation</td>
-                                                    <td>Gaylord Academy</td>
-                                                    <td>1/1/2019</td>
-                                                </tr>
-                                                
+													<td>12/25/2019</td>
+													<td><span class="label label-danger">Incomplete</span></td>
+													<td>Service Request</td>
+													<td>Need more equipment</td>
+													<td>bicycle</td>
+													<td>12/32/8102</td>
+												</tr>
+												<tr>
+													<td>12/25/2019</td>
+													<td><span class="label label-success">Completed</span></td>
+													<td>Service Request</td>
+													<td>Need more equipment</td>
+													<td>bicycle</td>
+													<td>12/32/8102</td>
+												</tr>
+												<tr>
+													<td>12/25/2019</td>
+													<td><span class="label label-warning">Pending</span></td>
+													<td>Service Request</td>
+													<td>Need more equipment</td>
+													<td>bicycle</td>
+													<td>12/32/8102</td>
+												</tr>
+												<tr>
+													<td>12/25/2019</td>
+													<td><span class="label label-default">Ongoing</span></td>
+													<td>Service Request</td>
+													<td>Need more equipment</td>
+													<td>bicycle</td>
+													<td>12/32/8102</td>
+												</tr>
                                             </tbody>
                                         </table>
                                     </section>
@@ -166,15 +363,68 @@
 				var createClickHandler = function(row) {
 					return function() {
 						var cell = row.getElementsByTagName("td")[1];
-						var id = cell.textContent;
+						var id = cell.textContent;						//Status
+						var cell = row.getElementsByTagName("td")[2];
+						var idx = cell.textContent;						//Request type
+						var cell = row.getElementsByTagName("td")[3];
+						var idDesc = cell.textContent;					//Description
+						alert(id + " - " + idx + " - " + idDesc);
 						
-						if(id == "Incomplete"){
-							window.location.replace("it_view_incomplete_request.php?requestID=" + row.getAttribute("id"));
+						if(idx == "Repair"){															
+							if(id == "Completed" || id == "Incomplete"){								
+								window.location.replace("it_view_completed_incomplete_repair.php?requestID=" + row.getAttribute("id"));
+							}
+							if(id == "Ongoing" || id == "Pending"){										
+								window.location.replace("it_view_ongoing_pending_repair.php?requestID=" + row.getAttribute("id"));
+							}
+							
 						}
-                        else if(id == "Canvas Completed"){
-                            window.location.replace("it_view_canvas_completed.php?requestID=" + row.getAttribute("id"))
-                        }
-						else window.location.replace("it_view_request.php?requestID=" + row.getAttribute("id"));
+                        
+						if(idx == "Asset Request"){
+							if(id == "Ongoing" || id == "Pending"){
+								if(idDesc == "Canvas completed"){
+									window.location.replace("it_view_canvas_completed.php");
+								}
+								
+								else if(idDesc == "Purchase order completed"){
+									window.location.replace("it_view_open_po.php");
+								}
+								
+								else if(idDesc == "Items received"){
+									window.location.replace("it_view_incomplete_request.php");
+								}
+								
+								else if(idDesc == "Testing checklist needed"){
+									window.location.replace("it_add_checklist.php");
+								}
+								
+								else if(idDesc == "Replacement needed"){
+									window.location.replace("it_all_supplier.php");
+								}
+								
+								else if(idDesc == "Conforme pending"){
+									window.location.replace("it_view_checklist.php");
+								}
+							}
+							
+							if(id == "Completed"){
+								window.location.replace("it_view_checklist.php");
+							}
+						}
+						
+						if(idx == "Testing"){
+							if(id == "Ongoing" || id == "Pending"){
+								window.location.replace("it_view_incomplete_testing.php");
+							}
+							
+							else if(id == "Completed" || id == "Incomplete"){
+								window.location.replace("it_view_testing.php");
+							}
+						}
+						
+						if(idx == "Service Request"){
+							window.location.replace("it_view_service_request_form.php");
+						}
 					};
 				};
 				currentRow.onclick = createClickHandler(currentRow);
