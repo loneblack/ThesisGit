@@ -3,6 +3,7 @@
 <?php
   require_once("db/mysql_connect.php");
 ?>
+
 <head>
     <meta charset="utf-8">
 
@@ -53,7 +54,7 @@
                             <div class="col-lg-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        Service Equipment Request 
+                                        Service Equipment Request
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
@@ -78,7 +79,7 @@
 
                                                             }
                                                            ?>
-                                                            
+
                                                         </select>
                                                     </div>
                                                 </div>
@@ -100,13 +101,13 @@
                                                         <input class=" form-control" id="endDate" name="endDate" type="datetime-local" />
                                                     </div>
                                                 </div>
-												<div class="form-group ">
+                                                <div class="form-group ">
                                                     <label for="purpose" class="control-label col-lg-3">Purpose</label>
                                                     <div class="col-lg-6">
                                                         <input class="form-control" id="purpose" name="purpose" type="text" />
                                                     </div>
                                                 </div>
-												<div class="form-group ">
+                                                <div class="form-group ">
                                                     <label for="building" class="control-label col-lg-3">Building</label>
                                                     <div class="col-lg-6">
                                                         <select name="building" class="form-control m-bot15" onChange="getRooms(this.value)">
@@ -128,51 +129,50 @@
                                                         </select>
                                                     </div>
                                                 </div>
-												<div class="form-group">
-													<label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
-													<div class="col-lg-6">
-														<select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15">
-															<option valu=''>Select floor & room</option>
-														</select>
-													</div>
-												</div>
+                                                <div class="form-group">
+                                                    <label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
+                                                    <div class="col-lg-6">
+                                                        <select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15">
+                                                            <option valu=''>Select floor & room</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                                 <hr>
-												<div class="container-fluid">
-													<h4>Equipment to be borrowed</h4>
-													
-													<table style="width:670px" class="table table-bordered table-striped table-condensed table-hover" id="tblCustomers" align="center" cellpadding="0" cellspacing="0" border="1">
-														<thead>
-															<tr>
-																<th style="width:500px">Equipment</th>
-																<th style="width:150px">Quantity</th>
-																<th></th>
-															</tr>
-														</thead>
-														<tbody>
-														</tbody>
-														<tfoot>
-															<tr>
-																<td>
-                                                                    <select class="form-control" id="txtName">
-                                                                        <option selected="selected">Select</option>
+                                                <div class="container-fluid">
+                                                    <h4>Equipment to be borrowed</h4>
+
+                                                    <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Equipment</th>
+                                                                <th>Quantity</th>
+                                                                <th>Add/ Remove</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <select class="form-control">
+                                                                        <option>Select Category</option>
+                                                                        <option>Computer</option>
                                                                     </select>
                                                                 </td>
-																<td><input class="form-control" type="number" min="1" id="txtCountry" /></td>
-																<td style="text-align:center"><input class="btn btn-primary" type="button" onclick="Add()" value="Add" /></td>
-															</tr>
-														</tfoot>
-													</table>
-												</div>
-												<hr>
+                                                                <td><input type="number" min="0" max="999999" step="1" class="form-control"></td>
+                                                                <td><button class="btn btn-success" onclick="addTest(4)"> Add </button></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <hr>
                                                 <div class="container-fluid">
-    												<h4>Endorsement (if applicable)</h4>
-    												<div class="form-group ">
+                                                    <h4>Endorsement (if applicable)</h4>
+                                                    <div class="form-group ">
                                                         <label for="representative" class="control-label col-lg-3">Representative</label>
                                                         <div class="col-lg-6">
                                                             <input class="form-control" id="representative" name="representative" type="text" />
                                                         </div>
                                                     </div>
-    												<div class="form-group ">
+                                                    <div class="form-group ">
                                                         <label for="idNum" class="control-label col-lg-3">ID Number</label>
                                                         <div class="col-lg-6">
                                                             <input class="form-control" id="idNum" name="idNum" type="text" />
@@ -187,7 +187,7 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        </div>
+                                    </div>
                                 </section>
                             </div>
                         </div>
@@ -199,82 +199,8 @@
         <!--main content end-->
 
     </section>
-	
-	<!--Script for table -->
-	<script type="text/javascript">
-        window.onload = function () {
-            //Build an array containing Customer records.
-            var customers = new Array();
-            
- 
-            //Add the data rows.
-            for (var i = 0; i < customers.length; i++) {
-                AddRow(customers[i][0], customers[i][1]);
-            }
-        };
- 
-        function Add() {
-            var txtName = document.getElementById("txtName");
-            var txtCountry = document.getElementById("txtCountry");
-            AddRow(txtName.value, txtCountry.value);
-            txtName.value = "";
-            txtCountry.value = "";
-        };
- 
-        function Remove(button) {
-            //Determine the reference of the Row using the Button.
-            var row = button.parentNode.parentNode;
-            var name = row.getElementsByTagName("TD")[0].innerHTML;
-            if (confirm("Remove: " + name)) {
- 
-                //Get the reference of the Table.
-                var table = document.getElementById("tblCustomers");
- 
-                //Delete the Table row using it's Index.
-                table.deleteRow(row.rowIndex);
-            }
-        };
- 
-        function AddRow(name, country) {
-            //Get the reference of the Table's TBODY element.
-            var tBody = document.getElementById("tblCustomers").getElementsByTagName("TBODY")[0];
- 
-            //Add Row.
-            row = tBody.insertRow(-1);
- 
-            //Add Name cell.
-            var cell = row.insertCell(-1);
-            cell.innerHTML = name;
- 
-            //Add Country cell.
-            cell = row.insertCell(-1);
-            cell.innerHTML = country;
- 
-            //Add Button cell.
-            cell = row.insertCell(-1);
-            var btnRemove = document.createElement("INPUT");
-            btnRemove.type = "button";
-            btnRemove.value = "Remove";
-            btnRemove.setAttribute("onclick", "Remove(this);");
-            btnRemove.setAttribute("class", "btn btn-primary");
-            btnRemove.setAttribute("style", "text-align:center");
 
-            cell.appendChild(btnRemove);
-        }
-
-        function getRooms(val){
-            $.ajax({
-            type:"POST",
-            url:"requestor_getRooms.php",
-            data: 'buildingID='+val,
-            success: function(data){
-                $("#FloorAndRoomID").html(data);
-
-                }
-            });
-        }
-    </script>
-
+   
     <!-- WAG GALAWIN PLS LANG -->
 
     <!--Core js-->
@@ -288,6 +214,43 @@
 
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
+    <script type="text/javascript">
+        function removeRow(o) {
+            var p = o.parentNode.parentNode;
+            p.parentNode.removeChild(p);
+        }
+
+
+        function addTest(cavasItemID) {
+            var row_index = 0;
+            var canvasItemID = cavasItemID;
+            var isRenderd = false;
+
+            $("td").click(function() {
+                row_index = $(this).parent().index();
+
+            });
+
+            var delayInMilliseconds = 0; //1 second
+
+            setTimeout(function() {
+
+                appendTableRow(row_index, canvasItemID);
+            }, delayInMilliseconds);
+
+
+        }
+
+        var appendTableRow = function(rowCount, canvasItemID) {
+            var cnt = 0;
+            var tr = "<tr>" +
+                "<td><select class='form-control'><option>Select Category</option></select></td>" +
+                "<td><input type='number' min='0' max='99999' step='1' class='form-control'></td>" +
+                "<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
+                "</tr>";
+            $('#tableTest tbody tr').eq(rowCount).after(tr);
+        }
+    </script>
 
 </body>
 
