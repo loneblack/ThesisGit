@@ -56,6 +56,18 @@
                                         Asset Testing Checklist
                                     </header>
                                     <div class="panel-body">
+										
+										<div class="panel-body">
+											<section>
+											<label>Name: </label><input type="text" class="form-control" disabled>
+											<br>
+											<label>Office Building: </label><input type="text" class="form-control" disabled>
+											<br>
+											<label>Room Number: </label><input type="text" class="form-control" disabled>
+											
+											</section>
+										</div>
+										</section>
 										<section>
 											<p>Check those which are functioning as intended.
 											If any damage or defect is found, please specify it in the comments.</p>
@@ -98,15 +110,7 @@
                                                 </tbody>
                                             </table>
 											
-											<div>
-												<label>Name: </label><input type="text" class="form-control" disabled>
-												<br>
-												<label>Office Building: </label><input type="text" class="form-control" disabled>
-												<br>
-												<label>Room Number: </label><input type="text" class="form-control" disabled>
-												<br>
-												<br>
-											</div>
+											
 											
 
                                             <div>
