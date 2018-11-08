@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--Notes
-1. Added 
+1. Add
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('7', 'Re-check Canvas');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('8', 'Ready for PO');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For Canvas');
@@ -108,7 +108,7 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
 													<?php
 													
 														require_once('db/mysql_connect.php');
-														$query="SELECT c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.recipient,r.datetime as `requestedDate` FROM thesis.canvas c 
+														$query="SELECT c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.recipient,r.date as `requestedDate` FROM thesis.canvas c 
 																   join ref_status rs on c.status=rs.statusID
                                                                    join request r on c.requestID=r.requestID";
 														$result=mysqli_query($dbc,$query);
@@ -129,6 +129,8 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
 															else{
 																echo "<td><span class='label label-primary label-mini'>{$row['status']}</span></td>";
 															}
+															
+															
 																
 															echo "<td>{$row['description']}</td>
 																<td>{$row['recipient']}</td>

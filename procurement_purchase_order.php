@@ -1,19 +1,65 @@
 <!DOCTYPE html>
 <?php
 	require_once('db/mysql_connect.php');
+	session_start();
 	$canvasID=$_GET['canvasID'];
 	if(isset($_POST['submit'])){
+		//UPDATE canvas status
 		$queryb="UPDATE `thesis`.`canvas` SET `status`='3' WHERE `canvasID`='{$canvasID}'";
 		$resultb=mysqli_query($dbc,$queryb);
 		
+		//UPDATE request status
 		$queryc="SELECT requestID FROM thesis.canvas where canvasID='{$canvasID}'";
 		$resultc=mysqli_query($dbc,$queryc);
 		$rowc=mysqli_fetch_array($resultc,MYSQLI_ASSOC);
 		
-		$queryd="UPDATE `thesis`.`request` SET `status`='3' WHERE `requestID`='{$rowc['requestID']}'";
-		$resultd=mysqli_query($dbc,$queryd);
+		//$queryd="UPDATE `thesis`.`request` SET `status`='3' WHERE `requestID`='{$rowc['requestID']}'";
+		//$resultd=mysqli_query($dbc,$queryd);
 		
-		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/procurement_view_completed.php?canvasID=".$canvasID);
+		//Get totalSum of approved canvas item
+		$querye="SELECT sum(cid.price*ci.quantity) as `totalPrice` FROM thesis.canvas c join canvasitem ci on c.canvasID=ci.canvasID
+							  join canvasitemdetails cid on ci.cavasItemID=cid.cavasItemID
+                              where c.canvasID='{$canvasID}' and cid.status='3'";
+		$resulte=mysqli_query($dbc,$querye);
+		$rowe=mysqli_fetch_array($resulte,MYSQLI_ASSOC);
+		
+		//Get Employee Name
+		$queryf="SELECT employeeID FROM thesis.employee where UserID='{$_SESSION['userID']}'";
+		$resultf=mysqli_query($dbc,$queryf);
+		$rowf=mysqli_fetch_array($resultf,MYSQLI_ASSOC);
+		
+		//Insert to procurement table
+		$queryg="SELECT cid.supplier_supplierID as `supplierID`,s.name as `supplierName`,s.address FROM thesis.canvasitem ci 
+							join canvasitemdetails cid on ci.cavasItemID=cid.cavasItemID 
+							join supplier s on cid.supplier_supplierID=s.supplierID
+							where ci.canvasID='{$canvasID}' 
+							group by cid.supplier_supplierID";
+		$resultg=mysqli_query($dbc,$queryg);
+		
+		while($rowg=mysqli_fetch_array($resultg,MYSQLI_ASSOC)){
+			$queryh="INSERT INTO `thesis`.`procurement` (`requestID`, `date`, `totalCost`, `status`, `preparedBy`, `supplierID`) VALUES ('{$rowc['requestID']}', now(), '{$rowe['totalPrice']}', '1', '{$rowf['employeeID']}', '{$rowg['supplierID']}')";
+			$resulth=mysqli_query($dbc,$queryh);
+			
+			$queryx="SELECT * FROM thesis.procurement order by procurementID desc";
+			$resultx=mysqli_query($dbc,$queryx);
+			$rowx=mysqli_fetch_array($resultx,MYSQLI_ASSOC);
+			
+			//Get Canvas Items
+			$queryi="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,am.itemSpecification,ci.description,ci.quantity,cid.price,(ci.quantity*cid.price) as `totalPrice`,ci.assetModel,ci.assetCategory FROM thesis.canvasitemdetails cid
+				join canvasitem ci on cid.cavasItemID=ci.cavasItemID 
+				join assetModel am on ci.assetModel=am.assetModelID
+				join ref_brand rb on am.brand=rb.brandID
+				join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
+				where ci.canvasID='{$canvasID}' and cid.supplier_supplierID='{$rowg['supplierID']}'";
+			$resulti=mysqli_query($dbc,$queryi);
+			while($rowi=mysqli_fetch_array($resulti,MYSQLI_ASSOC)){
+				$queryj="INSERT INTO `thesis`.`procurementdetails` (`procurementID`, `description`, `quantity`, `cost`, `subtotal`, `assetCategoryID`, `assetModelID`) VALUES ('{$rowx['procurementID']}', '{$rowi['description']}', '{$rowi['quantity']}', '{$rowi['price']}', '{$rowi['totalPrice']}', '{$rowi['assetCategory']}', '{$rowi['assetModel']}')";
+				$resultj=mysqli_query($dbc,$queryj);
+			}
+			
+		}
+		
+		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/procurement_view_completed.php?canvasID=".$canvasID);
 	}
 	
 ?>
