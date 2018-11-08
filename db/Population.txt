@@ -142,7 +142,10 @@ INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('15', 'Refu
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('1', 'Pending');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('2', 'Ongoing');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('3', 'Completed');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('4', 'Disapproved');
+INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('4', 'Incomplete');
+INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('5', 'Approved');
+INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('5', 'Disapproved');
+
 
 
 
