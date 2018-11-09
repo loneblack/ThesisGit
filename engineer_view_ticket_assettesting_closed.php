@@ -59,11 +59,11 @@
 									
 										<div class="panel-body">
 											<section>
-											<label>Name: </label><input type="text" class="form-control" disabled>
+											<label><h5>Name:</h5></label><input type="text" class="form-control" disabled>
 											<br>
-											<label>Office Building: </label><input type="text" class="form-control" disabled>
+											<label><h5>Office Building: </h5></label><input type="text" class="form-control" disabled>
 											<br>
-											<label>Room Number: </label><input type="text" class="form-control" disabled>
+											<label><h5>Room Number: </h5></label><input type="text" class="form-control" disabled>
 											
 											</section>
 										</div>
