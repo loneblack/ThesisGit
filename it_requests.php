@@ -419,16 +419,8 @@
 									window.location.replace("it_view_canvas_completed.php");
 								}
 								
-								else if(idDesc == "Purchase order completed"){
-									window.location.replace("it_view_open_po.php");
-								}
-								
 								else if(idDesc == "Items received"){
-									window.location.replace("it_view_incomplete_request.php");
-								}
-								
-								else if(idDesc == "Testing checklist needed"){
-									window.location.replace("it_add_checklist.php");
+									window.location.replace("it_view_open_po.php");
 								}
 								
 								else if(idDesc == "Replacement needed"){
