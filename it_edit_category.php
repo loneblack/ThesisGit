@@ -1,4 +1,36 @@
 <!DOCTYPE html>
+<?php
+
+	require_once('db/mysql_connect.php');
+	$assetCategoryID=$_GET['assetCategoryID'];
+	
+	$query="SELECT * FROM thesis.ref_assetcategory where assetCategoryID='{$assetCategoryID}'";
+	$result=mysqli_query($dbc,$query);
+	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+	
+	if (isset($_POST['submit'])){
+		
+		$message=null;
+		$query1="SELECT * FROM thesis.ref_assetcategory";
+		$result1=mysqli_query($dbc,$query1);
+		$assetCategoryName=$_POST['assetCategoryName'];
+
+		while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
+			if(strcasecmp($assetCategoryName, $row1['name'])==0){
+				$message="Asset Category already exists";
+				echo "<script>alert('{$message}');</script>";
+			}
+		}
+		
+		if(!isset($message)){
+			$query2="UPDATE `thesis`.`ref_assetcategory` SET `name`='{$assetCategoryName}' WHERE `assetCategoryID`='{$assetCategoryID}'";
+			$result2=mysqli_query($dbc,$query2);
+			echo "<script>alert('Success');</script>";
+		}	
+		
+	}
+
+?>
 <html lang="en">
 
 <head>
@@ -56,18 +88,18 @@
                                 </header>
                                 <div class="panel-body">
                                     <div class="position-center">
-                                        <form class="form-horizontal" role="form">
+                                        <form class="form-horizontal" role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']."?assetCategoryID=".$assetCategoryID; ?>">
 
                                             <div class="form-group">
                                                 <label for="category" class="col-lg-2 col-sm-2 control-label">Category Name</label>
                                                 <div class="col-lg-10">
-                                                    <input type="text" class="form-control" id="category" placeholder="Category Name">
+                                                    <input type="text" class="form-control" id="category" placeholder="Category Name" name="assetCategoryName" value="<?php echo $row['name'];  ?>" required>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <div class="col-lg-offset-2 col-lg-10">
-                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                    <button type="submit" class="btn btn-success" name="submit">Submit</button>
                                                 </div>
                                             </div>
                                         </form>

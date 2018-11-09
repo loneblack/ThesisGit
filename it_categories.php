@@ -65,11 +65,24 @@
                                                             <th>Category Name</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
+													<?php
+															require_once('db/mysql_connect.php');
+															$query="SELECT * FROM thesis.ref_assetcategory";
+															$result=mysqli_query($dbc,$query);
+															
+															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+																echo "<tr class='assetcategoryID' id='{$row['assetCategoryID']}'>
+																		<td>{$row['name']}</td>
+																	</tr>";
+															}
+														
+													?>
+
+                                                    <!-- <tbody>
                                                         <tr>
                                                             <td>LCD</td>
                                                         </tr>
-                                                    </tbody>
+                                                    </tbody> -->
                                                 </table>
                                             </section>
                                         </div>
@@ -96,8 +109,11 @@
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
     <script>
-        $('#ctable').on('dblclick', function() {
-            window.location.replace("it_edit_category.php");
+		$('#ctable').on('click', function() {
+			$('.assetcategoryID').on('click', function() {
+				var a = this.getAttribute("id");
+				window.location.replace("it_edit_category.php?assetCategoryID=" + a);
+			})
         })
 
     </script>
