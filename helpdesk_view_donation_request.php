@@ -56,9 +56,9 @@
                                 <header class="panel-heading">
                                     Donation Request
                                 </header>
-								<div style="padding-top:10px; padding-left:10px; float:left">
-									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Create Ticket</button>
-								</div>
+                                <div style="padding-top:10px; padding-left:10px; float:left">
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Create Ticket</button>
+                                </div>
                                 <!-- Modal -->
                                 <div class="modal fade" id="myModal" role="dialog">
                                     <div class="modal-dialog modal-lg">
@@ -130,71 +130,98 @@
                                 </div>
 
                                 <!--                                MODAL END-->
-                                
-                                <div style="padding-top:55px" class="panel-body">
-									<div class="form" method="post">
-										<form class="cmxform form-horizontal " id="signupForm" method="get" action="">
-											<div class="form-group ">
-												<label for="organization" class="control-label col-lg-3">Office/Department/School Organization</label>
-												<div class="col-lg-6">
-													<input type="text" name="organization" class="form-control m-bot15" disabled required>
-												</div>
-											</div>
-											<div class="form-group ">
-												<label for="number" class="control-label col-lg-3">Contact No.</label>
-												<div class="col-lg-6">
-													<input class="form-control" rows="5" name="details" style="resize:none" type="text" disabled required></input>
-												</div>
-											</div>
-											<div class="form-group ">
-												<label for="dateNeeded" class="control-label col-lg-3">Date & time needed</label>
-												<div class="col-lg-6">
-													<input class="form-control" id="dateNeeded" name="dateNeeded" type="datetime-local" disabled />
-												</div>
-											</div>
-											<div class="form-group ">
-												<label for="purpose" class="control-label col-lg-3">Purpose</label>
-												<div class="col-lg-6">
-													<input class="form-control" id="purpose" name="purpose" type="text" disabled />
-												</div>
-											</div>
-											
-											<hr>
-											<div class="container-fluid">
-												<h4>Requested Equipment</h4>
-												
-												<table style="width:670px" class="table table-bordered table-striped table-condensed table-hover" id="tblCustomers" align="center" cellpadding="0" cellspacing="0" border="1">
-													<thead>
-														<tr>
-															<th style="width:500px">Equipment</th>
-															<th style="width:150px">Quantity</th>
-														</tr>
-													</thead>
-													<tbody>
-													</tbody>
-													<tfoot>
-														<tr>
-															<td>
-																<select class="form-control" id="txtName" disabled>
-																	<option>Select</option>
-																</select>
-															</td>
-															<td><input class="form-control" type="number" min="1" id="txtCountry"  disabled /></td>
-														</tr>
-													</tfoot>
-												</table>
-											</div>
-											<hr>
-											<div class="container-fluid">
-												<div class="form-group">
-													<div style="padding-left:10px">
-														<a href="helpdesk_all_request.php"><button style="float:left" class="btn btn-default" type="button">Back</button></a>
-													</div>
-												</div>
-											</div>
-										</form>
-									</div>
-								</div>
+
+                                <div class="panel-body">
+                                    <br>
+                                    <br>
+                                    <h5 style="float:right"><button class="btn btn-default">For Testing</button></h5>
+                                    <h5><b>Office/ Department/ School Organization: Gaylord Academy</b></h5>
+                                    <h5><b>Contact Number: 09178328851</b></h5>
+                                    <h5><b>Date Time Needed: 12/23/2018 12:00:00AM</b></h5>
+                                    <h5><b>Purpose: To serve our gay community</b></h5>
+
+                                    <div>
+
+                                        <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+                                            <thead>
+                                                <tr>
+                                                    <th>Category</th>
+                                                    <th>Quantity</th>
+                                                    <th>Brand</th>
+                                                    <th>Model</th>
+                                                    <th>Property Code</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Computer</td>
+                                                    <td>3</td>
+                                                    <td>
+                                                        <select class="form-control" disabled>
+                                                            <option>Select Brand</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control" disabled>
+                                                            <option>Select Model</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control" disabled>
+                                                            <option>Select Property Code</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>
+                                                        <select class="form-control" disabled>
+                                                            <option>Select Brand</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control" disabled>
+                                                            <option>Select Model</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control" disabled>
+                                                            <option>Select Property Code</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>
+                                                        <select class="form-control" disabled>
+                                                            <option>Select Brand</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control" disabled>
+                                                            <option>Select Model</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control" disabled>
+                                                            <option>Select Property Code</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+
+                                        <br>
+                                        <button class="btn btn-success">Submit</button>
+                                        <button class="btn btn-danger" onClick="location.href='helpdesk_all_ticket.php'">Back</button>
+                                    </div>
+
+                                </div>
                             </section>
 
                         </div>
@@ -206,15 +233,15 @@
         <!--main content end-->
 
     </section>
-	
-	<script>
-	function checkvalue(val){
-		if(val==="25")
-		   document.getElementById('others').style.display='block';
-		else
-		   document.getElementById('others').style.display='none'; 
-	}
-	</script>
+
+    <script>
+        function checkvalue(val) {
+            if (val === "25")
+                document.getElementById('others').style.display = 'block';
+            else
+                document.getElementById('others').style.display = 'none';
+        }
+    </script>
 
     <!-- WAG GALAWIN PLS LANG -->
 
@@ -223,7 +250,7 @@
     <script src="js/jquery-1.8.3.min.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
     <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
-   
+
     <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
 
