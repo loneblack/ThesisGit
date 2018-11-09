@@ -40,8 +40,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`user` (
   `username` VARBINARY(100) NOT NULL,
   `firstName` VARBINARY(100) NOT NULL,
   `lastName` VARBINARY(100) NOT NULL,
-  `email` VARBINARY(100) NOT NULL,
-  `contactNo` VARBINARY(100) NOT NULL,
   PRIMARY KEY (`UserID`),
   INDEX `fk_User_ref_userType1_idx` (`userType` ASC),
   CONSTRAINT `fk_User_ref_userType1`
@@ -1066,31 +1064,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`requestdetails` (
   CONSTRAINT `fk_requestdetails_ref_assetcategory1`
     FOREIGN KEY (`assetCategory`)
     REFERENCES `thesis`.`ref_assetcategory` (`assetCategoryID`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `thesis`.`requestor`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `thesis`.`requestor` ;
-
-CREATE TABLE IF NOT EXISTS `thesis`.`requestor` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `local` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NULL DEFAULT NULL,
-  `signature` DATE NULL DEFAULT NULL,
-  `employeeID` INT(11) NULL DEFAULT NULL,
-  `PersonResponsibleID` INT(11) NULL DEFAULT NULL,
-  `PersonRepresentativeID` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_Requestor_Employee1_idx` (`employeeID` ASC),
-  INDEX `fk_requestor_employee2_idx` (`PersonResponsibleID` ASC),
-  CONSTRAINT `fk_Requestor_Employee1`
-    FOREIGN KEY (`employeeID`)
-    REFERENCES `thesis`.`employee` (`employeeID`),
-  CONSTRAINT `fk_requestor_employee2`
-    FOREIGN KEY (`PersonResponsibleID`)
-    REFERENCES `thesis`.`employee` (`employeeID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
