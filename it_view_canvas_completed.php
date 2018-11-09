@@ -10,19 +10,55 @@ $result=mysqli_query($dbc,$query);
 $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 
 if(isset($_POST['submit'])){
-	if(!empty($_POST['canvas'])){
+	
+	//$x=sizeof($_POST['comments']);
+	
+	
+	//if(!empty($_POST['canvas'])){
 	// Loop to store and display values of individual checked checkbox.
-		foreach($_POST['canvas'] as $canvas){
-			$query1="UPDATE `thesis`.`canvasitemdetails` SET `status`='3' WHERE `cavasItemID`='{$canvas}'";
+		$canvas=$_POST['canvas'];
+		foreach($canvas as $value){
+			
+			$dat=explode("_", $value);
+			$canCode=$dat[0];
+			$suppID=$dat[1];
+			$dat=array();
+			
+			//for($i=0;$i<sizeof($canvasItemID);$i++){
+				//for($j=0;$j<sizeof($supplierID);$j++){
+					//$canvID=$canvasItemID[$i]."".$supplierID[$j];
+					//if($value==$canvID){
+			$query1="UPDATE `thesis`.`canvasitemdetails` SET `status`='5' WHERE `cavasItemID`='{$canCode}' and `supplier_supplierID`='{$suppID}'";
 			$result1=mysqli_query($dbc,$query1);
+					//}
+				//}
+			//}
 		}
-	}
-	if(!empty($comments)){
-		foreach(array_combine($_POST['comments'], $_POST['canvasItemID']) as $comments => $canvasItemID){
-			$query2="UPDATE `thesis`.`canvasitemdetails` SET `comment`='{$comments}' WHERE `cavasItemID`='{$canvasItemID}'";
+		
+		foreach(array_combine($_POST['disapprovedCavasItem'],$_POST['comments']) as $disappCanvas => $comments){
+			$dat=explode("_", $disappCanvas);
+			$canCode=$dat[0];
+			$suppID=$dat[1];
+			$dat=array();
+			
+			$query2="UPDATE `thesis`.`canvasitemdetails` SET `status`='6',`comment`='{$comments}' WHERE `cavasItemID`='{$canCode}' and `supplier_supplierID`='{$suppID}'";
 			$result2=mysqli_query($dbc,$query2);
 		}
-	}
+	//}
+	
+
+	
+	
+	
+		
+		
+		//$x=sizeof($_POST['comments']);
+		//echo "<script>alert('{$x}');</script>";
+		//foreach(array_combine($_POST['comments'], $_POST['canvasItemID']) as $comments => $canvasItemID){
+			//$query2="UPDATE `thesis`.`canvasitemdetails` SET `status`='6',`comment`='{$comments}' WHERE `cavasItemID`='{$canvasItemID}' and `supplier_supplierID`='{$supplierID}'";
+			//$result2=mysqli_query($dbc,$query2);
+		//}
+	
 	
 		
 	
@@ -121,18 +157,19 @@ if(isset($_POST['submit'])){
                                             </thead>
                                             <tbody>
 												<?php
-												$query1="SELECT ci.cavasItemID as `canvasItemID`,ci.quantity as `canvasQty`,rac.name as `categoryName`,rb.name as `brandName`,am.description as 'modelDesc',am.itemSpecification as `itemSpec`,cid.price as `itemPrice`,s.name as `supplier` FROM thesis.canvasitemdetails cid join canvasitem ci on cid.cavasItemID=ci.cavasItemID
+												$query1="SELECT ci.cavasItemID as `canvasItemID`,ci.quantity as `canvasQty`,rac.name as `categoryName`,rb.name as `brandName`,am.description as 'modelDesc',am.itemSpecification as `itemSpec`,cid.price as `itemPrice`,s.name as `supplier`,cid.supplier_supplierID as `supplierID` FROM thesis.canvasitemdetails cid join canvasitem ci on cid.cavasItemID=ci.cavasItemID
 																				   join supplier s on cid.supplier_supplierID=s.supplierID
 																				   join assetmodel am on ci.assetModel=am.assetModelID
 																				   join ref_brand rb on am.brand=rb.brandID
 																				   join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
-												where ci.canvasID='{$row['canvasID']}' and cid.status='1'";
+												where ci.canvasID='{$row['canvasID']}' and cid.status!='5'";
 												$result1=mysqli_query($dbc,$query1);
-												
+												$count=0;
 												while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
-													
+													$idCanvas=$row1['canvasItemID']."_".$row1['supplierID'];
+													$idDisapp="Disapp_".$idCanvas;
 													echo "<tr>
-														<td><input type='checkbox' class='myCheck' name='canvas[]' value='{$row1['canvasItemID']}'></td>
+														<td><input type='checkbox' class='myCheck' name='canvas[]' value='{$idCanvas}'>
 														<td class='text-center'>{$row1['canvasQty']}</td>
 														<td class='text-center'>{$row1['categoryName']}</td>
 														<td class='text-center'>{$row1['brandName']}</td>
@@ -143,13 +180,16 @@ if(isset($_POST['submit'])){
 														<td>
                                                         <div class='form-group'>
                                                             <div class='col-lg-12'>
-                                                                <input type='text' class='form-control' id='{$row1['canvasItemID']}' name='comments[]' required>
-																<input type='hidden' name='canvasItemID[]' value='{$row1['canvasItemID']}'>
+                                                                <input type='text' class='form-control' id='{$idCanvas}' name='comments[]' required>
+																<input type='hidden' id='{$idDisapp}' name='disapprovedCavasItem[]' value='{$idCanvas}'>
                                                             </div>
                                                         </div>
 														</td>
 													
 													</tr>";	
+													//<input type='hidden' name='canvasItemID[]' value='{$row1['canvasItemID']}'>
+													//<input type='hidden' name='supplierID[]' value='{$row1['supplierID']}'>
+													$count++;
 												}
 												?>
                                                 <tr>
@@ -207,7 +247,7 @@ if(isset($_POST['submit'])){
                                                 </tr>
                                             </tbody>
                                         </table>
-										<button type="submit" class="btn btn-success" name="submit">Submit</button>
+										<button type="submit" class="btn btn-success" name="submit" >Submit</button>
 										<a href="it_requests.php"><button class="btn btn-danger">Back</button></a>
 										</form>
                                         
@@ -239,6 +279,8 @@ if(isset($_POST['submit'])){
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
     <script>
+		var code = new Array();
+		var comment = new Array();
         $(":input").bind('keyup change click', function(e) {
 
             if ($(this).val() < 0) {
@@ -246,20 +288,29 @@ if(isset($_POST['submit'])){
             }
 
         });
-		
+		//$("input:checkbox:not(:checked)").map(function(){
+			//var disapp = "Disapp_" + this.value;
+			//document.getElementById(this.value).required = true;
+			//document.getElementById(this.value).disabled = false;
+			//document.getElementById(disapp).disabled=false;
+		//})
 		$('.myCheck').change(function(){
-			
+			var disapp = "Disapp_" + this.value;
 			if($(this).is(':checked')) {
 			// Checkbox is checked..
 				document.getElementById(this.value).required = false;
 				document.getElementById(this.value).disabled = true;
-				
+				document.getElementById(disapp).disabled=true;
 			} else {
 				// Checkbox is not checked..
 				document.getElementById(this.value).required = true;
 				document.getElementById(this.value).disabled = false;
+				document.getElementById(disapp).disabled=false;
+				
 			}
 		});
+	
+		
 		
     </script>
 </body>

@@ -33,7 +33,7 @@
             <div class="brand">
 
                 <a href="#" class="logo">
-                    Welcome IT Officer!
+                    Requestor!
                 </a>
             </div>
 
@@ -43,7 +43,7 @@
 
         </header>
         <!--header end-->
-        <?php include 'it_navbar.php' ?>
+        <?php include 'requestor_navbar.php' ?>
 
         <!--main content-->
         <section id="main-content">
@@ -65,7 +65,8 @@
                                             View Donation Request
                                         </header>
                                         <div class="panel-body">
-                                            <button class="btn btn-danger" onclick="location.href='it_requests.php'">Back</button>
+                                            <button class="btn btn-danger" onclick="location.href='requestor_dashboard.php'">Back</button>
+                                            <button class="btn btn-danger" style="float:right">Disapproved</button>
                                             <h5><b>Office/ Department/ School Organization: Gaylord Academy</b></h5>
                                             <h5><b>Contact Number: 09178328851</b></h5>
                                             <h5><b>Date Time Needed: 12/23/2018 12:00:00AM</b></h5>
@@ -78,70 +79,12 @@
                                                         <tr>
                                                             <th>Category</th>
                                                             <th>Quantity</th>
-                                                            <th>Brand</th>
-                                                            <th>Model</th>
-                                                            <th>Property Code</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
                                                             <td>Computer</td>
                                                             <td>3</td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Brand</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Model</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Property Code</option>
-                                                                </select>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Brand</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Model</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Property Code</option>
-                                                                </select>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Brand</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Model</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Property Code</option>
-                                                                </select>
-                                                            </td>
                                                         </tr>
 
                                                     </tbody>
@@ -150,11 +93,9 @@
                                                 <br>
                                                 <div class="form-group">
                                                     <label for="comment">Please Fill Reason if Disapproved</label>
-                                                    <textarea class="form-control" rows="5" id="comment" style="resize:none"></textarea>
+                                                    <textarea class="form-control" rows="5" id="comment" style="resize:none" readonly></textarea>
                                                 </div>
 
-                                                <button class="btn btn-success">Approve</button>
-                                                <button class="btn btn-danger">Disapprove</button>
                                             </div>
 
                                         </div>
