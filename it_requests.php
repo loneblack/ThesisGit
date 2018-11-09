@@ -336,6 +336,39 @@
 													<td>bicycle</td>
 													<td>12/32/8102</td>
 												</tr>
+												
+												<tr>
+													<td>12/25/2019</td>
+													<td><span class="label label-default">Ongoing</span></td>
+													<td>Borrow</td>
+													<td></td>
+													<td>Yes</td>
+													<td>12/32/8102</td>
+												</tr>
+												<tr>
+													<td>12/25/2019</td>
+													<td><span class="label label-danger">Incomplete</span></td>
+													<td>Borrow</td>
+													<td>Need more equipment</td>
+													<td>Yes</td>
+													<td>12/32/8102</td>
+												</tr>
+												<tr>
+													<td>12/25/2019</td>
+													<td><span class="label label-success">Completed</span></td>
+													<td>Borrow</td>
+													<td>Need more equipment</td>
+													<td>Yes</td>
+													<td>12/32/8102</td>
+												</tr>
+												<tr>
+													<td>12/25/2019</td>
+													<td><span class="label label-warning">Pending</span></td>
+													<td>Borrow</td>
+													<td>Need more equipment</td>
+													<td>Yes</td>
+													<td>12/32/8102</td>
+												</tr>
                                             </tbody>
                                         </table>
                                     </section>
@@ -407,7 +440,7 @@
 								}
 							}
 							
-							if(id == "Completed"){
+							if(id == "Completed" || id == "Incomplete"){
 								window.location.replace("it_view_checklist.php");
 							}
 						}
@@ -425,8 +458,8 @@
 						if(idx == "Service Request"){
 							window.location.replace("it_view_service_request_form.php");
 						}
-
-                        if(idx == "Donation"){
+						
+						if(idx == "Donation"){
                             if(id == "Ongoing" || id == "Pending"){
                                 window.location.replace("it_view_open_donation_request.php");
                             }
@@ -435,6 +468,16 @@
                                 window.location.replace("it_view_closed_donation_request.php");
                             }
                         }
+						
+						if(idx == "Borrow"){
+							if(id == "Ongoing" || id == "Pending"){
+								window.location.replace("it_view_open_service_equipment_request.php");
+							}
+							
+							else if(id == "Completed" || id == "Incomplete"){
+								window.location.replace("it_view_closed_service_equipment_request.php");
+							}
+						}
 					};
 				};
 				currentRow.onclick = createClickHandler(currentRow);
