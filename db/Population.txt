@@ -144,7 +144,7 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('2', 'Ongo
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('3', 'Completed');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('4', 'Incomplete');
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('5', 'Approved');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('5', 'Disapproved');
+INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('6', 'Disapproved');
 
 
 
