@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php
+	require_once('db/mysql_connect.php');
+	
+?>
 <html lang="en">
 
 <head>
@@ -59,7 +63,33 @@
                                         </header>
                                         <div class="panel-body">
                                             <section id="unseen">
-                                                <table class="table table-bordered table-striped table-condensed table-hover" id="ctable">
+												
+												<table class="table table-bordered table-striped table-condensed table-hover" id="ctable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Brand</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+														<?php
+														
+															$query="SELECT * FROM thesis.ref_brand;";
+															$result=mysqli_query($dbc,$query);
+															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+																echo "<tr class='brandID' id='{$row['brandID']}'>
+																	<td>{$row['name']}</td>
+																</tr>";
+															}
+														
+														
+														
+														?>
+                                                        
+                                                    </tbody>
+                                                </table>
+												
+												
+                                                <!-- <table class="table table-bordered table-striped table-condensed table-hover" id="ctable">
                                                     <thead>
                                                         <tr>
                                                             <th>Brand</th>
@@ -70,7 +100,7 @@
                                                             <td>Samsung</td>
                                                         </tr>
                                                     </tbody>
-                                                </table>
+                                                </table> -->
                                             </section>
                                         </div>
                                     </section>
@@ -96,11 +126,15 @@
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
     
+	
     <script>
-        $('#ctable').on('dblclick', function() {
-            window.location.replace("it_edit_brand.php");
+		$('#ctable').on('click', function() {
+			$('.brandID').on('click', function() {
+				var a = this.getAttribute("id");
+				window.location.replace("it_edit_brand.php?brandID=" + a);
+			})
         })
-
+	
     </script>
 
     <!--common script init for all pages-->
