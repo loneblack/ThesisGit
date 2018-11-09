@@ -425,6 +425,16 @@
 						if(idx == "Service Request"){
 							window.location.replace("it_view_service_request_form.php");
 						}
+
+                        if(idx == "Donation"){
+                            if(id == "Ongoing" || id == "Pending"){
+                                window.location.replace("it_view_open_donation_request.php");
+                            }
+                            
+                            if(id == "Completed" || id == "Incomplete"){
+                                window.location.replace("it_view_closed_donation_request.php");
+                            }
+                        }
 					};
 				};
 				currentRow.onclick = createClickHandler(currentRow);
