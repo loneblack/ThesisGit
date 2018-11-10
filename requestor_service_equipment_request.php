@@ -2,6 +2,7 @@
 <html lang="en">
 <?php
   require_once("db/mysql_connect.php");
+  $_SESSION['count'] = 1;
 ?>
 
 <head>
@@ -58,11 +59,11 @@
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
-                                            <form class="cmxform form-horizontal " id="signupForm" method="get" action="">
+                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_equipment_request_DB.php">
                                                 <div class="form-group ">
                                                     <label for="serviceType" class="control-label col-lg-3">Office/Department/School Organization</label>
                                                     <div class="col-lg-6">
-                                                        <select name="serviceType" class="form-control m-bot15">
+                                                        <select name="depschoolorg" class="form-control m-bot15">
                                                             <option>Select</option>
                                                             <?php
 
@@ -81,12 +82,6 @@
                                                            ?>
 
                                                         </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="number" class="control-label col-lg-3">Contact No.</label>
-                                                    <div class="col-lg-6">
-                                                        <input class="form-control" rows="5" name="details" style="resize:none" type="text" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -110,7 +105,7 @@
                                                 <div class="form-group ">
                                                     <label for="building" class="control-label col-lg-3">Building</label>
                                                     <div class="col-lg-6">
-                                                        <select name="building" class="form-control m-bot15" onChange="getRooms(this.value)">
+                                                        <select name="buildingID" class="form-control m-bot15" onChange="getRooms(this.value)">
                                                             <option>Select building</option>
                                                             <?php
 
@@ -152,13 +147,30 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td>
-                                                                    <select class="form-control">
+                                                                    <select name = "category0" class="form-control"  onChange="getMax(this.value)" >
                                                                         <option>Select Category</option>
-                                                                        <option>Computer</option>
+                                                                         <?php
+
+                                                                            $sql = "SELECT * FROM thesis.ref_assetcategory;";
+
+                                                                            $result = mysqli_query($dbc, $sql);
+
+                                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                            {
+                                                                                    
+                                                                                echo "<option value ={$row['assetCategoryID']}>";
+                                                                                echo "{$row['name']}</option>";
+
+                                                                            }
+                                                                        ?>
                                                                     </select>
                                                                 </td>
-                                                                <td><input type="number" min="0" max="999999" step="1" class="form-control"></td>
-                                                                <td><button class="btn btn-success" onclick="addTest(4)"> Add </button></td>
+                                                                <td>
+                                                                    <select name='quantity0' id='quantity0' class='form-control m-bot15' required>              
+                                                                        <option value=''>0</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td><button type = "button" class="btn btn-success" onclick="addTest(4)"> Add </button></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -215,6 +227,8 @@
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
     <script type="text/javascript">
+
+        var count = 0; 
         function removeRow(o) {
             var p = o.parentNode.parentNode;
             p.parentNode.removeChild(p);
@@ -243,12 +257,61 @@
 
         var appendTableRow = function(rowCount, canvasItemID) {
             var cnt = 0;
+            count++;
             var tr = "<tr>" +
-                "<td><select class='form-control'><option>Select Category</option></select></td>" +
-                "<td><input type='number' min='0' max='99999' step='1' class='form-control'></td>" +
+                "<td><select class='form-control' onChange='getMax(this.value)' ><option>Select Category</option>"+
+
+                '<?php
+
+                    $sql = "SELECT * FROM thesis.ref_assetcategory;";
+
+                    $result = mysqli_query($dbc, $sql);
+
+                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                    {
+                            
+                        echo "<option value ={$row['assetCategoryID']}>";
+                        echo "{$row['name']}</option>";
+
+                    }
+
+                    $_SESSION['count']++;
+
+
+                ?>'+
+
+
+                +"</select></td>" +
+                "<td><select name='quantity"+count+"' id='quantity"+count+"' class='form-control m-bot15'></select></td>" +
                 "<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
                 "</tr>";
             $('#tableTest tbody tr').eq(rowCount).after(tr);
+        }
+
+        function getRooms(val){
+            $.ajax({
+            type:"POST",
+            url:"requestor_getRooms.php",
+            data: 'buildingID='+val,
+            success: function(data){
+                $("#FloorAndRoomID").html(data);
+
+                }
+            });
+        }
+
+        function getMax(val){
+            $.ajax({
+            type:"POST",
+            url:"requestor_getMax.php",
+            data: 'categoryID='+val,
+            success: function(data){
+
+
+                $("#quantity"+count).html(data);
+
+                }
+            });
         }
     </script>
 
