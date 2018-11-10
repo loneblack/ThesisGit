@@ -82,14 +82,15 @@
 															echo "<tr class='gradeA' id='{$row['requestID']}' >
 																	<td>{$row['reqDesc']}</td>";
 									
-																if($row['statusDesc']=='Pending'){
-																	echo "<td><span class='badge bg-warning'>{$row['statusDesc']}</span></td>";
+																if($row['statusDesc']=='Disapproved'){
+																	echo "<td><span class='badge bg-important'>{$row['statusDesc']}</span></td>";
 																}
-																elseif($row['statusDesc']=='Completed'){
+																elseif($row['statusDesc']=='Approved'){
 																	echo "<td><span class='badge bg-success'>{$row['statusDesc']}</span></td>";
 																}
 																else{
-																	echo "<td><span class='badge bg-important'>{$row['statusDesc']}</span></td>";
+																	
+																	echo "<td><span class='badge bg-warning'>{$row['statusDesc']}</span></td>";
 																}
 															
 															echo"

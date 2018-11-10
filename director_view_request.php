@@ -9,16 +9,16 @@
 	$result=mysqli_query($dbc,$query);
 	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 	
-	//if(isset($_POST['approve'])){
-		//$query="UPDATE `thesis`.`request` SET `status`='Approved' WHERE `requestID`='{$_SESSION['requestid']}'";
-		//$result=mysqli_query($dbc,$query);
-		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
-	//}
-	//elseif(isset($_POST['disapprove'])){
-		//$query="UPDATE `thesis`.`request` SET `status`='Disapproved' WHERE `requestID`='{$_SESSION['requestid']}'";
-		//$result=mysqli_query($dbc,$query);
-		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
-	//}
+	if(isset($_POST['approve'])){
+		$query="UPDATE `thesis`.`request` SET `status`='5' WHERE `requestID`='{$_SESSION['requestid']}'";
+		$result=mysqli_query($dbc,$query);
+		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
+	}
+	elseif(isset($_POST['disapprove'])){
+		$query="UPDATE `thesis`.`request` SET `status`='6' WHERE `requestID`='{$_SESSION['requestid']}'";
+		$result=mysqli_query($dbc,$query);
+		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
+	}
 	
 ?>
 <html lang="en">
@@ -74,7 +74,7 @@
 											if($row['statusDesc']=='Pending'){
 												echo "<span class='label label-warning'>{$row['statusDesc']}</span>";
 											}
-											elseif($row['statusDesc']=='Completed'){
+											elseif($row['statusDesc']=='Approved'){
 												echo "<span class='label label-success'>{$row['statusDesc']}</span>";
 											}
 											else{
@@ -167,8 +167,8 @@
                                 </tbody>
                             </table>
 							<form method="post">
-								<button type="submit" class="btn btn-success" name="approve" <?php if($row['statusDesc'] == 'Completed') echo "disabled"; ?> ><i class="fa fa-check"></i> Approve</button>
-								<button type="submit" class="btn btn-danger" name="disapprove" <?php if($row['statusDesc'] == 'Completed') echo "disabled"; ?> ><i class="fa fa-ban"></i> Disapprove</button>
+								<button type="submit" class="btn btn-success" name="approve" <?php if($row['statusDesc'] != 'Pending') echo "disabled"; ?> ><i class="fa fa-check"></i> Approve</button>
+								<button type="submit" class="btn btn-danger" name="disapprove" <?php if($row['statusDesc'] != 'Pending') echo "disabled"; ?> ><i class="fa fa-ban"></i> Disapprove</button>
 							</form>
                     </div>
                 </div>
