@@ -48,7 +48,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`user` (
     FOREIGN KEY (`userType`)
     REFERENCES `thesis`.`ref_usertype` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -88,7 +87,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`employee` (
     FOREIGN KEY (`UserID`)
     REFERENCES `thesis`.`user` (`UserID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -152,7 +150,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`service` (
     FOREIGN KEY (`status`)
     REFERENCES `thesis`.`ref_status` (`statusID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -200,7 +197,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`floorandroom` (
     FOREIGN KEY (`BuildingID`)
     REFERENCES `thesis`.`building` (`BuildingID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -281,7 +277,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ref_brand` (
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`brandID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 14
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -295,7 +290,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ref_assetcategory` (
   `name` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`assetCategoryID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 53
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -321,7 +315,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assetmodel` (
     FOREIGN KEY (`assetCategory`)
     REFERENCES `thesis`.`ref_assetcategory` (`assetCategoryID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -390,7 +383,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`asset` (
     FOREIGN KEY (`supplierID`)
     REFERENCES `thesis`.`supplier` (`supplierID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 12
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -504,7 +496,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assetassignment` (
     FOREIGN KEY (`statusID`)
     REFERENCES `thesis`.`ref_status` (`statusID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -609,7 +601,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`offices` (
   `Name` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`officeID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 111
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -703,7 +694,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
     FOREIGN KEY (`serviceType`)
     REFERENCES `thesis`.`ref_servicetype` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -752,7 +742,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assetaudit` (
     FOREIGN KEY (`UserID`)
     REFERENCES `thesis`.`user` (`UserID`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 12
 DEFAULT CHARACTER SET = utf8;
 
 
