@@ -1,5 +1,5 @@
 <?php
-	require_once('mysql_connect.php');
+	require_once('db/mysql_connect.php');
 	$category=$_REQUEST["category"];
 	$brand=$_REQUEST["brand"];
 	$query9="SELECT * FROM thesis.assetmodel where assetCategory='{$category}' and brand='{$brand}'";
