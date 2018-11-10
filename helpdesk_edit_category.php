@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 
-	require_once('mysql_connect.php');
+	require_once('db/mysql_connect.php');
 	$_SESSION['categoryid']=$_GET['categoryid'];
 	
 	$query="SELECT * FROM thesis.ref_servicetype where id='{$_SESSION['categoryid']}'";
