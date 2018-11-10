@@ -1,4 +1,35 @@
 <!DOCTYPE html>
+<?php
+
+	require_once('db/mysql_connect.php');
+	
+	if (isset($_POST['submit'])){
+		
+		$flag=0;
+		$message=null;
+		$query1="SELECT * FROM thesis.ref_assetcategory";
+		$result1=mysqli_query($dbc,$query1);
+		$assetCategoryName=$_POST['assetCategoryName'];
+
+		while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
+			if(strcasecmp($assetCategoryName, $row1['name'])==0){
+				$message="Asset Category already exists";
+				echo "<script>alert('{$message}');</script>";
+			}
+		}
+		
+		if(!isset($message)){
+			$query2="INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('{$assetCategoryName}')";
+			$result2=mysqli_query($dbc,$query2);
+			echo "<script>alert('Success');</script>";
+			$flag=1;
+		}	
+		
+	}
+
+
+
+?>
 <html lang="en">
 
 <head>
@@ -56,18 +87,18 @@
                                 </header>
                                 <div class="panel-body">
                                     <div class="position-center">
-                                        <form class="form-horizontal" role="form">
+                                        <form class="form-horizontal" role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
                                             <div class="form-group">
                                                 <label for="category" class="col-lg-2 col-sm-2 control-label">Category Name</label>
                                                 <div class="col-lg-10">
-                                                    <input type="text" class="form-control" id="category" placeholder="Category Name">
+                                                    <input type="text" class="form-control" id="category" placeholder="Category Name" name="assetCategoryName" value="<?php if (isset($_POST['assetCategoryName']) && !$flag) echo $_POST['assetCategoryName']; ?>">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <div class="col-lg-offset-2 col-lg-10">
-                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                    <button type="submit" name="submit" class="btn btn-success">Submit</button>
                                                 </div>
                                             </div>
                                         </form>
