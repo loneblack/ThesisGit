@@ -1,4 +1,40 @@
 <!DOCTYPE html>
+<?php
+	require_once('db/mysql_connect.php');
+	
+	if (isset($_POST['submit'])){
+		
+		$flag=0;
+		$message=null;
+		
+		$brand=$_POST['brand'];
+		$modelName=$_POST['modelName'];
+		$version=$_POST['version'];
+		$category=$_POST['category'];
+		$specs=$_POST['specs'];
+		
+		$query1="SELECT count(*) as `isExist` FROM thesis.assetmodel where brand='{$brand}' and assetCategory='{$category}' and itemSpecification='{$specs}' and softwareName='{$version}' and description='{$modelName}'";
+		$result1=mysqli_query($dbc,$query1);
+		$row1=mysqli_fetch_array($result1,MYSQLI_ASSOC);
+		
+		if($row1['isExist']!=0){
+			$message="Product already exists";
+			echo "<script>alert('{$message}');</script>";
+		}
+		
+		
+		if(!isset($message)){
+			$query2="INSERT INTO `thesis`.`assetmodel` (`brand`, `assetCategory`, `itemSpecification`, `softwareName`, `description`) VALUES ('{$brand}', '{$category}', '{$specs}', '{$version}', '{$modelName}')";
+			$result2=mysqli_query($dbc,$query2);
+			echo "<script>alert('Success');</script>";
+			$flag=1;
+		}	
+	}
+
+
+
+
+?>
 <html lang="en">
 
 <head>
@@ -56,7 +92,79 @@
                                 </header>
                                 <div class="panel-body">
                                     <div class="position-center">
-                                        <form class="form-horizontal" role="form">
+										
+										<form class="form-horizontal" role="form" method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-sm-2 control-label">Brand</label>
+                                                <div class="col-lg-10">
+                                                    <select class="form-control m-bot15" name="brand" value="<?php if (isset($_POST['brand']) && !$flag) echo $_POST['brand']; ?>" required>
+                                                        <option value="">Select Brand</option>
+														<?php
+														
+															$query1="SELECT * FROM thesis.ref_brand";
+															$result1=mysqli_query($dbc,$query1);
+															while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
+																echo "<option value='{$row1['brandID']}'>{$row1['name']}</option>";
+															}
+														
+														
+														?>
+                                                        
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="model" class="col-lg-2 col-sm-2 control-label">Model Name</label>
+                                                <div class="col-lg-10">
+                                                    <input type="text" class="form-control" id="model" placeholder="Model Name" name="modelName" value="<?php if (isset($_POST['modelName']) && !$flag) echo $_POST['modelName']; ?>" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Version</label>
+                                                <div class="col-lg-10">
+                                                    <input type="text" class="form-control" id="version" placeholder="Version" name="version" value="<?php if (isset($_POST['version']) && !$flag) echo $_POST['version']; ?>" required> 
+												</div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-sm-2 control-label">Category</label>
+                                                <div class="col-lg-10">
+                                                    <select class="form-control m-bot15" name="category" value="<?php if (isset($_POST['category']) && !$flag) echo $_POST['category']; ?>" required>
+                                                        <option value="">Select Category</option>
+														<?php
+														
+															$query2="SELECT * FROM thesis.ref_assetcategory";
+															$result2=mysqli_query($dbc,$query2);
+															while($row2=mysqli_fetch_array($result2,MYSQLI_ASSOC)){
+																echo "<option value='{$row2['assetCategoryID']}'>{$row2['name']}</option>";
+															}
+														
+														
+														?>
+                                                    </select>
+                                                </div>
+                                            </div>
+											
+											<div class="form-group">
+                                                <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Specification</label>
+                                                <div class="col-lg-10">
+                                                    <input type="text" class="form-control" id="specs" placeholder="Specification" name="specs" value="<?php if (isset($_POST['specs']) && !$flag) echo $_POST['specs']; ?>" required> 
+												</div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-2 col-lg-10">
+                                                    <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+										
+										
+                                        <!-- <form class="form-horizontal" role="form">
 
                                             <div class="form-group">
                                                 <label class="col-lg-2 col-sm-2 control-label">Brand</label>
@@ -101,7 +209,7 @@
                                                     <button type="submit" class="btn btn-success">Submit</button>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </form> -->
                                     </div>
                                 </div>
                             </section>
