@@ -63,6 +63,7 @@
                                                     <th>Testing #</th>
                                                     <th>Dated</th>
                                                     <th>Status</th>
+                                                    <th>Description</th>
                                                     <th>Tested By</th>
                                                     <th>Date Updated</th>
                                                 </tr>
@@ -72,6 +73,7 @@
                                                     <td>232323232</td>
                                                     <td>1/1/2018</td>
                                                     <td><span class="label label-success label-mini">Finished</span></td>
+                                                    <td>Acquired Item</td>
                                                     <td>Marvin Lao</td>
                                                     <td>1/1/2018</td>
                                                 </tr>
@@ -79,6 +81,7 @@
                                                     <td>232323232</td>
                                                     <td>1/1/2018</td>
                                                     <td><span class="label label-danger label-mini">Unfinished</span></td>
+                                                    <td>Disposal</td>
                                                     <td>Marvin Lao</td>
                                                     <td>1/1/2018</td>
                                                 </tr>

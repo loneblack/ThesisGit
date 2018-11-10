@@ -52,7 +52,9 @@
 
                 <div class="col-sm-12">
                     <div class="col-sm-12">
-
+                        <div class="alert alert-info">
+                            <strong>Hello! Wednesday is Disposal Day! </strong> Please Click this  <a href="it_create_disposal_checklist.php" class="alert-link">link</a> to input the assets for collection for disposal.
+                        </div>
                         <div class="row">
 
                             <a href="it_inventory.php">

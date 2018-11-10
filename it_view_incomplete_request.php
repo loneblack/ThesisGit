@@ -114,6 +114,7 @@ if(isset($_POST['submit'])){
                                                 <tr>
                                                     <th>Quantity</th>
                                                     <th>Category</th>
+                                                    <th>Description</th>
                                                     <th>Brand</th>
                                                     <th>Model</th>
                                                     <th>Specification</th>
