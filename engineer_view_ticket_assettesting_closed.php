@@ -79,8 +79,8 @@
                                                     <tr>
 														<th></th>
                                                         <th>Property Code</th>
-                                                        <th>Item</th>
-                                                        <th>Specification</th>
+                                                        <th>Brand</th>
+                                                        <th>Model</th>
                                                         <th>Comments</th>
                                                     </tr>
                                                 </thead>

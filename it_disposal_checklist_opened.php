@@ -52,7 +52,7 @@
                         <div class="col-sm-12">
                             <section class="panel">
                                 <header class="panel-heading">
-                                        View Testing
+                                        Create Disposal Testing Checklist
                                     </header>
                                     <div class="panel-body">
                                         <div class="text-center invoice-btn">
@@ -60,8 +60,10 @@
                                         <section id="unseen">
                                             <div class="row invoice-to">
                                                 <div class="col-md-4 col-sm-4 pull-left">
-                                                    <h4>Status:</h4>
-                                                    <h2>Completed</h2>
+                                                    <h4>Status: <button class="btn btn-danger">Incompleted</button></h4>
+                                                    <h5>Name: </h5>
+                                                    <h5>Office Building:</h5>
+                                                    <h5>Room Number:</h5>
                                                 </div>
                                                 <div class="col-md-4 col-sm-5 pull-right">
                                                     <div class="row">
@@ -79,37 +81,42 @@
                                                 </div>
                                             </div>
                                         
-                                        <table class="table table-invoice">
+                                        <table class="table table-invoice" id="tableTest">
                                             <thead>
                                                 <tr>
-                                                    <th></th>
-                                                    <th>Property Code</th>
-                                                    <th class="text-center">Brand</th>
+                                                    <th>Brand</th>
                                                     <th>Model</th>
-                                                    <th class="text-center">Comments</th>
+                                                    <th class="text-center">Property Code</th>
+                                                    <th class="text-center">Add/ Remove</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td class="text-center"><input type="checkbox" disabled></td>
-                                                    <td>1019212</td>
-                                                    <td class="text-center">Samsung</td>
-                                                    <td>S8 Edge</td>
-                                                    <td class="text-center"><input type="text" class="form-control" disabled></td>
+                                                    <td>
+                                                        <select class="form-control">
+                                                            <option>Select Brand</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control">
+                                                            <option>Select Model</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control">
+                                                            <option>Select Property Code</option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="text-center"><button class="btn btn-primary" onclick="addTest(this)">Add</button></td>
                                                 </tr>
-                                                <tr>
-                                                    <td class="text-center"><input type="checkbox" disabled></td>
-                                                    <td>1019212</td>
-                                                    <td class="text-center">Samsung</td>
-                                                    <td>S8 Edge</td>
-                                                    <td class="text-center"><input type="text" class="form-control" disabled></td>
-                                                </tr>
+
                                             </tbody>
                                         </table>
                                     </section>
                                 </div>
+                                <button class="btn btn-success" onclick="#" id="back">Submit</button>
+                                <button class="btn btn-danger" onclick="location.href='it_testing_list.php'" id="back">Back</button>
                             </section>
-							<button class="btn btn-info" onclick="window.history.back();" id="back">Back</button>
                         </div>
 
 
@@ -139,6 +146,47 @@
     </script>
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
+    
+    <script type="text/javascript">
+        
+        function removeRow(o) {
+            var p = o.parentNode.parentNode;
+            p.parentNode.removeChild(p);
+        }
+
+
+        function addTest(cavasItemID) {
+            var row_index = 0;
+			var canvasItemID=cavasItemID;
+            var isRenderd = false;
+
+            $("td").click(function() {
+                row_index = $(this).parent().index();
+
+            });
+
+            var delayInMilliseconds = 0; //1 second
+
+            setTimeout(function() {
+
+                appendTableRow(row_index,canvasItemID);
+            }, delayInMilliseconds);
+
+
+
+        }
+
+        var appendTableRow = function(rowCount,canvasItemID) {
+            var cnt = 0;
+            var tr = "<tr>" +
+                "<td><select class='form-control'><option>Select Brand</option></select></td>" +
+                "<td><select class='form-control'><option>Select Model</option></select></td>" +
+                "<td><select class='form-control'><option>Property Cofe</option></select></td>" +
+                "<td class='text-center'><button class='btn btn-danger' onclick='removeRow(this)'>Remove</button></td>"
+                "</tr>";
+            $('#tableTest tbody tr').eq(rowCount).after(tr);
+        }
+    </script>
 
 </body>
 

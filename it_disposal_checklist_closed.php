@@ -52,7 +52,7 @@
                         <div class="col-sm-12">
                             <section class="panel">
                                 <header class="panel-heading">
-                                        Create Disposal Testing Checklist
+                                        Disposal Testing Checklist
                                     </header>
                                     <div class="panel-body">
                                         <div class="text-center invoice-btn">
@@ -60,8 +60,10 @@
                                         <section id="unseen">
                                             <div class="row invoice-to">
                                                 <div class="col-md-4 col-sm-4 pull-left">
-                                                    <h4>Status:</h4>
-                                                    <h2>Incomplete</h2>
+                                                    <h4>Status: <button class="btn btn-success">Completed</button></h4>
+                                                    <h5>Name: </h5>
+                                                    <h5>Office Building:</h5>
+                                                    <h5>Room Number:</h5>
                                                 </div>
                                                 <div class="col-md-4 col-sm-5 pull-right">
                                                     <div class="row">
@@ -82,37 +84,27 @@
                                         <table class="table table-invoice" id="tableTest">
                                             <thead>
                                                 <tr>
+                                                    <th></th>
                                                     <th>Brand</th>
                                                     <th>Model</th>
                                                     <th class="text-center">Property Code</th>
-                                                    <th class="text-center">Add/ Remove</th>
+                                                    <th>Comments</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>
-                                                        <select class="form-control">
-                                                            <option>Select Brand</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select class="form-control">
-                                                            <option>Select Model</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select class="form-control">
-                                                            <option>Select Property Code</option>
-                                                        </select>
-                                                    </td>
-                                                    <td class="text-center"><button class="btn btn-primary" onclick="addTest(this)">Add</button></td>
+                                                    <td><input type="checkbox" disabled></td>
+                                                    <td>Samsung</td>
+                                                    <td>S7 Edge</td>
+                                                    <td>3332222</td>
+                                                    <td><input type="text" class="form-control" disabled></td>
                                                 </tr>
 
                                             </tbody>
                                         </table>
                                     </section>
                                 </div>
-                                <button class="btn btn-success" onclick="#" id="back">Submit</button>
+                                <button class="btn btn-success" onclick="#" id="back">Dispose</button>
                                 <button class="btn btn-danger" onclick="location.href='it_testing_list.php'" id="back">Back</button>
                             </section>
                         </div>
