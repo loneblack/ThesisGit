@@ -7,26 +7,29 @@
 <?php
 session_start();
 require_once('db/mysql_connect.php');
-$_SESSION['requestID']=$_GET['requestID'];
-
-$query="SELECT * FROM thesis.canvas 
-				 where requestID='{$_SESSION['requestID']}'";
-$result=mysqli_query($dbc,$query);
-$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+$requestID=$_GET['requestID'];
 
 if(isset($_POST['submit'])){
 	
 	$quantityArray=$_POST['qty'];
+	$desc=$_POST['desc'];
 	$categoryArray=$_POST['category'];
 	$brandArray=$_POST['brand'];
 	$modelArray=$_POST['model'];
-	//$specsArray=$_POST['specs'];
+	$specsArray=$_POST['specs'];
 	
 	$count = sizeof($modelArray);
 	
+	$queryx="INSERT INTO `thesis`.`canvas` (`requestID`, `status`) VALUES ('{$requestID}', '1')";
+	$resultx=mysqli_query($dbc,$queryx);
+	
+	$queryy="SELECT * FROM thesis.canvas order by canvasID desc";
+	$resulty=mysqli_query($dbc,$queryy);
+	$rowy=mysqli_fetch_array($resulty,MYSQLI_ASSOC);
+	
 	//auto increment for canvasItemID
 	for ($i=0; $i < $count; $i++) { 
-		$querya="INSERT INTO `thesis`.`canvasitem` (`canvasID`, `quantity`, `assetCategory`, `assetModel`) VALUES ('{$row['canvasID']}', '{$quantityArray[$i]}', '{$categoryArray[$i]}', '{$modelArray[$i]}')";
+		$querya="INSERT INTO `thesis`.`canvasitem` (`canvasID`, `quantity`, `description`, `assetCategory`, `assetModel`) VALUES ('{$rowy['canvasID']}', '{$quantityArray[$i]}', '{$desc[$i]}', '{$categoryArray[$i]}', '{$modelArray[$i]}')";
 		$resulta=mysqli_query($dbc,$querya);
 	}
 }
@@ -125,23 +128,26 @@ if(isset($_POST['submit'])){
                                             <tbody>
 												<?php
 												
-												$query1="SELECT ci.cavasItemID as `canvasItemID`,ci.quantity as `canvasQty`,rac.name as `categoryName`,rb.name as `brandName`,am.description as 'modelDesc',am.itemSpecification as `itemSpec` FROM thesis.canvasitem ci 
-																				   join assetmodel am on ci.assetModel=am.assetModelID
-																				   join ref_brand rb on am.brand=rb.brandID
-																				   join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
-												where ci.canvasID='{$row['canvasID']}'";
+												//$query1="SELECT ci.cavasItemID as `canvasItemID`,ci.quantity as `canvasQty`,rac.name as `categoryName`,rb.name as `brandName`,am.description as 'modelDesc',am.itemSpecification as `itemSpec` FROM thesis.canvasitem ci 
+													//							   join assetmodel am on ci.assetModel=am.assetModelID
+														//						   join ref_brand rb on am.brand=rb.brandID
+															//					   join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+												//where ci.canvasID='{$row['canvasID']}'";
+												
+												$query1="SELECT * FROM thesis.requestdetails rd join ref_assetcategory rac on rd.assetCategory=rac.assetCategoryID where rd.requestID='{$requestID}'";
 												$result1=mysqli_query($dbc,$query1);
 												
 												while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
-													
+													$reqCode=$row1['requestID']."_".$row1['assetCategory']."_".$row1['quantity'];
 													echo "<tr>
-														<td style='width:50px;'>{$row1['canvasQty']}</td>
-														<td>{$row1['categoryName']}</td>
-														<td>{$row1['brandName']}</td>
-														<td>{$row1['modelDesc']}</td>
-														<td>{$row1['itemSpec']}</td>
+														<td style='width:50px;'>{$row1['quantity']}</td>
+														<td>{$row1['name']}</td>
+														<td>{$row1['description']}</td>
 														<td></td>
-														<td><button type='button' class='btn btn-primary' onclick='addTest({$row1['canvasItemID']})'> Add </button></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td><button type='button' class='btn btn-primary' onclick='addTest(\"{$reqCode}\")'> Add </button></td>
 														
 													</tr>";	
 												}
@@ -270,10 +276,16 @@ if(isset($_POST['submit'])){
 
 
 
-                        function addTest() {
+                        function addTest(reqCode) {
+							
                             var row_index = 0;
+							var codeStr=""+reqCode;
                             var isRenderd = false;
-
+							var codeArr = codeStr.split("_");
+							var requestID = parseInt(codeArr[0]);
+							var assetCategory = parseInt(codeArr[1]);
+							var qty = parseInt(codeArr[2]);
+							
                             $("td").click(function() {
                                 row_index = $(this).parent().index();
 
@@ -283,92 +295,101 @@ if(isset($_POST['submit'])){
 
                             setTimeout(function() {
 
-                                appendTableRow(row_index);
+                                appendTableRow(row_index,requestID,assetCategory,qty,reqCode);
                             }, delayInMilliseconds);
 
 
 
                         }
-						function getBrand(){
-							var category=document.getElementById("exampleFormControlSelect1").value;
+						function getCategory(assetCategory,reqCode){
+							var xmlhttp = new XMLHttpRequest();
+							var code = "exampleFormControlSelect1" + reqCode;
+							xmlhttp.onreadystatechange = function() {
+								if (this.readyState == 4 && this.status == 200) {
+									document.getElementById(code).innerHTML = this.responseText;
+								}
+							};
+							xmlhttp.open("GET", "asset_category_ajax.php?category=" + assetCategory, true);
+							xmlhttp.send();
+							getBrand(assetCategory,reqCode);
+						}
+						
+						
+						function getBrand(assetCategory,reqCode){
+							var code = "exampleFormControlSelect2" + reqCode;
 							var xmlhttp = new XMLHttpRequest();
 							xmlhttp.onreadystatechange = function() {
 								if (this.readyState == 4 && this.status == 200) {
-									document.getElementById("exampleFormControlSelect2").innerHTML = this.responseText;
+									document.getElementById(code).innerHTML = this.responseText;
 								}
 							};
-							xmlhttp.open("GET", "brand_ajax.php?category=" + category, true);
+							xmlhttp.open("GET", "brand_ajax.php?category=" + assetCategory, true);
 							xmlhttp.send();
 							
 						}
-						function getModel(){
-							var category=document.getElementById("exampleFormControlSelect1").value;
-							var brand=document.getElementById("exampleFormControlSelect2").value;
+						function getModel(reqCode){
+							var code1 = "exampleFormControlSelect1" + reqCode;
+							var code2 = "exampleFormControlSelect2" + reqCode;
+							var code3 = "exampleFormControlSelect3" + reqCode;
+							var category=document.getElementById(code1).value;
+							var brand=document.getElementById(code2).value;
 							var xmlhttp = new XMLHttpRequest();
 							xmlhttp.onreadystatechange = function() {
 								if (this.readyState == 4 && this.status == 200) {
-									document.getElementById("exampleFormControlSelect3").innerHTML = this.responseText;
+									document.getElementById(code3).innerHTML = this.responseText;
 								}
 							};
 							xmlhttp.open("GET", "model_ajax.php?category=" + category + "&brand=" + brand, true);
 							xmlhttp.send();
 							
 						}
-						function getSpecs(){
-							var model=document.getElementById("exampleFormControlSelect3").value;
+						function getSpecs(reqCode){
+							var code3 = "exampleFormControlSelect3" + reqCode;
+							var model=document.getElementById(code3).value;
 							var xmlhttp = new XMLHttpRequest();
 							xmlhttp.onreadystatechange = function() {
 								if (this.readyState == 4 && this.status == 200) {
-									document.getElementById("specs").value = this.responseText;
+									document.getElementById("specs"+reqCode).value = this.responseText;
 								}
 							};
 							xmlhttp.open("GET", "specs_ajax.php?modelID=" + model, true);
 							xmlhttp.send();
 						}
 						
-                        var appendTableRow = function(rowCount) {
+						//var appendTableRow = function(rowCount) {
+                        var appendTableRow = function(rowCount,requestID,assetCategory,qty,reqCode) {
                             var cnt = 0;
                             var tr = "<tr>" +
-                                "<td><input type='number' class='form-control' min='0.00' name='qty[]' required></td>" +
+                                "<td><input type='number' class='form-control' min='0.00' name='qty[]' value='" + qty + "' readonly></td>" +
                                 "<td>" +
-                                "<select class='form-control' id='exampleFormControlSelect1' required name='category[]' onchange='getBrand()'>" +
-								"<option>Select Category</option>" +
-								"<?php
-									$query9="SELECT * FROM thesis.ref_assetcategory";
-									$result9=mysqli_query($dbc,$query9);
-									while($row9=mysqli_fetch_array($result9,MYSQLI_ASSOC)){
-										echo "<option value='{$row9['assetCategoryID']}'>{$row9['name']}</option>";
-									}
-									
-								?>"
-								+
+								"<select class='form-control' id='exampleFormControlSelect1" + reqCode + "' name='category[]' readonly>" +
                                 "</select>" +
+								"</td>"+
+								"<td><input type='text' class='form-control' id='desc' placeholder='Description' name='desc[]'></td>" +
                                 "<td>" +
-                                "<select class='form-control' id='exampleFormControlSelect2' required name='brand[]' onchange='getModel()'>" +
+                                "<select class='form-control' id='exampleFormControlSelect2" + reqCode + "' required name='brand[]' onchange='getModel(\"" + reqCode + "\")'>" +
                                 "<option selected disabled>Select Brand</option>" +
                                 "</select>" +
+								"</td>" +
                                 "<td>" +
-                                "<select class='form-control' id='exampleFormControlSelect3' name='model[]' required onchange='getSpecs()'>" +
+                                "<select class='form-control' id='exampleFormControlSelect3" + reqCode + "' name='model[]' required onchange='getSpecs(\"" + reqCode + "\")'>" +
                                 "<option selected disabled>Select Model</option>" +
                                 "</select>" +
                                 "</td>" +
                                 "<td>" +
                                 "<div class='form-group'>" +
                                 "<dive class='col-lg-10'>" +
-                                "<input type='text' class='form-control' id='specs' placeholder='Specification' name='specs[]' disabled>" +
+                                "<input type='text' class='form-control' id='specs" + reqCode + "' placeholder='Specification' name='specs[]' required readonly>" +
                                 "</div>" +
                                 "</div>" +
                                 "</td>" +
                                 "<td class='text-center'>" +
-                                "<button id='remove' class='btn btn-warning' onClick='removeRow(this)'>Remove</button> "
+                                "<button id='remove' class='btn btn-warning' onClick='removeRow(this)'>Remove</button> " +
                                 "</td>" +
                                 "</tr>";
-								
-								
-								
-								
+
                             $('#tableTest tbody tr').eq(rowCount).after(tr);
-							
+							getCategory(assetCategory,reqCode);
                         }
 						
 					</script>
