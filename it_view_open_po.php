@@ -149,7 +149,7 @@
                                                     <th class="text-center">Unit Cost</th>
                                                     <th class="text-center">Quantity</th>
                                                     <th class="text-center">Total</th>
-                                                    <th>Comments</th>
+                                                    <th>Number of Missing Items</th>
 
                                                 </tr>
                                             </thead>
@@ -176,7 +176,7 @@
 															<td>
 																<div class='form-group'>
 																	<div class='col-sm-12'>
-																		<input type='text' class='form-control' name='comment[]'>
+																		<input type='number' min='0' class='form-control' name='comment[]'>
 																	</div>
 																</div>
 															</td>

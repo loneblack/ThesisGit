@@ -90,6 +90,70 @@
                                     <div class="panel-body">
                                         <section id="unseen">
 											<form method="post">
+												<div style="float:right; padding-right:10px; padding-top:8px">
+													<button type="button" class="btn btn-info" data-toggle="modal" data-target="#supplierModal">New Supplier</button>
+													<br>
+													<br>
+													<br>
+												</div>
+												
+												<!-- Modal -->
+												<div class="modal fade" id="supplierModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+													<div class="modal-dialog" role="document">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																	<span aria-hidden="true">&times;</span>
+																</button>
+																<h5 class="modal-title" id="exampleModalLongTitle">Add New Supplier</h5>
+															
+															</div>
+															<div class="modal-body">
+																<form class="cmxform form-horizontal " id="signupForm" method="post">
+																	<div class="form-group ">
+																		<label for="companyName">Company Name</label>
+																		<div>
+																			<input class="form-control" id="companyName" name="companyName" type="text" required />
+																		</div>
+																	</div>
+
+																	<div class="form-group ">
+																		<label for="contactPerson">Contact Person</label>
+																		<div>
+																			<input class="form-control" id="contactPerson" name="contactPerson" type="text" required />
+																		</div>
+																	</div>
+
+																	<div class="form-group ">
+																		<label for="lastname">Contact Number</label>
+																		<div>
+																			<input class="form-control" id="number" name="number" type="text" required />
+																		</div>
+																	</div>
+
+																	<div class="form-group ">
+																		<label for="email">Email (DLSU)</label>
+																		<div>
+																			<input class="form-control " id="email" name="email" type="email" required />
+																		</div>
+																	</div>
+
+																	<div class="form-group">
+																		<label>Address</label>
+																		<div name="address" id="address">
+																			<textarea style="resize: none" class="form-control" rows="6" name="address" required></textarea>
+																		</div>
+																	</div>
+																</form>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-primary">Save </button>
+																<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- Modal -->
                                             <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                 <thead>
                                                     <tr>
