@@ -117,19 +117,31 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
 															echo "<tr id='{$row['canvasID']}'>
 																<td>{$row['dateNeeded']}</td>";
 																
+															//if($row['status']=='Completed'){
+																//echo "<td><span class='label label-success label-mini'>{$row['status']}</span></td>";
+															//}
+															//elseif($row['status']=='Re-check Canvas'){
+																//echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
+															//}
+															//elseif($row['status']=='For Canvas'){
+																//echo "<td><span class='label label-warning label-mini'>{$row['status']}</span></td>";
+															//}
+															//else{
+																//echo "<td><span class='label label-primary label-mini'>{$row['status']}</span></td>";
+															//}
+															
 															if($row['status']=='Completed'){
 																echo "<td><span class='label label-success label-mini'>{$row['status']}</span></td>";
 															}
-															elseif($row['status']=='Re-check Canvas'){
+															elseif($row['status']=='Incomplete'){
 																echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
 															}
-															elseif($row['status']=='For Canvas'){
+															elseif($row['status']=='Pending'){
 																echo "<td><span class='label label-warning label-mini'>{$row['status']}</span></td>";
 															}
 															else{
 																echo "<td><span class='label label-primary label-mini'>{$row['status']}</span></td>";
 															}
-															
 															
 																
 															echo "<td>{$row['description']}</td>
@@ -181,10 +193,20 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
 						var cell = row.getElementsByTagName("td")[1];
 						var id = cell.textContent;
 						
+						//if(id == "Ready for PO"){
+							//window.location.replace("procurement_purchase_order.php?canvasID="+ row.getAttribute("id"));
+						//}
+                        //else if(id == "For Canvas"){
+                            //window.location.replace("procurement_view_request.php?canvasID="+ row.getAttribute("id"));
+                        //}
+						//else if(id == "Completed"){
+                           // window.location.replace("procurement_view_completed.php?canvasID="+ row.getAttribute("id"));
+                        //}
+						
 						if(id == "Ready for PO"){
 							window.location.replace("procurement_purchase_order.php?canvasID="+ row.getAttribute("id"));
 						}
-                        else if(id == "For Canvas"){
+                        else if(id == "Pending"){
                             window.location.replace("procurement_view_request.php?canvasID="+ row.getAttribute("id"));
                         }
 						else if(id == "Completed"){

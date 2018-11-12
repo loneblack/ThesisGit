@@ -13,6 +13,24 @@ if(isset($_POST['submit'])){
 	
 	//$x=sizeof($_POST['comments']);
 	
+	//$queryv="SELECT * FROM thesis.canvasitemdetails cid join canvasitem ci on cid.cavasItemID=ci.cavasItemID					   
+		//										where ci.canvasID='{$row['canvasID']}' and cid.status!='5' 
+			//									group by ci.assetCategory";
+	//$resultv=mysqli_query($dbc,$queryv);
+	//while($rowv=mysqli_fetch_array($resultv,MYSQLI_ASSOC)){
+		//$code="canvas".$rowv['assetCategory'];
+		//if(isset($_POST[code])){
+			//$dat=explode("_", $_POST[code]);
+			//$canCode=$dat[0];
+			//$suppID=$dat[1];
+			//$dat=array();
+			//$query1="UPDATE `thesis`.`canvasitemdetails` SET `status`='5' WHERE `cavasItemID`='{$canCode}' and `supplier_supplierID`='{$suppID}'";
+			//$result1=mysqli_query($dbc,$query1);
+		//}
+		
+		
+	//}
+	
 	
 	if(!empty($_POST['canvas'])){
 	// Loop to store and display values of individual checked checkbox.
@@ -162,12 +180,14 @@ if(isset($_POST['submit'])){
 																				   join assetmodel am on ci.assetModel=am.assetModelID
 																				   join ref_brand rb on am.brand=rb.brandID
 																				   join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
-												where ci.canvasID='{$row['canvasID']}' and cid.status!='5'";
+												where ci.canvasID='{$row['canvasID']}' and cid.status!='5' 
+												order by ci.assetCategory";
 												$result1=mysqli_query($dbc,$query1);
 												$count=0;
 												while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
 													$idCanvas=$row1['canvasItemID']."_".$row1['supplierID'];
 													$idDisapp="Disapp_".$idCanvas;
+													//<td><input type='radio' class='myCheck' name='canvas{$row1['categoryName']}[]' value='{$idCanvas}'>
 													echo "<tr>
 														<td><input type='checkbox' class='myCheck' name='canvas[]' value='{$idCanvas}'>
 														<td class='text-center'>{$row1['canvasQty']}</td>
@@ -180,8 +200,8 @@ if(isset($_POST['submit'])){
 														<td>
                                                         <div class='form-group'>
                                                             <div class='col-lg-12'>
-                                                                <input type='text' class='form-control' id='{$idCanvas}' name='comments[]' required>
-																<input type='hidden' id='{$idDisapp}' name='disapprovedCavasItem[]' value='{$idCanvas}'>
+                                                                <input type='text' class='form-control comm' id='{$idCanvas}' name='comments[]' required>
+																<input type='hidden' id='{$idDisapp}' class='disappCavas' name='disapprovedCavasItem[]' value='{$idCanvas}'>
                                                             </div>
                                                         </div>
 														</td>
@@ -298,11 +318,13 @@ if(isset($_POST['submit'])){
 			var disapp = "Disapp_" + this.value;
 			if($(this).is(':checked')) {
 			// Checkbox is checked..
+			
 				document.getElementById(this.value).required = false;
 				document.getElementById(this.value).disabled = true;
 				document.getElementById(disapp).disabled=true;
 			} else {
 				// Checkbox is not checked..
+				
 				document.getElementById(this.value).required = true;
 				document.getElementById(this.value).disabled = false;
 				document.getElementById(disapp).disabled=false;
