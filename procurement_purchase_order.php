@@ -32,7 +32,7 @@
 		$queryg="SELECT cid.supplier_supplierID as `supplierID`,s.name as `supplierName`,s.address FROM thesis.canvasitem ci 
 							join canvasitemdetails cid on ci.cavasItemID=cid.cavasItemID 
 							join supplier s on cid.supplier_supplierID=s.supplierID
-							where ci.canvasID='{$canvasID}' 
+							where ci.canvasID='{$canvasID}' and cid.status='5'
 							group by cid.supplier_supplierID";
 		$resultg=mysqli_query($dbc,$queryg);
 		
