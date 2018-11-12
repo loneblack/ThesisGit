@@ -1010,7 +1010,7 @@ DROP TABLE IF EXISTS `thesis`.`procurementdetails` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`procurementdetails` (
   `procurementID` INT(11) NOT NULL,
-  `description` INT(11) NULL DEFAULT NULL,
+  `description` VARCHAR(45) NULL DEFAULT NULL,
   `quantity` INT(11) NULL DEFAULT NULL,
   `cost` DOUBLE NULL DEFAULT NULL,
   `subtotal` DOUBLE NULL DEFAULT NULL,
