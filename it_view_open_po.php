@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php
+	session_start();
 	require_once('db/mysql_connect.php');
 	$procID=$_GET['procID'];
 	
@@ -20,6 +21,13 @@
 		if($isEmpty){
 			$querya="UPDATE `thesis`.`procurement` SET `status`='3' WHERE `procurementID`='{$procID}'";
 			$resulta=mysqli_query($dbc,$querya);
+			
+			//INSERT RECEIVED ASSET 1 BY 1 IN ASSET TABLE
+			
+			$queryt="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`) VALUES ('1', '{$_SESSION['userID']}', now(), now(), now() + INTERVAL 1 week, 'High', '25');";
+			$resultt=mysqli_query($dbc,$queryt);
+			
+			
 			
 			//echo "<script>alert('empty');</script>";
 		}
@@ -49,6 +57,7 @@
 			
 			//echo "<script>alert('not empty');</script>";
 		}
+		
 	}
 												
 ?>
