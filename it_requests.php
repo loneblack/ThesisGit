@@ -78,7 +78,7 @@
                                                             <?php
 
                                                         require_once('db/mysql_connect.php');
-                                                        $query="SELECT r.requestID,r.description as `requestDesc`,r.recipient,r.datetime as `requestedDate`,r.dateNeeded,rs.description as `statusDesc` FROM thesis.request r 
+                                                        $query="SELECT r.requestID,r.description as `requestDesc`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc` FROM thesis.request r 
                                                                             join ref_status rs on r.status=rs.statusID";
                                                         $result=mysqli_query($dbc,$query);
                                                         while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
