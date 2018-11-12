@@ -55,17 +55,16 @@
     }
    
    //insertion to requestdetails table using the id taken earlier
-   for ($i=0; $i < $count; $i++) { 
+   for ($i=0; $i <= $count; $i++) { 
 
     $quantity = $_POST['quantity'.$i];
     $category = $_POST['category'.$i];
 
-    echo $quantity." - ".$category;
 
-
-        $sql = "INSERT INTO `thesis`.`borrow_details` (`borrowID`, `quantity`, `assetCategory`) 
+        $sql4 = "INSERT INTO `thesis`.`borrow_details` (`borrowID`, `quantity`, `assetCategoryID`) 
                 VALUES ('{$id}', '{$quantity}', '{$category}');";
-        $result = mysqli_query($dbc, $sql);       
+        $result4 = mysqli_query($dbc, $sql4); 
+
 
    }
     $message = "Form submitted!";
@@ -74,6 +73,6 @@
 
   unset($_SESSION['count']);  
 
-  //header('Location: '.$header);
+  header('Location: '.$header);
 
 ?>

@@ -61,6 +61,16 @@ session_start();
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
+                                            <?php
+                                                    if (isset($_SESSION['submitMessage'])){
+
+                                                        echo "<div class='alert alert-success'>
+                                                                {$_SESSION['submitMessage']}
+                                                              </div>";
+
+                                                        unset($_SESSION['submitMessage']);
+                                                    }
+                                                ?>
                                             <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_equipment_request_DB.php">
                                                 <div class="form-group ">
                                                     <label for="serviceType" class="control-label col-lg-3">Office/Department/School Organization</label>

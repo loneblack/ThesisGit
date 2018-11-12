@@ -153,9 +153,15 @@ require_once("db/mysql_connect.php");
 
                                                   <?php
 
-                                                    $query = "SELECT * FROM thesis.service sr JOIN ref_status st ON sr.status = st.statusID WHERE UserID = {$userID};";
+                                                    $sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = {$userID};";//get the employeeID using userID
+                                                    $result = mysqli_query($dbc, $sql);
 
-                                                    $query = "SELECT * FROM thesis.service sr JOIN ref_status st ON sr.status = st.statusID WHERE UserID = {$userID};";
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                                                        $employeeID = $row['employeeID'];
+                                                        
+                                                    }
+
+                                                    $query = "SELECT * FROM thesis.request_borrow r JOIN ref_status s on r.statusID = s.statusID AND personresponsibleID = {$employeeID};";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -163,11 +169,11 @@ require_once("db/mysql_connect.php");
                                                     {
                                                       
                                                       echo "<tr class='gradeA'>
-                                                            <td style='display: none'>{$row['requestID']}</td>
+                                                            <td style='display: none'>{$row['borrowID']}</td>
                                                             <td>{$count}</td>
-                                                            <td>Request for Service</td>
-                                                            <td>{$row['dateReceived']}</td>
-                                                            <td>{$row['dateNeed']}</td>
+                                                            <td>Borrow</td>
+                                                            <td>{$row['dateCreated']}</td>
+                                                            <td>{$row['startDate']}</td>
                                                             <td style='display: none'>{$row['statusID']}</td>";
 
                                                         if($row['statusID'] == '1'){//pending
@@ -191,8 +197,6 @@ require_once("db/mysql_connect.php");
 
                                                     
                                                   ?>
-
-
 
 
                                                 <tr class="gradeA">
