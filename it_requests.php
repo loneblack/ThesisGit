@@ -76,41 +76,42 @@
                                                         </thead>
                                                         <tbody>
                                                             <?php
-
-                                                        require_once('db/mysql_connect.php');
-                                                        $query="SELECT r.requestID,r.description as `requestDesc`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc` FROM thesis.request r 
-                                                                            join ref_status rs on r.status=rs.statusID";
-                                                        $result=mysqli_query($dbc,$query);
-                                                        while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-                                                            echo "<tr id='{$row['requestID']}'>
-                                                                <td>{$row['dateNeeded']}</td>";
-
-
-                                                                if($row['statusDesc']=='Completed'){
-                                                                    echo "<td><span class='label label-success label-mini'>{$row['statusDesc']}</span></td>";
-                                                                }
-
-                                                                elseif($row['statusDesc']=='Canvas Completed'){
-                                                                    echo "<td><span class='label label-info'>{$row['statusDesc']}</span></td>";
-                                                                }
-                                                                elseif($row['statusDesc']=='Incomplete'){
-                                                                    echo "<td><span class='label label-danger label-mini'>{$row['statusDesc']}</span></td>";
-                                                                }
-                                                                else{
-                                                                    echo "<td><span class='label label-default'>{$row['statusDesc']}</span></td>";
-                                                                }
-
-
-                                                            echo "
-                                                                <td>{$row['requestDesc']}</td>
-                                                                <td>{$row['recipient']}</td>
-                                                                <td>{$row['requestedDate']}</td>
-                                                            </tr>";
-
-
-
-                                                        }
-                                                    ?>
+												
+													require_once('db/mysql_connect.php');
+													$query="SELECT r.requestID,r.description as `requestDesc`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc` FROM thesis.request r 
+																		join ref_status rs on r.status=rs.statusID";
+													$result=mysqli_query($dbc,$query);
+													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														echo "<tr id='{$row['requestID']}'>
+															<td>{$row['dateNeeded']}</td>";
+															
+															if($row['statusDesc']=='Pending'){
+																echo "<td><span class='label label-warning label-mini'>{$row['statusDesc']}</span></td>";
+															}
+															elseif($row['statusDesc']=='Incomplete'){
+																echo "<td><span class='label label-danger label-mini'>{$row['statusDesc']}</span></td>";
+															}
+															elseif($row['statusDesc']=='Completed'){
+																echo "<td><span class='label label-success label-mini'>{$row['statusDesc']}</span></td>";
+															}
+															//elseif($row['statusDesc']=='Ongoing'){
+																//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+															//}
+															else{
+																echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+															}
+															
+														echo "
+															<td>Asset Request</td>
+															<td>{$row['requestDesc']}</td>
+															<td>{$row['recipient']}</td>
+															<td>{$row['requestedDate']}</td>
+														</tr>";
+														
+														
+														
+													}
+												?>
                                                             <tr>
                                                                 <td>12/23/2018</td>
                                                                 <td><span class="label label-success label-mini">Completed</span></td>
