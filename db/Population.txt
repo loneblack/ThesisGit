@@ -13,33 +13,26 @@ INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('7', 'Director
 
 -- user
 -- 
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`)
-VALUES ( AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '1', 
-AES_ENCRYPT('add', 'Fusion'), AES_ENCRYPT('mhin', 'Fusion'), AES_ENCRYPT('admin@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+VALUES ( AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '1', AES_ENCRYPT('add', 'Fusion'), AES_ENCRYPT('mhin', 'Fusion'));
 
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`)
-VALUES ( AES_ENCRYPT('ITOffice', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Ayti', 'Fusion'),
- AES_ENCRYPT('Opis', 'Fusion'), AES_ENCRYPT('ITOffice@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+VALUES ( AES_ENCRYPT('ITOffice', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Ayti', 'Fusion'), AES_ENCRYPT('Opis', 'Fusion'));
 
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`)
-VALUES ( AES_ENCRYPT('Helpdesk', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '3', AES_ENCRYPT('help', 'Fusion'),
- AES_ENCRYPT('desk', 'Fusion'), AES_ENCRYPT('halpdesk@tdlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+VALUES ( AES_ENCRYPT('Helpdesk', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '3', AES_ENCRYPT('help', 'Fusion'), AES_ENCRYPT('desk', 'Fusion')); 
 
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`)
-VALUES ( AES_ENCRYPT('Engineer', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Enn', 'Fusion'),
- AES_ENCRYPT('jineer', 'Fusion'), AES_ENCRYPT('engineer@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+VALUES ( AES_ENCRYPT('Engineer', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Enn', 'Fusion'), AES_ENCRYPT('jineer', 'Fusion')); 
 
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`)
-VALUES ( AES_ENCRYPT('Requestor', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('rekwest', 'Fusion'),
- AES_ENCRYPT('thor', 'Fusion'), AES_ENCRYPT('requestor@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+VALUES ( AES_ENCRYPT('Requestor', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('rekwest', 'Fusion'), AES_ENCRYPT('thor', 'Fusion'));
 
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`)
-VALUES ( AES_ENCRYPT('Procurement', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '6', AES_ENCRYPT('pro', 'Fusion'),
- AES_ENCRYPT('curement', 'Fusion'), AES_ENCRYPT('purchasing@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+VALUES ( AES_ENCRYPT('Procurement', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '6', AES_ENCRYPT('pro', 'Fusion'), AES_ENCRYPT('curement', 'Fusion'));
 
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`)
-VALUES ( AES_ENCRYPT('Director', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '7', AES_ENCRYPT('Allan', 'Fusion'),
- AES_ENCRYPT('Borja', 'Fusion'), AES_ENCRYPT('director@dlsu.edu.ph', 'Fusion'), AES_ENCRYPT('0987654321', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+VALUES ( AES_ENCRYPT('Director', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '7', AES_ENCRYPT('Allan', 'Fusion'), AES_ENCRYPT('Borja', 'Fusion'));
 
 
 -- building

@@ -55,6 +55,13 @@
                                 <span>Checklist List</span>
                             </a>
                         </li>
+
+                        <li>
+                            <a href="it_view_disposal_list.php">
+                                <i class="glyphicon glyphicon-trash"></i>
+                                <span>For Diposal</span>
+                            </a>
+                        </li>
                         
                         <li class="sub-menu">
                             <a href="javascript:;">

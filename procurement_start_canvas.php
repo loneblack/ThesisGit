@@ -15,15 +15,16 @@
 			$querya="INSERT INTO `thesis`.`canvasitemdetails` (`cavasItemID`, `supplier_supplierID`, `price`, `status`) VALUES ('{$canvasItemID[$i]}', '{$supplier[$i]}', '{$unitPrice[$i]}', '1')";
 			$resulta=mysqli_query($dbc,$querya);
 		}
-		$queryb="UPDATE `thesis`.`canvas` SET `status`='6' WHERE `canvasID`='{$canvasID}'";
-		$resultb=mysqli_query($dbc,$queryb);
 		
-		$queryc="SELECT requestID FROM thesis.canvas where canvasID='{$canvasID}'";
-		$resultc=mysqli_query($dbc,$queryc);
-		$rowc=mysqli_fetch_array($resultc,MYSQLI_ASSOC);
+		//$queryb="UPDATE `thesis`.`canvas` SET `status`='6' WHERE `canvasID`='{$canvasID}'";
+		//$resultb=mysqli_query($dbc,$queryb);
 		
-		$queryd="UPDATE `thesis`.`request` SET `status`='6' WHERE `requestID`='{$rowc['requestID']}'";
-		$resultd=mysqli_query($dbc,$queryd);
+		//$queryc="SELECT requestID FROM thesis.canvas where canvasID='{$canvasID}'";
+		//$resultc=mysqli_query($dbc,$queryc);
+		//$rowc=mysqli_fetch_array($resultc,MYSQLI_ASSOC);
+		
+		//$queryd="UPDATE `thesis`.`request` SET `status`='6' WHERE `requestID`='{$rowc['requestID']}'";
+		//$resultd=mysqli_query($dbc,$queryd);
 	}
 
 
@@ -286,7 +287,7 @@
                 "<td></td>" +
                 "<td>" +
                 "<select class='form-control' id='exampleFormControlSelect1' name='supplier[]' required>" +
-                "<option selected disabled>Select Supplier</option>" +
+                "<option value=''>Select Supplier</option>" +
                 "<?php 
 						$query2="SELECT * FROM thesis.supplier";
 						$result2=mysqli_query($dbc,$query2);
