@@ -1,452 +1,465 @@
--- -----------------------------------------------------
--- POPUPLATION
--- -----------------------------------------------------
+	-- -----------------------------------------------------
+	-- POPUPLATION
+	-- -----------------------------------------------------
 
--- ref_usertype
-INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('1', 'Administrator');
-INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('2', 'IT Office');	
-INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('3', 'Helpdesk');
-INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('4', 'Engineer');
-INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('5', 'Requestor');
-INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('6', 'Procurement');
-INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('7', 'Director');
+	-- ref_usertype
+	INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('1', 'Administrator');
+	INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('2', 'IT Office');	
+	INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('3', 'Helpdesk');
+	INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('4', 'Engineer');
+	INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('5', 'Requestor');
+	INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('6', 'Procurement');
+	INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('7', 'Director');
 
--- user
--- 
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '1', AES_ENCRYPT('add', 'Fusion'), AES_ENCRYPT('mhin', 'Fusion'));
+	-- building
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('1', 'Angelo King International Center');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('2', 'BGC-Rufino Campus');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('3', 'Br. Andrew B. Gonzalez FSC Hall (AGH)');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('4', 'Br. Celba John FSC Hall (JH)');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('5', 'Br. Gabriel Connon FSC Hall (CH)');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('6', 'DLSU Laguna Campus');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('7', 'Don Enrique T. Yuchengco Hall (YH)');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('8', 'Enrique M. Razon Sports Center (ERSC)');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('9', 'Faculty Center (FC)');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('10', 'Henry S. Sy Sr. Hall (HSSH)');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('11', 'John Gokongwei Sr. Hall (GH)');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('12', 'Lasallian Study Center');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('13', 'Makati Extension Campus');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('14', 'Milagros Hall');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('15', 'Science and Technology Campus');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('16', 'Science and Technology Research Center (STRC)');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('17', 'St. Joseph Hall (SJ)');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('18', 'St. La Salle Hall (LS)');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('19', 'St. Miguel Febres Cordero Hall (MH)');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('20', 'Tuluyan Center');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('21', 'Urbano J. Velasco Hall (VH)');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('22', 'Warehouse');
+	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('23', 'William J. Shaw Hall (WH)');
 
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('ITOffice', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Ayti', 'Fusion'), AES_ENCRYPT('Opis', 'Fusion'));
+	-- ref_assetcategory
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Access Point');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Accessories');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Adaptor');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Automatic Voltage Regulator (AVR)');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Barcode Reader/Scanner');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Battery');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Cables');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Camera');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Connectors');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Consumables');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Contactless Reader');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('DELSAN Printer');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Desktop');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Earphone / Headset');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Flash Drive');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Hard Disk Drive (External)');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Hard Disk Drive (Internal)');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Keyboard');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('LAN Card');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Laptop');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Media Player');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Memory');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Monitor');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Motherboard');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Mouse');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Nettop');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Network Switch');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Non- IT Equipment');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Optical Drive (External)');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Optical Drive (Internal)');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Pocket Wifi');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Power Supply');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Printer');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Processor');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Projector');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Projector Bulbs');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Projector Screen');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Router');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Scanner (Document)');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Server');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Smart Card Reader');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Software');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Speaker');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Tablet');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Tape Drive');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Thin Client');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Turnstile');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('UPS');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Video Card');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Voice Recorder (Digital)');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Webcam');
+	INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Wireless Presenter');
 
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('Helpdesk', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '3', AES_ENCRYPT('help', 'Fusion'), AES_ENCRYPT('desk', 'Fusion')); 
+	-- ref_assetstatus
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('1', 'Stocked');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('2', 'Deployed');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('3', 'Moving');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('4', 'Broken - Not Fixable');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('5', 'Broken - Fixable');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('6', 'Donated');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('7', 'Disposed');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('8', 'For Testing');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('9', 'For Repair');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('10', 'For Refurbish');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('11', 'For Disposal');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('12', 'in Testing');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('13', 'In Repair');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('14', 'Ticketed');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('15', 'Refurbishing');
 
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('Engineer', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Enn', 'Fusion'), AES_ENCRYPT('jineer', 'Fusion')); 
-
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('Requestor', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('rekwest', 'Fusion'), AES_ENCRYPT('thor', 'Fusion'));
-
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('Procurement', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '6', AES_ENCRYPT('pro', 'Fusion'), AES_ENCRYPT('curement', 'Fusion'));
-
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('Director', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '7', AES_ENCRYPT('Allan', 'Fusion'), AES_ENCRYPT('Borja', 'Fusion'));
-
-
--- building
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('1', 'Angelo King International Center');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('2', 'BGC-Rufino Campus');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('3', 'Br. Andrew B. Gonzalez FSC Hall (AGH)');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('4', 'Br. Celba John FSC Hall (JH)');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('5', 'Br. Gabriel Connon FSC Hall (CH)');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('6', 'DLSU Laguna Campus');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('7', 'Don Enrique T. Yuchengco Hall (YH)');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('8', 'Enrique M. Razon Sports Center (ERSC)');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('9', 'Faculty Center (FC)');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('10', 'Henry S. Sy Sr. Hall (HSSH)');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('11', 'John Gokongwei Sr. Hall (GH)');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('12', 'Lasallian Study Center');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('13', 'Makati Extension Campus');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('14', 'Milagros Hall');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('15', 'Science and Technology Campus');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('16', 'Science and Technology Research Center (STRC)');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('17', 'St. Joseph Hall (SJ)');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('18', 'St. La Salle Hall (LS)');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('19', 'St. Miguel Febres Cordero Hall (MH)');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('20', 'Tuluyan Center');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('21', 'Urbano J. Velasco Hall (VH)');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('22', 'Warehouse');
-INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('23', 'William J. Shaw Hall (WH)');
-
--- ref_assetcategory
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Access Point');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Accessories');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Adaptor');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Automatic Voltage Regulator (AVR)');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Barcode Reader/Scanner');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Battery');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Cables');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Camera');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Connectors');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Consumables');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Contactless Reader');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('DELSAN Printer');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Desktop');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Earphone / Headset');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Flash Drive');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Hard Disk Drive (External)');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Hard Disk Drive (Internal)');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Keyboard');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('LAN Card');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Laptop');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Media Player');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Memory');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Monitor');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Motherboard');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Mouse');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Nettop');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Network Switch');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Non- IT Equipment');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Optical Drive (External)');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Optical Drive (Internal)');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Pocket Wifi');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Power Supply');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Printer');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Processor');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Projector');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Projector Bulbs');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Projector Screen');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Router');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Scanner (Document)');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Server');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Smart Card Reader');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Software');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Speaker');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Tablet');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Tape Drive');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Thin Client');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Turnstile');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('UPS');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Video Card');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Voice Recorder (Digital)');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Webcam');
-INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Wireless Presenter');
-
--- ref_assetstatus
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('1', 'Stocked');
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('2', 'Deployed');
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('3', 'Moving');
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('4', 'Broken - Not Fixable');
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('5', 'Broken - Fixable');
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('6', 'Donated');
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('7', 'Disposed');
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('8', 'For Testing');
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('9', 'For Repair');
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('10', 'For Refurbish');
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('11', 'For Disposal');
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('12', 'in Testing');
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('13', 'In Repair');
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('14', 'Ticketed');
-INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('15', 'Refurbishing');
-
--- ref_status
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('1', 'Pending');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('2', 'Ongoing');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('3', 'Completed');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('4', 'Incomplete');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('5', 'Approved');
-INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('6', 'Disapproved');
+	-- ref_status
+	INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('1', 'Pending');
+	INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('2', 'Ongoing');
+	INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('3', 'Completed');
+	INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('4', 'Incomplete');
+	INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('5', 'Approved');
+	INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('6', 'Disapproved');
 
 
 
-	
+		
 
 
--- ref_ticketstatus
-INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('1', 'Open');
-INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('2', 'Assigned');
-INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('3', 'In Progress');
-INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('4', 'Transferred');
-INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('5', 'Escalated');
-INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('6', 'Waiting for Parts');
-INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('7', 'Closed');
+	-- ref_ticketstatus
+	INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('1', 'Open');
+	INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('2', 'Assigned');
+	INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('3', 'In Progress');
+	INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('4', 'Transferred');
+	INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('5', 'Escalated');
+	INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('6', 'Waiting for Parts');
+	INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('7', 'Closed');
 
--- ref_serviceType
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('1', 'Access regulation / permission');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('2', 'Activation / Deactivation of MyLasalle account');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('3', 'Add / Remove email address in mailing list');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('4', 'Computer lab management');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('5', 'Computer Set-up');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('6', 'Creation/Deletion of mailing list');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('7', 'Data extraction / Report generation / Printing');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('8', 'Data / Infomation Update');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('9', 'Forms / Charts design');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('10', 'IT asset management');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('11', 'Network Management');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('12', 'Photoshoot / Virtual tour');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('13', 'Print publishing');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('14', 'Program access request');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('15', 'Request for replacement unit');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('16', 'Security management');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('17', 'Server management');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('18', 'Service / Backup unit provisions');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('19', 'Stand by support Engineer');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('20', 'System development / Revision');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('21', 'Transfer and installation of application software');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('22', 'Web graphics publishing');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('23', 'Web site creation');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('24', 'Web site updating');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('25', 'Asset Testing');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('26', 'Refurbishing');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('27', 'repair');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('28', 'Maintenance');
-INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('29', 'Others');
+	-- ref_serviceType
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('1', 'Access regulation / permission');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('2', 'Activation / Deactivation of MyLasalle account');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('3', 'Add / Remove email address in mailing list');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('4', 'Computer lab management');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('5', 'Computer Set-up');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('6', 'Creation/Deletion of mailing list');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('7', 'Data extraction / Report generation / Printing');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('8', 'Data / Infomation Update');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('9', 'Forms / Charts design');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('10', 'IT asset management');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('11', 'Network Management');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('12', 'Photoshoot / Virtual tour');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('13', 'Print publishing');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('14', 'Program access request');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('15', 'Request for replacement unit');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('16', 'Security management');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('17', 'Server management');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('18', 'Service / Backup unit provisions');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('19', 'Stand by support Engineer');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('20', 'System development / Revision');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('21', 'Transfer and installation of application software');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('22', 'Web graphics publishing');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('23', 'Web site creation');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('24', 'Web site updating');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('25', 'Asset Testing');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('26', 'Refurbishing');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('27', 'repair');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('28', 'Maintenance');
+	INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('29', 'Others');
 
 
 
 
--- department
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('1', 'Accountancy');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('2', 'Behavioral Sciences');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('3', 'Biology');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('4', 'Chemical Engineering');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('5', 'Chemistry');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('6', 'Civil Engineering');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('7', 'Commercial Law');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('8', 'Communication');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('9', 'Computer Technology');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('10', 'Counseling and Educational Psychology');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('11', 'Decision Sciences and Innovation');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('12', 'Economics');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('13', 'Educational Leadership and Management');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('14', 'Electronics and Communications Engineering');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('15', 'English and Applied Linguistics');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('16', 'Filipino');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('17', 'Financial Management');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('18', 'History');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('19', 'Industrial Engineering');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('20', 'Information Technology');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('21', 'International Studies');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('22', 'Law');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('23', 'Literature');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('24', 'Management and Organization');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('25', 'Manufacturing Engineering and Management');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('26', 'Marketing Management');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('27', 'Mathematics');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('28', 'Mechanical Engineering');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('29', 'Philosophy');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('30', 'Physical Education');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('31', 'Physics');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('32', 'Political Science');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('33', 'Psychology');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('34', 'Science Education');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('35', 'Software Technology');
-INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('36', 'Theology and Religious Studies');
+	-- department
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('1', 'Accountancy');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('2', 'Behavioral Sciences');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('3', 'Biology');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('4', 'Chemical Engineering');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('5', 'Chemistry');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('6', 'Civil Engineering');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('7', 'Commercial Law');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('8', 'Communication');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('9', 'Computer Technology');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('10', 'Counseling and Educational Psychology');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('11', 'Decision Sciences and Innovation');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('12', 'Economics');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('13', 'Educational Leadership and Management');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('14', 'Electronics and Communications Engineering');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('15', 'English and Applied Linguistics');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('16', 'Filipino');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('17', 'Financial Management');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('18', 'History');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('19', 'Industrial Engineering');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('20', 'Information Technology');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('21', 'International Studies');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('22', 'Law');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('23', 'Literature');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('24', 'Management and Organization');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('25', 'Manufacturing Engineering and Management');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('26', 'Marketing Management');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('27', 'Mathematics');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('28', 'Mechanical Engineering');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('29', 'Philosophy');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('30', 'Physical Education');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('31', 'Physics');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('32', 'Political Science');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('33', 'Psychology');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('34', 'Science Education');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('35', 'Software Technology');
+	INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('36', 'Theology and Religious Studies');
 
 
--- offices
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('1', 'Academic Support for Instructional Services and Technology (ASIST), Director');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('2', 'Academic Support for Instructional Services and Technology (ASIST), Director');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('3', 'Advanced Research Institute for Informatics, Computing and Networking (AdRIC)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('4', 'Advancement and Alumni Affairs Office (AAAO)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('5', 'Angelo King Institute (AKI)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('6', 'Associate Vice Chancellor for Academic Services (AVCAS)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('7', 'Associate Vice Chancellor for Campus Services (AVCCS)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('8', 'Behavioral Sciences Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('9', 'Bienvenido N. Santos Creative Writing Center (BNSCWC)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('10', 'Biology Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('11', 'Br. Alfred Shields FSC Ocean Research (SHORE) Center');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('12', 'Br. Andrew Gonzalez College of Education (BAGCED), Dean');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('13', 'Buildings and Grounds Maintenance (BGM) Office');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('14', 'Campus Sustainability Office (CSO)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('15', 'Center for Business Research and Development (CBERD)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('16', 'Center for Engineering and Sustainable Development Research (CESDR)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('17', 'Center for Natural Sciences and Environmental Research (CENSER)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('18', 'Center for Social Concern and Action (COSCA)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('19', 'Chemical Engineering Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('20', 'Chemistry Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('21', 'Civil and Sanitary Works (CSW) Office');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('22', 'Civil Engineering Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('23', 'College of Computer Studies, Dean');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('24', 'College of Law (COL), Dean');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('25', 'College of Liberal Arts (CLA), Dean');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('26', 'College of Science (COS), Dean');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('27', 'Commercial Law Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('28', 'Computer Technology Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('29', 'Counseling and Educational Psychology Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('30', 'Cultural Arts Office (CAO)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('31', 'Decision Sciences and Innovation Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('32', 'Department of Communication');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('33', 'Department of English and Applied Linguistics');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('34', 'Discipline Board (DB)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('35', 'DLSU Innovation and Technology Office (DITO)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('36', 'DLSU Publishing House (DLSUPH)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('37', 'Economics Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('38', 'Educational Leadership and Management Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('39', 'Electronics and Communications Engineering Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('40', 'Enrollment Services Hub');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('41', 'External Relations and Internalization, Executive Director');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('42', 'Filipino Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('43', 'Financial Management Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('44', 'Gokongwei College of Engineering (GCOE), Dean');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('45', 'Health Services Office (HSO)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('46', 'History Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('47', 'Industrial Engineering Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('48', 'Information Technology Services (ITS)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('49', 'Information Technology Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('50', 'Institutional Testing and Evaluation Office (ITEO)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('51', 'Intellectual Property Office (DIPO)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('52', 'International Studies Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('53', 'Inventory Management Office (IMO)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('54', 'Jesse M. Robredo Institute of Governance (JMRIG)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('55', 'Lasallian Institute for Development and Educational Research (LIDER)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('56', 'Lasallian Mission in DLSU-STC');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('57', 'Lasallian Pastoral Office (LSPO)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('58', 'Legal Counsel');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('59', 'Literature Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('60', 'Management and Organization Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('61', 'Manufacturing Engineering and Management Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('62', 'Marketing Management Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('63', 'Mathematics Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('64', 'Mechanical and Electrical Works Office (MEWO)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('65', 'Mechanical Engineering Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('66', 'Office of Academic Services for Integrated School (OASIS)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('67', 'Office of Admissions and Scholarships (OAS)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('68', 'Office of Counseling and Career Services (OCCS)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('69', 'Office of Personnel Management (OPM)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('70', 'Office of Satellite Campus Facilities Administration (OSCFA)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('71', 'Office of Sports Development (OSD)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('72', 'Office of the President');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('73', 'Philosophy Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('74', 'Physical Education Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('75', 'Physics Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('76', 'Political Science Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('77', 'Procurement Office');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('78', 'Psychology Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('79', 'Quality Assurance Office');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('80', 'Ramon V. del Rosario College of Business (RVRCOB), Dean');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('81', 'Reserve Officers Training Center Office');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('82', 'Risk Management, Compliance and Audit (RMCA) Office');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('83', 'School of Economics, Dean');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('84', 'Science Education Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('85', 'Security Office (SO)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('86', 'Social Development Research Center (SDRC)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('87', 'Software Technology Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('88', 'STC Academics, Director');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('89', 'Strategic Communications (STRATCOM), Director for Operations');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('90', 'Strategic Communications (STRATCOM), Executive Director');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('91', 'Strategic Management');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('92', 'Student Affairs (DSA), Dean');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('93', 'Student Affairs, Vice Dean');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('94', 'Student Discipline Formation Office (SDFO)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('95', 'Student Leadership Involvement, Formation and Empowerment (SLIFE)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('96', 'Student Media Office');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('97', 'Support Services Office');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('98', 'The Museum');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('99', 'Theology and Religious Studies Department');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('100', 'University Architect');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('101', 'University Controller');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('102', 'University Library');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('103', 'University Registrar (OUR)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('104', 'University Research Coordination Office (URCO)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('105', 'University Safety Office (USO)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('106', 'Vice Chancellor for Academics (VCA)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('107', 'Vice Chancellor for Administration');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('108', 'Vice President for Lasallian Mission (VCLM)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('109', 'Vice Chancellor for Research and Innovation (VCRI)');
-INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('110', 'Vice Chancellor for STC');
+	-- offices
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('1', 'Academic Support for Instructional Services and Technology (ASIST), Director');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('2', 'Academic Support for Instructional Services and Technology (ASIST), Director');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('3', 'Advanced Research Institute for Informatics, Computing and Networking (AdRIC)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('4', 'Advancement and Alumni Affairs Office (AAAO)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('5', 'Angelo King Institute (AKI)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('6', 'Associate Vice Chancellor for Academic Services (AVCAS)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('7', 'Associate Vice Chancellor for Campus Services (AVCCS)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('8', 'Behavioral Sciences Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('9', 'Bienvenido N. Santos Creative Writing Center (BNSCWC)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('10', 'Biology Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('11', 'Br. Alfred Shields FSC Ocean Research (SHORE) Center');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('12', 'Br. Andrew Gonzalez College of Education (BAGCED), Dean');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('13', 'Buildings and Grounds Maintenance (BGM) Office');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('14', 'Campus Sustainability Office (CSO)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('15', 'Center for Business Research and Development (CBERD)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('16', 'Center for Engineering and Sustainable Development Research (CESDR)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('17', 'Center for Natural Sciences and Environmental Research (CENSER)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('18', 'Center for Social Concern and Action (COSCA)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('19', 'Chemical Engineering Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('20', 'Chemistry Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('21', 'Civil and Sanitary Works (CSW) Office');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('22', 'Civil Engineering Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('23', 'College of Computer Studies, Dean');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('24', 'College of Law (COL), Dean');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('25', 'College of Liberal Arts (CLA), Dean');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('26', 'College of Science (COS), Dean');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('27', 'Commercial Law Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('28', 'Computer Technology Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('29', 'Counseling and Educational Psychology Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('30', 'Cultural Arts Office (CAO)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('31', 'Decision Sciences and Innovation Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('32', 'Department of Communication');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('33', 'Department of English and Applied Linguistics');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('34', 'Discipline Board (DB)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('35', 'DLSU Innovation and Technology Office (DITO)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('36', 'DLSU Publishing House (DLSUPH)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('37', 'Economics Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('38', 'Educational Leadership and Management Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('39', 'Electronics and Communications Engineering Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('40', 'Enrollment Services Hub');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('41', 'External Relations and Internalization, Executive Director');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('42', 'Filipino Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('43', 'Financial Management Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('44', 'Gokongwei College of Engineering (GCOE), Dean');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('45', 'Health Services Office (HSO)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('46', 'History Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('47', 'Industrial Engineering Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('48', 'Information Technology Services (ITS)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('49', 'Information Technology Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('50', 'Institutional Testing and Evaluation Office (ITEO)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('51', 'Intellectual Property Office (DIPO)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('52', 'International Studies Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('53', 'Inventory Management Office (IMO)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('54', 'Jesse M. Robredo Institute of Governance (JMRIG)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('55', 'Lasallian Institute for Development and Educational Research (LIDER)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('56', 'Lasallian Mission in DLSU-STC');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('57', 'Lasallian Pastoral Office (LSPO)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('58', 'Legal Counsel');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('59', 'Literature Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('60', 'Management and Organization Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('61', 'Manufacturing Engineering and Management Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('62', 'Marketing Management Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('63', 'Mathematics Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('64', 'Mechanical and Electrical Works Office (MEWO)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('65', 'Mechanical Engineering Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('66', 'Office of Academic Services for Integrated School (OASIS)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('67', 'Office of Admissions and Scholarships (OAS)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('68', 'Office of Counseling and Career Services (OCCS)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('69', 'Office of Personnel Management (OPM)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('70', 'Office of Satellite Campus Facilities Administration (OSCFA)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('71', 'Office of Sports Development (OSD)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('72', 'Office of the President');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('73', 'Philosophy Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('74', 'Physical Education Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('75', 'Physics Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('76', 'Political Science Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('77', 'Procurement Office');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('78', 'Psychology Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('79', 'Quality Assurance Office');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('80', 'Ramon V. del Rosario College of Business (RVRCOB), Dean');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('81', 'Reserve Officers Training Center Office');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('82', 'Risk Management, Compliance and Audit (RMCA) Office');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('83', 'School of Economics, Dean');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('84', 'Science Education Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('85', 'Security Office (SO)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('86', 'Social Development Research Center (SDRC)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('87', 'Software Technology Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('88', 'STC Academics, Director');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('89', 'Strategic Communications (STRATCOM), Director for Operations');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('90', 'Strategic Communications (STRATCOM), Executive Director');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('91', 'Strategic Management');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('92', 'Student Affairs (DSA), Dean');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('93', 'Student Affairs, Vice Dean');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('94', 'Student Discipline Formation Office (SDFO)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('95', 'Student Leadership Involvement, Formation and Empowerment (SLIFE)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('96', 'Student Media Office');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('97', 'Support Services Office');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('98', 'The Museum');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('99', 'Theology and Religious Studies Department');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('100', 'University Architect');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('101', 'University Controller');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('102', 'University Library');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('103', 'University Registrar (OUR)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('104', 'University Research Coordination Office (URCO)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('105', 'University Safety Office (USO)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('106', 'Vice Chancellor for Academics (VCA)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('107', 'Vice Chancellor for Administration');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('108', 'Vice President for Lasallian Mission (VCLM)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('109', 'Vice Chancellor for Research and Innovation (VCRI)');
+	INSERT INTO `thesis`.`offices` (`officeID`, `Name`) VALUES ('110', 'Vice Chancellor for STC');
 
--- Insertion to floorRoom ---------------------------------------------------------------------------------------
--- Andrew Building
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('3', 'AGH1706 Computer Laboratory');
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('3', 'AGH1904 Computer Laboratory');
+	-- Insertion to floorRoom ---------------------------------------------------------------------------------------
+	-- Andrew Building
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('3', 'AGH1706 Computer Laboratory');
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('3', 'AGH1904 Computer Laboratory');
 
--- Yuchengco Building
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('7', 'YH602 Computer Laboratory');
+	-- Yuchengco Building
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('7', 'YH602 Computer Laboratory');
 
--- Gokongwei Building
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH301 Computer Laboratory');
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH302A Computer Laboratory');
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH302B Computer Laboratory');
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH304A Computer Laboratory');
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH304B Computer Laboratory');
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH306A Computer Laboratory');
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH306B Computer Laboratory');
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH404 Computer Laboratory');
+	-- Gokongwei Building
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH301 Computer Laboratory');
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH302A Computer Laboratory');
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH302B Computer Laboratory');
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH304A Computer Laboratory');
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH304B Computer Laboratory');
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH306A Computer Laboratory');
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH306B Computer Laboratory');
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH404 Computer Laboratory');
 
--- Makati Extension Campus
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('13', 'MEC Computer Laboratory');
+	-- Makati Extension Campus
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('13', 'MEC Computer Laboratory');
 
--- Scienc and Technology Research Center(STRC)
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('16', 'STRC 314 Computer Laboratory');
+	-- Scienc and Technology Research Center(STRC)
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('16', 'STRC 314 Computer Laboratory');
 
--- St. Joseph Hall
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('17', 'SJ212 Computer Laboratory');
+	-- St. Joseph Hall
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('17', 'SJ212 Computer Laboratory');
 
--- St. Miguel Hall
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('19', 'M303 Computer Laboratory');
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('19', 'M404 Computer Laboratory');
+	-- St. Miguel Hall
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('19', 'M303 Computer Laboratory');
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('19', 'M404 Computer Laboratory');
 
--- Velasco Hall
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('21', 'VH103 Computer Laboratory');
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('21', 'VH301 Computer Laboratory');
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('21', 'VH310 Computer Laboratory');
-INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('21', 'VH153 Computer Laboratory');
+	-- Velasco Hall
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('21', 'VH103 Computer Laboratory');
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('21', 'VH301 Computer Laboratory');
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('21', 'VH310 Computer Laboratory');
+	INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('21', 'VH153 Computer Laboratory');
 
--- End of Flooroom Insertion -------------------------------------------------------------------------------------
+	-- End of Flooroom Insertion -------------------------------------------------------------------------------------
 
--- brand
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('1', 'Acer');
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('2', 'Samsung');
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('3', 'Logitech');
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('4', 'Google');
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('5', 'Apple');
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('6', 'Microsoft');
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('7', 'IBM');
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('8', 'Samsung');
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('9', 'Baidu');
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('10', 'Oracle');
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('11', 'Kingmax');
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('12', 'Intel');
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('13', 'Smart');
-
-
--- assetModel
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('1', '20', '1', '4gb Ram 500gb storage');
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('2', '8', '2', '12 mega pixels');
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('3', '18', '3', 'Wireless ');
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('4', '15', '11', '32gb USB 3.0');
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('5', '18', '12', 'Ocatacore');
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('6', '48', '12', 'HD 2000');
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('7', '31', '13', '2.4Ghz');
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('8', '23', '8', '18 inch Retina Display');
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('9', '21', '10', 'Blu-ray');
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('10', '44', '5', '4gb Ram 128gb storage');
-
--- Employee
-INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, UserID) VALUES ('20', 'Sir Jojo', 'Asset Manager', '09999999999', 'jojo.soliva@dlsu.edu.ph', '2');
-INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Test Employee', 'Test Employee', '09999999999', 'test@test');
-INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Giligan Crissa', 'Assistan Asset Manager', '0456789299', 'crissa.giligan@dlsu.edu.ph');
-INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Helph Dyesk', 'Helpdesk', '09876543210', 'helpless.desk@dlsu.edu.ph');
-INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Mark Question', 'Engineer', '09876543210', 'question.mark@dlsu.edu.ph');
-INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Point Exclamation', 'Head Engineer', '09876543210', 'exclamation.point@dlsu.edu.ph');
-INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Teacher Matt', 'Professor', '09876543210', 'math.teacher@dlsu.edu.ph');
-INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Professor Psy', 'Professor', '09876543210', 'psych.prof@dlsu.edu.ph');
-INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`) VALUES ('20', 'Lecturer Phil', 'Assistant Professor', '09876543210', 'filipino.lecturer@dlsu.edu.ph');
-
--- asset
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('1', 'LaptopPropertyCode', 'SerialNumberLaptop', 'MACADDRESSLAPTOP', '2');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('2', 'CameraPropertyCode', 'SerialNumberCamera', 'MACCamera', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('3', 'KeyboardPropertyCode', 'SerialNumberKeyboard', 'MacKeyboard', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('4', 'FlashdrivePropertyCode', 'SerialNumberFlashdrive', 'MacFlashdrive', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('5', 'ProcessorPropertyCode', 'SerialNumberProcessor', 'MacProcessor', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('6', 'VideoCardPropertyCode', 'SerialNumberVideoCard', 'MacVideoCard', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('7', 'PocketWifiPropertyCode', 'SerialNumberPocketWifi', 'MacPocketWifi', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('8', 'MonitorPropertyCode', 'SerialNumberMonitor', 'MacMonitor', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('9', 'MediaPlayerPropertyCode', 'SerialNumberMediaPlayer', 'MacMediaPlayer', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('10', 'TabletPropertyCode', 'SerialNumberTablet', 'MacTablet', '1');
+	-- brand
+	INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('1', 'Acer');
+	INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('2', 'Samsung');
+	INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('3', 'Logitech');
+	INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('4', 'Google');
+	INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('5', 'Apple');
+	INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('6', 'Microsoft');
+	INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('7', 'IBM');
+	INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('8', 'Samsung');
+	INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('9', 'Baidu');
+	INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('10', 'Oracle');
+	INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('11', 'Kingmax');
+	INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('12', 'Intel');
+	INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('13', 'Smart');
 
 
--- asset audit for new items
-INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');
-INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '2');
-INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '3');
-INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '4');
-INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '5');
-INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '6');
-INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '7');
-INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '8');
-INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '9');
-INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '10');
+	-- assetModel
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('1', '20', '1', '4gb Ram 500gb storage');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('2', '8', '2', '12 mega pixels');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('3', '18', '3', 'Wireless ');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('4', '15', '11', '32gb USB 3.0');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('5', '18', '12', 'Ocatacore');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('6', '48', '12', 'HD 2000');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('7', '31', '13', '2.4Ghz');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('8', '23', '8', '18 inch Retina Display');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('9', '21', '10', 'Blu-ray');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('10', '44', '5', '4gb Ram 128gb storage');
+
+	-- user
+	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+	VALUES ( AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '1', AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('admin', 'Fusion'));
+
+	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+	VALUES ( AES_ENCRYPT('Director', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '7', AES_ENCRYPT('Allan', 'Fusion'), AES_ENCRYPT('Borja', 'Fusion'));
+
+	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+	VALUES ( AES_ENCRYPT('ITOffice1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Jojo', 'Fusion'), AES_ENCRYPT('Soliva', 'Fusion'));
+
+	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+	VALUES ( AES_ENCRYPT('ITOffice2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Giligan', 'Fusion'), AES_ENCRYPT('Crissa', 'Fusion'));
+
+	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+	VALUES ( AES_ENCRYPT('Helpdesk', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '3', AES_ENCRYPT('help', 'Fusion'), AES_ENCRYPT('desk', 'Fusion')); 
+
+	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+	VALUES ( AES_ENCRYPT('Procurement', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '6', AES_ENCRYPT('Procurement', 'Fusion'), AES_ENCRYPT('Procurement', 'Fusion'));
+
+	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+	VALUES ( AES_ENCRYPT('Engineer1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('One', 'Fusion'), AES_ENCRYPT('Engineer', 'Fusion'));
+
+	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+	VALUES ( AES_ENCRYPT('Engineer2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Two', 'Fusion'), AES_ENCRYPT('Engineer', 'Fusion')); 
+
+	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+	VALUES ( AES_ENCRYPT('Requestor1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('One', 'Fusion'), AES_ENCRYPT('Requestor', 'Fusion'));
+
+	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+	VALUES ( AES_ENCRYPT('Requestor2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Two', 'Fusion'), AES_ENCRYPT('Requestor', 'Fusion'));
+
+	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+	VALUES ( AES_ENCRYPT('Requestor3', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Three', 'Fusion'), AES_ENCRYPT('Requestor', 'Fusion'));
+	-- 696969696969696969
 
 
--- Asset Assignment
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('1', '2018-07-24', '2018-07-25', '1', '2');
+	-- Employee
+	INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, UserID) VALUES ('20', 'Allan Borja', 'Director', '09999999999', 'allan.borja@dlsu.edu.ph', '2');
+	INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, UserID) VALUES ('20', 'Sir Jojo', 'Asset Manager', '09999999999', 'jojo.soliva@dlsu.edu.ph', '3');
+	INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, UserID) VALUES ('20', 'Giligan Crissa', 'Assistan Asset Manager', '0456789299', 'crissa.giligan@dlsu.edu.ph', '4');
+	INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, UserID) VALUES ('20', 'Help Desk', 'Helpdesk', '09876543210', 'helpless.desk@dlsu.edu.ph', '5');
+	INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, UserID) VALUES ('20', 'Pro Curement', 'Procurement', '09999999999', 'test@test', '6');
+	INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, UserID) VALUES ('20', 'Mark Question', 'Engineer', '09876543210', 'question.mark@dlsu.edu.ph', '7');
+	INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, UserID) VALUES ('20', 'Point Exclamation', 'Engineer', '09876543210', 'exclamation.point@dlsu.edu.ph', '8');
+	INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, UserID) VALUES ('20', 'Teacher Matt', 'Professor', '09876543210', 'math.teacher@dlsu.edu.ph', '9');
+	INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, UserID) VALUES ('20', 'Professor Psy', 'Professor', '09876543210', 'psych.prof@dlsu.edu.ph','10');
+	INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, UserID) VALUES ('20', 'Lecturer Phil', 'Assistant Professor', '09876543210', 'filipino.lecturer@dlsu.edu.ph', '1');
 
--- asseet audit for asset assignment
-INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '1', '1');
+	-- asset
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('1', 'LaptopPropertyCode', 'SerialNumberLaptop', 'MACADDRESSLAPTOP', '2');
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('2', 'CameraPropertyCode', 'SerialNumberCamera', 'MACCamera', '1');
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('3', 'KeyboardPropertyCode', 'SerialNumberKeyboard', 'MacKeyboard', '1');
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('4', 'FlashdrivePropertyCode', 'SerialNumberFlashdrive', 'MacFlashdrive', '1');
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('5', 'ProcessorPropertyCode', 'SerialNumberProcessor', 'MacProcessor', '1');
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('6', 'VideoCardPropertyCode', 'SerialNumberVideoCard', 'MacVideoCard', '1');
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('7', 'PocketWifiPropertyCode', 'SerialNumberPocketWifi', 'MacPocketWifi', '1');
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('8', 'MonitorPropertyCode', 'SerialNumberMonitor', 'MacMonitor', '1');
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('9', 'MediaPlayerPropertyCode', 'SerialNumberMediaPlayer', 'MacMediaPlayer', '1');
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('10', 'TabletPropertyCode', 'SerialNumberTablet', 'MacTablet', '1');
+
+
+	-- asset audit for new items
+	INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');
+	INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '2');
+	INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '3');
+	INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '4');
+	INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '5');
+	INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '6');
+	INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '7');
+	INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '8');
+	INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '9');
+	INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '10');
+
+
+	-- Asset Assignment
+	INSERT INTO `thesis`.`assetassignment` (`assetID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('1', '2018-07-24', '2018-07-25', '1', '2');
+
+	-- asseet audit for asset assignment
+	INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '1', '1');
 
 
 

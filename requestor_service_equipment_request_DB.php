@@ -5,8 +5,17 @@
 
     $header =  $_SESSION['previousPage'];
 
-    $employeeID = 1;
+    
     $userID = $_SESSION['userID'];
+
+
+    $sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = {$userID};";//get the employeeID using userID
+    $result = mysqli_query($dbc, $sql);
+
+    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+        $employeeID = $row['employeeID'];
+        
+    }
 
     $depschoolorg = $_POST['depschoolorg'];
     $orgName = $_POST['orgName'];
@@ -30,14 +39,8 @@
     $id = 0;    
 
     //insertion to request table
-    $sql0 = "INSERT INTO `thesis`.`request_borrow` (`DepartmentID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `personrepresentativeID`, `personrepresentative`, `dateCreated`, `purpose`, `statusID`) VALUES ('1', '3', '1', '2018-11-12 10:08:07', '2018-11-12 10:08:07', '1', '114232323', 'johannes ssss', '2018-11-12 10:08:07', 'purpose', '1');";//status is set to 1 for pending status
-    //$result0 = mysqli_query($dbc, $sql0);
-
-
-    if (!mysqli_query($dbc,$sql0))
-      {
-      echo("Error description: " . mysqli_error($dbc));
-      }
+    $sql0 = "INSERT INTO `thesis`.`request_borrow` (`officeID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `personrepresentativeID`, `personrepresentative`, `dateCreated`, `purpose`, `statusID`) VALUES ('{$depschoolorg}', '{$buildingID}', '{$FloorAndRoomID }', '{$dateNeeded}', '{$endDate}', '{$employeeID}', '{$idNum}', '{$representative}', '{$date}', '{$purpose}', '1');";//status is set to 1 for pending status
+    $result0 = mysqli_query($dbc, $sql0);
 
     
     $sql2 = "SELECT * FROM `thesis`.`request_borrow` order by borrowID DESC LIMIT 1;";
@@ -57,10 +60,11 @@
     $quantity = $_POST['quantity'.$i];
     $category = $_POST['category'.$i];
 
+    echo $quantity." - ".$category;
 
 
-        $sql = "INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `assetCategory`, `description`) 
-                VALUES ('{$id}', '{$quantity}', '{$category}', '{$description}');";
+        $sql = "INSERT INTO `thesis`.`borrow_details` (`borrowID`, `quantity`, `assetCategory`) 
+                VALUES ('{$id}', '{$quantity}', '{$category}');";
         $result = mysqli_query($dbc, $sql);       
 
    }
@@ -70,6 +74,6 @@
 
   unset($_SESSION['count']);  
 
-  header('Location: '.$header);
+  //header('Location: '.$header);
 
 ?>

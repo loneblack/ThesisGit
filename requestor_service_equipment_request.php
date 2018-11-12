@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
+session_start();
   require_once("db/mysql_connect.php");
-  $_SESSION['count'] = 1;
+  $_SESSION['count'] = 0;
+  $_SESSION['previousPage'] = "requestor_service_equipment_request.php";
 ?>
 
 <head>

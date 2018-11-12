@@ -4,7 +4,7 @@
 session_start();
 require_once("db/mysql_connect.php");
 $_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.php";
-$_SESSION['count'] = 1;
+$_SESSION['count'] = 0;
 ?>
 
 <head>
