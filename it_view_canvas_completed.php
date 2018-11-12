@@ -14,7 +14,7 @@ if(isset($_POST['submit'])){
 	//$x=sizeof($_POST['comments']);
 	
 	
-	//if(!empty($_POST['canvas'])){
+	if(!empty($_POST['canvas'])){
 	// Loop to store and display values of individual checked checkbox.
 		$canvas=$_POST['canvas'];
 		foreach($canvas as $value){
@@ -34,7 +34,9 @@ if(isset($_POST['submit'])){
 				//}
 			//}
 		}
-		
+	}
+	
+	if(!empty($_POST['disapprovedCavasItem'])){
 		foreach(array_combine($_POST['disapprovedCavasItem'],$_POST['comments']) as $disappCanvas => $comments){
 			$dat=explode("_", $disappCanvas);
 			$canCode=$dat[0];
@@ -44,9 +46,7 @@ if(isset($_POST['submit'])){
 			$query2="UPDATE `thesis`.`canvasitemdetails` SET `status`='6',`comment`='{$comments}' WHERE `cavasItemID`='{$canCode}' and `supplier_supplierID`='{$suppID}'";
 			$result2=mysqli_query($dbc,$query2);
 		}
-	//}
-	
-
+	}
 	
 	
 	

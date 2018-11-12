@@ -29,7 +29,7 @@
 			$assetModelIDArr=$_POST['assetModelID'];
 			
 			//UPDATE STATUS
-			$querya="UPDATE `thesis`.`procurement` SET `status`='2' WHERE `procurementID`='{$procID}'";
+			$querya="UPDATE `thesis`.`procurement` SET `status`='4' WHERE `procurementID`='{$procID}'";
 			$resulta=mysqli_query($dbc,$querya);
 			
 			

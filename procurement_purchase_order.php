@@ -5,8 +5,8 @@
 	$canvasID=$_GET['canvasID'];
 	if(isset($_POST['submit'])){
 		//UPDATE canvas status
-		$queryb="UPDATE `thesis`.`canvas` SET `status`='3' WHERE `canvasID`='{$canvasID}'";
-		$resultb=mysqli_query($dbc,$queryb);
+		//$queryb="UPDATE `thesis`.`canvas` SET `status`='3' WHERE `canvasID`='{$canvasID}'";
+		//$resultb=mysqli_query($dbc,$queryb);
 		
 		//UPDATE request status
 		$queryc="SELECT requestID FROM thesis.canvas where canvasID='{$canvasID}'";
@@ -19,7 +19,7 @@
 		//Get totalSum of approved canvas item
 		$querye="SELECT sum(cid.price*ci.quantity) as `totalPrice` FROM thesis.canvas c join canvasitem ci on c.canvasID=ci.canvasID
 							  join canvasitemdetails cid on ci.cavasItemID=cid.cavasItemID
-                              where c.canvasID='{$canvasID}' and cid.status='3'";
+                              where c.canvasID='{$canvasID}' and cid.status='5'";
 		$resulte=mysqli_query($dbc,$querye);
 		$rowe=mysqli_fetch_array($resulte,MYSQLI_ASSOC);
 		
@@ -50,7 +50,7 @@
 				join assetModel am on ci.assetModel=am.assetModelID
 				join ref_brand rb on am.brand=rb.brandID
 				join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
-				where ci.canvasID='{$canvasID}' and cid.supplier_supplierID='{$rowg['supplierID']}'";
+				where ci.canvasID='{$canvasID}' and cid.status='5' and cid.supplier_supplierID='{$rowg['supplierID']}'";
 			$resulti=mysqli_query($dbc,$queryi);
 			while($rowi=mysqli_fetch_array($resulti,MYSQLI_ASSOC)){
 				$queryj="INSERT INTO `thesis`.`procurementdetails` (`procurementID`, `description`, `quantity`, `cost`, `subtotal`, `assetCategoryID`, `assetModelID`) VALUES ('{$rowx['procurementID']}', '{$rowi['description']}', '{$rowi['quantity']}', '{$rowi['price']}', '{$rowi['totalPrice']}', '{$rowi['assetCategory']}', '{$rowi['assetModel']}')";
@@ -112,17 +112,18 @@
 				
 				
                 <div class="row">
+					<form method='post'>
 					<div class='text-center invoice-btn'>
-						<form method='post'>
+						
 							<button type="submit" class="btn btn-success btn-lg" name="submit"><i class='fa fa-check'></i> Send </button>
-						</form>
+						
 					</div>
 					<?php
 						
 						$query="SELECT cid.supplier_supplierID as `supplierID`,s.name as `supplierName`,s.address FROM thesis.canvasitem ci 
 							join canvasitemdetails cid on ci.cavasItemID=cid.cavasItemID 
 							join supplier s on cid.supplier_supplierID=s.supplierID
-							where ci.canvasID='{$canvasID}' 
+							where ci.canvasID='{$canvasID}' and cid.status='5'
 							group by cid.supplier_supplierID";
 						$result=mysqli_query($dbc,$query);
 						
@@ -203,7 +204,7 @@
 					
 					
 					?>
-					
+					</form>
                     <!-- 
 						<div class="row">
                         <div class="col-sm-12">
