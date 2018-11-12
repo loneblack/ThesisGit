@@ -26,7 +26,17 @@
 		//$queryd="UPDATE `thesis`.`request` SET `status`='6' WHERE `requestID`='{$rowc['requestID']}'";
 		//$resultd=mysqli_query($dbc,$queryd);
 	}
+	
+	if(isset($_POST['save'])){
+		$companyName=$_POST['companyName'];
+		$contactPerson=$_POST['contactPerson'];
+		$number=$_POST['number'];
+		$email=$_POST['email'];
+		$address=$_POST['address'];
 
+		$queryo="INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('{$companyName}', '{$number}', '{$email}', '{$contactPerson}', '{$address}')";
+		$resulto=mysqli_query($dbc,$queryo);
+	}
 
 
 
@@ -89,14 +99,14 @@
                                     </header>
                                     <div class="panel-body">
                                         <section id="unseen">
-											<form method="post">
+											<!-- <form method="post"> -->
 												<div style="float:right; padding-right:10px; padding-top:8px">
 													<button type="button" class="btn btn-info" data-toggle="modal" data-target="#supplierModal">New Supplier</button>
 													<br>
 													<br>
 													<br>
 												</div>
-												
+												<form method="post">
 												<!-- Modal -->
 												<div class="modal fade" id="supplierModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 													<div class="modal-dialog" role="document">
@@ -134,7 +144,7 @@
 																	<div class="form-group ">
 																		<label for="email">Email (DLSU)</label>
 																		<div>
-																			<input class="form-control " id="email" name="email" type="email" required />
+																			<input class="form-control " id="email" name="email" pattern=".+dlsu.edu.ph" type="email" required />
 																		</div>
 																	</div>
 
@@ -147,13 +157,15 @@
 																</form>
 															</div>
 															<div class="modal-footer">
-																<button type="button" class="btn btn-primary">Save </button>
+																<button type="submit" name="save" class="btn btn-primary">Save </button>
 																<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 															</div>
 														</div>
 													</div>
 												</div>
 												<!-- Modal -->
+												</form>
+											<form method="post">
                                             <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                 <thead>
                                                     <tr>
