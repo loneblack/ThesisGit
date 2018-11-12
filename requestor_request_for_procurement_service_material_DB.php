@@ -31,7 +31,8 @@
 
     //insertion to request table
     $sql0 = "INSERT INTO `thesis`.`request` (`description`, `DepartmentID`, `unitHead`, `recipient`, `employeeID`, `datetime`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`) VALUES ('{$comment}', '{$department}', '{$unitHead}', '{$recipient}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1');";//status is set to 1 for pending status
-   // $result0 = mysqli_query($dbc, $sql0);
+    $result0 = mysqli_query($dbc, $sql0);
+    
 
     if (!mysqli_query($dbc,$sql0))
       {

@@ -81,7 +81,14 @@
                                                             }
                                                            ?>
 
+                                                            <option value ='111'>School Organization</option>
                                                         </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group " style="display: none">
+                                                    <label for="purpose" class="control-label col-lg-3">School Organization Name</label>
+                                                    <div class="col-lg-6">
+                                                        <input class="form-control" id="orgName" name="orgName" type="text" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -178,6 +185,7 @@
                                                 <hr>
                                                 <div class="container-fluid">
                                                     <h4>Endorsement (if applicable)</h4>
+                                                    <h5>Kindly fill up both fields if there is a representative.</h5>
                                                     <div class="form-group ">
                                                         <label for="representative" class="control-label col-lg-3">Representative</label>
                                                         <div class="col-lg-6">
@@ -259,7 +267,7 @@
             var cnt = 0;
             count++;
             var tr = "<tr>" +
-                "<td><select class='form-control' onChange='getMax(this.value)' ><option>Select Category</option>"+
+                "<td><select class='form-control' name='category"+count+"' id='category"+count+"' onChange='getMax(this.value)' ><option>Select Category</option>"+
 
                 '<?php
 

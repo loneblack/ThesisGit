@@ -8,16 +8,15 @@
     $employeeID = 1;
     $userID = $_SESSION['userID'];
 
-    $department = $_POST['department'];
-    $unitHead = $_POST['unitHead'];
-    $contactPerson = $_POST['contactPerson'];
-    $email = $_POST['email'];
-    $number = $_POST['number'];
+    $depschoolorg = $_POST['depschoolorg'];
+    $orgName = $_POST['orgName'];
+    $dateNeeded = $_POST['dateNeeded'];
+    $endDate = $_POST['endDate'];
+    $purpose = $_POST['purpose'];
     $buildingID = $_POST['buildingID'];
     $FloorAndRoomID = $_POST['FloorAndRoomID'];
-    $recipient = $_POST['recipient'];
-    $dateNeeded = $_POST['dateNeeded'];
-    $comment = $_POST['comment'];
+    $representative = $_POST['representative'];
+    $idNum = $_POST['idNum'];  
 
 
     date_default_timezone_set("Asia/Singapore");
@@ -31,23 +30,25 @@
     $id = 0;    
 
     //insertion to request table
-    $sql0 = "INSERT INTO `thesis`.`request` (`description`, `DepartmentID`, `unitHead`, `recipient`, `employeeID`, `datetime`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`) VALUES ('{$comment}', '{$department}', '{$unitHead}', '{$recipient}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1');";//status is set to 1 for pending status
-   // $result0 = mysqli_query($dbc, $sql0);
+    $sql0 = "INSERT INTO `thesis`.`request_borrow` (`DepartmentID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `personrepresentativeID`, `personrepresentative`, `dateCreated`, `purpose`, `statusID`) VALUES ('1', '3', '1', '2018-11-12 10:08:07', '2018-11-12 10:08:07', '1', '114232323', 'johannes ssss', '2018-11-12 10:08:07', 'purpose', '1');";//status is set to 1 for pending status
+    //$result0 = mysqli_query($dbc, $sql0);
+
 
     if (!mysqli_query($dbc,$sql0))
       {
       echo("Error description: " . mysqli_error($dbc));
       }
 
-    $sql2 = "SELECT * FROM `thesis`.`request` order by requestID DESC LIMIT 1;";
+    
+    $sql2 = "SELECT * FROM `thesis`.`request_borrow` order by borrowID DESC LIMIT 1;";
     $result2 = mysqli_query($dbc, $sql2);
 
     //get the id of the recently inserted item to request table
-    $sql1 = "SELECT * FROM `thesis`.`request` order by requestID DESC LIMIT 1;";
+    $sql1 = "SELECT * FROM `thesis`.`request_borrow` order by borrowID DESC LIMIT 1;";
     $result1 = mysqli_query($dbc, $sql1);
 
     while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC)){
-        $id = $row['requestID'];
+        $id = $row['borrowID'];
     }
    
    //insertion to requestdetails table using the id taken earlier
@@ -55,7 +56,7 @@
 
     $quantity = $_POST['quantity'.$i];
     $category = $_POST['category'.$i];
-    $description = $_POST['description'.$i];
+
 
 
         $sql = "INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `assetCategory`, `description`) 
