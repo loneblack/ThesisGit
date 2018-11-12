@@ -54,7 +54,7 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Stock List
+                                            PANGALAN NG NACLICK NA ASSET
 
                                         </header>
                                         <div class="panel-body">
@@ -63,41 +63,26 @@
                                                     <section class="panel">
                                                         <div class="panel-body">
                                                             <div class="adv-table">
+                                                                <h5>Category: </h5>
+                                                                <h5>Property Code: </h5>
+                                                                <h5>Brand: </h5>
+                                                                <h5>Model: </h5>
                                                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th>Asset Category</th>
-                                                                            <th>Floor</th>
-                                                                            <th>Ceiling</th>
-                                                                            <th>Stock On Hand</th>
-                                                                            <th>Borrowed</th>
-                                                                            <th>Total Quantity</th>
+                                                                            <th>Status</th>
+                                                                            <th>Last updated</th>
+                                                                            <th>Location</th>
+                                                                            <th>Burrower</th>
+                                                                            
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr>
-                                                                            <td>Computer</td>
-                                                                            <td>5</td>
-                                                                            <td>50</td>
-                                                                            <td>23</td>
-                                                                            <td>20</td>
-                                                                            <td>43</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Laptop</td>
-                                                                            <td>6</td>
-                                                                            <td><font color="orange">10</font></td>
-                                                                            <td>24</td>
-                                                                            <td>21</td>
-                                                                            <td>44</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>VGA</td>
-                                                                            <td>6</td>
-                                                                            <td><font color="red">6</font></td>
-                                                                            <td>24</td>
-                                                                            <td>21</td>
-                                                                            <td>44</td>
+                                                                            <td>Checked Out</td>
+                                                                            <td>12-23-2018 9:00:00 AM</td>
+                                                                            <td>Gokongwei 403B</td>
+                                                                            <td>Marvin Lao</td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -131,7 +116,7 @@
 						var cell = row.getElementsByTagName("td")[0];
 						var idx = cell.textContent;
 						
-                        window.location.replace("it_inventory_specific.php?=");
+                        window.location.replace("it_asset_audit.php?=");
 						
 					};
 				};

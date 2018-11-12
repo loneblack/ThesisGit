@@ -54,7 +54,7 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Stock List
+                                            PANGALAN NG NACLICK NA ASSET
 
                                         </header>
                                         <div class="panel-body">
@@ -66,38 +66,51 @@
                                                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th>Asset Category</th>
-                                                                            <th>Floor</th>
-                                                                            <th>Ceiling</th>
-                                                                            <th>Stock On Hand</th>
-                                                                            <th>Borrowed</th>
-                                                                            <th>Total Quantity</th>
+                                                                            <th>Property Code</th>
+                                                                            <th>Brand</th>
+                                                                            <th>Model</th>
+                                                                            <th>Status</th>
+                                                                            <th>Last Updated</th>
+                                                                            <th>Location</th>
+                                                                            <th>Borrower</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr>
-                                                                            <td>Computer</td>
-                                                                            <td>5</td>
-                                                                            <td>50</td>
-                                                                            <td>23</td>
-                                                                            <td>20</td>
-                                                                            <td>43</td>
+                                                                            <td>99994447327</td>
+                                                                            <td>Samsung</td>
+                                                                            <td>S7 Edge</td>
+                                                                            <td>Checked Out</td>
+                                                                            <td>12-23-2018 9:00:00 AM</td>
+                                                                            <td>Gokongwei 403B</td>
+                                                                            <td>Marvin Lao</td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td>Laptop</td>
-                                                                            <td>6</td>
-                                                                            <td><font color="orange">10</font></td>
-                                                                            <td>24</td>
-                                                                            <td>21</td>
-                                                                            <td>44</td>
+                                                                            <td>12445447327</td>
+                                                                            <td>Samsung</td>
+                                                                            <td>S7 Edge</td>
+                                                                            <td>In Repair</td>
+                                                                            <td>12-23-2018 9:00:00 AM</td>
+                                                                            <td>Default</td>
+                                                                            <td></td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td>VGA</td>
-                                                                            <td>6</td>
-                                                                            <td><font color="red">6</font></td>
-                                                                            <td>24</td>
-                                                                            <td>21</td>
-                                                                            <td>44</td>
+                                                                            <td>39382707327</td>
+                                                                            <td>Huawei</td>
+                                                                            <td>Flare S2</td>
+                                                                            <td>Checked Out</td>
+                                                                            <td>12-23-2018 9:00:00 AM</td>
+                                                                            <td>Gokongwei 403B</td>
+                                                                            <td>Marvin Lao</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>12394447327</td>
+                                                                            <td>Dell</td>
+                                                                            <td>RTX-1480</td>
+                                                                            <td>Stocked</td>
+                                                                            <td>12-23-2018 9:00:00 AM</td>
+                                                                            <td>Default</td>
+                                                                            <td></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -131,7 +144,7 @@
 						var cell = row.getElementsByTagName("td")[0];
 						var idx = cell.textContent;
 						
-                        window.location.replace("it_inventory_specific.php?=");
+                        window.location.replace("it_asset_audit.php?=");
 						
 					};
 				};
