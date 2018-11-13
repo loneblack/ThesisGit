@@ -22,16 +22,29 @@
 			$querya="UPDATE `thesis`.`procurement` SET `status`='3' WHERE `procurementID`='{$procID}'";
 			$resulta=mysqli_query($dbc,$querya);
 			
-			//INSERT RECEIVED ASSET 1 BY 1 IN ASSET TABLE
 			
-			$queryt="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`) VALUES ('1', '{$_SESSION['userID']}', now(), now(), now() + INTERVAL 1 week, 'High', '25')";
+			//GET REQUEST DATA
+			$queryaa="SELECT r.UserID,r.FloorAndRoomID FROM thesis.procurement p join request r on p.requestID=r.requestID";
+			$resultaa=mysqli_query($dbc,$queryaa);
+			$rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
+			
+			//INSERT ASSET TESTING
+			
+			$queryt="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`) VALUES ('1', '{$rowaa['UserID']}', '{$rowaa['FloorAndRoomID']}', '25');";
 			$resultt=mysqli_query($dbc,$queryt);
+			
+			//$queryt="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`) VALUES ('1', '{$_SESSION['userID']}', now(), now(), now() + INTERVAL 1 week, 'High', '25')";
+			//$resultt=mysqli_query($dbc,$queryt);
 			
 			//GET LATEST TICKET
 			
-			$query0="SELECT * FROM thesis.ticket order by ticketID desc";
+			$query0="SELECT * FROM `thesis`.`assettesting` order by testingID desc";
 			$result0=mysqli_query($dbc,$query0);
 			$row0=mysqli_fetch_array($result0,MYSQLI_ASSOC);
+			
+			//$query0="SELECT * FROM thesis.ticket order by ticketID desc";
+			//$result0=mysqli_query($dbc,$query0);
+			//$row0=mysqli_fetch_array($result0,MYSQLI_ASSOC);
 			
 			//GET ALL ASSET MODELS
 			
@@ -50,9 +63,13 @@
 					$resultrr=mysqli_query($dbc,$queryrr);
 					$rowrr=mysqli_fetch_array($resultrr,MYSQLI_ASSOC);
 					
-					//Insert to ticketedasset table
-					$queryrrr="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$row0['ticketID']}', '{$rowrr['assetID']}')";
+					//Insert to assettesting_details table
+					
+					$queryrrr="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$row0['testingID']}', '{$rowrr['assetID']}')";
 					$resultrrr=mysqli_query($dbc,$queryrrr);
+					
+					//$queryrrr="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$row0['ticketID']}', '{$rowrr['assetID']}')";
+					//$resultrrr=mysqli_query($dbc,$queryrrr);
 				}
 			}
 			//echo "<script>alert('empty');</script>";
