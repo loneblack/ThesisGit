@@ -176,7 +176,7 @@
 																join assetModel am on ci.assetModel=am.assetModelID
 																join ref_brand rb on am.brand=rb.brandID
 																join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
-																where ci.canvasID='{$canvasID}' and cid.supplier_supplierID='{$row['supplierID']}'";
+																where ci.canvasID='{$canvasID}' and cid.supplier_supplierID='{$row['supplierID']}' and cid.status='5'";
 													$resulta=mysqli_query($dbc,$querya);
 													while($rowa=mysqli_fetch_array($resulta,MYSQLI_ASSOC)){
 														echo "<tr>
