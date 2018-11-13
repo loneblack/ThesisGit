@@ -24,7 +24,7 @@
 			
 			//INSERT RECEIVED ASSET 1 BY 1 IN ASSET TABLE
 			
-			$queryt="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`) VALUES ('1', '{$_SESSION['userID']}', now(), now(), now() + INTERVAL 1 week, 'High', '25')";
+			$queryt="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`) VALUES ('1', '{$_SESSION['userID']}', now(), now(), now() + INTERVAL 1 week, 'High', '25')";
 			$resultt=mysqli_query($dbc,$queryt);
 			
 			//GET LATEST TICKET
