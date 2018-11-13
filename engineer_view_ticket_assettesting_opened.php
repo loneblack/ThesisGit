@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+<?php
+	require_once('db/mysql_connect.php');
+	$ticketID=$_GET['id'];
+
+	$queryx = "SELECT CONCAT(Convert(AES_DECRYPT(u.lastName,'Fusion')USING utf8),' ',Convert(AES_DECRYPT(u.firstName,'Fusion')USING utf8)) as `fullname`,far.floorRoom,t.dueDate FROM thesis.ticket t join assettesting at on t.testingID=at.testingID 
+											 join user u on at.PersonRequestedID=u.UserID 
+											 join floorandroom far on at.FloorAndRoomID=far.FloorAndRoomID
+											 where t.ticketID='{$ticketID}'";
+    $resultx = mysqli_query($dbc, $queryx);
+	$rowx = mysqli_fetch_array($resultx, MYSQLI_ASSOC);
+
+?>
 <html lang="en">
 
 <head>
@@ -59,11 +71,11 @@
 									
 										<div class="panel-body">
 											<section>
-											<label><h5>Name:</h5></label><input type="text" class="form-control" disabled>
+											<label><h5>Name:</h5></label><input type="text" value="<?php echo $rowx['fullname']; ?>" class="form-control" disabled>
 											<br>
 											<label><h5>Office Building: </h5></label><input type="text" class="form-control" disabled>
 											<br>
-											<label><h5>Room Number: </h5></label><input type="text" class="form-control" disabled>
+											<label><h5>Room Number: </h5></label><input type="text" value="<?php echo $rowx['floorRoom']; ?>" class="form-control" disabled>
 											
 											</section>
 										</div>
@@ -85,7 +97,31 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+													<?php
+														$query = "SELECT atd.asset_assetID as `assetID`,rb.name as `brand`, am.description as `model`, a.propertyCode FROM thesis.assettesting_details atd join assettesting at on atd.assettesting_testingID=at.testingID 
+																	  join ticket t on at.testingID=t.testingID
+																	  join asset a on atd.asset_assetID=a.assetID
+																	  join assetmodel am on a.assetModel=am.assetModelID
+																	  join ref_brand rb on am.brand=rb.brandID
+																	  where t.ticketID='{$ticketID}'";
+                                                                  
+														$result = mysqli_query($dbc, $query);
+                                                    
+														while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+															echo "<tr><td style='text-align:center'><input type='checkbox' name='funcAsset[]' class='form-check-input myCheck' value='{$row['assetID']}'></td>
+																<td style='text-align:center'>{$row['propertyCode']}</td>
+																<td style='text-align:center'>{$row['brand']}</td>
+																<td style='text-align:center'>{$row['model']}</td>
+																<td><input style='text' id='{$row['assetID']}' name='comments[]' class='form-control'></td>
+																</tr>";
+														}
+													
+													
+													
+													
+													
+													?>
+                                                    <!-- <tr>
 														<td style="text-align:center"><input type='checkbox' class='form-check-input'></td>
                                                         <td style="text-align:center">TBLT-001</td>
                                                         <td style="text-align:center">Apple Tablet</td>
@@ -106,7 +142,7 @@
                                                         <td style="text-align:center">Smartphone</td>
                                                         <td style="text-align:center">Samsung Galaxy J7 Pro</td>
                                                         <th><input style="text" class="form-control"></th>
-                                                    </tr>
+                                                    </tr> -->
                                                 </tbody>
                                             </table>
 											
@@ -138,7 +174,7 @@
 													<div class="form-group ">
 														<label style="padding-left:22px" for="category" class="control-label col-lg-4">Category</label>
 														<div class="col-lg-8" style="padding-right:30px">
-															<select class="form-control m-bot15" disabled>
+															<select class="form-control m-bot15" name="category" readonly>
 																<option selected="selected">Repair</option>
 																<option>Repair</option>
 																<option>Maintenance</option>
@@ -149,13 +185,31 @@
 
 													<label for="status" class="control-label col-lg-4">Status</label>
 													<div class="col-lg-8">
-														<select class="form-control m-bot15">
-															<option>Assigned</option>
+														<select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status']) && !$flag) echo $_POST['status']; ?>" required>
+															<?php
+																$query1 = "SELECT * FROM thesis.ref_ticketstatus";
+																$result1 = mysqli_query($dbc, $query1);
+																while($row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC)){
+																	if($row1['ticketID']==4){
+																		echo "<option selected value='{$row1['ticketID']}'>{$row1['status']}</option>";
+																	}
+																	else{
+																		echo "<option value='{$row1['ticketID']}'>{$row1['status']}</option>";
+																	}
+																}
+																
+															
+															
+															
+															
+															?>
+														
+														<!--<option>Assigned</option>
 															<option>In Progress</option>
 															<option selected="selected">Transferred</option>
 															<option>Escalated</option>
 															<option>Waiting For Parts</option>
-															<option>Closed</option>
+															<option>Closed</option> -->
 														</select>
 													</div>
 												</div>
@@ -163,11 +217,11 @@
 												<div class="form-group ">
 													<label for="priority" class="control-label col-lg-4">Priority</label>
 													<div class="col-lg-8">
-														<select class="form-control m-bot15">
-															<option selected="selected">Low</option>
-															<option>Medium</option>
-															<option>High</option>
-															<option>Urgent</option>
+														<select class="form-control m-bot15" name="priority" value="<?php if (isset($_POST['priority']) && !$flag) echo $_POST['priority']; ?>" required>
+															<option selected value="Low">Low</option>
+															<option value="Medium</">Medium</option>
+															<option value="High">High</option>
+															<option value="Urgent">Urgent</option>
 														</select>
 													</div>
 												</div>
@@ -175,13 +229,16 @@
 												<div class="form-group ">
 													<label for="assign" class="control-label col-lg-4">Escalate To</label>
 													<div class="col-lg-8">
-														<select class="form-control m-bot15">
-															<option selected="selected">Eng. Marvin Lao</option>
-															<option>Eng. Marvin Lao</option>
-															<option>Eng. Marvin Lao</option>
-															<option>Eng. Marvin Lao</option>
-															<option>Eng. Marvin Lao</option>
-															<option>Eng. Marvin Lao</option>
+														<select class="form-control m-bot15" name="escalate" value="<?php if (isset($_POST['escalate']) && !$flag) echo $_POST['escalate']; ?>" required>
+															<?php
+																$query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer'";
+																$result3=mysqli_query($dbc,$query3);
+																		
+																while($row3=mysqli_fetch_array($result3,MYSQLI_ASSOC)){
+																	echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
+																}										
+																
+															?>
 														</select>
 													</div>
 												</div>
@@ -189,14 +246,14 @@
 												<div class="form-group">
 													<label class="control-label col-lg-4">Due Date</label>
 													<div class="col-lg-8">
-														<input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018" disabled />
+														<input class="form-control form-control-inline input-medium default-date-picker" name="dueDate" size="10" type="text" value="<?php echo $rowx['dueDate']; ?>" readonly />
 													</div>
 												</div>
 
 												<div class="form-group">
 													<label class="control-label col-lg-4">Repair Date *</label>
 													<div class="col-lg-8">
-														<input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018" required />
+														<input class="form-control form-control-inline input-medium default-date-picker" name="repairDate" size="10" type="datetime-local" value="<?php if (isset($_POST['repairDate']) && !$flag) echo $_POST['repairDate']; ?>" required />
 													</div>
 												</div>
 											</form>
@@ -272,6 +329,24 @@
                 "</tr>";
             $('#tableTest tbody tr').eq(rowCount).after(tr);
         }
+		
+		$('.myCheck').change(function(){
+			
+			if($(this).is(':checked')) {
+			// Checkbox is checked..
+			
+				document.getElementById(this.value).required = false;
+				document.getElementById(this.value).disabled = true;
+				
+			} else {
+				// Checkbox is not checked..
+				
+				document.getElementById(this.value).required = true;
+				document.getElementById(this.value).disabled = false;
+				
+				
+			}
+		});
     </script>
 	
 	
