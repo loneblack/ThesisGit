@@ -48,20 +48,27 @@
                                 <li><a href="it_inventory_report.php">Report</a></li>
                             </ul>
                         </li>
-                        
-                        
-                        <li>
-                            <a href="it_asset_checklist_list.php">
-                                <i class="fa fa-list"></i>
-                                <span>Checklist List</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="it_view_disposal_list.php">
+						
+						<li class="sub-menu">
+                            <a href="javascript:;">
                                 <i class="glyphicon glyphicon-trash"></i>
-                                <span>For Diposal</span>
+                                <span>Disposal</span>
                             </a>
+                            <ul class="sub">
+                                <li><a href="it_view_disposal_list.php">For Diposal</a></li>
+                                <li><a href="it_mark_for_disposal.php">Mark Assets For Diposal</a></li>
+                            </ul>
+                        </li>
+						
+						<li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>Donation</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="it_view_donation_list.php">For Donation</a></li>
+                                <li><a href="it_mark_for_donation.php">Mark Assets For Donation</a></li>
+                            </ul>
                         </li>
                         
                         <li class="sub-menu">

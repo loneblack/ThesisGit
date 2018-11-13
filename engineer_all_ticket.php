@@ -93,7 +93,7 @@ require_once("db/mysql_connect.php");
                                                                 ON t.status = s.ticketID
                                                             JOIN ref_servicetype st
                                                                 ON t.serviceType = st.id
-                                                            WHERE t.ticketID = {$userID};";
+                                                            WHERE au.UserID = {$userID};";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -199,7 +199,7 @@ require_once("db/mysql_connect.php");
 							}
 						}
 						
-						if(serviceTypeID == '26'){
+						else if(serviceTypeID == '26'){
                             //refurbishing
 							if(status == "Closed"){
 								window.location.replace("engineer_view_ticket_refurbishing_closed.php?id=" + id);
@@ -211,7 +211,7 @@ require_once("db/mysql_connect.php");
                             
 						}
                         
-                        if(serviceTypeID == '27'){
+                        else if(serviceTypeID == '27'){
                             //repair
                             if(status == "Closed"){
                                 window.location.replace("engineer_view_ticket_repair_closed.php?id=" + id);
@@ -220,7 +220,7 @@ require_once("db/mysql_connect.php");
 								window.location.replace("engineer_view_ticket_repair_opened.php?id=" + id);
 							}
 						}
-                         if(serviceTypeID == '28'){
+                        else if(serviceTypeID == '28'){
                             //maintenance
                             if(status == "Closed"){
                                 window.location.replace("engineer_view_ticket_maintenance_closed.php?id=" + id);
@@ -229,7 +229,7 @@ require_once("db/mysql_connect.php");
                                 window.location.replace("engineer_view_ticket_maintenance_opened.php?id=" + id);
                             }
                         }
-                         if(serviceTypeID == '29'){
+                         else if(serviceTypeID == '29'){
                             //others
                             if(status == "Closed"){
                                 window.location.replace("engineer_view_ticket_others_closed.php?id=" + id);
