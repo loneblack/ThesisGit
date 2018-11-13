@@ -103,7 +103,8 @@
                                             </div>
                                         </div>
                                         <div style="padding-left:10px; padding-bottom:10px">
-                                            <button type="button" class="btn btn-info">Dispose</button>
+                                            <button type="button" onclick="Confirm()" class="btn btn-info">Dispose</button>
+											<button type="button" onclick="window.history.back()" class="btn btn-secondary">Back</button>
                                         </div>
                                     </section>
                                 </div>
