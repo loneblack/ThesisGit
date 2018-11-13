@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <?php
 	session_start(); 
-	require_once('mysql_connect.php');
+	require_once('db/mysql_connect.php');
 	$_SESSION['ticketID']=$_GET['ticketID'];
 	
-	$que1="SELECT t.action as `action`,rts.status as `status` FROM thesis.ticket t join thesis.ref_ticketstatus rts on t.status=rts.ticketID where t.ticketID='{$_SESSION['ticketID']}'";
+	$que1="SELECT rts.status as `status` FROM thesis.ticket t join thesis.ref_ticketstatus rts on t.status=rts.ticketID where t.ticketID='{$_SESSION['ticketID']}'";
 	$res1=mysqli_query($dbc,$que1);
 	$row0=mysqli_fetch_array($res1,MYSQLI_ASSOC);
 	
-	if($row0['action']!='Answered'){
-		$que="UPDATE `thesis`.`ticket` SET `action`='Unanswered' WHERE `ticketID`='{$_SESSION['ticketID']}'";
-		$res=mysqli_query($dbc,$que);
-	}
+	//if($row0['action']!='Answered'){
+		//$que="UPDATE `thesis`.`ticket` SET `action`='Unanswered' WHERE `ticketID`='{$_SESSION['ticketID']}'";
+		//$res=mysqli_query($dbc,$que);
+	//}
 	
 	$key = "Fusion";
 	$flag=0;
@@ -116,15 +116,15 @@
 									<h4 class="gen-case"> 
 										<?php 
 											
-											if($row0['action']=='Unanswered'){
-												echo "<a class='btn btn-warning'>{$row0['action']}</a>";
-											}
-											elseif($row0['action']=='Answered'){
-												echo "<a class='btn btn-danger'>{$row0['action']}</a>";
-											}
-											else{
-												echo "<a class='btn btn-success'>{$row0['action']}</a>";
-											}
+											//if($row0['action']=='Unanswered'){
+												//echo "<a class='btn btn-warning'>{$row0['action']}</a>";
+											//}
+											//elseif($row0['action']=='Answered'){
+												//echo "<a class='btn btn-danger'>{$row0['action']}</a>";
+											//}
+											//else{
+												//echo "<a class='btn btn-success'>{$row0['action']}</a>";
+											//}
 											
 											if($row0['status']=='Open'){
 												echo "<a class='btn btn-success'>{$row0['status']}</a>";
