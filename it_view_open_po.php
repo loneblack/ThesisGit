@@ -24,11 +24,37 @@
 			
 			//INSERT RECEIVED ASSET 1 BY 1 IN ASSET TABLE
 			
-			$queryt="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`) VALUES ('1', '{$_SESSION['userID']}', now(), now(), now() + INTERVAL 1 week, 'High', '25');";
+			$queryt="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`) VALUES ('1', '{$_SESSION['userID']}', now(), now(), now() + INTERVAL 1 week, 'High', '25')";
 			$resultt=mysqli_query($dbc,$queryt);
 			
+			//GET LATEST TICKET
 			
+			$query0="SELECT * FROM thesis.ticket order by ticketID desc";
+			$result0=mysqli_query($dbc,$query0);
+			$row0=mysqli_fetch_array($result0,MYSQLI_ASSOC);
 			
+			//GET ALL ASSET MODELS
+			
+			$querys="SELECT * FROM thesis.procurementdetails pd join procurement p on pd.procurementID=p.procurementID where pd.procurementID='{$procID}' and p.status='3'";
+			$results=mysqli_query($dbc,$querys);
+			
+			while($rows=mysqli_fetch_array($results,MYSQLI_ASSOC)){
+				for($i=0;$i<$rows['quantity'];$i++){
+					//Insert to asset table
+					$queryr="INSERT INTO `thesis`.`asset` (`supplierID`, `assetModel`, `unitCost`, `assetStatus`) VALUES ('{$rows['supplierID']}', '{$rows['assetModelID']}', '{$rows['cost']}', '1')";
+					$resultr=mysqli_query($dbc,$queryr);
+					
+					//SELECT LATEST ASSET
+					
+					$queryrr="SELECT * FROM thesis.asset order by assetID desc";
+					$resultrr=mysqli_query($dbc,$queryrr);
+					$rowrr=mysqli_fetch_array($resultrr,MYSQLI_ASSOC);
+					
+					//Insert to ticketedasset table
+					$queryrrr="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$row0['ticketID']}', '{$rowrr['assetID']}')";
+					$resultrrr=mysqli_query($dbc,$queryrrr);
+				}
+			}
 			//echo "<script>alert('empty');</script>";
 		}
 		else{
