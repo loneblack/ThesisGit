@@ -31,8 +31,7 @@ $_SESSION['previousPage'] = "requestor_service_request_form.php";
             <!--logo start-->
             <div class="brand">
 
-                <a href="#" class="logo">
-                    Welcome IT Officer!
+                <a href="#" class="logo"><img src="images/dlsulogo.png" alt="" width="200px" height="40px">Welcome IT Officer!
                 </a>
             </div>
 

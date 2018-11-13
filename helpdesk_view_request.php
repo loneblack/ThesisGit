@@ -31,7 +31,7 @@
             <div class="brand">
 
                 <a href="#" class="logo">
-                    Welcome Helpdesk!
+                    <img src="images/dlsulogo.png" alt="" width="200px" height="40px">
                 </a>
             </div>
 

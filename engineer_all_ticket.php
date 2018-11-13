@@ -35,7 +35,7 @@ require_once("db/mysql_connect.php");
             <div class="brand">
 
                 <a href="#" class="logo">
-                    Welcome Engineer!
+                    <img src="images/dlsulogo.png" alt="" width="200px" height="40px">
                 </a>
             </div>
 

@@ -34,7 +34,7 @@ $_SESSION['count'] = 0;
             <div class="brand">
 
                 <a href="#" class="logo">
-                    Welcome Requestor!
+                    <img src="images/dlsulogo.png" alt="" width="200px" height="40px">
                 </a>
             </div>
 
