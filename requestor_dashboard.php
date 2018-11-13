@@ -198,23 +198,6 @@ require_once("db/mysql_connect.php");
                                                     
                                                   ?>
 
-
-                                                <tr class="gradeA">
-                                                    <td>1</td>
-                                                    <td>Request for Service</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-warning">Pending</span></td>
-                                                </tr>
-
-                                                <tr class="gradeA">
-                                                    <td>2</td>
-                                                    <td>Need notHere</td>
-                                                    <td>10/9/28</td>
-                                                    <td>10/9/288</td>
-                                                    <td><span class="label label-success">Completed</span></td>
-                                                </tr>
-
                                                 
                                             </tbody>
                                             <tfoot>
