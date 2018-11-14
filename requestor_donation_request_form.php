@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php
+session_start();
+  require_once("db/mysql_connect.php");
+  $_SESSION['count'] = 0;
+  $_SESSION['previousPage'] = "requestor_service_equipment_request.php";
+?>
 <head>
     <meta charset="utf-8">
 
@@ -59,21 +64,68 @@
                                                 <div class="form-group ">
                                                     <label class="control-label col-lg-3">Affiliation</label>
                                                     <div class="col-lg-6">
-                                                        <select class="form-control" id="ddl1" onchange="configureDropDownLists(this,document.getElementById('ddl2'))">
-                                                            <option>Select Affiliation</option>
-                                                            <option value="Office">Office</option>
-                                                            <option value="Department">Department</option>
-                                                            <option value="Organization">School Organization</option>
+                                                        <select class="form-control" id="ddl1" onchange="checkvalue(this.value)">
+                                                            <option value="0">Select Affiliation</option>
+                                                            <option value="1">Office</option>
+                                                            <option value="2">Department</option>
+                                                            <option value="3">School Organization</option>
                                                         </select>
                                                     </div>
                                                 </div>
 
 
 
-                                                <div class="form-group" id="office">
+                                                <div class="form-group" id="office" style="display:none">
                                                     <label class="control-label col-lg-3"></label>
                                                     <div class="col-lg-6">
-                                                        <select class="form-control" id="ddl2">
+                                                        <select class="form-control" id="office">
+                                                            <option>Select Office</option>
+                                                            <?php
+
+                                                                            $sql = "SELECT * FROM thesis.offices;";
+
+                                                                            $result = mysqli_query($dbc, $sql);
+
+                                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                            {
+                                                                                    
+                                                                                echo "<option value ={$row['officeID']}>";
+                                                                                echo "{$row['Name']}</option>";
+
+                                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group" id="department" style="display:none">
+                                                    <label class="control-label col-lg-3"></label>
+                                                    <div class="col-lg-6">
+                                                        <select class="form-control" id="office">
+                                                            <option>Select Department</option>
+                                                            <?php
+
+                                                                            $sql = "SELECT * FROM thesis.department;";
+
+                                                                            $result = mysqli_query($dbc, $sql);
+
+                                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                            {
+                                                                                    
+                                                                                echo "<option value ={$row['DepartmentID']}>";
+                                                                                echo "{$row['name']}</option>";
+
+                                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group" id="org" style="display:none">
+                                                    <label class="control-label col-lg-3"></label>
+                                                    <div class="col-lg-6">
+                                                        <select class="form-control" id="office">
+                                                            <option>Org Itu</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -227,44 +279,26 @@
                 }
             });
         }
-
-        function configureDropDownLists(ddl1, ddl2) {
-            var colours = ['Select Office', 'IT Office', 'Accounting Office', 'ABC Office'];
-            var shapes = ['Select Department', 'Accountancy', 'Behavioral Sciences', 'Biology'];
-            var names = ['Select Organization', 'ENGLICOM', 'LSCS', 'USG'];
-
-            switch (ddl1.value) {
-                case 'Office':
-                    ddl2.options.length = 0;
-                    for (i = 0; i < colours.length; i++) {
-                        createOption(ddl2, colours[i], colours[i]);
-                    }
-                    break;
-                case 'Department':
-                    ddl2.options.length = 0;
-                    for (i = 0; i < shapes.length; i++) {
-                        createOption(ddl2, shapes[i], shapes[i]);
-                    }
-                    break;
-                case 'Organization':
-                    ddl2.options.length = 0;
-                    for (i = 0; i < names.length; i++) {
-                        createOption(ddl2, names[i], names[i]);
-                    }
-                    break;
-                default:
-                    ddl2.options.length = 0;
-                    break;
-            }
-
-        }
-
-        function createOption(ddl, text, value) {
-            var opt = document.createElement('option');
-            opt.value = value;
-            opt.text = text;
-            ddl.options.add(opt);
-        }
+        
+        function checkvalue(val){
+			if(val==="1"){
+			    document.getElementById('office').style.display='block';
+                document.getElementById('department').style.display='none';
+                document.getElementById('org').style.display='none';}
+            if(val==="2"){
+			    document.getElementById('office').style.display='none';
+                document.getElementById('department').style.display='block';
+                document.getElementById('org').style.display='none';}
+			if(val==="3"){
+			    document.getElementById('office').style.display='none';
+                document.getElementById('department').style.display='none';
+                document.getElementById('org').style.display='block';}
+            if(val==="0"){
+			    document.getElementById('office').style.display='none';
+                document.getElementById('department').style.display='none';
+                document.getElementById('org').style.display='none';}
+		}
+        
     </script>
 
     <!-- WAG GALAWIN PLS LANG -->
