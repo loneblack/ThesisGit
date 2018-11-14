@@ -109,6 +109,7 @@
                                     </section>
                                 </div>
                             </section>
+                            <button class="btn btn-success">Send</button>
 							<button class="btn btn-info" onclick="window.history.back();" id="back">Back</button>
                         </div>
 
