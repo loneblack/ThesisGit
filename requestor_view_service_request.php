@@ -127,7 +127,7 @@ $_SESSION['previousPage'] = "requestor_service_request_form.php";
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-3 col-lg-6">
-                                                        <a href="it_requests.php"><button class="btn btn-default" type="button">Back</button></a>
+                                                        <a href="requestor_dashboard.php"><button class="btn btn-default" type="button">Back</button></a>
                                                     </div>
                                                 </div>
                                             </form>

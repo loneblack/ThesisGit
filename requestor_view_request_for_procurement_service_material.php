@@ -174,7 +174,7 @@ $_SESSION['count'] = 0;
 
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-3 col-lg-6">
-                                                        <button class="btn btn-default" onclick="window.history.back();" type="button">Back</button>
+                                                        <a href="requestor_dashboard.php"><button class="btn btn-default" type="button">Back</button></a>
                                                     </div>
                                                 </div>
                                             </form>
