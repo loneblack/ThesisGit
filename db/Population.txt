@@ -382,36 +382,37 @@
 	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('10', '44', '5', '4gb Ram 128gb storage');
 
 	-- user
+	-- 1
 	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
 	VALUES ( AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '1', AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('admin', 'Fusion'));
-
+	-- 2
 	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
 	VALUES ( AES_ENCRYPT('Director', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '7', AES_ENCRYPT('Allan', 'Fusion'), AES_ENCRYPT('Borja', 'Fusion'));
-
+	-- 3
 	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
 	VALUES ( AES_ENCRYPT('ITOffice1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Jojo', 'Fusion'), AES_ENCRYPT('Soliva', 'Fusion'));
-
+	-- 4	
 	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
 	VALUES ( AES_ENCRYPT('ITOffice2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Giligan', 'Fusion'), AES_ENCRYPT('Crissa', 'Fusion'));
-
+	-- 5
 	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
 	VALUES ( AES_ENCRYPT('Helpdesk', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '3', AES_ENCRYPT('help', 'Fusion'), AES_ENCRYPT('desk', 'Fusion')); 
-
+	-- 6
 	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
 	VALUES ( AES_ENCRYPT('Procurement', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '6', AES_ENCRYPT('Procurement', 'Fusion'), AES_ENCRYPT('Procurement', 'Fusion'));
-
+	-- 7
 	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
 	VALUES ( AES_ENCRYPT('Engineer1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('One', 'Fusion'), AES_ENCRYPT('Engineer', 'Fusion'));
-
+	-- 8
 	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
 	VALUES ( AES_ENCRYPT('Engineer2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Two', 'Fusion'), AES_ENCRYPT('Engineer', 'Fusion')); 
-
+	-- 9
 	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
 	VALUES ( AES_ENCRYPT('Requestor1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('One', 'Fusion'), AES_ENCRYPT('Requestor', 'Fusion'));
-
+	-- 10
 	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
 	VALUES ( AES_ENCRYPT('Requestor2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Two', 'Fusion'), AES_ENCRYPT('Requestor', 'Fusion'));
-
+	-- 11
 	INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
 	VALUES ( AES_ENCRYPT('Requestor3', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Three', 'Fusion'), AES_ENCRYPT('Requestor', 'Fusion'));
 	-- 696969696969696969
