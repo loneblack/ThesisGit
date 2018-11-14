@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <?php
 
-require_once('mysql_connect.php');
+require_once('db/mysql_connect.php');
 $_SESSION['userid']=$_GET['userid'];
-
 
 $key = "Fusion";
 $flag=0;
 
-$query="Select Convert(AES_DECRYPT(username,'".$key."')USING utf8) as 'username',Convert(AES_DECRYPT(password,'".$key."')USING utf8) as 'password',Convert(AES_DECRYPT(firstName,'".$key."')USING utf8) as 'firstname',Convert(AES_DECRYPT(lastName,'".$key."')USING utf8) as 'lastname',Convert(AES_DECRYPT(email,'".$key."')USING utf8) as 'email',Convert(AES_DECRYPT(contactNo,'".$key."')USING utf8) as 'contactNo',userType from user where UserID='".$_SESSION['userid']."'";
+$query="Select Convert(AES_DECRYPT(username,'".$key."')USING utf8) as 'username',Convert(AES_DECRYPT(password,'".$key."')USING utf8) as 'password',Convert(AES_DECRYPT(firstName,'".$key."')USING utf8) as 'firstname',Convert(AES_DECRYPT(lastName,'".$key."')USING utf8) as 'lastname', userType from user where UserID='".$_SESSION['userid']."'";
 $result=mysqli_query($dbc,$query);
 $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 
@@ -21,19 +20,6 @@ if (isset($_POST['submit'])){
 		
 		//Lastname
 		$lastname=$_POST['lastname'];
-		
-		//Contact Number
-		if (!is_numeric($_POST['number'])) {
-            $number=FALSE; 
-			$message.="Contact number entered is invalid. ";   
-        }
-		elseif($_POST['number']<0){
-			$number=FALSE;
-			$message.="Contact number entered is invalid. ";
-		}
-		else{
-			$number=$_POST['number'];
-		}
 		
 		//User Type
 		$usertype=$_POST['usertype'];
@@ -59,17 +45,9 @@ if (isset($_POST['submit'])){
 			$password=$_POST['password'];
 		}
 		
-		//Email
-		if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-			$email=FALSE;
-			$message.="Invalid email format. ";
-		}
-		else
-			$email=$_POST['email'];
-		
 		if(!isset($message)){
 			echo "<script type='text/javascript'>alert('Success');</script>"; // Show modal
-			$query="UPDATE `thesis`.`user` SET username=AES_ENCRYPT('".$username."', '".$key."'), password=AES_ENCRYPT('".$password."', '".$key."'), userType='".$usertype."', firstName=AES_ENCRYPT('".$firstname."', '".$key."'), lastName=AES_ENCRYPT('".$lastname."', '".$key."'), email=AES_ENCRYPT('".$email."', '".$key."'), contactNo=AES_ENCRYPT('".$number."', '".$key."') WHERE `UserID`='".$_SESSION['userid']."'";
+			$query="UPDATE `thesis`.`user` SET username=AES_ENCRYPT('".$username."', '".$key."'), password=AES_ENCRYPT('".$password."', '".$key."'), userType='".$usertype."', firstName=AES_ENCRYPT('".$firstname."', '".$key."'), lastName=AES_ENCRYPT('".$lastname."', '".$key."') WHERE `UserID`='".$_SESSION['userid']."'";
 			$result=mysqli_query($dbc,$query);
 			$flag=1;
 			header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/admin_edit_user.php?userid=".$_SESSION['userid']."");
@@ -153,12 +131,6 @@ if (isset($_POST['submit'])){
                                                 </div>
                                             </div>
                                             <div class="form-group ">
-                                                <label for="lastname" class="control-label col-lg-3">Contact Number</label>
-                                                <div class="col-lg-6">
-                                                    <input class=" form-control" id="number" name="number" type="number" min="0.00" value="<?php echo $row['contactNo'];  ?>" required />
-                                                </div>
-                                            </div>
-                                            <div class="form-group ">
                                                 <label for="lastname" class="control-label col-lg-3">User Type</label>
                                                 <div class="col-lg-6">
 												
@@ -188,12 +160,6 @@ if (isset($_POST['submit'])){
                                                 <label for="confirm_password" class="control-label col-lg-3">Confirm Password</label>
                                                 <div class="col-lg-6">
                                                     <input class="form-control " id="confirm_password" name="confirm_password" type="password" value="<?php echo $row['password'];  ?>" required />
-                                                </div>
-                                            </div>
-                                            <div class="form-group ">
-                                                <label for="email" class="control-label col-lg-3">Email (DLSU)</label>
-                                                <div class="col-lg-6">
-                                                    <input class="form-control " id="email" name="email" type="email" value="<?php echo $row['email'];  ?>" required />
                                                 </div>
                                             </div>
 
