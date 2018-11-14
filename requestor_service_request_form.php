@@ -99,6 +99,7 @@ $_SESSION['previousPage'] = "requestor_service_request_form.php";
                                                             <option value="22">Web graphics publishing</option>
                                                             <option value="23">Web site creation</option>
                                                             <option value="24">Website updating</option>
+                                                            <option value="27">Repair Asset</option>
                                                             <option value="25">Others</option>
                                                         </select>
 														<input type="text" class="form-control" name="others" id="others" placeholder="Specify request" style='display:none'/>

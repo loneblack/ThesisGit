@@ -235,23 +235,27 @@ require_once("db/mysql_connect.php");
             var currentRow = table.rows[i];
             var createClickHandler = function(row) {
                 return function() {
+
+                    var cell1 = row.getElementsByTagName("td")[0];
+                    var id = cell1.textContent;
+
                     var cell = row.getElementsByTagName("td")[2];
-                    var id = cell.textContent;
+                    var requestType = cell.textContent;
                                         
-                    if(id == 'Asset Request'){
-                        window.location.replace("requestor_view_request_for_procurement_service_material.php");
+                    if(requestType == 'Asset Request'){
+                        window.location.replace("requestor_view_request_for_procurement_service_material.php?id=" + id);
                     }
 
-                    else if(id == "Borrow"){
-                        window.location.replace("requestor_view_service_equipment_request.php");
+                    else if(requestType == "Borrow"){
+                        window.location.replace("requestor_view_service_equipment_request.php?id=" + id);
                     }
                     
-                    else if(id == "Donation"){
-                        window.location.replace("requestor_view_donation_request.php");
+                    else if(requestType == "Donation"){
+                        window.location.replace("requestor_view_donation_request.php?id=" + id);
                     }
 
-                    else if(id == "Service"){
-                        window.location.replace("requestor_view_service_request.php");
+                    else if(requestType == "Service"){
+                        window.location.replace("requestor_view_service_request.php?id=" + id);
                     }
                     
                 };
