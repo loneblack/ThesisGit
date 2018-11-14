@@ -227,6 +227,41 @@ require_once("db/mysql_connect.php");
 
     <!-- WAG GALAWIN PLS LANG -->
 
+    <script>
+    function addRowHandlers() {
+        var table = document.getElementById("dynamic-table");
+        var rows = table.getElementsByTagName("tr");
+        for (i = 1; i < rows.length; i++) {
+            var currentRow = table.rows[i];
+            var createClickHandler = function(row) {
+                return function() {
+                    var cell = row.getElementsByTagName("td")[2];
+                    var id = cell.textContent;
+                                        
+                    if(id == 'Asset Request'){
+                        window.location.replace("requestor_view_request_for_procurement_service_material.php");
+                    }
+
+                    else if(id == "Borrow"){
+                        window.location.replace("requestor_view_service_equipment_request.php");
+                    }
+                    
+                    else if(id == "Donation"){
+                        window.location.replace("requestor_view_donation_request.php");
+                    }
+
+                    else if(id == "Service"){
+                        window.location.replace("requestor_view_service_request.php");
+                    }
+                    
+                };
+            };
+            currentRow.onclick = createClickHandler(currentRow);
+        }
+    }
+    window.onload = addRowHandlers();
+    </script>
+
     <!--Core js-->
     <script src="js/jquery.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>

@@ -23,7 +23,7 @@
 								<li><a href="requestor_service_equipment_request.php">Service Equipment Request</a></li>
                             </ul>
                         </li>
-						
+					
                         
                         <li>
                             <a href="logout.php">
