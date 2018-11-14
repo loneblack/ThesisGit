@@ -166,7 +166,7 @@ $_SESSION['count'] = 0;
                                                     <div class="form-group ">
                                                         <label for="dateNeeded" class="control-label col-lg-3">Date needed</label>
                                                         <div class="col-lg-6">
-                                                            <input class="form-control" id="dateNeeded" name="dateNeeded" type="date" />
+                                                            <input class="form-control" id="dateNeeded" name="dateNeeded" type="datetime-local" />
                                                         </div>
                                                     </div>
                                                 </section>
