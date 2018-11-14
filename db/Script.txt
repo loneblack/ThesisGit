@@ -133,10 +133,10 @@ CREATE TABLE IF NOT EXISTS `thesis`.`service` (
   `others` LONGTEXT NULL DEFAULT NULL,
   `status` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Service_User1_idx` (`UserID` ASC)
-  INDEX `fk_service_ref_serviceType1_idx` (`serviceType` ASC)
-  INDEX `fk_service_employee1_idx` (`employeeID` ASC)
-  INDEX `fk_service_ref_status1_idx` (`status` ASC)
+  INDEX `fk_Service_User1_idx` (`UserID` ASC),
+  INDEX `fk_service_ref_serviceType1_idx` (`serviceType` ASC),
+  INDEX `fk_service_employee1_idx` (`employeeID` ASC),
+  INDEX `fk_service_ref_status1_idx` (`status` ASC),
   CONSTRAINT `fk_Service_User1`
     FOREIGN KEY (`UserID`)
     REFERENCES `thesis`.`user` (`UserID`),
