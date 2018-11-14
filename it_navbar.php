@@ -31,6 +31,12 @@
                             </a>
                         </li>
                         
+						<li>
+                            <a href="it_view_deployed_assets.php">
+                                <i class="glyphicon glyphicon-asterisk"></i>
+                                <span>View Deployed Assets</span>
+                            </a>
+                        </li>
                         
                         <li class="sub-menu">
                             <a href="javascript:;">
