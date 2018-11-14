@@ -89,8 +89,8 @@ require_once("db/mysql_connect.php");
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['requestID']}</td>
                                                             <td>{$count}</td>
-                                                            <td>Request for Purchase</td>
-                                                            <td>{$row['datetime']}</td>
+                                                            <td>Asset Request</td>
+                                                            <td>{$row['date']}</td>
                                                             <td>{$row['dateNeeded']}</td>
                                                             <td style='display: none'>{$row['statusID']}</td>";
 
@@ -126,7 +126,7 @@ require_once("db/mysql_connect.php");
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['id']}</td>
                                                             <td>{$count}</td>
-                                                            <td>Request for Service</td>
+                                                            <td>Service</td>
                                                             <td>{$row['dateReceived']}</td>
                                                             <td>{$row['dateNeed']}</td>
                                                             <td style='display: none'>{$row['statusID']}</td>";
@@ -272,12 +272,6 @@ require_once("db/mysql_connect.php");
     <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
     <script src="js/dynamic_table_init.js"></script>
-    
-    <script>
-        $('#ctable').on('dblclick', function() {
-            window.location.replace("requestor_view_request.php");
-        })
-    </script>
 
 
     <!--common script init for all pages-->
