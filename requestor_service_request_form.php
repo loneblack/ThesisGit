@@ -73,8 +73,8 @@ $_SESSION['previousPage'] = "requestor_service_request_form.php";
                                                     ?>
                                                     <label for="serviceType" class="control-label col-lg-3">Type of Service Requested</label>
                                                     <div class="col-lg-6">
-                                                        <select name="serviceType" onchange='checkvalue(this.value)' class="form-control m-bot15">
-                                                            <option>Select Service Type</option>
+                                                        <select name="serviceType" onchange='checkvalue(this.value)' class="form-control m-bot15" required>
+                                                            <option value="">Select Service Type</option>
                                                             <option value="1">Access regulation/permission</option>
                                                             <option value="2">Activation/Deactivation of MyLasalle account</option>
                                                             <option value="3">Add/remove email address in mailing list</option>
