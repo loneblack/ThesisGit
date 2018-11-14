@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<?php
+	session_start();
+	require_once('db/mysql_connect.php');
+
+
+
+
+?>
 <html lang="en">
 
 <head>
@@ -68,7 +76,41 @@
                                                     <th>Date Updated</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+												<tbody>
+												<?php
+													$query = "SELECT at.testingID,at.startTestDate,rs.description as `status`,e.name FROM thesis.assettesting at join ref_status rs on at.statusID=rs.statusID
+																																						  join ticket t on at.testingID=t.testingID
+																																						  join user u on t.assigneeUserID=u.UserID
+																																						  join employee e on u.UserID=e.UserID";         
+                                                    $result = mysqli_query($dbc, $query);
+													while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+														echo "<tr id='{$row['testingID']}'>
+															<td>{$row['testingID']}</td>
+															<td>{$row['startTestDate']}</td>";
+															
+															if($row['status']=="Completed"){
+																echo "<td><span class='label label-success label-mini'>{$row['status']}</span></td>";
+															}
+															elseif($row['status']=="Incomplete"){
+																echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
+															}
+															else{
+																echo "<td><span class='label label-warning label-mini'>{$row['status']}</span></td>";
+															}
+															
+															echo "<td></td>
+															<td>{$row['name']}</td>
+															<td></td>
+														</tr>";
+													}
+												
+												
+												
+												
+												
+												
+												
+												?>
                                                 <tr>
                                                     <td>232323232</td>
                                                     <td>1/1/2018</td>
@@ -86,6 +128,26 @@
                                                     <td>1/1/2018</td>
                                                 </tr>
                                             </tbody>
+											
+											
+                                            <!-- <tbody>
+                                                <tr>
+                                                    <td>232323232</td>
+                                                    <td>1/1/2018</td>
+                                                    <td><span class="label label-success label-mini">Finished</span></td>
+                                                    <td>Acquired Item</td>
+                                                    <td>Marvin Lao</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>232323232</td>
+                                                    <td>1/1/2018</td>
+                                                    <td><span class="label label-danger label-mini">Unfinished</span></td>
+                                                    <td>Disposal</td>
+                                                    <td>Marvin Lao</td>
+                                                    <td>1/1/2018</td>
+                                                </tr>
+                                            </tbody> -->
                                         </table>
                                         </div>
                                     </section>
@@ -125,11 +187,11 @@
 						var cell = row.getElementsByTagName("td")[2];
 						var id = cell.textContent;
 						
-						if(id == "Finished"){
-							window.location.replace("it_view_testing.php");
+						if(id == "Completed"){
+							window.location.replace("it_view_testing.php?testingID=" + row.getAttribute("id"));
 						}
-						else if(id == "Unfinished"){
-                            window.location.replace("it_view_incomplete_testing.php");
+						else if(id == "Incomplete"){
+                            window.location.replace("it_view_incomplete_testing.php?testingID=" + row.getAttribute("id"));
                         }
 					};
 				};
