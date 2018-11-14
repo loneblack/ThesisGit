@@ -124,8 +124,8 @@ DROP TABLE IF EXISTS `thesis`.`service` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`service` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `details` VARCHAR(45) NULL DEFAULT NULL,
-  `dateNeed` DATE NULL DEFAULT NULL,
-  `endDate` DATE NULL DEFAULT NULL,
+  `dateNeed` DATETIME NULL DEFAULT NULL,
+  `endDate` DATETIME NULL DEFAULT NULL,
   `employeeID` INT(11) NULL DEFAULT NULL,
   `UserID` INT(11) NOT NULL,
   `dateReceived` DATE NULL DEFAULT NULL,
@@ -133,10 +133,10 @@ CREATE TABLE IF NOT EXISTS `thesis`.`service` (
   `others` LONGTEXT NULL DEFAULT NULL,
   `status` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Service_User1_idx` (`UserID` ASC),
-  INDEX `fk_service_ref_serviceType1_idx` (`serviceType` ASC),
-  INDEX `fk_service_employee1_idx` (`employeeID` ASC),
-  INDEX `fk_service_ref_status1_idx` (`status` ASC),
+  INDEX `fk_Service_User1_idx` (`UserID` ASC)
+  INDEX `fk_service_ref_serviceType1_idx` (`serviceType` ASC)
+  INDEX `fk_service_employee1_idx` (`employeeID` ASC)
+  INDEX `fk_service_ref_status1_idx` (`status` ASC)
   CONSTRAINT `fk_Service_User1`
     FOREIGN KEY (`UserID`)
     REFERENCES `thesis`.`user` (`UserID`),
@@ -151,6 +151,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`service` (
     REFERENCES `thesis`.`ref_status` (`statusID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
 
 
 -- -----------------------------------------------------

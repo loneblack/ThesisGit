@@ -114,13 +114,13 @@ $_SESSION['previousPage'] = "requestor_service_request_form.php";
                                                 <div class="form-group ">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Date needed</label>
                                                     <div class="col-lg-6">
-                                                        <input class="form-control" id="dateNeeded" name="dateNeeded" type="date" />
+                                                        <input class="form-control" id="dateNeeded" name="dateNeeded" type="datetime-local" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="endDate" class="control-label col-lg-3">End date</label>
                                                     <div class="col-lg-6">
-                                                        <input class=" form-control" id="endDate" name="endDate" type="date" />
+                                                        <input class=" form-control" id="endDate" name="endDate" type="datetime-local" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
