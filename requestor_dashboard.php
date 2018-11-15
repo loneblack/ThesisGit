@@ -70,11 +70,28 @@ require_once("db/mysql_connect.php");
                                                     <th>Date Made</th>
                                                     <th>Date Needed</th>
                                                     <th>Status</th>
+													<th>Description</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
-
+												<tr>
+													<td>1</td>
+													<td>Asset Request</td>
+													<td>3</td>
+													<td>4</td>
+													<td>5</td>
+													<td>Conforme pending</td>
+												</tr>
+												
+												<tr>
+													<td>1</td>
+													<td>Asset Request</td>
+													<td>3</td>
+													<td>4</td>
+													<td>5</td>
+													<td></td>
+												</tr>
 
                                                  <?php
                                                     $count = 1;
@@ -207,6 +224,7 @@ require_once("db/mysql_connect.php");
                                                     <th>Date Made</th>
                                                     <th>Date Needed</th>
                                                     <th>Status</th>
+													<th>Description</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -239,25 +257,36 @@ require_once("db/mysql_connect.php");
                     var cell1 = row.getElementsByTagName("td")[0];
                     var id = cell1.textContent;
 
-                    var cell = row.getElementsByTagName("td")[2];
+                    var cell = row.getElementsByTagName("td")[1];
                     var requestType = cell.textContent;
+					
+					var cell = row.getElementsByTagName("td")[5];
+					var description = cell.textContent;
                                         
                     if(requestType == 'Asset Request'){
-                        window.location.replace("requestor_view_request_for_procurement_service_material.php?id=" + id);
+						if(description == 'Conforme pending'){
+							window.location.replace("requestor_service_request_form_conforme.php");
+							alert("!!");
+						} else window.location.replace("requestor_view_request_for_procurement_service_material.php?id=" + id);
                     }
 
                     else if(requestType == "Borrow"){
-                        window.location.replace("requestor_view_service_equipment_request.php?id=" + id);
+                        if(description == "Conforme pending"){
+							window.location.replace("requestor_service_request_form_conforme.php");
+						} else window.location.replace("requestor_view_service_equipment_request.php?id=" + id);
                     }
                     
                     else if(requestType == "Donation"){
-                        window.location.replace("requestor_view_donation_request.php?id=" + id);
+                        if(description == "Conforme pending"){
+							window.location.replace("requestor_service_request_form_conforme.php");
+						} else window.location.replace("requestor_view_donation_request.php?id=" + id);
                     }
 
                     else if(requestType == "Service"){
-                        window.location.replace("requestor_view_service_request.php?id=" + id);
-                    }
-                    
+                        if(description == "Conforme pending"){
+							window.location.replace("requestor_service_request_form_conforme.php");
+						} else window.location.replace("requestor_view_service_request.php?id=" + id);
+                    }                    
                 };
             };
             currentRow.onclick = createClickHandler(currentRow);
