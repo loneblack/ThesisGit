@@ -125,7 +125,21 @@ session_start();
                                                     <label class="control-label col-lg-3"></label>
                                                     <div class="col-lg-6">
                                                         <select class="form-control" id="office">
-                                                            <option>Org Itu</option>
+                                                            <option>Select Organizaiton</option>
+                                                            <?php
+
+                                                                            $sql = "SELECT * FROM thesis.organization;";
+
+                                                                            $result = mysqli_query($dbc, $sql);
+
+                                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                            {
+                                                                                    
+                                                                                echo "<option value ={$row['id']}>";
+                                                                                echo "{$row['name']}</option>";
+
+                                                                            }
+                                                            ?>
                                                         </select>
                                                     </div>
                                                 </div>
