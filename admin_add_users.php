@@ -18,6 +18,14 @@
 		
 		//User Type
 		$usertype=$_POST['usertype'];
+        
+        $department=$_POST['department'];
+        
+        $position=$_POST['position'];
+        
+        $number=$_POST['number'];
+        
+        $email=$_POST['email'];
 		
 		//User Name
 		
@@ -43,8 +51,18 @@
 		if(!isset($message)){
 			
 			$query="INSERT INTO `thesis`.`user`(`username`, `password`, `userType`, `firstName`, `lastName`) VALUES ( AES_ENCRYPT('".$username."', '".$key."'), AES_ENCRYPT('".$password."', '".$key."'), '".$usertype."', AES_ENCRYPT('".$firstname."', '".$key."'), AES_ENCRYPT('".$lastname."', '".$key."'))";
-			
 			$result=mysqli_query($dbc,$query);
+            
+            $query2="SELECT MAX(userid) AS 'id' FROM USER";
+            $result2=mysqli_query($dbc,$query2);
+            
+            while($row=mysqli_fetch_array($result2, MYSQLI_ASSOC)){
+                $userID = $row['id'];
+            }
+            
+            
+            $query3="INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`) VALUES ('".$department."', '".$firstname." ".$lastname."', '".$position."', '".$number."', '".$email."', '".$userID."');";
+            $result3=mysqli_query($dbc,$query3);
 			
 			echo "<script type='text/javascript'>alert('Success');</script>"; // Show modal
 			$flag=1;
@@ -132,6 +150,7 @@
                                                 <div class="col-lg-6">
                                                     <select class="form-control m-bot15" name="usertype" value="<?php if (isset($_POST['usertype']) && !$flag) echo $_POST['usertype']; ?>" required>
                                                         <option value="" disabled selected>Select User Type</option>
+                                                        <option value="1">Student</option>
                                                         <option value="2">IT Office</option>
                                                         <option value="3">Helpdesk</option>
                                                         <option value="6">Procurement</option>
@@ -140,6 +159,40 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            
+                                            <div class="form-group ">
+                                                <label for="lastname" class="control-label col-lg-3">Department</label>
+                                                <div class="col-lg-6">
+                                                    <select class="form-control m-bot15" name="department" value="<?php if (isset($_POST['department']) && !$flag) echo $_POST['department']; ?>" required>
+                                                        <option value="" disabled selected>Select Department</option>
+                                                        <option value="1">Student</option>
+                                                        <option value="2">Accounting</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group ">
+                                                <label for="lastname" class="control-label col-lg-3">Position</label>
+                                                <div class="col-lg-6">
+                                                    <input type="text" class="form-control" id="position" name="position" value="<?php if (isset($_POST['position']) && !$flag) echo $_POST['position']; ?>" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group ">
+                                                <label for="lastname" class="control-label col-lg-3">Contact Number</label>
+                                                <div class="col-lg-6">
+                                                    <input type="text" class="form-control" id="number" name="number" value="<?php if (isset($_POST['number']) && !$flag) echo $_POST['number']; ?>" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group ">
+                                                <label for="lastname" class="control-label col-lg-3">Email</label>
+                                                <div class="col-lg-6">
+                                                    <input type="email" class="form-control" id="email" name="email" value="<?php if (isset($_POST['email']) && !$flag) echo $_POST['email']; ?>" required>
+                                                </div>
+                                            </div>
+                                            
+                                            
                                             <div class="form-group ">
                                                 <label for="username" class="control-label col-lg-3">Username</label>
                                                 <div class="col-lg-6">
