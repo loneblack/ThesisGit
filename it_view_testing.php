@@ -18,16 +18,20 @@
 		while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
 			//GENERATE PROPERTY CODE
 			
+			//UPDATE ASSET STATUS
+			$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='1' WHERE `assetID`='{$row1['assetID']}'";
+			$resultStat=mysqli_query($dbc,$queryStat);
+			
 			//Count Curr Assets based on assetCategory
 			$queryCount="SELECT Count(assetID) as `assetPosition` FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID
-																					  where a.assetID<='{$row1['assetID']}' and am.assetCategory='{$row1['assetCategory']}'";
+																					  where a.assetID<='{$row1['assetID']}' and am.assetCategory='{$row1['assetCategory']}' and a.assetStatus='1'";
 			$resultCount=mysqli_query($dbc,$queryCount);
 			$rowCount=$rowg=mysqli_fetch_array($resultCount,MYSQLI_ASSOC);
 			
 			//$propertyCode="0".$row1['assetCategory']."-".sprintf('%06d', $rowCount['assetPosition']);
 			$propertyCode=sprintf('%03d', $row1['assetCategory'])."-".sprintf('%06d', $rowCount['assetPosition']);
 			//INSERT Property Code
-			$queryProp="UPDATE `thesis`.`asset` SET `propertyCode`='{$propertyCode}', `assetStatus`='1' WHERE `assetID`='{$row1['assetID']}'";
+			$queryProp="UPDATE `thesis`.`asset` SET `propertyCode`='{$propertyCode}' WHERE `assetID`='{$row1['assetID']}'";
 			$resultProp=mysqli_query($dbc,$queryProp);
 				
 		}
