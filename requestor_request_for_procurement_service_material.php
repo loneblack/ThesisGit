@@ -110,19 +110,6 @@ $_SESSION['count'] = 0;
                                                             <input class="form-control" id="contactPerson" name="contactPerson" type="text" />
                                                         </div>
                                                     </div>
-                                                    <div class="form-group ">
-                                                        <label for="Email" class="control-label col-lg-3">Email (DLSU)</label>
-                                                        <div class="col-lg-6">
-                                                            <input name="email" id="email" class="form-control" type="email" pattern=".+dlsu.edu.ph" size="30" required />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group ">
-                                                        <label for="number" class="control-label col-lg-3">Contact Number</label>
-                                                        <div class="col-lg-6">
-                                                            <input class=" form-control" id="number" name="number" type="text" />
-                                                        </div>
-                                                    </div>
                                                 </section>
                                                 <hr>
                                                 <section>
