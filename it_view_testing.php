@@ -64,6 +64,7 @@
 											  where atd.assettesting_testingID='{$testingID}' and atd.check='0' and a.supplierID='{$rowg['supplierID']}'
                                               group by a.assetModel";
 			$result0=mysqli_query($dbc,$query0);
+			$totalCost=0;
 			while($row0=mysqli_fetch_array($result0,MYSQLI_ASSOC)){
 				//INSERT PO DETAILS
 				$query2="INSERT INTO `thesis`.`procurementdetails` (`procurementID`, `quantity`, `cost`, `subtotal`, `assetCategoryID`, `assetModelID`) VALUES ('{$rowProcID['procurementID']}', '{$row0['qty']}', '{$row0['unitCost']}', '{$row0['totalCost']}', '{$row0['assetCategory']}', '{$row0['assetModel']}')";
@@ -72,7 +73,16 @@
 				//UPDATE ASSET STATUS
 				$queryProp="UPDATE `thesis`.`asset` SET `assetStatus`='4' WHERE `assetID`='{$row0['assetID']}'";
 				$resultProp=mysqli_query($dbc,$queryProp);
+				
+				$totalCost=$totalCost+$row0['totalCost'];
 			}
+			
+			$queryTotC="UPDATE `thesis`.`procurement` SET `totalCost`='{$totalCost}' WHERE `procurementID`='{$rowProcID['procurementID']}'";
+			$resultTotC=mysqli_query($dbc,$queryTotC);
+			//UPDATE TOTAL COST OF PO
+			
+			
+			
 		}
 		
 	}
