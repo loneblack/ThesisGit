@@ -122,13 +122,13 @@ $_SESSION['previousPage'] = "requestor_service_request_form.php";
                                                         <input type="text" class="form-control" name="others" id="others" placeholder="Specify request" style='display:none' />
 
                                                         <div id="asset" style="display:none">
-                                                                ** Place Asset on Right for Repair
-                                                                <select class="multi-select" multiple="" id="my_multi_select3">
-                                                                    <option>Lenovo BHT 940 (3982901)</option>
-                                                                    <option>Samsung S9 (4737292)</option>
-                                                                </select>
-                                                            </div>
+                                                            ** Place Asset on Right for Repair
+                                                            <select class="multi-select" multiple="" id="my_multi_select3">
+                                                                <option>Lenovo BHT 940 (3982901)</option>
+                                                                <option>Samsung S9 (4737292)</option>
+                                                            </select>
                                                         </div>
+                                                    </div>
                                                 </div>
 
 
@@ -186,8 +186,10 @@ $_SESSION['previousPage'] = "requestor_service_request_form.php";
                 document.getElementById('asset').style.display = 'block';
                 document.getElementById('others').style.display = 'none';
             }
-            if (val != "25" && val != "27")
+            if (val != "25" && val != "27") {
                 document.getElementById('others').style.display = 'none';
+                document.getElementById('asset').style.display = 'none';
+            }
         }
     </script>
 
