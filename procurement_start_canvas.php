@@ -5,6 +5,8 @@
  -->
 <?php
 	$canvasID=$_GET['canvasID'];
+	
+	
 	require_once('db/mysql_connect.php');
 	if (isset($_POST['submit'])){
 		$canvasItemID=$_POST['cavasItemID'];
@@ -15,6 +17,13 @@
 			$querya="INSERT INTO `thesis`.`canvasitemdetails` (`cavasItemID`, `supplier_supplierID`, `price`, `status`) VALUES ('{$canvasItemID[$i]}', '{$supplier[$i]}', '{$unitPrice[$i]}', '1')";
 			$resulta=mysqli_query($dbc,$querya);
 		}
+		
+		$queryReqID="SELECT requestID FROM thesis.canvas where canvasID='{$canvasID}'";
+		$resultReqID=mysqli_query($dbc,$queryReqID);
+		$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
+		
+		$queryd="UPDATE `thesis`.`request` SET `step`='1' WHERE `requestID`='{$rowReqID['requestID']}'";
+		$resultd=mysqli_query($dbc,$queryd);
 		
 		//$queryb="UPDATE `thesis`.`canvas` SET `status`='6' WHERE `canvasID`='{$canvasID}'";
 		//$resultb=mysqli_query($dbc,$queryb);
@@ -381,18 +390,18 @@
 <script src="js/advanced-form.js"></script>
 <script src="js/dynamic_table_init.js"></script>
 
+    
     <script type="text/javascript">
-       <script type="text/javascript">
-$(document).ready(function() {
-    /* btn click event */
-    $('#addmore').click(function(){
+		$(document).ready(function() {
+		/* btn click event */
+		$('#addmore').click(function(){
         /* append selectbox where you want */
         $("#target").append('<select><option value="">select</option></select>')
-    });
-});
-</script>
+			});
+	});
+	</script>
 
-
+	<script>
         
 
         function addTest(cavasItemID) {

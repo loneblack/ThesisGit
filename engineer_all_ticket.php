@@ -109,15 +109,16 @@ require_once("db/mysql_connect.php");
                                                             <td>{$row['lastUpdateDate']}</td>
                                                             <td>{$row['dueDate']}</td>";
 
-                                                        if($row['priority'] == "high"){
+                                                        if($row['priority'] == "High" || $row['priority'] == "Urgent"){
                                                             echo "<td><span class='label label-danger'>{$row['priority']}</span></td>";
                                                         }
-                                                        if($row['priority'] == "medium"){
+                                                        if($row['priority'] == "Medium"){
                                                             echo "<td><span class='label label-warning'>{$row['priority']}</span></td>";
                                                         }
-                                                        if($row['priority'] == "low"){
+                                                        if($row['priority'] == "Low"){
                                                             echo "<td><span class='label label-success'>{$row['priority']}</span></td>";
                                                         }
+														
 
                                                         if($row['statusID'] == "1"){
                                                             echo "<td><span class='label label-success'>{$row['status']}</span></td>";
