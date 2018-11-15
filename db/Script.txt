@@ -111,6 +111,18 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `thesis`.`ref_steps`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`ref_steps` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`ref_steps` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `thesis`.`service`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `thesis`.`service` ;
@@ -126,11 +138,13 @@ CREATE TABLE IF NOT EXISTS `thesis`.`service` (
   `serviceType` INT(11) NULL DEFAULT NULL,
   `others` LONGTEXT NULL DEFAULT NULL,
   `status` INT(11) NOT NULL,
+  `steps` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Service_User1_idx` (`UserID` ASC),
   INDEX `fk_service_ref_serviceType1_idx` (`serviceType` ASC),
   INDEX `fk_service_employee1_idx` (`employeeID` ASC),
   INDEX `fk_service_ref_status1_idx` (`status` ASC),
+  INDEX `fk_service_ref_steps1_idx` (`steps` ASC),
   CONSTRAINT `fk_Service_User1`
     FOREIGN KEY (`UserID`)
     REFERENCES `thesis`.`user` (`UserID`),
@@ -142,7 +156,12 @@ CREATE TABLE IF NOT EXISTS `thesis`.`service` (
     REFERENCES `thesis`.`ref_servicetype` (`id`),
   CONSTRAINT `fk_service_ref_status1`
     FOREIGN KEY (`status`)
-    REFERENCES `thesis`.`ref_status` (`statusID`))
+    REFERENCES `thesis`.`ref_status` (`statusID`),
+  CONSTRAINT `fk_service_ref_steps1`
+    FOREIGN KEY (`steps`)
+    REFERENCES `thesis`.`ref_steps` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -658,6 +677,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   `dateNeeded` DATETIME NULL DEFAULT NULL,
   `UserID` INT(11) NULL DEFAULT NULL,
   `status` INT(11) NOT NULL,
+  `step` INT NULL,
   PRIMARY KEY (`requestID`),
   INDEX `fk_Request_Employee1_idx` (`employeeID` ASC),
   INDEX `fk_Request_FloorAndRoom1_idx` (`FloorAndRoomID` ASC),
@@ -665,6 +685,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   INDEX `fk_request_department1_idx` (`DepartmentID` ASC),
   INDEX `fk_request_user1_idx` (`UserID` ASC),
   INDEX `fk_request_ref_status1_idx` (`status` ASC),
+  INDEX `fk_request_ref_steps1_idx` (`step` ASC),
   CONSTRAINT `fk_Request_Building1`
     FOREIGN KEY (`BuildingID`)
     REFERENCES `thesis`.`building` (`BuildingID`),
@@ -682,7 +703,12 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
     REFERENCES `thesis`.`ref_status` (`statusID`),
   CONSTRAINT `fk_request_user1`
     FOREIGN KEY (`UserID`)
-    REFERENCES `thesis`.`user` (`UserID`))
+    REFERENCES `thesis`.`user` (`UserID`),
+  CONSTRAINT `fk_request_ref_steps1`
+    FOREIGN KEY (`step`)
+    REFERENCES `thesis`.`ref_steps` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -862,6 +888,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request_borrow` (
   `dateCreated` DATETIME NULL,
   `purpose` VARCHAR(45) NULL,
   `statusID` INT(11) NOT NULL,
+  `steps` INT NULL,
   PRIMARY KEY (`borrowID`),
   INDEX `fk_AssetAssignment_FloorAndRoom1_idx` (`FloorAndRoomID` ASC),
   INDEX `fk_assetassignment_persondirectly1_idx` (`persondirectlyID` ASC),
@@ -871,6 +898,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request_borrow` (
   INDEX `fk_request_borrow_offices1_idx` (`officeID` ASC),
   INDEX `fk_request_borrow_organization1_idx` (`organizationID` ASC),
   INDEX `fk_request_borrow_department1_idx` (`DepartmentID` ASC),
+  INDEX `fk_request_borrow_ref_steps1_idx` (`steps` ASC),
   CONSTRAINT `fk_AssetAssignment_FloorAndRoom10`
     FOREIGN KEY (`FloorAndRoomID`)
     REFERENCES `thesis`.`floorandroom` (`FloorAndRoomID`),
@@ -901,6 +929,11 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request_borrow` (
   CONSTRAINT `fk_request_borrow_department1`
     FOREIGN KEY (`DepartmentID`)
     REFERENCES `thesis`.`department` (`DepartmentID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_request_borrow_ref_steps1`
+    FOREIGN KEY (`steps`)
+    REFERENCES `thesis`.`ref_steps` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -1002,12 +1035,27 @@ CREATE TABLE IF NOT EXISTS `thesis`.`evaluation` (
   `efficiency` INT(11) NULL DEFAULT NULL,
   `courtesy` INT(11) NULL DEFAULT NULL,
   `comments` LONGTEXT NULL DEFAULT NULL,
-  `ServiceID` INT(11) NOT NULL,
-  PRIMARY KEY (`ServiceID`),
-  INDEX `fk_Evaluation_Service1_idx` (`ServiceID` ASC),
-  CONSTRAINT `fk_Evaluation_Service1`
-    FOREIGN KEY (`ServiceID`)
-    REFERENCES `thesis`.`service` (`id`))
+  `serviceID` INT(11) NULL,
+  `requestID` INT(11) NULL,
+  `borrowID` INT(11) NULL,
+  INDEX `fk_evaluation_service1_idx` (`serviceID` ASC),
+  INDEX `fk_evaluation_request1_idx` (`requestID` ASC),
+  INDEX `fk_evaluation_request_borrow1_idx` (`borrowID` ASC),
+  CONSTRAINT `fk_evaluation_service1`
+    FOREIGN KEY (`serviceID`)
+    REFERENCES `thesis`.`service` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_evaluation_request1`
+    FOREIGN KEY (`requestID`)
+    REFERENCES `thesis`.`request` (`requestID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_evaluation_request_borrow1`
+    FOREIGN KEY (`borrowID`)
+    REFERENCES `thesis`.`request_borrow` (`borrowID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

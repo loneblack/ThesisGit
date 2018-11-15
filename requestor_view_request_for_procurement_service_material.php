@@ -4,7 +4,54 @@
 session_start();
 require_once("db/mysql_connect.php");
 
-$_GET['id'];
+$id = $_GET['id'];
+
+$sql = "SELECT d.name AS 'department', unitHead, contactPerson, b.name AS 'building', floorRoom, recipient, dateneeded, r.description
+            FROM thesis.request r 
+        JOIN ref_status s 
+            ON r.status = s.statusID
+        JOIN department d 
+            ON d.departmentID = r.DepartmentID
+        JOIN building b
+            ON r.BuildingID = b.BuildingID
+        JOIN floorandroom f
+            ON  r.FloorAndRoomID = f.FloorAndRoomID
+            WHERE requestID =  {$id};";
+$result = mysqli_query($dbc, $sql);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+        $description = $row['description'];
+        $department = $row['department'];
+        $unitHead = $row['unitHead'];
+        $contactPerson = $row['contactPerson'];
+        $building = $row['building'];
+        $floorRoom = $row['floorRoom'];
+        $recipient = $row['recipient'];
+        $recipient = $row['recipient'];
+        $dateneeded = $row['dateneeded'];
+        $description = $row['description'];
+
+    }
+
+$sql = "SELECT * FROM thesis.requestdetails JOIN ref_assetcategory ON assetCategory = assetCategoryID WHERE requestID  =  {$id};";
+$result = mysqli_query($dbc, $sql);
+
+$count = 0;
+
+$requestedQuantity = array();
+$requestedCategory = array();
+$requestedDescription = array();
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+        array_push($requestedQuantity, $row['quantity']);
+        array_push($requestedDescription, $row['description']);
+        array_push($requestedCategory, $row['name']);
+
+        $count++;
+
+    }
 ?>
 
 <head>
@@ -77,24 +124,15 @@ $_GET['id'];
 
                                                     <div class="form-group ">
                                                         <h4 class="control-label col-lg-3">Department</h4>
-                                                        <h4 class="control-label col-lg-1">asdasd</h4>
+                                                        <h4 class="control-label col-lg-1"><?php echo $department;?></h4>
                                                     </div>
                                                     <div class="form-group ">
                                                         <h4 class="control-label col-lg-3">Unit Head/Fund Owner</h4>
-                                                        <h4 class="control-label col-lg-1">asdasd</h4>
+                                                        <h4 class="control-label col-lg-1"><?php echo $unitHead;?></h4>
                                                     </div>
                                                     <div class="form-group ">
                                                         <h4 class="control-label col-lg-3">Contact Person</h4>
-                                                        <h4 class="control-label col-lg-1">asdasd</h4>
-                                                    </div>
-                                                    <div class="form-group ">
-                                                        <h4 class="control-label col-lg-3">Email (DLSU)</h4>
-                                                        <h4 class="control-label col-lg-1">asdasd</h4>
-                                                    </div>
-
-                                                    <div class="form-group ">
-                                                        <h4 class="control-label col-lg-3">Contact Number</h4>
-                                                        <h4 class="control-label col-lg-1">asdasd</h4>
+                                                        <h4 class="control-label col-lg-1"><?php echo $contactPerson;?></h4>
                                                     </div>
                                                 </section>
                                                 <hr>
@@ -102,19 +140,19 @@ $_GET['id'];
                                                     <h4>User Location Information</h4>
                                                     <div class="form-group ">
                                                         <h4 class="control-label col-lg-3">Building</h4>
-                                                        <h4 class="control-label col-lg-1">asdasd</h4>
+                                                        <h4 class="control-label col-lg-1"><?php echo $building;?></h4>
                                                     </div>
                                                     <div class="form-group">
                                                         <h4 class="control-label col-lg-3">floor & Room</h4>
-                                                        <h4 class="control-label col-lg-1">asdasd</h4>
+                                                        <h4 class="control-label col-lg-1"><?php echo $floorRoom;?></h4>
                                                     </div>
                                                     <div class="form-group ">
                                                         <h4 class="control-label col-lg-3">Recipient</h4>
-                                                        <h4 class="control-label col-lg-1">asdasd</h4>
+                                                        <h4 class="control-label col-lg-1"><?php echo $recipient;?></h4>
                                                     </div>
                                                     <div class="form-group ">
                                                        <h4 class="control-label col-lg-3">Date Needed</h4>
-                                                       <h4 class="control-label col-lg-1">asdasd</h4>
+                                                       <h4 class="control-label col-lg-1"><?php echo $dateneeded;?></h4>
                                                     </div>
                                                 </section>
                                                 <hr>
@@ -123,7 +161,7 @@ $_GET['id'];
                                                     <h4>Request Details</h4>
                                                     <div class="form-group ">
                                                         <h4 class="control-label col-lg-3">Reason Of Request</h4>
-                                                        <h4 class="control-label col-lg-1">asdasd</h4>
+                                                        <h4 class="control-label col-lg-1"><?php echo $description;?></h4>
                                                     </div>
                                                 </section>
 
@@ -140,41 +178,32 @@ $_GET['id'];
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="col-lg-12">
-                                                                        <input style="display: none" type="number" id="count" value=<?php echo $_SESSION['count'];?>/>
-                                                                        <input class="form-control" type="number"  name="quantity0" id="quantity0" min="1" step="1" placeholder="Quantity" disabled />
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="col-lg-12">
-                                                                        <select class="form-control" name="category0" id="category0" disabled>
-                                                                            <option>Select</option>
-                                                                            <?php
+                                                            <?php
+                                                            for ($i=0; $i < $count; $i++) { 
+                                                                echo
+                                                                    '<tr>
+                                                                        <td>
+                                                                            <div class="col-lg-12">
+                                                                                <input class="form-control" type="number" value="'. $requestedQuantity[$i].'" disabled />
+                                                                            </div>
+                                                                        </td>
 
-                                                                                $sql = "SELECT * FROM thesis.ref_assetcategory;";
+                                                                        <td>
+                                                                            <div class="col-lg-12">
+                                                                                <select class="form-control"  disabled>
+                                                                                    <option value ="">'.$requestedCategory[$i].'</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </td>
 
-                                                                                $result = mysqli_query($dbc, $sql);
-
-                                                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                                                {
-                                                                                    
-                                                                                    echo "<option value ={$row['assetCategoryID']}>";
-                                                                                    echo "{$row['name']}</option>";
-
-                                                                                }
-                                                                           ?>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-
-                                                                <td style="padding-top:5px; padding-bottom:5px">
-                                                                    <div class="col-lg-12">
-                                                                        <input class="form-control" type="text" name="description0" id="description0" placeholder="Item description" disabled/>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                                        <td style="padding-top:5px; padding-bottom:5px">
+                                                                            <div class="col-lg-12">
+                                                                                <input class="form-control" type="text" value="'.$requestedDescription[$i].'" disabled/>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>';
+                                                            }
+                                                            ?>
                                                         </tbody>
                                                     </table>
 
