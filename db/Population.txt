@@ -462,5 +462,57 @@
 	-- asseet audit for asset assignment
 	INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '1', '1');
 
+	-- orgs ng studyante
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('1', 'Council of Student Organization');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('2', 'Ad Create Society');
 
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('3', 'Business Management Society');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('4', 'Economics Organization');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('5', 'Junior Entrepreneurs Marketing Association');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('6', 'Junior Philippine Institute of Accountants');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('7', 'Ley La Salle');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('8', 'Management of Financial Institution Association');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('9', 'Young Entrepreneurs Society');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('10', 'The Organization for American Studies Students ');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('11', 'Behavioral Science Society');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('12', 'Dalubhasaan  ng  mga  Umuusbong  na  Mag-aaral ng Araling Filipino');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('13', 'European Studies Association ');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('14', 'Sociedad de Historia');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('15', 'Samahan ng Lasalayanong Pilosopo');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('16', 'Nihon Kenkyuu Kai');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('17', 'Political Science Society');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('18', 'Samahan ng mga Mag-aaral sa Sikolohya');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('19', 'Team Communications');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('20', 'Kapatiran ng Kabataan para sa Kaunlaran');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('21', 'Association of Computer Engineering Students ');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('22', 'Chemical Engineering Society');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('23', 'Civil Engineering Society');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('24', 'Electronic and Communications Engineering Society');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('25', 'Industrial Management Engineering Society');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('26', 'Mechanical Engineering Society');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('27', 'Society of Manufacturing Engineering');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('28', 'Chemistry Society');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('29', 'Mathematics Circle');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('30', 'Physics Society');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('31', 'Societas Vitae');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('32', 'La Salle Computer Society');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('33', 'Union of Students Inspired Towards Education');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('34', 'ENGLICOM- DLSU Filipino & Chinese Organization');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('35', 'Rotaract Club of DLSU-');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('36', 'United International Student Organization');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('37', 'AIESEC-DLSU');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('38', 'Outdoor Club');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('38', 'Writers’ Guild');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('39', 'De La Salle University - Environmental Conservation Organization');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('40', 'Gakuen Anime Soshiki');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('41', 'Graduate Student Council');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('42', 'De La Salle Law - Paralegal Volunteers Organization');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('43', 'THE De Lasalle University MBA FINANCE SOCIETY');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('44', 'Business Doctoral Society');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('45', 'JUAN');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('46', 'Alyansang Tapat sa Lasalista');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('47', 'DLSU Multipurpose Student CoOperative');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('48', 'Iisang Tugon sa Tawag ng Panahon');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('49', 'La Salle Debate Society');
 
+	
