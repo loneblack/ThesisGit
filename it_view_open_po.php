@@ -24,7 +24,7 @@
 			
 			
 			//GET REQUEST DATA
-			$queryaa="SELECT r.UserID,r.FloorAndRoomID FROM thesis.procurement p join request r on p.requestID=r.requestID";
+			$queryaa="SELECT r.UserID,r.FloorAndRoomID FROM thesis.procurement p join request r on p.requestID=r.requestID where p.procurementID='{$procID}'";
 			$resultaa=mysqli_query($dbc,$queryaa);
 			$rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
 			
@@ -38,7 +38,7 @@
 			
 			//GET LATEST TICKET
 			
-			$query0="SELECT * FROM `thesis`.`assettesting` order by testingID desc";
+			$query0="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
 			$result0=mysqli_query($dbc,$query0);
 			$row0=mysqli_fetch_array($result0,MYSQLI_ASSOC);
 			
@@ -54,12 +54,12 @@
 			while($rows=mysqli_fetch_array($results,MYSQLI_ASSOC)){
 				for($i=0;$i<$rows['quantity'];$i++){
 					//Insert to asset table
-					$queryr="INSERT INTO `thesis`.`asset` (`supplierID`, `assetModel`, `unitCost`, `assetStatus`) VALUES ('{$rows['supplierID']}', '{$rows['assetModelID']}', '{$rows['cost']}', '1')";
+					$queryr="INSERT INTO `thesis`.`asset` (`supplierID`, `assetModel`, `unitCost`, `assetStatus`) VALUES ('{$rows['supplierID']}', '{$rows['assetModelID']}', '{$rows['cost']}', '8')";
 					$resultr=mysqli_query($dbc,$queryr);
 					
 					//SELECT LATEST ASSET
 					
-					$queryrr="SELECT * FROM thesis.asset order by assetID desc";
+					$queryrr="SELECT * FROM thesis.asset order by assetID desc limit 1";
 					$resultrr=mysqli_query($dbc,$queryrr);
 					$rowrr=mysqli_fetch_array($resultrr,MYSQLI_ASSOC);
 					

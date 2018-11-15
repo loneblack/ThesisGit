@@ -4,7 +4,7 @@
 
 	$flag=0;
 	$key = "Fusion";
-	require_once('mysql_connect.php');
+	require_once('db/mysql_connect.php');
 	
 	if (isset($_POST['submit'])){
 		
@@ -15,19 +15,6 @@
 		
 		//Lastname
 		$lastname=$_POST['lastname'];
-		
-		//Contact Number
-		if (!is_numeric($_POST['number'])) {
-            $number=FALSE; 
-			$message.="Contact number entered is invalid. ";   
-        }
-		elseif($_POST['number']<0){
-			$number=FALSE;
-			$message.="Contact number entered is invalid. ";
-		}
-		else{
-			$number=$_POST['number'];
-		}
 		
 		//User Type
 		$usertype=$_POST['usertype'];
@@ -53,17 +40,9 @@
 			$password=$_POST['password'];
 		}
 		
-		//Email
-		if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-			$email=FALSE;
-			$message.="Invalid email format. ";
-		}
-		else
-			$email=$_POST['email'];
-		
 		if(!isset($message)){
 			
-			$query="INSERT INTO `thesis`.`user`(`username`, `password`, `userType`, `firstName`, `lastName`, `email`, `contactNo`) VALUES ( AES_ENCRYPT('".$username."', '".$key."'), AES_ENCRYPT('".$password."', '".$key."'), '".$usertype."', AES_ENCRYPT('".$firstname."', '".$key."'), AES_ENCRYPT('".$lastname."', '".$key."'), AES_ENCRYPT('".$email."', '".$key."'), AES_ENCRYPT('".$number."', '".$key."'))";
+			$query="INSERT INTO `thesis`.`user`(`username`, `password`, `userType`, `firstName`, `lastName`) VALUES ( AES_ENCRYPT('".$username."', '".$key."'), AES_ENCRYPT('".$password."', '".$key."'), '".$usertype."', AES_ENCRYPT('".$firstname."', '".$key."'), AES_ENCRYPT('".$lastname."', '".$key."'))";
 			
 			$result=mysqli_query($dbc,$query);
 			
@@ -149,12 +128,6 @@
                                                 </div>
                                             </div>
                                             <div class="form-group ">
-                                                <label for="lastname" class="control-label col-lg-3">Contact Number</label>
-                                                <div class="col-lg-6">
-                                                    <input class=" form-control" id="number" name="number" type="number" min="0.00" value="<?php if (isset($_POST['number']) && !$flag) echo $_POST['number']; ?>" required />
-                                                </div>
-                                            </div>
-                                            <div class="form-group ">
                                                 <label for="lastname" class="control-label col-lg-3">User Type</label>
                                                 <div class="col-lg-6">
                                                     <select class="form-control m-bot15" name="usertype" value="<?php if (isset($_POST['usertype']) && !$flag) echo $_POST['usertype']; ?>" required>
@@ -183,12 +156,6 @@
                                                 <label for="confirm_password" class="control-label col-lg-3">Confirm Password</label>
                                                 <div class="col-lg-6">
                                                     <input class="form-control " id="confirm_password" name="confirm_password" type="password" value="<?php if (isset($_POST['confirm_password']) && !$flag) echo $_POST['confirm_password']; ?>" required />
-                                                </div>
-                                            </div>
-                                            <div class="form-group ">
-                                                <label for="email" class="control-label col-lg-3">Email (DLSU)</label>
-                                                <div class="col-lg-6">
-                                                    <input class="form-control " id="email" name="email" type="email" value="<?php if (isset($_POST['email']) && !$flag) echo $_POST['email']; ?>" required />
                                                 </div>
                                             </div>
 

@@ -3,8 +3,8 @@
 <?php
 session_start();
 require_once("db/mysql_connect.php");
-$_SESSION['previousPage'] = "requestor_request_for_procurement_service_material.php";
-$_SESSION['count'] = 0;
+
+$_GET['id'];
 ?>
 
 <head>
@@ -77,19 +77,24 @@ $_SESSION['count'] = 0;
 
                                                     <div class="form-group ">
                                                         <h4 class="control-label col-lg-3">Department</h4>
+                                                        <h4 class="control-label col-lg-1">asdasd</h4>
                                                     </div>
                                                     <div class="form-group ">
                                                         <h4 class="control-label col-lg-3">Unit Head/Fund Owner</h4>
+                                                        <h4 class="control-label col-lg-1">asdasd</h4>
                                                     </div>
                                                     <div class="form-group ">
                                                         <h4 class="control-label col-lg-3">Contact Person</h4>
+                                                        <h4 class="control-label col-lg-1">asdasd</h4>
                                                     </div>
                                                     <div class="form-group ">
                                                         <h4 class="control-label col-lg-3">Email (DLSU)</h4>
+                                                        <h4 class="control-label col-lg-1">asdasd</h4>
                                                     </div>
 
                                                     <div class="form-group ">
                                                         <h4 class="control-label col-lg-3">Contact Number</h4>
+                                                        <h4 class="control-label col-lg-1">asdasd</h4>
                                                     </div>
                                                 </section>
                                                 <hr>
@@ -97,15 +102,19 @@ $_SESSION['count'] = 0;
                                                     <h4>User Location Information</h4>
                                                     <div class="form-group ">
                                                         <h4 class="control-label col-lg-3">Building</h4>
+                                                        <h4 class="control-label col-lg-1">asdasd</h4>
                                                     </div>
                                                     <div class="form-group">
                                                         <h4 class="control-label col-lg-3">floor & Room</h4>
+                                                        <h4 class="control-label col-lg-1">asdasd</h4>
                                                     </div>
                                                     <div class="form-group ">
                                                         <h4 class="control-label col-lg-3">Recipient</h4>
+                                                        <h4 class="control-label col-lg-1">asdasd</h4>
                                                     </div>
                                                     <div class="form-group ">
                                                        <h4 class="control-label col-lg-3">Date Needed</h4>
+                                                       <h4 class="control-label col-lg-1">asdasd</h4>
                                                     </div>
                                                 </section>
                                                 <hr>
@@ -114,6 +123,7 @@ $_SESSION['count'] = 0;
                                                     <h4>Request Details</h4>
                                                     <div class="form-group ">
                                                         <h4 class="control-label col-lg-3">Reason Of Request</h4>
+                                                        <h4 class="control-label col-lg-1">asdasd</h4>
                                                     </div>
                                                 </section>
 
@@ -208,120 +218,7 @@ $_SESSION['count'] = 0;
     <script src="js/scripts.js"></script>
     
     <script type="text/javascript">
-        var count = 1;
-		// Shorthand for $( document ).ready()
-        $(function() {
-
-        });
-
-
-        function removeRow(o) {
-            var p = o.parentNode.parentNode;
-            p.parentNode.removeChild(p);
-        }
-
-        function addTest() {
-
-
-           
-            var row_index = 0;
-            var isRenderd = false;
-
-            $("td").click(function() {
-                row_index = $(this).parent().index();
-
-            });
-
-            var delayInMilliseconds = 300; //1 second
-
-            setTimeout(function() {
-
-                appendTableRow(row_index);
-            }, delayInMilliseconds);
-
-
-
-        }
-		
-		
-        var appendTableRow = function(rowCount) {
-
-             $("#count").val(count);
-
-            var tr = 
-                
-                            "<tr>" +
-                                    "<td>" +
-                                       " <div class='col-lg-12'>" +
-                                            "<input class='form-control' type='number' id='quantity"+count+"' name = 'quantity"+count+"' min='1'" + "step='1' placeholder='Quantity' />" +
-                                        "</div>" +
-                                    "</td>" +
-                                    "<td>" +
-                                        "<div class='col-lg-12'>" +
-                                            "<select class='form-control' id='category"+count+"' name = 'category"+count+"'>" +
-                                                "<option>Select</option>" +
-
-                                                '<?php
-
-                                                    $sql = "SELECT * FROM thesis.ref_assetcategory;";
-
-                                                    $result = mysqli_query($dbc, $sql);
-
-                                                    $_SESSION['count'] += 1;
-
-                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                    {
-                                                        
-                                                        echo "<option value ={$row['assetCategoryID']}>";
-                                                        echo "{$row['name']}</option>";
-
-                                                    }
-                                                ?>'
-
-                                            +"</select>" +
-                                        "</div>" +
-                                    "</td>" +
-                                    "<td style='padding-top:5px; padding-bottom:5px'>" +
-                                        "<div class='col-lg-12'>" +
-                    "<input class='form-control' type='text' id='description"+count+"' name ='description"+count+"' placeholder='Item description' />" +
-                                        "</div>" +
-                                    "</td>" +
-                                    "<td>" +
-        "<button id='remove' class='btn btn-danger' type='button' onClick='removeRow(this)'>Remove</button>" +
-                                    "</td>" +
-                                    "<td>" +
-                                    "</td>" +
-                                    "</tr>"
-				
-				
-				
-				
-            $('#tableTest tbody tr').eq(rowCount).after(tr);
-
-            count++;
-
-             $.ajax({
-            type:"POST",
-            url:"count.php",
-            data: 'count='+count,
-            success: function(data){
-                $("#count").html(data);
-
-                }
-            });
-			
-        }
-			function getRooms(val){
-            $.ajax({
-            type:"POST",
-            url:"requestor_getRooms.php",
-            data: 'buildingID='+val,
-            success: function(data){
-                $("#FloorAndRoomID").html(data);
-
-                }
-            });
-        }
+ 
 	</script>
 
 </body>
