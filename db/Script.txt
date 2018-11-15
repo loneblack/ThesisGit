@@ -649,6 +649,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   `description` VARCHAR(45) NULL DEFAULT NULL,
   `DepartmentID` INT(11) NOT NULL,
   `unitHead` VARCHAR(45) NULL DEFAULT NULL,
+  `contactPerson` VARCHAR(70) NULL,
   `recipient` VARCHAR(45) NULL DEFAULT NULL,
   `employeeID` INT(11) NULL DEFAULT NULL,
   `date` DATETIME NULL DEFAULT NULL,
@@ -788,7 +789,7 @@ DROP TABLE IF EXISTS `thesis`.`organization` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`organization` (
   `id` INT NOT NULL,
-  `name` VARCHAR(45) NULL,
+  `name` LONGTEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
