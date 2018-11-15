@@ -19,6 +19,23 @@ $_SESSION['previousPage'] = "requestor_service_request_form.php";
     <link href="css/bootstrap-reset.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="css/bootstrap-switch.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-fileupload/bootstrap-fileupload.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-datepicker/css/datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-timepicker/compiled/timepicker.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-colorpicker/css/colorpicker.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-datetimepicker/css/datetimepicker.css" />
+    <link rel="stylesheet" type="text/css" href="js/jquery-multi-select/css/multi-select.css" />
+    <link rel="stylesheet" type="text/css" href="js/jquery-tags-input/jquery.tagsinput.css" />
+    <link href="js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
+    <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css" />
+
+    <link rel="stylesheet" type="text/css" href="js/select2/select2.css" />
+
+    <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
 </head>
@@ -102,16 +119,30 @@ $_SESSION['previousPage'] = "requestor_service_request_form.php";
                                                             <option value="27">Repair Asset</option>
                                                             <option value="25">Others</option>
                                                         </select>
-														<input type="text" class="form-control" name="others" id="others" placeholder="Specify request" style='display:none'/>
-                                                    </div>
+                                                        <input type="text" class="form-control" name="others" id="others" placeholder="Specify request" style='display:none' />
+
+                                                        <div id="asset" style="display:none">
+                                                                ** Place Asset on Right for Repair
+                                                                <select class="multi-select" multiple="" id="my_multi_select3">
+                                                                    <option>Lenovo BHT 940 (3982901)</option>
+                                                                    <option>Samsung S9 (4737292)</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
                                                 </div>
-												
+
+
+
+
                                                 <div class="form-group ">
                                                     <label for="details" class="control-label col-lg-3">Details</label>
                                                     <div class="col-lg-6">
                                                         <textarea class="form-control" rows="5" name="details" style="resize:none"></textarea>
                                                     </div>
                                                 </div>
+
+
+
                                                 <div class="form-group ">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Date needed</label>
                                                     <div class="col-lg-6">
@@ -144,29 +175,62 @@ $_SESSION['previousPage'] = "requestor_service_request_form.php";
         <!--main content end-->
 
     </section>
-	
-	<script>
-		function checkvalue(val){
-			if(val==="25")
-			   document.getElementById('others').style.display='block';
-			else
-			   document.getElementById('others').style.display='none'; 
-		}
-	</script>
-	
+
+    <script>
+        function checkvalue(val) {
+            if (val === "25") {
+                document.getElementById('others').style.display = 'block';
+                document.getElementById('asset').style.display = 'none';
+            }
+            if (val === "27") {
+                document.getElementById('asset').style.display = 'block';
+                document.getElementById('others').style.display = 'none';
+            }
+            if (val != "25" && val != "27")
+                document.getElementById('others').style.display = 'none';
+        }
+    </script>
+
     <!-- WAG GALAWIN PLS LANG -->
 
     <!--Core js-->
     <script src="js/jquery.js"></script>
+    <script src="js/jquery-1.8.3.min.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
     <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
+    <script src="js/jquery.nicescroll.js"></script>
+
+    <script src="js/bootstrap-switch.js"></script>
+
+    <script type="text/javascript" src="js/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
+    <script type="text/javascript" src="js/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+    <script type="text/javascript" src="js/jquery-multi-select/js/jquery.multi-select.js"></script>
+    <script type="text/javascript" src="js/jquery-multi-select/js/jquery.quicksearch.js"></script>
+    <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+    <script type="text/javascript" src="js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+
+    <script src="js/jquery-tags-input/jquery.tagsinput.js"></script>
+
+    <script src="js/select2/select2.js"></script>
+    <script src="js/select-init.js"></script>
 
 
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
+
+    <script src="js/toggle-init.js"></script>
+
+    <script src="js/advanced-form.js"></script>
+    <script src="js/dynamic_table_init.js"></script>
 
 </body>
 

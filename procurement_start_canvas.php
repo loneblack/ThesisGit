@@ -382,13 +382,18 @@
 <script src="js/dynamic_table_init.js"></script>
 
     <script type="text/javascript">
-        // Shorthand for $( document ).ready()
-        $(function() {
+       <script type="text/javascript">
+$(document).ready(function() {
+    /* btn click event */
+    $('#addmore').click(function(){
+        /* append selectbox where you want */
+        $("#target").append('<select><option value="">select</option></select>')
+    });
+});
+</script>
 
-        });
 
-
-
+        
 
         function addTest(cavasItemID) {
             var row_index = 0;
