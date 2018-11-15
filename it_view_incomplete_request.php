@@ -31,6 +31,9 @@ if(isset($_POST['submit'])){
 		$querya="INSERT INTO `thesis`.`canvasitem` (`canvasID`, `quantity`, `description`, `assetCategory`, `assetModel`) VALUES ('{$rowy['canvasID']}', '{$quantityArray[$i]}', '{$desc[$i]}', '{$categoryArray[$i]}', '{$modelArray[$i]}')";
 		$resulta=mysqli_query($dbc,$querya);
 	}
+	
+	$queryz="UPDATE `thesis`.`request` SET `step`='7' WHERE `requestID`='{$requestID}'";
+	$resultz=mysqli_query($dbc,$queryz);
 }
 ?>
 <html lang="en">

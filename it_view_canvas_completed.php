@@ -2,10 +2,10 @@
 <?php
 session_start();
 require_once('db/mysql_connect.php');
-$_SESSION['requestID']=$_GET['requestID'];
+$requestID=$_GET['requestID'];
 
 $query="SELECT * FROM thesis.canvas 
-				 where requestID='{$_SESSION['requestID']}'";
+				 where requestID='{$requestID}'";
 $result=mysqli_query($dbc,$query);
 $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 
@@ -51,7 +51,11 @@ if(isset($_POST['submit'])){
 					//}
 				//}
 			//}
+			
 		}
+		
+		$queryd="UPDATE `thesis`.`request` SET `step`='8' WHERE `requestID`='{$requestID}'";
+		$resultd=mysqli_query($dbc,$queryd);
 	}
 	
 	if(!empty($_POST['disapprovedCavasItem'])){
@@ -63,6 +67,10 @@ if(isset($_POST['submit'])){
 			
 			$query2="UPDATE `thesis`.`canvasitemdetails` SET `status`='6',`comment`='{$comments}' WHERE `cavasItemID`='{$canCode}' and `supplier_supplierID`='{$suppID}'";
 			$result2=mysqli_query($dbc,$query2);
+		}
+		if(empty($_POST['canvas'])){
+			$queryd="UPDATE `thesis`.`request` SET `step`='9' WHERE `requestID`='{$rowc['requestID']}'";
+			$resultd=mysqli_query($dbc,$queryd);
 		}
 	}
 	
@@ -158,7 +166,7 @@ if(isset($_POST['submit'])){
                                             </div>
                                         </div>
                                         <h5>*** Please Check the Checkbox for Procurement to Buy</h5>
-										<form method="post" action="<?php echo $_SERVER['PHP_SELF']."?requestID={$_SESSION['requestID']}"; ?>">
+										<form method="post" action="<?php echo $_SERVER['PHP_SELF']."?requestID={$requestID}"; ?>">
                                         <table class="table table-invoice" id="mytable">
                                             <thead>
                                                 <tr>

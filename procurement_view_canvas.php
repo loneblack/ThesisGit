@@ -108,9 +108,10 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
 													<?php
 													
 														require_once('db/mysql_connect.php');
-														$query="SELECT c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.recipient,r.date as `requestedDate` FROM thesis.canvas c 
+														$query="SELECT c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.recipient,r.date as `requestedDate`,rstp.name as `step` FROM thesis.canvas c 
 																   join ref_status rs on c.status=rs.statusID
-                                                                   join request r on c.requestID=r.requestID";
+                                                                   join request r on c.requestID=r.requestID
+																   join ref_steps rstp on r.step=rstp.id";
 														$result=mysqli_query($dbc,$query);
 														
 														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
@@ -136,12 +137,17 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
 															elseif($row['status']=='Incomplete'){
 																echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
 															}
-															elseif($row['status']=='Pending'){
-																echo "<td><span class='label label-warning label-mini'>{$row['status']}</span></td>";
+															elseif($row['step']=='For Canvas'){
+																echo "<td><span class='label label-warning label-mini'>For Canvas</span></td>";
 															}
-															else{
-																echo "<td><span class='label label-primary label-mini'>{$row['status']}</span></td>";
+															elseif($row['step']=='Ready for PO'){
+																echo "<td><span class='label label-primary label-mini'>Ready for PO</span></td>";
 															}
+															elseif($row['step']=='Re-check Canvas'){
+																echo "<td><span class='label label-danger label-mini'>Re-check Canvas</span></td>";
+															}
+																
+															
 															
 																
 															echo "<td>{$row['description']}</td>
@@ -193,15 +199,15 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
 						var cell = row.getElementsByTagName("td")[1];
 						var id = cell.textContent;
 						
-						//if(id == "Ready for PO"){
-							//window.location.replace("procurement_purchase_order.php?canvasID="+ row.getAttribute("id"));
-						//}
-                        //else if(id == "For Canvas"){
-                            //window.location.replace("procurement_view_request.php?canvasID="+ row.getAttribute("id"));
-                        //}
-						//else if(id == "Completed"){
-                           // window.location.replace("procurement_view_completed.php?canvasID="+ row.getAttribute("id"));
-                        //}
+						if(id == "Ready for PO"){
+							window.location.replace("procurement_purchase_order.php?canvasID="+ row.getAttribute("id"));
+						}
+                        else if(id == "For Canvas"){
+                            window.location.replace("procurement_view_request.php?canvasID="+ row.getAttribute("id"));
+                        }
+						else if(id == "Completed"){
+                           window.location.replace("procurement_view_completed.php?canvasID="+ row.getAttribute("id"));
+                        }
 						
 						if(id == "Ready for PO"){
 							window.location.replace("procurement_purchase_order.php?canvasID="+ row.getAttribute("id"));

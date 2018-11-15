@@ -59,6 +59,13 @@
 			
 		}
 		
+		//$queryReqID="SELECT requestID FROM thesis.canvas where canvasID='{$canvasID}'";
+		//$resultReqID=mysqli_query($dbc,$queryReqID);
+		//$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
+		
+		//$queryd="UPDATE `thesis`.`request` SET `step`='5' WHERE `requestID`='{$rowReqID['requestID']}'";
+		//$resultd=mysqli_query($dbc,$queryd);
+		
 		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/procurement_view_completed.php?canvasID=".$canvasID);
 	}
 	

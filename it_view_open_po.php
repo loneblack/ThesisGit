@@ -24,7 +24,7 @@
 			
 			
 			//GET REQUEST DATA
-			$queryaa="SELECT r.UserID,r.FloorAndRoomID FROM thesis.procurement p join request r on p.requestID=r.requestID where p.procurementID='{$procID}'";
+			$queryaa="SELECT p.requestID,r.UserID,r.FloorAndRoomID FROM thesis.procurement p join request r on p.requestID=r.requestID where p.procurementID='{$procID}'";
 			$resultaa=mysqli_query($dbc,$queryaa);
 			$rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
 			
@@ -67,6 +67,11 @@
 					
 					$queryrrr="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$row0['testingID']}', '{$rowrr['assetID']}')";
 					$resultrrr=mysqli_query($dbc,$queryrrr);
+					
+					//Insert to assetdocument table
+					
+					$queryasd="INSERT INTO `thesis`.`assetdocument` (`assetID`, `requestID`, `procurementID`) VALUES ('{$rowrr['assetID']}', '{$rowaa['requestID']}', '{$procID}')";
+					$resultasd=mysqli_query($dbc,$queryasd);
 					
 					//$queryrrr="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$row0['ticketID']}', '{$rowrr['assetID']}')";
 					//$resultrrr=mysqli_query($dbc,$queryrrr);

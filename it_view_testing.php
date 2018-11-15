@@ -24,8 +24,8 @@
 			$resultCount=mysqli_query($dbc,$queryCount);
 			$rowCount=$rowg=mysqli_fetch_array($resultCount,MYSQLI_ASSOC);
 			
-			$propertyCode="0".$row1['assetCategory']."-".sprintf('%06d', $rowCount['assetPosition']);
-			
+			//$propertyCode="0".$row1['assetCategory']."-".sprintf('%06d', $rowCount['assetPosition']);
+			$propertyCode=sprintf('%03d', $row1['assetCategory'])."-".sprintf('%06d', $rowCount['assetPosition']);
 			//INSERT Property Code
 			$queryProp="UPDATE `thesis`.`asset` SET `propertyCode`='{$propertyCode}', `assetStatus`='1' WHERE `assetID`='{$row1['assetID']}'";
 			$resultProp=mysqli_query($dbc,$queryProp);
@@ -43,7 +43,7 @@
 		$queryg="SELECT a.supplierID,ad.requestID FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID 
 											  join assetdocument ad on a.assetID=ad.assetID
 											  join assetmodel am on a.assetModel=am.assetModelID
-											  where atd.assettesting_testingID='1' and atd.check='0' 
+											  where atd.assettesting_testingID='{$testingID}' and atd.check='0' 
                                               group by a.supplierID";
 		$resultg=mysqli_query($dbc,$queryg);
 		
@@ -83,6 +83,28 @@
 			
 			
 			
+		}
+		//UPDATE REQUEST STATUS
+		
+		//GET REQID
+		$queryReqID="SELECT ad.requestID FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
+											  join assetdocument ad on a.assetID=ad.assetID where atd.assettesting_testingID='4' limit 1";
+		$resultReqID=mysqli_query($dbc,$queryReqID);
+		$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
+		
+		//GET QTY of Assets requested IN REQUESTDETAILS
+		$queryReq="SELECT sum(quantity) as `totalQty` FROM thesis.requestdetails where requestID='{$rowReqID['requestID']}'";
+		$resultReq=mysqli_query($dbc,$queryReq);
+		$rowReq=mysqli_fetch_array($resultReq,MYSQLI_ASSOC);
+		
+		//GET ALL Assets that passed the test
+		$queryPass="SELECT count(ad.assetID) as `passedAsset` FROM thesis.assetdocument ad join asset a on ad.assetID=a.assetID where ad.requestID='{$rowReqID['requestID']}' and a.assetStatus='1'";
+		$resultPass=mysqli_query($dbc,$queryPass);
+		$rowPass=mysqli_fetch_array($resultPass,MYSQLI_ASSOC);
+		
+		if($rowReq['totalQty']==$rowPass['passedAsset']){
+			$queryComp="UPDATE `thesis`.`request` SET `status`='3' WHERE `requestID`='{$rowReqID['requestID']}'";
+			$resultComp=mysqli_query($dbc,$queryComp);
 		}
 		
 	}

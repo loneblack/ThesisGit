@@ -78,7 +78,7 @@
 												<?php
 												
 													require_once('db/mysql_connect.php');
-													$query="SELECT t.ticketID,t.summary,rst.serviceType,t.lastUpdateDate,t.dueDate,rts.status,t.action FROM thesis.ticket t 
+													$query="SELECT t.ticketID,t.summary,rst.serviceType,t.lastUpdateDate,t.dueDate,rts.status FROM thesis.ticket t 
 																						join thesis.ref_ticketstatus rts on t.status=rts.ticketID
 																						join thesis.ref_servicetype rst on t.serviceType=rst.id";
 													$result=mysqli_query($dbc,$query);
@@ -89,17 +89,18 @@
 															<td>{$row['summary']}</td>
 															<td>{$row['serviceType']}</td>
 															<td>{$row['lastUpdateDate']}</td>
-															<td>{$row['dueDate']}</td>";
+															<td>{$row['dueDate']}</td>
+															<td></td>";
 															
-														if($row['action']=='Unanswered'){
-															echo "<td><span class='label label-warning'>Unanswered</span></td>";
-														}
-														elseif($row['action']=='Answered'){
-															echo "<td><span class='label label-danger'>Answered</span></td>";
-														}	
-														else{
-															echo "<td><span class='label label-success'>New Ticket</span></td>";
-														}
+														//if($row['action']=='Unanswered'){
+															//echo "<td><span class='label label-warning'>Unanswered</span></td>";
+														//}
+														//elseif($row['action']=='Answered'){
+															//echo "<td><span class='label label-danger'>Answered</span></td>";
+														//}	
+														//else{
+															//echo "<td><span class='label label-success'>New Ticket</span></td>";
+														//}
 
 														if($row['status']=='Open'){
 															echo "<td><span class='label label-success'>{$row['status']}</span></td>";
