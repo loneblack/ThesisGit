@@ -73,27 +73,84 @@ session_start();
                                                 ?>
                                             <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_equipment_request_DB.php">
                                                 <div class="form-group ">
-                                                    <label for="serviceType" class="control-label col-lg-3">Office/Department/School Organization</label>
+                                                    <label class="control-label col-lg-3">Affiliation</label>
                                                     <div class="col-lg-6">
-                                                        <select name="depschoolorg" class="form-control m-bot15">
-                                                            <option>Select</option>
+                                                        <select class="form-control" id="ddl1" onchange="checkvalue(this.value)">
+                                                            <option value="0">Select Affiliation</option>
+                                                            <option value="1">Office</option>
+                                                            <option value="2">Department</option>
+                                                            <option value="3">School Organization</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="form-group" id="office" style="display:none">
+                                                    <label class="control-label col-lg-3"></label>
+                                                    <div class="col-lg-6">
+                                                        <select class="form-control" id="office">
+                                                            <option>Select Office</option>
                                                             <?php
 
-                                                          
-                                                            $sql = "SELECT * FROM thesis.offices;";
+                                                                            $sql = "SELECT * FROM thesis.offices;";
 
-                                                            $result = mysqli_query($dbc, $sql);
+                                                                            $result = mysqli_query($dbc, $sql);
 
-                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                            {
-                                                                
-                                                                echo "<option value ={$row['officeID']}>";
-                                                                echo "{$row['Name']}</option>";
+                                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                            {
+                                                                                    
+                                                                                echo "<option value ={$row['officeID']}>";
+                                                                                echo "{$row['Name']}</option>";
 
-                                                            }
-                                                           ?>
+                                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group" id="department" style="display:none">
+                                                    <label class="control-label col-lg-3"></label>
+                                                    <div class="col-lg-6">
+                                                        <select class="form-control" id="office">
+                                                            <option>Select Department</option>
+                                                            <?php
 
-                                                            <option value ='111'>School Organization</option>
+                                                                            $sql = "SELECT * FROM thesis.department;";
+
+                                                                            $result = mysqli_query($dbc, $sql);
+
+                                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                            {
+                                                                                    
+                                                                                echo "<option value ={$row['DepartmentID']}>";
+                                                                                echo "{$row['name']}</option>";
+
+                                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group" id="org" style="display:none">
+                                                    <label class="control-label col-lg-3"></label>
+                                                    <div class="col-lg-6">
+                                                        <select class="form-control" id="office">
+                                                            <option>Select Organizaiton</option>
+                                                            <?php
+
+                                                                            $sql = "SELECT * FROM thesis.organization;";
+
+                                                                            $result = mysqli_query($dbc, $sql);
+
+                                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                            {
+                                                                                    
+                                                                                echo "<option value ={$row['id']}>";
+                                                                                echo "{$row['name']}</option>";
+
+                                                                            }
+                                                            ?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -333,6 +390,25 @@ session_start();
                 }
             });
         }
+        
+        function checkvalue(val){
+			if(val==="1"){
+			    document.getElementById('office').style.display='block';
+                document.getElementById('department').style.display='none';
+                document.getElementById('org').style.display='none';}
+            if(val==="2"){
+			    document.getElementById('office').style.display='none';
+                document.getElementById('department').style.display='block';
+                document.getElementById('org').style.display='none';}
+			if(val==="3"){
+			    document.getElementById('office').style.display='none';
+                document.getElementById('department').style.display='none';
+                document.getElementById('org').style.display='block';}
+            if(val==="0"){
+			    document.getElementById('office').style.display='none';
+                document.getElementById('department').style.display='none';
+                document.getElementById('org').style.display='none';}
+		}
     </script>
 
 </body>
