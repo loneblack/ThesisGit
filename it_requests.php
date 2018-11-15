@@ -432,7 +432,7 @@
                                 } else if (idDesc == "Items received") {
                                     window.location.replace("it_view_open_po.php");
                                 } else if (idDesc == "Replacement needed") {
-                                    window.location.replace("it_all_supplier.php");
+                                    window.location.replace("it_view_open_po.php");
                                 } else if (idDesc == "Conforme pending") {
                                     window.location.replace("it_view_checklist.php");
                                 }
