@@ -2,7 +2,37 @@
 <html lang="en">
 <?php
 session_start();
+require_once('db/mysql_connect.php');
+
 $_SESSION['previousPage'] = "requestor_service_request_form.php";
+
+$userID = $_SESSION['userID'];
+
+$sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = {$userID};";//get the employeeID using userID
+$result = mysqli_query($dbc, $sql);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+    $employeeID = $row['employeeID'];
+
+}
+
+ $sql1 = "SELECT a.assetID, propertyCode, b.name AS 'brand', c.name as 'category', itemSpecification, aa.statusID, s.id
+            FROM thesis.assetassignment aa
+                JOIN asset a 
+            ON a.assetID = aa.assetID
+                JOIN assetModel m
+            ON assetModel = assetModelID
+                JOIN ref_brand b
+            ON brand = brandID
+                JOIN ref_assetcategory c
+            ON assetCategory = assetCategoryID
+                JOIN ref_assetstatus s
+            ON a.assetStatus = s.id
+                WHERE (personresponsibleID = {$employeeID})
+            AND (s.id = 2) AND (aa.statusID = 2);";
+
+$result1 = mysqli_query($dbc, $sql1);
+
 ?>
 
 <head>
@@ -123,17 +153,25 @@ $_SESSION['previousPage'] = "requestor_service_request_form.php";
 
                                                         <div id="asset" style="display:none">
                                                             ** Place Asset on Right for Repair
-                                                            <select class="multi-select" multiple="" id="my_multi_select3">
-                                                                <option>Lenovo BHT 940 (3982901)</option>
-                                                                <option>Samsung S9 (4737292)</option>
+                                                            <select class="multi-select" multiple="" name = "assets[]" id="my_multi_select3">
+                                                                <?php
+                                                                    
+                                                                    while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC))
+                                                                    {
+                                                                        
+                                                                        echo "<option value ={$row['assetID']}>";
+                                                                        echo "{$row['propertyCode']} ";
+                                                                        echo "{$row['brand']} ";
+                                                                        echo "{$row['category']} ";
+                                                                        echo "{$row['itemSpecification']} ";
+                                                                        echo "</option>";
+
+                                                                    }
+                                                               ?>
                                                             </select>
                                                         </div>
                                                     </div>
                                                 </div>
-
-
-
-
                                                 <div class="form-group ">
                                                     <label for="details" class="control-label col-lg-3">Details</label>
                                                     <div class="col-lg-6">
