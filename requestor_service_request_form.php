@@ -147,7 +147,7 @@ $result1 = mysqli_query($dbc, $sql1);
                                                             <option value="23">Web site creation</option>
                                                             <option value="24">Website updating</option>
                                                             <option value="27">Repair Asset</option>
-                                                            <option value="25">Others</option>
+                                                            <option value="29">Others</option>
                                                         </select>
                                                         <input type="text" class="form-control" name="others" id="others" placeholder="Specify request" style='display:none' />
 
@@ -216,7 +216,7 @@ $result1 = mysqli_query($dbc, $sql1);
 
     <script>
         function checkvalue(val) {
-            if (val === "25") {
+            if (val === "29") {
                 document.getElementById('others').style.display = 'block';
                 document.getElementById('asset').style.display = 'none';
             }
@@ -224,7 +224,7 @@ $result1 = mysqli_query($dbc, $sql1);
                 document.getElementById('asset').style.display = 'block';
                 document.getElementById('others').style.display = 'none';
             }
-            if (val != "25" && val != "27") {
+            if (val != "29" && val != "27") {
                 document.getElementById('others').style.display = 'none';
                 document.getElementById('asset').style.display = 'none';
             }
