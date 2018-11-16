@@ -52,7 +52,7 @@
 
                 <div class="col-sm-12">
                     <div class="col-sm-12">
-                        
+
                         <div class="row">
 
 
@@ -72,6 +72,8 @@
                                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                                     <thead>
                                                         <tr>
+                                                            <th>
+                                                            </th>
                                                             <th>Property Code</th>
                                                             <th>Brand</th>
                                                             <th>Model</th>
@@ -79,11 +81,15 @@
                                                             <th>Location Room</th>
                                                             <th>Status</th>
                                                             <th>Comments</th>
-                                                            <th>Checkin</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr class="gradeX">
+                                                            <td>
+                                                                <div class="checkbox ">
+                                                                    <input type="checkbox">
+                                                                </div>
+                                                            </td>
                                                             <td>G29203219</td>
                                                             <td>Samsung</td>
                                                             <td>S7 Edge</td>
@@ -96,13 +102,14 @@
                                                                 </select>
                                                             </td>
                                                             <td><input type="text" class="form-control"></td>
-                                                            <td><button class="btn btn-info">Checkin</button></td>
                                                         </tr>
-                                                        
+
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
+                                        <button class="btn btn-success">Checkin</button>
+                                        <a href="it_bulk_checkin.php"><button class="btn btn-danger">Back</button></a>
                                     </section>
                                 </div>
                             </div>
@@ -120,25 +127,25 @@
 
     <!-- WAG GALAWIN PLS LANG -->
     <script>
-		function addRowHandlers() {
-			var table = document.getElementById("dynamic-table");
-			var rows = table.getElementsByTagName("tr");
-			for (i = 1; i < rows.length; i++) {
-				var currentRow = table.rows[i];
-				var createClickHandler = function(row) {
-					return function() {
-						var cell = row.getElementsByTagName("td")[0];
-						var idx = cell.textContent;
-						
+        function addRowHandlers() {
+            var table = document.getElementById("dynamic-table");
+            var rows = table.getElementsByTagName("tr");
+            for (i = 1; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function(row) {
+                    return function() {
+                        var cell = row.getElementsByTagName("td")[0];
+                        var idx = cell.textContent;
+
                         window.location.replace("it_user_assets.php?=");
-						
-					};
-				};
-				currentRow.onclick = createClickHandler(currentRow);
-			}
-		}
-		window.onload = addRowHandlers();
-	</script>
+
+                    };
+                };
+                currentRow.onclick = createClickHandler(currentRow);
+            }
+        }
+        window.onload = addRowHandlers();
+    </script>
 
     <script src="js/jquery.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
