@@ -32,6 +32,18 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
     }
 
+$query =  " SELECT details, dateNeed, endDate, dateReceived, s.serviceType AS 'serviceTypeID', t.serviceType, statusID, description AS 'status', others, steps
+            FROM thesis.service s
+                JOIN ref_servicetype t
+            ON s.serviceType = t.id
+                JOIN ref_status a
+            ON s.status = a.statusID
+                WHERE s.id = {$id};";
+$result = mysqli_query($dbc, $query);
+
+if(true){
+
+}
 ?>
 
 <head>

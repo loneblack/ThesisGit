@@ -175,7 +175,7 @@ $result1 = mysqli_query($dbc, $sql1);
                                                 <div class="form-group ">
                                                     <label for="details" class="control-label col-lg-3">Details</label>
                                                     <div class="col-lg-6">
-                                                        <textarea class="form-control" rows="5" name="details" style="resize:none"></textarea>
+                                                        <textarea class="form-control" rows="5" name="details" style="resize:none" required></textarea>
                                                     </div>
                                                 </div>
 
@@ -184,13 +184,13 @@ $result1 = mysqli_query($dbc, $sql1);
                                                 <div class="form-group ">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Date needed</label>
                                                     <div class="col-lg-6">
-                                                        <input class="form-control" id="dateNeeded" name="dateNeeded" type="datetime-local" />
+                                                        <input class="form-control" id="dateNeeded" name="dateNeeded" type="datetime-local" required />
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="endDate" class="control-label col-lg-3">End date</label>
                                                     <div class="col-lg-6">
-                                                        <input class=" form-control" id="endDate" name="endDate" type="datetime-local" />
+                                                        <input class=" form-control" id="endDate" name="endDate" type="datetime-local" required />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
