@@ -17,15 +17,19 @@
         
     }
 
-    $depschoolorg = $_POST['depschoolorg'];
-    $orgName = $_POST['orgName'];
     $dateNeeded = $_POST['dateNeeded'];
     $endDate = $_POST['endDate'];
     $purpose = $_POST['purpose'];
     $buildingID = $_POST['buildingID'];
     $FloorAndRoomID = $_POST['FloorAndRoomID'];
     $representative = $_POST['representative'];
-    $idNum = $_POST['idNum'];  
+    $idNum = $_POST['idNum']; 
+
+    $affiliation = $_POST['affiliation']; 
+    $department = $_POST['department']; 
+    $organization = $_POST['organization']; 
+    $office = $_POST['office']; 
+
 
 
     date_default_timezone_set("Asia/Singapore");
@@ -39,7 +43,7 @@
     $id = 0;    
 
     //insertion to request table
-    $sql0 = "INSERT INTO `thesis`.`request_borrow` (`officeID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `personrepresentativeID`, `personrepresentative`, `dateCreated`, `purpose`, `statusID`) VALUES ('{$depschoolorg}', '{$buildingID}', '{$FloorAndRoomID }', '{$dateNeeded}', '{$endDate}', '{$employeeID}', '{$idNum}', '{$representative}', '{$date}', '{$purpose}', '1');";//status is set to 1 for pending status
+    $sql0 = "INSERT INTO `thesis`.`request_borrow` (`officeID`,  `DepartmentID`, `organizationID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `personrepresentativeID`, `personrepresentative`, `dateCreated`, `purpose`, `statusID`, `steps`) VALUES ('{$office}', '{$department}', '{$organization}', '{$buildingID}', '{$FloorAndRoomID }', '{$dateNeeded}', '{$endDate}', '{$employeeID}', '{$idNum}', '{$representative}', '{$date}', '{$purpose}', '1', '1');";//status is set to 1 for pending status
     $result0 = mysqli_query($dbc, $sql0);
 
     

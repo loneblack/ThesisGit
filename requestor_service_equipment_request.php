@@ -75,7 +75,7 @@ session_start();
                                                 <div class="form-group ">
                                                     <label class="control-label col-lg-3">Affiliation</label>
                                                     <div class="col-lg-6">
-                                                        <select class="form-control" id="ddl1" onchange="checkvalue(this.value)">
+                                                        <select class="form-control" id="ddl1" onchange="checkvalue(this.value)" name="affiliation">
                                                             <option value="0">Select Affiliation</option>
                                                             <option value="1">Office</option>
                                                             <option value="2">Department</option>
@@ -89,7 +89,7 @@ session_start();
                                                 <div class="form-group" id="office" style="display:none">
                                                     <label class="control-label col-lg-3"></label>
                                                     <div class="col-lg-6">
-                                                        <select class="form-control" id="office">
+                                                        <select class="form-control" id="office" name = "office">
                                                             <option>Select Office</option>
                                                             <?php
 
@@ -112,7 +112,7 @@ session_start();
                                                 <div class="form-group" id="department" style="display:none">
                                                     <label class="control-label col-lg-3"></label>
                                                     <div class="col-lg-6">
-                                                        <select class="form-control" id="office">
+                                                        <select class="form-control" id="department" name = "department">
                                                             <option>Select Department</option>
                                                             <?php
 
@@ -135,7 +135,7 @@ session_start();
                                                 <div class="form-group" id="org" style="display:none">
                                                     <label class="control-label col-lg-3"></label>
                                                     <div class="col-lg-6">
-                                                        <select class="form-control" id="office">
+                                                        <select class="form-control" id="organization" name = "organization">
                                                             <option>Select Organizaiton</option>
                                                             <?php
 
