@@ -513,4 +513,19 @@
 	-- change asset status to deployed
 	UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '1');
 	UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '2');
+
+	-- steps pa lang ng acquisition
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('1', 'Request for Approval');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('2', 'IT Create Specs');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('3', 'Canvasing');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('3', 'Canvasing');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('5', 'Re-Canvas');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('6', 'Create Purchase Order');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('7', 'Items Received');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('8', 'Items Lacking');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('9', 'Testing');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('10', 'Replacement Needed');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('11', 'Conforme Pending');
+
+
 	
