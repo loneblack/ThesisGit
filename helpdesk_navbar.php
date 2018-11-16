@@ -29,7 +29,7 @@
                         <li class="sub-menu">
                             <a href="helpdesk_category.php">
                                 <i class="fa fa-list-ol"></i>
-                                <span>Categories</span>
+                                <span>Service Category</span>
                             </a>
                         </li>
                         

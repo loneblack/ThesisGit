@@ -52,8 +52,8 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Category List
-                                            <span class="tools pull-right">
+                                            Service Type
+                                            <span class="tools pull-right" hidden>
                                                 <a class="fa fa-plus" href="helpdesk_add_category.php"></a>
                                             </span>
                                         </header>
