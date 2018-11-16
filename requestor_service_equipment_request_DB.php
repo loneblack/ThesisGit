@@ -1,10 +1,10 @@
 <?php
 
+
     session_start();
     require_once("db/mysql_connect.php");
 
     $header =  $_SESSION['previousPage'];
-
     
     $userID = $_SESSION['userID'];
 
@@ -40,11 +40,19 @@
 
     $count = $_SESSION['count'];
 
+    echo $count;
+
     $id = 0;    
 
     //insertion to request table
     $sql0 = "INSERT INTO `thesis`.`request_borrow` (`officeID`,  `DepartmentID`, `organizationID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `personrepresentativeID`, `personrepresentative`, `dateCreated`, `purpose`, `statusID`, `steps`) VALUES ('{$office}', '{$department}', '{$organization}', '{$buildingID}', '{$FloorAndRoomID }', '{$dateNeeded}', '{$endDate}', '{$employeeID}', '{$idNum}', '{$representative}', '{$date}', '{$purpose}', '1', '1');";//status is set to 1 for pending status
     $result0 = mysqli_query($dbc, $sql0);
+
+    echo "sql: ".$sql0;
+    if (!mysqli_query($dbc,$sql0))
+      {
+      echo("Error description: " . mysqli_error($dbc));
+      }
 
     
     $sql2 = "SELECT * FROM `thesis`.`request_borrow` order by borrowID DESC LIMIT 1;";
@@ -68,7 +76,7 @@
         $sql4 = "INSERT INTO `thesis`.`borrow_details` (`borrowID`, `quantity`, `assetCategoryID`) 
                 VALUES ('{$id}', '{$quantity}', '{$category}');";
         $result4 = mysqli_query($dbc, $sql4); 
-
+        echo "sql4: ".$sql4;
 
    }
     $message = "Form submitted!";
@@ -77,6 +85,6 @@
 
   unset($_SESSION['count']);  
 
-  header('Location: '.$header);
+  //header('Location: '.$header);
 
 ?>
