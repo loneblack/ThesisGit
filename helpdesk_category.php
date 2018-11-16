@@ -68,7 +68,7 @@
                                                     </thead>
                                                     <tbody>
 														<?php
-															require_once('mysql_connect.php');
+															require_once('db/mysql_connect.php');
 															$query="SELECT * FROM thesis.ref_servicetype";
 															$result=mysqli_query($dbc,$query);
 															
