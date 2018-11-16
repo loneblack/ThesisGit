@@ -174,6 +174,10 @@
 							window.location.replace("helpdesk_view_service_request.php");
 						}
 						
+						if(idx == "Repair"){
+							window.location.replace("helpdesk_view_repair_open.php");
+						}
+						
 					};
 				};
 				currentRow.onclick = createClickHandler(currentRow);
