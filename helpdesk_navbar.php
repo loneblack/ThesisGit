@@ -39,7 +39,7 @@
                                 <span>Asset</span>
                             </a>
                             <ul class="sub">
-                                <li><a href=".php">Assets</a></li>
+                                <li><a href="helpdesk_bulk_checkin.php">Checkin</a></li>
                                 <li><a href="helpdesk_bulk_checkout.php">Checkout</a></li>
                             </ul>
                         </li>
