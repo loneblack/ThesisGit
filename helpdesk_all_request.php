@@ -96,7 +96,7 @@
                                                 <tr class="gradeA">
                                                     <td>4</td>
                                                     <td>Need Help Here</td>
-                                                    <td>Service Equipment Request</td>
+                                                    <td>Borrow</td>
                                                     <td>10/9/18</td>
                                                 </tr>
 
@@ -154,23 +154,23 @@
 						var idx = cell.textContent;
 						
 						
-						if(idx == "Hardware Software Request"){
-							window.location.replace("helpdesk_view_hardware_software_request.php");
+						if(idx == "Asset Testing"){
+							window.location.replace("helpdesk_view_assettesting_open.php");
 						}
 						
 						if(idx == "Donation"){
 							window.location.replace("helpdesk_view_donation_request.php");
 						}
                         
-                        if(idx == "Procurement of Service and Material"){
+                        if(idx == "Asset Request"){
                             window.location.replace("helpdesk_view_procurement_service_material_request.php");
 						}
 						
-						if(idx == "Service Equipment Request"){
+						if(idx == "Borrow"){
 							window.location.replace("helpdesk_view_service_equipment_request.php");
 						}
 						
-						if(idx == "Service Request"){
+						if(idx == "Service"){
 							window.location.replace("helpdesk_view_service_request.php");
 						}
 						
