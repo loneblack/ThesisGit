@@ -67,14 +67,10 @@
                         </li>
 						
 						<li class="sub-menu">
-                            <a href="javascript:;">
+                            <a href="it_mark_for_donation.php">
                                 <i class="glyphicon glyphicon-plus"></i>
-                                <span>Donation</span>
+                                <span>Mark Assets For Donation</span>
                             </a>
-                            <ul class="sub">
-                                <li><a href="it_view_donation_list.php">For Donation</a></li>
-                                <li><a href="it_mark_for_donation.php">Mark Assets For Donation</a></li>
-                            </ul>
                         </li>
                         
                         <li class="sub-menu">
