@@ -345,7 +345,7 @@
 	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('36', 'United International Student Organization');
 	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('37', 'AIESEC-DLSU');
 	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('38', 'Outdoor Club');
-	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('39', 'Writers’ Guild');
+	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('39', 'WritersÂ’ Guild');
 	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('40', 'De La Salle University - Environmental Conservation Organization');
 	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('41', 'Gakuen Anime Soshiki');
 	INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('42', 'Graduate Student Council');
@@ -518,7 +518,7 @@
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('1', 'Request for Approval');
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('2', 'IT Create Specs');
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('3', 'Canvasing');
-	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('3', 'Canvasing');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('4', 'Checking Canvas');
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('5', 'Re-Canvas');
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('6', 'Create Purchase Order');
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('7', 'Items Received');
