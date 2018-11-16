@@ -73,6 +73,7 @@
                                                                             <th>Last Updated</th>
                                                                             <th>Location</th>
                                                                             <th>Borrower</th>
+                                                                            <th>Checkout/ Checkin</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -84,6 +85,7 @@
                                                                             <td>12-23-2018 9:00:00 AM</td>
                                                                             <td>Gokongwei 403B</td>
                                                                             <td>Marvin Lao</td>
+                                                                            <td class="text-center"><a href="it_checkin.php"><button class="btn btn-info">Checkin</button></a></td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>12445447327</td>
@@ -93,6 +95,7 @@
                                                                             <td>12-23-2018 9:00:00 AM</td>
                                                                             <td>Default</td>
                                                                             <td></td>
+                                                                            <td class="text-center"><a href="it_checkout.php"><button class="btn btn-warning" disabled>Checkout</button></a></td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>39382707327</td>
@@ -102,6 +105,7 @@
                                                                             <td>12-23-2018 9:00:00 AM</td>
                                                                             <td>Gokongwei 403B</td>
                                                                             <td>Marvin Lao</td>
+                                                                            <td class="text-center"><a href="it_checkin.php"><button class="btn btn-info">Checkin</button></a></td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>12394447327</td>
@@ -111,6 +115,7 @@
                                                                             <td>12-23-2018 9:00:00 AM</td>
                                                                             <td>Default</td>
                                                                             <td></td>
+                                                                            <td class="text-center"><a href="it_checkout.php"><button class="btn btn-warning">Checkout</button></a></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -148,7 +153,7 @@
 						
 					};
 				};
-				currentRow.onclick = createClickHandler(currentRow);
+				currentRow.ondblclick = createClickHandler(currentRow);
 			}
 		}
 		window.onload = addRowHandlers();
