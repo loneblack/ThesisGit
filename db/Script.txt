@@ -1305,7 +1305,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `thesis`.`donation` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`donation` (
-  `donationID` INT NOT NULL,
+  `donationID` INT NOT NULL AUTO_INCREMENT,
   `organizationID` INT NULL,
   `DepartmentID` INT(11) NULL,
   `officeID` INT(11) NULL,
