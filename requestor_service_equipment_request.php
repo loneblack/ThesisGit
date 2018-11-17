@@ -5,6 +5,8 @@ session_start();
   require_once("db/mysql_connect.php");
   $_SESSION['count'] = 0;
   $_SESSION['previousPage'] = "requestor_service_equipment_request.php";
+
+ if(isset($_SESSION['count']))unset($_SESSION['count']);
 ?>
 
 <head>
@@ -90,7 +92,7 @@ session_start();
                                                     <label class="control-label col-lg-3"></label>
                                                     <div class="col-lg-6">
                                                         <select class="form-control" id="office" name = "office">
-                                                            <option>Select Office</option>
+                                                            <option value=''>Select Office</option>
                                                             <?php
 
                                                                             $sql = "SELECT * FROM thesis.offices;";
@@ -113,7 +115,7 @@ session_start();
                                                     <label class="control-label col-lg-3"></label>
                                                     <div class="col-lg-6">
                                                         <select class="form-control" id="department" name = "department">
-                                                            <option>Select Department</option>
+                                                            <option value=''>Select Department</option>
                                                             <?php
 
                                                                             $sql = "SELECT * FROM thesis.department;";
@@ -136,7 +138,7 @@ session_start();
                                                     <label class="control-label col-lg-3"></label>
                                                     <div class="col-lg-6">
                                                         <select class="form-control" id="organization" name = "organization">
-                                                            <option>Select Organizaiton</option>
+                                                            <option value =''>Select Organizaiton</option>
                                                             <?php
 
                                                                             $sql = "SELECT * FROM thesis.organization;";
@@ -152,12 +154,6 @@ session_start();
                                                                             }
                                                             ?>
                                                         </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group " style="display: none">
-                                                    <label for="purpose" class="control-label col-lg-3">School Organization Name</label>
-                                                    <div class="col-lg-6">
-                                                        <input class="form-control" id="orgName" name="orgName" type="text" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
@@ -181,8 +177,8 @@ session_start();
                                                 <div class="form-group ">
                                                     <label for="building" class="control-label col-lg-3">Building</label>
                                                     <div class="col-lg-6">
-                                                        <select name="buildingID" class="form-control m-bot15" onChange="getRooms(this.value)">
-                                                            <option>Select building</option>
+                                                        <select name="buildingID" class="form-control m-bot15" onChange="getRooms(this.value)" required>
+                                                            <option value =''>Select building</option>
                                                             <?php
 
                                                             $sql = "SELECT * FROM thesis.building;";

@@ -70,7 +70,7 @@
 													
 													<?php
 												
-													require_once('mysql_connect.php');
+													require_once('db/mysql_connect.php');
 													$query="SELECT * FROM thesis.supplier";
 													$result=mysqli_query($dbc,$query);
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){

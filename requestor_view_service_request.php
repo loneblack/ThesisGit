@@ -153,7 +153,31 @@ if(true){
                                                     <div class="col-lg-6">
                                                         <input class=" form-control" id="endDate" name="endDate"  disabled value = <?php echo "'".$endDate."'";?>/>
                                                     </div>
-                                                </div>
+                                                </div><br><br>
+
+                                                <!-- BUTAS NG PWET KO-->
+                                                <h4 class="col-lg-3">Assets For Repair</h4><br><br>
+                                                <div class="col-lg-6">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                      <tr>
+                                                        <th>Property Code</th>
+                                                        <th>Brand</th>
+                                                        <th>Model</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      <tr>
+                                                        <td>20-1019939</td>
+                                                        <td>Samsung</td>
+                                                        <td>Galaxy S&</td>
+                                                      </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- END NG BUTAS NG PWET KO -->
+
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-3 col-lg-6">
                                                         <a href="requestor_dashboard.php"><button class="btn btn-default" type="button">Back</button></a>
