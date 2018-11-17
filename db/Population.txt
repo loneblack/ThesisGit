@@ -514,7 +514,7 @@
 	UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '1');
 	UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '2');
 
-	-- steps pa lang ng acquisition
+	-- steps pa lang ng completo na pala
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('1', 'Request for Approval');
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('2', 'IT Create Specs');
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('3', 'Canvasing');
@@ -526,6 +526,12 @@
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('9', 'Testing');
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('10', 'Replacement Needed');
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('11', 'Conforme Pending');
-
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('12', 'Request For IT Approval');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('13', 'Testing Asset');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('14', 'Checking Asset');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('15', 'Request For Additonal Parts');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('16', 'Additional Parts Received');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('17', 'Approval Pending');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('18', 'Testing');
 
 	
