@@ -64,15 +64,15 @@ session_start();
                                     <div class="panel-body">
                                         <div class="form" method="post">
                                             <?php
-                                                    if (isset($_SESSION['submitMessage'])){
+                                                if (isset($_SESSION['submitMessage'])){
 
-                                                        echo "<div class='alert alert-success'>
-                                                                {$_SESSION['submitMessage']}
-                                                              </div>";
+                                                    echo "<div style='text-align:center' class='alert alert-success'>
+                                                            <strong><h3>{$_SESSION['submitMessage']}</h3></strong>
+                                                          </div>";
 
-                                                        unset($_SESSION['submitMessage']);
-                                                    }
-                                                ?>
+                                                    unset($_SESSION['submitMessage']);
+                                                }
+                                            ?>
                                             <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_equipment_request_DB.php">
                                                 <div class="form-group ">
                                                     <label class="control-label col-lg-3">Affiliation</label>
