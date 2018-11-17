@@ -1,4 +1,4 @@
-	-- -----------------------------------------------------
+﻿	-- -----------------------------------------------------
 	-- POPUPLATION
 	-- -----------------------------------------------------
 
@@ -534,4 +534,22 @@
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('17', 'Approval Pending');
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('18', 'Testing');
 
-	
+	-- supplier populate
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('360Networks Inc.', '371-7098', 'networks360@gmail.com', 'Angela Gonzales', '111 Benitez St., New Manila');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('3DLabs Inc. Ltd.', '820-1928', 'lab@yahoo.com', 'Tyra Ku Norva', '2213  Strother Street, Manila');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('A B Electrolux', '205-2098', 'ywemmive-9867@yopmail.com', 'Hana Zobel', '12 Malate St., Manila');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('A R T International Inc.', '09176273561', '4giwrgosgavraki2@omessage.gq', 'Sarah Pagsisihan', '444 Manresa St., Makati');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('Abitibi Consolidated Inc.', '09278188351', 'jvinicios@rover400.tk', 'Johannes Sia', '4233 St. Albert St., Quezon City');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('Bennett Environmental Inc.', '09827361919', 'rmohsin19908p@aaphace9.ml', 'Austin Pimentel', '22 Paranaque');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('BHP Billiton Ltd.', '09920826181', 'wrfiras7@falrxnryfqio.cf', 'Pimentel Pen', '3213C Paranaque');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('CDR-King', '09178328851', 'cdrking@yahoo.com', 'Marvin Lao', '20939 G. Razon, Quezon City');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('Cognicase Inc.', '09957382901', 'dtoutou.dba@uruarurqup5ri9s28ki.tk', 'Fred Purisima', '99 Aguirre St. Quezon City');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('Ducati Motor Holdings S.p.A.', '09829065281', 'gmoh@apcm29te8vgxwrcqq.ml', 'Kay Shivaun', '23 Forneas St., Calamba City');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('Dundee Bancorp Inc.', '0984930928', '6salomib@tbxmakazxsoyltu.tk', 'Mocha Uson', '9890 Diaz St., Zamboanga City');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('Extendicare Inc.', '09829167154', 'gibrahim.irkanc@uzxia.ml', 'Zel Rosilio', '43 Taft Avenue, Pasay');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('Fresh Del Monte Produce Inc.', '0924524323', 'emaryemelf@kulitlumpia3.ml', 'Tantan Mente', '78 Pok Fu Lam St., Hong Kong');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('Glamis Gold Ltd.', '09324241', '4irin@ermail.gq', 'Paula Gaitan', '98 D. Tuazon St. Quezon City');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('Imperial Ginseng Products, Ltd.', '091245435', '4darwde@lew2sv9bgq4a.cf', 'Angela Reyes', '4th Floor SM North Edsa');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('Mer Telemanagement Solutions Ltd.', '0923423411', '9ayoub.axpi@e4t5exw6aauecg.tk', 'Bhea Perez', '1306 RCBC Tower, Makati');
+	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('Nymox Pharmaceutical Corp.', '0912323542', 'vcherie_fm5@gkwerto4wndl3ls.cf', 'Athena Louise Baetiong', '222 Fornez St. Quezon City');
+
