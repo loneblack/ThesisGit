@@ -111,8 +111,8 @@ $result1 = mysqli_query($dbc, $sql1);
                                                     <?php
                                                         if (isset($_SESSION['submitMessage'])){
 
-                                                            echo "<div class='alert alert-success'>
-                                                                    {$_SESSION['submitMessage']}
+                                                            echo "<div style='text-align:center' class='alert alert-success'>
+                                                                    <strong><h3>{$_SESSION['submitMessage']}</h3></strong>
                                                                   </div>";
 
                                                             unset($_SESSION['submitMessage']);
@@ -196,7 +196,7 @@ $result1 = mysqli_query($dbc, $sql1);
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-3 col-lg-6">
                                                         <button class="btn btn-primary" type="submit">Save</button>
-                                                        <button class="btn btn-default" type="button">Cancel</button>
+                                                        <a href="requestor_dashboard.php"><button class="btn btn-default" type="button">Cancel</button></a>
                                                     </div>
                                                 </div>
                                             </form>
