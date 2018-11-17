@@ -3,8 +3,7 @@
 <?php
 session_start();
   require_once("db/mysql_connect.php");
-  $_SESSION['count'] = 0;
-  $_SESSION['previousPage'] = "requestor_service_equipment_request.php";
+
 ?>
 
 <head>
@@ -61,37 +60,30 @@ session_start();
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
-                                            <?php
-                                                    if (isset($_SESSION['submitMessage'])){
-
-                                                        echo "<div class='alert alert-success'>
-                                                                {$_SESSION['submitMessage']}
-                                                              </div>";
-
-                                                        unset($_SESSION['submitMessage']);
-                                                    }
-                                                ?>
                                             <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_equipment_request_DB.php">
                                                 <div class="form-group ">
-                                                    <h5 class="control-label col-lg-3">Office/Department/School Organization</h5>
-                                                </div>
-                                                <div class="form-group " style="display: none">
-                                                    <h5 class="control-label col-lg-3">School Organization Name</h5>
+                                                    <h5 class="control-label col-lg-3">Office/ Department/ School Organization</h5>
+                                                    <h5 class="control-label col-lg-2">Office/ Department/ School Organization</h5>
                                                 </div>
                                                 <div class="form-group ">
                                                     <h5 class="control-label col-lg-3">Date & Time Needed</h5>
+                                                    <h5 class="control-label col-lg-2">Date & Time Needed</h5>
                                                 </div>
                                                 <div class="form-group ">
                                                     <h5 class="control-label col-lg-3">End Date & Time</h5>
+                                                    <h5 class="control-label col-lg-2">End Date & Time</h5>
                                                 </div>
                                                 <div class="form-group ">
                                                     <h5 class="control-label col-lg-3">Purpose</h5>
+                                                    <h5 class="control-label col-lg-2">Purpose</h5>
                                                 </div>
                                                 <div class="form-group ">
                                                     <h5 class="control-label col-lg-3">Building</h5>
+                                                    <h5 class="control-label col-lg-2">Building</h5>
                                                 </div>
                                                 <div class="form-group">
                                                     <h5 class="control-label col-lg-3">Floor & Room</h5>
+                                                    <h5 class="control-label col-lg-2">Floor & Room</h5>
                                                 </div>
                                                 <hr>
                                                 <div class="container-fluid">

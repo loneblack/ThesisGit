@@ -6,7 +6,6 @@ session_start();
   $_SESSION['count'] = 0;
   $_SESSION['previousPage'] = "requestor_service_equipment_request.php";
 
- if(isset($_SESSION['count']))unset($_SESSION['count']);
 ?>
 
 <head>
@@ -300,14 +299,11 @@ session_start();
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
     <script type="text/javascript">
-
         var count = 0; 
         function removeRow(o) {
             var p = o.parentNode.parentNode;
             p.parentNode.removeChild(p);
         }
-
-
         function addTest(cavasItemID) {
             var row_index = 0;
             var canvasItemID = cavasItemID;
@@ -327,12 +323,13 @@ session_start();
 
 
         }
-
         var appendTableRow = function(rowCount, canvasItemID) {
             var cnt = 0;
             count++;
             var tr = "<tr>" +
-                "<td><select class='form-control' name='category"+count+"' id='category"+count+"' onChange='getMax(this.value)' ><option>Select Category</option>"+
+                "<td><select class='form-control' name='category"+count+"' id='category"+count+"' onChange='getMax(this.value)' >"+
+
+                "<option>Select Category</option>"+
 
                 '<?php
 
@@ -351,7 +348,7 @@ session_start();
                     $_SESSION['count']++;
 
 
-                ?>'+
+                ?>'
 
 
                 +"</select></td>" +
@@ -360,8 +357,26 @@ session_start();
                 "</tr>";
             $('#tableTest tbody tr').eq(rowCount).after(tr);
         }
+         function checkvalue(val){
+            if(val==="1"){
+                document.getElementById('office').style.display='block';
+                document.getElementById('department').style.display='none';
+                document.getElementById('org').style.display='none';}
+            if(val==="2"){
+                document.getElementById('office').style.display='none';
+                document.getElementById('department').style.display='block';
+                document.getElementById('org').style.display='none';}
+            if(val==="3"){
+                document.getElementById('office').style.display='none';
+                document.getElementById('department').style.display='none';
+                document.getElementById('org').style.display='block';}
+            if(val==="0"){
+                document.getElementById('office').style.display='none';
+                document.getElementById('department').style.display='none';
+                document.getElementById('org').style.display='none';}
+        }
 
-        function getRooms(val){
+           function getRooms(val){
             $.ajax({
             type:"POST",
             url:"requestor_getRooms.php",
@@ -372,7 +387,6 @@ session_start();
                 }
             });
         }
-
         function getMax(val){
             $.ajax({
             type:"POST",
@@ -387,24 +401,6 @@ session_start();
             });
         }
         
-        function checkvalue(val){
-			if(val==="1"){
-			    document.getElementById('office').style.display='block';
-                document.getElementById('department').style.display='none';
-                document.getElementById('org').style.display='none';}
-            if(val==="2"){
-			    document.getElementById('office').style.display='none';
-                document.getElementById('department').style.display='block';
-                document.getElementById('org').style.display='none';}
-			if(val==="3"){
-			    document.getElementById('office').style.display='none';
-                document.getElementById('department').style.display='none';
-                document.getElementById('org').style.display='block';}
-            if(val==="0"){
-			    document.getElementById('office').style.display='none';
-                document.getElementById('department').style.display='none';
-                document.getElementById('org').style.display='none';}
-		}
     </script>
 
 </body>
