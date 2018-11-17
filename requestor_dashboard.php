@@ -70,6 +70,7 @@ require_once("db/mysql_connect.php");
                                                     <th>Date Made</th>
                                                     <th>Date Needed</th>
                                                     <th>Status</th>
+                                                    <th>Description</th>
                                                 </tr>
                                             </thead>
 
@@ -107,7 +108,7 @@ require_once("db/mysql_connect.php");
                                                             echo "<td><span class='label label-danger'>{$row['statusName']}</span></td>";
                                                         }
 
-
+                                                        echo "<td>{$row['step']}</td>";
                                                         echo "</tr>";
 
                                                           $count++;
@@ -144,7 +145,7 @@ require_once("db/mysql_connect.php");
                                                             echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
                                                         }
 
-
+                                                        echo "<td>{$row['steps']}</td>";
                                                         echo "</tr>";
 
                                                           $count++;
@@ -190,6 +191,7 @@ require_once("db/mysql_connect.php");
                                                         }
 
 
+                                                        echo "<td>{$row['steps']}</td>";
                                                         echo "</tr>";
 
                                                           $count++;
@@ -207,6 +209,7 @@ require_once("db/mysql_connect.php");
                                                     <th>Date Made</th>
                                                     <th>Date Needed</th>
                                                     <th>Status</th>
+                                                    <th>Description</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
