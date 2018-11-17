@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 	$flag=0;
-	require_once('mysql_connect.php');
+	require_once('db/mysql_connect.php');
 	
 	if (isset($_POST['submit'])){
 		$message=NULL;
