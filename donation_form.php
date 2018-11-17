@@ -1,6 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+session_start();
+require_once("db/mysql_connect.php");
+  
+if(isset($_POST['save'])){
+	$schoolorg=$_POST['schoolorg'];
+	$contactPerson=$_POST['contactPerson'];
+	$contactNo=$_POST['contactNo'];
+	$dateNeeded=$_POST['dateNeeded'];
+    $purpose = $_POST['purpose'];
+    $assetCategory=$_POST['assetCategory'];
+	$quantity=$_POST['qty'];
+    
+    //INSERT TO DONATION TABLE
+    $queryDon = "INSERT INTO thesis.donation(`schoolName`, `dateNeed`, `purpose`) VALUES ('{$schoolorg}', '{$dateNeeded}', '{$purpose}');";
+    $resultDon = mysqli_query($dbc, $queryDon);
+	
+	//GET DONATION ID
+    $queryDonID = "SELECT * FROM thesis.donation order by donationID desc limit 1;";
+    $resultDonID = mysqli_query($dbc, $queryDonID);
+    $rowDonID = mysqli_fetch_array($resultDonID, MYSQLI_ASSOC);
+
+    foreach (array_combine($assetCategory, $quantity) as $assetCat => $qty)
+    {
+        //INSERT TO DONATIONDETAILS TABLE
+        $queryDonDet = "INSERT INTO `thesis`.`donationdetails` (`donationID`, `assetCategoryID`, `quantity`) VALUES ('{$rowDonID['donationID']}', '{$assetCat}', '{$qty}');";
+        $resultDonDet = mysqli_query($dbc, $queryDonDet);
+        
+    }
+	echo "<script>alert('Success');</script>";
+}
+?>    
+    
+    
 <head>
     <meta charset="utf-8">
 
@@ -9,7 +43,7 @@
     <meta name="author" content="ThemeBucket">
     <link rel="shortcut icon" href="images/favicon.png">
 
-    <title>Horizontal menu page</title>
+    <title>Request For Donation Outsider</title>
 
     <!--Core CSS -->
     <link href="bs3/css/bootstrap.min.css" rel="stylesheet">
@@ -44,28 +78,63 @@
                         <form id="contact" action="" method="post">
                             <h3>Request For Donation</h3>
                             <fieldset>
-                                <input placeholder="Office/Department/School Organization" type="text" tabindex="1" required autofocus>
+                                <input id="schoolorg" name="schoolorg" class="form-control" placeholder="School" type="text" required>
                             </fieldset>
                             <fieldset>
-                                <input placeholder="Contact Person" type="text" tabindex="1" required autofocus>
+                                <input id="contactPerson" name="contactPerson" class="form-control" placeholder="Contact Person" type="text" required>
                             </fieldset>
                             <fieldset>
-                                <input placeholder="Contact No." type="text" tabindex="2" required>
+                                <input id="contactNo" name="contactNo" class="form-control" placeholder="Contact No." type="text" required>
                             </fieldset>
                             <fieldset>
-                                <input placeholder="Date and Time Needed" type="tel" tabindex="3" required>
+                                <input id="dateNeeded" name="dateNeeded" class="form-control" type="datetime-local" placeholder="Date and Time Needed" required />
                             </fieldset>
                             <fieldset>
-                                <input placeholder="Purpose" type="url" tabindex="4" required>
+                                <input id="purpose" name="purpose" class="form-control" placeholder="Purpose" type="text" required>
                             </fieldset>
                             <fieldset>
-                                <textarea placeholder="Input item and quantity for donation" tabindex="5" required></textarea>
+                                <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest" align="center" cellpadding="0" cellspacing="0" border="1" required>
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:500px">Equipment</th>
+                                                                <th style="width:150px">Quantity</th>
+                                                                <th></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+														<tr>
+                                                            <td>
+                                                                <select class="form-control" id="txtName" name="assetCategory[]" required>
+                                                                    <option value="">Select</option>
+																	<?php
+																		
+																		$sql = "SELECT * FROM thesis.ref_assetcategory;";
+
+                                                                        $result = mysqli_query($dbc, $sql);
+
+                                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                        {   
+                                                                            echo "<option value ={$row['assetCategoryID']}>";
+                                                                            echo "{$row['name']}</option>";
+                                                                        }
+																	?>
+                                                                </select>
+                                                            </td>
+                                                            <td><input class="form-control" type="number" min="1" id="txtCountry" name="qty[]" required /></td>
+                                                            <td style="text-align:center"><input class="btn btn-primary" type="button" onclick="Add()" value="Add" /></td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <tfoot>  
+                                                        </tfoot>
+                                                    </table>
                             </fieldset>
                             <fieldset>
-                                <button class="btn btn-success">Submit</button>
-                                <button class="btn btn-danger" onclick="window.location.href='login.php'">Back</button>
+                                <button id="save" name="save" class="btn btn-success" type="submit">Submit</button>
                             </fieldset>
-                            
+                            <fieldset>
+                                <button class="btn btn-danger" type="submit" onclick="window.location.href='login.php'">Back</button>
+                            </fieldset>
+
                         </form>
                     </div>
 
@@ -75,7 +144,83 @@
     </section>
 
     <!-- Placed js at the end of the document so the pages load faster -->
+    
+    <script type="text/javascript">
+        window.onload = function() {
+            //Build an array containing Customer records.
+            var customers = new Array();
 
+
+            //Add the data rows.
+            for (var i = 0; i < customers.length; i++) {
+                AddRow(customers[i][0], customers[i][1]);
+            }
+        };
+		
+		function removeRow(o) {
+            var p = o.parentNode.parentNode;
+            p.parentNode.removeChild(p);
+        }
+		
+		function Add() {
+            var row_index = 0;
+			var isRenderd = false;
+			$("td").click(function() {
+                row_index = $(this).parent().index();
+            });
+            var delayInMilliseconds = 300; //1 second
+			setTimeout(function() {
+                appendTableRow(row_index);
+            }, delayInMilliseconds);
+           
+		};
+		
+		 var appendTableRow = function(rowCount) {
+            var cnt = 0;
+            var tr = "<tr>" +
+                     "<td><select class='form-control' id='txtName' name='assetCategory[]' required>" +
+                     "<option value=\"\">Select</option>" +
+					 '<?php
+					  $sql = "SELECT * FROM thesis.ref_assetcategory;";
+                      $result = mysqli_query($dbc, $sql);
+					  while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                      {   
+                        echo "<option value ={$row['assetCategoryID']}>";
+                        echo "{$row['name']}</option>";
+                      }
+					 ?>' 
+                     + "</select></td>" 
+                     + "<td><input class='form-control' type='number' min='1' id='txtCountry' name='qty[]' required /></td>" 
+					 + "<td>" 
+					 + "<button id='remove' class='btn btn-danger' type='button' onClick='removeRow(this)'>Remove</button>" 
+                     + "</td>" 
+                     + "</tr>";
+            $('#tableTest tbody tr').eq(rowCount).after(tr);
+							
+        }
+
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = button.parentNode.parentNode;
+            var name = row.getElementsByTagName("TD")[0].innerHTML;
+            if (confirm("Remove: " + name)) {
+
+                //Get the reference of the Table.
+                var table = document.getElementById("tblCustomers");
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row.rowIndex);
+            }
+        };
+
+
+        
+    </script>
+
+    
+    
+    
     <!--Core js-->
     <script src="js/jquery.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
