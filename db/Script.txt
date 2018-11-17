@@ -1312,6 +1312,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`donation` (
   `contactNumber` VARCHAR(45) NULL,
   `dateNeed` DATETIME NULL,
   `purpose` LONGTEXT NULL,
+  `schoolName` LONGTEXT NULL,
+  `contactPerson` MEDIUMTEXT NULL,
   PRIMARY KEY (`donationID`),
   INDEX `fk_donation_organization1_idx` (`organizationID` ASC),
   INDEX `fk_donation_department1_idx` (`DepartmentID` ASC),

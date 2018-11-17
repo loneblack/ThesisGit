@@ -31,18 +31,15 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         $steps = $row['steps'];
 
     }
+$assets = array();
+if($serviceTypeID=='27'){
 
-$query =  " SELECT details, dateNeed, endDate, dateReceived, s.serviceType AS 'serviceTypeID', t.serviceType, statusID, description AS 'status', others, steps
-            FROM thesis.service s
-                JOIN ref_servicetype t
-            ON s.serviceType = t.id
-                JOIN ref_status a
-            ON s.status = a.statusID
-                WHERE s.id = {$id};";
-$result = mysqli_query($dbc, $query);
+    $query2 =  "SELECT * FROM thesis.servicedetails WHERE serviceID = {$id};";
+    $result2 = mysqli_query($dbc, $query2);
 
-if(true){
-
+    while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
+        array_push($assets, $row['asset']);
+    }
 }
 ?>
 
@@ -155,6 +152,7 @@ if(true){
                                                     </div>
                                                 </div><br><br>
 
+                                                <?php if($serviceTypeID=='27'){ ?>
                                                 <!-- BUTAS NG PWET KO-->
                                                 <h4 class="col-lg-3">Assets For Repair</h4><br><br>
                                                 <div class="col-lg-6">
@@ -162,21 +160,51 @@ if(true){
                                                     <thead>
                                                       <tr>
                                                         <th>Property Code</th>
+                                                        <th>Category</th>
                                                         <th>Brand</th>
                                                         <th>Model</th>
                                                       </tr>
                                                     </thead>
                                                     <tbody>
-                                                      <tr>
-                                                        <td>20-1019939</td>
-                                                        <td>Samsung</td>
-                                                        <td>Galaxy S&</td>
-                                                      </tr>
+                                                        <?php
+                                                        
+                                                        for ($i=0; $i < count($assets); $i++) { 
+                                                            
+
+                                                            $query3 =  "SELECT a.assetID, propertyCode, b.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description
+                                                                    FROM asset a 
+                                                                        JOIN assetModel m
+                                                                    ON assetModel = assetModelID
+                                                                        JOIN ref_brand b
+                                                                    ON brand = brandID
+                                                                        JOIN ref_assetcategory c
+                                                                    ON assetCategory = assetCategoryID
+                                                                        JOIN ref_assetstatus s
+                                                                    ON a.assetStatus = s.id
+                                                                        WHERE a.assetID = {$assets[$i]};";
+
+                                                            $result3 = mysqli_query($dbc, $query3);  
+
+
+
+                                                            while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
+
+                                                               echo "<tr>
+                                                                <td>{$row['propertyCode']}</td>
+                                                                <td>{$row['category']}</td>
+                                                                <td>{$row['brand']}</td>
+                                                                <td>{$row['description']}</td>
+                                                                </tr>";
+                                                            }  
+
+                                                        }
+                                                        ?>
                                                     </tbody>
                                                 </table>
                                             </div>
-
                                             <!-- END NG BUTAS NG PWET KO -->
+                                        <?php } ?>
+
 
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-3 col-lg-6">
