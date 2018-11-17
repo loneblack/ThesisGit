@@ -131,8 +131,8 @@
 		
 		
 	}
-
-?>
+ 
+?> -->
 <html lang="en">
 
 <head>
@@ -193,7 +193,7 @@
 						 unset($_SESSION['submitMessage']);
 					}
 				?>
-				<form class="cmxform form-horizontal " id="signupForm" method="post" action="">
+				<form class="cmxform form-horizontal " id="signupForm" method="post" action=""> 
                 <div class="row">
                     <div class="col-sm-12">
 						
@@ -351,10 +351,7 @@
 																		echo "<option value='{$row1['ticketID']}'>{$row1['status']}</option>";
 																	}
 																}
-																
-															
-															
-															
+
 															
 															?>
 														
@@ -422,7 +419,7 @@
                         </div>
                     </div>
                 </div>
-				</form>
+				 </form>
                 <!-- page end-->
             </section>
         </section>
@@ -508,8 +505,14 @@
 		});
 		
 		$('#save').click(function () {
-			
-			if($('.comments').val() == '' && !$('.comments').prop('disabled')){
+			var isExist=false;
+			for(var i=0;i<document.getElementsByClassName("comments").length;i++){
+				if(document.getElementsByClassName("comments")[i].value == '' && !document.getElementsByClassName("comments")[i].disabled){
+					isExist=true;
+				}
+			}
+			alert(isExist);
+			if(isExist){
 				document.getElementById("priority").required = true;
 				document.getElementById("escalate").required = true;
 			}
