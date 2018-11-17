@@ -19,34 +19,115 @@
 	$row7 = mysqli_fetch_array($result7, MYSQLI_ASSOC);
 	
 	if(isset($_POST['save'])){
+		$message=null;
 		//For functioning assets
 		if(!empty($_POST['funcAsset'])){
 			$funcAsset=$_POST['funcAsset'];
 			
-			//if(sizeof($funcAsset)==$row7['numAssets']){
-				
-			//}
-			
 			foreach($funcAsset as $value){
-				
 				$query5="UPDATE `thesis`.`assettesting_details` SET `check`='1' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$value}'";
 				$result5=mysqli_query($dbc,$query5);
 			}
 		}
 		
-		//For defected assets
+		
 		if(!empty($_POST['disapprovedAsset'])){
+			
+			//For defected assets
 			$disapprovedAsset=$_POST['disapprovedAsset'];
 			$comments=$_POST['comments'];
-			foreach (array_combine($disapprovedAsset, $comments) as $value1 => $value2){
 			
-				$query6="UPDATE `thesis`.`assettesting_details` SET `check`='0',`comment`='{$value2}' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$value1}'";
-				$result6=mysqli_query($dbc,$query6);
+			
+			//CHECK IF THERE'S AN EMPTY COMMENT FOR ESCALATION
+			$isThereEmp=false;
+			foreach($comments as $isThere){
+				if(empty($isThere)){
+					$isThereEmp=true;
+				}
+			}
+			
+			//Escalate Code
+			if($isThereEmp){
+				if(isset($_POST['priority'])&&isset($_POST['escalate'])){
+					//GETTESTINGID
+					$queryTestID = "SELECT * FROM thesis.ticket where ticketID='{$ticketID}'";
+					$resultTestID = mysqli_query($dbc, $queryTestID);
+					$rowTestID = mysqli_fetch_array($resultTestID, MYSQLI_ASSOC);
+					
+					//GET REQUEST DATA
+					$queryReqDat="SELECT ad.requestID,r.UserID,r.FloorAndRoomID FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
+																				           join assetdocument ad on a.assetID=ad.assetID
+																						   join request r on ad.requestID=r.requestID 
+																						   where atd.assettesting_testingID='{$rowTestID['testingID']}' limit 1";
+					$resultReqDat=mysqli_query($dbc,$queryReqDat);
+					$rowReqDat=mysqli_fetch_array($resultReqDat,MYSQLI_ASSOC);
+					
+					//CREATE ASSETTESTING
+					$queryAssTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`) VALUES ('1', '{$rowReqDat['UserID']}', '{$rowReqDat['FloorAndRoomID']}', '25');";
+					$resultAssTest=mysqli_query($dbc,$queryAssTest);
+					
+					//GET LATEST ASSET TEST
+					$queryLatAss="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
+					$resultLatAss=mysqli_query($dbc,$queryLatAss);
+					$rowLatAss=mysqli_fetch_array($resultLatAss,MYSQLI_ASSOC);
+					
+					//INSERT TO ASSETTESTDETAILS
+					foreach(array_combine($disapprovedAsset, $comments) as $escAsset => $com){
+						if(empty($com)){
+							$queryAtd="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowLatAss['testingID']}', '{$escAsset}')";
+							$resultAtd=mysqli_query($dbc,$queryAtd);
+							
+							//DELETE ASSET TO ASSET TESTING
+							$queryDelAss="DELETE FROM `thesis`.`assettesting_details` WHERE `assettesting_testingID`='{$rowTestID['testingID']}' and `asset_assetID`='{$escAsset}'";
+							$resultDelAss=mysqli_query($dbc,$queryDelAss);
+						}
+					}
+					
+					//CREATE TICKET FOR ESCALATION
+					$queryEsc="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('5', '{$_POST['escalate']}', '{$_SESSION['userID']}', now(), now(), '{$_POST['dueDate']}', '{$_POST['priority']}', '{$rowLatAss['testingID']}', '25')";
+					$resultEsc=mysqli_query($dbc,$queryEsc);
+					
+					//GET LATEST TICKET
+					$queryLatTic="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
+					$resultLatTic=mysqli_query($dbc,$queryLatTic);
+					$rowLatTic=mysqli_fetch_array($resultLatTic,MYSQLI_ASSOC);
+					
+					//INSERT TO TICKETEDASSET
+					foreach(array_combine($disapprovedAsset, $comments) as $escAsset => $com){
+						if(empty($com)){
+							$queryTicAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTic['ticketID']}', '{$escAsset}');";
+							$resultTicAss=mysqli_query($dbc,$queryTicAss);
+							
+							//DELETE ASSET TO TICKETEDASSET
+							$queryDelTic="DELETE FROM `thesis`.`ticketedasset` WHERE `ticketID`='{$ticketID}' and `assetID`='{$escAsset}'";
+							$resultDelTic=mysqli_query($dbc,$queryDelTic);
+						}
+					}
+				}
+						
+			}
+				
+			//For defected asset code
+			foreach (array_combine($disapprovedAsset, $comments) as $value1 => $value2){
+				if(!empty($value2)){
+					$query6="UPDATE `thesis`.`assettesting_details` SET `check`='0',`comment`='{$value2}' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$value1}'";
+					$result6=mysqli_query($dbc,$query6);
+				}
 			}
 		}
-
-		$query8="UPDATE `thesis`.`assettesting` SET `statusID`='3' WHERE `testingID`='{$row7['testingID']}'";
+		
+		//UPDATE ASSET TESTING STATUS
+		$query8="UPDATE `thesis`.`assettesting` SET `statusID`='2' WHERE `testingID`='{$row7['testingID']}'";
 		$result8=mysqli_query($dbc,$query8);
+		
+		//UPDATE TICKET STATUS TO CLOSED
+		$queryTicStat="UPDATE `thesis`.`ticket` SET `status`='7', `dateClosed`=now() WHERE `ticketID`='{$ticketID}'";
+		$resultTicStat=mysqli_query($dbc,$queryTicStat);
+		
+		if(!isset($message)){
+			$message = "Form submitted!";
+			$_SESSION['submitMessage'] = $message; 
+		}
 		
 		
 	}
@@ -97,7 +178,21 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				<?php
+                    if (isset($_SESSION['submitMessage']) && $_SESSION['submitMessage']=="Form submitted!"){
 
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+					elseif(isset($_SESSION['submitMessage'])){
+						 echo "<div class='alert alert-danger'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+						 unset($_SESSION['submitMessage']);
+					}
+				?>
 				<form class="cmxform form-horizontal " id="signupForm" method="post" action="">
                 <div class="row">
                     <div class="col-sm-12">
@@ -123,7 +218,8 @@
 
 										<section>
 											<p>Check those which are functioning as intended.
-											If any damage or defect is found, please specify it in the comments.</p>
+											If any damage or defect is found, please specify it in the comments.
+											Leave both checkbox and comment blank for escalation.</p>
 											<br>
 										</section>
 										
@@ -155,7 +251,7 @@
 															echo "<tr><td style='text-align:center'><input type='checkbox' name='funcAsset[]' class='form-check-input myCheck' value='{$row['assetID']}'></td>
 																<td style='text-align:center'>{$row['brand']}</td>
 																<td style='text-align:center'>{$row['model']}</td>
-																<td><input style='text' id='{$row['assetID']}' name='comments[]' class='form-control' required></td>
+																<td><input style='text' id='{$row['assetID']}' name='comments[]' class='form-control comments'></td>
 																<input type='hidden' id='{$idDisapp}' name='disapprovedAsset[]' value='{$row['assetID']}'>
 																</tr>";
 														}
@@ -194,7 +290,7 @@
 											
 
                                             <div>
-												<button onclick="return confirm('Confirm checklist?')" type="submit" name="save" class="btn btn-success" data-dismiss="modal">Save</button> 
+												<button onclick="return confirm('Confirm checklist?')" type="submit" name="save" id="save" class="btn btn-success" data-dismiss="modal">Save</button> 
 												<!-- <button onclick="return confirm('Confirm checklist?')" type="button" class="btn btn-success" data-dismiss="modal">Save</button> -->
                                                 <a href="engineer_all_ticket.php"><button type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
                                             </div>
@@ -275,8 +371,8 @@
 												<div class="form-group ">
 													<label for="priority" class="control-label col-lg-4">Priority</label>
 													<div class="col-lg-8">
-														<select class="form-control m-bot15" name="priority" value="<?php if (isset($_POST['priority']) && !$flag) echo $_POST['priority']; ?>" >
-															<option selected value="">Select Priority</option>
+														<select class="form-control m-bot15" id="priority" name="priority" value="<?php if (isset($_POST['priority']) && !$flag) echo $_POST['priority']; ?>" >
+															<option value="">Select Priority</option>
 															<option value="Low">Low</option>
 															<option value="Medium</">Medium</option>
 															<option value="High">High</option>
@@ -288,8 +384,8 @@
 												<div class="form-group ">
 													<label for="assign" class="control-label col-lg-4">Escalate To</label>
 													<div class="col-lg-8">
-														<select class="form-control m-bot15" name="escalate" value="<?php if (isset($_POST['escalate']) && !$flag) echo $_POST['escalate']; ?>" >
-															<option selected value="">Select Engineer</option>
+														<select class="form-control m-bot15" id="escalate" name="escalate" value="<?php if (isset($_POST['escalate']) && !$flag) echo $_POST['escalate']; ?>" >
+															<option value="">Select Engineer</option>
 															<?php
 																$query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer' and u.UserID<>'{$userid}'";
 																$result3=mysqli_query($dbc,$query3);
@@ -396,20 +492,37 @@
 			if($(this).is(':checked')) {
 			// Checkbox is checked..
 			
-				document.getElementById(this.value).required = false;
+				//document.getElementById(this.value).required = false;
 				document.getElementById(this.value).disabled = true;
 				document.getElementById(disapp).disabled=true;
 				
 			} else {
 				// Checkbox is not checked..
 				
-				document.getElementById(this.value).required = true;
+				//document.getElementById(this.value).required = true;
 				document.getElementById(this.value).disabled = false;
 				document.getElementById(disapp).disabled=false;
 				
 				
 			}
 		});
+		
+		$('#save').click(function () {
+			
+			if($('.comments').val() == '' && !$('.comments').prop('disabled')){
+				document.getElementById("priority").required = true;
+				document.getElementById("escalate").required = true;
+			}
+			else{
+				document.getElementById("priority").required = false;
+				document.getElementById("escalate").required = false;
+			}
+		});
+		
+		//$('select').on('change', function() {
+		  //alert( this.value );
+		//});
+		
     </script>
 	
 	

@@ -11,6 +11,11 @@
 	
 	
 	if (isset($_POST['submit'])){
+		//GET REQUEST DATA
+		$queryaa="SELECT p.requestID,r.UserID,r.FloorAndRoomID FROM thesis.procurement p join request r on p.requestID=r.requestID where p.procurementID='{$procID}'";
+		$resultaa=mysqli_query($dbc,$queryaa);
+		$rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
+		
 		$isEmpty=true;
 		for($i=0;$i<sizeof($_POST['comment']);$i++){
 			if(!empty($_POST['comment'][$i])){
@@ -22,12 +27,6 @@
 			$querya="UPDATE `thesis`.`procurement` SET `status`='3' WHERE `procurementID`='{$procID}'";
 			$resulta=mysqli_query($dbc,$querya);
 			
-			
-			//GET REQUEST DATA
-			$queryaa="SELECT p.requestID,r.UserID,r.FloorAndRoomID FROM thesis.procurement p join request r on p.requestID=r.requestID where p.procurementID='{$procID}'";
-			$resultaa=mysqli_query($dbc,$queryaa);
-			$rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
-			
 			//INSERT ASSET TESTING
 			
 			$queryt="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`) VALUES ('1', '{$rowaa['UserID']}', '{$rowaa['FloorAndRoomID']}', '25');";
@@ -36,7 +35,7 @@
 			//$queryt="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`) VALUES ('1', '{$_SESSION['userID']}', now(), now(), now() + INTERVAL 1 week, 'High', '25')";
 			//$resultt=mysqli_query($dbc,$queryt);
 			
-			//GET LATEST TICKET
+			//GET LATEST ASSET TEST
 			
 			$query0="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
 			$result0=mysqli_query($dbc,$query0);
@@ -98,14 +97,27 @@
 				list($comment, $assetCategoryIDArr, $assetModelIDArr) = $value;
 				$queryb="UPDATE `thesis`.`procurementdetails` SET `comment`='{$comment}' WHERE `assetCategoryID`='{$assetCategoryIDArr}' and `procurementID`='{$procID}' and `assetModelID`='{$assetModelIDArr}'";
 				$resultb=mysqli_query($dbc,$queryb);
-				
 			}
-			
-			
 			
 			//echo "<script>alert('not empty');</script>";
 		}
 		
+		//Check if all the procurement order is complete
+		
+		$queryStep="SELECT count(*) as `isComplete` FROM thesis.procurement where requestID='{$rowaa['requestID']}' and status!=3";
+		$resultStep=mysqli_query($dbc,$queryStep);
+		$rowStep=mysqli_fetch_array($resultStep,MYSQLI_ASSOC);
+		
+		if($rowStep['isComplete']==0){
+			$queryUpd="UPDATE `thesis`.`request` SET `step`='9' WHERE `requestID`='{$rowaa['requestID']}'";
+			$resultUpd=mysqli_query($dbc,$queryUpd);
+		}
+		else{
+			$queryUpd="UPDATE `thesis`.`request` SET `step`='8' WHERE `requestID`='{$rowaa['requestID']}'";
+			$resultUpd=mysqli_query($dbc,$queryUpd);
+		}
+		$message = "Form Submitted!";
+		$_SESSION['submitMessage'] = $message;
 	}
 												
 ?>
@@ -154,7 +166,15 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				<?php
+                    if (isset($_SESSION['submitMessage'])){
 
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
@@ -186,7 +206,21 @@
 													<div style="padding-left:15px">
 														<strong>Status:</strong>
 														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-														<label class="btn btn-success"><?php echo $rowz['statusDesc']; ?></label>
+														<?php
+															if($rowz['statusDesc']=="Completed"){
+																echo "<label class='btn btn-success'>{$rowz['statusDesc']}</label>";
+															
+															}
+															elseif($rowz['statusDesc']=="Incomplete"){
+																echo "<label class='btn btn-danger'>{$rowz['statusDesc']}</label>";
+															}
+															else{
+																echo "<label class='btn btn-warning'>{$rowz['statusDesc']}</label>";
+															}
+														
+														
+														?>
+														
 														
 													</div>
                                                 </div>
@@ -233,7 +267,7 @@
 															<td>
 																<div class='form-group'>
 																	<div class='col-sm-12'>
-																		<input type='number' min='0' class='form-control' name='comment[]'>
+																		<input type='number' min='0' max='{$row['quantity']}' class='form-control' name='comment[]'>
 																	</div>
 																</div>
 															</td>

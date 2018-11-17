@@ -19,7 +19,6 @@
 		//$counte = sizeof($canvasItemIDArray);
 		
 		
-		echo "<script>alert('supplierArray:{$supplierArray[0]} unitPriceArray:{$unitPriceArray[0]} canvasItemIDArray{$canvasItemIDArray[0]}');</script>";
 		
 		$mi = new MultipleIterator();
 		$mi->attachIterator(new ArrayIterator($supplierArray));
@@ -38,11 +37,21 @@
 		
 		$result = array_unique($canvasItemIDArray2);
 		$count2 = sizeof($result);
-		
-		for ($j=0; $j < $count2; $j++){
-			$queryb="DELETE FROM `thesis`.`canvasitemdetails` WHERE `cavasItemID`='{$result[$j]}' and status='11'";
+			
+		foreach($result as $canvasItem)	{
+			$queryb="DELETE FROM `thesis`.`canvasitemdetails` WHERE `cavasItemID`='{$canvasItem}' and status='6'";
 			$resultb=mysqli_query($dbc,$queryb);
 		}
+		
+		$queryReqID="SELECT requestID FROM thesis.canvas where canvasID='{$canvasID}'";
+		$resultReqID=mysqli_query($dbc,$queryReqID);
+		$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
+		
+		$queryd="UPDATE `thesis`.`request` SET `step`='4' WHERE `requestID`='{$rowReqID['requestID']}'";
+		$resultd=mysqli_query($dbc,$queryd);
+		
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message;
 	}
 ?>
 <html lang="en">
@@ -90,8 +99,15 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				<?php
+                    if (isset($_SESSION['submitMessage'])){
 
-
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
                 <div class="row">
                     <div class="col-sm-12">
 

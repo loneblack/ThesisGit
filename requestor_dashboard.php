@@ -77,10 +77,13 @@ require_once("db/mysql_connect.php");
                                             <tbody>
 
 
+                                                
                                                  <?php
                                                     $count = 1;
 
-                                                    $query = "SELECT *, s.description as'statusName' FROM thesis.request r JOIN ref_status s ON r.status = s.statusID WHERE UserID = {$userID};";
+                                                    $query = "SELECT *, s.description as `statusName`,rs.name as `step` FROM thesis.request r JOIN ref_status s ON r.status = s.statusID
+																																			  join ref_steps rs on r.step=rs.id
+																																			  WHERE UserID = {$userID};";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -107,9 +110,7 @@ require_once("db/mysql_connect.php");
                                                         if($row['statusID'] == '4'){//disapproved
                                                             echo "<td><span class='label label-danger'>{$row['statusName']}</span></td>";
                                                         }
-
-                                                        echo "<td>{$row['step']}</td>";
-                                                        echo "</tr>";
+														echo "<td>{$row['step']}</td>";
 
                                                           $count++;
                                                     }
@@ -239,14 +240,22 @@ require_once("db/mysql_connect.php");
             var createClickHandler = function(row) {
                 return function() {
 
-                    var cell1 = row.getElementsByTagName("td")[0];
+                   var cell1 = row.getElementsByTagName("td")[0];
                     var id = cell1.textContent;
 
                     var cell = row.getElementsByTagName("td")[2];
                     var requestType = cell.textContent;
-                                        
+                    
+					var cell2 = row.getElementsByTagName("td")[7];
+                    var step = cell2.textContent;
+					
                     if(requestType == 'Asset Request'){
-                        window.location.replace("requestor_view_request_for_procurement_service_material.php?id=" + id);
+						if(step == "Conforme Pending"){
+							window.location.replace("requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType);
+						}
+						else{
+							window.location.replace("requestor_view_request_for_procurement_service_material.php?id=" + id);
+						}
                     }
 
                     else if(requestType == "Borrow"){

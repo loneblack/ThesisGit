@@ -74,7 +74,7 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
+                                                    <!-- <tr>
                                                         <td><a href="procurement_view_request.php">12/23/2018</a></td>
                                                         <td><span class="label label-success label-mini">Completed</span></td>
                                                         <td>We Need 500 more laptops PLSSS!!</td>
@@ -103,7 +103,7 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
                                                         <td>We Need 500 more laptops PLSSS!!</td>
                                                         <td>Marvin Lao</td>
                                                         <td>1/1/2018</td>
-                                                    </tr>
+                                                    </tr> -->
                                                     
 													<?php
 													
@@ -137,14 +137,14 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
 															elseif($row['status']=='Incomplete'){
 																echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
 															}
-															elseif($row['step']=='For Canvas'){
-																echo "<td><span class='label label-warning label-mini'>For Canvas</span></td>";
+															elseif($row['step']=='Canvasing'){
+																echo "<td><span class='label label-warning label-mini'>Canvasing</span></td>";
 															}
-															elseif($row['step']=='Ready for PO'){
-																echo "<td><span class='label label-primary label-mini'>Ready for PO</span></td>";
+															elseif($row['step']=='Create Purchase Order'){
+																echo "<td><span class='label label-primary label-mini'>Create Purchase Order</span></td>";
 															}
-															elseif($row['step']=='Re-check Canvas'){
-																echo "<td><span class='label label-danger label-mini'>Re-check Canvas</span></td>";
+															elseif($row['step']=='Re-Canvas'){
+																echo "<td><span class='label label-danger label-mini'>Re-Canvas</span></td>";
 															}
 																
 															
@@ -199,15 +199,18 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
 						var cell = row.getElementsByTagName("td")[1];
 						var id = cell.textContent;
 						
-						if(id == "Ready for PO"){
+						if(id == "Create Purchase Order"){
 							window.location.replace("procurement_purchase_order.php?canvasID="+ row.getAttribute("id"));
 						}
-                        else if(id == "For Canvas"){
+                        else if(id == "Canvasing"){
                             window.location.replace("procurement_view_request.php?canvasID="+ row.getAttribute("id"));
                         }
 						else if(id == "Completed"){
                            window.location.replace("procurement_view_completed.php?canvasID="+ row.getAttribute("id"));
                         }
+						else if(id == "Re-Canvas"){
+							window.location.replace("procurement_recheck_canvas.php?canvasID="+ row.getAttribute("id"));
+						}
 						
 						if(id == "Ready for PO"){
 							window.location.replace("procurement_purchase_order.php?canvasID="+ row.getAttribute("id"));

@@ -32,8 +32,11 @@ if(isset($_POST['submit'])){
 		$resulta=mysqli_query($dbc,$querya);
 	}
 	
-	$queryz="UPDATE `thesis`.`request` SET `step`='7' WHERE `requestID`='{$requestID}'";
+	$queryz="UPDATE `thesis`.`request` SET `step`='3' WHERE `requestID`='{$requestID}'";
 	$resultz=mysqli_query($dbc,$queryz);
+	
+	$message = "Form submitted!";
+	$_SESSION['submitMessage'] = $message;
 }
 ?>
 <html lang="en">
@@ -81,7 +84,15 @@ if(isset($_POST['submit'])){
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				<?php
+                    if (isset($_SESSION['submitMessage'])){
 
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
                 <div class="row">
                     <div class="row">
                         <div class="col-sm-12">
@@ -111,7 +122,7 @@ if(isset($_POST['submit'])){
 
                                             </div>
                                         </div>
-										<form method="post">
+										<form method="post" action="it_view_incomplete_request.php?requestID=<?php echo $requestID; ?>">
                                         <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                             <thead>
                                                 <tr>

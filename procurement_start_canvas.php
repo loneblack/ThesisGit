@@ -22,8 +22,11 @@
 		$resultReqID=mysqli_query($dbc,$queryReqID);
 		$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
 		
-		$queryd="UPDATE `thesis`.`request` SET `step`='1' WHERE `requestID`='{$rowReqID['requestID']}'";
+		$queryd="UPDATE `thesis`.`request` SET `step`='4' WHERE `requestID`='{$rowReqID['requestID']}'";
 		$resultd=mysqli_query($dbc,$queryd);
+		
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message;
 		
 		//$queryb="UPDATE `thesis`.`canvas` SET `status`='6' WHERE `canvasID`='{$canvasID}'";
 		//$resultb=mysqli_query($dbc,$queryb);
@@ -112,8 +115,15 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				<?php
+                    if (isset($_SESSION['submitMessage'])){
 
-
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
                 <div class="row">
                     <div class="col-sm-12">
 
@@ -220,7 +230,7 @@
 													<?php
 														
 														
-														$query="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,ci.quantity,am.itemSpecification,ci.description FROM thesis.canvasitem ci 
+														$query="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,ci.quantity,am.itemSpecification,ci.description,am.description as `assetModel` FROM thesis.canvasitem ci 
 															join assetmodel am on ci.assetModel=am.assetModelID
 															join ref_brand rb on am.brand=rb.brandID
 															join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
@@ -230,7 +240,7 @@
 															echo "<tr>
 															<input type='hidden' name='cavasItemID[]' value='{$row['cavasItemID']}'>
 															<td style='width:50px;'>{$row['quantity']}</td>
-															<td>{$row['itemName']}</td>
+															<td>{$row['assetModel']}</td>
 															<td>{$row['itemSpecification']}</td>
 															<td>
 																<select class='form-control' id='exampleFormControlSelect1' name='supplier[]' required>

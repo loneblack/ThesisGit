@@ -4,6 +4,11 @@
 	require_once('db/mysql_connect.php');
 	$testingID=$_GET['testingID'];
 	
+	//GET TESTING DATA
+	$queryTesDat="SELECT * FROM thesis.assettesting where testingID='{$testingID}'";
+	$resultTesDat=mysqli_query($dbc,$queryTesDat);
+	$rowTesDat=mysqli_fetch_array($resultTesDat,MYSQLI_ASSOC);
+	
 	
 	if(isset($_POST['send'])){
 		
@@ -85,8 +90,6 @@
 			$resultTotC=mysqli_query($dbc,$queryTotC);
 			//UPDATE TOTAL COST OF PO
 			
-			
-			
 		}
 		//UPDATE REQUEST STATUS
 		
@@ -107,9 +110,16 @@
 		$rowPass=mysqli_fetch_array($resultPass,MYSQLI_ASSOC);
 		
 		if($rowReq['totalQty']==$rowPass['passedAsset']){
-			$queryComp="UPDATE `thesis`.`request` SET `status`='3' WHERE `requestID`='{$rowReqID['requestID']}'";
+			$queryComp="UPDATE `thesis`.`request` SET `step`='11' WHERE `requestID`='{$rowReqID['requestID']}'";
 			$resultComp=mysqli_query($dbc,$queryComp);
 		}
+		
+		//UPDATE ASSET TESTING STATUS
+		$query8="UPDATE `thesis`.`assettesting` SET `statusID`='3' WHERE `testingID`='{$testingID}'";
+		$result8=mysqli_query($dbc,$query8);
+		
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message; 
 		
 	}
 ?>
@@ -158,7 +168,14 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-
+				<?php
+                    if (isset($_SESSION['submitMessage']) && $_SESSION['submitMessage']=="Form submitted!"){
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
                 <div class="row">
                     <div class="col-sm-12">
 
@@ -256,7 +273,9 @@
 										</section>
 									</div>
 								</section>
-								<button type="submit" name="send" class="btn btn-success">Send</button>
+								<button type="submit" name="send" class="btn btn-success" <?php if($rowTesDat['statusID']==3){
+																						echo "disabled";
+																						} ?> >Send</button>
 								<button type="button" class="btn btn-info" onclick="window.history.back();" id="back">Back</button>
 							</form>
                         </div>

@@ -1,4 +1,42 @@
 <!DOCTYPE html>
+<?php
+	$id=$_GET['id'];
+	$requestType=$_GET['requestType'];
+	require_once("db/mysql_connect.php");
+	
+	if(isset($_POST['save'])){
+		$responseTime=$_POST['responseTime'];
+		$efficiency=$_POST['efficiency'];
+		$accuracy=$_POST['accuracy'];
+		$courtesy=$_POST['courtesy'];
+		$comments=$_POST['comments'];
+		
+		if($requestType=="Asset Request"){
+			$queryAssReq="INSERT INTO `thesis`.`evaluation` (`date`, `responseTime`, `accuracy`, `efficiency`, `courtesy`, `comments`, `requestID`) VALUES (now(),'{$responseTime}','{$accuracy}','{$efficiency}','{$courtesy}','{$comments}','{$id}')";
+			$resultAssReq=mysqli_query($dbc,$queryAssReq);
+			
+			$queryStep="UPDATE `thesis`.`request` SET `status`='3' WHERE `requestID`='{$id}'";
+			$resultStep=mysqli_query($dbc,$queryStep);
+			echo "<script>alert('{$requestType}');</script>";
+		}
+		elseif($requestType=="borrow"){
+			//$query="";
+			//$result=mysqli_query($dbc,$query);
+		}
+		elseif($requestType=="donation"){
+			//$query="";
+			//$result=mysqli_query($dbc,$query);
+		}
+		elseif($requestType=="service"){
+			//$query="";
+			//$result=mysqli_query($dbc,$query);
+		}
+		
+	}
+
+
+
+?>
 <html lang="en">
 
 <head>
@@ -55,7 +93,7 @@
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
-                                            <form class="cmxform form-horizontal " id="signupForm" method="get" action="">
+                                            <form class="cmxform form-horizontal " id="signupForm" method="post">
 
                                                 <div class="form-group">
                                                     <label for="responseTime" class="control-label col-lg-3">Response Time</label>
@@ -114,7 +152,7 @@
 
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-3 col-lg-6">
-                                                        <button class="btn btn-primary" type="submit">Save</button>
+                                                        <button class="btn btn-primary" type="submit" name="save">Save</button>
                                                         <button class="btn btn-default" type="button">Cancel</button>
                                                     </div>
                                                 </div>

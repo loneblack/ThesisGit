@@ -93,6 +93,9 @@
 														//}
 														
 														if($row['status']=="Pending"){
+															echo "<td><span class='label label-warning label-mini'>{$row['status']}</span></td>";
+														}
+														elseif($row['status']=="Completed"){
 															echo "<td><span class='label label-success label-mini'>{$row['status']}</span></td>";
 														}
 														else{
@@ -109,7 +112,7 @@
 												
 												?>
 												
-                                                <tr>
+                                                <!-- <tr>
                                                     <td>232323232</td>
                                                     <td>1/1/2018</td>
                                                     <td><span class="label label-success label-mini">Open</span></td>
@@ -122,7 +125,7 @@
                                                     <td><span class="label label-danger label-mini">Closed</span></td>
                                                     <td>Marvin Lao</td>
                                                     <td>1/1/2018</td>
-                                                </tr>
+                                                </tr> -->
                                             </tbody>
                                         </table>
                                     </section>
@@ -170,7 +173,7 @@
 						//window.location.replace("it_view_closed_po.php");
 					//}
 					
-					if(status == "Pending"){
+					if(status == "Pending"||status == "Incomplete"){
 						window.location.replace("it_view_open_po.php?procID=" + row.getAttribute("id"));
 					}
 					

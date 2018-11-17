@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php
+	session_start();
+	require_once('db/mysql_connect.php');
+?>
 <html lang="en">
 
 <head>
@@ -71,6 +75,34 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+												<?php 
+													
+													
+												
+												
+												
+													//GET ASSET TESTING REQUEST
+													$queryTest="SELECT * FROM thesis.assettesting";
+													$resultTest=mysqli_query($dbc,$queryTest);
+													while($rowStep=mysqli_fetch_array($resultTest,MYSQLI_ASSOC)){
+														echo "<tr class='gradeA'>
+																<td>{$rowStep['testingID']}</td>
+																<td>Send a ticket to Engineers for testing</td>
+																<td>Asset Testing</td>";
+																
+														//GET REQUEST DATA
+														$queryReqID="SELECT ad.requestID,r.dateNeeded FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
+																															  join assetdocument ad on a.assetID=ad.assetID
+																															  join request r on ad.requestID=r.requestID 
+																															  where atd.assettesting_testingID='{$rowStep['testingID']}' limit 1";
+														$resultReqID=mysqli_query($dbc,$queryReqID);			
+														$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);	
+																
+														echo "<td>{$rowReqID['dateNeeded']}</td>";
+														echo "</tr>";
+														}
+
+												?>
 											
                                                 <tr class="gradeA">
                                                     <td>1</td>
@@ -153,9 +185,11 @@
 						var cell = row.getElementsByTagName("td")[2];
 						var idx = cell.textContent;
 						
+						var cell1 = row.getElementsByTagName("td")[0];
+						var id = cell1.textContent;
 						
 						if(idx == "Asset Testing"){
-							window.location.replace("helpdesk_view_assettesting_open.php");
+							window.location.replace("helpdesk_view_assettesting_open.php?testingID=" + id);
 						}
 						
 						if(idx == "Donation"){

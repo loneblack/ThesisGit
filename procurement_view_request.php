@@ -119,7 +119,7 @@
 												<?php
 													require_once('db/mysql_connect.php');
 													$canvasID=$_GET['canvasID'];
-													$query="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,ci.quantity,am.itemSpecification,ci.description FROM thesis.canvasitem ci 
+													$query="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,ci.quantity,am.itemSpecification,ci.description,am.description as `assetModel` FROM thesis.canvasitem ci 
 															join assetmodel am on ci.assetModel=am.assetModelID
 															join ref_brand rb on am.brand=rb.brandID
 															join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
@@ -129,7 +129,7 @@
 														echo "<tr>
 															<td>{$row['cavasItemID']}</td>
 															<td>
-																<h4>{$row['itemName']}</h4>
+																<h4>{$row['assetModel']}</h4>
 																<p>{$row['description']}</p>
 															</td>
 															<td class='text-center'>{$row['itemSpecification']}</td>

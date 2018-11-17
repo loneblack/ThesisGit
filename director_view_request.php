@@ -10,7 +10,7 @@
 	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 	
 	if(isset($_POST['approve'])){
-		$query="UPDATE `thesis`.`request` SET `status`='2', `step`='3'  WHERE `requestID`='{$_SESSION['requestid']}'";
+		$query="UPDATE `thesis`.`request` SET `status`='2', `step`='2'  WHERE `requestID`='{$_SESSION['requestid']}'";
 		$result=mysqli_query($dbc,$query);
 		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
 	}

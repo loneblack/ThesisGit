@@ -36,6 +36,10 @@
 							group by cid.supplier_supplierID";
 		$resultg=mysqli_query($dbc,$queryg);
 		
+		$queryReqID="SELECT requestID FROM thesis.canvas where canvasID='{$canvasID}'";
+		$resultReqID=mysqli_query($dbc,$queryReqID);
+		$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
+		
 		while($rowg=mysqli_fetch_array($resultg,MYSQLI_ASSOC)){
 			$queryh="INSERT INTO `thesis`.`procurement` (`requestID`, `date`, `totalCost`, `status`, `preparedBy`, `supplierID`) VALUES ('{$rowc['requestID']}', now(), '{$rowe['totalPrice']}', '1', '{$rowf['employeeID']}', '{$rowg['supplierID']}')";
 			$resulth=mysqli_query($dbc,$queryh);
@@ -58,13 +62,14 @@
 			}
 			
 		}
+		$queryd="UPDATE `thesis`.`request` SET `step`='7' WHERE `requestID`='{$rowReqID['requestID']}'";
+		$resultd=mysqli_query($dbc,$queryd);
 		
-		//$queryReqID="SELECT requestID FROM thesis.canvas where canvasID='{$canvasID}'";
-		//$resultReqID=mysqli_query($dbc,$queryReqID);
-		//$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
+		$message = "Purchase Order Submitted!";
+		$_SESSION['submitMessage'] = $message;
 		
-		//$queryd="UPDATE `thesis`.`request` SET `step`='5' WHERE `requestID`='{$rowReqID['requestID']}'";
-		//$resultd=mysqli_query($dbc,$queryd);
+		
+		
 		
 		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/procurement_view_completed.php?canvasID=".$canvasID);
 	}
@@ -115,11 +120,19 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-				
+				<?php
+                    if (isset($_SESSION['submitMessage'])){
+
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
 				
 				
                 <div class="row">
-					<form method='post'>
+					<form method="post">
 					<div class='text-center invoice-btn'>
 						
 							<button type="submit" class="btn btn-success btn-lg" name="submit"><i class='fa fa-check'></i> Send </button>

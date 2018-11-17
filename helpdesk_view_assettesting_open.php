@@ -3,26 +3,51 @@
 	session_start();
 	require_once('db/mysql_connect.php');
 	$testingID=$_GET['testingID'];
+	//GET Due Date
+	$queryReqID="SELECT ad.requestID,r.dateNeeded FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
+																				           join assetdocument ad on a.assetID=ad.assetID
+																						   join request r on ad.requestID=r.requestID 
+																						   where atd.assettesting_testingID='{$testingID}' limit 1";
+	$resultReqID=mysqli_query($dbc,$queryReqID);			
+	$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
+	
 	
 	if(isset($_POST['submit'])){
+		
+		$message=null;
 		$category=$_POST['category'];
 		$status=$_POST['status'];
 		$priority=$_POST['priority'];
 		$assigned=$_POST['assigned'];
-		$dueDate=$_POST['dueDate'];
+		$currDate=date("Y-m-d H:i:s");
 		
-		$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}')";
-		$resulta=mysqli_query($dbc,$querya);
+		if($rowReqID['dateNeeded']<$_POST['dueDate']||$currDate>$_POST['dueDate']){
+			$message="Invalid date input.";
+		}
+		else{
+			$dueDate=$_POST['dueDate'];
+		}
 		
-		$queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
-		$resultaa=mysqli_query($dbc,$queryaa);
-		$rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
+		if(!isset($message)){
+			$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}')";
+			$resulta=mysqli_query($dbc,$querya);
 		
-		$queryaaa="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$testingID}'";
-		$resultaaa=mysqli_query($dbc,$queryaaa);
-		while($rowaaa=mysqli_fetch_array($resultaaa,MYSQLI_ASSOC)){
-			$queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$rowaaa['asset_assetID']}');";
-			$resultaaaa=mysqli_query($dbc,$queryaaaa);
+			$queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
+			$resultaa=mysqli_query($dbc,$queryaa);
+			$rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
+		
+			$queryaaa="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$testingID}'";
+			$resultaaa=mysqli_query($dbc,$queryaaa);
+			while($rowaaa=mysqli_fetch_array($resultaaa,MYSQLI_ASSOC)){
+				$queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$rowaaa['asset_assetID']}');";
+				$resultaaaa=mysqli_query($dbc,$queryaaaa);
+			}
+		
+			$message = "Form submitted!";
+			$_SESSION['submitMessage'] = $message;
+		}
+		else{
+			$_SESSION['submitMessage'] = $message;
 		}
 		
 	}
@@ -76,6 +101,21 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				<?php
+                    if (isset($_SESSION['submitMessage']) && $_SESSION['submitMessage']=="Form submitted!"){
+
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+					elseif(isset($_SESSION['submitMessage'])){
+						 echo "<div class='alert alert-danger'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+						 unset($_SESSION['submitMessage']);
+					}
+				?>
 
                 <div class="row">
                     <div class="col-sm-12">
@@ -103,7 +143,7 @@
                                                             <div class="form-group ">
                                                                 <label for="category" class="control-label col-lg-3">Category</label>
                                                                 <div class="col-lg-6">
-                                                                    <select class="form-control m-bot15" name="category" value="<?php if (isset($_POST['category']) && !$flag) echo $_POST['category']; ?>" required >
+                                                                    <select class="form-control m-bot15" name="category" value="<?php if (isset($_POST['category']) && !$flag) echo $_POST['category']; ?>" required readonly>
 																		<?php
 																			
 																			$querya="SELECT * FROM thesis.ref_servicetype";
@@ -124,7 +164,7 @@
 
                                                             <label for="status" class="control-label col-lg-3">Status</label>
                                                             <div class="col-lg-6">
-                                                                <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status']) && !$flag) echo $_POST['status']; ?>" required >
+                                                                <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status']) && !$flag) echo $_POST['status']; ?>" required readonly>
 																	<?php
 																			
 																		$queryb="SELECT * FROM thesis.ref_ticketstatus";
@@ -180,7 +220,7 @@
                                                                 <input class="form-control m-bot15" size="10" name="dueDate" type="datetime-local" value="<?php if (isset($_POST['dueDate']) && !$flag) echo $_POST['dueDate']; ?>" required />
                                                             </div>
                                                         </div>
-
+																
                                                         <button type="submit" class="btn btn-success" name="submit">Update</button>
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 

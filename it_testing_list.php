@@ -187,12 +187,12 @@
 						var cell = row.getElementsByTagName("td")[2];
 						var id = cell.textContent;
 						
-						if(id == "Completed"){
+						if(id == "Ongoing" || id == "Completed"){
 							window.location.replace("it_view_testing.php?testingID=" + row.getAttribute("id"));
 						}
-						else if(id == "Incomplete"){
-                            window.location.replace("it_view_incomplete_testing.php?testingID=" + row.getAttribute("id"));
-                        }
+						//else if(id == "Incomplete"){
+                            //window.location.replace("it_view_incomplete_testing.php?testingID=" + row.getAttribute("id"));
+                        //}
 					};
 				};
 				currentRow.onclick = createClickHandler(currentRow);

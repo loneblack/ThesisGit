@@ -11,27 +11,6 @@ $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 
 if(isset($_POST['submit'])){
 	
-	//$x=sizeof($_POST['comments']);
-	
-	//$queryv="SELECT * FROM thesis.canvasitemdetails cid join canvasitem ci on cid.cavasItemID=ci.cavasItemID					   
-		//										where ci.canvasID='{$row['canvasID']}' and cid.status!='5' 
-			//									group by ci.assetCategory";
-	//$resultv=mysqli_query($dbc,$queryv);
-	//while($rowv=mysqli_fetch_array($resultv,MYSQLI_ASSOC)){
-		//$code="canvas".$rowv['assetCategory'];
-		//if(isset($_POST[code])){
-			//$dat=explode("_", $_POST[code]);
-			//$canCode=$dat[0];
-			//$suppID=$dat[1];
-			//$dat=array();
-			//$query1="UPDATE `thesis`.`canvasitemdetails` SET `status`='5' WHERE `cavasItemID`='{$canCode}' and `supplier_supplierID`='{$suppID}'";
-			//$result1=mysqli_query($dbc,$query1);
-		//}
-		
-		
-	//}
-	
-	
 	if(!empty($_POST['canvas'])){
 	// Loop to store and display values of individual checked checkbox.
 		$canvas=$_POST['canvas'];
@@ -42,19 +21,12 @@ if(isset($_POST['submit'])){
 			$suppID=$dat[1];
 			$dat=array();
 			
-			//for($i=0;$i<sizeof($canvasItemID);$i++){
-				//for($j=0;$j<sizeof($supplierID);$j++){
-					//$canvID=$canvasItemID[$i]."".$supplierID[$j];
-					//if($value==$canvID){
 			$query1="UPDATE `thesis`.`canvasitemdetails` SET `status`='5' WHERE `cavasItemID`='{$canCode}' and `supplier_supplierID`='{$suppID}'";
 			$result1=mysqli_query($dbc,$query1);
-					//}
-				//}
-			//}
 			
 		}
 		
-		$queryd="UPDATE `thesis`.`request` SET `step`='8' WHERE `requestID`='{$requestID}'";
+		$queryd="UPDATE `thesis`.`request` SET `step`='6' WHERE `requestID`='{$requestID}'";
 		$resultd=mysqli_query($dbc,$queryd);
 	}
 	
@@ -69,25 +41,12 @@ if(isset($_POST['submit'])){
 			$result2=mysqli_query($dbc,$query2);
 		}
 		if(empty($_POST['canvas'])){
-			$queryd="UPDATE `thesis`.`request` SET `step`='9' WHERE `requestID`='{$rowc['requestID']}'";
+			$queryd="UPDATE `thesis`.`request` SET `step`='5' WHERE `requestID`='{$requestID}'";
 			$resultd=mysqli_query($dbc,$queryd);
 		}
 	}
-	
-	
-	
-		
-		
-		//$x=sizeof($_POST['comments']);
-		//echo "<script>alert('{$x}');</script>";
-		//foreach(array_combine($_POST['comments'], $_POST['canvasItemID']) as $comments => $canvasItemID){
-			//$query2="UPDATE `thesis`.`canvasitemdetails` SET `status`='6',`comment`='{$comments}' WHERE `cavasItemID`='{$canvasItemID}' and `supplier_supplierID`='{$supplierID}'";
-			//$result2=mysqli_query($dbc,$query2);
-		//}
-	
-	
-		
-	
+	$message = "Form submitted!";
+	$_SESSION['submitMessage'] = $message;
 	
 }
 
@@ -137,7 +96,15 @@ if(isset($_POST['submit'])){
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				<?php
+                    if (isset($_SESSION['submitMessage'])){
 
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
                 <div class="row">
                     <div class="row">
                         <div class="col-sm-12">
@@ -220,7 +187,7 @@ if(isset($_POST['submit'])){
 													$count++;
 												}
 												?>
-                                                <tr>
+                                                <!-- <tr>
                                                     <td><input type="checkbox"></td>
                                                     <td class="text-center">3</td>
                                                     <td class="text-center">Laptop</td>
@@ -272,7 +239,7 @@ if(isset($_POST['submit'])){
                                                             </div>
                                                         </div>
                                                     </td>
-                                                </tr>
+                                                </tr> -->
                                             </tbody>
                                         </table>
 										<button type="submit" class="btn btn-success" name="submit" >Submit</button>
