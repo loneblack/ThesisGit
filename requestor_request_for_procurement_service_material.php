@@ -73,46 +73,6 @@ $_SESSION['count'] = 0;
                                                     }
                                                 ?>
                                                 <section>
-                                                    <h4>Contact Information</h4>
-
-                                                    <div class="form-group ">
-                                                        <label for="department" class="control-label col-lg-3">Department</label>
-                                                        <div class="col-lg-6">
-                                                            <select name="department" id="department" class="form-control m-bot15" required>
-                                                                <option value=''>Select department</option>
-                                                                <?php
-
-                                                                    
-                                                                    $sql = "SELECT * FROM thesis.department;";
-
-                                                                    $result = mysqli_query($dbc, $sql);
-
-                                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                                    {
-                                                                        
-                                                                        echo "<option value ={$row['DepartmentID']}>";
-                                                                        echo "{$row['name']}</option>";
-
-                                                                    }
-                                                               ?>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group ">
-                                                        <label for="unitHead" class="control-label col-lg-3">Unit Head/Fund Owner</label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" rows="5" id="unitHead" name="unitHead" style="resize:none" type="text">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group ">
-                                                        <label for="contactPerson" class="control-label col-lg-3">Contact Person</label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" id="contactPerson" name="contactPerson" type="text" />
-                                                        </div>
-                                                    </div>
-                                                </section>
-                                                <hr>
-                                                <section>
                                                     <h4>User Location Information</h4>
                                                     <div class="form-group ">
                                                         <label for="building" class="control-label col-lg-3">Building</label>

@@ -7,7 +7,6 @@ $_SESSION['count'] = 0;
 $_SESSION['previousPage'] = "requestor_service_equipment_request.php";
   
 if(isset($_POST['save'])){
-	$contactNo=$_POST['contactNo'];
 	$dateNeeded=$_POST['dateNeeded'];
 	$purpose=$_POST['purpose'];
 	$assetCategory=$_POST['assetCategory'];
@@ -17,19 +16,19 @@ if(isset($_POST['save'])){
 	if($affiliation==1){
 		//INSERT TO DONATION TABLE
 		$office=$_POST['office'];
-		$queryDon = "INSERT INTO `thesis`.`donation` (`officeID`, `contactNumber`, `dateNeed`, `purpose`) VALUES ('{$office}', '{$contactNo}', '{$dateNeeded}', '{$purpose}');";
+		$queryDon = "INSERT INTO `thesis`.`donation` (`officeID`, `dateNeed`, `purpose`) VALUES ('{$office}', '{$dateNeeded}', '{$purpose}');";
         $resultDon = mysqli_query($dbc, $queryDon);
 	}
 	elseif($affiliation==2){
 		//INSERT TO DONATION TABLE
 		$department=$_POST['department'];
-		$queryDon = "INSERT INTO `thesis`.`donation` (`DepartmentID`, `contactNumber`, `dateNeed`, `purpose`) VALUES ('{$department}', '{$contactNo}', '{$dateNeeded}', '{$purpose}');";
+		$queryDon = "INSERT INTO `thesis`.`donation` (`DepartmentID`, `dateNeed`, `purpose`) VALUES ('{$department}', '{$dateNeeded}', '{$purpose}');";
         $resultDon = mysqli_query($dbc, $queryDon);
 	}
 	elseif($affiliation==3){
 		//INSERT TO DONATION TABLE
 		$org=$_POST['org'];
-		$queryDon = "INSERT INTO `thesis`.`donation` (`organizationID`, `contactNumber`, `dateNeed`, `purpose`) VALUES ('{$org}', '{$contactNo}', '{$dateNeeded}', '{$purpose}');";
+		$queryDon = "INSERT INTO `thesis`.`donation` (`organizationID`, `dateNeed`, `purpose`) VALUES ('{$org}', '{$dateNeeded}', '{$purpose}');";
         $resultDon = mysqli_query($dbc, $queryDon);
 	}
 	
@@ -181,14 +180,6 @@ if(isset($_POST['save'])){
 
 
 
-
-
-                                                <div class="form-group ">
-                                                    <label for="number" class="control-label col-lg-3">Contact No.</label>
-                                                    <div class="col-lg-6">
-                                                        <input class="form-control" rows="5" name="contactNo" style="resize:none" type="text" required>
-                                                    </div>
-                                                </div>
                                                 <div class="form-group ">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Date & time needed</label>
                                                     <div class="col-lg-6">

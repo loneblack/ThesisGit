@@ -7,9 +7,6 @@
     $employeeID = 1;
     $userID = $_SESSION['userID'];
 
-    $department = $_POST['department'];
-    $unitHead = $_POST['unitHead'];
-    $contactPerson = $_POST['contactPerson'];
     $buildingID = $_POST['buildingID'];
     $FloorAndRoomID = $_POST['FloorAndRoomID'];
     $recipient = $_POST['recipient'];
@@ -28,7 +25,7 @@
     $id = 0;    
 
     //insertion to request table
-    $sql0 = "INSERT INTO `thesis`.`request` (`description`, `DepartmentID`, `unitHead`, `contactPerson`, `recipient`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`) VALUES ('{$comment}', '{$department}', '{$unitHead}', '{$contactPerson}', '{$recipient}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1');";//status is set to 1 for pending status
+    $sql0 = "INSERT INTO `thesis`.`request` (`description`, `recipient`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`) VALUES ('{$comment}', '{$recipient}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1');";//status is set to 1 for pending status
     $result0 = mysqli_query($dbc, $sql0);
 
 
