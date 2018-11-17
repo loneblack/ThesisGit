@@ -6,12 +6,10 @@ require_once("db/mysql_connect.php");
 
 $id = $_GET['id'];
 
-$sql = "SELECT d.name AS 'department', unitHead, contactPerson, b.name AS 'building', floorRoom, recipient, dateneeded, r.description
+$sql = "SELECT  b.name AS 'building', floorRoom, recipient, dateneeded, r.description
             FROM thesis.request r 
         JOIN ref_status s 
             ON r.status = s.statusID
-        JOIN department d 
-            ON d.departmentID = r.DepartmentID
         JOIN building b
             ON r.BuildingID = b.BuildingID
         JOIN floorandroom f
@@ -22,9 +20,6 @@ $result = mysqli_query($dbc, $sql);
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
         $description = $row['description'];
-        $department = $row['department'];
-        $unitHead = $row['unitHead'];
-        $contactPerson = $row['contactPerson'];
         $building = $row['building'];
         $floorRoom = $row['floorRoom'];
         $recipient = $row['recipient'];
@@ -119,23 +114,6 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                         unset($_SESSION['submitMessage']);
                                                     }
                                                 ?>
-                                                <section>
-                                                    <h4>Contact Information</h4>
-
-                                                    <div class="form-group ">
-                                                        <h4 class="control-label col-lg-3">Department</h4>
-                                                        <h4 class="control-label col-lg-1"><?php echo $department;?></h4>
-                                                    </div>
-                                                    <div class="form-group ">
-                                                        <h4 class="control-label col-lg-3">Unit Head/Fund Owner</h4>
-                                                        <h4 class="control-label col-lg-1"><?php echo $unitHead;?></h4>
-                                                    </div>
-                                                    <div class="form-group ">
-                                                        <h4 class="control-label col-lg-3">Contact Person</h4>
-                                                        <h4 class="control-label col-lg-1"><?php echo $contactPerson;?></h4>
-                                                    </div>
-                                                </section>
-                                                <hr>
                                                 <section>
                                                     <h4>User Location Information</h4>
                                                     <div class="form-group ">

@@ -28,7 +28,6 @@
     $sql0 = "INSERT INTO `thesis`.`request` (`description`, `recipient`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`) VALUES ('{$comment}', '{$recipient}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1');";//status is set to 1 for pending status
     $result0 = mysqli_query($dbc, $sql0);
 
-
     $sql2 = "SELECT * FROM `thesis`.`request` order by requestID DESC LIMIT 1;";
     $result2 = mysqli_query($dbc, $sql2);
 

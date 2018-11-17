@@ -666,7 +666,7 @@ DROP TABLE IF EXISTS `thesis`.`request` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   `requestID` INT(11) NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(45) NULL DEFAULT NULL,
-  `DepartmentID` INT(11) NOT NULL,
+  `DepartmentID` INT(11) NULL,
   `unitHead` VARCHAR(45) NULL DEFAULT NULL,
   `contactPerson` VARCHAR(70) NULL,
   `recipient` VARCHAR(45) NULL DEFAULT NULL,

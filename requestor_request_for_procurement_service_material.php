@@ -65,8 +65,8 @@ $_SESSION['count'] = 0;
                                                 <?php
                                                     if (isset($_SESSION['submitMessage'])){
 
-                                                        echo "<div class='alert alert-success'>
-                                                                {$_SESSION['submitMessage']}
+                                                        echo "<div style='text-align:center' class='alert alert-success'>
+                                                                <strong><h3>{$_SESSION['submitMessage']}</h3></strong>
                                                               </div>";
 
                                                         unset($_SESSION['submitMessage']);
