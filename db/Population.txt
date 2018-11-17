@@ -414,16 +414,16 @@
 
 
 	-- assetModel
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('1', '20', '1', '4gb Ram 500gb storage');
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('2', '8', '2', '12 mega pixels');
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('3', '18', '3', 'Wireless ');
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('4', '15', '11', '32gb USB 3.0');
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('5', '18', '12', 'Ocatacore');
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('6', '48', '12', 'HD 2000');
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('7', '31', '13', '2.4Ghz');
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('8', '23', '8', '18 inch Retina Display');
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('9', '21', '10', 'Blu-ray');
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`) VALUES ('10', '44', '5', '4gb Ram 128gb storage');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('1', '20', '1', '4gb Ram 500gb storage', 'ROG');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('2', '8', '2', '12 mega pixels', 'pro');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('3', '18', '3', 'Wireless ', 'sensi');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('4', '15', '11', '32gb USB 3.0', 'lite');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('5', '18', '12', 'Ocatacore', 'max');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('6', '48', '12', 'HD 2000', 'core');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('7', '31', '13', '2.4Ghz', 'gtx');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('8', '23', '8', '18 inch Retina Display', 'alive');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('9', '21', '10', 'Blu-ray', 'disc');
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('10', '44', '5', '4gb Ram 128gb storage', 'Note');
 
 	-- user
 	-- 1
