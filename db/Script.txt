@@ -529,7 +529,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assettesting` (
   `endTestDate` DATETIME NULL DEFAULT NULL,
   `Result` VARCHAR(45) NULL DEFAULT NULL,
   `PersonRequestedID` INT(11) NOT NULL,
-  `FloorAndRoomID` INT(11) NOT NULL,
+  `FloorAndRoomID` INT(11) NULL,
   `departmentOwnsRoomID` INT(11) NULL DEFAULT NULL,
   `officeID` INT(11) NULL DEFAULT NULL,
   `remarks` LONGTEXT NULL DEFAULT NULL,
@@ -1317,12 +1317,14 @@ CREATE TABLE IF NOT EXISTS `thesis`.`donation` (
   `reason` VARCHAR(45) NULL,
   `statusID` INT(11) NOT NULL,
   `stepsID` INT NOT NULL,
+  `user_UserID` INT(11) NOT NULL,
   PRIMARY KEY (`donationID`),
   INDEX `fk_donation_organization1_idx` (`organizationID` ASC),
   INDEX `fk_donation_department1_idx` (`DepartmentID` ASC),
   INDEX `fk_donation_offices1_idx` (`officeID` ASC),
   INDEX `fk_donation_ref_status1_idx` (`statusID` ASC),
   INDEX `fk_donation_ref_steps1_idx` (`stepsID` ASC),
+  INDEX `fk_donation_user1_idx` (`user_UserID` ASC),
   CONSTRAINT `fk_donation_organization1`
     FOREIGN KEY (`organizationID`)
     REFERENCES `thesis`.`organization` (`id`)
@@ -1346,6 +1348,11 @@ CREATE TABLE IF NOT EXISTS `thesis`.`donation` (
   CONSTRAINT `fk_donation_ref_steps1`
     FOREIGN KEY (`stepsID`)
     REFERENCES `thesis`.`ref_steps` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_donation_user1`
+    FOREIGN KEY (`user_UserID`)
+    REFERENCES `thesis`.`user` (`UserID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

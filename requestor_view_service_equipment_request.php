@@ -6,34 +6,44 @@ require_once("db/mysql_connect.php");
 
 $id = $_GET['id'];
 
-$sql = "SELECT * FROM thesis.request_borrow r JOIN ref_status s ON r.statusID = s.statusID WHERE borrowID = '{$id}';";
+$sql = "SELECT *, o.Name AS 'office', d.name AS 'department', z.name AS 'organization', b.name AS 'building' 
+        FROM thesis.request_borrow r 
+        JOIN ref_status s ON r.statusID = s.statusID 
+        LEFT JOIN offices o ON r.officeID = o.officeID 
+        LEFT JOIN department d ON r.DepartmentID = d.DepartmentID
+        LEFT JOIN organization z ON r.organizationID = z.id
+        JOIN building b ON r.BuildingID = b.BuildingID 
+        JOIN floorandroom f ON r.FloorAndRoomID = f.FloorAndRoomID 
+        WHERE borrowID = {$id};";
+
 $result = mysqli_query($dbc, $sql);
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
-        $OfficeID = $row['OfficeID'];
-        $DepartmentID = $row['DepartmentID'];
-        $organizationID = $row['organizationID'];
-        $recipient = $row['recipient'];
-        $recipient = $row['recipient'];
-        $dateneeded = $row['dateneeded'];
-        $description = $row['description'];
+        $office = $row['office'];
+        $department = $row['department'];
+        $organization = $row['organization'];
+        $startDate = $row['startDate'];
+        $endDate = $row['endDate'];
+        $purpose = $row['purpose'];
+        $building = $row['building'];
+        $floorRoom = $row['floorRoom'];
+        $personrepresentativeID = $row['personrepresentativeID'];
+        $personrepresentative = $row['personrepresentative'];
 
     }
 
-$sql = "SELECT * FROM thesis.requestdetails JOIN ref_assetcategory ON assetCategory = assetCategoryID WHERE requestID  =  {$id};";
+$sql = "SELECT * FROM thesis.borrow_details d JOIN ref_assetcategory c ON d.assetCategoryID = c.assetCategoryID WHERE borrowID = {$id};";
 $result = mysqli_query($dbc, $sql);
 
 $count = 0;
 
 $requestedQuantity = array();
 $requestedCategory = array();
-$requestedDescription = array();
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
         array_push($requestedQuantity, $row['quantity']);
-        array_push($requestedDescription, $row['description']);
         array_push($requestedCategory, $row['name']);
 
         $count++;
@@ -97,27 +107,27 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                             <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_equipment_request_DB.php">
                                                 <div class="form-group ">
                                                     <h5 class="control-label col-lg-3">Office/ Department/ School Organization</h5>
-                                                    <h5 class="control-label col-lg-2">Office/ Department/ School Organization</h5>
+                                                    <h5 class="control-label col-lg-2"><?php echo $office.$department.$organization; ?></h5>
                                                 </div>
                                                 <div class="form-group ">
                                                     <h5 class="control-label col-lg-3">Date & Time Needed</h5>
-                                                    <h5 class="control-label col-lg-2">Date & Time Needed</h5>
+                                                    <h5 class="control-label col-lg-2"><?php echo $startDate; ?></h5>
                                                 </div>
                                                 <div class="form-group ">
                                                     <h5 class="control-label col-lg-3">End Date & Time</h5>
-                                                    <h5 class="control-label col-lg-2">End Date & Time</h5>
+                                                    <h5 class="control-label col-lg-2"><?php echo$endDate ; ?></h5>
                                                 </div>
                                                 <div class="form-group ">
                                                     <h5 class="control-label col-lg-3">Purpose</h5>
-                                                    <h5 class="control-label col-lg-2">Purpose</h5>
+                                                    <h5 class="control-label col-lg-2"><?php echo $purpose; ?></h5>
                                                 </div>
                                                 <div class="form-group ">
                                                     <h5 class="control-label col-lg-3">Building</h5>
-                                                    <h5 class="control-label col-lg-2">Building</h5>
+                                                    <h5 class="control-label col-lg-2"><?php echo $building; ?></h5>
                                                 </div>
                                                 <div class="form-group">
                                                     <h5 class="control-label col-lg-3">Floor & Room</h5>
-                                                    <h5 class="control-label col-lg-2">Floor & Room</h5>
+                                                    <h5 class="control-label col-lg-2"><?php echo $floorRoom; ?></h5>
                                                 </div>
                                                 <hr>
                                                 <div class="container-fluid">
@@ -131,47 +141,39 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
+                                                        <?php
+                                                        for ($i=0; $i < $count; $i++) { 
+
+                                                            echo 
+                                                            "<tr>
                                                                 <td>
-                                                                    <select name = "category0" class="form-control"  onChange="getMax(this.value)" disabled >
-                                                                        <option>Select Category</option>
-                                                                         <?php
-
-                                                                            $sql = "SELECT * FROM thesis.ref_assetcategory;";
-
-                                                                            $result = mysqli_query($dbc, $sql);
-
-                                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                                            {
-                                                                                    
-                                                                                echo "<option value ={$row['assetCategoryID']}>";
-                                                                                echo "{$row['name']}</option>";
-
-                                                                            }
-                                                                        ?>
+                                                                    <select class='form-control' disabled >
+                                                                        <option>{$requestedCategory[$i]}</option>
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <select name='quantity0' id='quantity0' class='form-control m-bot15' disabled required>              
-                                                                        <option value=''>0</option>
+                                                                    <select class='form-control m-bot15' disabled required>              
+                                                                        <option>{$requestedQuantity[$i]}</option>
                                                                     </select>
                                                                 </td>
                                                                
-                                                            </tr>
+                                                            </tr>";
+                                                         }
+
+                                                        ?>
                                                         </tbody>
                                                     </table>
                                                 </div>
                                                 <hr>
                                                 <div class="container-fluid">
-                                                    <h4>Endorsement (if applicable)</h4>
-                                                    <h5>Kindly fill up both fields if there is a representative.</h5>
+                                                    <h4>Endorsement</h4>
                                                     <div class="form-group ">
                                                         <h5 class="control-label col-lg-3">Representative</h5>
-                                                        <h5 class="control-label col-lg-3">Representative</h5>
+                                                        <h5 class="control-label col-lg-1"><?php echo $personrepresentative; ?></h5>
                                                     </div>
                                                     <div class="form-group ">
                                                         <h5 class="control-label col-lg-3">ID Number</h5>
-                                                        <h5 class="control-label col-lg-3">ID Number</h5>
+                                                        <h5 class="control-label col-lg-1"><?php echo $personrepresentativeID; ?></h5>
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="col-lg-offset-3 col-lg-6">
@@ -209,92 +211,6 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
     <script type="text/javascript">
-
-        var count = 0; 
-        function removeRow(o) {
-            var p = o.parentNode.parentNode;
-            p.parentNode.removeChild(p);
-        }
-
-
-        function addTest(cavasItemID) {
-            var row_index = 0;
-            var canvasItemID = cavasItemID;
-            var isRenderd = false;
-
-            $("td").click(function() {
-                row_index = $(this).parent().index();
-
-            });
-
-            var delayInMilliseconds = 0; //1 second
-
-            setTimeout(function() {
-
-                appendTableRow(row_index, canvasItemID);
-            }, delayInMilliseconds);
-
-
-        }
-
-        var appendTableRow = function(rowCount, canvasItemID) {
-            var cnt = 0;
-            count++;
-            var tr = "<tr>" +
-                "<td><select class='form-control' name='category"+count+"' id='category"+count+"' onChange='getMax(this.value)' ><option>Select Category</option>"+
-
-                '<?php
-
-                    $sql = "SELECT * FROM thesis.ref_assetcategory;";
-
-                    $result = mysqli_query($dbc, $sql);
-
-                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                    {
-                            
-                        echo "<option value ={$row['assetCategoryID']}>";
-                        echo "{$row['name']}</option>";
-
-                    }
-
-                    $_SESSION['count']++;
-
-
-                ?>'+
-
-
-                +"</select></td>" +
-                "<td><select name='quantity"+count+"' id='quantity"+count+"' class='form-control m-bot15'></select></td>" +
-                "<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
-                "</tr>";
-            $('#tableTest tbody tr').eq(rowCount).after(tr);
-        }
-
-        function getRooms(val){
-            $.ajax({
-            type:"POST",
-            url:"requestor_getRooms.php",
-            data: 'buildingID='+val,
-            success: function(data){
-                $("#FloorAndRoomID").html(data);
-
-                }
-            });
-        }
-
-        function getMax(val){
-            $.ajax({
-            type:"POST",
-            url:"requestor_getMax.php",
-            data: 'categoryID='+val,
-            success: function(data){
-
-
-                $("#quantity"+count).html(data);
-
-                }
-            });
-        }
     </script>
 
 </body>
