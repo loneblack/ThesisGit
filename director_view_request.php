@@ -8,6 +8,8 @@
 										   where r.requestID='{$_SESSION['requestid']}'";
 	$result=mysqli_query($dbc,$query);
 	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+
 	
 	if(isset($_POST['approve'])){
 		$query="UPDATE `thesis`.`request` SET `status`='2', `step`='2'  WHERE `requestID`='{$_SESSION['requestid']}'";
@@ -19,7 +21,28 @@
 		$result=mysqli_query($dbc,$query);
 		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
 	}
+
+
+    $sql="SELECT *, d.name as 'department', e.name as 'myName', b.name as 'building'
+            FROM thesis.request r 
+            JOIN employee e ON r.UserID = e.UserID 
+            JOIN department d ON e.DepartmentID = d.DepartmentID 
+            JOIN building b ON r.BuildingID = b.BuildingID
+            JOIN floorandroom f ON r.FloorAndRoomID = f.FloorAndRoomID
+            WHERE requestID = {$_SESSION['requestid']};";
+
+    $output=mysqli_query($dbc,$sql);
+    $column=mysqli_fetch_array($output,MYSQLI_ASSOC);
 	
+    $department = $column['department'];
+    $myName = $column['myName'];
+    $contactNo = $column['contactNo'];
+    $email = $column['email'];
+    $building = $column['building'];
+    $floorRoom = $column['floorRoom'];
+    $dateNeeded = $column['dateNeeded'];
+
+   
 ?>
 <html lang="en">
 
@@ -75,27 +98,28 @@
 											if($row['statusDesc']=='Pending'){
 												echo "<span class='label label-warning'>{$row['statusDesc']}</span>";
 											}
-											elseif($row['statusDesc']=='Approved'){
-												echo "<span class='label label-success'>{$row['statusDesc']}</span>";
+											elseif($row['statusDesc']=='Disapproved'){
+												echo "<span class='label label-danger'>{$row['statusDesc']}</span>";
 											}
 											else{
-												echo "<span class='label label-danger'>{$row['statusDesc']}</span>";
+												echo "<span class='label label-success'>Approved</span>";
 											} ?></h2>
+                            <br><br>
                             <div class="col-lg-6">
-                                <h4>Department:</h4>
-                                <h4>Name: </h4>
-                                <h4>Contact Number:</h4>
-                                <h4>Email:</h4>
+                                <h4><strong>Department:</strong> <?php echo $department; ?></h4>
+                                <h4><strong>Name:</strong> <?php echo $myName; ?></h4>
+                                <h4><strong>Contact Number:</strong> <?php echo $contactNo; ?></h4>
+                                <h4><strong>Email:</strong> <?php echo $email; ?></h4>
                             </div>
                             
                             <div class="col-lg-6">
-                                <h4>Building:</h4>
-                                <h4>Floor/ Room Number: </h4>
-                                <h4>Date Needed:</h4>
+                                <h4><strong>Building:</strong> <?php echo $building; ?></h4>
+                                <h4><strong>Floor/ Room Number:</strong> <?php echo $floorRoom; ?></h4>
+                                <h4><strong>Date Needed:</strong> <?php echo $dateNeeded; ?></h4>
                             </div>
-                            <br>
-
-                            <table class="table">
+                            
+                            <br><br><br><br><br><br><br><br>
+                            <table class="table">    
                                 <thead class="thead-light">
                                     <tr>
                                         <th>Quantity</th>
@@ -133,7 +157,7 @@
                     
 							<form method="post">
 								<button type="submit" class="btn btn-success" name="approve" <?php if($row['statusDesc'] != 'Pending') echo "disabled"; ?> ><i class="fa fa-check"></i> Approve</button>
-                                &nbsp;
+                                &nbsp;&nbsp;
 								<button type="submit" class="btn btn-danger" name="disapprove" <?php if($row['statusDesc'] != 'Pending') echo "disabled"; ?> ><i class="fa fa-ban"></i> Disapprove</button>
                             </form>
                     </div>
