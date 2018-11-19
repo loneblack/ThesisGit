@@ -76,33 +76,62 @@
                                             </thead>
                                             <tbody>
 												<?php 
-													
-													
-												
-												
-												
-													//GET ASSET TESTING REQUEST
-													$queryTest="SELECT * FROM thesis.assettesting";
-													$resultTest=mysqli_query($dbc,$queryTest);
-													while($rowStep=mysqli_fetch_array($resultTest,MYSQLI_ASSOC)){
+													//GET REQUEST FOR Procurement Service Material
+													$queryReqProc="SELECT * FROM thesis.request where step='9'";
+													$resultReqProc=mysqli_query($dbc,$queryReqProc);
+													while($rowReqProc=mysqli_fetch_array($resultReqProc,MYSQLI_ASSOC)){
 														echo "<tr class='gradeA'>
-																<td>{$rowStep['testingID']}</td>
-																<td>Send a ticket to Engineers for testing</td>
-																<td>Asset Testing</td>";
+															<td>{$rowReqProc['requestID']}</td>
+															<td>{$rowReqProc['description']}</td>
+															<td>Procurement of Service and Material</td>
+															<td>{$rowReqProc['dateNeeded']}</td>
+															</tr>";
+													}
+												?>
+												
+												<?php 
+													
+													//GET DONATION REQUEST
+													$queryDon="SELECT * FROM thesis.donation where stepsID='9'";
+													$resultDon=mysqli_query($dbc,$queryDon);
+													while($rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC)){
+														echo "<tr class='gradeA'>
+															<td>{$rowDon['donationID']}</td>
+															<td>{$rowDon['purpose']}</td>
+															<td>Donation</td>
+															<td>{$rowDon['dateNeed']}</td>
+															</tr>";
+													}
+													
+												?>
+											
+											
+												<?php 
+													
+													//GET ASSET TESTING REQUEST
+													//$queryTest="SELECT * FROM thesis.assettesting";
+													//$resultTest=mysqli_query($dbc,$queryTest);
+													//while($rowStep=mysqli_fetch_array($resultTest,MYSQLI_ASSOC)){
+														//echo "<tr class='gradeA'>
+															//	<td>{$rowStep['testingID']}</td>
+																//<td>Send a ticket to Engineers for testing</td>
+																//<td>Asset Testing</td>";
 																
 														//GET REQUEST DATA
-														$queryReqID="SELECT ad.requestID,r.dateNeeded FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
-																															  join assetdocument ad on a.assetID=ad.assetID
-																															  join request r on ad.requestID=r.requestID 
-																															  where atd.assettesting_testingID='{$rowStep['testingID']}' limit 1";
-														$resultReqID=mysqli_query($dbc,$queryReqID);			
-														$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);	
+														//$queryReqID="SELECT ad.requestID,r.dateNeeded FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
+														//																	  join assetdocument ad on a.assetID=ad.assetID
+														//																	  join request r on ad.requestID=r.requestID 
+														//																	  where atd.assettesting_testingID='{$rowStep['testingID']}' limit 1";
+														//$resultReqID=mysqli_query($dbc,$queryReqID);			
+														//$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);	
 																
-														echo "<td>{$rowReqID['dateNeeded']}</td>";
-														echo "</tr>";
-														}
+														//echo "<td>{$rowReqID['dateNeeded']}</td>";
+														//echo "</tr>";
+														//}
 
 												?>
+												
+												
 											
                                                 <tr class="gradeA">
                                                     <td>1</td>
@@ -193,11 +222,11 @@
 						}
 						
 						if(idx == "Donation"){
-							window.location.replace("helpdesk_view_donation_request.php");
+							window.location.replace("helpdesk_view_donation_request.php?donationID=" + id);
 						}
                         
-                        if(idx == "Asset Request"){
-                            window.location.replace("helpdesk_view_procurement_service_material_request.php");
+                        if(idx == "Procurement of Service and Material"){
+                            window.location.replace("helpdesk_view_procurement_service_material_request.php?requestID=" + id);
 						}
 						
 						if(idx == "Borrow"){
