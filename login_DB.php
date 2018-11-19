@@ -52,7 +52,7 @@
 				header("Location:procurement_dashboard.php");
 	    	}
 	    	if($userType == '7'){
-				header("Location:director_dashboard.php");
+				header("Location:director_requests.php");
 	    	}
 	        
 	        exit;
