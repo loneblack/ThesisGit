@@ -81,16 +81,18 @@
 											else{
 												echo "<span class='label label-danger'>{$row['statusDesc']}</span>";
 											} ?></h2>
-                            <center><img src="img/logo.png" width="150" height="150"> </center>
-                            <center><b>
-                                    <h3>De La Salle University</h3>
-                                </b></center>
-                            <center><b>
-                                    <h5>Information Technology Services</h5>
-                                </b></center>
-                            <center><b>
-                                    <h3>Hardware Software Request Form</h3>
-                                </b></center>
+                            <div class="col-lg-6">
+                                <h4>Department:</h4>
+                                <h4>Name: </h4>
+                                <h4>Contact Number:</h4>
+                                <h4>Email:</h4>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h4>Building:</h4>
+                                <h4>Floor/ Room Number: </h4>
+                                <h4>Date Needed:</h4>
+                            </div>
                             <br>
 
                             <table class="table">
@@ -124,53 +126,16 @@
 										}
 
 									?>
-									<!--
-                                    <tr>
-                                        <td>10</td>
-                                        <td>Shabu</td>
-                                        <td>P 1000.00</td>
-                                        <td>Nanay Mo Corp.</td>
-                                        <td>CDR King</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>10</td>
-                                        <td>Microphones</td>
-                                        <td>P 1000.00</td>
-                                        <td>Sponsor</td>
-                                        <td>CDR King</td>
-                                    </tr>
-									-->
                                 </tbody>
                             </table>
                         </div>
 
-                        <br>
-
-                            <table class="table">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>Course(s) That Will Use The Requirement(s)</th>
-                                        <th>Course Offering Per Academic Year</th>
-                                        <th>Projected Number of Students Per Section</th>
-                                        <th>Projected Number of Sections Per Term</th>
-                                        <th>Projected Number of Sections Per Year</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>ITMETHD</td>
-                                        <td>3</td>
-                                        <td>45</td>
-                                        <td>3</td>
-                                        <td>12</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    
 							<form method="post">
 								<button type="submit" class="btn btn-success" name="approve" <?php if($row['statusDesc'] != 'Pending') echo "disabled"; ?> ><i class="fa fa-check"></i> Approve</button>
+                                &nbsp;
 								<button type="submit" class="btn btn-danger" name="disapprove" <?php if($row['statusDesc'] != 'Pending') echo "disabled"; ?> ><i class="fa fa-ban"></i> Disapprove</button>
-							</form>
+                            </form>
                     </div>
                 </div>
                 <!-- page end-->
