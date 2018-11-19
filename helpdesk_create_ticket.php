@@ -29,7 +29,7 @@
 		if(!isset($message)){
 			echo "<script type='text/javascript'>alert('Success');</script>"; // Show modal
 			
-			$query="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `summary`, `description`, `serviceType`, `action`) VALUES ('{$status}', '{$assigned}', '{$userID}', now(), now(), '{$dueDate}', '{$priority}', '{$title}', '{$description}', '{$category}', 'New Ticket')";
+			$query="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `summary`, `description`, `serviceType`) VALUES ('{$status}', '{$assigned}', '{$userID}', now(), now(), '{$dueDate}', '{$priority}', '{$title}', '{$description}', '{$category}')";
 			$result=mysqli_query($dbc,$query);
 			$flag=1;
 		}
