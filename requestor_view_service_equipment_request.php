@@ -2,10 +2,44 @@
 <html lang="en">
 <?php
 session_start();
-  require_once("db/mysql_connect.php");
+require_once("db/mysql_connect.php");
 
+$id = $_GET['id'];
+
+$sql = "SELECT * FROM thesis.request_borrow r JOIN ref_status s ON r.statusID = s.statusID WHERE borrowID = '{$id}';";
+$result = mysqli_query($dbc, $sql);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+        $OfficeID = $row['OfficeID'];
+        $DepartmentID = $row['DepartmentID'];
+        $organizationID = $row['organizationID'];
+        $recipient = $row['recipient'];
+        $recipient = $row['recipient'];
+        $dateneeded = $row['dateneeded'];
+        $description = $row['description'];
+
+    }
+
+$sql = "SELECT * FROM thesis.requestdetails JOIN ref_assetcategory ON assetCategory = assetCategoryID WHERE requestID  =  {$id};";
+$result = mysqli_query($dbc, $sql);
+
+$count = 0;
+
+$requestedQuantity = array();
+$requestedCategory = array();
+$requestedDescription = array();
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+        array_push($requestedQuantity, $row['quantity']);
+        array_push($requestedDescription, $row['description']);
+        array_push($requestedCategory, $row['name']);
+
+        $count++;
+
+    }
 ?>
-
 <head>
     <meta charset="utf-8">
 
@@ -133,8 +167,10 @@ session_start();
                                                     <h5>Kindly fill up both fields if there is a representative.</h5>
                                                     <div class="form-group ">
                                                         <h5 class="control-label col-lg-3">Representative</h5>
+                                                        <h5 class="control-label col-lg-3">Representative</h5>
                                                     </div>
                                                     <div class="form-group ">
+                                                        <h5 class="control-label col-lg-3">ID Number</h5>
                                                         <h5 class="control-label col-lg-3">ID Number</h5>
                                                     </div>
                                                     <div class="form-group">
