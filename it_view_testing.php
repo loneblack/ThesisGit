@@ -91,11 +91,23 @@
 			//UPDATE TOTAL COST OF PO
 			
 		}
+		
+		
+		
+		
+		
+		//$queryProc1="";
+		//$resultProc1=mysqli_query($dbc,$queryProc1);
+		
+		//$querya="UPDATE `thesis`.`procurement` SET `status`='3' WHERE `procurementID`='{$procID}'";
+		//$resulta=mysqli_query($dbc,$querya);
+		
+		
 		//UPDATE REQUEST STATUS
 		
 		//GET REQID
 		$queryReqID="SELECT ad.requestID FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
-	join assetdocument ad on a.assetID=ad.assetID where atd.assettesting_testingID='{$testingID}' limit 1";
+												join assetdocument ad on a.assetID=ad.assetID where atd.assettesting_testingID='{$testingID}' limit 1";
 		$resultReqID=mysqli_query($dbc,$queryReqID);
 		$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
 		
