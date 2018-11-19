@@ -46,7 +46,6 @@ if(isset($_POST['save'])){
 		}
 		
 	}
-	echo "<script>alert('Success');</script>";
 }
 ?>
 <head>
@@ -103,6 +102,19 @@ if(isset($_POST['save'])){
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
+                                            <?php 
+
+                                             if(isset($_POST['save'])){
+
+
+                                                 echo "<div class='alert alert-success'>
+                                                                Form Submitted!
+                                                              </div>";
+
+                                                 unset($_SESSION['save']);
+                                             }
+
+                                            ?>
                                             <form class="cmxform form-horizontal" id="signupForm" method="post">
                                                 <div class="form-group ">
                                                     <label class="control-label col-lg-3">Affiliation</label>
