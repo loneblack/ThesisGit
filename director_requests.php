@@ -63,7 +63,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Title of Request</th>
-                                                        <th>Status</th>
+                                                        <th id = "sortme">Status</th>
                                                         <th>Requestor</th>
                                                         <th class="hidden-phone">Date Needed</th>
                                                     </tr>
@@ -75,7 +75,7 @@
 														require_once('db/mysql_connect.php');
 														$query="SELECT r.requestID as `requestID`,r.description as `reqDesc`,rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(lastName,'{$key}')USING utf8)) as `requestor`, r.dateNeeded as `dateNeeded` FROM thesis.request r 
 																		join thesis.ref_status rs on r.status=rs.statusID
-																		join thesis.user u on r.UserID=u.UserID";
+																		join thesis.user u on r.UserID=u.UserID ";
 														$result=mysqli_query($dbc,$query);
 														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 															
@@ -85,12 +85,12 @@
 																if($row['statusDesc']=='Disapproved'){
 																	echo "<td><span class='badge bg-important'>{$row['statusDesc']}</span></td>";
 																}
-																elseif($row['statusDesc']=='Approved'){
-																	echo "<td><span class='badge bg-success'>{$row['statusDesc']}</span></td>";
+																elseif($row['statusDesc']=='Pending'){
+																	echo "<td><span class='badge bg-warning'>{$row['statusDesc']}</span></td>";
 																}
 																else{
 																	
-																	echo "<td><span class='badge bg-warning'>{$row['statusDesc']}</span></td>";
+																	echo "<td><span class='badge bg-success'>Approved</span></td>";
 																}
 															
 															echo"
@@ -167,6 +167,15 @@
 				window.location.replace("director_view_request.php?requestid=" + a);
 			})
         })	
+
+        $(window).load(function(){
+
+
+        document.getElementById("sortme").click();
+        document.getElementById("sortme").click();
+
+        });
+
     </script>
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
