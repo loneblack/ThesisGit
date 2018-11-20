@@ -80,7 +80,6 @@ require_once("db/mysql_connect.php");
                                             </thead>
 
                                             <tbody>
-
                                                  <?php
                                                     $count = 1;
 

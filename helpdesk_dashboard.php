@@ -1,6 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+$userID = $_SESSION['userID'];
+require_once("db/mysql_connect.php");
 
+$query1="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.status != 7;";
+$result1=mysqli_query($dbc,$query1);
+while ($row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC)){ $Unresolved = $row1['count']; }
+
+$query2="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE (t.dueDate < now());";
+$result2=mysqli_query($dbc,$query2);
+while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){ $Overdue = $row2['count']; }   
+
+$query3="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE (DATE(t.dueDate) = DATE(now()));";
+$result3=mysqli_query($dbc,$query3);
+while ($row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC)){ $DueToday = $row3['count']; }   
+
+$query4="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.status = 1;";
+$result4=mysqli_query($dbc,$query4);
+while ($row4 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $Open = $row4['count']; }   
+
+$query5="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.status = 6;";
+$result5=mysqli_query($dbc,$query5);
+while ($row5 = mysqli_fetch_array($result5, MYSQLI_ASSOC)){ $OnHold = $row5['count']; }   
+
+$query6="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.priority = 'Urgent';";
+$result6=mysqli_query($dbc,$query6);
+while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['count']; }                           
+
+?>
 <head>
     <meta charset="utf-8">
 
@@ -56,7 +85,7 @@
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon orange"><i class="fa fa-gavel"></i></span>
                                             <div class="mini-stat-info"><br>
-                                                <span>3200</span>
+                                                <span><?php echo $Unresolved;?></span>
                                                 Unresolved
                                             </div>
                                         </div>
@@ -68,7 +97,7 @@
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon orange"><i class="fa fa-clock-o"></i></span>
                                             <div class="mini-stat-info">
-                                                <span>22,450</span>
+                                                <span><?php echo $Overdue;?></span>
                                                 Overdue
                                             </div>
                                         </div>
@@ -80,7 +109,7 @@
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon pink"><i class="fa fa-clock-o"></i></span>
                                             <div class="mini-stat-info">
-                                                <span>34,320</span>
+                                                <span><?php echo $DueToday;?></span>
                                                 Due Today
                                             </div>
                                         </div>
@@ -92,7 +121,7 @@
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon green"><i class="fa fa-eye"></i></span>
                                             <div class="mini-stat-info">
-                                                <span>32720</span>
+                                                <span><?php echo $Open;?></span>
                                                 Open
                                             </div>
                                         </div>
@@ -105,7 +134,7 @@
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon orange"><i class="fa fa-times-circle-o"></i></span>
                                             <div class="mini-stat-info">
-                                                <span>32720</span>
+                                                <span><?php echo $OnHold;?></span>
                                                 On Hold
                                             </div>
                                         </div>
@@ -116,10 +145,10 @@
                                 <a href="#">
                                     <div class="col-md-2">
                                         <div class="mini-stat clearfix">
-                                            <span class="mini-stat-icon orange"><i class="fa fa-question"></i></span>
+                                            <span class="mini-stat-icon orange"><i class="fa fa-exclamation"></i></span>
                                             <div class="mini-stat-info">
-                                                <span>32720</span>
-                                                Unassigned
+                                                <span><?php echo $Urgent;?></span>
+                                                Urgent
                                             </div>
                                         </div>
                                     </div>

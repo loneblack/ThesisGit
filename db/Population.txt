@@ -106,6 +106,7 @@
 	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('13', 'In Repair');
 	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('14', 'Ticketed');
 	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('15', 'Refurbishing');
+	INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('16', 'For Donation');
 
 	-- ref_status
 	INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('1', 'Pending');
