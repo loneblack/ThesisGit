@@ -38,7 +38,7 @@
 			
 			if(!isset($message)){
 				//INSERT ASSET TESTING
-				$queryt="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`) VALUES ('1', '{$rowReq['UserID']}', '{$rowReq['FloorAndRoomID']}', '25');";
+				$queryt="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`, `remarks`) VALUES ('1', '{$rowReq['UserID']}', '{$rowReq['FloorAndRoomID']}', '25', 'Asset Request');";
 				$resultt=mysqli_query($dbc,$queryt);
 				
 				//GET LATEST ASSET TEST

@@ -325,7 +325,12 @@ require_once("db/mysql_connect.php");
                     }
                     
                     else if(requestType == "Donation"){
-                        window.location.replace("requestor_view_donation_request.php?id=" + id);
+                        if(step == "Conforme Pending"){
+							window.location.replace("requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType);
+						}
+						else{
+							window.location.replace("requestor_view_donation_request.php?id=" + id);
+						}
                     }
 
                     else if(requestType == "Service"){

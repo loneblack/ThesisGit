@@ -13,8 +13,9 @@
 	$rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC);
 	
 	if(isset($_POST['submit'])){
+		$message=null;
 		if($_POST['category']=='25'){
-			$message=null;
+			
 			$category=$_POST['category'];
 			$status=$_POST['status'];
 			$priority=$_POST['priority'];
@@ -30,7 +31,7 @@
 			
 			if(!isset($message)){
 				//INSERT ASSET TESTING
-				$queryt="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`) VALUES ('1', '{$rowDon['user_UserID']}', '25');";
+				$queryt="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`, `remarks`) VALUES ('1', '{$rowDon['user_UserID']}', '25', 'Donation');";
 				$resultt=mysqli_query($dbc,$queryt);
 				
 				//GET LATEST ASSET TEST
@@ -39,10 +40,10 @@
 				$row0=mysqli_fetch_array($result0,MYSQLI_ASSOC);
 				
 				//UPDATE ASSET STATUS / GET Donation data
-				$queryDonDet="SELECT * FROM thesis.donationdetails where donationID='{$donationID}'";
+				$queryDonDet="SELECT *,ddi.assetID as `asset` FROM thesis.donationdetails dd join donationdetails_item ddi on dd.id=ddi.id where dd.donationID='{$donationID}'";
 				$resultDonDet=mysqli_query($dbc,$queryDonDet);
 				while($rowDonDet=mysqli_fetch_array($resultDonDet,MYSQLI_ASSOC)){
-					$queryAsset="UPDATE `thesis`.`asset` SET `assetStatus`='8' WHERE `assetID`='{$rowDonDet['assetID']}'";
+					$queryAsset="UPDATE `thesis`.`asset` SET `assetStatus`='8' WHERE `assetID`='{$rowDonDet['asset']}'";
 					$resultAsset=mysqli_query($dbc,$queryAsset);
 					
 					//Insert to assettesting_details table
@@ -292,24 +293,27 @@
                                             <thead>
                                                 <tr>
                                                     <th>Category</th>
-                                                    <th>Quantity</th>
+                                                <!--    <th>Quantity</th> -->
                                                     <th>Brand</th>
                                                     <th>Model</th>
                                                     <th>Property Code</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+												
+												
 												<?php
 												$queryDonDet="SELECT rb.name as `brandName`, am.description as `assetModelName`,a.propertyCode,dd.quantity,rac.name as `assetCatName` FROM thesis.donationdetails dd join ref_assetcategory rac on dd.assetCategoryID=rac.assetCategoryID
-																									  join asset a on dd.assetID=a.assetID
+																									  join donationdetails_item ddi on dd.id=ddi.id
+                                                                                                      join asset a on ddi.assetID=a.assetID
 																									  join assetmodel am on a.assetModel=am.assetModelID
 																									  join ref_brand rb on am.brand=rb.brandID
-																									  where dd.donationID='{$donationID}'";
+																									  where dd.donationID='{$donationID}'
+																									  order by dd.assetCategoryID asc";
 												$resultDonDet=mysqli_query($dbc,$queryDonDet);
 												while($rowDonDet=mysqli_fetch_array($resultDonDet,MYSQLI_ASSOC)){
 													echo "<tr>
                                                     <td>{$rowDonDet['assetCatName']}</td>
-                                                    <td>{$rowDonDet['quantity']}</td>
                                                     <td>
                                                         <select class='form-control' disabled>
                                                             <option selected>{$rowDonDet['brandName']}</option>
