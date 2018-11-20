@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 
-	require_once('mysql_connect.php');
+	require_once('db/mysql_connect.php');
 	$_SESSION['supplierid']=$_GET['supplierid'];
 
 	$query="SELECT * FROM thesis.supplier where supplierID='{$_SESSION['supplierid']}'";
