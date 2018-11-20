@@ -105,18 +105,15 @@ if(isset($_POST['save'])){
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
-                                            <?php 
+                                            <?php
+                                                if (isset($_POST['save'])){
 
-                                             if(isset($_POST['save'])){
+                                                    echo "<div style='text-align:center' class='alert alert-success'>
+                                                            <strong><h3>{$_SESSION['submitMessage']}</h3></strong>
+                                                          </div>";
 
-
-                                                 echo "<div class='alert alert-success'>
-                                                                Form Submitted!
-                                                              </div>";
-
-                                                 unset($_SESSION['save']);
-                                             }
-
+                                                    unset($_SESSION['save']);
+                                                }
                                             ?>
                                             <form class="cmxform form-horizontal" id="signupForm" method="post">
                                                 <div class="form-group ">

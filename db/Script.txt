@@ -1364,13 +1364,13 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `thesis`.`donationdetails` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`donationdetails` (
+  `id` INT(11) NOT NULL,
   `donationID` INT NOT NULL,
   `assetCategoryID` INT(11) NULL,
   `quantity` VARCHAR(45) NULL,
-  `assetID` INT(11) NULL,
   INDEX `fk_table1_donation1_idx` (`donationID` ASC),
   INDEX `fk_table1_ref_assetcategory1_idx` (`assetCategoryID` ASC),
-  INDEX `fk_donationdetails_asset1_idx` (`assetID` ASC),
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_table1_donation1`
     FOREIGN KEY (`donationID`)
     REFERENCES `thesis`.`donation` (`donationID`)
@@ -1380,8 +1380,26 @@ CREATE TABLE IF NOT EXISTS `thesis`.`donationdetails` (
     FOREIGN KEY (`assetCategoryID`)
     REFERENCES `thesis`.`ref_assetcategory` (`assetCategoryID`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`donationdetails_item`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`donationdetails_item` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`donationdetails_item` (
+  `id` INT(11) NOT NULL,
+  `assetID` INT(11) NOT NULL,
+  INDEX `fk_donationdetails_item_donationdetails1_idx` (`id` ASC),
+  INDEX `fk_donationdetails_item_asset1_idx` (`assetID` ASC),
+  CONSTRAINT `fk_donationdetails_item_donationdetails1`
+    FOREIGN KEY (`id`)
+    REFERENCES `thesis`.`donationdetails` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_donationdetails_asset1`
+  CONSTRAINT `fk_donationdetails_item_asset1`
     FOREIGN KEY (`assetID`)
     REFERENCES `thesis`.`asset` (`assetID`)
     ON DELETE NO ACTION

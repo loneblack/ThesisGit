@@ -82,9 +82,11 @@ require_once("db/mysql_connect.php");
                                                     // view for purchase request
                                                     $count = 1;
 
-                                                    $query = "SELECT *, s.description as `statusName`,rs.name as `step` FROM thesis.request r JOIN ref_status s ON r.status = s.statusID
-																																			  join ref_steps rs on r.step=rs.id
-																																			  WHERE UserID = {$userID};";
+                                                    $query = "SELECT *, s.description as `statusName`,rs.name as `step`
+                                                              FROM thesis.request r
+                                                              JOIN ref_status s ON r.status = s.statusID
+														      JOIN ref_steps rs on r.step=rs.id
+															  WHERE UserID = {$userID};";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -119,7 +121,9 @@ require_once("db/mysql_connect.php");
 
                                                   <?php
                                                     //view for service
-                                                    $query = "SELECT * FROM thesis.service sr JOIN ref_status st ON sr.status = st.statusID WHERE UserID = {$userID};";
+                                                    $query = "SELECT * FROM thesis.service sr   
+                                                              JOIN ref_status st ON sr.status = st.statusID 
+                                                              WHERE UserID = {$userID};";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -164,7 +168,9 @@ require_once("db/mysql_connect.php");
                                                         
                                                     }
 
-                                                    $query = "SELECT * FROM thesis.request_borrow r JOIN ref_status s on r.statusID = s.statusID AND personresponsibleID = {$employeeID};";
+                                                    $query = "SELECT * FROM thesis.request_borrow r 
+                                                              JOIN ref_status s ON r.statusID = s.statusID
+                                                              AND personresponsibleID = {$employeeID};";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -203,6 +209,7 @@ require_once("db/mysql_connect.php");
                                                   ?>
                                                   <?php
                                                     // view for donation
+                                                  
                                                     $sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = {$userID};";//get the employeeID using userID
                                                     $result = mysqli_query($dbc, $sql);
 
@@ -211,7 +218,10 @@ require_once("db/mysql_connect.php");
                                                         
                                                     }
 
-                                                    $query = "SELECT * FROM thesis.request_borrow r JOIN ref_status s on r.statusID = s.statusID AND personresponsibleID = {$employeeID};";
+                                                    $query = "SELECT * FROM thesis.donation d 
+                                                              JOIN ref_status s ON d.statusID = s.statusID
+                                                              JOIN ref_steps ON stepsID = id 
+                                                              WHERE user_UserID = {$userID}";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -219,11 +229,11 @@ require_once("db/mysql_connect.php");
                                                     {
                                                       
                                                       echo "<tr class='gradeA'>
-                                                            <td style='display: none'>{$row['borrowID']}</td>
+                                                            <td style='display: none'>{$row['donationID']}</td>
                                                             <td>{$count}</td>
-                                                            <td>Borrow</td>
-                                                            <td>{$row['dateCreated']}</td>
-                                                            <td>{$row['startDate']}</td>
+                                                            <td>Donation</td>
+                                                            <td>{$row['dateNeed']}</td>
+                                                            <td>{$row['dateNeed']}</td>
                                                             <td style='display: none'>{$row['statusID']}</td>";
 
                                                         if($row['statusID'] == '1'){//pending
@@ -240,13 +250,12 @@ require_once("db/mysql_connect.php");
                                                         }
 
 
-                                                        echo "<td>{$row['steps']}</td>";
+                                                        echo "<td>{$row['name']}</td>";
                                                         echo "</tr>";
 
                                                           $count++;
                                                     }
 
-                                                    
                                                   ?>
 
                                                 

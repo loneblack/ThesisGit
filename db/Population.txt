@@ -529,11 +529,15 @@
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('11', 'Conforme Pending');
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('12', 'Request For IT Approval');
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('13', 'Testing Asset');
-	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('14', 'Checking Asset');
-	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('15', 'Request For Additonal Parts');
-	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('16', 'Additional Parts Received');
-	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('17', 'Approval Pending');
-	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('18', 'Testing');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('14', 'Request Pending');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('15', 'Request Forwarded');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('16', 'Checking Asset');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('17', 'Request For Additonal Parts');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('18', 'Additional Parts Received');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('19', 'Approval Pending');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('20', 'Testing');
+	
+
 
 	-- supplier populate
 	INSERT INTO `thesis`.`supplier` (`name`, `contactNo`, `email`, `contactPerson`, `address`) VALUES ('360Networks Inc.', '371-7098', 'networks360@gmail.com', 'Angela Gonzales', '111 Benitez St., New Manila');
