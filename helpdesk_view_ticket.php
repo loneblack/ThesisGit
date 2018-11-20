@@ -107,14 +107,14 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-8">
+                            <a href="helpdesk_all_ticket.php"><button class="btn btn-danger">Back</button></a><br><br>
                             <section class="panel">
                                 <header class="panel-heading wht-bg">
                                     <!-- <h4 class="gen-case"> 
 										<a class="btn btn-success">Opened</a>
                                         <a class="btn btn-warning">Unassigned</a> -->
-                                    </h4>
-									<h4 class="gen-case"> 
-										<?php 
+                                    <h4 class="gen-case">
+                                        <?php 
 											
 											//if($row0['action']=='Unanswered'){
 												//echo "<a class='btn btn-warning'>{$row0['action']}</a>";
@@ -153,27 +153,30 @@
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <img src="images/chat-avatar2.jpg" alt="">
-                                                <!-- <strong>IT Office</strong> -->
-												<strong><?php echo $row['usertypedes'] ?></strong>
+                                                <strong>
+                                                    <?php echo $row['usertypedes'] ?></strong>
                                                 to
                                                 <strong>me</strong>
                                             </div>
                                             <div class="col-md-4">
                                                 <!-- <p class="date"> 10:15AM 02 FEB 2018</p><br><br> -->
-												<p class="date"><?php echo $row['dateCreated'] ?></p><br><br>
+                                                <p class="date">
+                                                    <?php echo $row['dateCreated'] ?>
+                                                </p><br><br>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="view-mail">
-                                        <!-- <p>Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. </p> -->
-										<p><?php echo $row['ticketdes'] ?></p>
+                                        <p>
+                                            <?php echo $row['ticketdes'] ?>
+                                        </p>
                                     </div>
                                 </div>
                             </section>
                         </div>
 
                         <div class="col-sm-4">
-
+                            <br><br><br>
                             <section class="panel">
                                 <div class="panel-body">
                                     <ul class="nav nav-pills nav-stacked labels-info ">
@@ -182,13 +185,13 @@
                                         </li>
                                     </ul>
                                     <div class="form">
-                                        <form class="cmxform form-horizontal " id="signupForm" method="post" action="<?php echo $_SERVER['PHP_SELF']."?ticketID={$_SESSION['ticketID']}"; ?>">
+                                        <form class="cmxform form-horizontal " id="signupForm" method="post" action="<?php echo $_SERVER['PHP_SELF']." ?ticketID={$_SESSION['ticketID']}"; ?>">
                                             <div class="form-group ">
                                                 <div class="form-group ">
-                                                <label for="category" class="control-label col-lg-3">Category</label>
-                                                <div class="col-lg-6">
-                                                    <select class="form-control m-bot15" name="category" value="<?php if (isset($_POST['category']) && !$flag) echo $_POST['category'];  ?>" required>
-														<?php
+                                                    <label for="category" class="control-label col-lg-3">Category</label>
+                                                    <div class="col-lg-6">
+                                                        <select class="form-control m-bot15" name="category" value="<?php if (isset($_POST['category']) && !$flag) echo $_POST['category'];  ?>" required>
+                                                            <?php
 															$query1="SELECT * FROM thesis.ref_servicetype";
 															$result1=mysqli_query($dbc,$query1);
 														
@@ -197,14 +200,14 @@
 															}
 
 														?>
-                                                    </select>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                                
+
                                                 <label for="status" class="control-label col-lg-3">Status</label>
                                                 <div class="col-lg-6">
                                                     <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status']) && !$flag) echo $_POST['status'];  ?>" required>
-														<?php
+                                                        <?php
 															$query2="SELECT * FROM thesis.ref_ticketstatus";
 															$result2=mysqli_query($dbc,$query2);
 															
@@ -232,7 +235,7 @@
                                                 <label for="assign" class="control-label col-lg-3">Assigned</label>
                                                 <div class="col-lg-6">
                                                     <select class="form-control m-bot15" name="assigned" value="<?php if (isset($_POST['assigned']) && !$flag) echo $_POST['assigned'];  ?>" required>
-														<?php
+                                                        <?php
 															$query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer'";
 															$result3=mysqli_query($dbc,$query3);
 															
@@ -241,7 +244,7 @@
 															}										
 														
 														?>
-                                                        
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -249,7 +252,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-3">Due Date</label>
                                                 <div class="col-lg-6">
-													<!-- class="form-control form-control-inline input-medium default-date-picker" -->
+                                                    <!-- class="form-control form-control-inline input-medium default-date-picker" -->
                                                     <input class="form-control m-bot15" size="10" name="dueDate" type="datetime-local" value="<?php if (isset($_POST['dueDate']) && !$flag) echo $_POST['dueDate']; ?>" required />
                                                 </div>
                                             </div>
@@ -257,14 +260,11 @@
                                             <button type="submit" class="btn btn-success" name="submit">Update</button>
                                         </form>
                                     </div>
-
                                 </div>
                             </section>
                         </div>
-
-    
-
                     </div>
+                </div>
                 <!-- page end-->
             </section>
         </section>
@@ -279,7 +279,7 @@
     <script src="js/jquery-1.8.3.min.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
     <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
-   
+
     <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
 

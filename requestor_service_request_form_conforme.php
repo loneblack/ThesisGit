@@ -17,15 +17,18 @@
 			
 			$queryStep="UPDATE `thesis`.`request` SET `status`='3' WHERE `requestID`='{$id}'";
 			$resultStep=mysqli_query($dbc,$queryStep);
-			echo "<script>alert('{$requestType}');</script>";
+			
 		}
 		elseif($requestType=="borrow"){
 			//$query="";
 			//$result=mysqli_query($dbc,$query);
 		}
-		elseif($requestType=="donation"){
-			//$query="";
-			//$result=mysqli_query($dbc,$query);
+		elseif($requestType=="Donation"){
+			$queryDon="INSERT INTO `thesis`.`evaluation` (`date`, `responseTime`, `accuracy`, `efficiency`, `courtesy`, `comments`, `donationID`) VALUES (now(),'{$responseTime}','{$accuracy}','{$efficiency}','{$courtesy}','{$comments}','{$id}'";
+			$resultDon=mysqli_query($dbc,$queryDon);
+			
+			$queryStep="UPDATE `thesis`.`donation` SET `statusID`='3' WHERE `donationID`='{$id}'";
+			$resultStep=mysqli_query($dbc,$queryStep);
 		}
 		elseif($requestType=="service"){
 			//$query="";

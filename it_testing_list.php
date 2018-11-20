@@ -78,7 +78,7 @@
                                             </thead>
 												<tbody>
 												<?php
-													$query = "SELECT at.testingID,at.startTestDate,rs.description as `status`,e.name FROM thesis.assettesting at join ref_status rs on at.statusID=rs.statusID
+													$query = "SELECT at.remarks,at.testingID,at.startTestDate,rs.description as `status`,e.name FROM thesis.assettesting at join ref_status rs on at.statusID=rs.statusID
 																																						  join ticket t on at.testingID=t.testingID
 																																						  join user u on t.assigneeUserID=u.UserID
 																																						  join employee e on u.UserID=e.UserID";         
@@ -98,7 +98,7 @@
 																echo "<td><span class='label label-warning label-mini'>{$row['status']}</span></td>";
 															}
 															
-															echo "<td></td>
+															echo "<td>{$row['remarks']}</td>
 															<td>{$row['name']}</td>
 															<td></td>
 														</tr>";
@@ -111,22 +111,7 @@
 												
 												
 												?>
-                                                <tr>
-                                                    <td>232323232</td>
-                                                    <td>1/1/2018</td>
-                                                    <td><span class="label label-success label-mini">Finished</span></td>
-                                                    <td>Acquired Item</td>
-                                                    <td>Marvin Lao</td>
-                                                    <td>1/1/2018</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>232323232</td>
-                                                    <td>1/1/2018</td>
-                                                    <td><span class="label label-danger label-mini">Unfinished</span></td>
-                                                    <td>Disposal</td>
-                                                    <td>Marvin Lao</td>
-                                                    <td>1/1/2018</td>
-                                                </tr>
+                                                
                                             </tbody>
 											
 											

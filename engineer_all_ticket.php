@@ -60,9 +60,6 @@ require_once("db/mysql_connect.php");
                             <section class="panel">
                                 <header class="panel-heading">
                                     All Tickets
-                                    <span class="tools pull-right">
-                                        <a href="helpdesk_create_ticket.php" class="fa fa-plus"></a>
-                                    </span>
                                 </header>
                                 <div class="panel-body">
                                     <div class="adv-table" id="ctable">

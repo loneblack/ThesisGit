@@ -1,6 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
 
+$_SESSION['previousPage'] = "requestor_service_request_form.php";
+$id = $_GET['id'];//get the id of the selected service request
+
+require_once("db/mysql_connect.php");
+
+$query =  "SELECT *, details, dateNeed, endDate, dateReceived, s.serviceType AS 'serviceTypeID', t.serviceType, statusID, description AS 'status', others, steps
+            FROM thesis.service s
+                JOIN ref_servicetype t
+            ON s.serviceType = t.id
+                JOIN ref_status a
+            ON s.status = a.statusID
+                JOIN employee e 
+            ON s.UserID = e.UserID
+                WHERE s.id = {$id}";
+$result = mysqli_query($dbc, $query);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+    
+        $name = $row['name'];      
+        $dateReceived = $row['dateReceived'];
+        $details = $row['details'];
+        $dateNeed = $row['dateNeed'];
+        $endDate = $row['endDate'];
+        $serviceTypeID = $row['serviceTypeID'];
+        $serviceType = $row['serviceType'];
+        $statusID = $row['statusID'];
+        $description = $row['description'];
+        $others = $row['others'];
+        $steps = $row['steps'];
+
+    }
+$assets = array();
+
+$query2 =  "SELECT * FROM thesis.servicedetails WHERE serviceID = {$id};";
+$result2 = mysqli_query($dbc, $query2);
+
+while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
+    array_push($assets, $row['asset']);
+}
+?>
+<?php
+// Insertion to ticket
+    
+    if(isset($_POST['submit'])){
+        
+        $message=null;
+        $category=$_POST['category'];
+        $status=$_POST['status'];
+        $priority=$_POST['priority'];
+        $assigned=$_POST['assigned'];
+        $currDate=date("Y-m-d H:i:s");
+// submit not yet fixed
+        if(!isset($message)){
+            $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}')";
+            $resulta=mysqli_query($dbc,$querya);
+        
+            $queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
+            $resultaa=mysqli_query($dbc,$queryaa);
+            $rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
+        
+            $queryaaa="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$testingID}'";
+            $resultaaa=mysqli_query($dbc,$queryaaa);
+            while($rowaaa=mysqli_fetch_array($resultaaa,MYSQLI_ASSOC)){
+                $queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$rowaaa['asset_assetID']}');";
+                $resultaaaa=mysqli_query($dbc,$queryaaaa);
+            }
+        
+            $message = "Ticket Created";
+            $_SESSION['submitMessage'] = $message;
+        }
+        
+    }
+    
+?>
 <head>
     <meta charset="utf-8">
 
@@ -71,19 +147,17 @@
                                                 <div class="form">
                                                     <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
                                                         <div class="form-group ">
-                                                            <div class="form-group ">
-                                                                <label for="category" class="control-label col-lg-3">Category</label>
-                                                                <div class="col-lg-6">
-                                                                    <select class="form-control m-bot15" name="category" value="" required>
-
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
                                                             <label for="status" class="control-label col-lg-3">Status</label>
                                                             <div class="col-lg-6">
                                                                 <select class="form-control m-bot15" name="status" value="" required>
-
+                                                                <?php
+                                                                    $query2="SELECT * FROM thesis.ref_ticketstatus";
+                                                                    $result2=mysqli_query($dbc,$query2);
+                                                                    
+                                                                    while($row2=mysqli_fetch_array($result2,MYSQLI_ASSOC)){
+                                                                        echo "<option value='{$row2['ticketID']}'>{$row2['status']}</option>";
+                                                                    }
+                                                                ?>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -104,17 +178,17 @@
                                                             <label for="assign" class="control-label col-lg-3">Assigned</label>
                                                             <div class="col-lg-6">
                                                                 <select class="form-control m-bot15" name="assigned" value="" required>
-
-
+                                                                <option>None</option>
+                                                                <?php
+                                                                    $query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer'";
+                                                                    $result3=mysqli_query($dbc,$query3);
+                                                                    
+                                                                    while($row3=mysqli_fetch_array($result3,MYSQLI_ASSOC)){
+                                                                        echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
+                                                                    }                                       
+                                                                
+                                                                ?>
                                                                 </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label class="control-label col-lg-3">Due Date</label>
-                                                            <div class="col-lg-6">
-                                                                <!-- class="form-control form-control-inline input-medium default-date-picker" -->
-                                                                <input class="form-control m-bot15" size="10" name="dueDate" type="datetime-local" value="" required />
                                                             </div>
                                                         </div>
 
@@ -136,7 +210,22 @@
 										<form class="cmxform form-horizontal " id="servicerequest" method="post" action="requestor_service_request_form_DB.php">
 											
 												<header style="padding-bottom:20px" class="panel-heading wht-bg">
-													<h4 class="gen-case" style="float:right"> <a class="btn btn-success">Opened</a></h4>
+													<h4 class="gen-case" style="float:right"> 
+                                                        <?php
+                                                        if($statusID == '1'){//pending
+                                                            echo " <a class='btn btn-warning'>{$description}</span></a>";
+                                                        }
+                                                        if($statusID == '2'){//ongoing
+                                                            echo "<a class='btn btn-info'>{$description}</span></a>";
+                                                        }
+                                                        if($statusID == '3'){//completed
+                                                            echo " <a class='btn btn-success'>{$description}</span></a>";
+                                                        }
+                                                        if($statusID == '4'){//disapproved
+                                                            echo " <a class='btn btn-danger'>{$description}</span></a>";
+                                                        }
+                                                        ?>
+                                                    </h4>
 													<h4>Repair Request</h3>
 												</header>
 												<div class="panel-body ">
@@ -145,17 +234,22 @@
 														<div class="row">
 															<div class="col-md-8">
 																<img src="images/chat-avatar2.jpg" alt="">
-																<strong>IT Office</strong>
+																<strong><?php echo $name; ?></strong>
 																to
 																<strong>me</strong>
 															</div>
 															<div class="col-md-4">
-																<p class="date"> 10:15AM 02 FEB 2018</p><br><br>
+																<h5>Date Created: <?php echo $dateReceived;?></h5>
 															</div>
+                                                            <div class="col-md-8">
+                                                            </div>
+                                                            <div class="cp;-col-md-4">
+                                                                <h5>&nbsp; &nbsp; Due Date: <?php echo $dateNeed;?></h5>
+                                                            </div>
 														</div>
 													</div>
 													<div class="view-mail">
-														<p>HI would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. </p>
+														<p><?php echo $details;?></p>
 													</div>
 												</div>
 							</section>
@@ -167,30 +261,65 @@
 													<thead>
 														<tr>
 															
-															<th>Asset/ Software Name</th>
 															<th>Property Code</th>
+                                                            <th>Category</th>
+                                                            <th>Brand</th>
+                                                            <th>Description</th>
 															<th>Building</th>
 															<th>Room</th>
 														</tr>
 													</thead>
 													<tbody>
-														<tr>
-															<td>PC</td>
-															<td>123456</td>
-															<td>Br. Andrew</td>
-															<td>A 1702</td>
-														</tr>
+                                                        <?php
+                                                        
+                                                        for ($i=0; $i < count($assets); $i++) { 
+                                                            
+                                                            
+                                                            $query3 =  "SELECT a.assetID, propertyCode, b.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
+                                                                    FROM asset a 
+                                                                        JOIN assetModel m
+                                                                    ON assetModel = assetModelID
+                                                                        JOIN ref_brand br
+                                                                    ON brand = brandID
+                                                                        JOIN ref_assetcategory c
+                                                                    ON assetCategory = assetCategoryID
+                                                                        JOIN ref_assetstatus s
+                                                                    ON a.assetStatus = s.id
+                                                                        JOIN assetassignment aa
+                                                                    ON a.assetID = aa.assetID
+                                                                        JOIN building b
+                                                                    ON aa.BuildingID = b.BuildingID
+                                                                        JOIN floorandroom f
+                                                                    ON aa.FloorAndRoomID = f.FloorAndRoomID 
+                                                                        WHERE a.assetID = {$assets[$i]};";
+
+                                                            $result3 = mysqli_query($dbc, $query3);  
+
+
+
+                                                            while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
+
+                                                               echo "<tr>
+                                                                <td>{$row['propertyCode']}</td>
+                                                                <td>{$row['category']}</td>
+                                                                <td>{$row['brand']}</td>
+                                                                <td>{$row['description']}</td>
+                                                                <td>{$row['building']}</td>
+                                                                <td>{$row['floorroom']}</td>
+                                                                </tr>";
+                                                            }  
+
+                                                        }
+                                                        ?>
 													</tbody>
 												</table>
 											</div>
 										</section>
-										
-										<div class="form-control">
 											<a href="engineer_all_ticket.php"><button class="btn btn-danger">Back</button></a>
-										</div>
 										
 							
-										</form>
+										</form>                                       
+
 									</div>
 								</div>
                             

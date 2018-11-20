@@ -8,36 +8,51 @@
 	$row=mysqli_fetch_array($result, MYSQLI_ASSOC);
 	
 	if(isset($_POST['approve'])){
-		$assetCategoryID=$_POST['assetCategoryID'];
+		$donDetailsID=$_POST['donDetailsID'];
 		$propCode=$_POST['propCode'];
 		
+		
 		//Update status
-		$queryApp="UPDATE `thesis`.`donation` SET `statusID`='2',`stepsID`='9' WHERE `donationID`='1'";
+		$queryApp="UPDATE `thesis`.`donation` SET `statusID`='2',`stepsID`='9' WHERE `donationID`='{$donationID}'";
 		$resultApp=mysqli_query($dbc,$queryApp);
 		
 		//Get donation data
-		$queryDonDat="SELECT * FROM thesis.donation where `donationID`='{$donationID}'";
+		$queryDonDat="SELECT * FROM thesis.donation where `donationID`='{$donationID}' limit 1";
 		$resultDonDat=mysqli_query($dbc,$queryDonDat);
 		$rowDonDat=mysqli_fetch_array($resultDonDat, MYSQLI_ASSOC);
 		
 		//Create asset testing
-		$queryAssT="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`) VALUES ('1', '{$rowDonDat['user_UserID']}', '25');";
-		$resultAssT=mysqli_query($dbc,$queryAssT);
+		//$queryAssT="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`) VALUES ('1', '{$rowDonDat['user_UserID']}', '25');";
+		//$resultAssT=mysqli_query($dbc,$queryAssT);
 		
 		//GET asset testing data
-		$queryAssTData="SELECT * FROM thesis.assettesting order by testingID desc limit 1";
-		$resultAssTData=mysqli_query($dbc,$queryAssTData);
-		$rowAssTData=mysqli_fetch_array($resultAssTData, MYSQLI_ASSOC);
+		//$queryAssTData="SELECT * FROM thesis.assettesting order by testingID desc limit 1";
+		//$resultAssTData=mysqli_query($dbc,$queryAssTData);
+		//$rowAssTData=mysqli_fetch_array($resultAssTData, MYSQLI_ASSOC);
 		
-		foreach(array_combine($assetCategoryID, $propCode) as $assetCatId => $asset){
-			//Update donation details
-			$queryDonDet1="UPDATE `thesis`.`donationdetails` SET `assetID`='{$asset}' WHERE `donationID`='{$donationID}' and assetCategoryID='{$assetCatId}'";
-			$resultDonDet1=mysqli_query($dbc,$queryDonDet1);
+		foreach(array_combine($donDetailsID, $propCode) as $donID => $asset){
+			//INSERT TO DONATIONDETAILS_ITEM
+			$queryDonDetIt="INSERT INTO `thesis`.`donationdetails_item` (`id`, `assetID`) VALUES ('{$donID}', '{$asset}');";
+			$resultDonDetIt=mysqli_query($dbc,$queryDonDetIt);
 			
 			//INSERT to Asset testing details
-			$queryAssTDet="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowAssTData['testingID']}', '{$asset}');";
-			$resultAssTDet=mysqli_query($dbc,$queryAssTDet);	
+			//$queryAssTDet="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowAssTData['testingID']}', '{$asset}');";
+			//$resultAssTDet=mysqli_query($dbc,$queryAssTDet);	
 		}
+		if(!empty($_POST['donDetailsID1'])&&!empty($_POST['propCode1'])){
+			$donDetailsID1=$_POST['donDetailsID1'];
+			$propCode1=$_POST['propCode1'];
+			foreach(array_combine($donDetailsID1, $propCode1) as $donID1 => $asset1){
+				//INSERT TO DONATIONDETAILS_ITEM
+				$queryDonDetIt="INSERT INTO `thesis`.`donationdetails_item` (`id`, `assetID`) VALUES ('{$donID1}', '{$asset1}');";
+				$resultDonDetIt=mysqli_query($dbc,$queryDonDetIt);
+			
+				//INSERT to Asset testing details
+				//$queryAssTDet="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowAssTData['testingID']}', '{$asset1}');";
+				//$resultAssTDet=mysqli_query($dbc,$queryAssTDet);	
+			}
+		}
+		
 		
 		$message = "Form submitted!";
 		$_SESSION['submitMessage'] = $message; 
@@ -169,7 +184,7 @@
 															while($rowDonDet=mysqli_fetch_array($resultDonDet, MYSQLI_ASSOC)){
 																echo 
 																"<tr>
-																	<input type='hidden' name='assetCategoryID[]' value='{$rowDonDet['assetCategoryID']}'>
+																	<input type='hidden' name='donDetailsID[]' value='{$rowDonDet['id']}'>
 																	<td>{$rowDonDet['assetCatName']}</td>
 																	<td>{$rowDonDet['quantity']}</td>
 																	<td>
@@ -201,6 +216,42 @@
 																	</td>
 																</tr>";
 																$count++;
+																for($i=0;$i<$rowDonDet['quantity']-1;$i++){
+																	echo "<tr>
+																		  <input type='hidden' name='donDetailsID1[]' value='{$rowDonDet['id']}'>
+																		  <td></td>
+																		  <td></td>
+																		  <td>
+																		  <select class='form-control donreq' id='brand".$count."' required onchange='getModel({$count},{$rowDonDet['assetCategoryID']})'>
+																		  <option value=''>Select Brand</option>";
+																	
+																	//GET BRAND
+																	$queryBrand = "SELECT * FROM thesis.ref_brand";
+																	$resultBrand = mysqli_query($dbc, $queryBrand);
+																	while($rowBrand=mysqli_fetch_array($resultBrand, MYSQLI_ASSOC)){
+																		echo "<option value='{$rowBrand['brandID']}'>{$rowBrand['name']}</option>";
+																	}
+																	
+																	
+																	
+																	echo "</select>
+																		</td>
+																		<td>
+																		<select class='form-control donreq' id='model".$count."' required onchange='getPropCode({$count})'>
+																			<option value=''>Select Model</option>";
+																	
+																	echo "</select>
+																		</td>
+																		<td>
+																		<select class='form-control donreq' id='propCode".$count."' name='propCode1[]' required>
+																			<option value=''>Select Property Code</option>";
+																			
+																	echo "</select>
+																		</td>
+																	</tr>";
+																	$count++;
+																}
+																
 															}
 														?>
                                                     </tbody>

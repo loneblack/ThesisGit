@@ -503,8 +503,8 @@
 
 
 	-- Asset Assignment
-	INSERT INTO `thesis`.`assetassignment` (`assetID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('1', '2018-07-24', '2018-07-25', '1', '2');
-	INSERT INTO `thesis`.`assetassignment` (`assetID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('2', '2018-07-24', '2018-07-25', '9', '2');
+	INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('1', '3', '1', '2018-07-24', '2018-07-25', '1', '2');
+	INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('2', '3', '2', '2018-07-24', '2018-07-25', '9', '2');
 
 
 	-- asseet audit for asset assignment
