@@ -159,6 +159,7 @@
                                                 <label for="name" class="col-lg-2 col-sm-2 control-label">Assigned</label>
                                                 <div class="col-lg-10">
                                                     <select class="form-control m-bot15" name="assigned" value="<?php if (isset($_POST['assigned']) && !$flag) echo $_POST['assigned'];  ?>" required>
+                                                        <option>None</option>
 														<?php
 															$query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer'";
 															$result3=mysqli_query($dbc,$query3);

@@ -43,6 +43,40 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     array_push($assets, $row['asset']);
 }
 ?>
+<?php
+// Insertion to ticket
+    
+    if(isset($_POST['submit'])){
+        
+        $message=null;
+        $category=$_POST['category'];
+        $status=$_POST['status'];
+        $priority=$_POST['priority'];
+        $assigned=$_POST['assigned'];
+        $currDate=date("Y-m-d H:i:s");
+// submit not yet fixed
+        if(!isset($message)){
+            $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}')";
+            $resulta=mysqli_query($dbc,$querya);
+        
+            $queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
+            $resultaa=mysqli_query($dbc,$queryaa);
+            $rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
+        
+            $queryaaa="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$testingID}'";
+            $resultaaa=mysqli_query($dbc,$queryaaa);
+            while($rowaaa=mysqli_fetch_array($resultaaa,MYSQLI_ASSOC)){
+                $queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$rowaaa['asset_assetID']}');";
+                $resultaaaa=mysqli_query($dbc,$queryaaaa);
+            }
+        
+            $message = "Ticket Created";
+            $_SESSION['submitMessage'] = $message;
+        }
+        
+    }
+    
+?>
 <head>
     <meta charset="utf-8">
 
@@ -113,19 +147,17 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 <div class="form">
                                                     <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
                                                         <div class="form-group ">
-                                                            <div class="form-group ">
-                                                                <label for="category" class="control-label col-lg-3">Category</label>
-                                                                <div class="col-lg-6">
-                                                                    <select class="form-control m-bot15" name="category" value="" required>
-
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
                                                             <label for="status" class="control-label col-lg-3">Status</label>
                                                             <div class="col-lg-6">
                                                                 <select class="form-control m-bot15" name="status" value="" required>
-
+                                                                <?php
+                                                                    $query2="SELECT * FROM thesis.ref_ticketstatus";
+                                                                    $result2=mysqli_query($dbc,$query2);
+                                                                    
+                                                                    while($row2=mysqli_fetch_array($result2,MYSQLI_ASSOC)){
+                                                                        echo "<option value='{$row2['ticketID']}'>{$row2['status']}</option>";
+                                                                    }
+                                                                ?>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -146,17 +178,17 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                             <label for="assign" class="control-label col-lg-3">Assigned</label>
                                                             <div class="col-lg-6">
                                                                 <select class="form-control m-bot15" name="assigned" value="" required>
-
-
+                                                                <option>None</option>
+                                                                <?php
+                                                                    $query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer'";
+                                                                    $result3=mysqli_query($dbc,$query3);
+                                                                    
+                                                                    while($row3=mysqli_fetch_array($result3,MYSQLI_ASSOC)){
+                                                                        echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
+                                                                    }                                       
+                                                                
+                                                                ?>
                                                                 </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label class="control-label col-lg-3">Due Date</label>
-                                                            <div class="col-lg-6">
-                                                                <!-- class="form-control form-control-inline input-medium default-date-picker" -->
-                                                                <input class="form-control m-bot15" size="10" name="dueDate" type="datetime-local" value="" required />
                                                             </div>
                                                         </div>
 
@@ -207,8 +239,13 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 																<strong>me</strong>
 															</div>
 															<div class="col-md-4">
-																<p class="date"><?php echo $dateReceived;?></p><br><br>
+																<h5>Date Created: <?php echo $dateReceived;?></h5>
 															</div>
+                                                            <div class="col-md-8">
+                                                            </div>
+                                                            <div class="cp;-col-md-4">
+                                                                <h5>&nbsp; &nbsp; Due Date: <?php echo $dateNeed;?></h5>
+                                                            </div>
 														</div>
 													</div>
 													<div class="view-mail">
@@ -237,7 +274,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         
                                                         for ($i=0; $i < count($assets); $i++) { 
                                                             
-                                                                    // !!!!  join asset assignment to get floor and building to show in table
+                                                            
                                                             $query3 =  "SELECT a.assetID, propertyCode, b.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
                                                                     FROM asset a 
                                                                         JOIN assetModel m
@@ -274,23 +311,15 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                                                         }
                                                         ?>
-														<tr>
-															<td>PC</td>
-															<td>123456</td>
-															<td>Br. Andrew</td>
-															<td>A 1702</td>
-														</tr>
 													</tbody>
 												</table>
 											</div>
 										</section>
-										
-										<div class="form-control">
 											<a href="engineer_all_ticket.php"><button class="btn btn-danger">Back</button></a>
-										</div>
 										
 							
-										</form>
+										</form>                                       
+
 									</div>
 								</div>
                             
