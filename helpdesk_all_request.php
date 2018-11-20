@@ -68,6 +68,7 @@
                                         <table class="display table table-bordered table-striped" id="dynamic-table">
                                             <thead>
                                                 <tr>
+                                                    <th style="display: none"></th>
                                                     <th>#</th>
                                                     <th>Title</th>
                                                     <th>Type of Request</th>
@@ -76,16 +77,20 @@
                                             </thead>
                                             <tbody>
 												<?php 
+                                                    $count = 1;
 													//GET REQUEST FOR Procurement Service Material
 													$queryReqProc="SELECT * FROM thesis.request where step='9'";
 													$resultReqProc=mysqli_query($dbc,$queryReqProc);
 													while($rowReqProc=mysqli_fetch_array($resultReqProc,MYSQLI_ASSOC)){
 														echo "<tr class='gradeA'>
-															<td>{$rowReqProc['requestID']}</td>
+                                                            <td style='display: none'>{$rowReqProc['requestID']}</td>
+															<td>{$count}</td>
 															<td>{$rowReqProc['description']}</td>
 															<td>Procurement of Service and Material</td>
 															<td>{$rowReqProc['dateNeeded']}</td>
 															</tr>";
+
+                                                        $count++;
 													}
 												?>
 												
@@ -96,11 +101,14 @@
 													$resultDon=mysqli_query($dbc,$queryDon);
 													while($rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC)){
 														echo "<tr class='gradeA'>
-															<td>{$rowDon['donationID']}</td>
+                                                            <td style='display: none'>{$rowDon['donationID']}</td>
+															<td>{$count}</td>
 															<td>{$rowDon['purpose']}</td>
 															<td>Donation</td>
 															<td>{$rowDon['dateNeed']}</td>
 															</tr>";
+
+                                                            $count++;
 													}
 													
 												?>
@@ -131,9 +139,37 @@
 
 												?>
 												
-												
+												<?php
+                                                    //view for service
+                                                    $query = "SELECT *, sr.id as 'serviceID' FROM thesis.service sr   
+                                                              JOIN ref_status st ON sr.status = st.statusID 
+                                                              JOIN ref_steps s ON steps = s.id;";
+                                                                  
+                                                    $result = mysqli_query($dbc, $query);
+                                                    
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                      
+                                                      echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$row['serviceID']}</td>
+                                                            <td>{$count}</td>
+                                                            <td>{$row['details']}</td>
+                                                            <td>";
+
+                                                       if($row['serviceType']=='27') echo "Repair";
+                                                       else echo "Service";
+
+                                                        echo
+                                                            "</td>
+                                                            <td>{$row['dateNeed']}</td>
+                                                            </tr>";
+
+                                                          $count++;
+                                                    }
+                                                  ?>
 											
                                                 <tr class="gradeA">
+                                                    <td style="display: none"></td>
                                                     <td>1</td>
                                                     <td>Need Help Here</td>
                                                     <td>Donation</td>
@@ -141,6 +177,7 @@
                                                 </tr>
 
                                                 <tr class="gradeA">
+                                                    <td style="display: none"></td>
                                                     <td>2</td>
                                                     <td>Need Help Here</td>
                                                     <td>Hardware Software Request</td>
@@ -148,6 +185,7 @@
                                                 </tr>
 
                                                 <tr class="gradeA">
+                                                    <td style="display: none"></td>
                                                     <td>3</td>
                                                     <td>Need Help Here</td>
                                                     <td>Procurement of Service and Material</td>
@@ -155,6 +193,7 @@
                                                 </tr>
 
                                                 <tr class="gradeA">
+                                                    <td style="display: none"></td>
                                                     <td>4</td>
                                                     <td>Need Help Here</td>
                                                     <td>Borrow</td>
@@ -162,6 +201,7 @@
                                                 </tr>
 
                                                 <tr class="gradeA">
+                                                    <td style="display: none"></td>
                                                     <td>5</td>
                                                     <td>Need Help Here</td>
                                                     <td>Service Request</td>
@@ -169,6 +209,7 @@
                                                 </tr>
                                             <tfoot>
                                                 <tr>
+                                                    <th style="display: none"></th>
                                                     <th>#</th>
                                                     <th>Title</th>
                                                     <th>Type of Request</th>
@@ -211,7 +252,7 @@
 				var currentRow = table.rows[i];
 				var createClickHandler = function(row) {
 					return function() {
-						var cell = row.getElementsByTagName("td")[2];
+						var cell = row.getElementsByTagName("td")[3];
 						var idx = cell.textContent;
 						
 						var cell1 = row.getElementsByTagName("td")[0];
@@ -238,7 +279,7 @@
 						}
 						
 						if(idx == "Repair"){
-							window.location.replace("helpdesk_view_repair_open.php");
+							window.location.replace("helpdesk_view_repair_open.php?id="+id);
 						}
 						
 					};

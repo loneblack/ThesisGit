@@ -1,6 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
 
+$_SESSION['previousPage'] = "requestor_service_request_form.php";
+$id = $_GET['id'];//get the id of the selected service request
+
+require_once("db/mysql_connect.php");
+
+$query =  "SELECT *, details, dateNeed, endDate, dateReceived, s.serviceType AS 'serviceTypeID', t.serviceType, statusID, description AS 'status', others, steps
+            FROM thesis.service s
+                JOIN ref_servicetype t
+            ON s.serviceType = t.id
+                JOIN ref_status a
+            ON s.status = a.statusID
+                JOIN employee e 
+            ON s.UserID = e.UserID
+                WHERE s.id = {$id}";
+$result = mysqli_query($dbc, $query);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+    
+        $name = $row['name'];      
+        $dateReceived = $row['dateReceived'];
+        $details = $row['details'];
+        $dateNeed = $row['dateNeed'];
+        $endDate = $row['endDate'];
+        $serviceTypeID = $row['serviceTypeID'];
+        $serviceType = $row['serviceType'];
+        $statusID = $row['statusID'];
+        $description = $row['description'];
+        $others = $row['others'];
+        $steps = $row['steps'];
+
+    }
+$assets = array();
+
+$query2 =  "SELECT * FROM thesis.servicedetails WHERE serviceID = {$id};";
+$result2 = mysqli_query($dbc, $query2);
+
+while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
+    array_push($assets, $row['asset']);
+}
+?>
 <head>
     <meta charset="utf-8">
 
@@ -136,7 +178,22 @@
 										<form class="cmxform form-horizontal " id="servicerequest" method="post" action="requestor_service_request_form_DB.php">
 											
 												<header style="padding-bottom:20px" class="panel-heading wht-bg">
-													<h4 class="gen-case" style="float:right"> <a class="btn btn-success">Opened</a></h4>
+													<h4 class="gen-case" style="float:right"> 
+                                                        <?php
+                                                        if($statusID == '1'){//pending
+                                                            echo " <a class='btn btn-warning'>{$description}</span></a>";
+                                                        }
+                                                        if($statusID == '2'){//ongoing
+                                                            echo "<a class='btn btn-info'>{$description}</span></a>";
+                                                        }
+                                                        if($statusID == '3'){//completed
+                                                            echo " <a class='btn btn-success'>{$description}</span></a>";
+                                                        }
+                                                        if($statusID == '4'){//disapproved
+                                                            echo " <a class='btn btn-danger'>{$description}</span></a>";
+                                                        }
+                                                        ?>
+                                                    </h4>
 													<h4>Repair Request</h3>
 												</header>
 												<div class="panel-body ">
@@ -145,17 +202,17 @@
 														<div class="row">
 															<div class="col-md-8">
 																<img src="images/chat-avatar2.jpg" alt="">
-																<strong>IT Office</strong>
+																<strong><?php echo $name; ?></strong>
 																to
 																<strong>me</strong>
 															</div>
 															<div class="col-md-4">
-																<p class="date"> 10:15AM 02 FEB 2018</p><br><br>
+																<p class="date"><?php echo $dateReceived;?></p><br><br>
 															</div>
 														</div>
 													</div>
 													<div class="view-mail">
-														<p>HI would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. </p>
+														<p><?php echo $details;?></p>
 													</div>
 												</div>
 							</section>
@@ -167,13 +224,48 @@
 													<thead>
 														<tr>
 															
-															<th>Asset/ Software Name</th>
 															<th>Property Code</th>
+                                                            <th>Category</th>
+                                                            <th>Brand</th>
+                                                            <th>Description</th>
 															<th>Building</th>
 															<th>Room</th>
 														</tr>
 													</thead>
 													<tbody>
+                                                        <?php
+                                                        
+                                                        for ($i=0; $i < count($assets); $i++) { 
+                                                            
+                                                                    // !!!!  join asset assignment to get floor and building
+                                                            $query3 =  "SELECT a.assetID, propertyCode, b.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description
+                                                                    FROM asset a 
+                                                                        JOIN assetModel m
+                                                                    ON assetModel = assetModelID
+                                                                        JOIN ref_brand b
+                                                                    ON brand = brandID
+                                                                        JOIN ref_assetcategory c
+                                                                    ON assetCategory = assetCategoryID
+                                                                        JOIN ref_assetstatus s
+                                                                    ON a.assetStatus = s.id
+                                                                        WHERE a.assetID = {$assets[$i]};";
+
+                                                            $result3 = mysqli_query($dbc, $query3);  
+
+
+
+                                                            while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
+
+                                                               echo "<tr>
+                                                                <td>{$row['propertyCode']}</td>
+                                                                <td>{$row['category']}</td>
+                                                                <td>{$row['brand']}</td>
+                                                                <td>{$row['description']}</td>
+                                                                </tr>";
+                                                            }  
+
+                                                        }
+                                                        ?>
 														<tr>
 															<td>PC</td>
 															<td>123456</td>

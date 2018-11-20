@@ -179,8 +179,10 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                         <table class="table table-bordered table-striped table-condensed table-hover" id="dynamic-table">
                                             <thead>
                                                 <tr>
+                                                    <td style='display: none'>ID</td>
                                                     <th>#</th>
                                                     <th>Title</th>
+                                                    <td style='display: none'>ServiceTypeID</td>
                                                     <th>Category</th>
                                                     <th>Updated</th>
                                                     <th>Date Needed</th>
@@ -188,7 +190,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody>1
 
                                                  <?php
                                                     $count = 1;

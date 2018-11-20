@@ -65,10 +65,12 @@ require_once("db/mysql_connect.php");
                                         <table class="display table table-bordered table-striped" id="dynamic-table">
                                             <thead>
                                                 <tr>
+                                                    <td style='display: none'>ID</td>
                                                     <th>#</th>
                                                     <th>Type of Request</th>
                                                     <th>Date Made</th>
                                                     <th>Date Needed</th>
+                                                    <td style='display: none'>StatusID</td>
                                                     <th>Status</th>
                                                     <th>Description</th>
                                                 </tr>
@@ -123,6 +125,7 @@ require_once("db/mysql_connect.php");
                                                     //view for service
                                                     $query = "SELECT * FROM thesis.service sr   
                                                               JOIN ref_status st ON sr.status = st.statusID 
+                                                              JOIN ref_steps s ON steps = s.id
                                                               WHERE UserID = {$userID};";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
@@ -151,7 +154,7 @@ require_once("db/mysql_connect.php");
                                                             echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
                                                         }
 
-                                                        echo "<td>{$row['steps']}</td>";
+                                                        echo "<td>{$row['name']}</td>";
                                                         echo "</tr>";
 
                                                           $count++;
@@ -262,10 +265,12 @@ require_once("db/mysql_connect.php");
                                             </tbody>
                                             <tfoot>
                                                 <tr>
+                                                    <td style='display: none'>ID</td>
                                                     <th>#</th>
                                                     <th>Type of Request</th>
                                                     <th>Date Made</th>
                                                     <th>Date Needed</th>
+                                                    <td style='display: none'>StatusID</td>
                                                     <th>Status</th>
                                                     <th>Description</th>
                                                 </tr>
