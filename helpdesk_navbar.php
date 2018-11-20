@@ -25,14 +25,6 @@
                             </a>
                         </li>
                         
-                        
-                        <li class="sub-menu">
-                            <a href="helpdesk_category.php">
-                                <i class="fa fa-list-ol"></i>
-                                <span>Service Category</span>
-                            </a>
-                        </li>
-                        
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-dropbox"></i>

@@ -59,7 +59,7 @@
                                                 <div class="form-group ">
                                                     <label for="dts" class="control-label col-lg-3">DTS No.</label>
                                                     <div class="col-lg-6">
-                                                        <input type="text" class="form-control"  id="dts" name="dts" readonly value="661947"></input>
+                                                        <input type="text" class="form-control"  id="dts" name="dts" readonly value="661947">
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
