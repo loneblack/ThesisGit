@@ -237,17 +237,23 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         
                                                         for ($i=0; $i < count($assets); $i++) { 
                                                             
-                                                                    // !!!!  join asset assignment to get floor and building
-                                                            $query3 =  "SELECT a.assetID, propertyCode, b.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description
+                                                                    // !!!!  join asset assignment to get floor and building to show in table
+                                                            $query3 =  "SELECT a.assetID, propertyCode, b.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
                                                                     FROM asset a 
                                                                         JOIN assetModel m
                                                                     ON assetModel = assetModelID
-                                                                        JOIN ref_brand b
+                                                                        JOIN ref_brand br
                                                                     ON brand = brandID
                                                                         JOIN ref_assetcategory c
                                                                     ON assetCategory = assetCategoryID
                                                                         JOIN ref_assetstatus s
                                                                     ON a.assetStatus = s.id
+                                                                        JOIN assetassignment aa
+                                                                    ON a.assetID = aa.assetID
+                                                                        JOIN building b
+                                                                    ON aa.BuildingID = b.BuildingID
+                                                                        JOIN floorandroom f
+                                                                    ON aa.FloorAndRoomID = f.FloorAndRoomID 
                                                                         WHERE a.assetID = {$assets[$i]};";
 
                                                             $result3 = mysqli_query($dbc, $query3);  
@@ -261,6 +267,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                                 <td>{$row['category']}</td>
                                                                 <td>{$row['brand']}</td>
                                                                 <td>{$row['description']}</td>
+                                                                <td>{$row['building']}</td>
+                                                                <td>{$row['floorroom']}</td>
                                                                 </tr>";
                                                             }  
 

@@ -123,7 +123,7 @@ require_once("db/mysql_connect.php");
 
                                                   <?php
                                                     //view for service
-                                                    $query = "SELECT * FROM thesis.service sr   
+                                                    $query = "SELECT *, sr.id as'serviceID' FROM thesis.service sr   
                                                               JOIN ref_status st ON sr.status = st.statusID 
                                                               JOIN ref_steps s ON steps = s.id
                                                               WHERE UserID = {$userID};";
@@ -134,7 +134,7 @@ require_once("db/mysql_connect.php");
                                                     {
                                                       
                                                       echo "<tr class='gradeA'>
-                                                            <td style='display: none'>{$row['id']}</td>
+                                                            <td style='display: none'>{$row['serviceID']}</td>
                                                             <td>{$count}</td>
                                                             <td>Service</td>
                                                             <td>{$row['dateReceived']}</td>
