@@ -78,10 +78,10 @@
                                                 <thead>
                                                     <tr>
 														<th></th>
-                                                        <th>Property Code</th>
-                                                        <th>Brand</th>
-                                                        <th>Model</th>
-                                                        <th>Comments</th>
+                                                        <th style="text-align:center">Property Code</th>
+                                                        <th style="text-align:center">Brand</th>
+                                                        <th style="text-align:center">Model</th>
+                                                        <th style="text-align:center">Comments</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
