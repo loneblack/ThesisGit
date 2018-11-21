@@ -188,22 +188,22 @@ require_once("db/mysql_connect.php");
 						if(serviceTypeID == '25'){
                             //asset testing
 							if(status == "Closed"){
-								window.location.replace("engineer_view_ticket_assettesting_closed.php?id=" + id);
+								window.location.href ="engineer_view_ticket_assettesting_closed.php?id=" + id;
 							}
 								
 							else{
-								window.location.replace("engineer_view_ticket_assettesting_opened.php?id=" + id);
+								window.location.href = "engineer_view_ticket_assettesting_opened.php?id=" + id;
 							}
 						}
 						
 						else if(serviceTypeID == '26'){
                             //refurbishing
 							if(status == "Closed"){
-								window.location.replace("engineer_view_ticket_refurbishing_closed.php?id=" + id);
+								window.location.href = "engineer_view_ticket_refurbishing_closed.php?id=" + id;
 							}
 
                             else{
-                                window.location.replace("engineer_view_ticket_refurbishing_opened.php?id=" + id);
+                                window.location.href = "engineer_view_ticket_refurbishing_opened.php?id=" + id;
                             }
                             
 						}
@@ -211,37 +211,37 @@ require_once("db/mysql_connect.php");
                         else if(serviceTypeID == '27'){
                             //repair
                             if(status == "Closed"){
-                                window.location.replace("engineer_view_ticket_repair_closed.php?id=" + id);
+                                window.location.href = "engineer_view_ticket_repair_closed.php?id=" + id;
                             }
                             else{
-								window.location.replace("engineer_view_ticket_repair_opened.php?id=" + id);
+								window.location.href = "engineer_view_ticket_repair_opened.php?id=" + id;
 							}
 						}
                         else if(serviceTypeID == '28'){
                             //maintenance
                             if(status == "Closed"){
-                                window.location.replace("engineer_view_ticket_maintenance_closed.php?id=" + id);
+                                window.location.href = "engineer_view_ticket_maintenance_closed.php?id=" + id;
                             }
                             else{
-                                window.location.replace("engineer_view_ticket_maintenance_opened.php?id=" + id);
+                                window.location.href = "engineer_view_ticket_maintenance_opened.php?id=" + id;
                             }
                         }
                          else if(serviceTypeID == '29'){
                             //others
                             if(status == "Closed"){
-                                window.location.replace("engineer_view_ticket_others_closed.php?id=" + id);
+                                window.location.href = "engineer_view_ticket_others_closed.php?id=" + id;
                             }
                             else{
-                                window.location.replace("engineer_view_ticket_others_opened.php?id=" + id);
+                                window.location.href = "engineer_view_ticket_others_opened.php?id=" + id;
                             }
                         }
                          else{
                             //service
                             if(status == "Closed"){
-                                window.location.replace("engineer_view_ticket_service_closed.php?id=" + id);
+                                window.location.href = "engineer_view_ticket_service_closed.php?id=" + id;
                             }
                             else{
-                                window.location.replace("engineer_view_ticket_service_opened.php?id=" + id);
+                                window.location.href = "engineer_view_ticket_service_opened.php?id=" + id;
                             }
                         }
 						
