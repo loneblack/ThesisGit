@@ -154,7 +154,7 @@
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['serviceID']}</td>
                                                             <td>{$count}</td>
-                                                            <td>{$row['details']}</td>
+                                                            <td>{$row['summary']}</td>
                                                             <td>";
 
                                                        if($row['serviceType']=='27') echo "Repair";

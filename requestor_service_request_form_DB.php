@@ -6,6 +6,7 @@
 
 	$serviceType = $_POST['serviceType'];
 	$others = $_POST['others'];
+	$summary = $_POST['summary'];
 	$details = $_POST['details'];
 	$dateNeeded = $_POST['dateNeeded'];
 	$endDate = $_POST['endDate'];
@@ -19,10 +20,12 @@
     $date = date('Y-m-d H:i:s', strtotime($value." ".$time));
 
     //insertion to service table
-	$sql = "INSERT INTO `thesis`.`service` (`details`, `dateNeed`, `endDate`, `dateReceived`, `UserID`, `serviceType`, `others`, `status`, `steps`)
-	                                VALUES ('{$details}', '{$dateNeeded}', '{$endDate}', '{$date}', '{$userID}', '{$serviceType}', '{$others}', '1', '14');";//status is set to 1 for pending status
+	$sql = "INSERT INTO `thesis`.`service` (`details`, `details`, `dateNeed`, `endDate`, `dateReceived`, `UserID`, `serviceType`, `others`, `status`, `steps`)
+	                                VALUES ('{$summary}', '{$details}', '{$dateNeeded}', '{$endDate}', '{$date}', '{$userID}', '{$serviceType}', '{$others}', '1', '14');";//status is set to 1 for pending status
 
 	$result = mysqli_query($dbc, $sql);
+
+	echo $sql;
 
 	//get the id of previously inserted service
 	$sql1 = "SELECT MAX(id) as 'id' FROM thesis.service;";//status is set to 1 for pending status
@@ -49,5 +52,5 @@
 	$message = "Form submitted!";
 	$_SESSION['submitMessage'] = $message;
 
-	header('Location: '.$header);
+	//header('Location: '.$header);
 ?>	
