@@ -168,7 +168,7 @@
                                                             <div class="form-group ">
                                                                 <label for="category" class="control-label col-lg-3">Category</label>
                                                                 <div class="col-lg-6">
-                                                                    <select class="form-control m-bot15" name="category" value="<?php if (isset($_POST['category']) && !$flag) echo $_POST['category']; ?>" required >
+                                                                    <select class="form-control m-bot15" name="category" value="<?php if (isset($_POST['category']) && !$flag) echo $_POST['category']; ?>" required readonly>
 																		<?php
 																			
 																			$querya="SELECT * FROM thesis.ref_servicetype";
