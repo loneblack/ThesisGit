@@ -1172,6 +1172,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticketedasset` (
   `ticketID` INT(11) NOT NULL,
   `assetID` INT(11) NULL DEFAULT NULL,
   `computerID` INT(11) NULL DEFAULT NULL,
+  `checked` TINYINT NULL,
   INDEX `fk_TicketedAsset_Ticket1_idx` (`ticketID` ASC),
   INDEX `fk_TicketedAsset_Asset1_idx` (`assetID` ASC),
   INDEX `fk_TicketedAsset_Computer1_idx` (`computerID` ASC),
