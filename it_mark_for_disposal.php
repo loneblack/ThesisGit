@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+<?php
+	session_start();
+	require_once('db/mysql_connect.php');
+	
+	if(isset($_POST['confirm'])){
+		if(!empty($_POST['markForDis'])){
+			$markForDis=$_POST['markForDis'];
+			foreach($markForDis as $forDis){
+				$queryForDis="UPDATE `thesis`.`asset` SET `assetStatus`='11' WHERE `assetID`='{$forDis}'";
+				$resultForDis=mysqli_query($dbc,$queryForDis);
+			}
+			$message = "Form submitted!";
+			$_SESSION['submitMessage'] = $message; 
+		}
+	}
+?>
 <html lang="en">
 
 <head>
@@ -49,7 +65,15 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				<?php
+                    if (isset($_SESSION['submitMessage'])){
 
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
                 <div class="col-sm-12">
                     <div class="col-sm-12">
                         
@@ -59,6 +83,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <section class="panel">
+										<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                         <header class="panel-heading">
                                             Mark for Disposal
                                             <span class="tools pull-right">
@@ -75,12 +100,30 @@
 															<th>Status</th>
                                                             <th>Property Code</th>
                                                             <th>Model</th>
-                                                            <th class="hidden-phone">Comments</th>
+                                                            <!-- <th class="hidden-phone">Comments</th> -->
                                                             <th class="hidden-phone">Brand</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr class="gradeX">
+														<?php
+															//GET STOCKED ASSET TEST
+															$queryAsset="SELECT a.assetID,rac.name as `assetCat`,rb.name as `brandName`,am.description as `assetModel`,ras.description as `assetStat`,a.propertyCode FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID
+																		  join ref_assetstatus ras on a.assetStatus=ras.id
+																		  join ref_brand rb on am.brand=rb.brandID
+																		  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID where a.assetStatus='4'";
+															$resultAsset=mysqli_query($dbc,$queryAsset);
+															while($rowAsset=mysqli_fetch_array($resultAsset,MYSQLI_ASSOC)){
+																echo "<tr class='gradeX'>
+																<td style='width:7px; text-align:center'><input type='checkbox' class='form-check-input' name='markForDis[]' id='exampleCheck1' value='{$rowAsset['assetID']}'></td>
+																<td>{$rowAsset['assetCat']}</td>
+																<td><label class='label label-danger'>{$rowAsset['assetStat']}</label></td>
+																<td>{$rowAsset['propertyCode']}</td>
+																<td>{$rowAsset['assetModel']}</td>
+																<td>{$rowAsset['brandName']}</td>
+															</tr>";
+															}
+														?>
+                                                       <!-- <tr class="gradeX">
                                                             <td style="width:7px; text-align:center"><input type="checkbox" class="form-check-input" id="exampleCheck1"></td>
                                                             <td>Laptop</td>
                                                             <td><label class="label label-danger">Broken - Not Fixable</label></td>
@@ -88,7 +131,7 @@
                                                             <td>Samsung</td>
                                                             <td>dead</td>
 															<td>Brand</td>
-                                                        </tr>
+                                                        </tr> -->
                                                         
                                                     </tbody>
                                                     <tfoot>
@@ -98,7 +141,7 @@
 															<th>Status</th>
                                                             <th>Property Code</th>
                                                             <th>Model</th>
-                                                            <th class="hidden-phone">Comments</th>
+                                                            <!-- <th class="hidden-phone">Comments</th> -->
                                                             <th class="hidden-phone">Brand</th>
                                                         </tr>
                                                     </tfoot>
@@ -106,9 +149,10 @@
                                             </div>
                                         </div>
                                         <div style="padding-left:10px; padding-bottom:10px">
-                                            <button type="button" onclick="Confirm()" class="btn btn-info">Confirm</button>
+                                            <button type="submit" name="confirm" onclick="Confirm()" class="btn btn-info">Confirm</button>
 											<button type="button" onclick="window.history.back()" class="btn btn-secondary">Back</button>
                                         </div>
+										</form>
                                     </section>
                                 </div>
                             </div>
