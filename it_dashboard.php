@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 	session_start();
-	$StartDate = strtotime('2018-1-1'); //Start date from which we begin count
+	$StartDate = strtotime('2018-1-3'); //Start date from which we begin count
 	$CurDate = date("Y-m-d"); //Current date.
 	$NextDate = date("Y-m-d", strtotime("+2 week", $StartDate)); //Next date = +2 week from start date
 	while ($CurDate > $NextDate ) { 
