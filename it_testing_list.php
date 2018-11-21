@@ -173,10 +173,10 @@
 						var id = cell.textContent;
 						
 						if(id == "Ongoing" || id == "Completed"){
-							window.location.replace("it_view_testing.php?testingID=" + row.getAttribute("id"));
+							window.location.href = "it_view_testing.php?testingID=" + row.getAttribute("id");
 						}
 						//else if(id == "Incomplete"){
-                            //window.location.replace("it_view_incomplete_testing.php?testingID=" + row.getAttribute("id"));
+                            //window.location.href = "it_view_incomplete_testing.php?testingID=" + row.getAttribute("id");
                         //}
 					};
 				};

@@ -417,10 +417,10 @@
 
                         if (idx == "Repair") {
                             if (id == "Completed" || id == "Incomplete") {
-                                window.location.replace("it_view_completed_incomplete_repair.php?requestID=" + row.getAttribute("id"));
+                                window.location.href ="it_view_completed_incomplete_repair.php?requestID=" + row.getAttribute("id");
                             }
                             if (id == "Ongoing" || id == "Pending") {
-                                window.location.replace("it_view_ongoing_pending_repair.php?requestID=" + row.getAttribute("id"));
+                                window.location.href = "it_view_ongoing_pending_repair.php?requestID=" + row.getAttribute("id");
                             }
 
                         }
@@ -428,48 +428,48 @@
                         if (idx == "Asset Request") {
                             if (id == "Ongoing" || id == "Pending") {
                                 if (idDesc == "Canvas completed") {
-                                    window.location.replace("it_view_canvas_completed.php");
+                                    window.location.href = "it_view_canvas_completed.php";
                                 } else if (idDesc == "Items received") {
-                                    window.location.replace("it_view_open_po.php");
+                                    window.location.href = "it_view_open_po.php";
                                 } else if (idDesc == "Replacement needed") {
-                                    window.location.replace("it_view_open_po.php");
+                                    window.location.href = "it_view_open_po.php";
                                 } else if (idDesc == "Conforme pending") {
-                                    window.location.replace("it_view_checklist.php");
+                                    window.location.href = "it_view_checklist.php";
                                 }
                             }
 
                             if (id == "Completed" || id == "Incomplete") {
-                                window.location.replace("it_view_checklist.php");
+                                window.location.href = "it_view_checklist.php";
                             }
                         }
 
                         if (idx == "Testing") {
                             if (id == "Ongoing" || id == "Pending") {
-                                window.location.replace("it_view_incomplete_testing.php");
+                                window.location.href = "it_view_incomplete_testing.php";
                             } else if (id == "Completed" || id == "Incomplete") {
-                                window.location.replace("it_view_testing.php");
+                                window.location.href = "it_view_testing.php";
                             }
                         }
 
                         if (idx == "Service Request") {
-                            window.location.replace("it_view_service_request_form.php");
+                            window.location.href = "it_view_service_request_form.php";
                         }
 
                         if (idx == "Donation") {
                             if (id == "Ongoing" || id == "Pending") {
-                                window.location.replace("it_view_open_donation_request.php");
+                                window.location.href = "it_view_open_donation_request.php";
                             }
 
                             if (id == "Completed" || id == "Incomplete") {
-                                window.location.replace("it_view_closed_donation_request.php");
+                                window.location.href = "it_view_closed_donation_request.php";
                             }
                         }
 
                         if (idx == "Borrow") {
                             if (id == "Ongoing" || id == "Pending") {
-                                window.location.replace("it_view_open_service_equipment_request.php");
+                                window.location.href = "it_view_open_service_equipment_request.php";
                             } else if (id == "Completed" || id == "Incomplete") {
-                                window.location.replace("it_view_closed_service_equipment_request.php");
+                                window.location.href = "it_view_closed_service_equipment_request.php";
                             }
                         }
                     };

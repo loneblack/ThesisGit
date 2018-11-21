@@ -101,7 +101,7 @@
     <script src="js/jquery.nicescroll.js"></script>
     <script>
         $('#ctable').on('dblclick', function() {
-            window.location.replace("it_edit_product.php");
+            window.location.href = "it_edit_product.php";
         })
 
     </script>
