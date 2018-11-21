@@ -106,7 +106,7 @@
                                                     </thead>
                                                     <tbody>
 														<?php
-															//GET STOCKED ASSET TEST
+															//GET Broken not fixable ASSET
 															$queryAsset="SELECT a.assetID,rac.name as `assetCat`,rb.name as `brandName`,am.description as `assetModel`,ras.description as `assetStat`,a.propertyCode FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID
 																		  join ref_assetstatus ras on a.assetStatus=ras.id
 																		  join ref_brand rb on am.brand=rb.brandID
