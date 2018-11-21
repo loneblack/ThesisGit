@@ -20,7 +20,7 @@
     $date = date('Y-m-d H:i:s', strtotime($value." ".$time));
 
     //insertion to service table
-	$sql = "INSERT INTO `thesis`.`service` (`details`, `details`, `dateNeed`, `endDate`, `dateReceived`, `UserID`, `serviceType`, `others`, `status`, `steps`)
+	$sql = "INSERT INTO `thesis`.`service` (`summary`, `details`, `dateNeed`, `endDate`, `dateReceived`, `UserID`, `serviceType`, `others`, `status`, `steps`)
 	                                VALUES ('{$summary}', '{$details}', '{$dateNeeded}', '{$endDate}', '{$date}', '{$userID}', '{$serviceType}', '{$others}', '1', '14');";//status is set to 1 for pending status
 
 	$result = mysqli_query($dbc, $sql);
@@ -36,21 +36,23 @@
         $id = $row['id'];
     }
 
-    //insert assets to service details from select box
-	foreach ($_POST['assets'] as $assets){
-		
-    	$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`) VALUES ('{$id}', '{$assets}');";
-    	$resulted = mysqli_query($dbc, $query);
+    if (isset($_POST['assets'])) {
+    	//insert assets to service details from select box
+		foreach ($_POST['assets'] as $assets){
+			
+	    	$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`) VALUES ('{$id}', '{$assets}');";
+	    	$resulted = mysqli_query($dbc, $query);
 
-    	//set asset status to for repair(9)
-		$query2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '9' WHERE (`assetID` = '{$assets}');";
-		$resulted2 = mysqli_query($dbc, $query2);
+	    	//set asset status to for repair(9)
+			$query2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '9' WHERE (`assetID` = '{$assets}');";
+			$resulted2 = mysqli_query($dbc, $query2);
 
-	}
+		}
+    }
 
 	$result1 = mysqli_query($dbc, $sql1);
 	$message = "Form submitted!";
 	$_SESSION['submitMessage'] = $message;
 
-	//header('Location: '.$header);
+	header('Location: '.$header);
 ?>	

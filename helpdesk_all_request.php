@@ -289,11 +289,11 @@
 						}
 						
 						if(idx == "Service"){
-							window.location.href="helpdesk_view_service_request.php";
+							window.location.href="helpdesk_view_service_request.php?id="+id;
 						}
 						
 						if(idx == "Repair"){
-							window.location.href = "helpdesk_view_repair_open.php?id="+id;
+							window.location.href = "helpdesk_view_repair.php?id="+id;
 						}
 						
 					};
