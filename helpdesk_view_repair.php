@@ -71,7 +71,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
             for ($i=0; $i < count($assets); $i++) { 
 
-                $queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$assets[$i]}');";
+                $queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`, `checked`) VALUES ('{$rowaa['ticketID']}', '{$assets[$i]}', '0');";
                 $resultaaaa=mysqli_query($dbc,$queryaaaa);
             }
 
