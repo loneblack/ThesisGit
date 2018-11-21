@@ -200,26 +200,26 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
 						var id = cell.textContent;
 						
 						if(id == "Create Purchase Order"){
-							window.location.replace("procurement_purchase_order.php?canvasID="+ row.getAttribute("id"));
+							window.location.href = "procurement_purchase_order.php?canvasID="+ row.getAttribute("id");
 						}
                         else if(id == "Canvasing"){
-                            window.location.replace("procurement_view_request.php?canvasID="+ row.getAttribute("id"));
+                            window.location.href = "procurement_view_request.php?canvasID="+ row.getAttribute("id");
                         }
 						else if(id == "Completed"){
-                           window.location.replace("procurement_view_completed.php?canvasID="+ row.getAttribute("id"));
+                           window.location.href = "procurement_view_completed.php?canvasID="+ row.getAttribute("id");
                         }
 						else if(id == "Re-Canvas"){
-							window.location.replace("procurement_recheck_canvas.php?canvasID="+ row.getAttribute("id"));
+							window.location.href = "procurement_recheck_canvas.php?canvasID="+ row.getAttribute("id");
 						}
 						
 						if(id == "Ready for PO"){
-							window.location.replace("procurement_purchase_order.php?canvasID="+ row.getAttribute("id"));
+							window.location.href = "procurement_purchase_order.php?canvasID="+ row.getAttribute("id");
 						}
                         else if(id == "Pending"){
-                            window.location.replace("procurement_view_request.php?canvasID="+ row.getAttribute("id"));
+                            window.location.href = "procurement_view_request.php?canvasID="+ row.getAttribute("id");
                         }
 						else if(id == "Completed"){
-                            window.location.replace("procurement_view_completed.php?canvasID="+ row.getAttribute("id"));
+                            window.location.href = "procurement_view_completed.php?canvasID="+ row.getAttribute("id");
                         }
 					};
 				};

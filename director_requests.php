@@ -164,7 +164,7 @@
         $('#ctable').on('click', function() {
 			$('.gradeA').on('click', function() {
 				var a = this.getAttribute("id");
-				window.location.replace("director_view_request.php?requestid=" + a);
+				window.location.href = "director_view_request.php?requestid=" + a;
 			})
         })	
 

@@ -49,26 +49,36 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     if(isset($_POST['submit'])){
         
         $message=null;
-        $category=$_POST['category'];
         $status=$_POST['status'];
         $priority=$_POST['priority'];
         $assigned=$_POST['assigned'];
         $currDate=date("Y-m-d H:i:s");
-// submit not yet fixed
+
         if(!isset($message)){
-            $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}')";
-            $resulta=mysqli_query($dbc,$querya);
+
+            if($assigned=='0'){
+                $querya="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `description`) VALUES ('{$status}', '{$_SESSION['userID']}', now(), now(), '{$dateNeed}', '{$priority}', '27', '{$description}')";
+                $resulta=mysqli_query($dbc,$querya);
+            }
+            else{
+                $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `description`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dateNeed}', '{$priority}', '27', '{$description}')";
+                $resulta=mysqli_query($dbc,$querya);
+            }
+
+            echo $querya;
         
             $queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
             $resultaa=mysqli_query($dbc,$queryaa);
             $rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
-        
-            $queryaaa="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$testingID}'";
-            $resultaaa=mysqli_query($dbc,$queryaaa);
-            while($rowaaa=mysqli_fetch_array($resultaaa,MYSQLI_ASSOC)){
-                $queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$rowaaa['asset_assetID']}');";
+
+            for ($i=0; $i < count($assets); $i++) { 
+
+                $queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$assets[$i]}');";
                 $resultaaaa=mysqli_query($dbc,$queryaaaa);
             }
+
+            $sql = "UPDATE `thesis`.`service` SET `status` = '2' WHERE (`id` = '{$id}');";
+            $output = mysqli_query($dbc, $sql);
         
             $message = "Ticket Created";
             $_SESSION['submitMessage'] = $message;
@@ -133,7 +143,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     Repair Request
                                 </header>
 								<div style="padding-top:10px; padding-left:10px; float:left">
-									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Create Ticket</button>
+									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" <?php if($statusID != 1) echo "disabled";?>>Create Ticket</button>
 								</div>
                                 <!-- Modal -->
                                 <div class="modal fade" id="myModal" role="dialog">
@@ -177,8 +187,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         <div class="form-group ">
                                                             <label for="assign" class="control-label col-lg-3">Assigned</label>
                                                             <div class="col-lg-6">
-                                                                <select class="form-control m-bot15" name="assigned" value="" required>
-                                                                <option>None</option>
+                                                                <select class="form-control m-bot15" name="assigned" value="">
+                                                                <option value='0'>None</option>
                                                                 <?php
                                                                     $query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer'";
                                                                     $result3=mysqli_query($dbc,$query3);
@@ -207,8 +217,16 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                 
                                 <div style="padding-top:55px" class="panel-body">
 									<div class="form" method="post">
-										<form class="cmxform form-horizontal " id="servicerequest" method="post" action="requestor_service_request_form_DB.php">
-											
+                                        <?php 
+                                            if(isset($_POST['submit'])){
+                                                echo   "<div style='text-align:center' class='alert alert-success'>
+                                                            <strong><h3>{$message}</h3></strong>
+                                                        </div>";
+
+                                                    unset($_SESSION['submitMessage']);
+                                            }
+                                        ?>
+									    
 												<header style="padding-bottom:20px" class="panel-heading wht-bg">
 													<h4 class="gen-case" style="float:right"> 
                                                         <?php
@@ -315,10 +333,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 												</table>
 											</div>
 										</section>
-											<a href="engineer_all_ticket.php"><button class="btn btn-danger">Back</button></a>
-										
-							
-										</form>                                       
+											<a href="helpdesk_all_request.php"><button type="button" class="btn btn-danger">Back</button></a>
+										                                    
 
 									</div>
 								</div>

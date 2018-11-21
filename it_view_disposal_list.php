@@ -67,6 +67,7 @@
                                         </header>
                                         <div class="panel-body">
                                             <div class="adv-table">
+                                                <h3>Next Disposal Date is On: </h3>
                                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                                     <thead>
                                                         <tr>

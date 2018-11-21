@@ -273,7 +273,7 @@
         $('#ctable').on('click', function() {
 			$('.gradeA').on('click', function() {
 				var a = this.getAttribute("id");
-				window.location.replace("helpdesk_view_ticket.php?ticketID=" + a);
+				window.location.href = "helpdesk_view_ticket.php?ticketID=" + a;
 			})
         })
     </script>

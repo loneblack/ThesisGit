@@ -194,7 +194,7 @@
     <script src="js/jquery.nicescroll.js"></script>
     <script>
         $('#ctable').on('dblclick', function() {
-            window.location.replace("it_view_inventory.php");
+            window.location.href = "it_view_inventory.php";
         })
     </script>
 

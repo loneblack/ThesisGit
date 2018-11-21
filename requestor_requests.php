@@ -112,15 +112,15 @@
 						var id = cell.textContent;
 						
 						if(id == "Approved"){
-							window.location.replace("requestor_view_approved_request.php");
+							window.location.href = "requestor_view_approved_request.php";
 						}
 						
 						if(id == "Pending"){
-							window.location.replace("requestor_view_pending_request.php");
+							window.location.href = "requestor_view_pending_request.php";
 						}
 						
 						if(id == "Disapproved"){
-							window.location.replace("requestor_view_disapproved_request.php");
+							window.location.href = "requestor_view_disapproved_request.php";
 						}
 					};
 				};

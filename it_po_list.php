@@ -166,19 +166,19 @@
 					var status = cell.textContent;
 					
 					//if(status == "Open"){
-						//window.location.replace("it_view_open_po.php");
+						//window.location.href = "it_view_open_po.php";
 					//}
 					
 					//if(status == "Closed"){
-						//window.location.replace("it_view_closed_po.php");
+						//window.location.replace = "it_view_closed_po.php";
 					//}
 					
 					if(status == "Pending"||status == "Incomplete"){
-						window.location.replace("it_view_open_po.php?procID=" + row.getAttribute("id"));
+						window.location.href = "it_view_open_po.php?procID=" + row.getAttribute("id");
 					}
 					
 					if(status == "Completed"){
-						window.location.replace("it_view_closed_po.php?procID=" + row.getAttribute("id"));
+						window.location.href = "it_view_closed_po.php?procID=" + row.getAttribute("id");
 					}
 					
 				};

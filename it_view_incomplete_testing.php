@@ -147,7 +147,7 @@
 
     <script>
         $('#ctable').on('dblclick', function() {
-            window.location.replace("it_view_testing.php");
+            window.location.href = "it_view_testing.php";
         })
     </script>
     <!--common script init for all pages-->

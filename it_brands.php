@@ -131,7 +131,7 @@
 		$('#ctable').on('click', function() {
 			$('.brandID').on('click', function() {
 				var a = this.getAttribute("id");
-				window.location.replace("it_edit_brand.php?brandID=" + a);
+				window.location.href = "it_edit_brand.php?brandID=" + a;
 			})
         })
 	

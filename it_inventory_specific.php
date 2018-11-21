@@ -149,7 +149,7 @@
 						var cell = row.getElementsByTagName("td")[0];
 						var idx = cell.textContent;
 						
-                        window.location.replace("it_asset_audit.php?=");
+                        window.location.href = "it_asset_audit.php?=";
 						
 					};
 				};

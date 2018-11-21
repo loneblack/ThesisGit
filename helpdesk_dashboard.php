@@ -316,7 +316,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
 
     <script>
         $('#ctable').on('dblclick', function() {
-            window.location.replace("helpdesk_view_ticket.php");
+            window.location.href = "helpdesk_view_ticket.php";
         })
     </script>
 

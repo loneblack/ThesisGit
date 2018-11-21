@@ -73,6 +73,7 @@
                                                     <th>Title</th>
                                                     <th>Type of Request</th>
                                                     <th>Date Needed</th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -153,7 +154,7 @@
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['serviceID']}</td>
                                                             <td>{$count}</td>
-                                                            <td>{$row['details']}</td>
+                                                            <td>{$row['summary']}</td>
                                                             <td>";
 
                                                        if($row['serviceType']=='27') echo "Repair";
@@ -161,8 +162,14 @@
 
                                                         echo
                                                             "</td>
-                                                            <td>{$row['dateNeed']}</td>
-                                                            </tr>";
+                                                            <td>{$row['dateNeed']}</td>";
+
+                                                        if($row['description']=="Pending"){ echo "<td><label class='label label-warning'>{$row['description']}</label></td>"; }
+                                                        if($row['description']=="Ongoing"){ echo "<td><label class='label label-primary'>{$row['description']}</label></td>"; }
+                                                        if($row['description']=="Incomplete"){ echo "<td><label class='label label-danger'>{$row['description']}</label></td>"; }
+                                                        if($row['description']=="Complete"){ echo "<td><label class='label label-success'>{$row['description']}</label></td>"; }
+
+                                                        echo "</tr>";
 
                                                           $count++;
                                                     }
@@ -174,6 +181,8 @@
                                                     <td>Need Help Here</td>
                                                     <td>Donation</td>
                                                     <td>10/9/18</td>
+                                                    <td>Pending</td>
+
                                                 </tr>
 
                                                 <tr class="gradeA">
@@ -182,6 +191,7 @@
                                                     <td>Need Help Here</td>
                                                     <td>Hardware Software Request</td>
                                                     <td>10/9/18</td>
+                                                    <td>Pending</td>
                                                 </tr>
 
                                                 <tr class="gradeA">
@@ -190,6 +200,7 @@
                                                     <td>Need Help Here</td>
                                                     <td>Procurement of Service and Material</td>
                                                     <td>10/9/18</td>
+                                                    <td>Pending</td>
                                                 </tr>
 
                                                 <tr class="gradeA">
@@ -198,6 +209,7 @@
                                                     <td>Need Help Here</td>
                                                     <td>Borrow</td>
                                                     <td>10/9/18</td>
+                                                    <td>Pending</td>
                                                 </tr>
 
                                                 <tr class="gradeA">
@@ -206,6 +218,7 @@
                                                     <td>Need Help Here</td>
                                                     <td>Service Request</td>
                                                     <td>10/9/18</td>
+                                                    <td>Pending</td>
                                                 </tr>
                                             <tfoot>
                                                 <tr>
@@ -214,6 +227,7 @@
                                                     <th>Title</th>
                                                     <th>Type of Request</th>
                                                     <th>Date Needed</th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -259,27 +273,27 @@
 						var id = cell1.textContent;
 						
 						if(idx == "Asset Testing"){
-							window.location.replace("helpdesk_view_assettesting_open.php?testingID=" + id);
+							window.location.href = "helpdesk_view_assettesting_open.php?testingID=" + id;
 						}
 						
 						if(idx == "Donation"){
-							window.location.replace("helpdesk_view_donation_request.php?donationID=" + id);
+							window.location.href = "helpdesk_view_donation_request.php?donationID=" + id;
 						}
                         
                         if(idx == "Procurement of Service and Material"){
-                            window.location.replace("helpdesk_view_procurement_service_material_request.php?requestID=" + id);
+                            window.location.href = "helpdesk_view_procurement_service_material_request.php?requestID=" + id;
 						}
 						
 						if(idx == "Borrow"){
-							window.location.replace("helpdesk_view_service_equipment_request.php");
+							window.location.href = "helpdesk_view_service_equipment_request.php";
 						}
 						
 						if(idx == "Service"){
-							window.location.replace("helpdesk_view_service_request.php");
+							window.location.href="helpdesk_view_service_request.php";
 						}
 						
 						if(idx == "Repair"){
-							window.location.replace("helpdesk_view_repair_open.php?id="+id);
+							window.location.href = "helpdesk_view_repair_open.php?id="+id;
 						}
 						
 					};

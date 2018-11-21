@@ -112,7 +112,7 @@
 		$('#ctable').on('click', function() {
 			$('.assetcategoryID').on('click', function() {
 				var a = this.getAttribute("id");
-				window.location.replace("it_edit_category.php?assetCategoryID=" + a);
+				window.location.href = "it_edit_category.php?assetCategoryID=" + a;
 			})
         })
 

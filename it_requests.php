@@ -76,42 +76,82 @@
                                                         </thead>
                                                         <tbody>
                                                             <?php
-												
-													require_once('db/mysql_connect.php');
-													$query="SELECT r.requestID,r.description as `requestDesc`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc` FROM thesis.request r 
-																		join ref_status rs on r.status=rs.statusID";
-													$result=mysqli_query($dbc,$query);
-													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-														echo "<tr id='{$row['requestID']}'>
-															<td>{$row['dateNeeded']}</td>";
 															
-															if($row['statusDesc']=='Pending'){
-																echo "<td><span class='label label-warning label-mini'>{$row['statusDesc']}</span></td>";
-															}
-															elseif($row['statusDesc']=='Incomplete'){
-																echo "<td><span class='label label-danger label-mini'>{$row['statusDesc']}</span></td>";
-															}
-															elseif($row['statusDesc']=='Completed'){
-																echo "<td><span class='label label-success label-mini'>{$row['statusDesc']}</span></td>";
-															}
-															//elseif($row['statusDesc']=='Ongoing'){
-																//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
-															//}
-															else{
-																echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+															$key = "Fusion";
+															require_once('db/mysql_connect.php');
+															$query="SELECT r.requestID,rstp.name as `step`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor` FROM thesis.request r 
+																				join ref_status rs on r.status=rs.statusID
+																				join ref_steps rstp on r.step=rstp.id
+																				join user u on r.UserID=u.UserID";
+															$result=mysqli_query($dbc,$query);
+															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+																echo "<tr id='{$row['requestID']}'>
+																	<td>{$row['dateNeeded']}</td>";
+																	
+																	if($row['statusDesc']=='Pending'){
+																		echo "<td><span class='label label-warning label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Incomplete'){
+																		echo "<td><span class='label label-danger label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Completed'){
+																		echo "<td><span class='label label-success label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	//elseif($row['statusDesc']=='Ongoing'){
+																		//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	//}
+																	else{
+																		echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	
+																echo "
+																	<td>Asset Request</td>
+																	<td>{$row['step']}</td>
+																	<td>{$row['requestor']}</td>
+																	<td>{$row['requestedDate']}</td>
+																</tr>";
+																
+																
+																
 															}
 															
-														echo "
-															<td>Asset Request</td>
-															<td>{$row['requestDesc']}</td>
-															<td>{$row['recipient']}</td>
-															<td>{$row['requestedDate']}</td>
-														</tr>";
-														
-														
-														
-													}
-												?>
+															$queryDon="SELECT * , rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`,rstp.name as `step` FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID
+																																		join ref_steps rstp on d.stepsID=rstp.id
+																																		join user u on d.user_UserID=u.UserID";
+															$resultDon=mysqli_query($dbc,$queryDon);
+															
+															while($rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC)){
+																echo "<tr id='{$rowDon['donationID']}'>
+																	<td>{$rowDon['dateNeed']}</td>";
+																	
+																	if($rowDon['statusDesc']=='Pending'){
+																		echo "<td><span class='label label-warning label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	elseif($rowDon['statusDesc']=='Incomplete'){
+																		echo "<td><span class='label label-danger label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	elseif($rowDon['statusDesc']=='Completed'){
+																		echo "<td><span class='label label-success label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	//elseif($row['statusDesc']=='Ongoing'){
+																		//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	//}
+																	else{
+																		echo "<td><span class='label label-default label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	
+																echo "
+																	<td>Donation</td>
+																	<td>{$rowDon['step']}</td>
+																	<td>{$rowDon['requestor']}</td>
+																	<td></td>
+																</tr>";
+																
+																
+																
+															}
+															//Comment
+															?>
                                                             <tr>
                                                                 <td>12/23/2018</td>
                                                                 <td><span class="label label-success label-mini">Completed</span></td>
@@ -414,62 +454,53 @@
                         var cell = row.getElementsByTagName("td")[3];
                         var idDesc = cell.textContent; //Description
                         alert(id + " - " + idx + " - " + idDesc);
-
                         if (idx == "Repair") {
                             if (id == "Completed" || id == "Incomplete") {
-                                window.location.replace("it_view_completed_incomplete_repair.php?requestID=" + row.getAttribute("id"));
+                                window.location.href ="it_view_completed_incomplete_repair.php?requestID=" + row.getAttribute("id");
                             }
                             if (id == "Ongoing" || id == "Pending") {
-                                window.location.replace("it_view_ongoing_pending_repair.php?requestID=" + row.getAttribute("id"));
+                                window.location.href = "it_view_ongoing_pending_repair.php?requestID=" + row.getAttribute("id");
                             }
-
                         }
-
                         if (idx == "Asset Request") {
                             if (id == "Ongoing" || id == "Pending") {
-                                if (idDesc == "Canvas completed") {
-                                    window.location.replace("it_view_canvas_completed.php");
-                                } else if (idDesc == "Items received") {
-                                    window.location.replace("it_view_open_po.php");
+                                if (idDesc == "Checking Canvas") {
+                                    window.location.href = "it_view_canvas_completed.php?requestID=" + row.getAttribute("id");
+                                } else if (idDesc == "IT Create Specs") {
+                                    window.location.href = "it_view_incomplete_request.php?requestID=" + row.getAttribute("id");
                                 } else if (idDesc == "Replacement needed") {
-                                    window.location.replace("it_view_open_po.php");
+                                    window.location.href = "it_view_open_po.php?requestID=" + row.getAttribute("id");
                                 } else if (idDesc == "Conforme pending") {
-                                    window.location.replace("it_view_checklist.php");
+                                    window.location.href = "it_view_checklist.php";
                                 }
                             }
-
                             if (id == "Completed" || id == "Incomplete") {
-                                window.location.replace("it_view_checklist.php");
+                                window.location.href = "it_view_checklist.php";
                             }
                         }
-
                         if (idx == "Testing") {
                             if (id == "Ongoing" || id == "Pending") {
-                                window.location.replace("it_view_incomplete_testing.php");
+                                window.location.href = "it_view_incomplete_testing.php";
                             } else if (id == "Completed" || id == "Incomplete") {
-                                window.location.replace("it_view_testing.php");
+                                window.location.href = "it_view_testing.php";
                             }
                         }
-
                         if (idx == "Service Request") {
-                            window.location.replace("it_view_service_request_form.php");
+                            window.location.href = "it_view_service_request_form.php";
                         }
-
                         if (idx == "Donation") {
                             if (id == "Ongoing" || id == "Pending") {
-                                window.location.replace("it_view_open_donation_request.php");
+                                window.location.href = "it_view_open_donation_request.php?id=" + row.getAttribute("id");
                             }
-
                             if (id == "Completed" || id == "Incomplete") {
-                                window.location.replace("it_view_closed_donation_request.php");
+                                window.location.href = "it_view_closed_donation_request.php?id=" + row.getAttribute("id");
                             }
                         }
-
                         if (idx == "Borrow") {
                             if (id == "Ongoing" || id == "Pending") {
-                                window.location.replace("it_view_open_service_equipment_request.php");
+                                window.location.href = "it_view_open_service_equipment_request.php";
                             } else if (id == "Completed" || id == "Incomplete") {
-                                window.location.replace("it_view_closed_service_equipment_request.php");
+                                window.location.href = "it_view_closed_service_equipment_request.php";
                             }
                         }
                     };

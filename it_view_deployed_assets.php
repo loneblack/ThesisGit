@@ -128,19 +128,19 @@
                     var id = cell.textContent;
                                         
                     if(id == 'Asset Request'){
-                        window.location.replace("requestor_view_request_for_procurement_service_material.php");
+                        window.location.href = "requestor_view_request_for_procurement_service_material.php";
                     }
 
                     else if(id == "Borrow"){
-                        window.location.replace("requestor_view_service_equipment_request.php");
+                        window.location.href = "requestor_view_service_equipment_request.php";
                     }
                     
                     else if(id == "Donation"){
-                        window.location.replace("requestor_view_donation_request.php");
+                        window.location.href = "requestor_view_donation_request.php";
                     }
 
                     else if(id == "Service"){
-                        window.location.replace("requestor_view_service_request.php");
+                        window.location.href = "requestor_view_service_request.php";
                     }
                     
                 };
@@ -164,7 +164,7 @@
     
     <script>
         $('#ctable').on('dblclick', function() {
-            window.location.replace("requestor_view_request.php");
+            window.location.href = "requestor_view_request.php";
         })
     </script>
 

@@ -173,14 +173,17 @@ $result1 = mysqli_query($dbc, $sql1);
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
+                                                    <label for="details" class="control-label col-lg-3">Summary</label>
+                                                    <div class="col-lg-6">
+                                                        <input class=" form-control" id="summary" name="summary" type="input" maxlength = "45" required />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group ">
                                                     <label for="details" class="control-label col-lg-3">Details</label>
                                                     <div class="col-lg-6">
                                                         <textarea class="form-control" rows="5" name="details" style="resize:none" required></textarea>
                                                     </div>
                                                 </div>
-
-
-
                                                 <div class="form-group ">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Date needed</label>
                                                     <div class="col-lg-6">
