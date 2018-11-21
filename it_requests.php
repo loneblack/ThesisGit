@@ -76,6 +76,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <?php
+															
 															$key = "Fusion";
 															require_once('db/mysql_connect.php');
 															$query="SELECT r.requestID,rstp.name as `step`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor` FROM thesis.request r 
@@ -149,6 +150,7 @@
 																
 																
 															}
+															//Comment
 															?>
                                                             <tr>
                                                                 <td>12/23/2018</td>
