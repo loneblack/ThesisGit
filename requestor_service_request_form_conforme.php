@@ -97,7 +97,9 @@
                                     <div class="panel-body">
                                         <div class="form" method="post">
                                             <form class="cmxform form-horizontal " id="signupForm" method="post">
-
+                                                <div class="alert alert-danger" role="alert">
+                                                    Kindly fill up the conforme only after receiving items or after service has been rendered.
+                                                </div>
                                                 <div class="form-group">
                                                     <label for="responseTime" class="control-label col-lg-3">Response Time</label>
                                                     <div class="col-lg-6">

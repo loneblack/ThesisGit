@@ -164,7 +164,7 @@
                                      Request For Procurement of Services and Materials
                                 </header>
 								<div style="padding-top:10px; padding-left:10px; float:left">
-									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Create Ticket</button>
+									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Send For Testing</button>
 								</div>
                                 <!-- Modal -->
                                 <div class="modal fade" id="myModal" role="dialog">
@@ -172,7 +172,7 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">Create a Ticket</h4>
+                                                <h4 class="modal-title">Send For Testing</h4>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form">
@@ -181,7 +181,7 @@
                                                             <div class="form-group ">
                                                                 <label for="category" class="control-label col-lg-3">Category</label>
                                                                 <div class="col-lg-6">
-                                                                    <select class="form-control m-bot15" name="category" value="<?php if (isset($_POST['category']) && !$flag) echo $_POST['category']; ?>" required >
+                                                                    <select class="form-control m-bot15" name="category" value="<?php if (isset($_POST['category']) && !$flag) echo $_POST['category']; ?>" required readonly>
 																		<?php
 																			
 																			$querya="SELECT * FROM thesis.ref_servicetype";
