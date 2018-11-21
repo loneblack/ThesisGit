@@ -544,6 +544,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
   `dueDate` DATETIME NULL DEFAULT NULL,
   `priority` VARCHAR(45) NOT NULL,
   `summary` VARCHAR(45) NULL DEFAULT NULL,
+  `details` LONGTEXT NULL,
   `description` VARCHAR(45) NULL DEFAULT NULL,
   `testingID` INT(11) NULL DEFAULT NULL,
   `serviceType` INT(11) NULL DEFAULT NULL,
