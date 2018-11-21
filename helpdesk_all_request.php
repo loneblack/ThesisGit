@@ -73,6 +73,7 @@
                                                     <th>Title</th>
                                                     <th>Type of Request</th>
                                                     <th>Date Needed</th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -161,8 +162,14 @@
 
                                                         echo
                                                             "</td>
-                                                            <td>{$row['dateNeed']}</td>
-                                                            </tr>";
+                                                            <td>{$row['dateNeed']}</td>";
+
+                                                        if($row['description']=="Pending"){ echo "<td><label class='label label-warning'>{$row['description']}</label></td>"; }
+                                                        if($row['description']=="Ongoing"){ echo "<td><label class='label label-primary'>{$row['description']}</label></td>"; }
+                                                        if($row['description']=="Incomplete"){ echo "<td><label class='label label-danger'>{$row['description']}</label></td>"; }
+                                                        if($row['description']=="Complete"){ echo "<td><label class='label label-success'>{$row['description']}</label></td>"; }
+
+                                                        echo "</tr>";
 
                                                           $count++;
                                                     }
@@ -174,6 +181,8 @@
                                                     <td>Need Help Here</td>
                                                     <td>Donation</td>
                                                     <td>10/9/18</td>
+                                                    <td>Pending</td>
+
                                                 </tr>
 
                                                 <tr class="gradeA">
@@ -182,6 +191,7 @@
                                                     <td>Need Help Here</td>
                                                     <td>Hardware Software Request</td>
                                                     <td>10/9/18</td>
+                                                    <td>Pending</td>
                                                 </tr>
 
                                                 <tr class="gradeA">
@@ -190,6 +200,7 @@
                                                     <td>Need Help Here</td>
                                                     <td>Procurement of Service and Material</td>
                                                     <td>10/9/18</td>
+                                                    <td>Pending</td>
                                                 </tr>
 
                                                 <tr class="gradeA">
@@ -198,6 +209,7 @@
                                                     <td>Need Help Here</td>
                                                     <td>Borrow</td>
                                                     <td>10/9/18</td>
+                                                    <td>Pending</td>
                                                 </tr>
 
                                                 <tr class="gradeA">
@@ -206,6 +218,7 @@
                                                     <td>Need Help Here</td>
                                                     <td>Service Request</td>
                                                     <td>10/9/18</td>
+                                                    <td>Pending</td>
                                                 </tr>
                                             <tfoot>
                                                 <tr>
@@ -214,6 +227,7 @@
                                                     <th>Title</th>
                                                     <th>Type of Request</th>
                                                     <th>Date Needed</th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
