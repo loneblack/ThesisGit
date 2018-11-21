@@ -313,28 +313,28 @@ require_once("db/mysql_connect.php");
 					
                     if(requestType == 'Asset Request'){
 						if(step == "Conforme Pending"){
-							window.location.replace("requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType);
+							window.location.href = "requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType;
 						}
 						else{
-							window.location.replace("requestor_view_request_for_procurement_service_material.php?id=" + id);
+							window.location.href = "requestor_view_request_for_procurement_service_material.php?id=" + id;
 						}
                     }
 
                     else if(requestType == "Borrow"){
-                        window.location.replace("requestor_view_service_equipment_request.php?id=" + id);
+                        window.location.href = "requestor_view_service_equipment_request.php?id=" + id;
                     }
                     
                     else if(requestType == "Donation"){
                         if(step == "Conforme Pending"){
-							window.location.replace("requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType);
+							window.location.href = "requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType;
 						}
 						else{
-							window.location.replace("requestor_view_donation_request.php?id=" + id);
+							window.location.href = "requestor_view_donation_request.php?id=" + id;
 						}
                     }
 
                     else if(requestType == "Service"){
-                        window.location.replace("requestor_view_service_request.php?id=" + id);
+                        window.location.href = "requestor_view_service_request.php?id=" + id;
                     }
                     
                 };

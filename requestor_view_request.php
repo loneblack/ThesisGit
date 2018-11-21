@@ -86,7 +86,7 @@
     
     <script>
         $('#ctable').on('dblclick', function() {
-            window.location.replace("requestor_view_request.php");
+            window.location.href = "requestor_view_request.php";
         })
     </script>
 
