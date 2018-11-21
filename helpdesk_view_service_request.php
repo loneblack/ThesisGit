@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+
+require_once("db/mysql_connect.php");
+
+$id = $_GET['id'];
+
+$query = "SELECT * FROM thesis.service s JOIN ref_servicetype t ON s.serviceType = t.id WHERE s.id = {$id}";
+
+$result = mysqli_query($dbc, $query);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+{
+    $serviceType = $row['serviceType'];
+    $details = $row['details'];
+	$dateNeed = $row['dateNeed'];
+	$endDate = $row['endDate'];
+}	
+?>
+
 <head>
     <meta charset="utf-8">
 
@@ -71,19 +90,19 @@
                                                 <div class="form">
                                                     <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
                                                         <div class="form-group ">
-                                                            <div class="form-group ">
-                                                                <label for="category" class="control-label col-lg-3">Category</label>
-                                                                <div class="col-lg-6">
-                                                                    <select class="form-control m-bot15" name="category" value="" required>
-
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
                                                             <label for="status" class="control-label col-lg-3">Status</label>
                                                             <div class="col-lg-6">
                                                                 <select class="form-control m-bot15" name="status" value="" required>
+																	<?php
+																		$query = "SELECT * FROM ref_ticketstatus";
+																		
+																		$result = mysqli_query($dbc, $query);
 
+																		while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+																		{
+																			echo "<option>{$row['status']}</option>";
+																		}	
+																	?>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -103,8 +122,19 @@
                                                         <div class="form-group ">
                                                             <label for="assign" class="control-label col-lg-3">Assigned</label>
                                                             <div class="col-lg-6">
-                                                                <select class="form-control m-bot15" name="assigned" value="" required>
+                                                                <select class="form-control m-bot15" name="assigned">
+																	<option value="0">None</option>
+																	<?php
+																		$query = "SELECT (convert(aes_decrypt(firstName, 'Fusion') using utf8)) AS 'firstName' ,(convert(aes_decrypt(lastName, 'Fusion')using utf8)) AS 'lastName' FROM user WHERE userType = 4";
+																		
+																		$result = mysqli_query($dbc, $query);
 
+																		while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+																		{
+																			echo "<option>{$row['firstName']} {$row['lastName']}</option>";
+																		}	
+																		
+																	?>
 
                                                                 </select>
                                                             </div>
@@ -149,31 +179,9 @@
 												<div class="col-lg-6">
 													<select name="serviceType" onload='checkvalue(this.value)' class="form-control m-bot15" disabled>
 														<option>Select Service Type</option>
-														<option value="1">Access regulation/permission</option>
-														<option value="2">Activation/Deactivation of MyLasalle account</option>
-														<option value="3">Add/remove email address in mailing list</option>
-														<option value="4">Computer lab management</option>
-														<option value="5">Computer Set-up</option>
-														<option value="6">Creation/Deletion of mailing list</option>
-														<option value="7">Data extraction/Report generation/Printing</option>
-														<option value="8">Data/Information update</option>
-														<option value="9">Forms/Charts design</option>
-														<option value="10">IT asset management</option>
-														<option value="11">Network management</option>
-														<option value="12">Photoshoot/Virtual tour</option>
-														<option value="13">Print publishing</option>
-														<option value="14">Program access request</option>
-														<option value="15">Request for replacement unit</option>
-														<option value="16">Security management</option>
-														<option value="17">Server management</option>
-														<option value="18">Service/Backup unit provisions</option>
-														<option value="19">Stand by support Engineer</option>
-														<option value="20">System development/Revision</option>
-														<option value="21">Transfer and installation of application software</option>
-														<option value="22">Web graphics publishing</option>
-														<option value="23">Web site creation</option>
-														<option value="24">Website updating</option>
-														<option value="25">Others</option>
+														<option selected="selected">
+															<?php echo $serviceType;?>
+														</option>
 													</select>
 													<input type="text" class="form-control" name="others" id="others" placeholder="Specify request" style='display:none' disabled/>
 												</div>
@@ -182,19 +190,19 @@
 											<div class="form-group ">
 												<label for="details" class="control-label col-lg-3">Details</label>
 												<div class="col-lg-6">
-													<textarea class="form-control" rows="5" name="details" style="resize:none" disabled></textarea>
+													<textarea class="form-control" rows="5" name="details" style="resize:none" disabled><?php echo $details ?></textarea>
 												</div>
 											</div>
 											<div class="form-group ">
 												<label for="dateNeeded" class="control-label col-lg-3">Date needed</label>
 												<div class="col-lg-6">
-													<input class="form-control" id="dateNeeded" name="dateNeeded" type="date" disabled />
+													<input class="form-control" id="dateNeeded" name="dateNeeded" value="<?php echo $dateNeed; ?>" type="text" disabled></input>
 												</div>
 											</div>
 											<div class="form-group ">
 												<label for="endDate" class="control-label col-lg-3">End date</label>
 												<div class="col-lg-6">
-													<input class=" form-control" id="endDate" name="endDate" type="date" disabled />
+													<input class="form-control" id="endDate" name="endDate" value="<?php echo $endDate; ?>" type="text" disabled />
 												</div>
 											</div>
 											<div class="form-group">

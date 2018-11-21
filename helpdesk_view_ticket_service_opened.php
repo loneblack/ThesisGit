@@ -1,7 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
+
 require_once("db/mysql_connect.php");
+
+$id = $_GET['id'];
+
+$query = "SELECT t.ticketID, (convert(aes_decrypt(au.firstName, 'Fusion') using utf8)) AS 'firstName' ,(convert(aes_decrypt(au.lastName, 'Fusion')using utf8)) AS 'lastName',
+        lastUpdateDate, dateCreated, dateClosed, dueDate, priority,summary,
+        t.description, t.serviceType as 'serviceTypeID', st.serviceType,t.status as 'statusID', s.status
+        FROM thesis.ticket t
+            JOIN user au
+        ON t.assigneeUserID = au.UserID
+            JOIN ref_ticketstatus s
+        ON t.status = s.ticketID
+            JOIN ref_servicetype st
+        ON t.serviceType = st.id
+        WHERE t.ticketID = {$id};";
+
+$result = mysqli_query($dbc, $query);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+{
+    $lastUpdateDate = $row['lastUpdateDate'];
+    $dateCreated = $row['dateCreated'];
+    $dateClosed = $row['dateClosed'];
+    $dueDate = $row['dueDate'];
+    $priority = $row['priority'];
+    $summary = $row['summary'];
+    $description = $row['description'];
+    $serviceTypeID = $row['serviceTypeID'];
+    $serviceType = $row['serviceType'];
+    $statusID = $row['statusID'];
+    $status = $row['status'];
+    $firstName = $row['firstName'];
+    $lastName = $row['lastName'];
+    
+    
+}
+
 ?>
 <head>
     <meta charset="utf-8">
