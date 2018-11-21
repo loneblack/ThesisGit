@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<?php
+	session_start();
+	$StartDate = strtotime('2018-1-1'); //Start date from which we begin count
+	$CurDate = date("Y-m-d"); //Current date.
+	$NextDate = date("Y-m-d", strtotime("+2 week", $StartDate)); //Next date = +2 week from start date
+	while ($CurDate > $NextDate ) { 
+	  $NextDate = date("Y-m-d", strtotime("+2 week", strtotime($NextDate)));
+	}
+	$_SESSION['dateDisposal']=date("Y-m-d", strtotime($NextDate));
+?>
 <html lang="en">
 
 <head>
@@ -53,7 +63,7 @@
                 <div class="col-sm-12">
                     <div class="col-sm-12">
                         <div class="alert alert-info">
-                            <strong>Hello! The 12/23/2018 is the next Disposal Day! </strong> Please Click this  <a href="it_view_disposal_list.php" class="alert-link">link</a> to input the assets for collection for disposal.
+                            <strong>Hello! <?php echo $_SESSION['dateDisposal']; ?> is the next Disposal Day! </strong> Please Click this  <a href="it_view_disposal_list.php" class="alert-link">link</a> to input the assets for collection for disposal.
                         </div>
                         <div class="row">
 
@@ -206,7 +216,7 @@
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
-
+	
     <!--dynamic table-->
     <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
