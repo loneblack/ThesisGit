@@ -141,7 +141,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     Repair Request
                                 </header>
                                 <div style="padding-top:10px; padding-left:10px; float:left">
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" <?php if($statusID != 1) echo "disabled";?>>Create Ticket</button>
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" <?php if($statusID != 1) echo "disabled";
+                                    ?>>Create Ticket</button>
                                 </div>
                                 <!-- Modal -->
                                 <div class="modal fade" id="myModal" role="dialog">
