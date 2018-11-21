@@ -3,7 +3,6 @@
 <?php
 session_start();
 
-$_SESSION['previousPage'] = "requestor_service_request_form.php";
 $id = $_GET['id'];//get the id of the selected service request
 
 require_once("db/mysql_connect.php");
@@ -23,6 +22,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
     
         $name = $row['name'];      
         $dateReceived = $row['dateReceived'];
+        $summary = $row['summary'];
         $details = $row['details'];
         $dateNeed = $row['dateNeed'];
         $endDate = $row['endDate'];
@@ -57,15 +57,13 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         if(!isset($message)){
 
             if($assigned=='0'){
-                $querya="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `description`) VALUES ('{$status}', '{$_SESSION['userID']}', now(), now(), '{$dateNeed}', '{$priority}', '27', '{$description}')";
+                $querya="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`) VALUES ('{$status}', '{$_SESSION['userID']}', now(), now(), '{$dateNeed}', '{$priority}', '27', '{$summary}', '{$description}')";
                 $resulta=mysqli_query($dbc,$querya);
             }
             else{
-                $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `description`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dateNeed}', '{$priority}', '27', '{$description}')";
+                $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dateNeed}', '{$priority}', '27', '{$summary}', '{$description}')";
                 $resulta=mysqli_query($dbc,$querya);
             }
-
-            echo $querya;
         
             $queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
             $resultaa=mysqli_query($dbc,$queryaa);
@@ -142,9 +140,9 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                 <header class="panel-heading">
                                     Repair Request
                                 </header>
-								<div style="padding-top:10px; padding-left:10px; float:left">
-									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" <?php if($statusID != 1) echo "disabled";?>>Create Ticket</button>
-								</div>
+                                <div style="padding-top:10px; padding-left:10px; float:left">
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" <?php if($statusID != 1) echo "disabled";?>>Create Ticket</button>
+                                </div>
                                 <!-- Modal -->
                                 <div class="modal fade" id="myModal" role="dialog">
                                     <div class="modal-dialog modal-lg">
@@ -216,7 +214,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                 <!--                                MODAL END-->
                                 
                                 <div style="padding-top:55px" class="panel-body">
-									<div class="form" method="post">
+                                    <div class="form" method="post">
                                         <?php 
                                             if(isset($_POST['submit'])){
                                                 echo   "<div style='text-align:center' class='alert alert-success'>
@@ -226,9 +224,9 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     unset($_SESSION['submitMessage']);
                                             }
                                         ?>
-									    
-												<header style="padding-bottom:20px" class="panel-heading wht-bg">
-													<h4 class="gen-case" style="float:right"> 
+                                        
+                                                <header style="padding-bottom:20px" class="panel-heading wht-bg">
+                                                    <h4 class="gen-case" style="float:right"> 
                                                         <?php
                                                         if($statusID == '1'){//pending
                                                             echo " <a class='btn btn-warning'>{$description}</span></a>";
@@ -244,50 +242,56 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         }
                                                         ?>
                                                     </h4>
-													<h4>Repair Request</h3>
-												</header>
-												<div class="panel-body ">
+                                                    <h4>Repair Request</h3>
+                                                </header>
+                                                <div class="panel-body ">
 
-													<div>
-														<div class="row">
-															<div class="col-md-8">
-																<img src="images/chat-avatar2.jpg" alt="">
-																<strong><?php echo $name; ?></strong>
-																to
-																<strong>me</strong>
-															</div>
-															<div class="col-md-4">
-																<h5>Date Created: <?php echo $dateReceived;?></h5>
-															</div>
+                                                    <div>
+                                                        <div class="row">
+                                                            <div class="col-md-8">
+                                                                <img src="images/chat-avatar2.jpg" alt="">
+                                                                <strong><?php echo $name; ?></strong>
+                                                                to
+                                                                <strong>me</strong>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <h5>Date Created: <?php echo $dateReceived;?></h5>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <h5>Summary: <?php echo $summary;?></h5>
+                                                            </div>
+                                                            <div class="cp;-col-md-4">
+                                                            </div>
+
                                                             <div class="col-md-8">
                                                             </div>
                                                             <div class="cp;-col-md-4">
                                                                 <h5>&nbsp; &nbsp; Due Date: <?php echo $dateNeed;?></h5>
                                                             </div>
-														</div>
-													</div>
-													<div class="view-mail">
-														<p><?php echo $details;?></p>
-													</div>
-												</div>
-							</section>
-							
-							
-										<section class="panel">
-											<div class="panel-body ">
-												<table class="table table-hover">
-													<thead>
-														<tr>
-															
-															<th>Property Code</th>
+                                                        </div>
+                                                    </div>
+                                                    <div class="view-mail">
+                                                        <p>Details: <?php echo $details;?></p>
+                                                    </div>
+                                                </div>
+                            </section>
+                            
+                            
+                                        <section class="panel">
+                                            <div class="panel-body ">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            
+                                                            <th>Property Code</th>
                                                             <th>Category</th>
                                                             <th>Brand</th>
                                                             <th>Description</th>
-															<th>Building</th>
-															<th>Room</th>
-														</tr>
-													</thead>
-													<tbody>
+                                                            <th>Building</th>
+                                                            <th>Room</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
                                                         <?php
                                                         
                                                         for ($i=0; $i < count($assets); $i++) { 
@@ -329,15 +333,15 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                                                         }
                                                         ?>
-													</tbody>
-												</table>
-											</div>
-										</section>
-											<a href="helpdesk_all_request.php"><button type="button" class="btn btn-danger">Back</button></a>
-										                                    
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </section>
+                                            <a href="helpdesk_all_request.php"><button type="button" class="btn btn-danger">Back</button></a>
+                                                                            
 
-									</div>
-								</div>
+                                    </div>
+                                </div>
                             
 
                         </div>
@@ -349,15 +353,15 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         <!--main content end-->
 
     </section>
-	
-	<script>
-	function checkvalue(val){
-		if(val==="25")
-		   document.getElementById('others').style.display='block';
-		else
-		   document.getElementById('others').style.display='none'; 
-	}
-	</script>
+    
+    <script>
+    function checkvalue(val){
+        if(val==="25")
+           document.getElementById('others').style.display='block';
+        else
+           document.getElementById('others').style.display='none'; 
+    }
+    </script>
 
     <!-- WAG GALAWIN PLS LANG -->
 

@@ -64,33 +64,36 @@
                                         <table class="display table table-bordered table-striped" id="dynamic-table">
                                             <thead>
                                                 <tr>
+                                                    <td style='display: none'>ticketID</td>
                                                     <th>#</th>
                                                     <th>Title</th>
+                                                    <td style='display: none'>ServiceTypeID</td>
                                                     <th>Category</th>
                                                     <th>Updated</th>
                                                     <th>Date Needed</th>
-                                                    <th>Action</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
 											
 												<?php
+                                                    $count = 1;
 												
 													require_once('db/mysql_connect.php');
-													$query="SELECT t.ticketID,t.summary,rst.serviceType,t.lastUpdateDate,t.dueDate,rts.status FROM thesis.ticket t 
-																						join thesis.ref_ticketstatus rts on t.status=rts.ticketID
-																						join thesis.ref_servicetype rst on t.serviceType=rst.id";
+													$query="SELECT t.ticketID,t.summary, rst.id,rst.serviceType,t.lastUpdateDate,t.dueDate,rts.status FROM thesis.ticket t 
+                                                                                        join thesis.ref_ticketstatus rts on t.status=rts.ticketID
+                                                                                        join thesis.ref_servicetype rst on t.serviceType=rst.id";
 													$result=mysqli_query($dbc,$query);
 												
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 														echo "<tr class='gradeA' id='{$row['ticketID']}'>
+                                                            <td style='display: none'>{$row['ticketID']}</td>
 															<td>{$row['ticketID']}</td>
 															<td>{$row['summary']}</td>
+                                                            <td style='display: none'>{$row['id']}</td>
 															<td>{$row['serviceType']}</td>
 															<td>{$row['lastUpdateDate']}</td>
-															<td>{$row['dueDate']}</td>
-															<td></td>";
+															<td>{$row['dueDate']}</td>";
 															
 														//if($row['action']=='Unanswered'){
 															//echo "<td><span class='label label-warning'>Unanswered</span></td>";
@@ -121,6 +124,8 @@
 														elseif($row['status']=='Escalated'){
 															echo "<td><span class='label label-default'>{$row['status']}</span></td>";
 														}
+
+                                                        $count++;
 														
 													}
 												
@@ -130,114 +135,81 @@
 											
 											
                                                 <tr class="gradeA">
+                                                     <td style='display: none'>ticketID</td>
                                                     <td>1</td>
                                                     <td>Need Help Here</td>
+                                                    <td style='display: none'>ServiceTypeID</td>
                                                     <td>Inquiry</td>
                                                     <td>10/9/18</td>
                                                     <td>10/9/18</td>
-                                                    <td><span class="label label-success">Solved</span></td>
                                                     <td><span class="label label-danger">Closed</span></td>
                                                 </tr>
 
                                                 <tr class="gradeA">
+                                                    <td style='display: none'>ticketID</td>
                                                     <td>2</td>
                                                     <td>Need Help Here</td>
+                                                    <td style='display: none'>ServiceTypeID</td>
                                                     <td>Inquiry</td>
                                                     <td>10/9/18</td>
                                                     <td>10/9/18</td>
-                                                    <td><span class="label label-warning">Un-answered</span></td>
                                                     <td><span class="label label-success">Opened</span></td>
                                                 </tr>
 
                                                 <tr class="gradeA">
+                                                    <td style='display: none'>ticketID</td>
                                                     <td>3</td>
                                                     <td>Need Help Here</td>
+                                                    <td style='display: none'>ServiceTypeID</td>
                                                     <td>Inquiry</td>
                                                     <td>10/9/18</td>
                                                     <td>10/9/18</td>
-                                                    <td><span class="label label-danger">New Ticket</span></td>
                                                     <td><span class="label label-success">Opened</span></td>
                                                 </tr>
 
                                                 <tr class="gradeA">
+                                                    <td style='display: none'>ticketID</td>
                                                     <td>4</td>
                                                     <td>Need Help Here</td>
+                                                    <td style='display: none'>ServiceTypeID</td>
                                                     <td>Inquiry</td>
                                                     <td>10/9/18</td>
                                                     <td>10/9/18</td>
-                                                    <td><span class="label label-success">Solved</span></td>
                                                     <td><span class="label label-danger">Closed</span></td>
                                                 </tr>
 
                                                 <tr class="gradeA">
+                                                    <td style='display: none'>ticketID</td>
                                                     <td>5</td>
                                                     <td>Need Help Here</td>
+                                                    <td style='display: none'>ServiceTypeID</td>
                                                     <td>Inquiry</td>
                                                     <td>10/9/18</td>
                                                     <td>10/9/18</td>
-                                                    <td><span class="label label-warning">Un-answered</span></td>
                                                     <td><span class="label label-success">Opened</span></td>
                                                 </tr>
 
                                                 <tr class="gradeA">
+                                                    <td style='display: none'>ticketID</td>
                                                     <td>6</td>
                                                     <td>Need Help Here</td>
+                                                    <td style='display: none'>ServiceTypeID</td>
                                                     <td>Inquiry</td>
                                                     <td>10/9/18</td>
                                                     <td>10/9/18</td>
-                                                    <td><span class="label label-danger">New Ticket</span></td>
-                                                    <td><span class="label label-success">Opened</span></td>
-                                                </tr>
-
-                                                <tr class="gradeA">
-                                                    <td>7</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-success">Solved</span></td>
-                                                    <td><span class="label label-danger">Closed</span></td>
-                                                </tr>
-
-                                                <tr class="gradeA">
-                                                    <td>8</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-warning">Un-answered</span></td>
-                                                    <td><span class="label label-success">Opened</span></td>
-                                                </tr>
-
-                                                <tr class="gradeA">
-                                                    <td>9</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-danger">New Ticket</span></td>
-                                                    <td><span class="label label-success">Opened</span></td>
-                                                </tr>
-
-                                                <tr class="gradeA">
-                                                    <td>10</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-danger">New Ticket</span></td>
                                                     <td><span class="label label-success">Opened</span></td>
                                                 </tr>
 
                                             </tbody>
                                             <tfoot>
                                                 <tr>
+                                                    <td style='display: none'>ticketID</td>
                                                     <th>#</th>
                                                     <th>Title</th>
+                                                    <td style='display: none'>ServiceTypeID</td>
                                                     <th>Category</th>
                                                     <th>Updated</th>
                                                     <th>Date Needed</th>
-                                                    <th>Action</th>
                                                     <th class="hidden-phone">Status</th>
                                                 </tr>
                                             </tfoot>
@@ -270,12 +242,86 @@
     <script src="js/dynamic_table_init.js"></script>
 
     <script>
-        $('#ctable').on('click', function() {
-			$('.gradeA').on('click', function() {
-				var a = this.getAttribute("id");
-				window.location.href = "helpdesk_view_ticket.php?ticketID=" + a;
-			})
-        })
+        function addRowHandlers() {
+            var table = document.getElementById("dynamic-table");
+            var rows = table.getElementsByTagName("tr");
+            for (i = 1; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function(row) {
+                    return function() {
+                        var cell1 = row.getElementsByTagName("td")[0];
+                        var id = cell1.textContent;
+
+                        var cell2 = row.getElementsByTagName("td")[3];
+                        var serviceTypeID = cell2.textContent;
+
+                                            
+                        if(serviceTypeID == '25'){
+                            //asset testing
+                            if(status == "Closed"){
+                                window.location.href ="engineer_view_ticket_assettesting_closed.php?id=" + id;
+                            }
+                                
+                            else{
+                                window.location.href = "engineer_view_ticket_assettesting_opened.php?id=" + id;
+                            }
+                        }
+                        
+                        else if(serviceTypeID == '26'){
+                            //refurbishing
+                            if(status == "Closed"){
+                                window.location.href = "engineer_view_ticket_refurbishing_closed.php?id=" + id;
+                            }
+
+                            else{
+                                window.location.href = "engineer_view_ticket_refurbishing_opened.php?id=" + id;
+                            }
+                            
+                        }
+                        
+                        else if(serviceTypeID == '27'){//dpone
+                            //repair
+                            if(status == "Closed"){
+                                window.location.href = "engineer_view_ticket_repair_closed.php?id=" + id;
+                            }
+                            else{
+                                window.location.href = "engineer_view_ticket_repair_opened.php?id=" + id;
+                            }
+                        }
+                        else if(serviceTypeID == '28'){
+                            //maintenance
+                            if(status == "Closed"){
+                                window.location.href = "engineer_view_ticket_maintenance_closed.php?id=" + id;
+                            }
+                            else{
+                                window.location.href = "engineer_view_ticket_maintenance_opened.php?id=" + id;
+                            }
+                        }
+                         else if(serviceTypeID == '29'){
+                            //others
+                            if(status == "Closed"){
+                                window.location.href = "engineer_view_ticket_others_closed.php?id=" + id;
+                            }
+                            else{
+                                window.location.href = "engineer_view_ticket_others_opened.php?id=" + id;
+                            }
+                        }
+                         else{
+                            //service
+                            if(status == "Closed"){
+                                window.location.href = "engineer_view_ticket_service_closed.php?id=" + id;
+                            }
+                            else{
+                                window.location.href = "engineer_view_ticket_service_opened.php?id=" + id;
+                            }
+                        }
+                        
+                    };
+                };
+                currentRow.onclick = createClickHandler(currentRow);
+            }
+        }
+        window.onload = addRowHandlers();
     </script>
 
     <!--common script init for all pages-->
