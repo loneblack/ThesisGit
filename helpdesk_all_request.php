@@ -273,27 +273,27 @@
 						var id = cell1.textContent;
 						
 						if(idx == "Asset Testing"){
-							window.location.replace("helpdesk_view_assettesting_open.php?testingID=" + id);
+							window.location.href = "helpdesk_view_assettesting_open.php?testingID=" + id;
 						}
 						
 						if(idx == "Donation"){
-							window.location.replace("helpdesk_view_donation_request.php?donationID=" + id);
+							window.location.href = "helpdesk_view_donation_request.php?donationID=" + id;
 						}
                         
                         if(idx == "Procurement of Service and Material"){
-                            window.location.replace("helpdesk_view_procurement_service_material_request.php?requestID=" + id);
+                            window.location.href = "helpdesk_view_procurement_service_material_request.php?requestID=" + id;
 						}
 						
 						if(idx == "Borrow"){
-							window.location.replace("helpdesk_view_service_equipment_request.php");
+							window.location.href = "helpdesk_view_service_equipment_request.php";
 						}
 						
 						if(idx == "Service"){
-							window.location.replace("helpdesk_view_service_request.php");
+							window.location.replace.href="helpdesk_view_service_request.php";
 						}
 						
 						if(idx == "Repair"){
-							window.location.replace("helpdesk_view_repair_open.php?id="+id);
+							window.location.href = "helpdesk_view_repair_open.php?id="+id;
 						}
 						
 					};
