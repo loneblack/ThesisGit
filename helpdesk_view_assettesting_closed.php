@@ -21,7 +21,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
 </head>
-<!--asd-->
+    
 <body>
 
     <section id="container">
