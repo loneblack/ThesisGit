@@ -1,6 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
 
+$id = $_GET['id'];//get the id of the selected service request
+require_once("db/mysql_connect.php");
+
+$query =  "SELECT *, t.status AS 'status', s.status AS 'statusDescription' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID  WHERE t.ticketID = {$id};";
+$result = mysqli_query($dbc, $query);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+        
+        $dateCreated = $row['dateCreated'];
+        $dueDate = $row['dueDate'];
+        $summary = $row['summary'];
+        $details = $row['details'];
+        $status = $row['status'];
+        $statusDescription = $row['statusDescription'];
+        $description = $row['description'];
+        $priority = $row['priority'];
+        $others = $row['others'];
+        $assigneeUserID = $row['assigneeUserID'];
+
+
+    }
+$assets = array();
+
+$query2 =  "SELECT * FROM thesis.ticketedasset WHERE ticketID = {$id};";
+$result2 = mysqli_query($dbc, $query2);
+
+while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
+    array_push($assets, $row['assetID']);
+}
+?>
+<?php
+// Insertion to ticket
+    
+    if(isset($_POST['submit'])){
+
+        
+        $status=$_POST['status'];
+        $assigneeUserID=$_POST['assigneeUserID'];
+        if($_POST['assigneeUserID']=='0')
+        $assigneeUserID="NULL";
+        $priority=$_POST['priority'];
+        $currDate=date("Y-m-d H:i:s");
+
+        if(!isset($message)){
+
+
+            $querya="UPDATE `thesis`.`ticket` 
+                    SET `status` = '{$status}',
+                        `assigneeUserID` = {$assigneeUserID},
+                        `dateClosed` = '{$currDate}',
+                        `priority` = '{$priority}'
+                        WHERE (`ticketID` = '{$id}');";
+            $resulta=mysqli_query($dbc,$querya);
+        
+            $message = "Ticket Updated!";
+            $_SESSION['submitMessage'] = $message;
+        }
+        
+    }
+    
+?>
 <head>
     <meta charset="utf-8">
 
@@ -53,7 +116,42 @@
                         <div class="col-sm-9">
                             <section class="panel">
                                 <header style="padding-bottom:20px" class="panel-heading wht-bg">
-                                    <h4 class="gen-case" style="float:right"> <a class="btn btn-danger">Closed</a></h4>
+                                    <?php
+                                        if (isset($_SESSION['submitMessage'])){
+
+                                            echo "<div style='text-align:center' class='alert alert-success'><h5><strong>
+                                                    {$_SESSION['submitMessage']}
+                                                  </strong></h5></div>";
+
+                                            unset($_SESSION['submitMessage']);
+                                        }
+                                    ?>
+                                    <h4 class="gen-case" style="float:right"> 
+                                    <?php
+                                        if($status=='1'){
+                                            echo "<a class='btn btn-success'>Open</a>";
+                                        }
+                                        elseif($status=='7'){
+                                            echo "<a class='btn btn-danger'>Closed</a>";
+                                        }
+                                        elseif($status=='2'){
+                                            echo "<a class='btn btn-info'>Assigned</a>";
+                                        }
+                                        
+                                        elseif($status=='3'){
+                                            echo "<a class='btn btn-warning'>In Progress</a>";
+                                        }
+                                        elseif($status=='6'){
+                                            echo "<a class='btn btn-warning'>Waiting for Parts</a>";
+                                        }
+                                        elseif($status=='4'){
+                                            echo "<a class='btn btn-primary'>Transferred</a>";
+                                        }
+                                        elseif($status=='5'){
+                                            echo "<a class='btn btn-default'>Escalated</a>";
+                                        }
+                                    ?>
+                                    </h4>
                                     <h4>Repair Request</h3>
                                 </header>
                                 <div class="panel-body ">
@@ -67,14 +165,19 @@
                                                 <strong>me</strong>
                                             </div>
                                             <div class="col-md-4">
-                                                <p class="date"> 10:15AM 02 FEB 2018</p><br><br>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="view-mail">
-                                        <p>HI would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. Hello I would like to repair my PC. </p>
-                                    </div>
-                                </div>
+                                                                <h5>Date Created: <?php echo $dateCreated;?></h5>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <h5>Summary: <?php echo $summary;?></h5>
+                                                            </div>
+                                                            <div class="cp;-col-md-4">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="view-mail">
+                                                        <p>Details: <?php echo $details;?></p>
+                                                    </div>
+                                                </div>
                             </section>
 
                             <section class="panel">
@@ -84,22 +187,53 @@
                                         <thead>
                                             <tr>
                                                 <th></th>
-                                                <th>Asset/ Software Name</th>
                                                 <th>Property Code</th>
+                                                <th>Asset/ Software Name</th>
                                                 <th>Building</th>
                                                 <th>Room</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td align="center">
-                                                    <input type="checkbox" value="" disabled>
+                                            <?php
+                                                        
+                                            for ($i=0; $i < count($assets); $i++) { 
+                                                
+                                                
+                                                $query3 =  "SELECT a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            JOIN ref_assetstatus s
+                                                        ON a.assetStatus = s.id
+                                                            JOIN assetassignment aa
+                                                        ON a.assetID = aa.assetID
+                                                            JOIN building b
+                                                        ON aa.BuildingID = b.BuildingID
+                                                            JOIN floorandroom f
+                                                        ON aa.FloorAndRoomID = f.FloorAndRoomID 
+                                                            WHERE a.assetID = {$assets[$i]};";
+
+                                                $result3 = mysqli_query($dbc, $query3);  
+
+                                                while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
+
+                                                   echo "<tr>
+                                                   <td align='center'>
+                                                    <input type='checkbox' value='' disabled>
                                                 </td>
-                                                <td>PC</td>
-                                                <td>123456</td>
-                                                <td>Br. Andrew</td>
-                                                <td>A 1702</td>
-                                            </tr>
+                                                    <td>{$row['propertyCode']}</td>
+                                                    <td>{$row['brand']} {$row['category']} {$row['description']}</td>
+                                                    <td>{$row['building']}</td>
+                                                    <td>{$row['floorroom']}</td>
+                                                    </tr>";
+                                                }  
+
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -119,29 +253,27 @@
                                         </li>
                                     </ul>
                                     <div class="form">
-                                        <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
+                                        <form class="cmxform form-horizontal" id="signupForm" method="post" action="">
                                             <div class="form-group ">
                                                 <div class="form-group ">
-                                                    <label for="category" class="control-label col-lg-4" >Category</label>
-                                                    <div class="col-lg-8">
-                                                        <select class="form-control m-bot15" disabled>
+                                                    <label for="category" class="control-label col-lg-4">Category</label>
+                                                    <div class="col-lg-7">
+                                                        <select class="form-control m-bot15" disabled="">
                                                             <option selected="selected">Repair</option>
-                                                            <option>Repair</option>
-                                                            <option>Maintenance</option>
-                                                            <option>Replacement</option>
                                                         </select>
                                                     </div>
                                                 </div>
 
                                                 <label for="status" class="control-label col-lg-4">Status</label>
                                                 <div class="col-lg-8">
-                                                    <select class="form-control m-bot15" disabled>
-                                                        <option>Assigned</option>
-                                                        <option>In Progress</option>
-                                                        <option selected="selected">Transferred</option>
-                                                        <option>Escalated</option>
-                                                        <option>Waiting For Parts</option>
-                                                        <option>Closed</option>
+                                                    <select class="form-control m-bot15" name ="status" disabled>
+                                                        <option value='1' <?php if($status=='1') echo "selected";?> >Open</option>
+                                                        <option value='2' <?php if($status=='2') echo "selected";?> >Assigned</option>
+                                                        <option value='3' <?php if($status=='3') echo "selected";?> >In Progress</option>
+                                                        <option value='4' <?php if($status=='4') echo "selected";?> >Transferred</option>
+                                                        <option value='5' <?php if($status=='5') echo "selected";?> >Escalated</option>
+                                                        <option value='6' <?php if($status=='6') echo "selected";?> >Waiting For Parts</option>
+                                                        <option value='7' <?php if($status=='7') echo "selected";?> >Closed</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -149,11 +281,11 @@
                                             <div class="form-group ">
                                                 <label for="priority" class="control-label col-lg-4">Priority</label>
                                                 <div class="col-lg-8">
-                                                    <select class="form-control m-bot15" disabled>
-                                                        <option selected="selected">Low</option>
-                                                        <option>Medium</option>
-                                                        <option>High</option>
-                                                        <option>Urgent</option>
+                                                    <select class="form-control m-bot15" name="priority" disabled>
+                                                        <option value = "Low" <?php if($priority=='Low') echo "selected";?> >Low</option>
+                                                        <option value = "Medium" <?php if($priority=='Medium') echo "selected";?> >Medium</option>
+                                                        <option value = "High" <?php if($priority=='High') echo "selected";?> >High</option>
+                                                        <option value = "Urgent" <?php if($priority=='Urgent') echo "selected";?> >Urgent</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -161,13 +293,21 @@
                                             <div class="form-group ">
                                                 <label for="assign" class="control-label col-lg-4">Escalate To</label>
                                                 <div class="col-lg-8">
-                                                    <select class="form-control m-bot15" disabled>
-                                                        <option selected="selected">Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
+                                                    <select class="form-control m-bot15" name = "assigneeUserID" disabled>
+                                                        <option value='0'>None</option>
+                                                       <?php
+                                                            $query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer';";
+                                                            $result3=mysqli_query($dbc,$query3);
+                                                                    
+                                                            while($row3=mysqli_fetch_array($result3,MYSQLI_ASSOC)){
+                                                                if($assigneeUserID == $row3['UserID']){
+                                                                    echo "<option selected value='{$row3['UserID']}'>{$row3['fullname']}</option>";
+                                                                }
+                                                                else
+                                                                    echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
+                                                            }                                       
+                                                            
+                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -175,17 +315,10 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4">Due Date</label>
                                                 <div class="col-lg-8">
-                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018" disabled />
+                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value=<?php echo $dueDate;?> disabled/>
                                                 </div>
                                             </div>
-
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Repair Date *</label>
-                                                <div class="col-lg-8">
-                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018"  disabled required />
-                                                </div>
-                                            </div>
-                                        </form>
+                                       
                                     </div>
 
                                 </div>
@@ -202,14 +335,13 @@
                                         <h4>Comments or Request For Parts (if needed)</h4>
                                     </div>
                                     <div class="view-mail">
-                                        <textarea class="form-control" style="resize:none" rows="5" disabled></textarea>
+                                        <textarea class="form-control" style="resize:none" rows="5" name="comment" disabled></textarea>
                                     </div>
                                 </div>
                             </section>
-                            <button onclick="#" class="btn btn-success">Send</button></a>
-                            <a href="engineer_all_ticket.php"><button class="btn btn-danger">Back</button></a>
+                            <a href="helpdesk_all_ticket.php"><button type = "button" class="btn btn-danger">Back</button></a>
                         </div>
-
+                             </form>
 
                     </div>
                     <!-- page end-->

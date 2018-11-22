@@ -4,10 +4,9 @@
 session_start();
 
 $id = $_GET['id'];//get the id of the selected service request
-echo "<script>alert('asdasd');</script>";
 require_once("db/mysql_connect.php");
 
-$query =  "SELECT   * FROM thesis.ticket WHERE ticketID = {$id};";
+$query =  "SELECT *, t.status AS 'status', s.status AS 'statusDescription' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID  WHERE t.ticketID = {$id};";
 $result = mysqli_query($dbc, $query);
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
@@ -17,10 +16,12 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         $summary = $row['summary'];
         $details = $row['details'];
         $status = $row['status'];
+        $statusDescription = $row['statusDescription'];
         $description = $row['description'];
         $priority = $row['priority'];
         $others = $row['others'];
         $assigneeUserID = $row['assigneeUserID'];
+
 
     }
 $assets = array();
@@ -37,30 +38,26 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     
     if(isset($_POST['submit'])){
 
-        echo "<script>alert('submit');</script>";
         
         $status=$_POST['status'];
-        $assigned=$_POST['assigned'];
+        $assigneeUserID=$_POST['assigneeUserID'];
+        if($_POST['assigneeUserID']=='0')
+        $assigneeUserID="NULL";
         $priority=$_POST['priority'];
-        $comment=$_POST['comment'];
         $currDate=date("Y-m-d H:i:s");
 
         if(!isset($message)){
-             echo "<script>alert('message');</script>";
 
 
             $querya="UPDATE `thesis`.`ticket` 
                     SET `status` = '{$status}',
-                        `assigneeUserID` = '{$assigned}',
+                        `assigneeUserID` = {$assigneeUserID},
                         `dateClosed` = '{$currDate}',
-                        `priority` = '{$priority}',
-                        `comment` = '{$comment}' 
-                            WHERE (`ticketID` = '{$id}');";
+                        `priority` = '{$priority}'
+                        WHERE (`ticketID` = '{$id}');";
             $resulta=mysqli_query($dbc,$querya);
-
-            echo $querya;
         
-            $message = "Ticket Created";
+            $message = "Ticket Updated!";
             $_SESSION['submitMessage'] = $message;
         }
         
@@ -119,8 +116,43 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                         <div class="col-sm-9">
                             <section class="panel">
                                 <header style="padding-bottom:20px" class="panel-heading wht-bg">
-                                    <h4 class="gen-case" style="float:right"> <a class="btn btn-success">Opened</a></h4>
-                                    <h4>Repair Request</h3>
+                                    <?php
+                                        if (isset($_SESSION['submitMessage'])){
+
+                                            echo "<div style='text-align:center' class='alert alert-success'><h5><strong>
+                                                    {$_SESSION['submitMessage']}
+                                                  </strong></h5></div>";
+
+                                            unset($_SESSION['submitMessage']);
+                                        }
+                                    ?>
+                                    <h4 class="gen-case" style="float:right"> 
+                                    <?php
+                                        if($status=='1'){
+                                            echo "<a class='btn btn-success'>Open</a>";
+                                        }
+                                        elseif($status=='7'){
+                                            echo "<a class='btn btn-danger'>Closed</a>";
+                                        }
+                                        elseif($status=='2'){
+                                            echo "<a class='btn btn-info'>Assigned</a>";
+                                        }
+                                        
+                                        elseif($status=='3'){
+                                            echo "<a class='btn btn-warning'>In Progress</a>";
+                                        }
+                                        elseif($status=='6'){
+                                            echo "<a class='btn btn-warning'>Waiting for Parts</a>";
+                                        }
+                                        elseif($status=='4'){
+                                            echo "<a class='btn btn-primary'>Transferred</a>";
+                                        }
+                                        elseif($status=='5'){
+                                            echo "<a class='btn btn-default'>Escalated</a>";
+                                        }
+                                    ?>
+                                    </h4>
+                                    <h4>Repair Ticket</h3>
                                 </header>
                                 <div class="panel-body ">
 
@@ -133,24 +165,23 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 <strong>me</strong>
                                             </div>
                                             <div class="col-md-4">
-                                                                <h5>Date Created: <?php echo $dateCreated;?></h5>
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <h5>Summary: <?php echo $summary;?></h5>
-                                                            </div>
-                                                            <div class="cp;-col-md-4">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="view-mail">
-                                                        <p>Details: <?php echo $details;?></p>
-                                                    </div>
-                                                </div>
+                                                <h5>Date Created: <?php echo $dateCreated;?></h5>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h5>Summary: <?php echo $summary;?></h5>
+                                            </div>
+                                            <div class="cp;-col-md-4"></div>
+                                        </div>
+                                    </div>
+                                        <div class="view-mail">
+                                            <p>Details: <?php echo $details;?></p>
+                                        </div>
+                                </div>
                             </section>
 
                             <section class="panel">
                                 <div class="panel-body ">
-                                    <h5><b>** Check the Checkbox if item is repaired</b></h5>
+                                   
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
@@ -235,13 +266,13 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 <label for="status" class="control-label col-lg-4">Status</label>
                                                 <div class="col-lg-8">
                                                     <select class="form-control m-bot15" name ="status">
-                                                        <option <?php if($status=='1') echo "selected";?> >Open</option>
-                                                        <option <?php if($status=='2') echo "selected";?> >Assigned</option>
-                                                        <option <?php if($status=='3') echo "selected";?> >In Progress</option>
-                                                        <option <?php if($status=='4') echo "selected";?> >Transferred</option>
-                                                        <option <?php if($status=='5') echo "selected";?> >Escalated</option>
-                                                        <option <?php if($status=='6') echo "selected";?> >Waiting For Parts</option>
-                                                        <option <?php if($status=='7') echo "selected";?> >Closed</option>
+                                                        <option value='1' <?php if($status=='1') echo "selected";?> >Open</option>
+                                                        <option value='2' <?php if($status=='2') echo "selected";?> >Assigned</option>
+                                                        <option value='3' <?php if($status=='3') echo "selected";?> >In Progress</option>
+                                                        <option value='4' <?php if($status=='4') echo "selected";?> >Transferred</option>
+                                                        <option value='5' <?php if($status=='5') echo "selected";?> >Escalated</option>
+                                                        <option value='6' <?php if($status=='6') echo "selected";?> >Waiting For Parts</option>
+                                                        <option value='7' <?php if($status=='7') echo "selected";?> >Closed</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -249,11 +280,11 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             <div class="form-group ">
                                                 <label for="priority" class="control-label col-lg-4">Priority</label>
                                                 <div class="col-lg-8">
-                                                    <select class="form-control m-bot15">
-                                                        <option <?php if($priority=='Low') echo "selected";?> >Low</option>
-                                                        <option <?php if($priority=='Medium') echo "selected";?> >Medium</option>
-                                                        <option <?php if($priority=='High') echo "selected";?> >High</option>
-                                                        <option <?php if($priority=='Urgent') echo "selected";?> >Urgent</option>
+                                                    <select class="form-control m-bot15" name="priority">
+                                                        <option value = "Low" <?php if($priority=='Low') echo "selected";?> >Low</option>
+                                                        <option value = "Medium" <?php if($priority=='Medium') echo "selected";?> >Medium</option>
+                                                        <option value = "High" <?php if($priority=='High') echo "selected";?> >High</option>
+                                                        <option value = "Urgent" <?php if($priority=='Urgent') echo "selected";?> >Urgent</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -261,7 +292,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             <div class="form-group ">
                                                 <label for="assign" class="control-label col-lg-4">Escalate To</label>
                                                 <div class="col-lg-8">
-                                                    <select class="form-control m-bot15" name = "assigned">
+                                                    <select class="form-control m-bot15" name = "assigneeUserID">
                                                         <option value='0'>None</option>
                                                        <?php
                                                             $query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer';";
@@ -307,7 +338,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     </div>
                                 </div>
                             </section>
-                            <button type="submit" class="btn btn-success">Send</button></a>
+                            <button type="submit" name ="submit" class="btn btn-success">Send</button></a>
                             <a href="helpdesk_all_ticket.php"><button type = "button" class="btn btn-danger">Back</button></a>
                         </div>
                              </form>

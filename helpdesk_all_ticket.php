@@ -186,6 +186,9 @@
                         var cell2 = row.getElementsByTagName("td")[3];
                         var serviceTypeID = cell2.textContent;
 
+                        var cell3 = row.getElementsByTagName("td")[7];
+                        var status = cell3.textContent;
+
                                             
                         if(serviceTypeID == '25'){
                             //asset testing

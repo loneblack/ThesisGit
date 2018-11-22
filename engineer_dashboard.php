@@ -190,7 +190,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>1
+                                            <tbody>
 
                                                  <?php
                                                     $count = 1;

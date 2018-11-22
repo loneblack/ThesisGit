@@ -66,8 +66,10 @@ require_once("db/mysql_connect.php");
                                         <table class="display table table-bordered table-striped" id="dynamic-table">
                                             <thead>
                                                 <tr>
+                                                    <td style='display: none'>{$row['ticketID']}</td>
                                                     <th>#</th>
                                                     <th>Title</th>
+                                                    <td style='display: none'>{$row['ticketID']}</td>
                                                     <th>Category</th>
                                                     <th>Updated</th>
                                                     <th>Date Needed</th>
@@ -144,13 +146,15 @@ require_once("db/mysql_connect.php");
                                             </tbody>
                                             <tfoot>
                                                 <tr>
+                                                    <td style='display: none'>{$row['ticketID']}</td>
                                                     <th>#</th>
                                                     <th>Title</th>
+                                                    <td style='display: none'>{$row['ticketID']}</td>
                                                     <th>Category</th>
                                                     <th>Updated</th>
                                                     <th>Date Needed</th>
-                                                    <th>Action</th>
-                                                    <th class="hidden-phone">Status</th>
+                                                    <th>Priority</th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -183,7 +187,9 @@ require_once("db/mysql_connect.php");
                         var serviceTypeID = cell2.textContent;
 
                         var cell3 = row.getElementsByTagName("td")[8];
-                        var status = cell2.textContent;
+                        var status = cell3.textContent;
+
+                        alert(id+" - "+serviceTypeID+" - "+status);
 											
 						if(serviceTypeID == '25'){
                             //asset testing
