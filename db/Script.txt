@@ -984,7 +984,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`donation` (
   `reason` VARCHAR(45) NULL,
   `statusID` INT(11) NOT NULL,
   `stepsID` INT NOT NULL,
-  `user_UserID` INT(11) NOT NULL,
+  `user_UserID` INT(11) NULL,
   PRIMARY KEY (`donationID`),
   INDEX `fk_donation_organization1_idx` (`organizationID` ASC),
   INDEX `fk_donation_department1_idx` (`DepartmentID` ASC),
