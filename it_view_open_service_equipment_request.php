@@ -176,14 +176,33 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     </div>
                                                 </div>
                                                 <hr>
+
+                                                <h4>Endorsement (if applicable)</h4>
+                                                    <div class="form-group ">
+                                                        <label for="representative" class="control-label col-lg-3">Representative</label>
+                                                        <div class="col-lg-6">
+                                                            <input class="form-control" id="representative" name="representative" type="text" disabled value=<?php echo "'".$personrepresentative."'";?>/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <label for="idNum" class="control-label col-lg-3">ID Number</label>
+                                                        <div class="col-lg-6">
+                                                            <input class="form-control" id="idNum" name="idNum" type="text" disabled value=<?php echo "'".$personrepresentativeID."'";?>/>
+                                                        </div>
+                                                    </div>
+                                                <hr>
+
                                                 <div class="container-fluid">
-                                                    <h4>Equipment to be borrowed</h4>
+                                                    <h4>Equipment to Lend</h4>
 
                                                     <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                         <thead>
                                                             <tr>
                                                                 <th>Equipment</th>
                                                                 <th>Quantity</th>
+                                                                <th>Property Code</th>
+                                                                <th>Model</th>
+                                                                <th>Brand</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -197,27 +216,62 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                                     </select>
                                                                 </td>
                                                                 <td><input type='number' value ='{$quantity[$i]}' class='form-control' disabled></td>
+                                                                
+                                                                <td>
+                                                                    <select class='form-control'>
+                                                                        <option>Select Property Code</option>
+                                                                    </select>
+                                                                </td>
+                                                                
+                                                                <td>
+                                                                    <select class='form-control'>
+                                                                        <option>Select Model</option>
+                                                                    </select>
+                                                                </td>
+
+                                                                <td>
+                                                                    <select class='form-control'>
+                                                                        <option>Select Brand</option>
+                                                                    </select>
+                                                                </td>
                                                             </tr>";
+
+
+                                                                for ($j=1; $j < $quantity[$i] ; $j++) { 
+                                                                    
+                                                                echo "
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td>
+                                                                        <select class='form-control'>
+                                                                            <option>Select Property Code</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    
+                                                                    <td>
+                                                                        <select class='form-control'>
+                                                                            <option>Select Model</option>
+                                                                        </select>
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <select class='form-control'>
+                                                                            <option>Select Brand</option>
+                                                                        </select>
+                                                                    </td>
+                                                                </tr>";
+                                                                }
                                                             }
                                                         ?>
                                                         </tbody>
                                                     </table>
+
+
+
                                                 </div>
                                                 <hr>
                                                 <div class="container-fluid">
-                                                    <h4>Endorsement (if applicable)</h4>
-                                                    <div class="form-group ">
-                                                        <label for="representative" class="control-label col-lg-3">Representative</label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" id="representative" name="representative" type="text" disabled value=<?php echo "'".$personrepresentative."'";?>/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group ">
-                                                        <label for="idNum" class="control-label col-lg-3">ID Number</label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" id="idNum" name="idNum" type="text" disabled value=<?php echo "'".$personrepresentativeID."'";?>/>
-                                                        </div>
-                                                    </div>
+                                                    
 													<hr>
                                                     <div class="form-group">
 														<button id="approveBtn" name="approveBtn" class="btn btn-success" <?php if($description != 'Pending') echo "disabled"; ?> type="submit">Approve</button>
