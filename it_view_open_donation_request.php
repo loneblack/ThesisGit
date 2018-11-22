@@ -158,6 +158,9 @@
 																								$rowOff=mysqli_fetch_array($resultOff, MYSQLI_ASSOC);
 																								echo $rowOff['Name'];
 																							}
+																							else{
+																								echo $row['schoolName'];
+																							}
 																							?></b></h5>
                                             <h5><b>Contact Number: <?php echo $row['contactNumber']; ?></b></h5>
                                             <h5><b>Date Time Needed: <?php echo $row['dateNeed']; ?></b></h5>

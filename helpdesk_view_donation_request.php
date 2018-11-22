@@ -31,8 +31,15 @@
 			
 			if(!isset($message)){
 				//INSERT ASSET TESTING
-				$queryt="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`, `remarks`) VALUES ('1', '{$rowDon['user_UserID']}', '25', 'Donation');";
-				$resultt=mysqli_query($dbc,$queryt);
+				if(isset($rowDon['user_UserID'])){
+					$queryt="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`, `remarks`) VALUES ('1', '{$rowDon['user_UserID']}', '25', 'Donation');";
+					$resultt=mysqli_query($dbc,$queryt);
+				}
+				else{
+					$queryt="INSERT INTO `thesis`.`assettesting` (`statusID`, `serviceType`, `remarks`) VALUES ('1', '25', 'Donation');";
+					$resultt=mysqli_query($dbc,$queryt);
+				}
+				
 				
 				//GET LATEST ASSET TEST
 				$query0="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
@@ -281,6 +288,9 @@
 																								$resultOff=mysqli_query($dbc,$queryOff);
 																								$rowOff=mysqli_fetch_array($resultOff, MYSQLI_ASSOC);
 																								echo $rowOff['Name'];
+																							}
+																							else{
+																								echo $rowDon['schoolName'];
 																							}
 																							?> </b></h5>
                                     <h5><b>Contact Number: <?php echo $rowDon['contactNumber']; ?></b></h5>

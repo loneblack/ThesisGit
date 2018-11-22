@@ -9,11 +9,17 @@
 	//										 join user u on at.PersonRequestedID=u.UserID 
 	//										 join floorandroom far on at.FloorAndRoomID=far.FloorAndRoomID
 	//										 where t.ticketID='{$ticketID}'";
+	//For Users
 	$queryx = "SELECT CONCAT(Convert(AES_DECRYPT(u.lastName,'Fusion')USING utf8),' ',Convert(AES_DECRYPT(u.firstName,'Fusion')USING utf8)) as `fullname`,t.dueDate FROM thesis.ticket t join assettesting at on t.testingID=at.testingID 
 											 join user u on at.PersonRequestedID=u.UserID 
 											 where t.ticketID='{$ticketID}'";
     $resultx = mysqli_query($dbc, $queryx);
 	$rowx = mysqli_fetch_array($resultx, MYSQLI_ASSOC);
+	
+	$queryOut = "SELECT t.dueDate FROM thesis.ticket t join assettesting at on t.testingID=at.testingID 
+											 where t.ticketID='{$ticketID}'";
+    $resultOut = mysqli_query($dbc, $queryOut);
+	$rowOut = mysqli_fetch_array($resultOut, MYSQLI_ASSOC);
 	
 	$query7="SELECT COUNT(atd.asset_assetID) as `numAssets`,at.testingID,at.remarks FROM thesis.assettesting_details atd join assettesting at on atd.assettesting_testingID=at.testingID 
 																	  join ticket t on at.testingID=t.testingID
@@ -162,8 +168,14 @@
 						$rowDonDat=mysqli_fetch_array($resultDonDat,MYSQLI_ASSOC);
 						
 						//CREATE ASSETTESTING
-						$queryAssTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`,`remarks`) VALUES ('1', '{$rowDonDat['UserID']}', '25','Donation');";
-						$resultAssTest=mysqli_query($dbc,$queryAssTest);
+						if(isset($rowDonDat['UserID'])){
+							$queryAssTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`,`remarks`) VALUES ('1', '{$rowDonDat['UserID']}', '25','Donation');";
+							$resultAssTest=mysqli_query($dbc,$queryAssTest);
+						}
+						else{
+							$queryAssTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `serviceType`,`remarks`) VALUES ('1','25','Donation');";
+							$resultAssTest=mysqli_query($dbc,$queryAssTest);
+						}
 						
 						//GET LATEST ASSET TEST
 						$queryLatAss="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
@@ -500,7 +512,12 @@
 												<div class="form-group">
 													<label class="control-label col-lg-4">Due Date</label>
 													<div class="col-lg-8">
-														<input class="form-control form-control-inline input-medium default-date-picker" name="dueDate" size="10" type="datetime" value="<?php echo $rowx['dueDate']; ?>" readonly />
+														<input class="form-control form-control-inline input-medium default-date-picker" name="dueDate" size="10" type="datetime" value="<?php if(isset($rowx['dueDate'])){
+																																																	echo $rowx['dueDate'];
+																																																}
+																																																else{
+																																																	echo $rowOut['dueDate'];
+																																																}?>" readonly />
 													</div>
 												</div>
 

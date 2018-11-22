@@ -124,7 +124,7 @@
 																
 															}
 															//Donation
-															$queryDon="SELECT * , rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`,rstp.name as `step` FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID
+															$queryDon="SELECT * , rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`,rstp.name as `step`,d.dateCreated FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID
 																																		join ref_steps rstp on d.stepsID=rstp.id
 																																		join user u on d.user_UserID=u.UserID";
 															$resultDon=mysqli_query($dbc,$queryDon);
@@ -155,10 +155,49 @@
 																	<td>Donation</td>
 																	<td>{$rowDon['step']}</td>
 																	<td>{$rowDon['requestor']}</td>
-																	<td>{$rowDon['dateNeed']}</td>
+																	<td>{$rowDon['dateCreated']}</td>
 																</tr>";
-																
+																$count++;
 															}
+															//Donation for outsiders
+															
+															$queryDonOut="SELECT * , rs.description as `statusDesc`,rstp.name as `step`,d.dateCreated,d.contactPerson FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID
+																																		join ref_steps rstp on d.stepsID=rstp.id
+                                                                                                                                        where d.user_UserID is null and d.statusID!=6";
+															$resultDonOut=mysqli_query($dbc,$queryDonOut);
+															
+															while($rowDonOut=mysqli_fetch_array($resultDonOut,MYSQLI_ASSOC)){
+																echo "<tr>
+                                                                    <td style='display: none'>{$rowDonOut['donationID']}</td>
+                                                                    <td>{$count}</td>
+																	<td>{$rowDonOut['dateNeed']}</td>";
+																	
+																	if($rowDon['statusDesc']=='Pending'){
+																		echo "<td><span class='label label-warning label-mini'>{$rowDonOut['statusDesc']}</span></td>";
+																	}
+																	elseif($rowDon['statusDesc']=='Incomplete'){
+																		echo "<td><span class='label label-danger label-mini'>{$rowDonOut['statusDesc']}</span></td>";
+																	}
+																	elseif($rowDon['statusDesc']=='Completed'){
+																		echo "<td><span class='label label-success label-mini'>{$rowDonOut['statusDesc']}</span></td>";
+																	}
+																	//elseif($row['statusDesc']=='Ongoing'){
+																		//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	//}
+																	else{
+																		echo "<td><span class='label label-default label-mini'>{$rowDonOut['statusDesc']}</span></td>";
+																	}
+																	
+																echo "
+																	<td>Donation</td>
+																	<td>{$rowDonOut['step']}</td>
+																	<td>{$rowDonOut['contactPerson']}</td>
+																	<td>{$rowDonOut['dateCreated']}</td>
+																</tr>";
+																$count++;
+															}																		
+																																		
+															
 															 //Borrow
                                                             $query="SELECT * FROM thesis.request_borrow r 
                                                                       JOIN ref_status s ON r.statusID = s.statusID

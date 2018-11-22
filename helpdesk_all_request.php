@@ -80,7 +80,7 @@
 												<?php 
                                                     $count = 1;
 													//GET REQUEST FOR Procurement Service Material
-													$queryReqProc="SELECT * FROM thesis.request where step='9'";
+													$queryReqProc="SELECT *,rs.description as `statusDesc` FROM thesis.request r join ref_status rs on r.status=rs.statusID where r.step='9'";
 													$resultReqProc=mysqli_query($dbc,$queryReqProc);
 													while($rowReqProc=mysqli_fetch_array($resultReqProc,MYSQLI_ASSOC)){
 														echo "<tr class='gradeA'>
@@ -88,8 +88,13 @@
 															<td>{$count}</td>
 															<td>{$rowReqProc['description']}</td>
 															<td>Procurement of Service and Material</td>
-															<td>{$rowReqProc['dateNeeded']}</td>
-															</tr>";
+															<td>{$rowReqProc['dateNeeded']}</td>";
+															if($rowReqProc['statusDesc']=="Pending"){ echo "<td><label class='label label-warning'>{$rowReqProc['statusDesc']}</label></td>"; }
+															if($rowReqProc['statusDesc']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowReqProc['statusDesc']}</label></td>"; }
+															if($rowReqProc['statusDesc']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowReqProc['statusDesc']}</label></td>"; }
+															if($rowReqProc['statusDesc']=="Complete"){ echo "<td><label class='label label-success'>{$rowReqProc['statusDesc']}</label></td>"; }
+															
+															echo"</tr>";
 
                                                         $count++;
 													}
@@ -98,7 +103,7 @@
 												<?php 
 													
 													//GET DONATION REQUEST
-													$queryDon="SELECT * FROM thesis.donation where stepsID='9'";
+													$queryDon="SELECT *,rs.description as `statusDesc` FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID where d.stepsID='9' ";
 													$resultDon=mysqli_query($dbc,$queryDon);
 													while($rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC)){
 														echo "<tr class='gradeA'>
@@ -106,8 +111,12 @@
 															<td>{$count}</td>
 															<td>{$rowDon['purpose']}</td>
 															<td>Donation</td>
-															<td>{$rowDon['dateNeed']}</td>
-															</tr>";
+															<td>{$rowDon['dateNeed']}</td>";
+															if($rowDon['statusDesc']=="Pending"){ echo "<td><label class='label label-warning'>{$rowDon['statusDesc']}</label></td>"; }
+															if($rowDon['statusDesc']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowDon['statusDesc']}</label></td>"; }
+															if($rowDon['statusDesc']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowDon['statusDesc']}</label></td>"; }
+															if($rowDon['statusDesc']=="Complete"){ echo "<td><label class='label label-success'>{$rowDon['statusDesc']}</label></td>"; }
+															echo "</tr>";
 
                                                             $count++;
 													}
