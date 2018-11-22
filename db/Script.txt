@@ -1382,7 +1382,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `thesis`.`Inventory` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`Inventory` (
-  `InventoryID` INT(11) NOT NULL,
+  `InventoryID` INT(11) NOT NULL AUTO_INCREMENT,
   `assetCategoryID` INT(11) NULL,
   `quantity` INT(11) NULL,
   `floorLevel` INT(11) NULL,

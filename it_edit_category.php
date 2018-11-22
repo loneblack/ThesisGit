@@ -4,7 +4,8 @@
 	require_once('db/mysql_connect.php');
 	$assetCategoryID=$_GET['assetCategoryID'];
 	
-	$query="SELECT * FROM thesis.ref_assetcategory where assetCategoryID='{$assetCategoryID}'";
+	$query="SELECT ac.name, i.floorLevel, i.ceilingLevel FROM ref_assetcategory ac
+	JOIN inventory i ON ac.assetCategoryID = i.assetCategoryID where ac.assetCategoryID='{$assetCategoryID}'";
 	$result=mysqli_query($dbc,$query);
 	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 	
@@ -13,19 +14,15 @@
 		$message=null;
 		$query1="SELECT * FROM thesis.ref_assetcategory";
 		$result1=mysqli_query($dbc,$query1);
-		$assetCategoryName=$_POST['assetCategoryName'];
-
-		while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
-			if(strcasecmp($assetCategoryName, $row1['name'])==0){
-				$message="Asset Category already exists";
-				echo "<script>alert('{$message}');</script>";
-			}
-		}
 		
+        $floorLevel = $_POST['floorLevel'];
+        $ceilingLevel = $_POST['ceilingLevel'];
+        
 		if(!isset($message)){
-			$query2="UPDATE `thesis`.`ref_assetcategory` SET `name`='{$assetCategoryName}' WHERE `assetCategoryID`='{$assetCategoryID}'";
+			$query2="UPDATE inventory SET floorLevel = '{$floorLevel}', ceilingLevel = '{$ceilingLevel}' WHERE `assetCategoryID`='{$assetCategoryID}'";
 			$result2=mysqli_query($dbc,$query2);
 			echo "<script>alert('Success');</script>";
+            header("Location: http://".$_SERVER['HTTP_HOST']. dirname($_SERVER['PHP_SELF'])."/it_edit_category.php?assetCategoryID=".$assetCategoryID);
 		}	
 		
 	}
@@ -88,18 +85,33 @@
                                 </header>
                                 <div class="panel-body">
                                     <div class="position-center">
-                                        <form class="form-horizontal" role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']."?assetCategoryID=".$assetCategoryID; ?>">
+                                        <form class="form-horizontal" role="form" method="post">
 
                                             <div class="form-group">
                                                 <label for="category" class="col-lg-2 col-sm-2 control-label">Category Name</label>
                                                 <div class="col-lg-10">
-                                                    <input type="text" class="form-control" id="category" placeholder="Category Name" name="assetCategoryName" value="<?php echo $row['name'];  ?>" required>
+                                                    <input type="text" class="form-control" id="category" placeholder="Category Name" name="assetCategoryName" value="<?php echo $row['name'];  ?>" disabled>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="category" class="col-lg-2 col-sm-2 control-label">Floor Level</label>
+                                                <div class="col-lg-10">
+                                                    <input type="number" class="form-control" id="floorLevel" placeholder="Floor Level" name="floorLevel" value="<?php echo $row['floorLevel'];  ?>">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="category" class="col-lg-2 col-sm-2 control-label">Ceiling Level</label>
+                                                <div class="col-lg-10">
+                                                    <input type="number" class="form-control" id="ceilingLevel" placeholder="Ceiling Level" name="ceilingLevel" value="<?php echo $row['ceilingLevel'];  ?>">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <div class="col-lg-offset-2 col-lg-10">
                                                     <button type="submit" class="btn btn-success" name="submit">Submit</button>
+                                                    <a href="it_categories.php"><button type="button" class="btn btn-danger" name="submit">Back</button></a>
                                                 </div>
                                             </div>
                                         </form>

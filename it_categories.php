@@ -69,16 +69,21 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Category Name</th>
+                                                                <th>Floor Level</th>
+                                                                <th>Ceiling Level</th>
                                                             </tr>
                                                         </thead>
                                                         <?php
 															require_once('db/mysql_connect.php');
-															$query="SELECT * FROM thesis.ref_assetcategory";
+															$query="SELECT ac.assetCategoryID, ac.name, i.floorLevel, i.ceilingLevel FROM ref_assetcategory ac
+	                                                        JOIN inventory i ON ac.assetCategoryID = i.assetCategoryID;";
 															$result=mysqli_query($dbc,$query);
 															
 															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 																echo "<tr class='assetcategoryID' id='{$row['assetCategoryID']}'>
 																		<td>{$row['name']}</td>
+                                                                        <td>{$row['floorLevel']}</td>
+                                                                        <td>{$row['ceilingLevel']}</td>
 																	</tr>";
 															}
 														

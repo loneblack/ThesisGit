@@ -10,6 +10,8 @@
 		$query1="SELECT * FROM thesis.ref_assetcategory";
 		$result1=mysqli_query($dbc,$query1);
 		$assetCategoryName=$_POST['assetCategoryName'];
+        $floorLevel = $_POST['floorLevel'];
+        $ceilingLevel = $_POST['ceilingLevel'];
 
 		while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
 			if(strcasecmp($assetCategoryName, $row1['name'])==0){
@@ -21,6 +23,11 @@
 		if(!isset($message)){
 			$query2="INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('{$assetCategoryName}')";
 			$result2=mysqli_query($dbc,$query2);
+            
+            $query4="INSERT INTO inventory (assetCategoryID, floorLevel, ceilingLevel) VALUES ((
+                     SELECT max(assetCategoryID) FROM ref_assetcategory
+                     ), '{$floorLevel}', '{$ceilingLevel}');";
+			$result4=mysqli_query($dbc,$query4);
 			echo "<script>alert('Success');</script>";
 			$flag=1;
 		}	
@@ -95,10 +102,25 @@
                                                     <input type="text" class="form-control" id="category" placeholder="Category Name" name="assetCategoryName" value="<?php if (isset($_POST['assetCategoryName']) && !$flag) echo $_POST['assetCategoryName']; ?>">
                                                 </div>
                                             </div>
-
+                                            
+                                            <div class="form-group">
+                                                <label for="category" class="col-lg-2 col-sm-2 control-label">Floor Level</label>
+                                                <div class="col-lg-10">
+                                                    <input type="number" class="form-control" id="floorLevel" placeholder="Floor Level" name="floorLevel" value="<?php if (isset($_POST['floorLevel']) && !$flag) echo $_POST['floorLevel']; ?>">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="category" class="col-lg-2 col-sm-2 control-label">Ceiling Level</label>
+                                                <div class="col-lg-10">
+                                                    <input type="number" class="form-control" id="ceilingLevel" placeholder="Ceiling Level" name="ceilingLevel" value="<?php if (isset($_POST['ceilingLevel']) && !$flag) echo $_POST['ceilingLevel']; ?>">
+                                                </div>
+                                            </div>
+                                            
                                             <div class="form-group">
                                                 <div class="col-lg-offset-2 col-lg-10">
                                                     <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                                                    <a href="it_categories.php"><button type="button" class="btn btn-danger">Back</button></a>
                                                 </div>
                                             </div>
                                         </form>
