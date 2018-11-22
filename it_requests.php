@@ -80,11 +80,12 @@
 															$key = "Fusion";
 															require_once('db/mysql_connect.php');
 
-                                                            //Request Asset
+                                                            //Request Purchase
 															$query="SELECT r.requestID,rstp.name as `step`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor` FROM thesis.request r 
-																				join ref_status rs on r.status=rs.statusID
-																				join ref_steps rstp on r.step=rstp.id
-																				join user u on r.UserID=u.UserID";
+                                                                                join ref_status rs on r.status=rs.statusID
+                                                                                join ref_steps rstp on r.step=rstp.id
+                                                                                join user u on r.UserID=u.UserID
+                                                                                WHERE status !=6;";
 															$result=mysqli_query($dbc,$query);
 															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 																echo "<tr id='{$row['requestID']}'>
@@ -146,7 +147,7 @@
 																	<td>Donation</td>
 																	<td>{$rowDon['step']}</td>
 																	<td>{$rowDon['requestor']}</td>
-																	<td></td>
+																	<td>{$rowDon['dateNeed']}</td>
 																</tr>";
 																
 																
