@@ -218,20 +218,20 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                                 <td><input type='number' value ='{$quantity[$i]}' class='form-control' disabled></td>
                                                                 
                                                                 <td>
-                                                                    <select class='form-control'>
-                                                                        <option>Select Property Code</option>
+                                                                    <select class='form-control' required>
+                                                                        <option value=''>Select Brand</option>
                                                                     </select>
                                                                 </td>
                                                                 
                                                                 <td>
-                                                                    <select class='form-control'>
-                                                                        <option>Select Model</option>
+                                                                    <select class='form-control' required>
+                                                                        <option value= ''>Select Model</option>
                                                                     </select>
                                                                 </td>
 
                                                                 <td>
-                                                                    <select class='form-control'>
-                                                                        <option>Select Brand</option>
+                                                                    <select class='form-control' required>
+                                                                        <option value=''>Select Property Code</option>
                                                                     </select>
                                                                 </td>
                                                             </tr>";
@@ -243,22 +243,23 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td>
-                                                                        <select class='form-control'>
-                                                                            <option>Select Property Code</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    
-                                                                    <td>
-                                                                        <select class='form-control'>
-                                                                            <option>Select Model</option>
+                                                                        <select class='form-control' required>
+                                                                            <option value=''>Select Model</option>
                                                                         </select>
                                                                     </td>
 
                                                                     <td>
-                                                                        <select class='form-control'>
-                                                                            <option>Select Brand</option>
+                                                                        <select class='form-control' required>
+                                                                            <option value=''>Select Brand</option>
                                                                         </select>
                                                                     </td>
+
+                                                                    <td>
+                                                                        <select class='form-control' required>
+                                                                            <option value= ''>Select Property Code</option>
+                                                                        </select>
+                                                                    </td>
+ 
                                                                 </tr>";
                                                                 }
                                                             }
