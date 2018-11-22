@@ -394,7 +394,7 @@ session_start();
             url:"requestor_getMax.php",
             data: 'categoryID='+val,
             success: function(data){
-
+                alert(data);
 
                 $("#quantity"+count).html(data);
 
