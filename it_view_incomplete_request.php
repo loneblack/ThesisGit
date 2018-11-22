@@ -166,42 +166,6 @@ if(isset($_POST['submit'])){
 													</tr>";	
 												}
 											?>
-                                                <!-- <tr>
-                                                    <td style="width:50px;">5</td>
-                                                    <td>Laptop</td>
-                                                    <td>Apple</td>
-                                                    <td>MAC 122121</td>
-                                                    <td>4Gb RAM and 1020 GForce 1</td>
-                                                    <td></td>
-                                                    <td><button class="btn btn-primary" onclick="addTest(4)"> Add </button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="width:50px;">5</td>
-                                                    <td>Laptop</td>
-                                                    <td>Apple</td>
-                                                    <td>MAC 122121</td>
-                                                    <td>4Gb RAM and 1020 GForce 1</td>
-                                                    <td></td>
-                                                    <td><button class="btn btn-primary" onclick="addTest(3)"> Add </button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="width:50px;">5</td>
-                                                    <td>Laptop</td>
-                                                    <td>Apple</td>
-                                                    <td>MAC 122121</td>
-                                                    <td>4Gb RAM and 1020 GForce 1</td>
-                                                    <td></td>
-                                                    <td><button class="btn btn-primary" onclick="addTest(2)"> Add </button></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="width:50px;">5</td>
-                                                    <td>Laptop</td>
-                                                    <td>Apple</td>
-                                                    <td>MAC 122121</td>
-                                                    <td>4Gb RAM and 1020 GForce 1</td>
-                                                    <td></td>
-                                                    <td><button class="btn btn-primary" onclick="addTest(1)"> Add </button></td>
-                                                </tr> -->
                                             </tbody>
                                         </table>
 										<div style="padding-top:10px">

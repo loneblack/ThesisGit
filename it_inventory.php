@@ -20,7 +20,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
 </head>
-    
+
 <body>
 
     <section id="container">
@@ -62,47 +62,59 @@
                                                 <div class="col-sm-12">
                                                     <section class="panel">
                                                         <div class="panel-body">
-                                                            <div class="adv-table">
-                                                                <table class="display table table-bordered table-striped" id="dynamic-table">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Asset Category</th>
-                                                                            <th>Floor</th>
-                                                                            <th>Ceiling</th>
-                                                                            <th>Stock On Hand</th>
-                                                                            <th>Borrowed</th>
-                                                                            <th>Total Quantity</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>Computer</td>
-                                                                            <td>5</td>
-                                                                            <td>50</td>
-                                                                            <td>23</td>
-                                                                            <td>20</td>
-                                                                            <td>43</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Laptop</td>
-                                                                            <td>6</td>
-                                                                            <td><font color="orange">10</font></td>
-                                                                            <td>24</td>
-                                                                            <td>21</td>
-                                                                            <td>44</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>VGA</td>
-                                                                            <td>6</td>
-                                                                            <td><font color="red">6</font></td>
-                                                                            <td>24</td>
-                                                                            <td>21</td>
-                                                                            <td>44</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
+                                                            <form>
+                                                                <div class="adv-table">
+                                                                    <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Check to Replenish</th>
+                                                                                <th>Asset Category</th>
+                                                                                <th>Floor</th>
+                                                                                <th>Ceiling</th>
+                                                                                <th>Stock On Hand</th>
+                                                                                <th>Borrowed</th>
+                                                                                <th>Total Quantity</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td style="text-align:center"><input type="checkbox"></td>
+                                                                                <td>Computer</td>
+                                                                                <td>5</td>
+                                                                                <td>50</td>
+                                                                                <td>23</td>
+                                                                                <td>20</td>
+                                                                                <td>43</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="text-align:center"><input type="checkbox"></td>
+                                                                                <td>Laptop</td>
+                                                                                <td>6</td>
+                                                                                <td>
+                                                                                    <font color="orange">10</font>
+                                                                                </td>
+                                                                                <td>24</td>
+                                                                                <td>21</td>
+                                                                                <td>44</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td style="text-align:center"><input type="checkbox"></td>
+                                                                                <td>VGA</td>
+                                                                                <td>6</td>
+                                                                                <td>
+                                                                                    <font color="red">6</font>
+                                                                                </td>
+                                                                                <td>24</td>
+                                                                                <td>21</td>
+                                                                                <td>44</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                </div>
+                                                            </form>
                                                         </div>
+                                                        <a href="it_replenish.php"><button class="btn btn-success">Replenish</button></a>
                                                     </section>
                                                 </div>
                                             </div>
@@ -119,27 +131,27 @@
         <!--main content end-->
 
     </section>
-    
+
     <script>
-		function addRowHandlers() {
-			var table = document.getElementById("dynamic-table");
-			var rows = table.getElementsByTagName("tr");
-			for (i = 1; i < rows.length; i++) {
-				var currentRow = table.rows[i];
-				var createClickHandler = function(row) {
-					return function() {
-						var cell = row.getElementsByTagName("td")[0];
-						var idx = cell.textContent;
-						
+        function addRowHandlers() {
+            var table = document.getElementById("dynamic-table");
+            var rows = table.getElementsByTagName("tr");
+            for (i = 1; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function(row) {
+                    return function() {
+                        var cell = row.getElementsByTagName("td")[0];
+                        var idx = cell.textContent;
+
                         window.location.href = "it_inventory_specific.php?=";
-						
-					};
-				};
-				currentRow.onclick = createClickHandler(currentRow);
-			}
-		}
-		window.onload = addRowHandlers();
-	</script>
+
+                    };
+                };
+                currentRow.ondblclick = createClickHandler(currentRow);
+            }
+        }
+        window.onload = addRowHandlers();
+    </script>
 
     <!-- WAG GALAWIN PLS LANG -->
 
@@ -156,8 +168,8 @@
 
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
-    
-    
+
+
 
 </body>
 
