@@ -104,11 +104,14 @@ if(isset($_POST['submit'])){
                                     <section id="unseen">
                                         <div class="row invoice-to">
                                             <div class="col-md-4 col-sm-4 pull-left">
+                                                <a href="it_add_brand.php" target="_blank"><button class="btn btn-primary" type="button">Add Brand</button></a>
+                                                <a href="it_add_product.php" target="_blank"><button class="btn btn-info" type="button">Add Product</button></a>
                                                 <h4>Status:</h4>
                                                 <h2>Incomplete</h2>
                                             </div>
                                             <div class="col-md-4 col-sm-5 pull-right">
                                                 <div class="row">
+                                                    <br><br>
                                                     <div class="col-md-4 col-sm-5 inv-label">Request #</div>
                                                     <div class="col-md-8 col-sm-7">221</div>
                                                 </div>
