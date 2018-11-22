@@ -175,6 +175,7 @@ require_once("db/mysql_connect.php");
 
                                                     $query = "SELECT * FROM thesis.request_borrow r 
                                                               JOIN ref_status s ON r.statusID = s.statusID
+                                                              JOIN ref_steps t ON r.steps = t.id
                                                               AND personresponsibleID = {$employeeID};";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
@@ -204,7 +205,7 @@ require_once("db/mysql_connect.php");
                                                         }
 
 
-                                                        echo "<td>{$row['steps']}</td>";
+                                                        echo "<td>{$row['name']}</td>";
                                                         echo "</tr>";
 
                                                           $count++;

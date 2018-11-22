@@ -66,6 +66,8 @@
                                                     <table class="display table table-bordered table-striped" id="dynamic-table">
                                                         <thead>
                                                             <tr>
+                                                                <th style="display: none">id</th>
+                                                                <th>#</th>
                                                                 <th>Date Needed</th>
                                                                 <th>Status</th>
                                                                 <th>Request Type</th>
@@ -77,18 +79,22 @@
                                                         <tbody>
                                                             <?php
 															
+                                                            $count = 1;
 															$key = "Fusion";
 															require_once('db/mysql_connect.php');
 
                                                             //Request Purchase
-															$query="SELECT r.requestID,rstp.name as `step`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor` FROM thesis.request r 
+															$query="SELECT *,r.requestID,rstp.name as `step`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`
+                                                                                FROM thesis.request r 
                                                                                 join ref_status rs on r.status=rs.statusID
                                                                                 join ref_steps rstp on r.step=rstp.id
                                                                                 join user u on r.UserID=u.UserID
-                                                                                WHERE status !=6;";
+                                                                                WHERE status !=6 AND r.step !=1;";
 															$result=mysqli_query($dbc,$query);
 															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-																echo "<tr id='{$row['requestID']}'>
+																echo "<tr> 
+                                                                    <td style='display: none'>{$row['requestID']}</td>
+                                                                    <td>{$count}</td>
 																	<td>{$row['dateNeeded']}</td>";
 																	
 																	if($row['statusDesc']=='Pending'){
@@ -114,7 +120,7 @@
 																	<td>{$row['requestedDate']}</td>
 																</tr>";
 																
-																
+																$count++;
 																
 															}
 															//Donation
@@ -124,7 +130,9 @@
 															$resultDon=mysqli_query($dbc,$queryDon);
 															
 															while($rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC)){
-																echo "<tr id='{$rowDon['donationID']}'>
+																echo "<tr>
+                                                                    <td style='display: none'>{$rowDon['donationID']}</td>
+                                                                    <td>{$count}</td>
 																	<td>{$rowDon['dateNeed']}</td>";
 																	
 																	if($rowDon['statusDesc']=='Pending'){
@@ -150,10 +158,45 @@
 																	<td>{$rowDon['dateNeed']}</td>
 																</tr>";
 																
-																
-																
 															}
-															//ADD BORROW REQUEST
+															 //Borrow
+                                                            $query="SELECT * FROM thesis.request_borrow r 
+                                                                      JOIN ref_status s ON r.statusID = s.statusID
+                                                                      JOIN ref_steps t ON r.steps = t.id;";
+                                                            $result=mysqli_query($dbc,$query);
+                                                            while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$row['borrowID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$row['startDate']}</td>";
+                                                                    
+                                                                    if($row['description']=='Pending'){
+                                                                        echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Incomplete'){
+                                                                        echo "<td><span class='label label-danger label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Completed'){
+                                                                        echo "<td><span class='label label-success label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    //elseif($row['description']=='Ongoing'){
+                                                                        //echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    //}
+                                                                    else{
+                                                                        echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    
+                                                                echo "
+                                                                    <td>Borrow</td>
+                                                                    <td>{$row['name']}</td>
+                                                                    <td></td>
+                                                                    <td>{$row['dateCreated']}</td>
+                                                                </tr>";
+                                                                
+                                                                $count++;
+                                                                
+                                                            
+                                                            }
 															?>
                                                         </tbody>
                                                     </table>
@@ -185,29 +228,31 @@
                 var currentRow = table.rows[i];
                 var createClickHandler = function(row) {
                     return function() {
-                        var cell = row.getElementsByTagName("td")[1];
-                        var id = cell.textContent; //Status
-                        var cell = row.getElementsByTagName("td")[2];
-                        var idx = cell.textContent; //Request type
+                        var cell = row.getElementsByTagName("td")[0];
+                        var ida = cell.textContent; //id
                         var cell = row.getElementsByTagName("td")[3];
+                        var id = cell.textContent; //Status
+                        var cell = row.getElementsByTagName("td")[4];
+                        var idx = cell.textContent; //Request type
+                        var cell = row.getElementsByTagName("td")[5];
                         var idDesc = cell.textContent; //Description
-                        alert(id + " - " + idx + " - " + idDesc);
+
                         if (idx == "Repair") {
                             if (id == "Completed" || id == "Incomplete") {
-                                window.location.href ="it_view_completed_incomplete_repair.php?requestID=" + row.getAttribute("id");
+                                window.location.href ="it_view_completed_incomplete_repair.php?requestID=" + ida;
                             }
                             if (id == "Ongoing" || id == "Pending") {
-                                window.location.href = "it_view_ongoing_pending_repair.php?requestID=" + row.getAttribute("id");
+                                window.location.href = "it_view_ongoing_pending_repair.php?requestID=" + ida;
                             }
                         }
                         if (idx == "Asset Request") {
                             if (id == "Ongoing" || id == "Pending") {
                                 if (idDesc == "Checking Canvas") {
-                                    window.location.href = "it_view_canvas_completed.php?requestID=" + row.getAttribute("id");
+                                    window.location.href = "it_view_canvas_completed.php?requestID=" + ida;
                                 } else if (idDesc == "IT Create Specs") {
-                                    window.location.href = "it_view_incomplete_request.php?requestID=" + row.getAttribute("id");
+                                    window.location.href = "it_view_incomplete_request.php?requestID=" + ida;
                                 } else if (idDesc == "Replacement needed") {
-                                    window.location.href = "it_view_open_po.php?requestID=" + row.getAttribute("id");
+                                    window.location.href = "it_view_open_po.php?requestID=" + ida;
                                 } else if (idDesc == "Conforme pending") {
                                     window.location.href = "it_view_checklist.php";
                                 }
@@ -223,22 +268,19 @@
                                 window.location.href = "it_view_testing.php";
                             }
                         }
-                        if (idx == "Service Request") {
-                            window.location.href = "it_view_service_request_form.php";
-                        }
                         if (idx == "Donation") {
                             if (id == "Ongoing" || id == "Pending") {
-                                window.location.href = "it_view_open_donation_request.php?id=" + row.getAttribute("id");
+                                window.location.href = "it_view_open_donation_request.php?id=" + ida;
                             }
                             if (id == "Completed" || id == "Incomplete") {
-                                window.location.href = "it_view_closed_donation_request.php?id=" + row.getAttribute("id");
+                                window.location.href = "it_view_closed_donation_request.php?id=" + ida;
                             }
                         }
                         if (idx == "Borrow") {
                             if (id == "Ongoing" || id == "Pending") {
-                                window.location.href = "it_view_open_service_equipment_request.php";
+                                window.location.href = "it_view_open_service_equipment_request.php?id=" + ida;
                             } else if (id == "Completed" || id == "Incomplete") {
-                                window.location.href = "it_view_closed_service_equipment_request.php";
+                                window.location.href = "it_view_closed_service_equipment_request.php?id=" + ida;
                             }
                         }
                     };

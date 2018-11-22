@@ -977,6 +977,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`donation` (
   `officeID` INT(11) NULL,
   `contactNumber` VARCHAR(45) NULL,
   `dateNeed` DATETIME NULL,
+  `dateCreated` DATETIME NULL,
   `purpose` LONGTEXT NULL,
   `schoolName` LONGTEXT NULL,
   `contactPerson` MEDIUMTEXT NULL,

@@ -1,9 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-  require_once("db/mysql_connect.php");
-?>
+session_start();
 
+$id = $_GET['id'];//get the id of the selected service request
+
+require_once("db/mysql_connect.php");
+
+$query =  "SELECT *, details, dateNeed, endDate, dateReceived, s.serviceType AS 'serviceTypeID', t.serviceType, statusID, description AS 'status', others, steps
+            FROM thesis.service s
+                JOIN ref_servicetype t
+            ON s.serviceType = t.id
+                JOIN ref_status a
+            ON s.status = a.statusID
+                JOIN employee e 
+            ON s.UserID = e.UserID
+                WHERE s.id = {$id}";
+$result = mysqli_query($dbc, $query);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+    
+        $name = $row['name'];      
+        $dateReceived = $row['dateReceived'];
+        $summary = $row['summary'];
+        $details = $row['details'];
+        $dateNeed = $row['dateNeed'];
+        $endDate = $row['endDate'];
+        $serviceTypeID = $row['serviceTypeID'];
+        $serviceType = $row['serviceType'];
+        $statusID = $row['statusID'];
+        $description = $row['description'];
+        $others = $row['others'];
+        $steps = $row['steps'];
+
+    }
+$assets = array();
+
+$query2 =  "SELECT * FROM thesis.servicedetails WHERE serviceID = {$id};";
+$result2 = mysqli_query($dbc, $query2);
+
+while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
+    array_push($assets, $row['asset']);
+}
+?>
 <head>
     <meta charset="utf-8">
 
