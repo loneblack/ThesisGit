@@ -58,7 +58,7 @@ session_start();
                             <div class="col-lg-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        Service Equipment Request
+                                        Borrow An Asset
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
@@ -205,6 +205,7 @@ session_start();
                                                 </div>
                                                 <hr>
                                                 <div class="container-fluid">
+                                                    <h5>**Note: Quantity dropdown is based on how many assets that are currently available.</h5>
                                                     <h4>Equipment to be borrowed</h4>
 
                                                     <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
