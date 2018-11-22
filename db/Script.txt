@@ -492,7 +492,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assettesting` (
   `startTestDate` DATETIME NULL DEFAULT NULL,
   `endTestDate` DATETIME NULL DEFAULT NULL,
   `Result` VARCHAR(45) NULL DEFAULT NULL,
-  `PersonRequestedID` INT(11) NOT NULL,
+  `PersonRequestedID` INT(11) NULL,
   `FloorAndRoomID` INT(11) NULL,
   `departmentOwnsRoomID` INT(11) NULL DEFAULT NULL,
   `officeID` INT(11) NULL DEFAULT NULL,
