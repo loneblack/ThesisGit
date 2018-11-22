@@ -103,27 +103,6 @@
 													
 													
 													?>
-													
-                                                    <tr class="gradeA">
-                                                        <td>Need More PC</td>
-                                                        <td><span class="badge bg-important">Disapproved</span></td>
-                                                        <td>Marvin La</td>
-                                                        <td>12/23/1997</td>
-                                                    </tr>
-                                                    
-                                                    <tr class="gradeA">
-                                                        <td>Need More PC</td>
-                                                        <td><span class="badge bg-success">Approved</span></td>
-                                                        <td>Marvin La</td>
-                                                        <td>1/3/2018</td>
-                                                    </tr>
-                                                    
-                                                    <tr class="gradeA">
-                                                        <td>Need More PC</td>
-                                                        <td><span class="badge bg-warning">Pending</span></td>
-                                                        <td>Marvin La</td>
-                                                        <td>1/3/2018</td>
-                                                    </tr>
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>

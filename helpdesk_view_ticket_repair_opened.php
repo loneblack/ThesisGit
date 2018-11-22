@@ -4,7 +4,7 @@
 session_start();
 
 $id = $_GET['id'];//get the id of the selected service request
-
+echo "<script>alert('asdasd');</script>";
 require_once("db/mysql_connect.php");
 
 $query =  "SELECT   * FROM thesis.ticket WHERE ticketID = {$id};";
@@ -36,6 +36,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 // Insertion to ticket
     
     if(isset($_POST['submit'])){
+
+        echo "<script>alert('submit');</script>";
         
         $status=$_POST['status'];
         $assigned=$_POST['assigned'];
@@ -44,7 +46,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         $currDate=date("Y-m-d H:i:s");
 
         if(!isset($message)){
-            
+             echo "<script>alert('message');</script>";
+
 
             $querya="UPDATE `thesis`.`ticket` 
                     SET `status` = '{$status}',
@@ -305,7 +308,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                 </div>
                             </section>
                             <button type="submit" class="btn btn-success">Send</button></a>
-                            <a href="helpdesk_all_ticket.php"><button class="btn btn-danger">Back</button></a>
+                            <a href="helpdesk_all_ticket.php"><button type = "button" class="btn btn-danger">Back</button></a>
                         </div>
                              </form>
 
