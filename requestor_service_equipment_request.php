@@ -395,7 +395,6 @@ session_start();
             data: 'categoryID='+val,
             success: function(data){
 
-
                 $("#quantity"+count).html(data);
 
                 }

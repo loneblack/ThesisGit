@@ -53,6 +53,48 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
     }
 ?>
+<?php
+// Insertion to ticket
+    
+    if(isset($_POST['submit'])){
+        
+        $message=null;
+        $status=$_POST['status'];
+        $priority=$_POST['priority'];
+        $assigned=$_POST['assigned'];
+        $currDate=date("Y-m-d H:i:s");
+
+        if(!isset($message)){
+
+            if($assigned=='0'){
+                $querya="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`) VALUES ('{$status}', '{$_SESSION['userID']}', now(), now(), '{$startDate}', '{$priority}', '27', '{$summary}', '{$description}', '{$details}')";
+                $resulta=mysqli_query($dbc,$querya);
+            }
+            else{
+                $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$startDate}', '{$priority}', '27', '{$summary}', '{$description}', '{$details}')";
+                $resulta=mysqli_query($dbc,$querya);
+            }
+        
+            $queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
+            $resultaa=mysqli_query($dbc,$queryaa);
+            $rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
+
+            for ($i=0; $i < count($assets); $i++) { 
+
+                $queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`, `checked`) VALUES ('{$rowaa['ticketID']}', '{$assets[$i]}', '0');";
+                $resultaaaa=mysqli_query($dbc,$queryaaaa);
+            }
+
+            $sql = "UPDATE `thesis`.`service` SET `status` = '2' WHERE (`id` = '{$id}');";
+            $output = mysqli_query($dbc, $sql);
+        
+            $message = "Ticket Created";
+            $_SESSION['submitMessage'] = $message;
+        }
+        
+    }
+    
+?>
 <head>
     <meta charset="utf-8">
 

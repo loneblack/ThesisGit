@@ -278,7 +278,7 @@
 						}
 						
 						if(idx == "Borrow"){
-							window.location.href = "helpdesk_view_service_equipment_request.php";
+							window.location.href = "helpdesk_view_service_equipment_request.php?id=" + id;
 						}
 						
 						if(idx == "Service"){
