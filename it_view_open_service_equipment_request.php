@@ -7,40 +7,45 @@ $id = $_GET['id'];//get the id of the selected service request
 
 require_once("db/mysql_connect.php");
 
-$query =  "SELECT *, details, dateNeed, endDate, dateReceived, s.serviceType AS 'serviceTypeID', t.serviceType, statusID, description AS 'status', others, steps
-            FROM thesis.service s
-                JOIN ref_servicetype t
-            ON s.serviceType = t.id
-                JOIN ref_status a
-            ON s.status = a.statusID
-                JOIN employee e 
-            ON s.UserID = e.UserID
-                WHERE s.id = {$id}";
+$query =  "SELECT *, o.Name AS 'office', d.name AS 'department', org.name AS 'organization', b.name AS 'building'
+              FROM thesis.request_borrow r 
+              LEFT JOIN department d ON r.DepartmentID = d.DepartmentID 
+              LEFT JOIN offices o ON r.officeID = o.officeID
+              LEFT JOIN organization org ON r.organizationID = org.id
+              JOIN employee e ON personresponsibleID = e.UserID
+              JOIN building b ON r.BuildingID = b.Buildingid
+              JOIN floorandroom f ON r.FloorAndRoomID = f.FloorAndRoomID
+              JOIN ref_status s ON r.statusID = s.statusID
+              JOIN ref_steps t ON r.steps = t.id
+              WHERE borrowID = {$id};";
 $result = mysqli_query($dbc, $query);
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
     
-        $name = $row['name'];      
-        $dateReceived = $row['dateReceived'];
-        $summary = $row['summary'];
-        $details = $row['details'];
-        $dateNeed = $row['dateNeed'];
-        $endDate = $row['endDate'];
-        $serviceTypeID = $row['serviceTypeID'];
-        $serviceType = $row['serviceType'];
-        $statusID = $row['statusID'];
-        $description = $row['description'];
-        $others = $row['others'];
-        $steps = $row['steps'];
+        $office = $row['office'];      
+        $department = $row['department'];      
+        $organization = $row['organization'];      
+        $contactNo = $row['contactNo'];         
+        $startDate = $row['startDate'];         
+        $endDate = $row['endDate'];         
+        $purpose = $row['purpose'];         
+        $building = $row['building'];        
+        $floorRoom = $row['floorRoom'];         
+        $personrepresentativeID = $row['personrepresentativeID'];      
+        $personrepresentative = $row['personrepresentative'];      
 
     }
-$assets = array();
+$category = array();
+$quantity = array();
 
-$query2 =  "SELECT * FROM thesis.servicedetails WHERE serviceID = {$id};";
+$query2 =  "SELECT * FROM thesis.borrow_details d
+            JOIN ref_assetcategory c ON d.assetCategoryID = c.assetCategoryID
+            WHERE borrowID = {$id};";
 $result2 = mysqli_query($dbc, $query2);
 
 while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
-    array_push($assets, $row['asset']);
+    array_push($category, $row['name']);
+    array_push($quantity, $row['quantity']);
 }
 ?>
 <head>
@@ -102,52 +107,38 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 <div class="form-group ">
                                                     <label for="serviceType" class="control-label col-lg-3">Office/Department/School Organization</label>
                                                     <div class="col-lg-6">
-														<textarea class="form-control" style="resize:none" disabled></textarea>
+														<textarea class="form-control" style="resize:none" disabled><?php echo $office.$department.$organization;?></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="number" class="control-label col-lg-3">Contact No.</label>
                                                     <div class="col-lg-6">
-                                                        <input class="form-control" rows="5" name="details" style="resize:none" type="text" required disabled>
+                                                        <input class="form-control" rows="5" name="details" style="resize:none" type="text" required disabled value=<?php echo "'".$contactNo."'";?>>
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Date & time needed</label>
                                                     <div class="col-lg-6">
-                                                        <input class="form-control" id="dateNeeded" name="dateNeeded" type="datetime-local" disabled />
+                                                        <input class="form-control" id="dateNeeded" name="dateNeeded" disabled value=<?php echo "'".$startDate."'";?>/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="endDate" class="control-label col-lg-3">End date & time</label>
                                                     <div class="col-lg-6">
-                                                        <input class=" form-control" id="endDate" name="endDate" type="datetime-local" disabled />
+                                                        <input class=" form-control" id="endDate" name="endDate" disabled value=<?php echo "'".$endDate."'";?>/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="purpose" class="control-label col-lg-3">Purpose</label>
                                                     <div class="col-lg-6">
-                                                        <input class="form-control" id="purpose" name="purpose" type="text" disabled />
+                                                        <input class="form-control" id="purpose" name="purpose" type="text" disabled value=<?php echo "'".$purpose."'";?>/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="building" class="control-label col-lg-3">Building</label>
                                                     <div class="col-lg-6">
-                                                        <select name="building" class="form-control m-bot15" onChange="getRooms(this.value)" disabled>
-                                                            <option>Select building</option>
-                                                            <?php
-
-                                                            $sql = "SELECT * FROM thesis.building;";
-
-                                                            $result = mysqli_query($dbc, $sql);
-
-                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                            {
-                                                                
-                                                                echo "<option value ={$row['BuildingID']}>";
-                                                                echo "{$row['name']}</option>";
-
-                                                            }
-                                                           ?>
+                                                        <select name="building" class="form-control m-bot15" disabled >
+                                                            <option>value=<?php echo $building;?></option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -155,7 +146,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     <label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
                                                     <div class="col-lg-6">
                                                         <select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15" disabled>
-                                                            <option value=''>Select floor & room</option>
+                                                            <option value=''>value=<?php echo $floorRoom;?></option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -171,15 +162,19 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
+                                                        <?php
+                                                            for ($i=0; $i < count($category); $i++){ 
+                                                            echo
+                                                            "<tr>
                                                                 <td>
-                                                                    <select class="form-control" disabled>
-                                                                        <option>Select Category</option>
-                                                                        <option>Computer</option>
+                                                                    <select class='form-control' disabled>
+                                                                        <option>{$category[$i]}</option>
                                                                     </select>
                                                                 </td>
-                                                                <td><input type="number" min="0" max="999999" step="1" class="form-control" disabled></td>
-                                                            </tr>
+                                                                <td><input type='number' value ='{$quantity[$i]}' class='form-control' disabled></td>
+                                                            </tr>";
+                                                            }
+                                                        ?>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -189,13 +184,13 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     <div class="form-group ">
                                                         <label for="representative" class="control-label col-lg-3">Representative</label>
                                                         <div class="col-lg-6">
-                                                            <input class="form-control" id="representative" name="representative" type="text" disabled />
+                                                            <input class="form-control" id="representative" name="representative" type="text" disabled value=<?php echo "'".$personrepresentative."'";?>/>
                                                         </div>
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="idNum" class="control-label col-lg-3">ID Number</label>
                                                         <div class="col-lg-6">
-                                                            <input class="form-control" id="idNum" name="idNum" type="text" disabled />
+                                                            <input class="form-control" id="idNum" name="idNum" type="text" disabled value=<?php echo "'".$personrepresentativeID."'";?>/>
                                                         </div>
                                                     </div>
 													<hr>
