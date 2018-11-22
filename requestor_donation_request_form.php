@@ -15,19 +15,19 @@ if(isset($_POST['save'])){
 	if($affiliation==1){
 		//INSERT TO DONATION TABLE
 		$office=$_POST['office'];
-		$queryDon = "INSERT INTO `thesis`.`donation` (`officeID`, `dateNeed`, `purpose`, `statusID`, `stepsID`, `user_UserID`) VALUES ('{$office}', '{$dateNeeded}', '{$purpose}', '1','1','{$_SESSION['userID']}');";
+		$queryDon = "INSERT INTO `thesis`.`donation` (`officeID`, `dateNeed`, `purpose`, `statusID`, `stepsID`, `user_UserID`, `dateCreated`) VALUES ('{$office}', '{$dateNeeded}', '{$purpose}', '1','1','{$_SESSION['userID']}',now());";
         $resultDon = mysqli_query($dbc, $queryDon);
 	}
 	elseif($affiliation==2){
 		//INSERT TO DONATION TABLE
 		$department=$_POST['department'];
-		$queryDon = "INSERT INTO `thesis`.`donation` (`DepartmentID`, `dateNeed`, `purpose`, `statusID`, `stepsID`, `user_UserID`) VALUES ('{$department}', '{$dateNeeded}', '{$purpose}','1','1','{$_SESSION['userID']}');";
+		$queryDon = "INSERT INTO `thesis`.`donation` (`DepartmentID`, `dateNeed`, `purpose`, `statusID`, `stepsID`, `user_UserID`, `dateCreated`) VALUES ('{$department}', '{$dateNeeded}', '{$purpose}','1','1','{$_SESSION['userID']}',now());";
         $resultDon = mysqli_query($dbc, $queryDon);
 	}
 	elseif($affiliation==3){
 		//INSERT TO DONATION TABLE
 		$org=$_POST['org'];
-		$queryDon = "INSERT INTO `thesis`.`donation` (`organizationID`, `dateNeed`, `purpose`, `statusID`, `stepsID`, `user_UserID`) VALUES ('{$org}', '{$dateNeeded}', '{$purpose}','1','1','{$_SESSION['userID']}');";
+		$queryDon = "INSERT INTO `thesis`.`donation` (`organizationID`, `dateNeed`, `purpose`, `statusID`, `stepsID`, `user_UserID`, `dateCreated`) VALUES ('{$org}', '{$dateNeeded}', '{$purpose}','1','1','{$_SESSION['userID']}',now());";
         $resultDon = mysqli_query($dbc, $queryDon);
 	}
 	

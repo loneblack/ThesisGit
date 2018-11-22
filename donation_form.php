@@ -15,7 +15,7 @@ if(isset($_POST['save'])){
 	$quantity=$_POST['qty'];
     
     //INSERT TO DONATION TABLE
-    $queryDon = "INSERT INTO thesis.donation(`schoolName`, `dateNeed`, `purpose`) VALUES ('{$schoolorg}', '{$dateNeeded}', '{$purpose}');";
+    $queryDon = "INSERT INTO `thesis`.`donation` (`contactNumber`, `dateNeed`, `dateCreated`, `purpose`, `schoolName`, `contactPerson`, `statusID`, `stepsID`) VALUES ('{$contactNo}', '{$dateNeeded}', now(), '{$purpose}', '{$schoolorg}', '{$contactPerson}', '1', '1')";
     $resultDon = mysqli_query($dbc, $queryDon);
 	
 	//GET DONATION ID
