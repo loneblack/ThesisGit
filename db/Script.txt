@@ -1374,3 +1374,24 @@ CREATE TABLE IF NOT EXISTS `thesis`.`donationdetails_item` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`Inventory`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`Inventory` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`Inventory` (
+  `InventoryID` INT(11) NOT NULL,
+  `assetCategoryID` INT(11) NULL,
+  `quantity` INT(11) NULL,
+  `floorLevel` INT(11) NULL,
+  `ceilingLevel` INT NULL,
+  PRIMARY KEY (`InventoryID`),
+  INDEX `fk_Inventory_ref_assetcategory1_idx` (`assetCategoryID` ASC),
+  CONSTRAINT `fk_Inventory_ref_assetcategory1`
+    FOREIGN KEY (`assetCategoryID`)
+    REFERENCES `thesis`.`ref_assetcategory` (`assetCategoryID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
