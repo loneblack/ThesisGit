@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <?php
 	require_once('db/mysql_connect.php');
-	
+	session_start();
+    $userID = $_SESSION['userID'];
 ?>
 <html lang="en">
 
@@ -47,7 +48,7 @@
 
         </header>
         <!--header end-->
-        <?php include 'it_navbar.php' ?>
+        <?php include 'requestor_navbar.php' ?>
 
         <!--main content-->
         <section id="main-content">
@@ -61,7 +62,7 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Brand List
+                                            My Assets List
                                             <span class="tools pull-right">
                                                 <a class="fa fa-plus" href="it_add_brand.php"></a>
                                             </span>
@@ -72,18 +73,44 @@
                                                     <table class="display table table-bordered table-striped" id="dynamic-table">
                                                         <thead>
                                                             <tr>
+                                                                <th>#</th>
+                                                                <th>Property Code</th>
                                                                 <th>Brand</th>
+                                                                <th>Model</th>
+                                                                <th>Building</th>
+                                                                <th>Room</th>
+                                                                <th>Start Date</th>
+                                                                <th>End Date</th>
+                                                                <th>Status</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <?php
-														
-															$query="SELECT * FROM thesis.ref_brand order by name;";
+														    $count = 1;
+															$query="
+                                                                SELECT a.propertyCode, rb.name AS 'brand', am.description AS 'model', b.name, f.floorRoom, aa.startdate, aa.enddate, rs.description FROM thesis.assetassignment aa
+                                                                JOIN building b ON aa.BuildingID = b.buildingID
+                                                                JOIN floorandroom f ON aa.FloorAndRoomID = f.FloorAndRoomID
+                                                                JOIN employee e ON aa.personresponsibleID = e.employeeID
+                                                                JOIN asset a ON aa.assetID = a.assetID
+                                                                JOIN ref_assetstatus rs ON a.assetStatus = rs.id
+                                                                JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                WHERE (personresponsibleID = {$userID});";
 															$result=mysqli_query($dbc,$query);
 															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-																echo "<tr class='brandID' id='{$row['brandID']}'>
-																	<td>{$row['name']}</td>
+																echo "<tr>
+                                                                    <td>{$count}</td>
+																	<td>{$row['propertyCode']}</td>
+                                                                    <td>{$row['brand']}</td>
+                                                                    <td>{$row['model']}</td>
+                                                                    <td>{$row['name']}</td>
+                                                                    <td>{$row['floorRoom']}</td>
+                                                                    <td>{$row['startdate']}</td>
+                                                                    <td>{$row['enddate']}</td>
+                                                                    <td>{$row['description']}</td>
 																</tr>";
+                                                                $count++;
 															}
 														
 														
@@ -130,17 +157,6 @@
 
     <!--dynamic table initialization -->
     <script src="js/dynamic_table_init.js"></script>
-
-
-    <script>
-        $('#dynamic-table').on('click', function() {
-            $('.brandID').on('click', function() {
-                var a = this.getAttribute("id");
-                window.location.href = "it_edit_brand.php?brandID=" + a;
-            })
-        })
-    </script>
-
 </body>
 
 </html>

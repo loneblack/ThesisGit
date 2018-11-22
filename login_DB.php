@@ -14,7 +14,7 @@
 		$password = $_POST['password'];
 
 		
-		$_SESSION['$userID'] = '';
+		$_SESSION['userID'] = '';
 		$userType ='';
 
     	$sql = "SELECT userID, userType FROM user WHERE username = AES_ENCRYPT('{$username}', '{$key}') and password = AES_ENCRYPT('{$password}', '{$key}');";

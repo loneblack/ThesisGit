@@ -23,7 +23,13 @@
 								<li><a href="requestor_service_equipment_request.php">Borrow an Asset</a></li>
                             </ul>
                         </li>
-					
+					   
+                       <li>
+                            <a href="requestor_assets.php">
+                                <i class="fa fa-archive"></i>
+                                <span>My Assets</span>
+                            </a>
+                        </li>
                         
                         <li>
                             <a href="logout.php">
