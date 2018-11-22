@@ -1,4 +1,60 @@
 <!DOCTYPE html>
+<?php
+	session_start();
+	require_once('db/mysql_connect.php');
+	$forReplenish=$_SESSION['forReplenish'];
+	
+	if(isset($_POST['submit'])){
+		//CREATE REQUEST
+		$queryReq="INSERT INTO `thesis`.`request` (`date`, `UserID`, `status`, `step`) VALUES (now(), '{$_SESSION['userID']}', '2', '3')";
+		$resultReq=mysqli_query($dbc,$queryReq);
+		
+		//GET LATEST REQUEST
+		$queryLatReq="SELECT * FROM thesis.request order by requestID desc limit 1";
+		$resultLatReq=mysqli_query($dbc,$queryLatReq);
+		$rowLatReq=mysqli_fetch_array($resultLatReq, MYSQLI_ASSOC);
+		
+		//CREATE CANVAS
+		$queryCan="INSERT INTO `thesis`.`canvas` (`requestID`, `status`) VALUES ('{$rowLatReq['requestID']}', '1')";
+		$resultCan=mysqli_query($dbc,$queryCan);
+		
+		//GET LATEST CANVAS
+		$queryLatCan="SELECT * FROM thesis.canvas order by canvasID desc limit 1";
+		$resultLatCan=mysqli_query($dbc,$queryLatCan);
+		$rowLatCan=mysqli_fetch_array($resultLatCan, MYSQLI_ASSOC);
+		
+		//INSERT to CANVASITEM
+		$assetCat=$_POST['assetCat'];
+		$quantity=$_POST['quantity'];
+		$model=$_POST['model'];
+		
+		$mi = new MultipleIterator();
+		$mi->attachIterator(new ArrayIterator($assetCat));
+		$mi->attachIterator(new ArrayIterator($quantity));
+		$mi->attachIterator(new ArrayIterator($model));
+		
+		foreach ( $mi as $value ) {
+			list($assetCat, $quantity, $model) = $value;
+			$queryCanItem="INSERT INTO `thesis`.`canvasitem` (`canvasID`, `quantity`, `assetCategory`, `assetModel`) VALUES ('{$rowLatCan['canvasID']}', '{$quantity}', '{$assetCat}', '{$model}')";
+			$resultCanItem=mysqli_query($dbc,$queryCanItem);
+		}
+		
+		//GET SUM OF QTY ORDERED
+		$queryLatQty="SELECT assetCategory, SUM(quantity) as `totalQty` FROM thesis.canvasitem where canvasID='{$rowLatCan['canvasID']}' group by assetCategory";
+		$resultLatQty=mysqli_query($dbc,$queryLatQty);
+		while($rowLatQty=mysqli_fetch_array($resultLatQty, MYSQLI_ASSOC)){
+			//INSERT TO REQUESTDETAILS
+			$queryReqDet="INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `assetCategory`) VALUES ('{$rowLatReq['requestID']}', '{$rowLatQty['totalQty']}', '{$rowLatQty['assetCategory']}')";
+			$resultReqDet=mysqli_query($dbc,$queryReqDet);
+		}
+		
+		
+		
+	}
+	
+	
+	
+?>
 <html lang="en">
 
 <head>
@@ -62,7 +118,7 @@
                                                 <div class="col-sm-12">
                                                     <section class="panel">
                                                         <div class="panel-body">
-                                                            <form>
+                                                        <form method="post">
                                                                 <div class="adv-table">
                                                                     <table class="table table-bordered table table-hover" id="tableTest">
                                                                         <thead>
@@ -79,7 +135,57 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr>
+																			<?php
+																				//GET FOR REPLENISH DATA
+																				$count=0;
+																				foreach($forReplenish as $forRep){
+																					$code="0".$count;
+																					$queryForRep = "SELECT i.assetCategoryID,rac.name as `assetCat`,i.floorLevel,i.ceilingLevel, count(IF(a.assetStatus = 1, a.assetID, null)) as `stockOnHand`,count(IF(a.assetStatus = 2, a.assetID, null)) as `borrowed`, count(IF(a.assetStatus = 2 or a.assetStatus = 1, a.assetID, null)) as `totalQty` FROM thesis.inventory i join ref_assetcategory rac on i.assetCategoryID=rac.assetCategoryID
+																							 join assetmodel am on i.assetCategoryID=am.assetCategory
+																							 join asset a on am.assetModelID=a.assetModel
+																							 where i.assetCategoryID='{$forRep}'
+																							 group by i.assetCategoryID";
+																					$resultForRep = mysqli_query($dbc, $queryForRep);
+																					$rowForRep = mysqli_fetch_array($resultForRep, MYSQLI_ASSOC);
+																					echo "<tr>
+																						<td style='text-align:center'><input type='checkbox' checked disabled></td>
+																						<input type='hidden' name='assetCat[]' id='assetCatID".$code."' value='{$forRep}'>
+																						<td>{$rowForRep['assetCat']}</td>
+																						<td>{$rowForRep['floorLevel']}</td>
+																						<td>{$rowForRep['ceilingLevel']}</td>
+																						<td>{$rowForRep['totalQty']}</td>
+																						<td><input type='number' class='form-control' name='quantity[]'></td>
+																						<td>
+																							<select class='form-control' name='brand[]' id='exampleFormControlSelect2".$code."' required onchange='getModel(\"{$code}\")'>
+																							<option value=''>Select Brand</option>";
+																							
+																							//GET BRAND CODE														
+																							$queryGetBrand = "SELECT * FROM thesis.assetmodel am join ref_brand rb on am.brand=rb.brandID where am.assetCategory='{$forRep}' group by am.brand";
+																							$resultGetBrand = mysqli_query($dbc, $queryGetBrand);
+																							while($rowGetBrand = mysqli_fetch_array($resultGetBrand, MYSQLI_ASSOC)){
+																								echo "<option value='{$rowGetBrand['brandID']}'>{$rowGetBrand['name']}</option>";
+																							}
+																								
+																						echo "</select>
+																						</td>
+																						<td>
+																							<select class='form-control' name='model[]' required id='exampleFormControlSelect3".$code."'>
+																								<option>Select Model</option>
+																							</select>
+																						</td>
+																						<td><button type='button' class='btn btn-primary' onclick='Add({$forRep})'> Add </button></td>
+																					</tr>";
+																					$count++;
+																				}
+																				
+																			
+																			
+																			
+																			
+																			
+																			
+																			?>
+                                                                            <!-- <tr>
                                                                                 <td style="text-align:center"><input type="checkbox" checked disabled></td>
                                                                                 <td>Computer</td>
                                                                                 <td>5</td>
@@ -141,15 +247,16 @@
                                                                                     </select>
                                                                                 </td>
                                                                                 <td><button type="button" class="btn btn-primary" onclick="Add(3)"> Add </button></td>
-                                                                            </tr>
+                                                                            </tr> -->
                                                                         </tbody>
                                                                     </table>
 
                                                                 </div>
-                                                            </form>
+                                                           
                                                         </div>
-                                                        <button class="btn btn-success">Submit</button>
-                                                        <a href="it_inventory.php"><button class="btn btn-danger">Back</button></a>
+                                                        <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                                                        <a href="it_inventory.php"><button type="button" class="btn btn-danger">Back</button></a>
+														</form>
                                                     </section>
                                                 </div>
                                             </div>
@@ -171,54 +278,84 @@
 
     <!--Core js-->
     <script type="text/javascript">
+        var clicks=0;
+        
 		function removeRow(o) {
             var p = o.parentNode.parentNode;
             p.parentNode.removeChild(p);
         }
 		
-		function Add() {
+		function Add(forRep) {
+			clicks++;
             var row_index = 0;
 			var isRenderd = false;
 			$("td").click(function() {
                 row_index = $(this).parent().index();
             });
-            var delayInMilliseconds = 0; //1 second
+            var delayInMilliseconds = 300; //1 second
 			setTimeout(function() {
-                appendTableRow(row_index);
+                appendTableRow(row_index,clicks,forRep);
             }, delayInMilliseconds);
            
-		};
+		}
 		
-		 var appendTableRow = function(rowCount) {
+		function getBrand(clicks){
+			var code = "exampleFormControlSelect2" + clicks;
+			var code1 = "assetCatID" + clicks;
+			var category=document.getElementById(code1).value;
+			var cat=parseInt(category);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById(code).innerHTML = this.responseText;
+				}
+			};
+			xmlhttp.open("GET", "brand_ajax.php?category=" + cat, true);
+			xmlhttp.send();
+							
+		}
+		
+		function getModel(clicks){
+			var code1 = "assetCatID" + clicks;
+			var code2 = "exampleFormControlSelect2" + clicks;
+			var code3 = "exampleFormControlSelect3" + clicks;
+			var category=document.getElementById(code1).value;
+			var brand=document.getElementById(code2).value;
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById(code3).innerHTML = this.responseText;
+				}
+			};
+			xmlhttp.open("GET", "model_ajax.php?category=" + category + "&brand=" + brand, true);
+			xmlhttp.send();
+							
+		}
+		
+		var appendTableRow = function(rowCount,clicks,forRep) {
+			
             var cnt = 0;
             var tr = "<tr>" +
+					 "<input type='hidden' name='assetCat[]' id='assetCatID" + clicks + "' value='" + forRep + "'>" +
                      "<td></td>" +
                      "<td></td>" +
                      "<td></td>" +
                      "<td></td>" +
                      "<td></td>" +
-                     "<td></td>" +
-                     "<td><select class='form-control'><option>Select Brand</option></select></td>" +
-                     "<td><select class='form-control'><option>Select Model</option></select></td>" +
+                     "<td><input type='number' class='form-control' name='quantity[]'></td>" +
+                     "<td><select class='form-control' id='exampleFormControlSelect2" + clicks + "' required name='brand[]' onchange='getModel(\"" + clicks + "\")'>" +
+                     "<option selected disabled>Select Brand</option>" +
+                     "</select></td>" +
+                     "<td><select class='form-control' id='exampleFormControlSelect3" + clicks + "' name='model[]' required>" +
+                     "<option selected disabled>Select Model</option>" +
+                     "</select></td>" +
                      "<td><button id='remove' class='btn btn-danger' type='button' + onClick='removeRow(this)'>Remove</button></td>" +
-                     + "</tr>";
+                     "</tr>";
             $('#tableTest tbody tr').eq(rowCount).after(tr);
+			getBrand(clicks);
 							
         }
-        function Remove(button) {
-            //Determine the reference of the Row using the Button.
-            var row = button.parentNode.parentNode;
-            var name = row.getElementsByTagName("TD")[0].innerHTML;
-            if (confirm("Remove: " + name)) {
 
-                //Get the reference of the Table.
-                var table = document.getElementById("tblCustomers");
-
-                //Delete the Table row using it's Index.
-                table.deleteRow(row.rowIndex);
-            }
-        };
-        
     </script>
 
     <script src="js/jquery.js"></script>

@@ -273,7 +273,6 @@ if(isset($_POST['submit'])){
 							getBrand(assetCategory,clicks);
 						}
 						
-						
 						function getBrand(assetCategory,clicks){
 							var code = "exampleFormControlSelect2" + clicks;
 							var xmlhttp = new XMLHttpRequest();
