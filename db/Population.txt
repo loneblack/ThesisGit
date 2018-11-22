@@ -489,7 +489,7 @@
 	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('10', 'TabletPropertyCode', 'SerialNumberTablet', 'MacTablet', '1');
 	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('11', 'AccessPointPropertyCode1', 'SerialNumberAccessPoint1', 'MacAccessPoint1', '1');
 	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'AccessPointPropertyCode2', 'SerialNumberAccessPoint2', 'MacAccessPoint2', '1');
-	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'AccessPointPropertyCode3', 'SerialNumberAccessPoint3', 'MacAccessPoint3', '1');
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('13', 'AccessPointPropertyCode3', 'SerialNumberAccessPoint3', 'MacAccessPoint3', '1');
 
 
 	-- asset audit for new items
