@@ -44,6 +44,124 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				
+				<section class="panel">
+                                    <header class="panel-heading">
+                                        Recent Canvas
+                                    </header>
+                                    <div class="panel-body">
+                                        <section id="unseen">
+                                            <div class="adv-table">
+                                            <table class="table table-bordered table-striped table-condensed table-hover " id="ctable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Date Needed</th>
+                                                        <th>Status</th>
+                                                        <th>Description</th>
+                                                        <th >Requestor</th>
+                                                        <th>Requested Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+													<td>11/12/2018</td>
+													<td><label class="label label-warning">Pending</td>
+													<td>Need help</td>
+													<td>Requesting guy</td>
+													<td>12/31/2018</td>
+                                                    <!-- <tr>
+                                                        <td><a href="procurement_view_request.php">12/23/2018</a></td>
+                                                        <td><span class="label label-success label-mini">Completed</span></td>
+                                                        <td>We Need 500 more laptops PLSSS!!</td>
+                                                        <td>Marvin Lao</td>
+                                                        <td>1/1/2018</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><a href="procurement_view_request.php">12/23/2018</a></td>
+                                                        <td><span class="label label-danger label-mini">Re-check Canvas</span></td>
+                                                        <td>We Need 500 more laptops PLSSS!!</td>
+                                                        <td>Marvin Lao</td>
+                                                        <td>1/1/2018</td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td><a href="procurement_view_request.php">12/23/2018</a></td>
+                                                        <td><span class="label label-primary label-mini">Ready for PO</span></td>
+                                                        <td>We Need 500 more laptops PLSSS!!</td>
+                                                        <td>Marvin Lao</td>
+                                                        <td>1/1/2018</td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td><a href="procurement_view_request.php">12/23/2018</a></td>
+                                                        <td><span class="label label-warning label-mini">For Canvas</span></td>
+                                                        <td>We Need 500 more laptops PLSSS!!</td>
+                                                        <td>Marvin Lao</td>
+                                                        <td>1/1/2018</td>
+                                                    </tr> -->
+                                                    
+													<?php
+													
+														require_once('db/mysql_connect.php');
+														$query="SELECT c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.recipient,r.date as `requestedDate`,rstp.name as `step` FROM thesis.canvas c 
+																   join ref_status rs on c.status=rs.statusID
+                                                                   join request r on c.requestID=r.requestID
+																   join ref_steps rstp on r.step=rstp.id LIMIT 10";
+														$result=mysqli_query($dbc,$query);
+														
+														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+															echo "<tr id='{$row['canvasID']}'>
+																<td>{$row['dateNeeded']}</td>";
+																
+															//if($row['status']=='Completed'){
+																//echo "<td><span class='label label-success label-mini'>{$row['status']}</span></td>";
+															//}
+															//elseif($row['status']=='Re-check Canvas'){
+																//echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
+															//}
+															//elseif($row['status']=='For Canvas'){
+																//echo "<td><span class='label label-warning label-mini'>{$row['status']}</span></td>";
+															//}
+															//else{
+																//echo "<td><span class='label label-primary label-mini'>{$row['status']}</span></td>";
+															//}
+															
+															if($row['status']=='Completed'){
+																echo "<td><span class='label label-success label-mini'>{$row['status']}</span></td>";
+															}
+															elseif($row['status']=='Incomplete'){
+																echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
+															}
+															elseif($row['step']=='Canvasing'){
+																echo "<td><span class='label label-warning label-mini'>Canvasing</span></td>";
+															}
+															elseif($row['step']=='Create Purchase Order'){
+																echo "<td><span class='label label-primary label-mini'>Create Purchase Order</span></td>";
+															}
+															elseif($row['step']=='Re-Canvas'){
+																echo "<td><span class='label label-danger label-mini'>Re-Canvas</span></td>";
+															}
+																
+															
+															
+																
+															echo "<td>{$row['description']}</td>
+																<td>{$row['recipient']}</td>
+																<td>{$row['requestedDate']}</td>
+															</tr>";
+														}
+													
+													
+													
+													
+													?>
+													
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                        </section>
+
+                                    </div>
+                                </section>
 
                 <div class="row">
                     <div class="col-sm-12">
