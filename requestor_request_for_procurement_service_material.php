@@ -57,7 +57,7 @@ $_SESSION['count'] = 0;
                             <div class="col-lg-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        Request For Procurement of Services and Materials
+                                        Request To Purchase An Asset
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">

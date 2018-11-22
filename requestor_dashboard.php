@@ -112,7 +112,7 @@ require_once("db/mysql_connect.php");
                                                         if($row['statusID'] == '3'){//completed
                                                             echo "<td><span class='label label-success'>{$row['statusName']}</span></td>";
                                                         }
-                                                        if($row['statusID'] == '4'){//disapproved
+                                                        if($row['statusID'] == '6'){//disapproved
                                                             echo "<td><span class='label label-danger'>{$row['statusName']}</span></td>";
                                                         }
 														echo "<td>{$row['step']}</td>";
@@ -133,11 +133,13 @@ require_once("db/mysql_connect.php");
                                                     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                     {
                                                       
-                                                      echo "<tr class='gradeA'>
+                                                        echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['serviceID']}</td>
-                                                            <td>{$count}</td>
-                                                            <td>Service</td>
-                                                            <td>{$row['dateReceived']}</td>
+                                                            <td>{$count}</td>";
+                                                            
+                                                        if($row['serviceType']=='27') echo "<td>Repair</td>";
+                                                        else echo "<td>Service</td>";
+                                                        echo "<td>{$row['dateReceived']}</td>
                                                             <td>{$row['dateNeed']}</td>
                                                             <td style='display: none'>{$row['statusID']}</td>";
 
@@ -333,7 +335,7 @@ require_once("db/mysql_connect.php");
 						}
                     }
 
-                    else if(requestType == "Service"){
+                    else if(requestType == "Service" || requestType == "Repair"){
                         window.location.href = "requestor_view_service_request.php?id=" + id;
                     }
                     

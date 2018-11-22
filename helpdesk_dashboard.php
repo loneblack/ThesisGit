@@ -179,118 +179,78 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                         <table class="table table-bordered table-striped table-condensed table-hover" id="ctable">
                                             <thead>
                                                 <tr>
+                                                    <td style='display: none'>ticketID</td>
                                                     <th>#</th>
                                                     <th>Title</th>
+                                                    <td style='display: none'>ServiceTypeID</td>
                                                     <th>Category</th>
                                                     <th>Updated</th>
                                                     <th>Date Needed</th>
-                                                    <th>Action</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-success">Solved</span></td>
-                                                    <td><span class="label label-danger">Closed</span></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-warning">Un-answered</span></td>
-                                                    <td><span class="label label-success">Opened</span></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-danger">New Ticket</span></td>
-                                                    <td><span class="label label-success">Opened</span></td>
-                                                </tr>
+                                            
+                                                <?php
+                                                    $count = 1;
                                                 
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-success">Solved</span></td>
-                                                    <td><span class="label label-danger">Closed</span></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-warning">Un-answered</span></td>
-                                                    <td><span class="label label-success">Opened</span></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>6</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-danger">New Ticket</span></td>
-                                                    <td><span class="label label-success">Opened</span></td>
-                                                </tr>
+                                                    require_once('db/mysql_connect.php');
+                                                    $query="SELECT t.ticketID,t.summary, rst.id,rst.serviceType,t.lastUpdateDate,t.dueDate, dateCreated,rts.status 
+                                                            FROM thesis.ticket t 
+                                                            JOIN thesis.ref_ticketstatus rts ON t.status=rts.ticketID
+                                                            JOIN thesis.ref_servicetype rst ON t.serviceType=rst.id
+                                                            ORDER BY dateCreated LIMIT 10;";
+                                                    $result=mysqli_query($dbc,$query);
                                                 
-                                                <tr>
-                                                    <td>7</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-success">Solved</span></td>
-                                                    <td><span class="label label-danger">Closed</span></td>
-                                                </tr>
+                                                    while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                        echo "<tr class='gradeA' id='{$row['ticketID']}'>
+                                                            <td style='display: none'>{$row['ticketID']}</td>
+                                                            <td>{$row['ticketID']}</td>
+                                                            <td>{$row['summary']}</td>
+                                                            <td style='display: none'>{$row['id']}</td>
+                                                            <td>{$row['serviceType']}</td>
+                                                            <td>{$row['lastUpdateDate']}</td>
+                                                            <td>{$row['dueDate']}</td>";
 
-                                                <tr>
-                                                    <td>8</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-warning">Un-answered</span></td>
-                                                    <td><span class="label label-success">Opened</span></td>
-                                                </tr>
+                                                        if($row['status']=='Open'){
+                                                            echo "<td><span class='label label-success'>{$row['status']}</span></td>";
+                                                        }
+                                                        elseif($row['status']=='Closed'){
+                                                            echo "<td><span class='label label-danger'>{$row['status']}</span></td>";
+                                                        }
+                                                        elseif($row['status']=='Assigned'){
+                                                            echo "<td><span class='label label-info'>{$row['status']}</span></td>";
+                                                        }
+                                                        
+                                                        elseif($row['status']=='In Progress'||$row['status']=='Waiting for Parts'){
+                                                            echo "<td><span class='label label-warning'>{$row['status']}</span></td>";
+                                                        }
+                                                        elseif($row['status']=='Transferred'){
+                                                            echo "<td><span class='label label-primary'>{$row['status']}</span></td>";
+                                                        }
+                                                        elseif($row['status']=='Escalated'){
+                                                            echo "<td><span class='label label-default'>{$row['status']}</span></td>";
+                                                        }
 
-                                                <tr>
-                                                    <td>9</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-danger">New Ticket</span></td>
-                                                    <td><span class="label label-success">Opened</span></td>
-                                                </tr>
+                                                        $count++;
+                                                        
+                                                    }
                                                 
-                                                <tr>
-                                                    <td>10</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Inquiry</td>
-                                                    <td>10/9/18</td>
-                                                    <td>10/9/18</td>
-                                                    <td><span class="label label-danger">New Ticket</span></td>
-                                                    <td><span class="label label-success">Opened</span></td>
-                                                </tr>
+                                                ?>
 
                                             </tbody>
-                                        </table>
+                                            <tfoot>
+                                                <tr>
+                                                    <td style='display: none'>ticketID</td>
+                                                    <th>#</th>
+                                                    <th>Title</th>
+                                                    <td style='display: none'>ServiceTypeID</td>
+                                                    <th>Category</th>
+                                                    <th>Updated</th>
+                                                    <th>Date Needed</th>
+                                                    <th class="hidden-phone">Status</th>
+                                                </tr>
+                                            </tfoot>
                                     </section>
                                 </div>
                             </section>

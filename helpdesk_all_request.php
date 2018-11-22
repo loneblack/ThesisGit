@@ -175,51 +175,6 @@
                                                     }
                                                   ?>
 											
-                                                <tr class="gradeA">
-                                                    <td style="display: none"></td>
-                                                    <td>1</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Donation</td>
-                                                    <td>10/9/18</td>
-                                                    <td>Pending</td>
-
-                                                </tr>
-
-                                                <tr class="gradeA">
-                                                    <td style="display: none"></td>
-                                                    <td>2</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Hardware Software Request</td>
-                                                    <td>10/9/18</td>
-                                                    <td>Pending</td>
-                                                </tr>
-
-                                                <tr class="gradeA">
-                                                    <td style="display: none"></td>
-                                                    <td>3</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Procurement of Service and Material</td>
-                                                    <td>10/9/18</td>
-                                                    <td>Pending</td>
-                                                </tr>
-
-                                                <tr class="gradeA">
-                                                    <td style="display: none"></td>
-                                                    <td>4</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Borrow</td>
-                                                    <td>10/9/18</td>
-                                                    <td>Pending</td>
-                                                </tr>
-
-                                                <tr class="gradeA">
-                                                    <td style="display: none"></td>
-                                                    <td>5</td>
-                                                    <td>Need Help Here</td>
-                                                    <td>Service Request</td>
-                                                    <td>10/9/18</td>
-                                                    <td>Pending</td>
-                                                </tr>
                                             <tfoot>
                                                 <tr>
                                                     <th style="display: none"></th>

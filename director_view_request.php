@@ -17,7 +17,7 @@
 		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
 	}
 	elseif(isset($_POST['disapprove'])){
-		$query="UPDATE `thesis`.`request` SET `status`='6' WHERE `requestID`='{$_SESSION['requestid']}'";
+		$query="UPDATE `thesis`.`request` SET `status`='6', `step`='20' WHERE `requestID`='{$_SESSION['requestid']}'";
 		$result=mysqli_query($dbc,$query);
 		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
 	}

@@ -113,6 +113,7 @@ if(isset($_POST['save'])){
                                                           </div>";
 
                                                     unset($_SESSION['save']);
+                                                    unset($_SESSION['submitMessage']);
                                                 }
                                             ?>
                                             <form class="cmxform form-horizontal" id="signupForm" method="post">
