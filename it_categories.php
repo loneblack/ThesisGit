@@ -14,6 +14,11 @@
     <link href="bs3/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-reset.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/morris-chart/morris.css">
+    <!--dynamic table-->
+    <link href="js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
+    <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css" />
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
@@ -59,13 +64,14 @@
                                         </header>
                                         <div class="panel-body">
                                             <section id="unseen">
-                                                <table class="table table-bordered table-striped table-condensed table-hover" id="ctable">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Category Name</th>
-                                                        </tr>
-                                                    </thead>
-													<?php
+                                                <div class="adv-table">
+                                                    <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Category Name</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <?php
 															require_once('db/mysql_connect.php');
 															$query="SELECT * FROM thesis.ref_assetcategory";
 															$result=mysqli_query($dbc,$query);
@@ -77,13 +83,8 @@
 															}
 														
 													?>
-
-                                                    <!-- <tbody>
-                                                        <tr>
-                                                            <td>LCD</td>
-                                                        </tr>
-                                                    </tbody> -->
-                                                </table>
+                                                    </table>
+                                                </div>
                                             </section>
                                         </div>
                                     </section>
@@ -108,19 +109,27 @@
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
-    <script>
-		$('#ctable').on('click', function() {
-			$('.assetcategoryID').on('click', function() {
-				var a = this.getAttribute("id");
-				window.location.href = "it_edit_category.php?assetCategoryID=" + a;
-			})
-        })
 
-    </script>
-
+    <!--dynamic table-->
+    <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
 
+    <script src="js/morris-chart/morris.js"></script>
+    <script src="js/morris-chart/raphael-min.js"></script>
+    <script src="js/morris.init.js"></script>
+
+    <!--dynamic table initialization -->
+    <script src="js/dynamic_table_init.js"></script>
+    <script>
+        $('#dynamic-table').on('click', function() {
+            $('.assetcategoryID').on('click', function() {
+                var a = this.getAttribute("id");
+                window.location.href = "it_edit_category.php?assetCategoryID=" + a;
+            })
+        })
+    </script>
 </body>
 
 </html>
