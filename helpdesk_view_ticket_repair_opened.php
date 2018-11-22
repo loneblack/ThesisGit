@@ -34,7 +34,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 ?>
 <?php
 // Insertion to ticket
-    echo "asdasdasddas";
+    
     if(isset($_POST['submit'])){
         
         $status=$_POST['status'];
