@@ -1,6 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
 
+$id = $_GET['id'];//get the id of the selected service request
+
+require_once("db/mysql_connect.php");
+
+$query =  "SELECT   * FROM thesis.ticket WHERE ticketID = {$id};";
+$result = mysqli_query($dbc, $query);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+        
+        $dateCreated = $row['dateCreated'];
+        $dueDate = $row['dueDate'];
+        $summary = $row['summary'];
+        $details = $row['details'];
+        $status = $row['status'];
+        $description = $row['description'];
+        $priority = $row['priority'];
+        $others = $row['others'];
+        $assigneeUserID = $row['assigneeUserID'];
+
+    }
+$assets = array();
+
+$query2 =  "SELECT * FROM thesis.ticketedasset WHERE ticketID = {$id};";
+$result2 = mysqli_query($dbc, $query2);
+
+while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
+    array_push($assets, $row['assetID']);
+}
+?>
 <head>
     <meta charset="utf-8">
 
@@ -62,7 +93,7 @@
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <img src="images/chat-avatar2.jpg" alt="">
-                                                <strong>IT Office</strong>
+                                                <strong>Helpdesk</strong>
                                                 to
                                                 <strong>me</strong>
                                             </div>
@@ -176,13 +207,6 @@
                                                 <label class="control-label col-lg-4">Due Date</label>
                                                 <div class="col-lg-8">
                                                     <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018" disabled />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-4">Repair Date *</label>
-                                                <div class="col-lg-8">
-                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018" required />
                                                 </div>
                                             </div>
                                         </form>

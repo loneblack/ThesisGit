@@ -34,10 +34,9 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 ?>
 <?php
 // Insertion to ticket
-    
+    echo "asdasdasddas";
     if(isset($_POST['submit'])){
         
-        $message=null;
         $status=$_POST['status'];
         $assigned=$_POST['assigned'];
         $priority=$_POST['priority'];
@@ -45,6 +44,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         $currDate=date("Y-m-d H:i:s");
 
         if(!isset($message)){
+            
 
             $querya="UPDATE `thesis`.`ticket` 
                     SET `status` = '{$status}',
@@ -54,24 +54,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                         `comment` = '{$comment}' 
                             WHERE (`ticketID` = '{$id}');";
             $resulta=mysqli_query($dbc,$querya);
-        
-            $queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
-            $resultaa=mysqli_query($dbc,$queryaa);
-            $rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
 
-
-
-
-
-
-            for ($i=0; $i < count($assets); $i++) { 
-
-                $queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$assets[$i]}');";
-                $resultaaaa=mysqli_query($dbc,$queryaaaa);
-            }
-
-            $sql = "UPDATE `thesis`.`service` SET `status` = '2' WHERE (`id` = '{$id}');";
-            $output = mysqli_query($dbc, $sql);
+            echo $querya;
         
             $message = "Ticket Created";
             $_SESSION['submitMessage'] = $message;
@@ -204,7 +188,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                                                    echo "<tr>
                                                    <td align='center'>
-                                                    <input type='checkbox' value=''>
+                                                    <input type='checkbox' value='' disabled>
                                                 </td>
                                                     <td>{$row['propertyCode']}</td>
                                                     <td>{$row['brand']} {$row['category']} {$row['description']}</td>
@@ -234,7 +218,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         </li>
                                     </ul>
                                     <div class="form">
-                                        <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
+                                        <form class="cmxform form-horizontal" id="signupForm" method="post" action="">
                                             <div class="form-group ">
                                                 <div class="form-group ">
                                                     <label for="category" class="control-label col-lg-4">Category</label>
@@ -299,7 +283,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value=<?php echo $dueDate;?> disabled/>
                                                 </div>
                                             </div>
-                                        </form>
+                                       
                                     </div>
 
                                 </div>
@@ -316,14 +300,14 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         <h4>Comments or Request For Parts (if needed)</h4>
                                     </div>
                                     <div class="view-mail">
-                                        <textarea class="form-control" style="resize:none" rows="5" name="comment"></textarea>
+                                        <textarea class="form-control" style="resize:none" rows="5" name="comment" disabled></textarea>
                                     </div>
                                 </div>
                             </section>
-                            <button onclick="#" class="btn btn-success">Send</button></a>
+                            <button type="submit" class="btn btn-success">Send</button></a>
                             <a href="helpdesk_all_ticket.php"><button class="btn btn-danger">Back</button></a>
                         </div>
-
+                             </form>
 
                     </div>
                     <!-- page end-->
