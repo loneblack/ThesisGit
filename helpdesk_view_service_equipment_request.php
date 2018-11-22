@@ -1,6 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+require_once("db/mysql_connect.php");
 
+$id = $_GET['id'];
+
+$sql = "SELECT *, o.Name AS 'office', d.name AS 'department', z.name AS 'organization', b.name AS 'building' 
+        FROM thesis.request_borrow r 
+        JOIN ref_status s ON r.statusID = s.statusID 
+        LEFT JOIN offices o ON r.officeID = o.officeID 
+        LEFT JOIN department d ON r.DepartmentID = d.DepartmentID
+        LEFT JOIN organization z ON r.organizationID = z.id
+        JOIN building b ON r.BuildingID = b.BuildingID 
+        JOIN floorandroom f ON r.FloorAndRoomID = f.FloorAndRoomID
+        JOIN employee e ON personresponsibleID = e.UserID
+        WHERE borrowID = {$id};";
+
+$result = mysqli_query($dbc, $sql);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+        $office = $row['office'];
+        $department = $row['department'];
+        $organization = $row['organization'];
+        $startDate = $row['startDate'];
+        $endDate = $row['endDate'];
+        $purpose = $row['purpose'];
+        $building = $row['building'];
+        $floorRoom = $row['floorRoom'];
+        $personrepresentativeID = $row['personrepresentativeID'];
+        $personrepresentative = $row['personrepresentative'];
+        $contactNo = $row['contactNo'];
+
+
+    }
+
+$sql = "SELECT * FROM thesis.borrow_details d JOIN ref_assetcategory c ON d.assetCategoryID = c.assetCategoryID WHERE borrowID = {$id};";
+$result = mysqli_query($dbc, $sql);
+
+$count = 0;
+
+$requestedQuantity = array();
+$requestedCategory = array();
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+        array_push($requestedQuantity, $row['quantity']);
+        array_push($requestedCategory, $row['name']);
+
+        $count++;
+
+    }
+?>
 <head>
     <meta charset="utf-8">
 
@@ -71,19 +123,18 @@
                                                 <div class="form">
                                                     <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
                                                         <div class="form-group ">
-                                                            <div class="form-group ">
-                                                                <label for="category" class="control-label col-lg-3">Category</label>
-                                                                <div class="col-lg-6">
-                                                                    <select class="form-control m-bot15" name="category" value="" required>
-
-                                                                    </select>
-                                                                </div>
-                                                            </div>
 
                                                             <label for="status" class="control-label col-lg-3">Status</label>
                                                             <div class="col-lg-6">
-                                                                <select class="form-control m-bot15" name="status" value="" required>
-
+                                                                <select class="form-control m-bot15" name="status" required>
+                                                            	<?php
+                                                                    $query2="SELECT * FROM thesis.ref_ticketstatus";
+                                                                    $result2=mysqli_query($dbc,$query2);
+                                                                    
+                                                                    while($row2=mysqli_fetch_array($result2,MYSQLI_ASSOC)){
+                                                                        echo "<option value='{$row2['ticketID']}'>{$row2['status']}</option>";
+                                                                    }
+                                                            	?>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -104,17 +155,17 @@
                                                             <label for="assign" class="control-label col-lg-3">Assigned</label>
                                                             <div class="col-lg-6">
                                                                 <select class="form-control m-bot15" name="assigned" value="" required>
-
-
+                                                                <option value='0'>None</option>
+                                                                <?php
+                                                                    $query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer'";
+                                                                    $result3=mysqli_query($dbc,$query3);
+                                                                    
+                                                                    while($row3=mysqli_fetch_array($result3,MYSQLI_ASSOC)){
+                                                                        echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
+                                                                    }                                       
+                                                                
+                                                                ?>
                                                                 </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label class="control-label col-lg-3">Due Date</label>
-                                                            <div class="col-lg-6">
-                                                                <!-- class="form-control form-control-inline input-medium default-date-picker" -->
-                                                                <input class="form-control m-bot15" size="10" name="dueDate" type="datetime-local" value="" required />
                                                             </div>
                                                         </div>
 
@@ -137,69 +188,43 @@
 											<label for="serviceType" class="control-label col-lg-3">Office/Department/School Organization</label>
 											<div class="col-lg-6">
 												<select name="serviceType" class="form-control m-bot15" disabled>
-													<option>Select</option>
-													<?php
-
-												  
-													$sql = "SELECT * FROM thesis.offices;";
-
-													$result = mysqli_query($dbc, $sql);
-
-													while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-													{
-														
-														echo "<option value ={$row['officeID']}>";
-														echo "{$row['Name']}</option>";
-
-													}
-												   ?>
-													
+												<?php		
+													echo "<option>".$office.$department.$organization."</option>";
+												?>
 												</select>
 											</div>
 										</div>
 										<div class="form-group ">
 											<label for="number" class="control-label col-lg-3">Contact No.</label>
 											<div class="col-lg-6">
-												<input class="form-control" rows="5" name="details" style="resize:none" type="text" disabled required></input>
+												<input class="form-control" rows="5" name="details" style="resize:none" value=<?php echo '"'.$contactNo.'"'; ?> type="text" disabled></input>
 											</div>
 										</div>
 										<div class="form-group ">
 											<label for="dateNeeded" class="control-label col-lg-3">Date & time needed</label>
 											<div class="col-lg-6">
-												<input class="form-control" id="dateNeeded" name="dateNeeded" type="datetime-local" disabled required />
+												<input class="form-control" id="dateNeeded" name="dateNeeded" type="text" value=<?php echo '"'.$startDate.'"'; ?> disabled/>
 											</div>
 										</div>
 										<div class="form-group ">
 											<label for="endDate" class="control-label col-lg-3">End date & time</label>
 											<div class="col-lg-6">
-												<input class=" form-control" id="endDate" name="endDate" type="datetime-local" disabled required />
+												<input class=" form-control" id="endDate" name="endDate" type="text" value= <?php echo '"'.$endDate.'"' ; ?> disabled/>
 											</div>
 										</div>
 										<div class="form-group ">
 											<label for="purpose" class="control-label col-lg-3">Purpose</label>
 											<div class="col-lg-6">
-												<input class="form-control" id="purpose" name="purpose" type="text" disabled />
+												<input class="form-control" id="purpose" name="purpose" type="text" value = <?php echo '"'.$purpose.'"' ; ?> disabled />
 											</div>
 										</div>
 										<div class="form-group ">
 											<label for="building" class="control-label col-lg-3">Building</label>
 											<div class="col-lg-6">
-												<select name="building" class="form-control m-bot15" onChange="getRooms(this.value)" disabled>
-													<option>Select building</option>
-													<?php
-
-													$sql = "SELECT * FROM thesis.building;";
-
-													$result = mysqli_query($dbc, $sql);
-
-													while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-													{
-														
-														echo "<option value ={$row['BuildingID']}>";
-														echo "{$row['name']}</option>";
-
-													}
-												   ?>
+												<select name="building" class="form-control m-bot15" disabled>
+												<?php
+													echo "<option >".$building."</option>";
+											    ?>
 												</select>
 											</div>
 										</div>
@@ -207,7 +232,9 @@
 											<label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
 											<div class="col-lg-6">
 												<select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15" disabled>
-													<option valu=''>Select floor & room</option>
+													<?php
+													echo "<option >".$floorRoom."</option>";
+											    ?>
 												</select>
 											</div>
 										</div>
@@ -223,32 +250,42 @@
 													</tr>
 												</thead>
 												<tbody>
+													<?php
+                                                        for ($i=0; $i < $count; $i++) { 
+
+                                                            echo 
+                                                            "<tr>
+                                                                <td>
+                                                                    <select class='form-control' disabled >
+                                                                        <option>{$requestedCategory[$i]}</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select class='form-control m-bot15' disabled required>              
+                                                                        <option>{$requestedQuantity[$i]}</option>
+                                                                    </select>
+                                                                </td>
+                                                               
+                                                            </tr>";
+                                                        }
+
+                                                    ?>
 												</tbody>
-												<tfoot>
-													<tr>
-														<td>
-															<select class="form-control" id="txtName" disabled>
-																<option>Select</option>
-															</select>
-														</td>
-														<td><input class="form-control" type="number" min="1" id="txtCountry" disabled/></td>
-													</tr>
-												</tfoot>
 											</table>
 										</div>
 										<hr>
 										<div class="container-fluid">
-											<h4>Endorsement (if applicable)</h4>
+											<h4>Endorsement</h4>
 											<div class="form-group ">
 												<label for="representative" class="control-label col-lg-3">Representative</label>
 												<div class="col-lg-6">
-													<input class="form-control" id="representative" name="representative" type="text" disabled />
+													<input class="form-control" id="representative" name="representative" type="text" value = <?php echo '"'.$personrepresentative.'"' ; ?> disabled />
 												</div>
 											</div>
 											<div class="form-group ">
 												<label for="idNum" class="control-label col-lg-3">ID Number</label>
 												<div class="col-lg-6">
-													<input class="form-control" id="idNum" name="idNum" type="text" disabled />
+													<input class="form-control" id="idNum" name="idNum" type="text" value = <?php echo '"'.$personrepresentativeID.'"' ; ?> disabled />
 												</div>
 											</div>
 											<div class="form-group">

@@ -176,7 +176,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                 </header>
                                 <div class="panel-body">
                                     <section id="unseen">
-                                        <table class="table table-bordered table-striped table-condensed table-hover" id="ctable">
+                                        <table class="table table-bordered table-striped table-condensed table-hover" id="dynamic-table">
                                             <thead>
                                                 <tr>
                                                     <td style='display: none'>ticketID</td>
@@ -274,10 +274,90 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
 
-    <script>
-        $('#ctable').on('dblclick', function() {
-            window.location.href = "helpdesk_view_ticket.php";
-        })
+     <script>
+        function addRowHandlers() {
+            var table = document.getElementById("dynamic-table");
+            var rows = table.getElementsByTagName("tr");
+            for (i = 1; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function(row) {
+                    return function() {
+                        var cell1 = row.getElementsByTagName("td")[0];
+                        var id = cell1.textContent;
+
+                        var cell2 = row.getElementsByTagName("td")[3];
+                        var serviceTypeID = cell2.textContent;
+
+                        var cell3 = row.getElementsByTagName("td")[7];
+                        var status = cell3.textContent;
+
+                                            
+                        if(serviceTypeID == '25'){
+                            //asset testing
+                            if(status == "Closed"){
+                                window.location.href ="helpdesk_view_ticket_assettesting_closed.php?id=" + id;
+                            }
+                                
+                            else{
+                                window.location.href = "helpdesk_view_ticket_assettesting_opened.php?id=" + id;
+                            }
+                        }
+                        
+                        else if(serviceTypeID == '26'){
+                            //refurbishing
+                            if(status == "Closed"){
+                                window.location.href = "helpdesk_view_ticket_refurbishing_closed.php?id=" + id;
+                            }
+
+                            else{
+                                window.location.href = "helpdesk_view_ticket_refurbishing_opened.php?id=" + id;
+                            }
+                            
+                        }
+                        
+                        else if(serviceTypeID == '27'){//dpone
+                            //repair
+                            if(status == "Closed"){
+                                window.location.href = "helpdesk_view_ticket_repair_closed.php?id=" + id;
+                            }
+                            else{
+                                window.location.href = "helpdesk_view_ticket_repair_opened.php?id=" + id;
+                            }
+                        }
+                        else if(serviceTypeID == '28'){
+                            //maintenance
+                            if(status == "Closed"){
+                                window.location.href = "helpdesk_view_ticket_maintenance_closed.php?id=" + id;
+                            }
+                            else{
+                                window.location.href = "helpdesk_view_ticket_maintenance_opened.php?id=" + id;
+                            }
+                        }
+                         else if(serviceTypeID == '29'){
+                            //others
+                            if(status == "Closed"){
+                                window.location.href = "helpdesk_view_ticket_others_closed.php?id=" + id;
+                            }
+                            else{
+                                window.location.href = "helpdesk_view_ticket_others_opened.php?id=" + id;
+                            }
+                        }
+                         else{
+                            //service
+                            if(status == "Closed"){
+                                window.location.href = "helpdesk_view_ticket_service_closed.php?id=" + id;
+                            }
+                            else{
+                                window.location.href = "helpdesk_view_ticket_service_opened.php?id=" + id;
+                            }
+                        }
+                        
+                    };
+                };
+                currentRow.onclick = createClickHandler(currentRow);
+            }
+        }
+        window.onload = addRowHandlers();
     </script>
 
     <!--common script init for all pages-->
