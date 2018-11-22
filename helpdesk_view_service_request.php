@@ -139,15 +139,6 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                                 </select>
                                                             </div>
                                                         </div>
-
-                                                        <div class="form-group">
-                                                            <label class="control-label col-lg-3">Due Date</label>
-                                                            <div class="col-lg-6">
-                                                                <!-- class="form-control form-control-inline input-medium default-date-picker" -->
-                                                                <input class="form-control m-bot15" size="10" name="dueDate" type="datetime-local" value="" required />
-                                                            </div>
-                                                        </div>
-
                                                         <button type="submit" class="btn btn-success" name="submit">Update</button>
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 

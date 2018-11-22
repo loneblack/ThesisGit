@@ -21,7 +21,7 @@
 
     //insertion to service table
 	$sql = "INSERT INTO `thesis`.`service` (`summary`, `details`, `dateNeed`, `endDate`, `dateReceived`, `UserID`, `serviceType`, `others`, `status`, `steps`)
-	                                VALUES ('{$summary}', '{$details}', '{$dateNeeded}', '{$endDate}', '{$date}', '{$userID}', '{$serviceType}', '{$others}', '1', '14');";//status is set to 1 for pending status
+	                                VALUES ('{$summary}', '{$details}', '{$dateNeeded}', '{$endDate}', '{$date}', '{$userID}', '{$serviceType}', '{$others}', '1', '12');";//status is set to 1 for pending status
 
 	$result = mysqli_query($dbc, $sql);
 

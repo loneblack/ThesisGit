@@ -4,6 +4,7 @@
 session_start();
 
 $id = $_GET['id'];//get the id of the selected service request
+$_SESSION['id'] = $_GET['id'];
 
 require_once("db/mysql_connect.php");
 
@@ -32,7 +33,8 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         $building = $row['building'];        
         $floorRoom = $row['floorRoom'];         
         $personrepresentativeID = $row['personrepresentativeID'];      
-        $personrepresentative = $row['personrepresentative'];      
+        $personrepresentative = $row['personrepresentative'];        
+        $description = $row['description'];      
 
     }
 $category = array();
@@ -43,10 +45,23 @@ $query2 =  "SELECT * FROM thesis.borrow_details d
             WHERE borrowID = {$id};";
 $result2 = mysqli_query($dbc, $query2);
 
-while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
-    array_push($category, $row['name']);
-    array_push($quantity, $row['quantity']);
+while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
+    array_push($category, $row2['name']);
+    array_push($quantity, $row2['quantity']);
 }
+
+
+    if(isset($_POST['approveBtn'])){
+        $query="UPDATE `thesis`.`request_borrow` SET `statusID` = '2', `steps`='13' WHERE (`borrowID` = '{$id}');";
+        $result=mysqli_query($dbc,$query);
+        header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_view_open_service_equipment_request.php?id=".$_SESSION['id']);
+    }
+    elseif(isset($_POST['denyBtn'])){
+        $query="UPDATE `thesis`.`request_borrow` SET `statusID` = '2', `steps`='20' WHERE (`borrowID` = '{$id}');";
+        $result=mysqli_query($dbc,$query);
+        header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_view_open_service_equipment_request.php?id=".$_SESSION['id']);
+    }
+
 ?>
 <head>
     <meta charset="utf-8">
@@ -103,7 +118,17 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     <div class="panel-body">
                                         <div class="form" method="post">
 											<a href="it_requests.php"><button type="button" class="btn btn-link"><strong>< Back</strong></button></a>
-                                            <form class="cmxform form-horizontal " id="signupForm" method="get" action="">
+                                            <h4 style="float: right;">Status: <?php 
+                                            if($description=='Pending'){
+                                                echo "<span class='label label-warning'>{$description}</span>";
+                                            }
+                                            elseif($description=='Disapproved'){
+                                                echo "<span class='label label-danger'>{$description}</span>";
+                                            }
+                                            else{
+                                                echo "<span class='label label-success'>Approved</span>";
+                                            } ?></h4>
+                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
                                                 <div class="form-group ">
                                                     <label for="serviceType" class="control-label col-lg-3">Office/Department/School Organization</label>
                                                     <div class="col-lg-6">
@@ -138,7 +163,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     <label for="building" class="control-label col-lg-3">Building</label>
                                                     <div class="col-lg-6">
                                                         <select name="building" class="form-control m-bot15" disabled >
-                                                            <option>value=<?php echo $building;?></option>
+                                                            <option><?php echo $building;?></option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -146,7 +171,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     <label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
                                                     <div class="col-lg-6">
                                                         <select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15" disabled>
-                                                            <option value=''>value=<?php echo $floorRoom;?></option>
+                                                            <option value=''><?php echo $floorRoom;?></option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -195,9 +220,9 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     </div>
 													<hr>
                                                     <div class="form-group">
-														<button id="approveBtn" name="approveBtn" class="btn btn-success" type="submit">Approve</button>
+														<button id="approveBtn" name="approveBtn" class="btn btn-success" <?php if($description != 'Pending') echo "disabled"; ?> type="submit">Approve</button>
 														&nbsp;
-														<button id="denyBtn" name="denyBtn" class="btn btn-danger" type="submit">Deny</button>
+														<button id="denyBtn" name="denyBtn" class="btn btn-danger"<?php if($description != 'Pending') echo "disabled"; ?> type="submit">Deny</button>
                                                     </div>
                                                 </div>
                                             </form>
