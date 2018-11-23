@@ -208,6 +208,11 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         <tbody>
                                                         <?php
                                                             for ($i=0; $i < count($category); $i++){ 
+
+                                                            $sqlAsset = "SELECT * FROM thesis.asset WHERE assetStatus = 1;";
+                                                            $resultAsset = mysqli_query($dbc, $sqlAsset);
+
+
                                                             echo
                                                             "<tr>
                                                                 <td>

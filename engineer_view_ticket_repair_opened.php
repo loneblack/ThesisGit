@@ -247,43 +247,6 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                         </div>
 
-                        <section class="panel">
-                            <div class="panel-body">
-                                <table class="table table-bordered table table-hover" id="tableTest">
-                                    <thead>
-                                        <tr>
-                                            <th>Quantity</th>
-                                            <th>Category</th>
-                                            <th>Brand</th>
-                                            <th>Model</th>
-                                            <th>Add Remove</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="number" class="form-control" min="0" step="1"></td>
-                                            <td>
-                                                <select class="form-control">
-                                                    <option>Select Category</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select class="form-control">
-                                                    <option>Select Brand</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select class="form-control">
-                                                    <option>Select Model</option>
-                                                </select>
-                                            </td>
-                                            <td><button class="btn btn-primary" id="addTest(1)">Add</button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </section>
-
 
                         <div class="col-sm-3">
 
@@ -381,6 +344,46 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     </div>
                                 </div>
                             </section>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <section class="panel">
+                                <div class="panel-body ">
+
+                                    <table class="table table-bordered table table-hover" id="addtable">
+                                    <thead>
+                                        <tr>
+                                            <th>Quantity</th>
+                                            <th>Category</th>
+                                            <th>Brand</th>
+                                            <th>Model</th>
+                                            <th>Add Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="number" class="form-control" min="0" step="1"></td>
+                                            <td>
+                                                <select class="form-control">
+                                                    <option>Select Category</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control">
+                                                    <option>Select Brand</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control">
+                                                    <option>Select Model</option>
+                                                </select>
+                                            </td>
+                                            <td><button class="btn btn-primary" type="button" onclick="addTest(1)">Add</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                            </section>
                             <button type="submit" name="submit" class="btn btn-success">Send</button></a>
                             <a href="helpdesk_all_ticket.php"><button type="button" class="btn btn-danger">Back</button></a>
                         </div>
@@ -433,13 +436,13 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             var cnt = 0;
             count++;
             var tr = "<tr>" +
-                "<td><input type='number' min='0' step='1'></td>"+
+                "<td><input type='number' min='0' step='1' class='form-control'></td>"+
                 "<td><select class='form-control'><option>Select Category</option></select></td>" +
                 "<td><select class='form-control'><option>Select Brand</option></select></td>" +
                 "<td><select class='form-control'><option>Select Model</option></select></td>" +
                 "<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
                 "</tr>";
-            $('#tableTest tbody tr').eq(rowCount).after(tr);
+            $('#addtable tbody tr').eq(rowCount).after(tr);
         }
         
     </script>
