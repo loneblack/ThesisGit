@@ -1407,6 +1407,7 @@ DROP TABLE IF EXISTS `thesis`.`SchoolYear` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`SchoolYear` (
   `SchoolYearID` INT NOT NULL AUTO_INCREMENT,
+  `SchoolYear` VARCHAR(45) NULL,
   `Term1Start` DATE NULL,
   `Term2Start` DATE NULL,
   `Term3Start` DATE NULL,
