@@ -1382,7 +1382,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `thesis`.`Inventory` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`Inventory` (
-  `InventoryID` INT(11) NOT NULL AUTO_INCREMENT,
+  `InventoryID` INT(11) NOT NULL,
   `assetCategoryID` INT(11) NULL,
   `quantity` INT(11) NULL,
   `floorLevel` INT(11) NULL,
@@ -1394,4 +1394,21 @@ CREATE TABLE IF NOT EXISTS `thesis`.`Inventory` (
     REFERENCES `thesis`.`ref_assetcategory` (`assetCategoryID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`SchoolYear`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`SchoolYear` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`SchoolYear` (
+  `SchoolYearID` INT NOT NULL AUTO_INCREMENT,
+  `Term1Start` DATE NULL,
+  `Term2Start` DATE NULL,
+  `Term3Start` DATE NULL,
+  `Term1End` DATE NULL,
+  `Term2End` DATE NULL,
+  `Term3End` DATE NULL,
+  PRIMARY KEY (`SchoolYearID`))
 ENGINE = InnoDB;
