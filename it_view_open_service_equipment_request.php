@@ -62,16 +62,20 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         $result=mysqli_query($dbc,$query);
 	   
         //insert to assset testing
-        $queryTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `remarks`, `serviceType`)
-                            VALUES ('1', '1', 'Borrow', '25');";
+        $queryTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `remarks`, `serviceType`, `borrowID`)
+                            VALUES ('1', '1', 'Borrow', '25', '{$id}');";
         $resultTest=mysqli_query($dbc,$queryTest);
-        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+        $selectQuery = "SELECT * FROM thesis.assettesting ORDER BY testingID DESC LIMIT 1;";
+        $resultQuery = mysqli_query($dbc,$selectQuery);
+        while ($row = mysqli_fetch_array($resultQuery, MYSQLI_ASSOC)){
             $testingID = $row['testingID'];
         }
 		
 		foreach($propCode as $asset){
 			//INSERT TO asset testing details
             $queryDetails = "INSERT INTO assettesting_details (`assettesting_testingID`, `asset_assetID`) VALUES ('{$testingID}', '{$asset}');";
+            $resultDetails = mysqli_query($dbc,$queryDetails);
 
 			
 		}
@@ -154,6 +158,16 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     <header class="panel-heading">
                                         Service Equipment Request
                                     </header>
+                                    <?php
+                                        if (isset($_SESSION['submitMessage'])){
+
+                                            echo "<div style='text-align:center' class='alert alert-success'><h5><strong>
+                                                    {$_SESSION['submitMessage']}
+                                                  </strong></h5></div>";
+
+                                            unset($_SESSION['submitMessage']);
+                                        }
+                                    ?>
                                     <div class="panel-body">
                                         <div class="form" method="post">
 											<a href="it_requests.php"><button type="button" class="btn btn-link"><strong>< Back</strong></button></a>
