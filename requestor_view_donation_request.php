@@ -1,6 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+
+require_once("db/mysql_connect.php");
+
+$id = $_GET['id'];
+
+$query = "SELECT *, of.Name AS 'office', o.name AS 'organization', de.name AS 'department' FROM thesis.donation d
+		 LEFT JOIN organization o
+		 ON d.organizationID = o.id
+         LEFT JOIN offices of 
+         ON d.officeID = of.officeID
+         LEFT JOIN department de
+         ON d.DepartmentID = de.DepartmentID
+         JOIN employee e on d.user_UserID = e.UserID
+		 WHERE donationid = {$id};";
+		 
+$result = mysqli_query($dbc, $query);
+//echo $query;
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+{
+    $organizationID = $row['organizationID'];
+	$departmentID = $row['DepartmentID'];
+	$officeID = $row['officeID'];
+	$contactNumber = $row['contactNumber'];
+	$dateNeeded = $row['dateNeed'];
+	$dateCreated = $row['dateCreated'];
+	$purpose = $row['purpose'];
+	$office = $row['office'];
+	$department = $row['department'];
+	$organization = $row['organization'];
+	$contactNo = $row['contactNo'];
+}
+
+
+?>
+
 <head>
     <meta charset="utf-8">
 
@@ -58,18 +94,28 @@
                                             <form class="cmxform form-horizontal " id="signupForm" method="get" action="">
                                                 <div class="form-group ">
                                                     <label for="organization" class="control-label col-lg-3">Office/Department/School Organization</label>
-                                                    
+														<?php 
+															echo "<label for='organization' class='control-label col-lg-7'>".$office."".$department."".$organization."</label>";
+														?>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="number" class="control-label col-lg-3">Contact No.</label>
+														<?php 
+															echo "<label  for='organization' class='control-label col-lg-7'>".$contactNo."</label>";
+														?>
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Date & time needed</label>
-                                                    
+													<?php 
+															echo "<label  for='organization' class='control-label col-lg-7'>".$dateNeeded."</label>";
+													?>
                                                 </div>
 												<div class="form-group ">
                                                     <label for="purpose" class="control-label col-lg-3">Purpose</label>
-                                                    
+													<?php 
+															echo "<label for='organization' class='control-label col-lg-7'>".$purpose."</label>";
+													?>
+													
                                                 </div>
 												
                                                 <hr>
@@ -84,17 +130,28 @@
 															</tr>
 														</thead>
 														<tbody>
+															<?php
+																$query2 = "SELECT * FROM thesis.donationdetails dd JOIN ref_assetcategory ac ON dd.assetCategoryID = ac.assetCategoryID WHERE donationID = {$id};";
+																$result2 = mysqli_query($dbc, $query2);
+																while($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
+																	$name = $row2['name'];
+																	$quantity = $row2['quantity'];
+																	
+																	echo "
+																		<tr>
+																			<td>
+																				<label style='text-align:center'>".$name."</label>
+																			</td>
+																			<td>
+																				<label style='text-align:center'>".$quantity."</label>
+																			</td>
+																		</tr>
+																		";
+																		
+																}
+															?>
 														</tbody>
 														<tfoot>
-															<tr>
-																<td>
-                                                                    <select class="form-control" id="txtName" disabled>
-                                                                        <option>Select</option>
-                                                                    </select>
-                                                                </td>
-																<td><input class="form-control" type="number" min="1" id="txtCountry" disabled/></td>
-																
-															</tr>
 														</tfoot>
 													</table>
 												</div>
