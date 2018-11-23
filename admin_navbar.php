@@ -20,6 +20,12 @@
                             </ul>
                         </li>
                         <li>
+                            <a href="admin_sy_list.php">
+                                <i class="fa fa-calendar"></i>
+                                <span>School Years</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="logout.php">
                                 <i class="glyphicon glyphicon-log-out"></i>
                                 <span>Logout</span>

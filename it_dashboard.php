@@ -85,7 +85,7 @@
                                         <span class="mini-stat-icon orange"><i class="fa fa-save"></i></span>
                                         <div class="mini-stat-info">
                                             <span>22,450</span>
-                                            Total Licenses
+                                            Deployed
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +97,7 @@
                                         <span class="mini-stat-icon pink"><i class="fa fa-keyboard-o"></i></span>
                                         <div class="mini-stat-info">
                                             <span>34,320</span>
-                                            Total Accessories
+                                            On Hand
                                         </div>
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@
                                         <span class="mini-stat-icon green"><i class="fa fa-files-o"></i></span>
                                         <div class="mini-stat-info">
                                             <span>32720</span>
-                                            Total Consumables
+                                            Broken Fixable
                                         </div>
                                     </div>
                                 </div>
