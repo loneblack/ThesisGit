@@ -72,7 +72,7 @@
                                     <div class="mini-stat clearfix">
                                         <span class="mini-stat-icon green"><i class="fa fa-barcode"></i></span>
                                         <div class="mini-stat-info">
-                                            <span>32,000</span>
+                                            <span>67</span>
                                             Total Assets
                                         </div>
                                     </div>
@@ -84,7 +84,7 @@
                                     <div class="mini-stat clearfix">
                                         <span class="mini-stat-icon orange"><i class="fa fa-save"></i></span>
                                         <div class="mini-stat-info">
-                                            <span>22,450</span>
+                                            <span>5</span>
                                             Deployed
                                         </div>
                                     </div>
@@ -96,7 +96,7 @@
                                     <div class="mini-stat clearfix">
                                         <span class="mini-stat-icon pink"><i class="fa fa-keyboard-o"></i></span>
                                         <div class="mini-stat-info">
-                                            <span>34,320</span>
+                                            <span>57</span>
                                             On Hand
                                         </div>
                                     </div>
@@ -108,7 +108,7 @@
                                     <div class="mini-stat clearfix">
                                         <span class="mini-stat-icon green"><i class="fa fa-files-o"></i></span>
                                         <div class="mini-stat-info">
-                                            <span>32720</span>
+                                            <span>5</span>
                                             Broken Fixable
                                         </div>
                                     </div>

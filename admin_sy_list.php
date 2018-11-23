@@ -80,13 +80,13 @@
                                                         </thead>
                                                         <tbody>
                                                             <?php
-//															$query="SELECT * FROM thesis.ref_brand order by name;";
-//															$result=mysqli_query($dbc,$query);
-//															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-//																echo "<tr class='brandID' id='{$row['brandID']}'>
-//																	<td>{$row['name']}</td>
-//																</tr>";
-//															}
+															$query="SELECT * FROM thesis.schoolyear order by SchoolYearID;";
+															$result=mysqli_query($dbc,$query);
+															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+																echo "<tr class='SchoolYearID' id='{$row['SchoolYearID']}'>
+																	<td>{$row['name']}</td>
+																</tr>";
+															}
 														?>
 
                                                         </tbody>
