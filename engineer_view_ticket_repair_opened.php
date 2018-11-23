@@ -362,23 +362,17 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><input type="number" class="form-control" min="0" step="1"></td>
+                                            <td></td>
                                             <td>
-                                                <select class="form-control">
-                                                    <option>Select Category</option>
-                                                </select>
+                                                
                                             </td>
                                             <td>
-                                                <select class="form-control">
-                                                    <option>Select Brand</option>
-                                                </select>
+                                                
                                             </td>
                                             <td>
-                                                <select class="form-control">
-                                                    <option>Select Model</option>
-                                                </select>
+                                                
                                             </td>
-                                            <td><button class="btn btn-primary" type="button" onclick="addTest(1)">Add</button></td>
+                                            <td style="text-align:center"><button class="btn btn-primary" type="button" onclick="addTest(1)">Add</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -433,17 +427,18 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
         }
         var appendTableRow = function(rowCount, canvasItemID) {
-            var cnt = 0;
             count++;
             var tr = "<tr>" +
-                "<td><input type='number' min='0' step='1' class='form-control'></td>"+
-                "<td><select class='form-control'><option>Select Category</option></select></td>" +
-                "<td><select class='form-control'><option>Select Brand</option></select></td>" +
-                "<td><select class='form-control'><option>Select Model</option></select></td>" +
+                "<td><input type='number' min='0' step='1' class='form-control' name'quantity"+count+"'></td>"+
+                "<td><select class='form-control' name = 'category"+count+"'><option>Select Category</option></select></td>" +
+                "<td><select class='form-control' name = 'brand"+count+"'><option>Select Brand</option></select></td>" +
+                "<td><select class='form-control' name = 'model"+count+"'><option>Select Model</option></select></td>" +
                 "<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
                 "</tr>";
             $('#addtable tbody tr').eq(rowCount).after(tr);
         }
+
+        
         
     </script>
 
