@@ -906,11 +906,14 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `thesis`.`borrow_details` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`borrow_details` (
+  `borrow_detailscol` INT(11) NOT NULL AUTO_INCREMENT,
   `borrowID` INT(11) NOT NULL,
   `assetCategoryID` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL,
+  `borrow_detailsID` VARCHAR(45) NULL,
   INDEX `fk_borrow_details_request_borrow1_idx` (`borrowID` ASC),
   INDEX `fk_borrow_details_ref_assetcategory1_idx` (`assetCategoryID` ASC),
+  PRIMARY KEY (`borrow_detailscol`),
   CONSTRAINT `fk_borrow_details_request_borrow1`
     FOREIGN KEY (`borrowID`)
     REFERENCES `thesis`.`request_borrow` (`borrowID`),
@@ -1382,7 +1385,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `thesis`.`Inventory` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`Inventory` (
-  `InventoryID` INT(11) NOT NULL,
+  `InventoryID` INT(11) NOT NULL AUTO_INCREMENT,
   `assetCategoryID` INT(11) NULL,
   `quantity` INT(11) NULL,
   `floorLevel` INT(11) NULL,
@@ -1411,4 +1414,27 @@ CREATE TABLE IF NOT EXISTS `thesis`.`SchoolYear` (
   `Term2End` DATE NULL,
   `Term3End` DATE NULL,
   PRIMARY KEY (`SchoolYearID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`borrow_details_item`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`borrow_details_item` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`borrow_details_item` (
+  `borrow_detailsID` INT(11) NOT NULL,
+  `assetID` INT(11) NOT NULL,
+  INDEX `fk_borrow_details_item_borrow_details1_idx` (`borrow_detailsID` ASC),
+  INDEX `fk_borrow_details_item_asset1_idx` (`assetID` ASC),
+  CONSTRAINT `fk_borrow_details_item_borrow_details1`
+    FOREIGN KEY (`borrow_detailsID`)
+    REFERENCES `thesis`.`borrow_details` (`borrow_detailscol`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_borrow_details_item_asset1`
+    FOREIGN KEY (`assetID`)
+    REFERENCES `thesis`.`asset` (`assetID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
