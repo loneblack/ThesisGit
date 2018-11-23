@@ -32,36 +32,81 @@ $result2 = mysqli_query($dbc, $query2);
 while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     array_push($assets, $row['assetID']);
 }
+
 ?>
 <?php
 // Insertion to ticket
     
     if(isset($_POST['submit'])){
-
-        
+		
         $status=$_POST['status'];
         $assigneeUserID=$_POST['assigneeUserID'];
         if($_POST['assigneeUserID']=='0')
         $assigneeUserID="NULL";
         $priority=$_POST['priority'];
         $currDate=date("Y-m-d H:i:s");
-
-        if(!isset($message)){
-
-
-            $querya="UPDATE `thesis`.`ticket` 
-                    SET `status` = '{$status}',
-                        `assigneeUserID` = {$assigneeUserID},
-                        `dateClosed` = '{$currDate}',
-                        `priority` = '{$priority}'
-                        WHERE (`ticketID` = '{$id}');";
-            $resulta=mysqli_query($dbc,$querya);
+		
+		
+		//GET SERVICEID
+		$queryServID="SELECT * FROM thesis.servicedetails sd join asset a on sd.asset=a.assetID join ticketedasset ta on a.assetID=ta.assetID where ta.ticketID='{$id}' limit 1";
+		$resultServID=mysqli_query($dbc,$queryServID);
+		$rowServID=mysqli_fetch_array($resultServID,MYSQLI_ASSOC);
+		
+		//For repaired assets
+		if(!empty($_POST['repAsset'])){
+			$repAsset=$_POST['repAsset'];
+			foreach($repAsset as $value){
+				$query5="UPDATE `thesis`.`ticketedasset` SET `checked`=1 WHERE `ticketID`='{$id}' and `assetID`='{$reqPart}'";
+				$result5=mysqli_query($dbc,$query5);
+			}
+		}
+		
+		//Request for parts code
+		if(!empty($_POST['model'])){
+			$model=$_POST['model'];
+			$quantity=$_POST['quantity'];
+			foreach (array_combine($model, $quantity) as $mod => $qty){
+				$queryReqPart="INSERT INTO `thesis`.`requestparts` ( `serviceID`, `assetModelID`, `quantity`) VALUES ('{$rowServID['serviceID']}', '{$mod}' ,'{$qty}')";
+				$resultReqPart=mysqli_query($dbc,$queryReqPart);
+				
+				$querya="UPDATE `thesis`.`ticket` 
+				SET `status` = '6',
+				WHERE (`ticketID` = '{$id}');";
+				$resulta=mysqli_query($dbc,$querya);
+				
+			}
+		}
         
-            $message = "Ticket Updated!";
-            $_SESSION['submitMessage'] = $message;
+		//Check if all assets are repaired
+		
+		//GET SERVICE ID
+		
+		//GET QTY of Assets requested IN REQUESTDETAILS
+		$queryTicketed="SELECT count(ticketID) as `numAssets`, count(IF(checked = 1, ticketID, null)) as `repairedAssets` FROM thesis.ticketedasset where ticketID='{$id}'";
+		$resultTicketed=mysqli_query($dbc,$queryTicketed);
+		$rowTicketed=mysqli_fetch_array($resultTicketed,MYSQLI_ASSOC);
+			
+		if($rowTicketed['numAssets']==$rowTicketed['repairedAssets']){
+			$queryComp="UPDATE `thesis`.`service` SET `steps`='11' WHERE `id`='{$id}'";
+			$resultComp=mysqli_query($dbc,$queryComp);
+		}
+
+        //if(!isset($message)){
+
+
+        $querya="UPDATE `thesis`.`ticket` 
+        SET `status` = '{$status}',
+        `assigneeUserID` = {$assigneeUserID},
+        `dateClosed` = '{$currDate}',
+        `priority` = '{$priority}'
+        WHERE (`ticketID` = '{$id}');";
+        $resulta=mysqli_query($dbc,$querya);
+        
+        $message = "Ticket Updated!";
+        $_SESSION['submitMessage'] = $message;
         }
         
-    }
+    //}
     
 ?>
 
@@ -114,6 +159,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                 <div class="row">
                     <div class="col-sm-12">
+						<form class="cmxform form-horizontal " id="signupForm" method="post" action="">
                         <div class="col-sm-9">
                             <section class="panel">
                                 <header style="padding-bottom:20px" class="panel-heading wht-bg">
@@ -228,9 +274,9 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
 
                                                    echo "<tr>
-                                                   <td align='center'>
-                                                    <input type='checkbox' value=''>
-                                                </td>
+													<td align='center'>
+														<input type='checkbox' name='repAsset[]' class='form-check-input myCheck' value='{$row['assetID']}'>
+													</td>
                                                     <td>{$row['propertyCode']}</td>
                                                     <td>{$row['brand']} {$row['category']} {$row['description']}</td>
                                                     <td>{$row['building']}</td>
@@ -258,7 +304,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         </li>
                                     </ul>
                                     <div class="form">
-                                        <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
+                                        
                                             <div class="form-group ">
                                                 <div class="form-group ">
                                                     <label for="category" class="control-label col-lg-4">Category</label>
@@ -408,6 +454,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             p.parentNode.removeChild(p);
         }
         function addTest(cavasItemID) {
+			count++;
             var row_index = 0;
             var canvasItemID = cavasItemID;
             var isRenderd = false;
@@ -426,18 +473,71 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
 
         }
-        var appendTableRow = function(rowCount, canvasItemID) {
-            count++;
+						
+		function getBrand(clicks){
+			var code = "brand" + clicks;
+			var code1 = "category" + clicks;
+			var category=document.getElementById(code1).value;
+			var cat=parseInt(category);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById(code).innerHTML = this.responseText;
+			}
+			};
+			xmlhttp.open("GET", "brand_ajax.php?category=" + cat, true);
+			xmlhttp.send();
+							
+		}
+		function getModel(clicks){
+			var code1 = "category" + clicks;
+			var code2 = "brand" + clicks;
+			var code3 = "model" + clicks;
+			var category=document.getElementById(code1).value;
+			var brand=document.getElementById(code2).value;
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById(code3).innerHTML = this.responseText;
+			}
+			};
+			xmlhttp.open("GET", "model_ajax.php?category=" + category + "&brand=" + brand, true);
+			xmlhttp.send();
+							
+		}
+		
+        var appendTableRow = function(rowCount, clicks) {
+            //count++;
             var tr = "<tr>" +
-                "<td><input type='number' min='0' step='1' class='form-control' name'quantity"+count+"'></td>"+
-                "<td><select class='form-control' name = 'category"+count+"'><option>Select Category</option></select></td>" +
-                "<td><select class='form-control' name = 'brand"+count+"'><option>Select Brand</option></select></td>" +
-                "<td><select class='form-control' name = 'model"+count+"'><option>Select Model</option></select></td>" +
+                "<td><input type='number' min='0' step='1' class='form-control' name='quantity[]'></td>" +
+                "<td><select class='form-control' id='category"+clicks+"' name='category[]' onchange='getBrand(\"" + clicks + "\")'><option>Select Category</option>" +
+				'<?php 
+					$sql = "SELECT * FROM thesis.ref_assetcategory;";
+
+                    $result = mysqli_query($dbc, $sql);
+
+                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                        {   
+                            echo "<option value ={$row['assetCategoryID']}>";
+                            echo "{$row['name']}</option>";
+                        }
+				
+				
+				
+				?>'
+				+ "</select></td>" +
+                "<td><select class='form-control' id='brand"+clicks+"' name='brand[]' onchange='getModel(\"" + clicks + "\")'><option>Select Brand</option></select></td>" +
+                "<td><select class='form-control' id ='model"+clicks+"' name='model[]'><option>Select Model</option></select></td>" +
                 "<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
                 "</tr>";
             $('#addtable tbody tr').eq(rowCount).after(tr);
+			
         }
-
+		
+		var myInput = document.getElementById("customx");
+			if (myInput && myInput.value) {
+				alert("My input has a value!");
+		}
         
         
     </script>
