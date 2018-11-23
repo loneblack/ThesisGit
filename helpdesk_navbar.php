@@ -26,6 +26,13 @@
                         </li>
                         
                         <li class="sub-menu">
+                            <a href="helpdesk_maintenance.php">
+                                <i class="fa fa-wrench"></i>
+                                <span>Maintenance</span>
+                            </a>
+                        </li>
+                        
+                        <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-dropbox"></i>
                                 <span>Asset</span>
