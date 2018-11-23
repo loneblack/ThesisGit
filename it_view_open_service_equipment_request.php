@@ -60,19 +60,26 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 		//Update status,steps
         $query="UPDATE `thesis`.`request_borrow` SET `statusID` = '2', `steps`='13' WHERE (`borrowID` = '{$id}');";
         $result=mysqli_query($dbc,$query);
-		
-		//GET REQUESTFORBORROWDATA
-		$queryReqBor="SELECT * FROM thesis.request_borrow where borrowID='{$id}'";
-        $resultReqBor=mysqli_query($dbc,$queryReqBor);
-		$rowReqBor=mysqli_fetch_array($resultReqBor, MYSQLI_ASSOC);
+	   
+        //insert to assset testing
+        $queryTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `remarks`, `serviceType`, `borrowID`)
+                            VALUES ('1', '1', 'Borrow', '25', '{$id}');";
+        $resultTest=mysqli_query($dbc,$queryTest);
+
+        $selectQuery = "SELECT * FROM thesis.assettesting ORDER BY testingID DESC LIMIT 1;";
+        $resultQuery = mysqli_query($dbc,$selectQuery);
+        while ($row = mysqli_fetch_array($resultQuery, MYSQLI_ASSOC)){
+            $testingID = $row['testingID'];
+        }
 		
 		foreach($propCode as $asset){
-			//INSERT TO ASSETASSIGN TABLE
-			$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('{$asset}', '{$rowReqBor['BuildingID']}', '{$rowReqBor['FloorAndRoomID']}', '{$rowReqBor['startDate']}', '{$rowReqBor['endDate']}', '{$rowReqBor['personresponsibleID']}', '2')";
-			$resultAssAss=mysqli_query($dbc,$queryAssAss);
+			//INSERT TO asset testing details
+            $queryDetails = "INSERT INTO assettesting_details (`assettesting_testingID`, `asset_assetID`) VALUES ('{$testingID}', '{$asset}');";
+            $resultDetails = mysqli_query($dbc,$queryDetails);
+
 			
 		}
-		if(!empty($_POST['assetCatBor1'])&&!empty($_POST['propCode1'])){
+		/*if(!empty($_POST['assetCatBor1'])&&!empty($_POST['propCode1'])){
 			$assetCatBor1=$_POST['assetCatBor1'];
 			$propCode1=$_POST['propCode1'];
 			foreach($propCode1 as $asset1){
@@ -80,7 +87,7 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('{$asset1}', '{$rowReqBor['BuildingID']}', '{$rowReqBor['FloorAndRoomID']}', '{$rowReqBor['startDate']}', '{$rowReqBor['endDate']}', '{$rowReqBor['personresponsibleID']}', '2')";
 				$resultAssAss=mysqli_query($dbc,$queryAssAss);
 			}
-		}
+		}*/
 		
 		
 		$message = "Form submitted!";
@@ -151,6 +158,16 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     <header class="panel-heading">
                                         Service Equipment Request
                                     </header>
+                                    <?php
+                                        if (isset($_SESSION['submitMessage'])){
+
+                                            echo "<div style='text-align:center' class='alert alert-success'><h5><strong>
+                                                    {$_SESSION['submitMessage']}
+                                                  </strong></h5></div>";
+
+                                            unset($_SESSION['submitMessage']);
+                                        }
+                                    ?>
                                     <div class="panel-body">
                                         <div class="form" method="post">
 											<a href="it_requests.php"><button type="button" class="btn btn-link"><strong>< Back</strong></button></a>

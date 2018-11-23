@@ -121,34 +121,7 @@
                                                             $count++;
 													}
 													
-												?>
-											
-											
-												<?php 
-													
-													//GET ASSET TESTING REQUEST
-													//$queryTest="SELECT * FROM thesis.assettesting";
-													//$resultTest=mysqli_query($dbc,$queryTest);
-													//while($rowStep=mysqli_fetch_array($resultTest,MYSQLI_ASSOC)){
-														//echo "<tr class='gradeA'>
-															//	<td>{$rowStep['testingID']}</td>
-																//<td>Send a ticket to Engineers for testing</td>
-																//<td>Asset Testing</td>";
-																
-														//GET REQUEST DATA
-														//$queryReqID="SELECT ad.requestID,r.dateNeeded FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
-														//																	  join assetdocument ad on a.assetID=ad.assetID
-														//																	  join request r on ad.requestID=r.requestID 
-														//																	  where atd.assettesting_testingID='{$rowStep['testingID']}' limit 1";
-														//$resultReqID=mysqli_query($dbc,$queryReqID);			
-														//$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);	
-																
-														//echo "<td>{$rowReqID['dateNeeded']}</td>";
-														//echo "</tr>";
-														//}
-
-												?>
-												
+												?>	
 												<?php
                                                     //view for service
                                                     $query = "SELECT *, sr.id as 'serviceID' FROM thesis.service sr   
@@ -183,6 +156,7 @@
                                                           $count++;
                                                     }
                                                   ?>
+
                                                   <?php
                                                     //view for borrow
                                                     $query = "SELECT * FROM thesis.request_borrow r 
@@ -202,6 +176,7 @@
                                                             <td>Borrow</td>
                                                             <td>{$row['startDate']}</td>";
 
+
                                                         if($row['description']=="Pending"){ echo "<td><label class='label label-warning'>{$row['description']}</label></td>"; }
                                                         if($row['description']=="Ongoing"){ echo "<td><label class='label label-primary'>{$row['description']}</label></td>"; }
                                                         if($row['description']=="Incomplete"){ echo "<td><label class='label label-danger'>{$row['description']}</label></td>"; }
@@ -212,6 +187,33 @@
                                                           $count++;
                                                     }
                                                   ?>
+                                                <?php 
+                                                    
+                                                    //GET ASSET TESTING REQUEST
+                                                    $queryTest="SELECT * FROM thesis.assettesting a 
+                                                                JOIN request_borrow b
+                                                                ON a.borrowID = b.borrowID
+                                                                JOIN ref_status s
+                                                                ON a.statusID = s.statusID
+                                                                ORDER BY testingID DESC LIMIT 1;";
+                                                    $resultTest=mysqli_query($dbc,$queryTest);
+                                                    while($rowStep=mysqli_fetch_array($resultTest,MYSQLI_ASSOC)){
+                                                        echo "<tr class='gradeA'>
+                                                                <td style='display: none'>{$rowStep['testingID']}</td>
+                                                                <td>{$count}</td>
+                                                                <td>{$rowStep['purpose']}</td>
+                                                                <td>Asset Testing</td>
+                                                                <td>{$rowStep['startDate']}</td>";
+
+                                                        if($rowStep['description']=="Pending"){ echo "<td><label class='label label-warning'>{$rowStep['description']}</label></td>"; }
+                                                        if($rowStep['description']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowStep['description']}</label></td>"; }
+                                                        if($rowStep['description']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowStep['description']}</label></td>"; }
+                                                        if($rowStep['description']=="Complete"){ echo "<td><label class='label label-success'>{$rowStep['description']}</label></td>"; }
+                                                                
+                                                        echo "</tr>";
+                                                        }
+
+                                                ?>
 											
                                             <tfoot>
                                                 <tr>

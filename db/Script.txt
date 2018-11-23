@@ -482,6 +482,91 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `thesis`.`organization`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`organization` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`organization` (
+  `id` INT NOT NULL,
+  `name` LONGTEXT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`request_borrow`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`request_borrow` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`request_borrow` (
+  `borrowID` INT(11) NOT NULL AUTO_INCREMENT,
+  `officeID` INT(11) NULL,
+  `DepartmentID` INT(11) NULL,
+  `organizationID` INT NULL,
+  `BuildingID` INT(11) NULL,
+  `FloorAndRoomID` INT(11) NULL DEFAULT NULL,
+  `startDate` DATETIME NULL DEFAULT NULL,
+  `endDate` DATETIME NULL DEFAULT NULL,
+  `personresponsibleID` INT(11) NULL DEFAULT NULL,
+  `personrepresentativeID` VARCHAR(45) NULL DEFAULT NULL,
+  `personrepresentative` VARCHAR(45) NULL,
+  `persondirectlyID` INT(11) NULL DEFAULT NULL,
+  `dateCreated` DATETIME NULL,
+  `purpose` VARCHAR(45) NULL,
+  `statusID` INT(11) NOT NULL,
+  `steps` INT NULL,
+  PRIMARY KEY (`borrowID`),
+  INDEX `fk_AssetAssignment_FloorAndRoom1_idx` (`FloorAndRoomID` ASC),
+  INDEX `fk_assetassignment_persondirectly1_idx` (`persondirectlyID` ASC),
+  INDEX `fk_assetassignment_ref_status1_idx` (`statusID` ASC),
+  INDEX `fk_assetassignment_employee1_idx` (`personresponsibleID` ASC),
+  INDEX `fk_request_borrow_building1_idx` (`BuildingID` ASC),
+  INDEX `fk_request_borrow_offices1_idx` (`officeID` ASC),
+  INDEX `fk_request_borrow_organization1_idx` (`organizationID` ASC),
+  INDEX `fk_request_borrow_department1_idx` (`DepartmentID` ASC),
+  INDEX `fk_request_borrow_ref_steps1_idx` (`steps` ASC),
+  CONSTRAINT `fk_AssetAssignment_FloorAndRoom10`
+    FOREIGN KEY (`FloorAndRoomID`)
+    REFERENCES `thesis`.`floorandroom` (`FloorAndRoomID`),
+  CONSTRAINT `fk_assetassignment_employee10`
+    FOREIGN KEY (`personresponsibleID`)
+    REFERENCES `thesis`.`employee` (`employeeID`),
+  CONSTRAINT `fk_assetassignment_persondirectly10`
+    FOREIGN KEY (`persondirectlyID`)
+    REFERENCES `thesis`.`persondirectly` (`id`),
+  CONSTRAINT `fk_assetassignment_ref_status10`
+    FOREIGN KEY (`statusID`)
+    REFERENCES `thesis`.`ref_status` (`statusID`),
+  CONSTRAINT `fk_request_borrow_building1`
+    FOREIGN KEY (`BuildingID`)
+    REFERENCES `thesis`.`building` (`BuildingID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_request_borrow_offices1`
+    FOREIGN KEY (`officeID`)
+    REFERENCES `thesis`.`offices` (`officeID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_request_borrow_organization1`
+    FOREIGN KEY (`organizationID`)
+    REFERENCES `thesis`.`organization` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_request_borrow_department1`
+    FOREIGN KEY (`DepartmentID`)
+    REFERENCES `thesis`.`department` (`DepartmentID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_request_borrow_ref_steps1`
+    FOREIGN KEY (`steps`)
+    REFERENCES `thesis`.`ref_steps` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
 -- Table `thesis`.`assettesting`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `thesis`.`assettesting` ;
@@ -499,6 +584,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assettesting` (
   `remarks` LONGTEXT NULL DEFAULT NULL,
   `rpsmsrf` VARCHAR(45) NULL DEFAULT NULL,
   `serviceType` INT(11) NOT NULL,
+  `borrowID` INT(11) NULL,
   PRIMARY KEY (`testingID`),
   INDEX `fk_AssetTesting_User1_idx` (`PersonRequestedID` ASC),
   INDEX `fk_AssetTesting_FloorAndRoom1_idx` (`FloorAndRoomID` ASC),
@@ -506,6 +592,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assettesting` (
   INDEX `fk_assettesting_ref_status1_idx` (`statusID` ASC),
   INDEX `fk_assettesting_offices1_idx` (`officeID` ASC),
   INDEX `fk_assettesting_ref_servicetype1_idx` (`serviceType` ASC),
+  INDEX `fk_assettesting_request_borrow1_idx` (`borrowID` ASC),
   CONSTRAINT `fk_AssetTesting_DepartmentOwnsRoom1`
     FOREIGN KEY (`departmentOwnsRoomID`)
     REFERENCES `thesis`.`departmentownsroom` (`departmentOwnsRoomID`),
@@ -523,7 +610,12 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assettesting` (
     REFERENCES `thesis`.`ref_servicetype` (`id`),
   CONSTRAINT `fk_assettesting_ref_status1`
     FOREIGN KEY (`statusID`)
-    REFERENCES `thesis`.`ref_status` (`statusID`))
+    REFERENCES `thesis`.`ref_status` (`statusID`),
+  CONSTRAINT `fk_assettesting_request_borrow1`
+    FOREIGN KEY (`borrowID`)
+    REFERENCES `thesis`.`request_borrow` (`borrowID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -752,8 +844,8 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `thesis`.`assettesting_details` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`assettesting_details` (
-  `assettesting_testingID` INT(11) NOT NULL,
-  `asset_assetID` INT(11) NOT NULL,
+  `assettesting_testingID` INT(11) NULL,
+  `asset_assetID` INT(11) NULL,
   `comment` VARCHAR(45) NULL,
   `check` TINYINT NULL,
   INDEX `fk_assettesting_details_assettesting_idx` (`assettesting_testingID` ASC),
@@ -766,18 +858,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assettesting_details` (
     REFERENCES `thesis`.`assettesting` (`testingID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `thesis`.`organization`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `thesis`.`organization` ;
-
-CREATE TABLE IF NOT EXISTS `thesis`.`organization` (
-  `id` INT NOT NULL,
-  `name` LONGTEXT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -821,79 +901,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`borrow` (
   CONSTRAINT `fk_borrow_organization1`
     FOREIGN KEY (`organizationID`)
     REFERENCES `thesis`.`organization` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `thesis`.`request_borrow`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `thesis`.`request_borrow` ;
-
-CREATE TABLE IF NOT EXISTS `thesis`.`request_borrow` (
-  `borrowID` INT(11) NOT NULL AUTO_INCREMENT,
-  `officeID` INT(11) NULL,
-  `DepartmentID` INT(11) NULL,
-  `organizationID` INT NULL,
-  `BuildingID` INT(11) NULL,
-  `FloorAndRoomID` INT(11) NULL DEFAULT NULL,
-  `startDate` DATETIME NULL DEFAULT NULL,
-  `endDate` DATETIME NULL DEFAULT NULL,
-  `personresponsibleID` INT(11) NULL DEFAULT NULL,
-  `personrepresentativeID` VARCHAR(45) NULL DEFAULT NULL,
-  `personrepresentative` VARCHAR(45) NULL,
-  `persondirectlyID` INT(11) NULL DEFAULT NULL,
-  `dateCreated` DATETIME NULL,
-  `purpose` VARCHAR(45) NULL,
-  `statusID` INT(11) NOT NULL,
-  `steps` INT NULL,
-  PRIMARY KEY (`borrowID`),
-  INDEX `fk_AssetAssignment_FloorAndRoom1_idx` (`FloorAndRoomID` ASC),
-  INDEX `fk_assetassignment_persondirectly1_idx` (`persondirectlyID` ASC),
-  INDEX `fk_assetassignment_ref_status1_idx` (`statusID` ASC),
-  INDEX `fk_assetassignment_employee1_idx` (`personresponsibleID` ASC),
-  INDEX `fk_request_borrow_building1_idx` (`BuildingID` ASC),
-  INDEX `fk_request_borrow_offices1_idx` (`officeID` ASC),
-  INDEX `fk_request_borrow_organization1_idx` (`organizationID` ASC),
-  INDEX `fk_request_borrow_department1_idx` (`DepartmentID` ASC),
-  INDEX `fk_request_borrow_ref_steps1_idx` (`steps` ASC),
-  CONSTRAINT `fk_AssetAssignment_FloorAndRoom10`
-    FOREIGN KEY (`FloorAndRoomID`)
-    REFERENCES `thesis`.`floorandroom` (`FloorAndRoomID`),
-  CONSTRAINT `fk_assetassignment_employee10`
-    FOREIGN KEY (`personresponsibleID`)
-    REFERENCES `thesis`.`employee` (`employeeID`),
-  CONSTRAINT `fk_assetassignment_persondirectly10`
-    FOREIGN KEY (`persondirectlyID`)
-    REFERENCES `thesis`.`persondirectly` (`id`),
-  CONSTRAINT `fk_assetassignment_ref_status10`
-    FOREIGN KEY (`statusID`)
-    REFERENCES `thesis`.`ref_status` (`statusID`),
-  CONSTRAINT `fk_request_borrow_building1`
-    FOREIGN KEY (`BuildingID`)
-    REFERENCES `thesis`.`building` (`BuildingID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_request_borrow_offices1`
-    FOREIGN KEY (`officeID`)
-    REFERENCES `thesis`.`offices` (`officeID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_request_borrow_organization1`
-    FOREIGN KEY (`organizationID`)
-    REFERENCES `thesis`.`organization` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_request_borrow_department1`
-    FOREIGN KEY (`DepartmentID`)
-    REFERENCES `thesis`.`department` (`DepartmentID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_request_borrow_ref_steps1`
-    FOREIGN KEY (`steps`)
-    REFERENCES `thesis`.`ref_steps` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -1407,6 +1414,7 @@ DROP TABLE IF EXISTS `thesis`.`SchoolYear` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`SchoolYear` (
   `SchoolYearID` INT NOT NULL AUTO_INCREMENT,
+  `SchoolYear` VARCHAR(45) NULL,
   `Term1Start` DATE NULL,
   `Term2Start` DATE NULL,
   `Term3Start` DATE NULL,
@@ -1435,6 +1443,30 @@ CREATE TABLE IF NOT EXISTS `thesis`.`borrow_details_item` (
   CONSTRAINT `fk_borrow_details_item_asset1`
     FOREIGN KEY (`assetID`)
     REFERENCES `thesis`.`asset` (`assetID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`requestParts`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`requestParts` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`requestParts` (
+  `serviceID` INT(11) NULL,
+  `assetModelID` INT(11) NULL,
+  `quantity` INT(11) NULL,
+  INDEX `fk_requestParts_service1_idx` (`serviceID` ASC),
+  INDEX `fk_requestParts_assetmodel1_idx` (`assetModelID` ASC),
+  CONSTRAINT `fk_requestParts_service1`
+    FOREIGN KEY (`serviceID`)
+    REFERENCES `thesis`.`service` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_requestParts_assetmodel1`
+    FOREIGN KEY (`assetModelID`)
+    REFERENCES `thesis`.`assetmodel` (`assetModelID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
