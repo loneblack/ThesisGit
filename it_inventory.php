@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+<?php 
+	session_start();
+	require_once('db/mysql_connect.php');
+	$_SESSION['forReplenish']=array();
+	if(isset($_POST['replenish'])){
+		
+		if(!empty($_POST['forReplenish'])){
+			foreach($_POST['forReplenish'] as $forReplenish){
+				array_push($_SESSION['forReplenish'],$forReplenish);
+			}
+			header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_replenish.php");
+			
+		}
+	}
+
+?>
 <html lang="en">
 
 <head>
@@ -62,7 +78,7 @@
                                                 <div class="col-sm-12">
                                                     <section class="panel">
                                                         <div class="panel-body">
-                                                            <form>
+                                                        <form method="post">
                                                                 <div class="adv-table">
                                                                     <table class="display table table-bordered table-striped" id="dynamic-table">
                                                                         <thead>
@@ -77,7 +93,25 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <tr>
+																			<?php
+																				$queryInv="SELECT i.assetCategoryID,rac.name as `assetCat`,i.floorLevel,i.ceilingLevel, count(IF(a.assetStatus = 1, a.assetID, null)) as `stockOnHand`,count(IF(a.assetStatus = 2, a.assetID, null)) as `borrowed`, count(IF(a.assetStatus = 2 or a.assetStatus = 1, a.assetID, null)) as `totalQty` FROM thesis.inventory i join ref_assetcategory rac on i.assetCategoryID=rac.assetCategoryID
+																							 join assetmodel am on i.assetCategoryID=am.assetCategory
+																							 join asset a on am.assetModelID=a.assetModel
+																							 group by i.assetCategoryID";
+																				$resultInv=mysqli_query($dbc, $queryInv);
+																				while($rowInv=mysqli_fetch_array($resultInv, MYSQLI_ASSOC)){
+																					echo "<tr>
+																						<td style='text-align:center'><input type='checkbox' name='forReplenish[]' value='{$rowInv['assetCategoryID']}' ></td>
+																						<td>{$rowInv['assetCat']}</td>
+																						<td>{$rowInv['floorLevel']}</td>
+																						<td>{$rowInv['ceilingLevel']}</td>
+																						<td>{$rowInv['stockOnHand']}</td>
+																						<td>{$rowInv['borrowed']}</td>
+																						<td>{$rowInv['totalQty']}</td>
+																					</tr>";
+																				}
+																			?>
+                                                                            <!-- <tr>
                                                                                 <td style="text-align:center"><input type="checkbox"></td>
                                                                                 <td>Computer</td>
                                                                                 <td>5</td>
@@ -107,14 +141,15 @@
                                                                                 <td>24</td>
                                                                                 <td>21</td>
                                                                                 <td>44</td>
-                                                                            </tr>
+                                                                            </tr> -->
                                                                         </tbody>
                                                                     </table>
 
                                                                 </div>
-                                                            </form>
+                                                           
                                                         </div>
-                                                        <a href="it_replenish.php"><button class="btn btn-success">Replenish</button></a>
+                                                        <button type="submit" name="replenish" class="btn btn-success">Replenish</button>
+														</form>
                                                     </section>
                                                 </div>
                                             </div>

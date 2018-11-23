@@ -64,6 +64,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     }
     
 ?>
+
 <head>
     <meta charset="utf-8">
 
@@ -126,8 +127,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             unset($_SESSION['submitMessage']);
                                         }
                                     ?>
-                                    <h4 class="gen-case" style="float:right"> 
-                                    <?php
+                                    <h4 class="gen-case" style="float:right">
+                                        <?php
                                         if($status=='1'){
                                             echo "<a class='btn btn-success'>Open</a>";
                                         }
@@ -165,22 +166,28 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 <strong>me</strong>
                                             </div>
                                             <div class="col-md-4">
-                                                <h5>Date Created: <?php echo $dateCreated;?></h5>
+                                                <h5>Date Created:
+                                                    <?php echo $dateCreated;?>
+                                                </h5>
                                             </div>
                                             <div class="col-md-8">
-                                                <h5>Summary: <?php echo $summary;?></h5>
+                                                <h5>Summary:
+                                                    <?php echo $summary;?>
+                                                </h5>
                                             </div>
                                             <div class="cp;-col-md-4"></div>
                                         </div>
                                     </div>
-                                        <div class="view-mail">
-                                            <p>Details: <?php echo $details;?></p>
-                                        </div>
+                                    <div class="view-mail">
+                                        <p>Details:
+                                            <?php echo $details;?>
+                                        </p>
+                                    </div>
                                 </div>
                             </section>
 
                             <section class="panel">
-                                <div class="panel-body ">
+                                <div class="panel-body">
                                     <h5><b>** Check the Checkbox if item is repaired</b></h5>
                                     <table class="table table-hover">
                                         <thead>
@@ -241,7 +248,6 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                         </div>
 
 
-
                         <div class="col-sm-3">
 
                             <section class="panel">
@@ -266,14 +272,14 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                                                 <label for="status" class="control-label col-lg-4">Status</label>
                                                 <div class="col-lg-8">
-                                                    <select class="form-control m-bot15" name ="status">
-                                                        <option value='1' <?php if($status=='1') echo "selected";?> >Open</option>
-                                                        <option value='2' <?php if($status=='2') echo "selected";?> >Assigned</option>
-                                                        <option value='3' <?php if($status=='3') echo "selected";?> >In Progress</option>
-                                                        <option value='4' <?php if($status=='4') echo "selected";?> >Transferred</option>
-                                                        <option value='5' <?php if($status=='5') echo "selected";?> >Escalated</option>
-                                                        <option value='6' <?php if($status=='6') echo "selected";?> >Waiting For Parts</option>
-                                                        <option value='7' <?php if($status=='7') echo "selected";?> >Closed</option>
+                                                    <select class="form-control m-bot15" name="status">
+                                                        <option value='1' <?php if($status=='1' ) echo "selected" ;?> >Open</option>
+                                                        <option value='2' <?php if($status=='2' ) echo "selected" ;?> >Assigned</option>
+                                                        <option value='3' <?php if($status=='3' ) echo "selected" ;?> >In Progress</option>
+                                                        <option value='4' <?php if($status=='4' ) echo "selected" ;?> >Transferred</option>
+                                                        <option value='5' <?php if($status=='5' ) echo "selected" ;?> >Escalated</option>
+                                                        <option value='6' <?php if($status=='6' ) echo "selected" ;?> >Waiting For Parts</option>
+                                                        <option value='7' <?php if($status=='7' ) echo "selected" ;?> >Closed</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -282,10 +288,10 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 <label for="priority" class="control-label col-lg-4">Priority</label>
                                                 <div class="col-lg-8">
                                                     <select class="form-control m-bot15" name="priority">
-                                                        <option value = "Low" <?php if($priority=='Low') echo "selected";?> >Low</option>
-                                                        <option value = "Medium" <?php if($priority=='Medium') echo "selected";?> >Medium</option>
-                                                        <option value = "High" <?php if($priority=='High') echo "selected";?> >High</option>
-                                                        <option value = "Urgent" <?php if($priority=='Urgent') echo "selected";?> >Urgent</option>
+                                                        <option value="Low" <?php if($priority=='Low' ) echo "selected" ;?> >Low</option>
+                                                        <option value="Medium" <?php if($priority=='Medium' ) echo "selected" ;?> >Medium</option>
+                                                        <option value="High" <?php if($priority=='High' ) echo "selected" ;?> >High</option>
+                                                        <option value="Urgent" <?php if($priority=='Urgent' ) echo "selected" ;?> >Urgent</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -293,9 +299,9 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             <div class="form-group ">
                                                 <label for="assign" class="control-label col-lg-4">Escalate To</label>
                                                 <div class="col-lg-8">
-                                                    <select class="form-control m-bot15" name = "assigneeUserID">
+                                                    <select class="form-control m-bot15" name="assigneeUserID">
                                                         <option value='0'>None</option>
-                                                       <?php
+                                                        <?php
                                                             $query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer';";
                                                             $result3=mysqli_query($dbc,$query3);
                                                                     
@@ -318,8 +324,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value=<?php echo $dueDate;?> disabled/>
                                                 </div>
                                             </div>
-                                    </div>
 
+                                    </div>
                                 </div>
                             </section>
                         </div>
@@ -338,10 +344,44 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     </div>
                                 </div>
                             </section>
-                           <button type="submit" name ="submit" class="btn btn-success">Send</button></a>
-                            <a href="helpdesk_all_ticket.php"><button type = "button" class="btn btn-danger">Back</button></a>
                         </div>
-                                        </form>
+
+                        <div class="col-sm-12">
+                            <section class="panel">
+                                <div class="panel-body ">
+
+                                    <table class="table table-bordered table table-hover" id="addtable">
+                                    <thead>
+                                        <tr>
+                                            <th>Quantity</th>
+                                            <th>Category</th>
+                                            <th>Brand</th>
+                                            <th>Model</th>
+                                            <th>Add Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                
+                                            </td>
+                                            <td>
+                                                
+                                            </td>
+                                            <td>
+                                                
+                                            </td>
+                                            <td style="text-align:center"><button class="btn btn-primary" type="button" onclick="addTest(1)">Add</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                            </section>
+                            <button type="submit" name="submit" class="btn btn-success">Send</button></a>
+                            <a href="helpdesk_all_ticket.php"><button type="button" class="btn btn-danger">Back</button></a>
+                        </div>
+                        </form>
 
 
                     </div>
@@ -361,7 +401,46 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
 
     <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript">
+        var count = 0; 
+        function removeRow(o) {
+            var p = o.parentNode.parentNode;
+            p.parentNode.removeChild(p);
+        }
+        function addTest(cavasItemID) {
+            var row_index = 0;
+            var canvasItemID = cavasItemID;
+            var isRenderd = false;
 
+            $("td").click(function() {
+                row_index = $(this).parent().index();
+
+            });
+
+            var delayInMilliseconds = 0; //1 second
+
+            setTimeout(function() {
+
+                appendTableRow(row_index, canvasItemID);
+            }, delayInMilliseconds);
+
+
+        }
+        var appendTableRow = function(rowCount, canvasItemID) {
+            count++;
+            var tr = "<tr>" +
+                "<td><input type='number' min='0' step='1' class='form-control' name'quantity"+count+"'></td>"+
+                "<td><select class='form-control' name = 'category"+count+"'><option>Select Category</option></select></td>" +
+                "<td><select class='form-control' name = 'brand"+count+"'><option>Select Brand</option></select></td>" +
+                "<td><select class='form-control' name = 'model"+count+"'><option>Select Model</option></select></td>" +
+                "<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
+                "</tr>";
+            $('#addtable tbody tr').eq(rowCount).after(tr);
+        }
+
+        
+        
+    </script>
 
     <script src="js/scripts.js"></script>
     <script src="js/advanced-form.js"></script>

@@ -273,7 +273,6 @@ if(isset($_POST['submit'])){
 							getBrand(assetCategory,clicks);
 						}
 						
-						
 						function getBrand(assetCategory,clicks){
 							var code = "exampleFormControlSelect2" + clicks;
 							var xmlhttp = new XMLHttpRequest();
@@ -319,7 +318,7 @@ if(isset($_POST['submit'])){
                         var appendTableRow = function(rowCount,requestID,assetCategory,qty,reqCode,clicks) {
                             var cnt = 0;
                             var tr = "<tr>" +
-                                "<td><input type='number' class='form-control' min='0.00' name='qty[]' value='" + qty + "' readonly></td>" +
+                                "<td><input type='number' class='form-control' min='0.00' name='qty[]' max='" + qty + "' required></td>" +
                                 "<td>" +
 								"<select class='form-control' id='exampleFormControlSelect1" + clicks + "' name='category[]' readonly>" +
                                 "</select>" +

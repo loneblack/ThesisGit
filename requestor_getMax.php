@@ -9,7 +9,7 @@ if($categoryID!='')
 	
 $query="SELECT COUNT(*) AS 'count' FROM thesis.asset JOIN assetmodel ON assetModel = assetModelID WHERE assetCategory = {$categoryID} AND assetStatus =1;";
 $result=mysqli_query($dbc,$query);
-		
+
 	$count = 0;
 
 	while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){

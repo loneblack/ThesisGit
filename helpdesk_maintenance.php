@@ -43,58 +43,72 @@
 
         </header>
         <!--header end-->
-        <?php include 'it_navbar.php' ?>
+        <?php include 'helpdesk_navbar.php' ?>
 
         <!--main content-->
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				<?php
+                    if (isset($_SESSION['submitMessage'])){
 
-                <div class="row">
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
+                <div class="col-sm-12">
                     <div class="col-sm-12">
-                        <div class="col-sm-12">
+                        
+                        <div class="row">
+
+
                             <div class="row">
                                 <div class="col-sm-12">
                                     <section class="panel">
+										<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                         <header class="panel-heading">
-                                            Category List
+                                            Select Buildings to Perform Maintenance
                                             <span class="tools pull-right">
-                                                <a class="fa fa-plus" href="it_add_category.php"></a>
+                                                <a href="javascript:;" class="fa fa-chevron-down"></a>
                                             </span>
                                         </header>
                                         <div class="panel-body">
-                                            <section id="unseen">
-                                                <div class="adv-table">
-                                                    <table class="display table table-bordered table-striped" id="dynamic-table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Category Name</th>
-                                                                <th>Floor Level</th>
-                                                                <th>Ceiling Level</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <?php
-															require_once('db/mysql_connect.php');
-															$query="SELECT ac.assetCategoryID, ac.name, i.floorLevel, i.ceilingLevel FROM ref_assetcategory ac
-	                                                        JOIN inventory i ON ac.assetCategoryID = i.assetCategoryID;";
-															$result=mysqli_query($dbc,$query);
-															
-															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-																echo "<tr class='assetcategoryID' id='{$row['assetCategoryID']}'>
-																		<td>{$row['name']}</td>
-                                                                        <td>{$row['floorLevel']}</td>
-                                                                        <td>{$row['ceilingLevel']}</td>
-																	</tr>";
-															}
-														
-													?>
-                                                    </table>
-                                                </div>
-                                            </section>
+                                            <div class="adv-table">
+                                                <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Building</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="gradeX">
+                                                            <td style="width:7px; text-align:center"><input type="checkbox" class="form-check-input" id="exampleCheck1"></td>
+                                                            <td>Gokongwei</td>
+                                                        </tr> 
+                                                        
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Building</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
                                         </div>
+                                        <div style="padding-left:10px; padding-bottom:10px">
+                                            <button type="submit" name="confirm" onclick="Confirm()" class="btn btn-info">Confirm</button>
+											<button type="button" onclick="window.history.back()" class="btn btn-secondary">Back</button>
+                                        </div>
+										</form>
                                     </section>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -106,8 +120,13 @@
     </section>
 
     <!-- WAG GALAWIN PLS LANG -->
+	
+	<script>
+	function Confirm() {
+		confirm("Are you sure?");
+	}
+	</script>
 
-    <!--Core js-->
     <script src="js/jquery.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
     <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
@@ -127,14 +146,7 @@
 
     <!--dynamic table initialization -->
     <script src="js/dynamic_table_init.js"></script>
-    <script>
-        $('#dynamic-table').on('click', function() {
-            $('.assetcategoryID').on('click', function() {
-                var a = this.getAttribute("id");
-                window.location.href = "it_edit_category.php?assetCategoryID=" + a;
-            })
-        })
-    </script>
+
 </body>
 
 </html>

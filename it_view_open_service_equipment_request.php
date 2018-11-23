@@ -39,6 +39,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
     }
 $category = array();
 $quantity = array();
+$assetCat = array();
 
 $query2 =  "SELECT * FROM thesis.borrow_details d
             JOIN ref_assetcategory c ON d.assetCategoryID = c.assetCategoryID
@@ -48,17 +49,52 @@ $result2 = mysqli_query($dbc, $query2);
 while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     array_push($category, $row2['name']);
     array_push($quantity, $row2['quantity']);
+	array_push($assetCat, $row2['assetCategoryID']);
 }
-
-
     if(isset($_POST['approveBtn'])){
+
+		$propCode=$_POST['propCode'];
+		$a=sizeOf($propCode);
+		
+		
+		//Update status,steps
         $query="UPDATE `thesis`.`request_borrow` SET `statusID` = '2', `steps`='13' WHERE (`borrowID` = '{$id}');";
         $result=mysqli_query($dbc,$query);
+		
+		//GET REQUESTFORBORROWDATA
+		$queryReqBor="SELECT * FROM thesis.request_borrow where borrowID='{$id}'";
+        $resultReqBor=mysqli_query($dbc,$queryReqBor);
+		$rowReqBor=mysqli_fetch_array($resultReqBor, MYSQLI_ASSOC);
+		
+		foreach($propCode as $asset){
+			//INSERT TO ASSETASSIGN TABLE
+			$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('{$asset}', '{$rowReqBor['BuildingID']}', '{$rowReqBor['FloorAndRoomID']}', '{$rowReqBor['startDate']}', '{$rowReqBor['endDate']}', '{$rowReqBor['personresponsibleID']}', '2')";
+			$resultAssAss=mysqli_query($dbc,$queryAssAss);
+			
+		}
+		if(!empty($_POST['assetCatBor1'])&&!empty($_POST['propCode1'])){
+			$assetCatBor1=$_POST['assetCatBor1'];
+			$propCode1=$_POST['propCode1'];
+			foreach($propCode1 as $asset1){
+				//INSERT TO ASSETASSIGN TABLE
+				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('{$asset1}', '{$rowReqBor['BuildingID']}', '{$rowReqBor['FloorAndRoomID']}', '{$rowReqBor['startDate']}', '{$rowReqBor['endDate']}', '{$rowReqBor['personresponsibleID']}', '2')";
+				$resultAssAss=mysqli_query($dbc,$queryAssAss);
+			}
+		}
+		
+		
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message; 
+		
+		
+		
         header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_view_open_service_equipment_request.php?id=".$_SESSION['id']);
     }
     elseif(isset($_POST['denyBtn'])){
         $query="UPDATE `thesis`.`request_borrow` SET `statusID` = '2', `steps`='20' WHERE (`borrowID` = '{$id}');";
         $result=mysqli_query($dbc,$query);
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message; 
         header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_view_open_service_equipment_request.php?id=".$_SESSION['id']);
     }
 
@@ -176,36 +212,8 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     </div>
                                                 </div>
                                                 <hr>
-                                                <div class="container-fluid">
-                                                    <h4>Equipment to be borrowed</h4>
 
-                                                    <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Equipment</th>
-                                                                <th>Quantity</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <?php
-                                                            for ($i=0; $i < count($category); $i++){ 
-                                                            echo
-                                                            "<tr>
-                                                                <td>
-                                                                    <select class='form-control' disabled>
-                                                                        <option>{$category[$i]}</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td><input type='number' value ='{$quantity[$i]}' class='form-control' disabled></td>
-                                                            </tr>";
-                                                            }
-                                                        ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <hr>
-                                                <div class="container-fluid">
-                                                    <h4>Endorsement (if applicable)</h4>
+                                                <h4>Endorsement (if applicable)</h4>
                                                     <div class="form-group ">
                                                         <label for="representative" class="control-label col-lg-3">Representative</label>
                                                         <div class="col-lg-6">
@@ -218,6 +226,108 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                             <input class="form-control" id="idNum" name="idNum" type="text" disabled value=<?php echo "'".$personrepresentativeID."'";?>/>
                                                         </div>
                                                     </div>
+                                                <hr>
+
+                                                <div class="container-fluid">
+                                                    <h4>Equipment to Lend</h4>
+
+                                                    <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Equipment</th>
+                                                                <th>Quantity</th>
+                                                                <th>Brand</th>
+																<th>Model</th>
+																<th>Property Code</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <?php
+                                                            $count=0;
+                                                            for ($i=0; $i < count($category); $i++){ 
+                                                            echo
+                                                            "<tr>
+																<input type='hidden' name='assetCatBor[]' value='{$assetCat[$i]}'>
+                                                                <td>
+                                                                    <select class='form-control' disabled>
+                                                                        <option>{$category[$i]}</option>
+                                                                    </select>
+                                                                </td>
+                                                                <td><input type='number' value ='{$quantity[$i]}' class='form-control' disabled></td>
+                                                                
+                                                                <td>
+																	<select class='form-control donreq' id='brand".$count."' required onchange='getModel({$count},{$assetCat[$i]})'>
+																	<option value=''>Select Brand</option>";
+																	
+																	//GET BRAND
+																	$queryBrand = "SELECT * FROM thesis.ref_brand";
+																	$resultBrand = mysqli_query($dbc, $queryBrand);
+																	while($rowBrand=mysqli_fetch_array($resultBrand, MYSQLI_ASSOC)){
+																		echo "<option value='{$rowBrand['brandID']}'>{$rowBrand['name']}</option>";
+																	}
+																	
+																	echo "</select>
+																		</td>
+																		<td>
+																		<select class='form-control donreq' id='model".$count."' required onchange='getPropCode({$count})'>
+																			<option value=''>Select Model</option>";
+																	
+																	echo "</select>
+																		</td>
+																		<td>
+																		<select class='form-control donreq' id='propCode".$count."' name='propCode[]' required>
+																			<option value=''>Select Property Code</option>";
+																			
+																	echo "</select>
+																		</td>
+																	</tr>";
+																	$count++;
+
+																	for ($j=1; $j < $quantity[$i] ; $j++) { 
+																		
+																	echo "
+																		<input type='hidden' name='assetCatBor1[]' value='{$assetCat[$i]}'>
+																		<td></td>
+																		<td></td>
+																		<td>
+																		<select class='form-control donreq' id='brand".$count."' required onchange='getModel({$count},{$assetCat[$i]})'>
+																		<option value=''>Select Brand</option>";
+																		
+																		//GET BRAND
+																		$queryBrand = "SELECT * FROM thesis.ref_brand";
+																		$resultBrand = mysqli_query($dbc, $queryBrand);
+																		while($rowBrand=mysqli_fetch_array($resultBrand, MYSQLI_ASSOC)){
+																			echo "<option value='{$rowBrand['brandID']}'>{$rowBrand['name']}</option>";
+																		}
+																		
+																		echo "</select>
+																			</td>
+																			<td>
+																			<select class='form-control donreq' id='model".$count."' required onchange='getPropCode({$count})'>
+																				<option value=''>Select Model</option>";
+																		
+																		echo "</select>
+																			</td>
+																			<td>
+																			<select class='form-control donreq' id='propCode".$count."' name='propCode1[]' required>
+																				<option value=''>Select Property Code</option>";
+																				
+																		echo "</select>
+																			</td>
+																		</tr>";
+																		$count++;
+																	}
+                                                            }
+                                                        ?>
+                                                        </tbody>
+                                                    </table>
+
+
+
+                                                </div>
+                                                <hr>
+                                                <div class="container-fluid">
+                                                    
 													<hr>
                                                     <div class="form-group">
 														<button id="approveBtn" name="approveBtn" class="btn btn-success" <?php if($description != 'Pending') echo "disabled"; ?> type="submit">Approve</button>
@@ -280,7 +390,39 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
 
         }
-
+		
+		function getModel(count,assetCat){
+			
+			var code1 = "brand" + count;
+			var code3 = "model" + count;
+			var brand=document.getElementById(code1).value;
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById(code3).innerHTML = this.responseText;
+			}
+			};
+			xmlhttp.open("GET", "model_ajax.php?category=" + assetCat + "&brand=" + brand, true);
+			xmlhttp.send();
+							
+		}
+		
+		function getPropCode(count){
+			
+			var code3 = "model" + count;
+			var code4 = "propCode" + count;
+			var model=document.getElementById(code3).value;
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById(code4).innerHTML = this.responseText;
+				}
+			};
+			xmlhttp.open("GET", "propcode_ajax2.php?model=" + model, true);
+			xmlhttp.send();
+							
+		}
+		
         var appendTableRow = function(rowCount, canvasItemID) {
             var cnt = 0;
             var tr = "<tr>" +
