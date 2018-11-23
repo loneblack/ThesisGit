@@ -79,15 +79,15 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
 			
 		}
-		/*if(!empty($_POST['assetCatBor1'])&&!empty($_POST['propCode1'])){
+		if(!empty($_POST['assetCatBor1'])&&!empty($_POST['propCode1'])){
 			$assetCatBor1=$_POST['assetCatBor1'];
 			$propCode1=$_POST['propCode1'];
 			foreach($propCode1 as $asset1){
-				//INSERT TO ASSETASSIGN TABLE
-				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('{$asset1}', '{$rowReqBor['BuildingID']}', '{$rowReqBor['FloorAndRoomID']}', '{$rowReqBor['startDate']}', '{$rowReqBor['endDate']}', '{$rowReqBor['personresponsibleID']}', '2')";
+				//INSERT TO asset testing details
+				$queryAssAss="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$testingID}', '{$asset1}')";
 				$resultAssAss=mysqli_query($dbc,$queryAssAss);
 			}
-		}*/
+		}
 		
 		
 		$message = "Form submitted!";

@@ -156,40 +156,9 @@
                                                           $count++;
                                                     }
                                                   ?>
-
-                                                  <?php
-                                                    //view for borrow
-                                                    $query = "SELECT * FROM thesis.request_borrow r 
-                                                              JOIN ref_status s ON r.statusID = s.statusID
-                                                              JOIN ref_steps t ON r.steps = t.id
-                                                              WHERE steps = 13;";
-                                                                  
-                                                    $result = mysqli_query($dbc, $query);
-                                                    
-                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                    {
-                                                      
-                                                      echo "<tr class='gradeA'>
-                                                            <td style='display: none'>{$row['borrowID']}</td>
-                                                            <td>{$count}</td>
-                                                            <td>{$row['purpose']}</td>
-                                                            <td>Borrow</td>
-                                                            <td>{$row['startDate']}</td>";
-
-
-                                                        if($row['description']=="Pending"){ echo "<td><label class='label label-warning'>{$row['description']}</label></td>"; }
-                                                        if($row['description']=="Ongoing"){ echo "<td><label class='label label-primary'>{$row['description']}</label></td>"; }
-                                                        if($row['description']=="Incomplete"){ echo "<td><label class='label label-danger'>{$row['description']}</label></td>"; }
-                                                        if($row['description']=="Complete"){ echo "<td><label class='label label-success'>{$row['description']}</label></td>"; }
-
-                                                        echo "</tr>";
-
-                                                          $count++;
-                                                    }
-                                                  ?>
                                                 <?php 
                                                     
-                                                    //GET ASSET TESTING REQUEST
+                                                    //GET ASSET TESTING REQUEST borrow
                                                     $queryTest="SELECT * FROM thesis.assettesting a 
                                                                 JOIN request_borrow b
                                                                 ON a.borrowID = b.borrowID

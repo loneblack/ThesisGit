@@ -4,32 +4,26 @@
 	require_once('db/mysql_connect.php');
 	$testingID=$_GET['testingID'];
 	//GET Due Date
-	$queryReqID="SELECT ad.requestID,r.dateNeeded FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
-																				           join assetdocument ad on a.assetID=ad.assetID
-																						   join request r on ad.requestID=r.requestID 
-																						   where atd.assettesting_testingID='{$testingID}' limit 1";
+	$queryReqID="SELECT * FROM thesis.assettesting a 
+				JOIN request_borrow b
+				ON a.borrowID = b.borrowID;";
 	$resultReqID=mysqli_query($dbc,$queryReqID);			
-	$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
-	
+	$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);	
 	
 	if(isset($_POST['submit'])){
 		
 		$message=null;
-		$category=$_POST['category'];
+		$category=25;
 		$status=$_POST['status'];
 		$priority=$_POST['priority'];
 		$assigned=$_POST['assigned'];
 		$currDate=date("Y-m-d H:i:s");
-		
-		if($rowReqID['dateNeeded']<$_POST['dueDate']||$currDate>$_POST['dueDate']){
-			$message="Invalid date input.";
-		}
-		else{
-			$dueDate=$_POST['dueDate'];
-		}
+		$dueDate=$rowReqID['startDate'];
+
 		
 		if(!isset($message)){
-			$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}')";
+			$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) 
+											VALUES ('{$status}', {$assigned}, '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}')";
 			$resulta=mysqli_query($dbc,$querya);
 		
 			$queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
@@ -42,11 +36,11 @@
 				$queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$rowaaa['asset_assetID']}');";
 				$resultaaaa=mysqli_query($dbc,$queryaaaa);
 			}
-		
+
+			$queryUpdate= "UPDATE `thesis`.`assettesting` SET `statusID` = '2' WHERE (`testingID` = '1');";
+			$resultUpdate=mysqli_query($dbc,$queryUpdate);
+
 			$message = "Form submitted!";
-			$_SESSION['submitMessage'] = $message;
-		}
-		else{
 			$_SESSION['submitMessage'] = $message;
 		}
 		
@@ -126,7 +120,11 @@
                                     Asset Testing Request
                                 </header>
 								<div style="padding-left:30px; padding-top:10px">
-									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Create Ticket</button>
+									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" 
+									<?php 
+									if (isset($_POST['status']) && !$flag){ if($_POST['status'] !=1) echo "disabled"; } 
+
+									?> >Create Ticket</button>
 								</div>
                                 <!-- Modal -->
                                 <div class="modal fade" id="myModal" role="dialog">
@@ -143,7 +141,7 @@
                                                             <div class="form-group ">
                                                                 <label for="category" class="control-label col-lg-3">Category</label>
                                                                 <div class="col-lg-6">
-                                                                    <select class="form-control m-bot15" name="category" value="<?php if (isset($_POST['category']) && !$flag) echo $_POST['category']; ?>" required readonly>
+                                                                    <select class="form-control m-bot15" name="category" value="<?php if (isset($_POST['category']) && !$flag) echo $_POST['category']; ?>" required disabled>
 																		<?php
 																			
 																			$querya="SELECT * FROM thesis.ref_servicetype";
@@ -164,18 +162,15 @@
 
                                                             <label for="status" class="control-label col-lg-3">Status</label>
                                                             <div class="col-lg-6">
-                                                                <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status']) && !$flag) echo $_POST['status']; ?>" required readonly>
+                                                                <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status']) && !$flag) echo $_POST['status']; ?>" required >
 																	<?php
 																			
 																		$queryb="SELECT * FROM thesis.ref_ticketstatus";
 																		$resultb=mysqli_query($dbc,$queryb);
 																		while($rowb=mysqli_fetch_array($resultb,MYSQLI_ASSOC)){
-																			if($rowb['id']=='1'){
-																				echo "<option value='{$rowb['ticketID']}' selected>{$rowb['status']}</option>";
-																			}
-																			else{
+																		
 																				echo "<option value='{$rowb['ticketID']}'>{$rowb['status']}</option>";
-																			}
+																			
 																		}
 																		
 																	?>
@@ -199,6 +194,7 @@
                                                             <label for="assign" class="control-label col-lg-3">Assigned</label>
                                                             <div class="col-lg-6">
                                                                 <select class="form-control m-bot15" name="assigned" value="<?php if (isset($_POST['assigned']) && !$flag) echo $_POST['assigned']; ?>" required>
+                                                                	<option value='NULL'>None</option>
 																	<?php
 																		$query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer'";
 																		$result3=mysqli_query($dbc,$query3);
@@ -210,14 +206,6 @@
 																	?>
 
                                                                 </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label class="control-label col-lg-3">Due Date</label>
-                                                            <div class="col-lg-6">
-                                                                <!-- class="form-control form-control-inline input-medium default-date-picker" -->
-                                                                <input class="form-control m-bot15" size="10" name="dueDate" type="datetime-local" value="<?php if (isset($_POST['dueDate']) && !$flag) echo $_POST['dueDate']; ?>" required />
                                                             </div>
                                                         </div>
 																
@@ -237,18 +225,10 @@
                                 <div class="panel-body">
 									
 									<div class="panel-body">
-										<section>
-										<label><h5>Name:</h5></label><input type="text" class="form-control" disabled>
-										<br>
-										<label><h5>Office Building: </h5></label><input type="text" class="form-control" disabled>
-										<br>
-										<label><h5>Room Number: </h5></label><input type="text" class="form-control" disabled>
-										
+										<section>	
 										</section>
 									</div>
 
-									
-									
 									<section id="unseen">
 									<h3>Checklist</h3>
 										<table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
@@ -257,21 +237,28 @@
 													
 													<!-- <th>Property Code</th> -->
 													<th>Item</th>
-													<th>Specification</th>
+													<th>Category</th>
+													<th>Brand</th>
+													<th>PropertyCode</th>
 													<th>Comments</th>
 												</tr>
 											</thead>
 											<tbody>
 												<?php
 													
-													$query="SELECT am.description as 'item',am.itemSpecification FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
-																join assetmodel am on a.assetModel=am.assetModelID
-																where atd.assettesting_testingID='{$testingID}'";
+													$query="SELECT b.name as 'brand',propertyCode,am.description as 'item',am.itemSpecification 
+															FROM thesis.assettesting_details atd 
+															join asset a on atd.asset_assetID=a.assetID
+															join assetmodel am on a.assetModel=am.assetModelID
+                                                            join ref_brand b on am.brand = b.brandID
+															where atd.assettesting_testingID='{$testingID}';";
 													$result=mysqli_query($dbc,$query);
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 														echo "<tr>
+																<td style='text-align:center'>{$row['brand']}</td>
 																<td style='text-align:center'>{$row['item']}</td>
 																<td style='text-align:center'>{$row['itemSpecification']}</td>
+																<td style='text-align:center'>{$row['propertyCode']}</td>
 																<td><input style='text' class='form-control' disabled></td>
 															</tr>";
 													}
