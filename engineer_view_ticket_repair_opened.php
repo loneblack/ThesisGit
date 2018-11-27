@@ -199,7 +199,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         }
                                     ?>
                                     </h4>
-                                    <h4>Repair Ticket</h3>
+                                    <h4>Repair Ticket</h4>
                                 </header>
                                 <div class="panel-body ">
 
@@ -383,7 +383,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                 <div class="panel-body ">
 
                                     <div>
-                                        <h4>Comments or Request For Parts (if needed)</h4>
+                                        <h4>Comments</h4>
                                     </div>
                                     <div class="view-mail">
                                         <textarea class="form-control" style="resize:none" rows="5" name="comment"></textarea>
@@ -395,6 +395,9 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                         <div class="col-sm-12">
                             <section class="panel">
                                 <div class="panel-body ">
+                                    <div>
+                                        <h4><h4>Request For Parts (if needed)</h4></h4>
+                                    </div>
 
                                     <table class="table table-bordered table table-hover" id="addtable">
                                     <thead>
@@ -408,15 +411,23 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td></td>
                                             <td>
-                                                
+                                                <input type='number' min='0' step='1' class='form-control' name='quantity[]'>
                                             </td>
                                             <td>
-                                                
+                                                <select class="form-control">
+                                                    <option>Select Category</option>
+                                                </select>
                                             </td>
                                             <td>
-                                                
+                                                <select class="form-control">
+                                                    <option>Select Brand</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control">
+                                                    <option>Select Model</option>
+                                                </select>
                                             </td>
                                             <td style="text-align:center"><button class="btn btn-primary" type="button" onclick="addTest(1)">Add</button></td>
                                         </tr>
@@ -426,9 +437,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                             </section>
                             <button type="submit" name="submit" class="btn btn-success">Send</button></a>
                             <a href="helpdesk_all_ticket.php"><button type="button" class="btn btn-danger">Back</button></a>
-                        </div>
                         </form>
-
+                    </div>
 
                     </div>
                     <!-- page end-->
