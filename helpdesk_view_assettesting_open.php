@@ -22,29 +22,33 @@
 
 		
 		if(!isset($message)){
-			$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) 
+			//insert to ticket
+			$queryTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) 
 											VALUES ('{$status}', {$assigned}, '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}')";
-			$resulta=mysqli_query($dbc,$querya);
-
-			echo $querya;
+			$resultTicket=mysqli_query($dbc,$queryTicket);
 		
-			$queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
-			$resultaa=mysqli_query($dbc,$queryaa);
-			$rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
-		
-			$queryaaa="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$testingID}'";
-			$resultaaa=mysqli_query($dbc,$queryaaa);
-			while($rowaaa=mysqli_fetch_array($resultaaa,MYSQLI_ASSOC)){
-				$queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$rowaaa['asset_assetID']}');";
-				$resultaaaa=mysqli_query($dbc,$queryaaaa);
+			$queryTicketID="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
+			$resultTicketID=mysqli_query($dbc,$queryTicketID);
 
-				echo $queryaaa;
+			while($row=mysqli_fetch_array($resultTicketID,MYSQLI_ASSOC)){
+				$ticketID
 			}
 
+			//insert to ticketed asset
+			$queryTicketed="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$rowaaa['asset_assetID']}');";
+			$resultTicketed=mysqli_query($dbc,$queryTicketed);
+
+
+			//insert to asset testing
+			//insert to asset testing details
+
+
+			//update asset status
+			//asset audit
+
+			//testingid status change
 			$queryUpdate= "UPDATE `thesis`.`assettesting` SET `statusID` = '2' WHERE (`testingID` = '1');";
 			$resultUpdate=mysqli_query($dbc,$queryUpdate);
-
-			echo $queryUpdate;
 
 			$message = "Form submitted!";
 			$_SESSION['submitMessage'] = $message;
