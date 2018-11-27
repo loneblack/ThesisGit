@@ -25,6 +25,8 @@
 			$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) 
 											VALUES ('{$status}', {$assigned}, '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}')";
 			$resulta=mysqli_query($dbc,$querya);
+
+			echo $querya;
 		
 			$queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
 			$resultaa=mysqli_query($dbc,$queryaa);
@@ -35,10 +37,14 @@
 			while($rowaaa=mysqli_fetch_array($resultaaa,MYSQLI_ASSOC)){
 				$queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$rowaaa['asset_assetID']}');";
 				$resultaaaa=mysqli_query($dbc,$queryaaaa);
+
+				echo $queryaaa;
 			}
 
 			$queryUpdate= "UPDATE `thesis`.`assettesting` SET `statusID` = '2' WHERE (`testingID` = '1');";
 			$resultUpdate=mysqli_query($dbc,$queryUpdate);
+
+			echo $queryUpdate;
 
 			$message = "Form submitted!";
 			$_SESSION['submitMessage'] = $message;
@@ -122,7 +128,7 @@
 								<div style="padding-left:30px; padding-top:10px">
 									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" 
 									<?php 
-									if (isset($_POST['status']) && !$flag){ if($_POST['status'] !=1) echo "disabled"; } 
+									if (isset($_POST['status'])){ if($_POST['status'] !=1) echo "disabled"; } 
 
 									?> >Create Ticket</button>
 								</div>
@@ -141,7 +147,7 @@
                                                             <div class="form-group ">
                                                                 <label for="category" class="control-label col-lg-3">Category</label>
                                                                 <div class="col-lg-6">
-                                                                    <select class="form-control m-bot15" name="category" value="<?php if (isset($_POST['category']) && !$flag) echo $_POST['category']; ?>" required disabled>
+                                                                    <select class="form-control m-bot15" name="category" value="<?php if (isset($_POST['category'])) echo $_POST['category']; ?>" required disabled>
 																		<?php
 																			
 																			$querya="SELECT * FROM thesis.ref_servicetype";
@@ -162,7 +168,7 @@
 
                                                             <label for="status" class="control-label col-lg-3">Status</label>
                                                             <div class="col-lg-6">
-                                                                <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status']) && !$flag) echo $_POST['status']; ?>" required >
+                                                                <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status'])) echo $_POST['status']; ?>" required >
 																	<?php
 																			
 																		$queryb="SELECT * FROM thesis.ref_ticketstatus";
@@ -181,7 +187,7 @@
                                                         <div class="form-group ">
                                                             <label for="priority" class="control-label col-lg-3">Priority</label>
                                                             <div class="col-lg-6">
-                                                                <select class="form-control m-bot15" name="priority" value="<?php if (isset($_POST['priority']) && !$flag) echo $_POST['priority']; ?>" required>
+                                                                <select class="form-control m-bot15" name="priority" value="<?php if (isset($_POST['priority'])) echo $_POST['priority']; ?>" required>
                                                                     <option value='Low'>Low</option>
                                                                     <option value='Medium'>Medium</option>
                                                                     <option value='High' selected>High</option>
@@ -193,7 +199,7 @@
                                                         <div class="form-group ">
                                                             <label for="assign" class="control-label col-lg-3">Assigned</label>
                                                             <div class="col-lg-6">
-                                                                <select class="form-control m-bot15" name="assigned" value="<?php if (isset($_POST['assigned']) && !$flag) echo $_POST['assigned']; ?>" required>
+                                                                <select class="form-control m-bot15" name="assigned" value="<?php if (isset($_POST['assigned'])) echo $_POST['assigned']; ?>" required>
                                                                 	<option value='NULL'>None</option>
 																	<?php
 																		$query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer'";
@@ -264,31 +270,9 @@
 													}
 													
 												?>
-												<!-- <tr>
-													<td style="text-align:center">TBLT-001</td>
-													<td style="text-align:center">Apple Tablet</td>
-													<td style="text-align:center">iPad</td>
-													<th><input style="text" class="form-control" disabled></th>
-													
-												</tr>
-												<tr >
-													<td style="text-align:center; width:50px;">PC-0023</td>
-													<td style="text-align:center">Windows</td>
-													<td style="text-align:center">Windows 10</td>
-													<th><input style="text" class="form-control" disabled></th>
-												</tr>
-												<tr>	
-													<td style="text-align:center">PHN-0312</td>
-													<td style="text-align:center">Smartphone</td>
-													<td style="text-align:center">Samsung Galaxy J7 Pro</td>
-													<th><input style="text" class="form-control" disabled></th>
-												</tr> -->
+
 											</tbody>
 										</table>
-										
-										
-										
-
 										<div>
 											<a href="helpdesk_all_request.php"><button type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
 										</div>
