@@ -19,6 +19,21 @@
 			$resultStep=mysqli_query($dbc,$queryStep);
 			
 		}
+		elseif($requestType=="Repair"){
+			$queryRep="INSERT INTO `thesis`.`evaluation` (`date`, `responseTime`, `accuracy`, `efficiency`, `courtesy`, `comments`, `serviceID`) VALUES (now(),'{$responseTime}','{$accuracy}','{$efficiency}','{$courtesy}','{$comments}','{$id}')";
+			$resultRep=mysqli_query($dbc,$queryRep);
+			
+			$queryServDet="SELECT * FROM thesis.servicedetails sd join asset a on sd.asset=a.assetID where serviceID='{$id}'";
+			$resultServDet=mysqli_query($dbc,$queryServDet);
+			
+			while($rowServDet=mysqli_fetch_array($resultServDet,MYSQLI_ASSOC)){
+				$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='2' WHERE `assetID`='{$rowServDet['asset']}'";
+				$resultStat=mysqli_query($dbc,$queryStat);
+			}
+			
+			$queryStep="UPDATE `thesis`.`service` SET `status`='3' WHERE `id`='{$id}'";
+			$resultStep=mysqli_query($dbc,$queryStep);
+		}
 		elseif($requestType=="borrow"){
 			//$query="";
 			//$result=mysqli_query($dbc,$query);
