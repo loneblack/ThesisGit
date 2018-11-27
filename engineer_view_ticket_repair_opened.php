@@ -56,7 +56,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 		if(!empty($_POST['repAsset'])){
 			$repAsset=$_POST['repAsset'];
 			foreach($repAsset as $value){
-				$query5="UPDATE `thesis`.`ticketedasset` SET `checked`=1 WHERE `ticketID`='{$id}' and `assetID`='{$reqPart}'";
+				$query5="UPDATE `thesis`.`ticketedasset` SET `checked`=1 WHERE `ticketID`='{$id}' and `assetID`='{$value}'";
 				$result5=mysqli_query($dbc,$query5);
 			}
 		}
