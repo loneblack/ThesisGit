@@ -513,6 +513,9 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 			if(isEscEmpty==false){
 				document.getElementById("escalateUser").required = true;
 			}
+			else{
+				document.getElementById("escalateUser").required = false;
+			}
 			
 		});
 		
