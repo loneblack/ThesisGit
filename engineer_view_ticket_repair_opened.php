@@ -40,9 +40,9 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     if(isset($_POST['submit'])){
 		
         $status=$_POST['status'];
-        $assigneeUserID=$_POST['assigneeUserID'];
-        if($_POST['assigneeUserID']=='0')
-        $assigneeUserID="NULL";
+	
+        //if($_POST['escalateUserID']=='0')
+        //$assigneeUserID="NULL";
         $priority=$_POST['priority'];
         $currDate=date("Y-m-d H:i:s");
 		
@@ -58,6 +58,34 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 			foreach($repAsset as $value){
 				$query5="UPDATE `thesis`.`ticketedasset` SET `checked`=1 WHERE `ticketID`='{$id}' and `assetID`='{$value}'";
 				$result5=mysqli_query($dbc,$query5);
+			}
+		}
+		
+		//For escalation
+		if(isset($_POST['escalateUserID'])&&!empty($_POST['forEscAsset'])){
+			$forEscAsset=$_POST['forEscAsset'];
+			//GET TICKET DATA
+			$queryTickDat="SELECT * FROM thesis.ticket where ticketID='{$id}'";
+			$resultTickDat=mysqli_query($dbc,$queryTickDat);
+			$rowTickDat=mysqli_fetch_array($resultTickDat,MYSQLI_ASSOC);
+			
+			//CREATE TICKET FOR ESCALATION
+			$queryEsc="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dateClosed`, `dueDate`, `priority`, `summary`, `details`, `description`, `serviceType`) VALUES ('5', '{$_POST['escalateUserID']}', '{$_SESSION['userID']}', now(), now(), '{$rowTickDat['dateClosed']}', '{$rowTickDat['dueDate']}', '{$priority}', '{$rowTickDat['summary']}', '{$rowTickDat['details']}', '{$rowTickDat['description']}', '27')";
+			$resultEsc=mysqli_query($dbc,$queryEsc);
+			
+			//GET LATEST TICKET
+			$queryLatTic="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
+			$resultLatTic=mysqli_query($dbc,$queryLatTic);
+			$rowLatTic=mysqli_fetch_array($resultLatTic,MYSQLI_ASSOC);
+						
+			//INSERT TO TICKETEDASSET
+			foreach($forEscAsset as $escAsset){
+				$queryTicAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTic['ticketID']}', '{$escAsset}');";
+				$resultTicAss=mysqli_query($dbc,$queryTicAss);
+								
+				//DELETE ASSET TO TICKETEDASSET
+				$queryDelTic="DELETE FROM `thesis`.`ticketedasset` WHERE `ticketID`='{$id}' and `assetID`='{$escAsset}'";
+				$resultDelTic=mysqli_query($dbc,$queryDelTic);
 			}
 		}
 		
@@ -94,12 +122,18 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         //if(!isset($message)){
 
 
-        $querya="UPDATE `thesis`.`ticket` 
+        //$querya="UPDATE `thesis`.`ticket` 
+        //SET `status` = '{$status}',
+        //`assigneeUserID` = {$assigneeUserID},
+        //`dateClosed` = '{$currDate}',
+        //`priority` = '{$priority}'
+        //WHERE (`ticketID` = '{$id}');";
+		
+		$querya="UPDATE `thesis`.`ticket` 
         SET `status` = '{$status}',
-        `assigneeUserID` = {$assigneeUserID},
         `dateClosed` = '{$currDate}',
         `priority` = '{$priority}'
-        WHERE (`ticketID` = '{$id}');";
+		WHERE (`ticketID` = '{$id}');";
         $resulta=mysqli_query($dbc,$querya);
         
         $message = "Ticket Updated!";
@@ -238,7 +272,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th></th>
+                                                <th>Repaired</th>
+												<th>For Escalation</th>
                                                 <th>Property Code</th>
                                                 <th>Asset/ Software Name</th>
                                                 <th>Building</th>
@@ -275,7 +310,10 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                                                    echo "<tr>
 													<td align='center'>
-														<input type='checkbox' name='repAsset[]' class='form-check-input myCheck' value='{$row['assetID']}'>
+														<input type='checkbox' name='repAsset[]' class='form-check-input' id='myCheckRep_".$row['assetID']."' onchange='repairCheck(this);' value='{$row['assetID']}'>
+													</td>
+													<td align='center'>
+														<input type='checkbox' name='forEscAsset[]' class='form-check-input forEsc' id='myCheckEsc_".$row['assetID']."' onchange='forEscCheck(this);' value='{$row['assetID']}'>
 													</td>
                                                     <td>{$row['propertyCode']}</td>
                                                     <td>{$row['brand']} {$row['category']} {$row['description']}</td>
@@ -345,20 +383,20 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             <div class="form-group ">
                                                 <label for="assign" class="control-label col-lg-4">Escalate To</label>
                                                 <div class="col-lg-8">
-                                                    <select class="form-control m-bot15" name="assigneeUserID">
-                                                        <option value='0'>None</option>
+                                                    <select class="form-control m-bot15" name="escalateUserID" id='escalateUser'>
+                                                        <option value='' selected>None</option>
                                                         <?php
                                                             $query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer';";
                                                             $result3=mysqli_query($dbc,$query3);
                                                                     
                                                             while($row3=mysqli_fetch_array($result3,MYSQLI_ASSOC)){
-                                                                if($assigneeUserID == $row3['UserID']){
-                                                                    echo "<option selected value='{$row3['UserID']}'>{$row3['fullname']}</option>";
-                                                                }
-                                                                else
-                                                                    echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
-                                                            }                                       
-                                                            
+                                                                //if($assigneeUserID == $row3['UserID']){
+                                                                    //echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
+                                                                //}
+																if($assigneeUserID != $row3['UserID']){
+                                                                   echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
+                                                                }    
+                                                            }   
                                                         ?>
                                                     </select>
                                                 </div>
@@ -435,7 +473,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                 </table>
                                 </div>
                             </section>
-                            <button type="submit" name="submit" class="btn btn-success">Send</button></a>
+                            <button type="submit" name="submit" id="submit" class="btn btn-success">Send</button></a>
                             <a href="helpdesk_all_ticket.php"><button type="button" class="btn btn-danger">Back</button></a>
                         </form>
                     </div>
@@ -463,6 +501,41 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             var p = o.parentNode.parentNode;
             p.parentNode.removeChild(p);
         }
+		
+		$('#submit').click(function () {
+			var isEscEmpty = true;
+			for(var i=0;i<document.getElementsByClassName("forEsc").length;i++){
+				if(document.getElementsByClassName("forEsc")[i].checked == true){
+					isEscEmpty = false;
+				}
+			}
+			
+			if(isEscEmpty==false){
+				document.getElementById("escalateUser").required = true;
+			}
+			
+		});
+		
+		function repairCheck(checkbox) {
+			if(checkbox.checked == true){
+				var code = checkbox.id;
+				var res = code.split("_");
+				
+				var code1="myCheckEsc_" + res[1];
+				document.getElementById(code1).checked = false;
+			}
+        }
+		
+		function forEscCheck(checkbox) {
+			if(checkbox.checked == true){
+				var code = checkbox.id;
+				var res = code.split("_");
+				
+				var code1="myCheckRep_" + res[1];
+				document.getElementById(code1).checked = false;
+			}
+        }
+		
         function addTest(cavasItemID) {
 			count++;
             var row_index = 0;
