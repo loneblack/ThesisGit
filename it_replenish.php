@@ -3,10 +3,15 @@
 	session_start();
 	require_once('db/mysql_connect.php');
 	$forReplenish=$_SESSION['forReplenish'];
+	$employeeID = 1;
 	
 	if(isset($_POST['submit'])){
 		//CREATE REQUEST
-		$queryReq="INSERT INTO `thesis`.`request` (`date`, `UserID`, `status`, `step`) VALUES (now(), '{$_SESSION['userID']}', '2', '3')";
+		$dateNeeded='2020-12-05 15:09:24';
+		
+		$queryReq = "INSERT INTO `thesis`.`request` (`description`, `recipient`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`) VALUES ('For Replenish', 'IT Office', '{$employeeID}', now(), '4', '11', '{$dateNeeded}', '{$_SESSION['userID']}', '2', '3');";//status is set to 1 for pending status
+		
+		//$queryReq="INSERT INTO `thesis`.`request` (`date`, `UserID`, `status`, `step`) VALUES (now(), '{$_SESSION['userID']}', '2', '3')";
 		$resultReq=mysqli_query($dbc,$queryReq);
 		
 		//GET LATEST REQUEST
@@ -49,7 +54,8 @@
 		}
 		
 		
-		
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message; 
 	}
 	
 	
@@ -102,7 +108,14 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-
+				<?php
+				if (isset($_SESSION['submitMessage'])){
+					echo "<div class='alert alert-success'>
+							{$_SESSION['submitMessage']}
+							</div>";
+					unset($_SESSION['submitMessage']);
+				}
+				?>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
