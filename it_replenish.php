@@ -7,7 +7,7 @@
 	
 	if(isset($_POST['submit'])){
 		//CREATE REQUEST
-		$dateNeeded='2020-12-05 15:09:24';
+		$dateNeeded='2050-12-05 15:09:24';
 		
 		$queryReq = "INSERT INTO `thesis`.`request` (`description`, `recipient`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`) VALUES ('For Replenish', 'IT Office', '{$employeeID}', now(), '4', '11', '{$dateNeeded}', '{$_SESSION['userID']}', '2', '3');";//status is set to 1 for pending status
 		
