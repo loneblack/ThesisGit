@@ -7,7 +7,30 @@
 	
 	if(isset($_POST['submit'])){
 		//CREATE REQUEST
-		$dateNeeded='2050-12-05 15:09:24';
+		
+		//GET DATE FROM SCHOOLYEAR TABLE
+		$CurDate = date("Y-m-d"); //Current date.
+		
+		$check = false;
+		//$dateNeeded='2050-12-05 15:09:24';
+		$dateNeeded=null;
+		
+		$querySY="SELECT * FROM thesis.schoolyear order by SchoolYearID asc";
+		$resultSY=mysqli_query($dbc,$querySY);
+		while($rowSY=mysqli_fetch_array($resultSY, MYSQLI_ASSOC)){
+			if($CurDate<$rowSY['Term1End']&&$check==false){
+				$dateNeeded=$rowSY['Term1End'];
+				$check = true;
+			}
+			elseif($CurDate<$rowSY['Term2End']&&$check==false){
+				$dateNeeded=$rowSY['Term2End'];
+				$check = true;
+			}
+			elseif($CurDate<$rowSY['Term3End']&&$check==false){
+				$dateNeeded=$rowSY['Term3End'];
+				$check = true;
+			}
+		}
 		
 		$queryReq = "INSERT INTO `thesis`.`request` (`description`, `recipient`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`) VALUES ('For Replenish', 'IT Office', '{$employeeID}', now(), '4', '11', '{$dateNeeded}', '{$_SESSION['userID']}', '2', '3');";//status is set to 1 for pending status
 		

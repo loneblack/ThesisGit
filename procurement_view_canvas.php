@@ -146,6 +146,9 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
 															elseif($row['step']=='Re-Canvas'){
 																echo "<td><span class='label label-danger label-mini'>Re-Canvas</span></td>";
 															}
+															elseif($row['step']=='Conforme Pending'){
+																echo "<td><span class='label label-success label-mini'>Completed</span></td>";
+															}
 																
 															
 															

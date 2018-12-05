@@ -13,6 +13,10 @@
 	if(isset($_POST['send'])){
 		
 		if($rowTesDat['remarks']=="Asset Request"){
+			//UPDATE ASSET TESTING STATUS
+			$queryTestStat="UPDATE `thesis`.`assettesting` SET `statusID`='3' WHERE `testingID`='{$testingID}'";
+			$resultTestStat=mysqli_query($dbc,$queryTestStat);
+			
 			$query1="SELECT rb.name as `brand`,am.description as `assetModelName`,atd.asset_assetID as `assetID`,atd.comment,a.assetModel,am.assetCategory FROM thesis.assettesting_details atd 
 																												join asset a on atd.asset_assetID=a.assetID 
 																												join assetmodel am on a.assetModel=am.assetModelID
@@ -123,7 +127,7 @@
 			
 		}
 		elseif($rowTesDat['remarks']=="Donation"){
-				//UPDATE ASSET TESTING STATUS
+			//UPDATE ASSET TESTING STATUS
 			$query8="UPDATE `thesis`.`assettesting` SET `statusID`='3' WHERE `testingID`='{$testingID}'";
 			$result8=mysqli_query($dbc,$query8);
 			
