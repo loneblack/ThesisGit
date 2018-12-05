@@ -9,6 +9,26 @@
 	}
 	$_SESSION['dateDisposal']=date("Y-m-d", strtotime($NextDate));
 ?>
+
+<?php
+require_once("db/mysql_connect.php");
+
+$query1="SELECT COUNT(*) as 'count' FROM asset WHERE assetStatus = 5;";
+$result1=mysqli_query($dbc,$query1);
+while ($row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC)){ $brokenFixable = $row1['count']; }
+
+$query2="SELECT COUNT(*) as 'count' FROM asset WHERE assetStatus = 1;";
+$result2=mysqli_query($dbc,$query2);
+while ($row1 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){ $onHand = $row1['count']; }
+
+$query3="SELECT COUNT(*) as 'count' FROM asset WHERE assetStatus = 2;";
+$result3=mysqli_query($dbc,$query3);
+while ($row1 = mysqli_fetch_array($result3, MYSQLI_ASSOC)){ $deployed = $row1['count']; }
+
+$query4="SELECT COUNT(*) as 'count' FROM asset WHERE assetStatus != 4 AND assetStatus != 6 AND assetStatus != 7 AND assetStatus != 8 AND assetStatus != 15;";
+$result4=mysqli_query($dbc,$query4);
+while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1['count']; }
+?>
 <html lang="en">
 
 <head>
@@ -72,7 +92,7 @@
                                     <div class="mini-stat clearfix">
                                         <span class="mini-stat-icon green"><i class="fa fa-barcode"></i></span>
                                         <div class="mini-stat-info">
-                                            <span>67</span>
+                                            <span><?php echo $totalAssets;?></span>
                                             Total Assets
                                         </div>
                                     </div>
@@ -84,7 +104,7 @@
                                     <div class="mini-stat clearfix">
                                         <span class="mini-stat-icon orange"><i class="fa fa-save"></i></span>
                                         <div class="mini-stat-info">
-                                            <span>5</span>
+                                            <span><?php echo $deployed;?></span>
                                             Deployed
                                         </div>
                                     </div>
@@ -96,7 +116,7 @@
                                     <div class="mini-stat clearfix">
                                         <span class="mini-stat-icon pink"><i class="fa fa-keyboard-o"></i></span>
                                         <div class="mini-stat-info">
-                                            <span>57</span>
+                                            <span><?php echo $onHand;?></span>
                                             On Hand
                                         </div>
                                     </div>
@@ -108,7 +128,7 @@
                                     <div class="mini-stat clearfix">
                                         <span class="mini-stat-icon green"><i class="fa fa-files-o"></i></span>
                                         <div class="mini-stat-info">
-                                            <span>5</span>
+                                            <span><?php echo $brokenFixable;?></span>
                                             Broken Fixable
                                         </div>
                                     </div>
