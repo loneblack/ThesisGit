@@ -28,6 +28,7 @@ if(isset($_POST['submit'])){
         $status=$_POST['status'];
         $priority=$_POST['priority'];
         $assigned=$_POST['assigned'];
+        echo $assigned;
         if($assigned == 0) $assigned = "NULL";
 
         if($serviceTypeID == '29'){
@@ -151,13 +152,13 @@ if(isset($_POST['submit'])){
                                                                 <select class="form-control m-bot15" name="assigned">
 																	<option value="0">None</option>
 																	<?php
-																		$query = "SELECT (convert(aes_decrypt(firstName, 'Fusion') using utf8)) AS 'firstName' ,(convert(aes_decrypt(lastName, 'Fusion')using utf8)) AS 'lastName' FROM user WHERE userType = 4";
+																		$query = "SELECT userID, (convert(aes_decrypt(firstName, 'Fusion') using utf8)) AS 'firstName' ,(convert(aes_decrypt(lastName, 'Fusion')using utf8)) AS 'lastName' FROM user WHERE userType = 4";
 																		
 																		$result = mysqli_query($dbc, $query);
 
 																		while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 																		{
-																			echo "<option>{$row['firstName']} {$row['lastName']}</option>";
+																			echo "<option value = '{$row['userID']}'>{$row['firstName']} {$row['lastName']}</option>";
 																		}	
 																		
 																	?>
