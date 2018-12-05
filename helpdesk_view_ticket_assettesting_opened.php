@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+require_once('db/mysql_connect.php');
 
+?>
 <head>
     <meta charset="utf-8">
 
@@ -77,7 +81,7 @@
                                                 <thead>
                                                     <tr>
 														<th></th>
-                                                        <!-- <th>Property Code</th> -->
+                                                        <th>Property Code</th>
                                                         <th>Brand</th>
                                                         <th>Model</th>
                                                         <th>Comments</th>
@@ -115,7 +119,7 @@
 
                                             <div>
 												<button type="submit" name="save" id="save" class="btn btn-success" data-dismiss="modal">Send</button> 
-                                                <a href="engineer_all_ticket.php"><button type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
+                                                <a ><button onclick="window.history.back()" type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
                                             </div>
 
                                         </section>

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php
+session_start();
+require_once("db/mysql_connect.php");
+?>
 <head>
     <meta charset="utf-8">
 
@@ -78,8 +81,7 @@
 											
 												<?php
                                                     $count = 1;
-												
-													require_once('db/mysql_connect.php');
+
 													$query="SELECT t.ticketID,t.summary, rst.id,rst.serviceType,t.lastUpdateDate,t.dueDate,rts.status FROM thesis.ticket t 
                                                                                         join thesis.ref_ticketstatus rts on t.status=rts.ticketID
                                                                                         join thesis.ref_servicetype rst on t.serviceType=rst.id";
@@ -88,7 +90,7 @@
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 														echo "<tr class='gradeA' id='{$row['ticketID']}'>
                                                             <td style='display: none'>{$row['ticketID']}</td>
-															<td>{$row['ticketID']}</td>
+															<td>{$count}</td>
 															<td>{$row['summary']}</td>
                                                             <td style='display: none'>{$row['id']}</td>
 															<td>{$row['serviceType']}</td>

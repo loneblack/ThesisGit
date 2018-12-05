@@ -77,6 +77,10 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             $queryDetails = "INSERT INTO assettesting_details (`assettesting_testingID`, `asset_assetID`) VALUES ('{$testingID}', '{$asset}');";
             $resultDetails = mysqli_query($dbc,$queryDetails);
 
+            //update asset status
+            $QAssetStatus = "UPDATE `thesis`.`asset` SET `assetStatus` = '8' WHERE (`assetID` = '{$asset1}');";
+            $RAssetStatus = mysqli_query($dbc,$QAssetStatus);
+
 			
 		}
 		if(!empty($_POST['assetCatBor1'])&&!empty($_POST['propCode1'])){
@@ -86,8 +90,13 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 				//INSERT TO asset testing details
 				$queryAssAss="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$testingID}', '{$asset1}')";
 				$resultAssAss=mysqli_query($dbc,$queryAssAss);
+
+                //update asset status
+                $QAssetStatus = "UPDATE `thesis`.`asset` SET `assetStatus` = '8' WHERE (`assetID` = '{$asset1}');";
+                $RAssetStatus = mysqli_query($dbc,$QAssetStatus);
 			}
 		}
+
 		
 		
 		$message = "Form submitted!";

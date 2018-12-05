@@ -2,22 +2,48 @@
 <html lang="en">
 
 <?php
-
+session_start();
 require_once("db/mysql_connect.php");
 
+$userID = $_SESSION['userID'];
 $id = $_GET['id'];
 
-$query = "SELECT * FROM thesis.service s JOIN ref_servicetype t ON s.serviceType = t.id WHERE s.id = {$id}";
+$query = "SELECT *, t.id as 'serviceTypeID' FROM thesis.service s JOIN ref_servicetype t ON s.serviceType = t.id WHERE s.id = {$id}";
 
 $result = mysqli_query($dbc, $query);
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 {
+    $serviceTypeID = $row['serviceTypeID'];
     $serviceType = $row['serviceType'];
     $details = $row['details'];
 	$dateNeed = $row['dateNeed'];
 	$endDate = $row['endDate'];
-}	
+    $summary = $row['summary'];
+    $others = $row['others'];
+}
+
+if(isset($_POST['submit'])){
+        
+        $status=$_POST['status'];
+        $priority=$_POST['priority'];
+        $assigned=$_POST['assigned'];
+        if($assigned == 0) $assigned = "NULL";
+
+        if($serviceTypeID == '29'){
+             $queryTicket =  "INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `summary`, `details`, `serviceType`, `others`) VALUES ('{$status}', {$assigned}, '{$userID}', now(), now(), '{$dateNeed}', '{$priority}', '{$summary}', '{$details}', '{$serviceTypeID}', '{$others}');";
+            $resultTicket = mysqli_query($dbc, $queryTicket);
+            echo $queryTicket;
+        }
+        else{
+
+            $queryTicket =  "INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `summary`, `details`, `serviceType`) VALUES ('{$status}', {$assigned}, '{$userID}', now(), now(), '{$dateNeed}', '{$priority}', '{$summary}', '{$details}', '{$serviceTypeID}');";
+            $resultTicket = mysqli_query($dbc, $queryTicket);
+
+             echo $queryTicket;
+        }
+        //Update status and steps
+    }
 ?>
 
 <head>
@@ -100,7 +126,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 
 																		while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 																		{
-																			echo "<option>{$row['status']}</option>";
+																			echo "<option value = '{$row['ticketID']}'>{$row['status']}</option>";
 																		}	
 																	?>
                                                                 </select>
@@ -177,7 +203,22 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 													<input type="text" class="form-control" name="others" id="others" placeholder="Specify request" style='display:none' disabled/>
 												</div>
 											</div>
-											
+
+                                            <?php if ($serviceTypeID == '29'){?>
+                                            <div class="form-group ">
+                                                <label for="others" class="control-label col-lg-3">Service Description</label>
+                                                <div class="col-lg-6">
+                                                    <input class="form-control" id="others" name="others" value="<?php echo $others; ?>" type="text" disabled />
+                                                </div>
+                                            </div>
+                                            <?php } ?>
+
+											<div class="form-group ">
+                                                <label for="summary" class="control-label col-lg-3">Summary</label>
+                                                <div class="col-lg-6">
+                                                    <input class="form-control" id="summary" name="summary" value="<?php echo $summary; ?>" type="text" disabled />
+                                                </div>
+                                            </div>
 											<div class="form-group ">
 												<label for="details" class="control-label col-lg-3">Details</label>
 												<div class="col-lg-6">

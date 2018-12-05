@@ -2,60 +2,71 @@
 <?php
 	session_start();
 	require_once('db/mysql_connect.php');
+	$userID = $_SESSION['userID'];
 	$testingID=$_GET['testingID'];
 	//GET Due Date
-	$queryReqID="SELECT * FROM thesis.assettesting a 
+	$queryReqID="SELECT *, a.statusID as 'status' FROM thesis.assettesting a 
 				JOIN request_borrow b
-				ON a.borrowID = b.borrowID;";
+				ON a.borrowID = b.borrowID
+                WHERE a.testingID ={$testingID}";
 	$resultReqID=mysqli_query($dbc,$queryReqID);			
 	$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);	
 	
+	$status=$rowReqID['status'];
+
 	if(isset($_POST['submit'])){
 		
 		$message=null;
 		$category=25;
-		$status=$_POST['status'];
 		$priority=$_POST['priority'];
 		$assigned=$_POST['assigned'];
 		$currDate=date("Y-m-d H:i:s");
 		$dueDate=$rowReqID['startDate'];
+		$summary=$rowReqID['purpose'];
+		$borrowID = $rowReqID['borrowID'];
 
 		
 		if(!isset($message)){
 			//insert to ticket
-			$queryTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) 
-											VALUES ('{$status}', {$assigned}, '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}')";
+			$queryTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `summary`, `details`) 
+											VALUES ('{$status}', {$assigned}, '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}', '{$summary}', 'Please test the following assets:')";
 			$resultTicket=mysqli_query($dbc,$queryTicket);
+			echo $queryTicket;
 		
+			//get ticket ID of recentyl inserted ticket
 			$queryTicketID="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
 			$resultTicketID=mysqli_query($dbc,$queryTicketID);
-
 			while($row=mysqli_fetch_array($resultTicketID,MYSQLI_ASSOC)){
-				$ticketID
+				$ticketID = $row['ticketID'];
 			}
 
-			//insert to ticketed asset
-			$queryTicketed="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$rowaaa['asset_assetID']}');";
-			$resultTicketed=mysqli_query($dbc,$queryTicketed);
+			//get assets to be ticketed
+			$queryastDetails="SELECT * FROM thesis.assettesting_details WHERE assettesting_testingID = {$testingID};";
+			$resultastDetails=mysqli_query($dbc,$queryastDetails);
+			while($row=mysqli_fetch_array($resultastDetails,MYSQLI_ASSOC)){
+				//insert to ticketed asset
+				$queryTicketed="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$ticketID}', '{$row['asset_assetID']}');";
+				$resultTicketed=mysqli_query($dbc,$queryTicketed);
 
+				//update asset status
+				$QAssetStatus = "UPDATE `thesis`.`asset` SET `assetStatus` = '12' WHERE (`assetID` = '{$row['asset_assetID']}');";
+				$RAssetStatus = mysqli_query($dbc,$QAssetStatus);
 
-			//insert to asset testing
-			//insert to asset testing details
+				//asset audit
+				$AuditQuery = "INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$userID}', 'now()', '{$row['asset_assetID']}', '12');";
+				$AuditResult = mysqli_query($dbc,$AuditQuery);
+			}
 
-
-			//update asset status
-			//asset audit
-
-			//testingid status change
-			$queryUpdate= "UPDATE `thesis`.`assettesting` SET `statusID` = '2' WHERE (`testingID` = '1');";
-			$resultUpdate=mysqli_query($dbc,$queryUpdate);
+			//Change asset testing status to Ongoing
+			$updateQuery = "UPDATE `thesis`.`assettesting` SET `statusID` = '2' WHERE (`testingID` = '{$testingID}');";
+			$updateResult=mysqli_query($dbc,$updateQuery);
 
 			$message = "Form submitted!";
 			$_SESSION['submitMessage'] = $message;
 		}
 		
 	}
-	
+
 ?>
 <html lang="en">
 
@@ -132,7 +143,7 @@
 								<div style="padding-left:30px; padding-top:10px">
 									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" 
 									<?php 
-									if (isset($_POST['status'])){ if($_POST['status'] !=1) echo "disabled"; } 
+									if ($status != 1) echo "disabled";
 
 									?> >Create Ticket</button>
 								</div>

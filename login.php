@@ -12,7 +12,7 @@
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
-    <link href"css/loginbody.css" rel="stylesheet" />
+    <link href="css/loginbody.css" rel="stylesheet" />
 </head>
 
   <body class="login-body">
@@ -44,8 +44,6 @@
         </div>
       </form>
     </div>
-
-
 
     <!-- Wag nga galawin kulit -->
 
