@@ -140,9 +140,9 @@
 																echo "<tr class='gradeX'>
 																	<td style='width:7px; text-align:center'><input type='checkbox' class='form-check-input' name='forDis[]' id='exampleCheck1' value='{$rowAsset['assetID']}'></td>
 																	<td>{$rowAsset['assetCat']}</td>
-																	<td><label class='label label-danger'>{$rowAsset['assetStat']}</label></td>
 																	<td>{$rowAsset['propertyCode']}</td>
 																	<td>{$rowAsset['assetModel']}</td>
+																	<td><label class='label label-danger'>{$rowAsset['assetStat']}</label></td>
 																	<td>{$rowAsset['brandName']}</td>
 																</tr>";
 															}
