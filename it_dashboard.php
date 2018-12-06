@@ -83,7 +83,8 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                 <div class="col-sm-12">
                     <div class="col-sm-12">
                         <div class="alert alert-info">
-                            <strong>Hello! <?php echo $_SESSION['dateDisposal']; ?> is the next Disposal Day! </strong> Please Click this  <a href="it_view_disposal_list.php" class="alert-link">link</a> to input the assets for collection for disposal.
+                            <strong>Hello!
+                                <?php echo $_SESSION['dateDisposal']; ?> is the next Disposal Day! </strong> Please Click this <a href="it_view_disposal_list.php" class="alert-link">link</a> to input the assets for collection for disposal.
                         </div>
                         <div class="row">
 
@@ -92,7 +93,8 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                     <div class="mini-stat clearfix">
                                         <span class="mini-stat-icon green"><i class="fa fa-barcode"></i></span>
                                         <div class="mini-stat-info">
-                                            <span><?php echo $totalAssets;?></span>
+                                            <span>
+                                                <?php echo $totalAssets;?></span>
                                             Total Assets
                                         </div>
                                     </div>
@@ -104,7 +106,8 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                     <div class="mini-stat clearfix">
                                         <span class="mini-stat-icon orange"><i class="fa fa-save"></i></span>
                                         <div class="mini-stat-info">
-                                            <span><?php echo $deployed;?></span>
+                                            <span>
+                                                <?php echo $deployed;?></span>
                                             Deployed
                                         </div>
                                     </div>
@@ -116,7 +119,8 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                     <div class="mini-stat clearfix">
                                         <span class="mini-stat-icon pink"><i class="fa fa-keyboard-o"></i></span>
                                         <div class="mini-stat-info">
-                                            <span><?php echo $onHand;?></span>
+                                            <span>
+                                                <?php echo $onHand;?></span>
                                             On Hand
                                         </div>
                                     </div>
@@ -128,7 +132,8 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                     <div class="mini-stat clearfix">
                                         <span class="mini-stat-icon green"><i class="fa fa-files-o"></i></span>
                                         <div class="mini-stat-info">
-                                            <span><?php echo $brokenFixable;?></span>
+                                            <span>
+                                                <?php echo $brokenFixable;?></span>
                                             Broken Fixable
                                         </div>
                                     </div>
@@ -140,7 +145,7 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Recent Activities
+                                            Recent Requests
                                             <span class="tools pull-right">
                                                 <a href="javascript:;" class="fa fa-chevron-down"></a>
                                             </span>
@@ -150,66 +155,169 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                                     <thead>
                                                         <tr>
-                                                            <th>Date</th>
-                                                            <th>Action</th>
-                                                            <th>Item</th>
-                                                            <th class="hidden-phone">To</th>
-                                                            <th class="hidden-phone">Remarks</th>
+                                                            <th style="display: none">id</th>
+                                                            <th>#</th>
+                                                            <th>Date Needed</th>
+                                                            <th>Status</th>
+                                                            <th>Request Type</th>
+                                                            <th>Description</th>
+                                                            <th>Requestor</th>
+                                                            <th>Requested Date</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr class="gradeX">
-                                                            <td>October 15, 2018 9:53PM</td>
-                                                            <td>Checked In</td>
-                                                            <td>Win 95+</td>
-                                                            <td>Mr. Allan Peter</td>
-                                                            <td>Registered to PC</td>
-                                                        </tr>
-                                                        <tr class="gradeX">
-                                                            <td>October 15, 2018 9:53PM</td>
-                                                            <td>Checked In</td>
-                                                            <td>Win 95+</td>
-                                                            <td>Mr. Allan Peter</td>
-                                                            <td>Registered to PC</td>
-                                                        </tr>
-                                                        <tr class="gradeX">
-                                                            <td>October 15, 2018 9:53PM</td>
-                                                            <td>Checked In</td>
-                                                            <td>Win 95+</td>
-                                                            <td>Mr. Allan Peter</td>
-                                                            <td>Registered to PC</td>
-                                                        </tr>
-                                                        <tr class="gradeX">
-                                                            <td>October 15, 2018 9:53PM</td>
-                                                            <td>Checked In</td>
-                                                            <td>Win 95+</td>
-                                                            <td>Mr. Allan Peter</td>
-                                                            <td>Registered to PC</td>
-                                                        </tr>
-                                                        <tr class="gradeX">
-                                                            <td>October 15, 2018 9:53PM</td>
-                                                            <td>Checked In</td>
-                                                            <td>Win 95+</td>
-                                                            <td>Mr. Allan Peter</td>
-                                                            <td>Registered to PC</td>
-                                                        </tr>
-                                                        <tr class="gradeX">
-                                                            <td>October 15, 2018 9:53PM</td>
-                                                            <td>Checked In</td>
-                                                            <td>Win 95+</td>
-                                                            <td>Mr. Allan Peter</td>
-                                                            <td>Registered to PC</td>
-                                                        </tr>
+                                                        <?php
+															
+                                                            $count = 1;
+															$key = "Fusion";
+															require_once('db/mysql_connect.php');
+
+                                                            //Request Purchase
+															$query="SELECT *,r.requestID,rstp.name as `step`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`
+                                                                                FROM thesis.request r 
+                                                                                join ref_status rs on r.status=rs.statusID
+                                                                                join ref_steps rstp on r.step=rstp.id
+                                                                                join user u on r.UserID=u.UserID
+                                                                                WHERE status !=6 AND r.step !=1;";
+															$result=mysqli_query($dbc,$query);
+															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+																echo "<tr> 
+                                                                    <td style='display: none'>{$row['requestID']}</td>
+                                                                    <td>{$count}</td>
+																	<td>{$row['dateNeeded']}</td>";
+																	
+																	if($row['statusDesc']=='Pending'){
+																		echo "<td><span class='label label-warning label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Incomplete'){
+																		echo "<td><span class='label label-danger label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Completed'){
+																		echo "<td><span class='label label-success label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	//elseif($row['statusDesc']=='Ongoing'){
+																		//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	//}
+																	else{
+																		echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	
+																echo "
+																	<td>Asset Request</td>
+																	<td>{$row['step']}</td>
+																	<td>{$row['requestor']}</td>
+																	<td>{$row['requestedDate']}</td>
+																</tr>";
+																
+																$count++;
+																
+															}
+															//Donation
+															$queryDon="SELECT * , rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`,rstp.name as `step`,d.dateCreated FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID
+																																		join ref_steps rstp on d.stepsID=rstp.id
+																																		join user u on d.user_UserID=u.UserID";
+															$resultDon=mysqli_query($dbc,$queryDon);
+															
+															while($rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC)){
+																echo "<tr>
+                                                                    <td style='display: none'>{$rowDon['donationID']}</td>
+                                                                    <td>{$count}</td>
+																	<td>{$rowDon['dateNeed']}</td>";
+																	
+																	if($rowDon['statusDesc']=='Pending'){
+																		echo "<td><span class='label label-warning label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	elseif($rowDon['statusDesc']=='Incomplete'){
+																		echo "<td><span class='label label-danger label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	elseif($rowDon['statusDesc']=='Completed'){
+																		echo "<td><span class='label label-success label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	else{
+																		echo "<td><span class='label label-default label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	
+																echo "
+																	<td>Donation</td>
+																	<td>{$rowDon['step']}</td>
+																	<td>{$rowDon['requestor']}</td>
+																	<td>{$rowDon['dateCreated']}</td>
+																</tr>";
+																$count++;
+															}
+															//Donation for outsiders
+															
+															$queryDonOut="SELECT * , rs.description as `statusDesc`,rstp.name as `step`,d.dateCreated,d.contactPerson FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID
+																													join ref_steps rstp on d.stepsID=rstp.id 
+                                                                                                                                        where d.user_UserID is null and d.statusID!=6";
+															$resultDonOut=mysqli_query($dbc,$queryDonOut);
+															
+															while($rowDonOut=mysqli_fetch_array($resultDonOut,MYSQLI_ASSOC)){
+																echo "<tr>
+                                                                    <td style='display: none'>{$rowDonOut['donationID']}</td>
+                                                                    <td>{$count}</td>
+																	<td>{$rowDonOut['dateNeed']}</td>";
+																	
+																	if($rowDon['statusDesc']=='Pending'){
+																		echo "<td><span class='label label-warning label-mini'>{$rowDonOut['statusDesc']}</span></td>";
+																	}
+																	elseif($rowDon['statusDesc']=='Incomplete'){
+																		echo "<td><span class='label label-danger label-mini'>{$rowDonOut['statusDesc']}</span></td>";
+																	}
+																	elseif($rowDon['statusDesc']=='Completed'){
+																		echo "<td><span class='label label-success label-mini'>{$rowDonOut['statusDesc']}</span></td>";
+																	}
+																	else{
+																		echo "<td><span class='label label-default label-mini'>{$rowDonOut['statusDesc']}</span></td>";
+																	}
+																	
+																echo "
+																	<td>Donation</td>
+																	<td>{$rowDonOut['step']}</td>
+																	<td>{$rowDonOut['contactPerson']}</td>
+																	<td>{$rowDonOut['dateCreated']}</td>
+																</tr>";
+																$count++;
+															}																		
+																																		
+															
+															 //Borrow
+                                                            $query="SELECT * FROM thesis.request_borrow r 
+                                                                      JOIN ref_status s ON r.statusID = s.statusID
+                                                                      JOIN ref_steps t ON r.steps = t.id;";
+                                                            $result=mysqli_query($dbc,$query);
+                                                            while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$row['borrowID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$row['startDate']}</td>";
+                                                                    
+                                                                    if($row['description']=='Pending'){
+                                                                        echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Incomplete'){
+                                                                        echo "<td><span class='label label-danger label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Completed'){
+                                                                        echo "<td><span class='label label-success label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    else{
+                                                                        echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    
+                                                                echo "
+                                                                    <td>Borrow</td>
+                                                                    <td>{$row['name']}</td>
+                                                                    <td></td>
+                                                                    <td>{$row['dateCreated']}</td>
+                                                                </tr>";
+                                                                
+                                                                $count++;
+                                                                
+                                                            
+                                                            }
+															?>
                                                     </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <th>Date</th>
-                                                            <th>Action</th>
-                                                            <th>Item</th>
-                                                            <th class="hidden-phone">To</th>
-                                                            <th class="hidden-phone">Remarks</th>
-                                                        </tr>
-                                                    </tfoot>
                                                 </table>
                                             </div>
                                         </div>
@@ -236,7 +344,7 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
-	
+
     <!--dynamic table-->
     <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
