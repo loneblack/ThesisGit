@@ -26,14 +26,16 @@
 				//UPDATE ASSET STATUS
 				$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='{$assetStat}' WHERE `assetID`='{$asset}'";
 				$resultStat=mysqli_query($dbc,$queryStat);
-				
 			}
 			
 			//UPDATE SERVICE STATUS (STILL NEEDS TO BE FIXED)
-			//if($rowTicketed['numAssets']==$rowTicketed['repairedAssets']){
-				//$queryComp="UPDATE `thesis`.`service` SET `steps`='11' WHERE `id`='{$id}'";
-				//$resultComp=mysqli_query($dbc,$queryComp);
-			//}
+			$queryComp="UPDATE `thesis`.`service` SET `status`='3' WHERE `id`='{$id}'";
+			$resultComp=mysqli_query($dbc,$queryComp);
+			
+			//UPDATE TICKET
+			$queryTickUp="UPDATE `thesis`.`ticket` SET `status`='7', `dateClosed`=now() WHERE `ticketID`='{$id}'";
+			$resultTickUp=mysqli_query($dbc,$queryTickUp);
+			
 			$message = "Form submitted";
 			$_SESSION['submitMessage'] = $message;
 		}
@@ -117,12 +119,12 @@
                                                 <strong>me</strong>
                                             </div>
                                             <div class="col-md-4">
-                                                <p class="date"> 10:15AM 02 FEB 2018</p><br><br>
+                                                <p class="date"><?php echo $rowTickDat['dateCreated']; ?></p><br><br>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="view-mail">
-                                        <p>Please do maintenance on buildings Gokongwei</p>
+                                        <p><?php echo $rowTickDat['details']; ?></p>
                                     </div>
                                 </div>
                             </section>

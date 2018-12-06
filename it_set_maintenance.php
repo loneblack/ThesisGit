@@ -157,7 +157,7 @@
                                         </header>
                                         <div class="panel-body">
                                             <div class="adv-table">
-                                                <h3>Maintenance Date is On: </h3>
+                                                <h3>Maintenance Date is On: <?php echo $_SESSION['dateMaintenance']; ?></h3>
                                                 <h5><b>** Check Buildings to Perform Maintenance then click Confirm button</b></h5>
                                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                                     <thead>

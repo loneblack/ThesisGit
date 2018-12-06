@@ -13,7 +13,7 @@
 		if(!empty($_POST['assigneeUserID'])){
 			foreach (array_combine($_POST['assigneeUserID'], $_POST['forMain']) as $assigneeUserID => $forMain){
 				//CREATE TICKET
-				$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`) VALUES ('1', '{$assigneeUserID}', '{$_SESSION['userID']}', now(), now(), '{$rowServData['dateNeed']}', 'Urgent', '28', '{$rowServData['summary']}', 'Pending', '{$rowServData['details']}')";
+				$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`, `service_id`) VALUES ('1', '{$assigneeUserID}', '{$_SESSION['userID']}', now(), now(), '{$rowServData['dateNeed']}', 'Urgent', '28', '{$rowServData['summary']}', 'Pending', '{$rowServData['details']}','{$serviceID}')";
 				$resulta=mysqli_query($dbc,$querya);
 			
 				//GET LATEST TICKET

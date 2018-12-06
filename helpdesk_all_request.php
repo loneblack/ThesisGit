@@ -92,7 +92,7 @@
 															if($rowReqProc['statusDesc']=="Pending"){ echo "<td><label class='label label-warning'>{$rowReqProc['statusDesc']}</label></td>"; }
 															if($rowReqProc['statusDesc']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowReqProc['statusDesc']}</label></td>"; }
 															if($rowReqProc['statusDesc']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowReqProc['statusDesc']}</label></td>"; }
-															if($rowReqProc['statusDesc']=="Complete"){ echo "<td><label class='label label-success'>{$rowReqProc['statusDesc']}</label></td>"; }
+															if($rowReqProc['statusDesc']=="Completed"){ echo "<td><label class='label label-success'>{$rowReqProc['statusDesc']}</label></td>"; }
 															
 															echo"</tr>";
 
@@ -115,7 +115,7 @@
 															if($rowDon['statusDesc']=="Pending"){ echo "<td><label class='label label-warning'>{$rowDon['statusDesc']}</label></td>"; }
 															if($rowDon['statusDesc']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowDon['statusDesc']}</label></td>"; }
 															if($rowDon['statusDesc']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowDon['statusDesc']}</label></td>"; }
-															if($rowDon['statusDesc']=="Complete"){ echo "<td><label class='label label-success'>{$rowDon['statusDesc']}</label></td>"; }
+															if($rowDon['statusDesc']=="Completed"){ echo "<td><label class='label label-success'>{$rowDon['statusDesc']}</label></td>"; }
 															echo "</tr>";
 
                                                             $count++;
@@ -150,7 +150,7 @@
                                                         if($row['description']=="Pending"){ echo "<td><label class='label label-warning'>{$row['description']}</label></td>"; }
                                                         if($row['description']=="Ongoing"){ echo "<td><label class='label label-primary'>{$row['description']}</label></td>"; }
                                                         if($row['description']=="Incomplete"){ echo "<td><label class='label label-danger'>{$row['description']}</label></td>"; }
-                                                        if($row['description']=="Complete"){ echo "<td><label class='label label-success'>{$row['description']}</label></td>"; }
+                                                        if($row['description']=="Completed"){ echo "<td><label class='label label-success'>{$row['description']}</label></td>"; }
 
                                                         echo "</tr>";
 
@@ -178,7 +178,7 @@
                                                         if($rowStep['description']=="Pending"){ echo "<td><label class='label label-warning'>{$rowStep['description']}</label></td>"; }
                                                         if($rowStep['description']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowStep['description']}</label></td>"; }
                                                         if($rowStep['description']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowStep['description']}</label></td>"; }
-                                                        if($rowStep['description']=="Complete"){ echo "<td><label class='label label-success'>{$rowStep['description']}</label></td>"; }
+                                                        if($rowStep['description']=="Completed"){ echo "<td><label class='label label-success'>{$rowStep['description']}</label></td>"; }
                                                                 
                                                         echo "</tr>";
                                                         }

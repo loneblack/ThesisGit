@@ -3,7 +3,7 @@
 <?php
 session_start();
 
-$id = $_GET['id'];//get the id of the selected service request
+$id = $_GET['id'];
 require_once("db/mysql_connect.php");
 
 $query =  "SELECT *, t.status AS 'status', s.status AS 'statusDescription' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID  WHERE t.ticketID = {$id};";
@@ -64,13 +64,14 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 		//For escalation
 		if(isset($_POST['escalateUserID'])&&isset($_POST['forEscAsset'])){
 			$forEscAsset=$_POST['forEscAsset'];
+			$escalateUserID=$_POST['escalateUserID'];
 			//GET TICKET DATA
 			$queryTickDat="SELECT * FROM thesis.ticket where ticketID='{$id}'";
 			$resultTickDat=mysqli_query($dbc,$queryTickDat);
 			$rowTickDat=mysqli_fetch_array($resultTickDat,MYSQLI_ASSOC);
 			
 			//CREATE TICKET FOR ESCALATION
-			$queryEsc="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dateClosed`, `dueDate`, `priority`, `summary`, `details`, `description`, `serviceType`, `service_id`) VALUES ('5', '{$_POST['escalateUserID']}', '{$_SESSION['userID']}', now(), now(), '{$rowTickDat['dateClosed']}', '{$rowTickDat['dueDate']}', '{$priority}', '{$rowTickDat['summary']}', '{$rowTickDat['details']}', '{$rowTickDat['description']}', '27', '{$rowTickDat['service_id']}')";
+			$queryEsc="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `summary`, `details`, `description`, `serviceType`, `service_id`) VALUES ('5', '{$escalateUserID}', '{$_SESSION['userID']}', now(), now(), '{$rowTickDat['dueDate']}', '{$priority}', '{$rowTickDat['summary']}', '{$rowTickDat['details']}', '{$rowTickDat['description']}', '27', '{$rowTickDat['service_id']}')";
 			$resultEsc=mysqli_query($dbc,$queryEsc);
 			
 			//GET LATEST TICKET
@@ -107,17 +108,24 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         
 		//Check if all assets are repaired
 		
-		
-		//GET QTY of Assets 
+		//GET QTY of Assets of a Ticket
 		$queryTicketed="SELECT count(ticketID) as `numAssets`, count(IF(checked = 1, ticketID, null)) as `repairedAssets` FROM thesis.ticketedasset where ticketID='{$id}'";
 		$resultTicketed=mysqli_query($dbc,$queryTicketed);
 		$rowTicketed=mysqli_fetch_array($resultTicketed,MYSQLI_ASSOC);
 		
+		//GET QTY of Assets of a SERVICE
+		$queryService="SELECT count(ta.ticketID) as `numAssets`, count(IF(checked = 1, ta.ticketID, null)) as `repairedAssets` FROM thesis.ticketedasset ta join ticket t on ta.ticketID=t.ticketID where t.service_id='{$rowServID['service_id']}'";
+		$resultService=mysqli_query($dbc,$queryService);
+		$rowService=mysqli_fetch_array($resultService,MYSQLI_ASSOC);
+		
 		//UPDATE SERVICE STATUS (STILL NEEDS TO BE FIXED)
-		if($rowTicketed['numAssets']==$rowTicketed['repairedAssets']){
+		if($rowService['numAssets']==$rowService['repairedAssets']){
 			$queryComp="UPDATE `thesis`.`service` SET `steps`='11' WHERE `id`='{$rowServID['service_id']}'";
 			$resultComp=mysqli_query($dbc,$queryComp);
 		}
+		
+		//UPDATE TICKET
+		
 
         //if(!isset($message)){
 
@@ -128,14 +136,14 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         //`dateClosed` = '{$currDate}',
         //`priority` = '{$priority}'
         //WHERE (`ticketID` = '{$id}');";
+        //$resulta=mysqli_query($dbc,$querya);
 		
-		$querya="UPDATE `thesis`.`ticket` 
-        SET `status` = '{$status}',
-        `dateClosed` = '{$currDate}',
-        `priority` = '{$priority}'
-		WHERE (`ticketID` = '{$id}');";
-        $resulta=mysqli_query($dbc,$querya);
-        
+		//UPDATE TICKET STATUS 
+		if($rowTicketed['numAssets']==$rowTicketed['repairedAssets']){
+			$queryTickUp="UPDATE `thesis`.`ticket` SET `status`='7',`dateClosed` = '{$currDate}' WHERE `ticketID`='{$id}'";
+			$resultTickUp=mysqli_query($dbc,$queryTickUp);
+		}
+		
         $message = "Ticket Updated!";
         $_SESSION['submitMessage'] = $message;
         }
@@ -384,7 +392,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 <label for="assign" class="control-label col-lg-4">Escalate To</label>
                                                 <div class="col-lg-8">
                                                     <select class="form-control m-bot15" name="escalateUserID" id='escalateUser'>
-                                                        <option value='' selected>None</option>
+                                                        <option value=''>None</option>
                                                         <?php
                                                             $query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer';";
                                                             $result3=mysqli_query($dbc,$query3);

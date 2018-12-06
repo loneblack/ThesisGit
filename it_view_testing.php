@@ -13,6 +13,13 @@
 	if(isset($_POST['send'])){
 		
 		if($rowTesDat['remarks']=="Asset Request"){
+			//GET REQID
+			$queryReqID="SELECT ad.requestID FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
+																				  join assetdocument ad on a.assetID=ad.assetID where atd.assettesting_testingID='{$testingID}' limit 1";
+			$resultReqID=mysqli_query($dbc,$queryReqID);
+			$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
+			
+			
 			//UPDATE ASSET TESTING STATUS
 			$queryTestStat="UPDATE `thesis`.`assettesting` SET `statusID`='3' WHERE `testingID`='{$testingID}'";
 			$resultTestStat=mysqli_query($dbc,$queryTestStat);
@@ -42,6 +49,18 @@
 				//INSERT Property Code
 				$queryProp="UPDATE `thesis`.`asset` SET `propertyCode`='{$propertyCode}' WHERE `assetID`='{$row1['assetID']}'";
 				$resultProp=mysqli_query($dbc,$queryProp);
+				
+				//GET REQUESTDATA
+				$queryReqData="SELECT * FROM thesis.request where requestID='{$rowReqID['requestID']}'";
+				$resultReqData=mysqli_query($dbc,$queryReqData);
+				$rowReqData=mysqli_fetch_array($resultReqData,MYSQLI_ASSOC);
+				
+				//INSERT Asset that passed the test to ASSETASSIGNMENT
+				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `personresponsibleID`, `statusID`) VALUES ('{$row1['assetID']}', '{$rowReqData['BuildingID']}', '{$rowReqData['FloorAndRoomID']}', '{$rowReqData['UserID']}', '2')";
+				$resultAssAss=mysqli_query($dbc,$queryAssAss);
+				
+				
+				
 					
 			}	
 			//Defect asset 
@@ -103,11 +122,6 @@
 			
 			//UPDATE REQUEST STATUS
 			
-			//GET REQID
-			$queryReqID="SELECT ad.requestID FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
-																				  join assetdocument ad on a.assetID=ad.assetID where atd.assettesting_testingID='{$testingID}' limit 1";
-			$resultReqID=mysqli_query($dbc,$queryReqID);
-			$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
 			
 			//GET QTY of Assets requested IN REQUESTDETAILS
 			$queryReq="SELECT sum(quantity) as `totalQty` FROM thesis.requestdetails where requestID='{$rowReqID['requestID']}'";
@@ -118,6 +132,8 @@
 			$queryPass="SELECT count(ad.assetID) as `passedAsset` FROM thesis.assetdocument ad join asset a on ad.assetID=a.assetID where ad.requestID='{$rowReqID['requestID']}' and a.assetStatus='1'";
 			$resultPass=mysqli_query($dbc,$queryPass);
 			$rowPass=mysqli_fetch_array($resultPass,MYSQLI_ASSOC);
+			
+			
 			
 			if($rowReq['totalQty']==$rowPass['passedAsset']){
 				$queryComp="UPDATE `thesis`.`request` SET `step`='11' WHERE `requestID`='{$rowReqID['requestID']}'";

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
 	session_start();
+	require_once('db/mysql_connect.php');
 	$StartDate = strtotime('2018-1-3'); //Start date from which we begin count
 	$CurDate = date("Y-m-d"); //Current date.
 	$NextDate = date("Y-m-d", strtotime("+2 week", $StartDate)); //Next date = +2 week from start date
@@ -8,6 +9,33 @@
 	  $NextDate = date("Y-m-d", strtotime("+2 week", strtotime($NextDate)));
 	}
 	$_SESSION['dateDisposal']=date("Y-m-d", strtotime($NextDate));
+	
+	
+	//GET DATE FROM SCHOOLYEAR TABLE
+	$CurDate = date("Y-m-d"); //Current date.
+		
+	$check = false;
+	//$dateNeeded='2050-12-05 15:09:24';
+	$dateNeeded=null;
+		
+	$querySY="SELECT * FROM thesis.schoolyear order by SchoolYearID asc";
+	$resultSY=mysqli_query($dbc,$querySY);
+	while($rowSY=mysqli_fetch_array($resultSY, MYSQLI_ASSOC)){
+		if($CurDate<$rowSY['Term1End']&&$check==false){
+			$dateNeeded=$rowSY['Term1End'];
+			$check = true;
+		}
+		elseif($CurDate<$rowSY['Term2End']&&$check==false){
+			$dateNeeded=$rowSY['Term2End'];
+			$check = true;
+		}
+		elseif($CurDate<$rowSY['Term3End']&&$check==false){
+			$dateNeeded=$rowSY['Term3End'];
+			$check = true;
+		}
+	}
+	$_SESSION['dateMaintenance']=$dateNeeded;
+	
 ?>
 
 <?php
@@ -85,6 +113,10 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                         <div class="alert alert-info">
                             <strong>Hello!
                                 <?php echo $_SESSION['dateDisposal']; ?> is the next Disposal Day! </strong> Please Click this <a href="it_view_disposal_list.php" class="alert-link">link</a> to input the assets for collection for disposal.
+                        </div>
+						<div class="alert alert-info">
+                            <strong>Hello!
+                                <?php echo $_SESSION['dateMaintenance']; ?> is the next Maintenance Day! </strong> Please Click this <a href="it_set_maintenance.php" class="alert-link">link</a> to input the assets for collection for disposal.
                         </div>
                         <div class="row">
 
