@@ -23,13 +23,19 @@
 			
 			foreach ( $mi as $value ) {
 				list($asset, $remarks, $assetStat) = $value;
-				
 				//UPDATE ASSET STATUS
 				$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='{$assetStat}' WHERE `assetID`='{$asset}'";
 				$resultStat=mysqli_query($dbc,$queryStat);
 				
 			}
 			
+			//UPDATE SERVICE STATUS (STILL NEEDS TO BE FIXED)
+			//if($rowTicketed['numAssets']==$rowTicketed['repairedAssets']){
+				//$queryComp="UPDATE `thesis`.`service` SET `steps`='11' WHERE `id`='{$id}'";
+				//$resultComp=mysqli_query($dbc,$queryComp);
+			//}
+			$message = "Form submitted";
+			$_SESSION['submitMessage'] = $message;
 		}
 	}
 
@@ -82,7 +88,15 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				<?php 
+                    if(isset($_POST['submit'])){
+                        echo   "<div style='text-align:center' class='alert alert-success'>
+									<strong><h3>{$message}</h3></strong>
+                                </div>";
 
+                        unset($_SESSION['submitMessage']);
+					}
+                ?>
                 <div class="row">
                     <div class="col-sm-12">
 						<form class="cmxform form-horizontal " id="signupForm" method="post" action="">
@@ -145,7 +159,7 @@
                                                     <select class="form-control m-bot15" disabled>
                                                         <option>Low</option>
                                                         <option>Medium</option>
-                                                        <option selected="selected"><?php  ?></option>
+                                                        <option selected="selected"><?php echo $rowTickDat['priority']; ?></option>
                                                         <option>Urgent</option>
                                                     </select>
                                                 </div>
@@ -155,7 +169,7 @@
                                                 <label for="assign" class="control-label col-lg-3">Assigned</label>
                                                 <div class="col-lg-6">
                                                     <select class="form-control m-bot15" disabled>
-                                                        <option selected="selected">Eng. Marvin Lao</option>
+                                                        <option selected="selected"><?php echo $rowTickDat['fullname']; ?></option>
                                                         <option>Eng. Marvin Lao</option>
                                                         <option>Eng. Marvin Lao</option>
                                                         <option>Eng. Marvin Lao</option>
@@ -178,7 +192,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-3">Due Date</label>
                                                 <div class="col-lg-6">
-                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018" disabled />
+                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="<?php echo $rowTickDat['dueDate']; ?>" disabled />
                                                 </div>
                                             </div>
 

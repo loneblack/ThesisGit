@@ -56,14 +56,14 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
         if(!isset($message)){
 
-            if($assigned=='0'){
-                $querya="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`) VALUES ('{$status}', '{$_SESSION['userID']}', now(), now(), '{$dateNeed}', '{$priority}', '27', '{$summary}', '{$description}', '{$details}')";
+            //if($assigned=='0'){
+              //  $querya="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`) VALUES ('{$status}', '{$_SESSION['userID']}', now(), now(), '{$dateNeed}', '{$priority}', '27', '{$summary}', '{$description}', '{$details}')";
+              //  $resulta=mysqli_query($dbc,$querya);
+            //}
+            //else{
+                $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`, `service_id`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dateNeed}', '{$priority}', '27', '{$summary}', '{$description}', '{$details}','{$id}')";
                 $resulta=mysqli_query($dbc,$querya);
-            }
-            else{
-                $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dateNeed}', '{$priority}', '27', '{$summary}', '{$description}', '{$details}')";
-                $resulta=mysqli_query($dbc,$querya);
-            }
+            //}
         
             $queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
             $resultaa=mysqli_query($dbc,$queryaa);
@@ -158,7 +158,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         <div class="form-group ">
                                                             <label for="status" class="control-label col-lg-3">Status</label>
                                                             <div class="col-lg-6">
-                                                                <select class="form-control m-bot15" name="status" value="" required>
+                                                                <select class="form-control m-bot15" name="status" required>
                                                                 <?php
                                                                     $query2="SELECT * FROM thesis.ref_ticketstatus";
                                                                     $result2=mysqli_query($dbc,$query2);
@@ -174,7 +174,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         <div class="form-group ">
                                                             <label for="priority" class="control-label col-lg-3">Priority</label>
                                                             <div class="col-lg-6">
-                                                                <select class="form-control m-bot15" name="priority" value="" required>
+                                                                <select class="form-control m-bot15" name="priority" required>
                                                                     <option value='Low'>Low</option>
                                                                     <option value='Medium'>Medium</option>
                                                                     <option value='High'>High</option>
@@ -186,8 +186,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         <div class="form-group ">
                                                             <label for="assign" class="control-label col-lg-3">Assigned</label>
                                                             <div class="col-lg-6">
-                                                                <select class="form-control m-bot15" name="assigned" value="">
-                                                                <option value='0'>None</option>
+                                                                <select class="form-control m-bot15" name="assigned" required>
+                                                                <option value=''>None</option>
                                                                 <?php
                                                                     $query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer'";
                                                                     $result3=mysqli_query($dbc,$query3);

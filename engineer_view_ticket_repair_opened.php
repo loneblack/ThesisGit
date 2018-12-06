@@ -48,7 +48,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 		
 		
 		//GET SERVICEID
-		$queryServID="SELECT * FROM thesis.servicedetails sd join asset a on sd.asset=a.assetID join ticketedasset ta on a.assetID=ta.assetID where ta.ticketID='{$id}' limit 1";
+		$queryServID="SELECT * FROM thesis.ticket where ticketID='{$id}'";
 		$resultServID=mysqli_query($dbc,$queryServID);
 		$rowServID=mysqli_fetch_array($resultServID,MYSQLI_ASSOC);
 		
@@ -62,7 +62,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 		}
 		
 		//For escalation
-		if(isset($_POST['escalateUserID'])&&!empty($_POST['forEscAsset'])){
+		if(isset($_POST['escalateUserID'])&&isset($_POST['forEscAsset'])){
 			$forEscAsset=$_POST['forEscAsset'];
 			//GET TICKET DATA
 			$queryTickDat="SELECT * FROM thesis.ticket where ticketID='{$id}'";
@@ -70,7 +70,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 			$rowTickDat=mysqli_fetch_array($resultTickDat,MYSQLI_ASSOC);
 			
 			//CREATE TICKET FOR ESCALATION
-			$queryEsc="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dateClosed`, `dueDate`, `priority`, `summary`, `details`, `description`, `serviceType`) VALUES ('5', '{$_POST['escalateUserID']}', '{$_SESSION['userID']}', now(), now(), '{$rowTickDat['dateClosed']}', '{$rowTickDat['dueDate']}', '{$priority}', '{$rowTickDat['summary']}', '{$rowTickDat['details']}', '{$rowTickDat['description']}', '27')";
+			$queryEsc="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dateClosed`, `dueDate`, `priority`, `summary`, `details`, `description`, `serviceType`, `service_id`) VALUES ('5', '{$_POST['escalateUserID']}', '{$_SESSION['userID']}', now(), now(), '{$rowTickDat['dateClosed']}', '{$rowTickDat['dueDate']}', '{$priority}', '{$rowTickDat['summary']}', '{$rowTickDat['details']}', '{$rowTickDat['description']}', '27', '{$rowTickDat['service_id']}')";
 			$resultEsc=mysqli_query($dbc,$queryEsc);
 			
 			//GET LATEST TICKET
@@ -94,7 +94,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 			$model=$_POST['model'];
 			$quantity=$_POST['quantity'];
 			foreach (array_combine($model, $quantity) as $mod => $qty){
-				$queryReqPart="INSERT INTO `thesis`.`requestparts` ( `serviceID`, `assetModelID`, `quantity`) VALUES ('{$rowServID['serviceID']}', '{$mod}' ,'{$qty}')";
+				$queryReqPart="INSERT INTO `thesis`.`requestparts` ( `serviceID`, `assetModelID`, `quantity`) VALUES ('{$rowServID['service_id']}', '{$mod}' ,'{$qty}')";
 				$resultReqPart=mysqli_query($dbc,$queryReqPart);
 				
 				$querya="UPDATE `thesis`.`ticket` 
@@ -107,16 +107,15 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         
 		//Check if all assets are repaired
 		
-		//GET SERVICE ID
 		
 		//GET QTY of Assets 
 		$queryTicketed="SELECT count(ticketID) as `numAssets`, count(IF(checked = 1, ticketID, null)) as `repairedAssets` FROM thesis.ticketedasset where ticketID='{$id}'";
 		$resultTicketed=mysqli_query($dbc,$queryTicketed);
 		$rowTicketed=mysqli_fetch_array($resultTicketed,MYSQLI_ASSOC);
 		
-		//STILL NEEDS TO BE FIXED
+		//UPDATE SERVICE STATUS (STILL NEEDS TO BE FIXED)
 		if($rowTicketed['numAssets']==$rowTicketed['repairedAssets']){
-			$queryComp="UPDATE `thesis`.`service` SET `steps`='11' WHERE `id`='{$id}'";
+			$queryComp="UPDATE `thesis`.`service` SET `steps`='11' WHERE `id`='{$rowServID['service_id']}'";
 			$resultComp=mysqli_query($dbc,$queryComp);
 		}
 

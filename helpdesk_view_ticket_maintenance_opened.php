@@ -90,13 +90,13 @@
             <section class="wrapper">
                 <!-- page start-->
 				<?php 
-                                            if(isset($_POST['submit'])){
-                                                echo   "<div style='text-align:center' class='alert alert-success'>
-                                                            <strong><h3>{$message}</h3></strong>
-                                                        </div>";
+                    if(isset($_POST['submit'])){
+                        echo   "<div style='text-align:center' class='alert alert-success'>
+									<strong><h3>{$message}</h3></strong>
+                                </div>";
 
-                                                    unset($_SESSION['submitMessage']);
-                                            }
+                        unset($_SESSION['submitMessage']);
+					}
                 ?>
                 <div class="row">
                     <div class="col-sm-12">
