@@ -50,17 +50,17 @@
 
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="col-sm-8">
+                        <div class="col-sm-12">
                             <section class="panel">
                                 <header style="padding-bottom:20px" class="panel-heading wht-bg">
                                     <h4 class="gen-case" style="float:right"> <a class="btn btn-danger">Closed</a></h4>
-                                    <h4>Service Request</h3>
+                                    <h4>Service Request</h4>
                                 </header>
                                 <div class="panel-body ">
 
                                     <div>
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-md-12">
                                                 <img src="images/chat-avatar2.jpg" alt="">
                                                 <strong>IT Office</strong>
                                                 to
@@ -71,84 +71,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="view-mail">
-                                        <p>Please do maintenance on buildings Gokongwei and Andrew Rooms G403 and A1709 </p>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-
-                        <div class="col-sm-4">
-
-                            <section class="panel">
-                                <div class="panel-body">
-                                    <ul class="nav nav-pills nav-stacked labels-info ">
-                                        <li>
-                                            <h4>Properties</h4>
-                                        </li>
-                                    </ul>
-                                    <div class="form" style="float:right">
-                                        <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
-                                            <div class="form-group ">
-                                                <div class="form-group ">
-                                                    <label for="category" class="control-label col-lg-3">Category</label>
-                                                    <div class="col-lg-6">
-                                                        <select class="form-control m-bot15" disabled>
-                                                            <option>Request</option>
-                                                            <option>Repair</option>
-                                                            <option selected="selected">Maintenance</option>
-                                                            <option>Replacement</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group ">
-                                                <label for="priority" class="control-label col-lg-3">Priority</label>
-                                                <div class="col-lg-6">
-                                                    <select class="form-control m-bot15" disabled>
-                                                        <option>Low</option>
-                                                        <option>Medium</option>
-                                                        <option selected="selected">High</option>
-                                                        <option>Urgent</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group ">
-                                                <label for="assign" class="control-label col-lg-3">Assigned</label>
-                                                <div class="col-lg-6">
-                                                    <select class="form-control m-bot15" disabled>
-                                                        <option selected="selected">Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group ">
-                                                <label for="assign" class="control-label col-lg-3">Status</label>
-                                                <div class="col-lg-6">
-                                                    <select class="form-control m-bot15" disabled>
-                                                        <option>Opened</option>
-                                                        <option selected="selected">Closed</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-3">Due Date</label>
-                                                <div class="col-lg-6">
-                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018" disabled />
-                                                </div>
-                                            </div>
-
-                                        </form>
-                                    </div>
-
                                 </div>
                             </section>
                         </div>
@@ -162,28 +84,20 @@
                                     <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                         <thead>
                                             <tr>
-                                                <th>Category</th>
-                                                <th>Property Code</th>
-                                                <th>Location</th>
-                                                <th>To Check</th>
-                                                <th>Remarks</th>
+                                                <th>Building</th>
+                                                <th>Number of Assets</th>
+                                                <th>Assigned Engineer</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>Computer</td>
-                                                <td>PAJDN12344</td>
-                                                <td>G403</td>
-                                                <td contenteditable="false">Open Mo Lang tapos tingnan mo pag may nag subscribe</td>
-                                                <td><input type="text" class="form-control" placeholder="Remarks" readonly></td>
-                                            </tr>
-                                            
-                                            <tr>
-                                                <td>Projector</td>
-                                                <td>PAJDN696969</td>
-                                                <td>A1709</td>
-                                                <td contenteditable="false">Open Mo Lang tapos tingnan mo pag may nag subscribe</td>
-                                                <td><input type="text" class="form-control" placeholder="Remarks" readonly></td>
+                                                <td>Gokongwei</td>
+                                                <td>100</td>
+                                                <td>
+                                                    <select class="form-control" disabled>
+                                                        <option>Engineer Marvin Lao</option>
+                                                    </select>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>

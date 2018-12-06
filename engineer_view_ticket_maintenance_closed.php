@@ -72,7 +72,7 @@
                                         </div>
                                     </div>
                                     <div class="view-mail">
-                                        <p>Please do maintenance on buildings Gokongwei and Andrew Rooms G403 and A1709 </p>
+                                        <p>Please do maintenance on buildings Gokongwei </p>
                                     </div>
                                 </div>
                             </section>
@@ -165,8 +165,8 @@
                                                 <th>Category</th>
                                                 <th>Property Code</th>
                                                 <th>Location</th>
-                                                <th>To Check</th>
                                                 <th>Remarks</th>
+                                                <th>Asset Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -174,17 +174,14 @@
                                                 <td>Computer</td>
                                                 <td>PAJDN12344</td>
                                                 <td>G403</td>
-                                                <td contenteditable="false">Open Mo Lang tapos tingnan mo pag may nag subscribe</td>
-                                                <td><input type="text" class="form-control" placeholder="Remarks" readonly></td>
+                                                <td><input type="text" class="form-control" placeholder="Remarks" disabled></td>
+                                                <td>
+                                                    <select class="form-control" disabled>
+                                                        <option>Broken-Fixable</option>
+                                                    </select>
+                                                </td>
                                             </tr>
                                             
-                                            <tr>
-                                                <td>Projector</td>
-                                                <td>PAJDN696969</td>
-                                                <td>A1709</td>
-                                                <td contenteditable="false">Open Mo Lang tapos tingnan mo pag may nag subscribe</td>
-                                                <td><input type="text" class="form-control" placeholder="Remarks" readonly></td>
-                                            </tr>
                                         </tbody>
                                     </table>
 
