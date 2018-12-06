@@ -109,11 +109,12 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 		
 		//GET SERVICE ID
 		
-		//GET QTY of Assets requested IN REQUESTDETAILS
+		//GET QTY of Assets 
 		$queryTicketed="SELECT count(ticketID) as `numAssets`, count(IF(checked = 1, ticketID, null)) as `repairedAssets` FROM thesis.ticketedasset where ticketID='{$id}'";
 		$resultTicketed=mysqli_query($dbc,$queryTicketed);
 		$rowTicketed=mysqli_fetch_array($resultTicketed,MYSQLI_ASSOC);
-			
+		
+		//STILL NEEDS TO BE FIXED
 		if($rowTicketed['numAssets']==$rowTicketed['repairedAssets']){
 			$queryComp="UPDATE `thesis`.`service` SET `steps`='11' WHERE `id`='{$id}'";
 			$resultComp=mysqli_query($dbc,$queryComp);
