@@ -10,7 +10,7 @@
 		$dateTimestamp2 = strtotime($_SESSION['dateDisposal']);
 		$message = "Form submitted!";
 		
-		if($dateTimestamp1==$dateTimestamp2){
+		//if($dateTimestamp1==$dateTimestamp2){
 			if(!empty($_POST['forDis'])){
 				//Update For Disposed asset status
 				$forDisposal=$_POST['forDis'];
@@ -25,11 +25,11 @@
 				$message = "There are no assets selected to be disposed";
 				$_SESSION['submitMessage'] = $message;
 			}
-		}
-		else{
-			$message = "It is still not on disposal date!";
-			$_SESSION['submitMessage'] = $message;
-		}
+		//}
+		//else{
+			//$message = "It is still not on disposal date!";
+			//$_SESSION['submitMessage'] = $message;
+		//}
 	}
 
 ?>
