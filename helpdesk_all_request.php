@@ -140,6 +140,7 @@
                                                             <td>";
 
                                                        if($row['serviceType']=='27') echo "Repair";
+													   elseif($row['serviceType']=='28') echo "Maintenance";
                                                        else echo "Service";
 
                                                         echo
@@ -260,6 +261,9 @@
 							window.location.href = "helpdesk_view_repair.php?id="+id;
 						}
 						
+						if(idx == "Maintenance"){
+							window.location.href = "helpdesk_view_ticket_maintenance_opened.php?id="+id;
+						}
 					};
 				};
 				currentRow.onclick = createClickHandler(currentRow);

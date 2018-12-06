@@ -1,4 +1,39 @@
 <!DOCTYPE html>
+<?php
+	session_start();
+	require_once("db/mysql_connect.php");
+	$id = $_GET['id'];
+	
+	//GET TICKET DATA
+	
+	$queryTickDat =  "SELECT *,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),' ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.ticket t join user u on t.assigneeUserID=u.UserID where t.ticketID='{$id}'";
+	$resultTickDat = mysqli_query($dbc, $queryTickDat);
+	$rowTickDat=mysqli_fetch_array($resultTickDat,MYSQLI_ASSOC);
+	
+	if(isset($_POST['submit'])){
+		if(isset($_POST['asset'])&&isset($_POST['remarks'])&&isset($_POST['assetStat'])){
+			$asset=$_POST['asset'];
+			$remarks=$_POST['remarks'];
+			$assetStat=$_POST['assetStat'];
+			
+			$mi = new MultipleIterator();
+			$mi->attachIterator(new ArrayIterator($asset));
+			$mi->attachIterator(new ArrayIterator($remarks));
+			$mi->attachIterator(new ArrayIterator($assetStat));
+			
+			foreach ( $mi as $value ) {
+				list($asset, $remarks, $assetStat) = $value;
+				
+				//UPDATE ASSET STATUS
+				$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='{$assetStat}' WHERE `assetID`='{$asset}'";
+				$resultStat=mysqli_query($dbc,$queryStat);
+				
+			}
+			
+		}
+	}
+
+?>
 <html lang="en">
 
 <head>
@@ -50,6 +85,7 @@
 
                 <div class="row">
                     <div class="col-sm-12">
+						<form class="cmxform form-horizontal " id="signupForm" method="post" action="">
                         <div class="col-sm-8">
                             <section class="panel">
                                 <header style="padding-bottom:20px" class="panel-heading wht-bg">
@@ -88,7 +124,7 @@
                                         </li>
                                     </ul>
                                     <div class="form" style="float:right">
-                                        <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
+                                        
                                             <div class="form-group ">
                                                 <div class="form-group ">
                                                     <label for="category" class="control-label col-lg-3">Category</label>
@@ -109,7 +145,7 @@
                                                     <select class="form-control m-bot15" disabled>
                                                         <option>Low</option>
                                                         <option>Medium</option>
-                                                        <option selected="selected">High</option>
+                                                        <option selected="selected"><?php  ?></option>
                                                         <option>Urgent</option>
                                                     </select>
                                                 </div>
@@ -146,7 +182,7 @@
                                                 </div>
                                             </div>
 
-                                        </form>
+                                        
                                     </div>
 
                                 </div>
@@ -170,7 +206,40 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+											<?php
+												//GET ASSET DATA
+												$queryAssDat="SELECT ta.assetID,rac.name as `categoryName`,a.propertyCode,far.floorRoom FROM thesis.ticketedasset ta join asset a on ta.assetID=a.assetID
+															  join assetmodel am on a.assetModel=am.assetModelID
+															  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+															  join assetassignment aa on a.assetID=aa.assetID
+															  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
+															  where ticketID='{$id}'";
+												$resultAssDat=mysqli_query($dbc,$queryAssDat);
+												while($rowAssDat=mysqli_fetch_array($resultAssDat,MYSQLI_ASSOC)){
+													echo "<tr>
+														<input type='hidden' name='asset[]' value='{$rowAssDat['assetID']}'>
+														<td>{$rowAssDat['categoryName']}</td>
+														<td>{$rowAssDat['propertyCode']}</td>
+														<td>{$rowAssDat['floorRoom']}</td>
+														<td><input type='text' class='form-control' placeholder='Remarks' name='remarks[]'></td>
+														<td>
+														<select class='form-control' name='assetStat[]'>";
+															
+														//GET ASSET Status
+														
+														$queryAssStat="SELECT * FROM thesis.ref_assetstatus";
+														$resultAssStat=mysqli_query($dbc,$queryAssStat);
+														while($rowAssStat=mysqli_fetch_array($resultAssStat,MYSQLI_ASSOC)){
+															echo "<option value='{$rowAssStat['id']}'>{$rowAssStat['description']}</option>";
+														}
+															
+														echo "</select>
+														</td>
+													</tr>";
+												}
+											
+											?>
+                                            <!-- <tr>
                                                 <td>Computer</td>
                                                 <td>PAJDN12344</td>
                                                 <td>G403</td>
@@ -180,7 +249,7 @@
                                                         <option>Broken-Fixable</option>
                                                     </select>
                                                 </td>
-                                            </tr>
+                                            </tr> -->
                                             
                                         </tbody>
                                     </table>
@@ -193,11 +262,11 @@
                         
                         
                         <div class="col-sm-12">
-                            <a href=""><button class="btn btn-success">Submit</button></a>
+                            <a href=""><button class="btn btn-success" type="submit" name="submit">Submit</button></a>
                             <a href="engineer_all_ticket.php"><button class="btn btn-danger">Back</button></a>
                         </div>
                         
-                        
+                        </form>
                         
 
                     </div>
