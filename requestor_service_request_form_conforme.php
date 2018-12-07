@@ -18,6 +18,14 @@
 			$queryStep="UPDATE `thesis`.`request` SET `status`='3' WHERE `requestID`='{$id}'";
 			$resultStep=mysqli_query($dbc,$queryStep);
 			
+			//UPDATE ASSET STATUS TO DEPLOYED
+			$queryAssDoc="SELECT * FROM thesis.assetdocument where requestID='{$id}'";
+			$resultAssDoc=mysqli_query($dbc,$queryAssDoc);
+			while($rowAssDoc=mysqli_fetch_array($resultAssDoc,MYSQLI_ASSOC)){
+				$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='2' WHERE `assetID`='{$rowAssDoc['assetID']}'";
+				$resultStat=mysqli_query($dbc,$queryStat);
+			}
+			
 		}
 		elseif($requestType=="Repair"){
 			$queryRep="INSERT INTO `thesis`.`evaluation` (`date`, `responseTime`, `accuracy`, `efficiency`, `courtesy`, `comments`, `serviceID`) VALUES (now(),'{$responseTime}','{$accuracy}','{$efficiency}','{$courtesy}','{$comments}','{$id}')";
