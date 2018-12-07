@@ -44,6 +44,8 @@ if(isset($_POST['submit'])){
              echo $queryTicket;
         }
         //Update status and steps
+        $queryUpdate = "UPDATE `thesis`.`service` SET `status` = '2', `steps` = '15' WHERE (`id` = '{$id}');";
+        $resultUpdate = mysqli_query($dbc, $queryUpdate);
     }
 ?>
 
