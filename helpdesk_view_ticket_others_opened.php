@@ -11,6 +11,7 @@ $queryTicket="SELECT *, t.status as 'status', s.status as 'statusName' FROM thes
 $resultTicket=mysqli_query($dbc,$queryTicket);          
 $rowTicket=mysqli_fetch_array($resultTicket,MYSQLI_ASSOC);  
 
+$statusName=$rowTicket['statusName'];
 $status=$rowTicket['status'];
 $summary=$rowTicket['summary'];
 $details=$rowTicket['details'];
