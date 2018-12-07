@@ -91,6 +91,14 @@ if(isset($_POST['submit'])){
         <!--main content-->
         <section id="main-content">
             <section class="wrapper">
+                <?php
+                    if (isset($_POST['submit'])){
+
+                        echo "<div style='text-align:center' class='alert alert-success'>
+                                <strong><h3>Form Submitted!</h3></strong>
+                              </div>";
+                    }
+                ?>
                 <!-- page start-->
 
                 <div class="row">
@@ -98,7 +106,30 @@ if(isset($_POST['submit'])){
                         <div class="col-sm-8">
                             <section class="panel">
                                 <header style="padding-bottom:20px"class="panel-heading wht-bg">
-                                    <h4 class="gen-case" style="float:right"> <a class="btn btn-success">Opened</a></h4>
+                                    <h4 class="gen-case" style="float:right">
+                                        <?php
+                                        if($statusName=='Open'){
+                                            echo "<a class='btn btn-success'>{$statusName}</a>";
+                                        }
+                                        elseif($statusName=='Closed'){
+                                            echo "<a class='btn btn-danger'>{$statusName}</a>";
+                                        }
+                                        elseif($statusName=='Assigned'){
+                                            echo "<a class='btn btn-info'>{$statusName}</a>";
+                                        }
+                                        
+                                        elseif($statusName=='In Progress'||$statusName=='Waiting for Parts'){
+                                            echo "<a class='btn btn-warning'>{$statusName}</a>";
+                                        }
+                                        elseif($statusName=='Transferred'){
+                                            echo "<a class='btn btn-primary'>{$statusName}</a>";
+                                        }
+                                        elseif($statusName=='Escalated'){
+                                            echo "<a class='btn btn-default'>{$statusName}</a>";
+                                        }
+
+                                    ?>
+                                    </h4>
                                     <h4>Service Request</h3>
                                 </header>
                                 <div class="panel-body ">
@@ -246,7 +277,7 @@ if(isset($_POST['submit'])){
                                 </div>
                             </section>
                             <button onclick="return confirm('Send and close ticket?')" class="btn btn-success">Send</button></a>
-                            <button class="btn btn-danger" onclick="window.history.back()" >Back</button></a>
+                            <a ><button onclick="window.history.back()" type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
                         </div>
 
 

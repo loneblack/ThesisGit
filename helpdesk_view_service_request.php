@@ -8,7 +8,7 @@ require_once("db/mysql_connect.php");
 $userID = $_SESSION['userID'];
 $id = $_GET['id'];
 
-$query = "SELECT *, t.id as 'serviceTypeID' FROM thesis.service s JOIN ref_servicetype t ON s.serviceType = t.id WHERE s.id = {$id}";
+$query = "SELECT *, t.id as 'serviceTypeID' FROM thesis.service s JOIN ref_servicetype t ON s.serviceType = t.id WHERE s.id = {$id};";
 
 $result = mysqli_query($dbc, $query);
 
@@ -21,6 +21,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 	$endDate = $row['endDate'];
     $summary = $row['summary'];
     $others = $row['others'];
+    $status = $row['status'];
 }
 
 if(isset($_POST['submit'])){
@@ -34,14 +35,14 @@ if(isset($_POST['submit'])){
         if($serviceTypeID == '29'){
              $queryTicket =  "INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `summary`, `details`, `serviceType`, `others`) VALUES ('{$status}', {$assigned}, '{$userID}', now(), now(), '{$dateNeed}', '{$priority}', '{$summary}', '{$details}', '{$serviceTypeID}', '{$others}');";
             $resultTicket = mysqli_query($dbc, $queryTicket);
-            echo $queryTicket;
+
         }
         else{
 
             $queryTicket =  "INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `summary`, `details`, `serviceType`) VALUES ('{$status}', {$assigned}, '{$userID}', now(), now(), '{$dateNeed}', '{$priority}', '{$summary}', '{$details}', '{$serviceTypeID}');";
             $resultTicket = mysqli_query($dbc, $queryTicket);
 
-             echo $queryTicket;
+
         }
         //Update status and steps
         $queryUpdate = "UPDATE `thesis`.`service` SET `status` = '2', `steps` = '15' WHERE (`id` = '{$id}');";
@@ -105,7 +106,7 @@ if(isset($_POST['submit'])){
                                     Service Request
                                 </header>
 								<div style="padding-top:10px; padding-left:10px; float:left">
-									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Create Ticket</button>
+									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" <?php if ($status != '1') echo "disabled";?>>Create Ticket</button>
 								</div>
                                 <!-- Modal -->
                                 <div class="modal fade" id="myModal" role="dialog">

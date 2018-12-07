@@ -642,12 +642,14 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
   `serviceType` INT(11) NULL DEFAULT NULL,
   `others` LONGTEXT NULL DEFAULT NULL,
   `comment` LONGTEXT NULL,
+  `service_id` INT(11) NULL,
   PRIMARY KEY (`ticketID`),
   INDEX `fk_Ticket_ref_TicketStatus1_idx` (`status` ASC),
   INDEX `fk_Ticket_User1_idx` (`creatorUserID` ASC),
   INDEX `fk_Ticket_User2_idx` (`assigneeUserID` ASC),
   INDEX `fk_ticket_assettesting1_idx` (`testingID` ASC),
   INDEX `fk_ticket_ref_servicetype1_idx` (`serviceType` ASC),
+  INDEX `fk_ticket_service1_idx` (`service_id` ASC),
   CONSTRAINT `fk_Ticket_User1`
     FOREIGN KEY (`creatorUserID`)
     REFERENCES `thesis`.`user` (`UserID`),
@@ -662,7 +664,12 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
     REFERENCES `thesis`.`assettesting` (`testingID`),
   CONSTRAINT `fk_ticket_ref_servicetype1`
     FOREIGN KEY (`serviceType`)
-    REFERENCES `thesis`.`ref_servicetype` (`id`))
+    REFERENCES `thesis`.`ref_servicetype` (`id`),
+  CONSTRAINT `fk_ticket_service1`
+    FOREIGN KEY (`service_id`)
+    REFERENCES `thesis`.`service` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 

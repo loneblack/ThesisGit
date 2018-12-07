@@ -41,7 +41,6 @@ if(isset($_POST['submit'])){
         $queryTicket =  "UPDATE `thesis`.`ticket` SET `status` = '{$status}', `assigneeUserID` = {$assigned}, `lastUpdateDate` = now(), `priority` = '{$priority}' 
                         WHERE (`ticketID` = '{$ticketID}');";
         $resultTicket = mysqli_query($dbc, $queryTicket);
-        //Update status and steps
 
     }
 
@@ -91,6 +90,14 @@ if(isset($_POST['submit'])){
         <!--main content-->
         <section id="main-content">
             <section class="wrapper">
+                <?php
+                    if (isset($_POST['submit'])){
+
+                        echo "<div style='text-align:center' class='alert alert-success'>
+                                <strong><h3>Form Submitted!</h3></strong>
+                              </div>";
+                    }
+                ?>
                 <!-- page start-->
 
                 <div class="row">
@@ -267,8 +274,8 @@ if(isset($_POST['submit'])){
                                 </div>
                             </section>
                             <!-- <button onclick="return confirm('Update ticket?')" class="btn btn-success">Send</button></a> -->
-                            <button type="submit" name="submit" id="submit" class="btn btn-success">Send</button></a>
-                            <button class="btn btn-danger" onclick="window.history.back()" >Back</button></a>
+                            <button type="submit" name="submit" id="submit" class="btn btn-success" data-dismiss="modal">Send</button> 
+                            <a ><button onclick="window.history.back()" type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
                         </div>
 
                                         </form>
