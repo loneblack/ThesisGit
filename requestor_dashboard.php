@@ -324,7 +324,12 @@ require_once("db/mysql_connect.php");
                     }
 
                     else if(requestType == "Borrow"){
-                        window.location.href = "requestor_view_service_equipment_request.php?id=" + id;
+						if(step == "Conforme Pending"){
+							window.location.href = "requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType;
+						}
+						else{
+							window.location.href = "requestor_view_service_equipment_request.php?id=" + id;
+						}
                     }
                     
                     else if(requestType == "Donation"){

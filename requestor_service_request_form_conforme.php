@@ -34,7 +34,21 @@
 			$queryStep="UPDATE `thesis`.`service` SET `status`='3' WHERE `id`='{$id}'";
 			$resultStep=mysqli_query($dbc,$queryStep);
 		}
-		elseif($requestType=="borrow"){
+		elseif($requestType=="Borrow"){
+			$queryDon="INSERT INTO `thesis`.`evaluation` (`date`, `responseTime`, `accuracy`, `efficiency`, `courtesy`, `comments`, `borrowID`) VALUES (now(),'{$responseTime}','{$accuracy}','{$efficiency}','{$courtesy}','{$comments}','{$id}')";
+			$resultDon=mysqli_query($dbc,$queryDon);
+			
+			//UPDATE ASSETS TO DEPLOYED
+			$queryAssDep="SELECT * FROM thesis.borrow_details bd join borrow_details_item bdi on bd.borrow_detailscol=bdi.borrow_detailsID where bd.borrowID='{$id}'";
+			$resultAssDep=mysqli_query($dbc,$queryAssDep);
+			while($rowAssDep=mysqli_fetch_array($resultAssDep,MYSQLI_ASSOC)){
+				$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='2' WHERE `assetID`='{$rowAssDep['assetID']}'";
+				$resultStat=mysqli_query($dbc,$queryStat);
+			}
+			
+			$queryStep="UPDATE `thesis`.`request_borrow` SET `statusID`='3' WHERE `borrowID`='{$id}'";
+			$resultStep=mysqli_query($dbc,$queryStep);
+			
 			//$query="";
 			//$result=mysqli_query($dbc,$query);
 		}

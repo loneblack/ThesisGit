@@ -229,6 +229,106 @@
 			
 		}
 		
+		//Borrow
+		elseif($row7['remarks']=="Borrow"){
+			//For functioning assets
+			if(!empty($_POST['funcAsset'])){
+				$funcAsset=$_POST['funcAsset'];
+				
+				foreach($funcAsset as $value){
+					$query5="UPDATE `thesis`.`assettesting_details` SET `check`='1' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$value}'";
+					$result5=mysqli_query($dbc,$query5);
+				}
+			}
+			
+			if(!empty($_POST['disapprovedAsset'])){
+				
+				//For defected assets
+				$disapprovedAsset=$_POST['disapprovedAsset'];
+				$comments=$_POST['comments'];
+				
+				//CHECK IF THERE'S AN EMPTY COMMENT FOR ESCALATION
+				$isThereEmp=false;
+				foreach($comments as $isThere){
+					if(empty($isThere)){
+						$isThereEmp=true;
+					}
+				}
+				//Escalate Code
+				if($isThereEmp){
+					if(isset($_POST['priority'])&&isset($_POST['escalate'])){
+						//GETTESTINGID
+						$queryTestID = "SELECT * FROM thesis.ticket where ticketID='{$ticketID}'";
+						$resultTestID = mysqli_query($dbc, $queryTestID);
+						$rowTestID = mysqli_fetch_array($resultTestID, MYSQLI_ASSOC);
+						
+						//GET BORROW ID
+						$queryBorID="SELECT * FROM thesis.ticket t join assettesting at on t.testingID=at.testingID where t.ticketID='{$ticketID}'";
+						$resultBorID=mysqli_query($dbc,$queryBorID);
+						$rowBorID=mysqli_fetch_array($resultBorID,MYSQLI_ASSOC);
+						
+						//GET BORROW DATA
+						$queryBorDat="SELECT * FROM thesis.request_borrow where borrowID='{$rowBorID['borrowID']}'";
+						$resultBorDat=mysqli_query($dbc,$queryBorDat);
+						$rowBorDat=mysqli_fetch_array($resultBorDat,MYSQLI_ASSOC);
+						
+						//CREATE ASSETTESTING
+						$queryAssTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`,`remarks`, `borrowID`) VALUES ('1', '{$rowBorDat['personresponsibleID']}', '{$rowBorDat['FloorAndRoomID']}', '25', 'Borrow', '{$rowBorID['borrowID']}');";
+						$resultAssTest=mysqli_query($dbc,$queryAssTest);
+						
+						//GET LATEST ASSET TEST
+						$queryLatAss="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
+						$resultLatAss=mysqli_query($dbc,$queryLatAss);
+						$rowLatAss=mysqli_fetch_array($resultLatAss,MYSQLI_ASSOC);
+						
+						//INSERT TO ASSETTESTDETAILS
+						foreach(array_combine($disapprovedAsset, $comments) as $escAsset => $com){
+							if(empty($com)){
+								$queryAtd="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowLatAss['testingID']}', '{$escAsset}')";
+								$resultAtd=mysqli_query($dbc,$queryAtd);
+								
+								//DELETE ASSET TO ASSET TESTING
+								$queryDelAss="DELETE FROM `thesis`.`assettesting_details` WHERE `assettesting_testingID`='{$rowTestID['testingID']}' and `asset_assetID`='{$escAsset}'";
+								$resultDelAss=mysqli_query($dbc,$queryDelAss);
+							}
+						}
+						
+						//CREATE TICKET FOR ESCALATION
+						$queryEsc="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('5', '{$_POST['escalate']}', '{$_SESSION['userID']}', now(), now(), '{$_POST['dueDate']}', '{$_POST['priority']}', '{$rowLatAss['testingID']}', '25')";
+						$resultEsc=mysqli_query($dbc,$queryEsc);
+						
+						//GET LATEST TICKET
+						$queryLatTic="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
+						$resultLatTic=mysqli_query($dbc,$queryLatTic);
+						$rowLatTic=mysqli_fetch_array($resultLatTic,MYSQLI_ASSOC);
+						
+						//INSERT TO TICKETEDASSET
+						foreach(array_combine($disapprovedAsset, $comments) as $escAsset => $com){
+							if(empty($com)){
+								$queryTicAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTic['ticketID']}', '{$escAsset}');";
+								$resultTicAss=mysqli_query($dbc,$queryTicAss);
+								
+								//DELETE ASSET TO TICKETEDASSET
+								$queryDelTic="DELETE FROM `thesis`.`ticketedasset` WHERE `ticketID`='{$ticketID}' and `assetID`='{$escAsset}'";
+								$resultDelTic=mysqli_query($dbc,$queryDelTic);
+							}
+						}
+					}
+							
+				}
+					
+				//For defected asset code
+				foreach (array_combine($disapprovedAsset, $comments) as $value1 => $value2){
+					if(!empty($value2)){
+						$query6="UPDATE `thesis`.`assettesting_details` SET `check`='0',`comment`='{$value2}' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$value1}'";
+						$result6=mysqli_query($dbc,$query6);
+					}
+				}
+			}
+			
+			
+		}
+		
 		//UPDATE ASSET TESTING STATUS
 		$query8="UPDATE `thesis`.`assettesting` SET `statusID`='2' WHERE `testingID`='{$row7['testingID']}'";
 		$result8=mysqli_query($dbc,$query8);

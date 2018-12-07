@@ -227,7 +227,37 @@
 			}
 			
 		}
-		
+		elseif($rowTesDat['remarks']=="Borrow"){
+			//UPDATE ASSET TESTING STATUS
+			$query8="UPDATE `thesis`.`assettesting` SET `statusID`='3' WHERE `testingID`='{$testingID}'";
+			$result8=mysqli_query($dbc,$query8);
+			
+			//GET PASSED TEST ASSET
+			$queryPassTest="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$testingID}' and `check`='1'";
+			$resultPassTest=mysqli_query($dbc,$queryPassTest);
+			while($rowPassTest=mysqli_fetch_array($resultPassTest,MYSQLI_ASSOC)){
+				//UPDATE ASSET STATUS
+				$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='3' WHERE `assetID`='{$rowPassTest['asset_assetID']}'";
+				$resultStat=mysqli_query($dbc,$queryStat);
+				
+				//GET BORROW DATA
+				$queryBorDat="SELECT * FROM thesis.borrow_details bd where bd.borrowID='{$rowTesDat['borrowID']}'";
+				$resultBorDat=mysqli_query($dbc,$queryBorDat);
+				$rowBorDat=mysqli_fetch_array($resultBorDat,MYSQLI_ASSOC);
+				
+				//INSERT TO BORROWDETAILSITEM
+				$queryInsBor="INSERT INTO `thesis`.`borrow_details_item` (`borrow_detailsID`, `assetID`) VALUES ('{$rowBorDat['borrow_detailscol']}', '{$rowPassTest['asset_assetID']}');";
+				$resultInsBor=mysqli_query($dbc,$queryInsBor);
+				
+			}
+			
+			//GET ALL ASSET TESTING PER BORROWID
+			
+			//UPDATE BORROW STEP
+			$queryComp="UPDATE `thesis`.`request_borrow` SET `steps`='11' WHERE `borrowID`='{$rowTesDat['borrowID']}'";
+			$resultComp=mysqli_query($dbc,$queryComp);
+			
+		}
 		$message = "Form submitted!";
 		$_SESSION['submitMessage'] = $message; 
 		
