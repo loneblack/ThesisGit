@@ -32,6 +32,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         $purpose = $row['purpose'];         
         $building = $row['building'];        
         $floorRoom = $row['floorRoom'];         
+        $personresponsibleID = $row['personresponsibleID'];           
         $personrepresentativeID = $row['personrepresentativeID'];      
         $personrepresentative = $row['personrepresentative'];        
         $description = $row['description'];      
@@ -63,7 +64,7 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 	   
         //insert to assset testing
         $queryTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `remarks`, `serviceType`, `borrowID`)
-                            VALUES ('1', '1', 'Borrow', '25', '{$id}');";
+                            VALUES ('1', '{$personresponsibleID}', 'Borrow', '25', '{$id}');";
         $resultTest=mysqli_query($dbc,$queryTest);
 
         $selectQuery = "SELECT * FROM thesis.assettesting ORDER BY testingID DESC LIMIT 1;";
@@ -78,7 +79,7 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             $resultDetails = mysqli_query($dbc,$queryDetails);
 
             //update asset status
-            $QAssetStatus = "UPDATE `thesis`.`asset` SET `assetStatus` = '8' WHERE (`assetID` = '{$asset1}');";
+            $QAssetStatus = "UPDATE `thesis`.`asset` SET `assetStatus` = '8' WHERE (`assetID` = '{$asset}');";
             $RAssetStatus = mysqli_query($dbc,$QAssetStatus);
 
 			

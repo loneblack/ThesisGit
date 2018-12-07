@@ -12,10 +12,12 @@
 	$resultReqID=mysqli_query($dbc,$queryReqID);			
 	$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);	
 	
+
 	$status=$rowReqID['status'];
 
 	if(isset($_POST['submit'])){
 		
+		$status=$$_POST['status'];
 		$message=null;
 		$category=25;
 		$priority=$_POST['priority'];
@@ -24,12 +26,13 @@
 		$dueDate=$rowReqID['startDate'];
 		$summary=$rowReqID['purpose'];
 		$borrowID = $rowReqID['borrowID'];
+		$PersonRequestedID = $rowReqID['PersonRequestedID'];
 
 		
 		if(!isset($message)){
 			//insert to ticket
 			$queryTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `summary`, `details`) 
-											VALUES ('{$status}', {$assigned}, '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}', '{$summary}', 'Please test the following assets:')";
+											VALUES ('{$status}', {$assigned}, '{$PersonRequestedID}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}', '{$summary}', 'Please test the following assets:')";
 			$resultTicket=mysqli_query($dbc,$queryTicket);
 			echo $queryTicket;
 		
@@ -205,7 +208,7 @@
                                                                 <select class="form-control m-bot15" name="priority" value="<?php if (isset($_POST['priority'])) echo $_POST['priority']; ?>" required>
                                                                     <option value='Low'>Low</option>
                                                                     <option value='Medium'>Medium</option>
-                                                                    <option value='High' selected>High</option>
+                                                                    <option value='High'>High</option>
                                                                     <option value='Urgent'>Urgent</option>
                                                                 </select>
                                                             </div>
@@ -256,10 +259,9 @@
 											<thead>
 												<tr>
 													
-													<!-- <th>Property Code</th> -->
+													<th>Brand</th>
 													<th>Item</th>
 													<th>Category</th>
-													<th>Brand</th>
 													<th>PropertyCode</th>
 													<th>Comments</th>
 												</tr>

@@ -199,9 +199,10 @@
 																																		
 															
 															 //Borrow
-                                                            $query="SELECT * FROM thesis.request_borrow r 
+                                                            $query="SELECT *, t.name as 'stepName', e.name as 'Requestor' FROM thesis.request_borrow r 
                                                                       JOIN ref_status s ON r.statusID = s.statusID
-                                                                      JOIN ref_steps t ON r.steps = t.id;";
+                                                                      JOIN ref_steps t ON r.steps = t.id
+                                                                      JOIN employee e ON r.personresponsibleID = e.UserID;";
                                                             $result=mysqli_query($dbc,$query);
                                                             while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
                                                                 echo "<tr> 
@@ -227,8 +228,8 @@
                                                                     
                                                                 echo "
                                                                     <td>Borrow</td>
-                                                                    <td>{$row['name']}</td>
-                                                                    <td></td>
+                                                                    <td>{$row['stepName']}</td>
+                                                                    <td>{$row['Requestor']}</td>
                                                                     <td>{$row['dateCreated']}</td>
                                                                 </tr>";
                                                                 

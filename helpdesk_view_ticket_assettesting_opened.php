@@ -4,6 +4,29 @@
 session_start();
 require_once('db/mysql_connect.php');
 
+$userID = $_SESSION['userID'];
+$ticketID=$_GET['id'];
+//GET Due Date
+$queryTicket="SELECT * FROM thesis.ticket t JOIN ref_status s ON t.status = s.statusID WHERE ticketID = '{$ticketID}';";
+$resultTicket=mysqli_query($dbc,$queryTicket);			
+$rowTicket=mysqli_fetch_array($resultTicket,MYSQLI_ASSOC);	
+
+$status=$rowTicket['status'];
+$summary=$rowTicket['summary'];
+$details=$rowTicket['details'];
+$priority=$rowTicket['priority'];
+$dueDate=$rowTicket['dueDate'];
+$dateCreated=$rowTicket['dateCreated'];
+$lastUpdateDate=$rowTicket['lastUpdateDate'];
+$description=$rowTicket['description'];
+$creatorUserID=$rowTicket['creatorUserID'];
+
+$queryUser="SELECT * FROM thesis.employee WHERE UserID = '{$creatorUserID}';";
+$resultUser=mysqli_query($dbc,$queryUser);			
+$rowUser=mysqli_fetch_array($resultUser,MYSQLI_ASSOC);	
+
+$name=$rowUser['name'];
+
 ?>
 <head>
     <meta charset="utf-8">
@@ -62,7 +85,7 @@ require_once('db/mysql_connect.php');
 									
 										<div class="panel-body">
 											<section>
-											<label><h5>Name:</h5></label><input type="text" value="" class="form-control" disabled>
+											<label><h5>Name:</h5></label><input type="text" value="<?php echo $name ;?>" class="form-control" disabled>
 											<br>
 											
 											</section>
@@ -88,29 +111,27 @@ require_once('db/mysql_connect.php');
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-												
-                                                    <tr>
-														<td style="text-align:center"><input type='checkbox' class='form-check-input' disabled></td>
-                                                        <td style="text-align:center">TBLT-001</td>
-                                                        <td style="text-align:center">Apple Tablet</td>
-                                                        <td style="text-align:center">iPad</td>
-														<th><input style="text" class="form-control" disabled></th>
-                                                        
-                                                    </tr>
-                                                    <tr >
-														<td style="text-align:center"><input type='checkbox' class='form-check-input' disabled></td>
-                                                        <td style="text-align:center; width:50px;">PC-0023</td>
-                                                        <td style="text-align:center">Windows</td>
-                                                        <td style="text-align:center">Windows 10</td>
-                                                        <th><input style="text" class="form-control" disabled></th>
-                                                    </tr>
-													<tr>
-                                                        <td style="text-align:center"><input type='checkbox' class='form-check-input' disabled></td>
-														<td style="text-align:center">PHN-0312</td>
-                                                        <td style="text-align:center">Smartphone</td>
-                                                        <td style="text-align:center">Samsung Galaxy J7 Pro</td>
-                                                        <th><input style="text" class="form-control" disabled></th>
-                                                    </tr>
+												<?php
+													
+													$query="SELECT b.name as 'brand',propertyCode,am.description as 'item',am.itemSpecification
+															FROM thesis.ticketedasset t
+															join asset a on t.assetID=a.assetID
+															join assetmodel am on a.assetModel=am.assetModelID
+															join ref_brand b on am.brand = b.brandID
+															WHERE ticketID = '{$ticketID}';";
+													$result=mysqli_query($dbc,$query);
+													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														echo "<tr>
+																<td style='text-align:center'><input type='checkbox' class='form-check-input' disabled></td>
+																<td style='text-align:center'>{$row['propertyCode']}</td>
+																<td style='text-align:center'>{$row['brand']}</td>
+																<td style='text-align:center'>{$row['item']}</td>
+																<td><input style='text' class='form-control' disabled></td>
+															</tr>";
+													}
+													
+												?>
+
                                                 </tbody>
                                             </table>
 											
@@ -143,54 +164,64 @@ require_once('db/mysql_connect.php');
 														<label style="padding-left:22px" for="category" class="control-label col-lg-4">Category</label>
 														<div class="col-lg-8" style="padding-right:30px">
 															<select class="form-control m-bot15" name="category" readonly>
-																<option selected="selected">Repair</option>
-																<option>Repair</option>
-																<option>Maintenance</option>
-																<option>Replacement</option>
+																<option value = '25'>Repair</option>
 															</select>
 														</div>
 													</div>
 
 													<label for="status" class="control-label col-lg-4">Status</label>
 													<div class="col-lg-8">
-														<select class="form-control m-bot15" name="status">
-														  <option>Assigned</option>
-															<option>In Progress</option>
-															<option selected="selected">Transferred</option>
-															<option>Escalated</option>
-															<option>Waiting For Parts</option>
-															<option>Closed</option>
-														</select>
-													</div>
+	                                                    <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status'])) echo $_POST['status']; ?>" required >
+															<?php
+																	
+																$queryb="SELECT * FROM thesis.ref_ticketstatus";
+																$resultb=mysqli_query($dbc,$queryb);
+																while($rowb=mysqli_fetch_array($resultb,MYSQLI_ASSOC)){
+																
+																		echo "<option value='{$rowb['ticketID']}'>{$rowb['status']}</option>";
+																	
+																}
+																
+															?>
+	                                                    </select>
+	                                                </div>
 												</div>
 
 												<div class="form-group ">
 													<label for="priority" class="control-label col-lg-4">Priority</label>
 													<div class="col-lg-8">
-														<select class="form-control m-bot15" id="priority" name="priority" value="" >
-															<option value="">Select Priority</option>
-															<option value="Low">Low</option>
-															<option value="Medium">Medium</option>
-															<option value="High">High</option>
-															<option value="Urgent">Urgent</option>
-														</select>
-													</div>
+                                                        <select class="form-control m-bot15" name="priority" value="<?php if (isset($_POST['priority'])) echo $_POST['priority']; ?>" required>
+                                                            <option value='Low'>Low</option>
+                                                            <option value='Medium'>Medium</option>
+                                                            <option value='High'>High</option>
+                                                            <option value='Urgent'>Urgent</option>
+                                                        </select>
+                                                    </div>
 												</div>
 
 												<div class="form-group ">
-													<label for="assign" class="control-label col-lg-4">Escalate To</label>
+													<label for="assign" class="control-label col-lg-4">Assign To</label>
 													<div class="col-lg-8">
-														<select class="form-control m-bot15" id="escalate" name="escalate" value="" >
-															<option value="">Select Engineer</option>
+														<select class="form-control m-bot15" name="assigned" value="<?php if (isset($_POST['assigned'])) echo $_POST['assigned']; ?>" required>
+                                                        	<option value='NULL'>None</option>
+															<?php
+																$query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer'";
+																$result3=mysqli_query($dbc,$query3);
+																
+																while($row3=mysqli_fetch_array($result3,MYSQLI_ASSOC)){
+																	echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
+																}										
 															
-														</select>
+															?>
+
+                                                        </select>
 													</div>
 												</div>
 
 												<div class="form-group">
 													<label class="control-label col-lg-4">Due Date</label>
 													<div class="col-lg-8">
-														<input class="form-control form-control-inline input-medium default-date-picker" name="dueDate" size="10" type="datetime" value="<?php echo $rowx['dueDate']; ?>" readonly />
+														<input class="form-control form-control-inline input-medium default-date-picker" name="dueDate" size="10" type="datetime" value="<?php echo $dueDate ?>" readonly />
 													</div>
 												</div>
 											
