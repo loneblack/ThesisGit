@@ -59,9 +59,12 @@
 			$queryStep="UPDATE `thesis`.`donation` SET `statusID`='3' WHERE `donationID`='{$id}'";
 			$resultStep=mysqli_query($dbc,$queryStep);
 		}
-		elseif($requestType=="service"){
-			//$query="";
-			//$result=mysqli_query($dbc,$query);
+		elseif($requestType=="Service"){
+			$querySer="INSERT INTO `thesis`.`evaluation` (`date`, `responseTime`, `accuracy`, `efficiency`, `courtesy`, `comments`, `serviceID`) VALUES (now(),'{$responseTime}','{$accuracy}','{$efficiency}','{$courtesy}','{$comments}','{$id}');";
+            $resultSer=mysqli_query($dbc,$querySer);
+
+            $query="UPDATE `thesis`.`service` SET `status` = '3', `steps` = '21' WHERE (`id` = '1');";
+            $result=mysqli_query($dbc,$query);
 		}
 		
 		$message = "Conforme submitted!";

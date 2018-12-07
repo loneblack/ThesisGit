@@ -1,7 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-require_once("db/mysql_connect.php");
+session_start();
+require_once('db/mysql_connect.php');
+
+$userID = $_SESSION['userID'];
+$ticketID=$_GET['id'];
+
+$queryTicket="SELECT *, t.status as 'status', s.status as 'statusName' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.ticketID = '{$ticketID}';";
+$resultTicket=mysqli_query($dbc,$queryTicket);          
+$rowTicket=mysqli_fetch_array($resultTicket,MYSQLI_ASSOC);  
+
+$statusName=$rowTicket['statusName'];
+$status=$rowTicket['status'];
+$summary=$rowTicket['summary'];
+$details=$rowTicket['details'];
+$priority=$rowTicket['priority'];
+$dueDate=$rowTicket['dueDate'];
+$dateCreated=$rowTicket['dateCreated'];
+$lastUpdateDate=$rowTicket['lastUpdateDate'];
+$description=$rowTicket['description'];
+$creatorUserID=$rowTicket['creatorUserID'];
+$assigneeUserID=$rowTicket['assigneeUserID'];
+$serviceType=$rowTicket['serviceType'];
+$comment=$rowTicket['comment'];
+
+$queryUser="SELECT * FROM thesis.employee WHERE UserID = '{$creatorUserID}';";
+$resultUser=mysqli_query($dbc,$queryUser);          
+$rowUser=mysqli_fetch_array($resultUser,MYSQLI_ASSOC);  
+
+$name=$rowUser['name'];
+
+if(isset($_POST['submit'])){
+        
+        $status=$_POST['status'];
+        $priority=$_POST['priority'];
+        $assigned=$_POST['assigned'];
+        if($assigned == 0) $assigned = "NULL";
+
+        $queryTicket =  "UPDATE `thesis`.`ticket` SET `status` = '{$status}', `assigneeUserID` = {$assigned}, `lastUpdateDate` = now(), `priority` = '{$priority}' 
+                        WHERE (`ticketID` = '{$ticketID}');";
+        $resultTicket = mysqli_query($dbc, $queryTicket);
+
+    }
+
 ?>
 <head>
     <meta charset="utf-8">
@@ -48,6 +90,14 @@ require_once("db/mysql_connect.php");
         <!--main content-->
         <section id="main-content">
             <section class="wrapper">
+                <?php
+                    if (isset($_POST['submit'])){
+
+                        echo "<div style='text-align:center' class='alert alert-success'>
+                                <strong><h3>Form Submitted!</h3></strong>
+                              </div>";
+                    }
+                ?>
                 <!-- page start-->
 
                 <div class="row">
@@ -55,8 +105,31 @@ require_once("db/mysql_connect.php");
                         <div class="col-sm-8">
                             <section class="panel">
                                 <header style="padding-bottom:20px"class="panel-heading wht-bg">
-                                    <h4 class="gen-case" style="float:right"> <a class="btn btn-danger">Closed</a></h4>
-									<h4>Service Request</h3>
+                                    <h4 class="gen-case" style="float:right">
+                                    <?php
+                                        if($statusName=='Open'){
+                                            echo "<a class='btn btn-success'>{$statusName}</a>";
+                                        }
+                                        elseif($statusName=='Closed'){
+                                            echo "<a class='btn btn-danger'>{$statusName}</a>";
+                                        }
+                                        elseif($statusName=='Assigned'){
+                                            echo "<a class='btn btn-info'>{$statusName}</a>";
+                                        }
+                                        
+                                        elseif($statusName=='In Progress'||$statusName=='Waiting for Parts'){
+                                            echo "<a class='btn btn-warning'>{$statusName}</a>";
+                                        }
+                                        elseif($statusName=='Transferred'){
+                                            echo "<a class='btn btn-primary'>{$statusName}</a>";
+                                        }
+                                        elseif($statusName=='Escalated'){
+                                            echo "<a class='btn btn-default'>{$statusName}</a>";
+                                        }
+
+                                    ?>
+                                    </h4>
+                                    <h4>Service Request</h3>
                                 </header>
                                 <div class="panel-body ">
 
@@ -69,12 +142,13 @@ require_once("db/mysql_connect.php");
                                                 <strong>me</strong>
                                             </div>
                                             <div class="col-md-4">
-                                                <p class="date">12-12-2012</p><br><br>
+                                                <p class="date"><?php echo $dateCreated; ?></p><br><br>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="view-mail">
-                                        <p>Need help</p>
+                                        <p><b>Summary: </b><?php echo $summary;?></p>
+                                        <p><b>Details: </b><?php echo $details;?></p>
                                     </div>
                                 </div>
                             </section>
@@ -93,61 +167,101 @@ require_once("db/mysql_connect.php");
                                         <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
                                             <div class="form-group ">
                                                 <div class="form-group ">
-                                                <label for="category" class="control-label col-lg-3" >Category</label>
+                                                <label for="category" class="control-label col-lg-3">Category</label>
                                                 <div class="col-lg-6">
-                                                    <select class="form-control m-bot15" disabled>
-                                                        <option selected="selected">Category</option>
+                                                    <select class="form-control m-bot15" readonly>
+                                                       <?php
+                                                                //do selected and form submitted
+                                                            $query="SELECT * FROM thesis.ref_servicetype";
+                                                            $result=mysqli_query($dbc,$query);
+                                                            while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                            
+                                                                if ($serviceType == $row['id']){
+                                                                    echo "<option value='{$row['id']}' selected>{$row['serviceType']}</option>";
+                                                                }
+                                                                else{
+                                                                    echo "<option value='{$row['id']}'>{$row['serviceType']}</option>";
+                                                                }
+                                                                
+                                                            }
+                                                            
+                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
                                                 
                                                 <label for="status" class="control-label col-lg-3">Status</label>
                                                 <div class="col-lg-6">
-                                                    <select class="form-control m-bot15" disabled>
-                                                        <option>Assigned</option>
-                                                        <option>In Progress</option>
-                                                        <option>Transferred</option>
-                                                        <option>Waiting For Parts</option>
-                                                        <option>Escalated</option>
-                                                        <option>Closed</option>
+                                                    <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status'])) echo $_POST['status']; ?>" disabled >
+                                                        <?php
+                                                                //do selected and form submitted
+                                                            $queryb="SELECT * FROM thesis.ref_ticketstatus";
+                                                            $resultb=mysqli_query($dbc,$queryb);
+                                                            while($rowb=mysqli_fetch_array($resultb,MYSQLI_ASSOC)){
+                                                            
+                                                                if ($status == $rowb['ticketID']){
+                                                                    echo "<option value='{$rowb['ticketID']}' selected>{$rowb['status']}</option>";
+                                                                }
+                                                                else{
+                                                                    echo "<option value='{$rowb['ticketID']}'>{$rowb['status']}</option>";
+                                                                }
+                                                                
+                                                            }
+                                                            
+                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
 
                                             <div class="form-group ">
-                                                <label for="priority" class="control-label col-lg-3" >Priority</label>
+                                                <label for="priority" class="control-label col-lg-3">Priority</label>
                                                 <div class="col-lg-6">
-                                                    <select class="form-control m-bot15" disabled>
-                                                        <option>Low</option>
-                                                        <option>Medium</option>
-                                                        <option	>High</option>
-                                                    </select>
+                                                    <select class="form-control m-bot15" name="priority" value="<?php if (isset($_POST['priority'])) echo $_POST['priority']; ?>" disabled>
+                                                            <option <?php if($priority == 'Low') echo "selected"; ?> value='Low'>Low</option>
+                                                            <option <?php if($priority == 'Medium') echo "selected"; ?> value='Medium'>Medium</option>
+                                                            <option <?php if($priority == 'High') echo "selected"; ?> value='High'>High</option>
+                                                            <option <?php if($priority == 'Urgent') echo "selected"; ?> value='Urgent'>Urgent</option>
+                                                        </select>
                                                 </div>
                                             </div>
 
                                             <div class="form-group ">
                                                 <label for="assign" class="control-label col-lg-3">Assigned</label>
                                                 <div class="col-lg-6">
-                                                    <select class="form-control m-bot15" disabled>
-                                                        <option selected="selected">Eng. bfdfgrtrh</option>
-                                                    </select>
+                                                    <select class="form-control m-bot15" name="assigned" value="<?php if (isset($_POST['assigned'])) echo $_POST['assigned']; ?>" disabled>
+                                                            <option value='NULL'>None</option>
+                                                            <?php
+                                                                $query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer'";
+                                                                $result3=mysqli_query($dbc,$query3);
+                                                                
+                                                                while($row3=mysqli_fetch_array($result3,MYSQLI_ASSOC)){
+                                                                    if($assigneeUserID == $row3['UserID']){
+                                                                        echo "<option value='{$row3['UserID']}' selected>{$row3['fullname']}</option>";
+                                                                    }
+                                                                    else{
+                                                                        echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
+                                                                    }
+                                                                }                                       
+                                                            
+                                                            ?>
+
+                                                        </select>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="control-label col-lg-3">Due Date</label>
                                                 <div class="col-lg-6">
-                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" disabled type="text" />
+                                                    <input class="form-control form-control-inline input-medium default-date-picker" name="dueDate" size="10" type="datetime" value="<?php echo $dueDate ?>" readonly />
                                                 </div>
                                             </div>
-                                        </form>
                                     </div>
 
                                 </div>
                             </section>
                         </div>
-		
-						<div class="col-sm-12">
+        
+                        <div class="col-sm-12">
                             <section class="panel">
                                 <div class="panel-body ">
 
@@ -155,13 +269,15 @@ require_once("db/mysql_connect.php");
                                         <h4>Comments (if needed)</h4>
                                     </div>
                                     <div class="view-mail">
-										<textarea class="form-control" style="resize:none" rows="5" disabled></textarea>
+                                        <textarea class="form-control" style="resize:none" rows="5" disabled><?php echo $comment;?></textarea>
                                     </div>
                                 </div>
                             </section>
-							<button class="btn btn-danger" onclick="window.history.back()" >Back</button></a>
+                            <!-- <button onclick="return confirm('Update ticket?')" class="btn btn-success">Send</button></a> -->
+                            <a ><button onclick="window.history.back()" type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
                         </div>
 
+                                        </form>
 
                     </div>
                 </div>

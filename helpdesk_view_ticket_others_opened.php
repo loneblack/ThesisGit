@@ -257,7 +257,6 @@ if(isset($_POST['submit'])){
                                                     <input class="form-control form-control-inline input-medium default-date-picker" name="dueDate" size="10" type="datetime" value="<?php echo $dueDate ?>" readonly />
                                                 </div>
                                             </div>
-                                        </form>
                                     </div>
 
                                 </div>
@@ -276,10 +275,11 @@ if(isset($_POST['submit'])){
                                     </div>
                                 </div>
                             </section>
-                            <button onclick="return confirm('Send and close ticket?')" class="btn btn-success">Send</button></a>
+                            <button type="submit" name="submit" id="submit" class="btn btn-success" data-dismiss="modal">Send</button> 
                             <a ><button onclick="window.history.back()" type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
                         </div>
 
+                                        </form>
 
                     </div>
                 </div>

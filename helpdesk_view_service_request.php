@@ -33,13 +33,13 @@ if(isset($_POST['submit'])){
         if($assigned == 0) $assigned = "NULL";
 
         if($serviceTypeID == '29'){
-             $queryTicket =  "INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `summary`, `details`, `serviceType`, `others`) VALUES ('{$status}', {$assigned}, '{$userID}', now(), now(), '{$dateNeed}', '{$priority}', '{$summary}', '{$details}', '{$serviceTypeID}', '{$others}');";
+             $queryTicket =  "INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `summary`, `details`, `serviceType`, `others`, `service_id`) VALUES ('{$status}', {$assigned}, '{$userID}', now(), now(), '{$dateNeed}', '{$priority}', '{$summary}', '{$details}', '{$serviceTypeID}', '{$others}', '{$id}');";
             $resultTicket = mysqli_query($dbc, $queryTicket);
 
         }
         else{
 
-            $queryTicket =  "INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `summary`, `details`, `serviceType`) VALUES ('{$status}', {$assigned}, '{$userID}', now(), now(), '{$dateNeed}', '{$priority}', '{$summary}', '{$details}', '{$serviceTypeID}');";
+            $queryTicket =  "INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `summary`, `details`, `serviceType`, `service_id`) VALUES ('{$status}', {$assigned}, '{$userID}', now(), now(), '{$dateNeed}', '{$priority}', '{$summary}', '{$details}', '{$serviceTypeID}', '{$id}');";
             $resultTicket = mysqli_query($dbc, $queryTicket);
 
 

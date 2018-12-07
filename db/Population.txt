@@ -544,7 +544,8 @@
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('17', 'Request For Additonal Parts');
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('18', 'Additional Parts Received');
 	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('19', 'Approval Pending');
-	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('20', 'Disapproved');
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('20', 'Disapproved');	
+	INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('21', 'Completed');
 	
 
 

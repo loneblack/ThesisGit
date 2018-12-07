@@ -7,7 +7,7 @@ require_once("db/mysql_connect.php");
 $id = $_GET['id'];
 
 $query = "SELECT t.ticketID, (convert(aes_decrypt(au.firstName, 'Fusion') using utf8)) AS 'firstName' ,(convert(aes_decrypt(au.lastName, 'Fusion')using utf8)) AS 'lastName',
-        lastUpdateDate, dateCreated, dateClosed, dueDate, priority,summary,
+        lastUpdateDate, dateCreated, dateClosed, dueDate, priority,summary, details, others, comment, service_id, 
         t.description, t.serviceType as 'serviceTypeID', st.serviceType,t.status as 'statusID', s.status
         FROM thesis.ticket t
             JOIN user au
@@ -28,6 +28,8 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
     $dueDate = $row['dueDate'];
     $priority = $row['priority'];
     $summary = $row['summary'];
+    $details = $row['details'];
+    $others = $row['others'];
     $description = $row['description'];
     $serviceTypeID = $row['serviceTypeID'];
     $serviceType = $row['serviceType'];
@@ -35,9 +37,31 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
     $status = $row['status'];
     $firstName = $row['firstName'];
     $lastName = $row['lastName'];
+    $comment=$row['comment'];
+    $service_id=$row['service_id'];
     
     
 }
+
+if(isset($_POST['submit'])){
+        
+        $status=$_POST['status'];
+        $priority=$_POST['priority'];
+        $comment=$_POST['comment'];
+
+        if ($status == 7){
+
+            $queryUpdate =  "UPDATE `thesis`.`service` SET `steps` = '11' WHERE (`id` = '{$service_id}');";
+            $resultUpdate = mysqli_query($dbc, $queryUpdate);
+
+        }
+
+        $queryTicket =  "UPDATE `thesis`.`ticket` SET `status` = '{$status}', `priority` = '{$priority}', `comment` = '{$comment}' WHERE (`ticketID` = '{$id}');";
+        $resultTicket = mysqli_query($dbc, $queryTicket);
+
+
+    }
+
 
 ?>
 <head>
@@ -85,6 +109,14 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
         <!--main content-->
         <section id="main-content">
             <section class="wrapper">
+                <?php
+                    if (isset($_POST['submit'])){
+
+                        echo "<div style='text-align:center' class='alert alert-success'>
+                                <strong><h3>Form Submitted!</h3></strong>
+                              </div>";
+                    }
+                ?>
                 <!-- page start-->
 
                 <div class="row">
@@ -111,7 +143,10 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                         </div>
                                     </div>
                                     <div class="view-mail">
-                                        <p><?php echo $description;?></p>
+                                        <div class="view-mail">
+                                        <p><b>Summary: </b><?php echo $summary;?></p>
+                                        <p><b>Details: </b><?php echo $details;?></p>
+                                    </div>
                                     </div>
                                 </div>
                             </section>
@@ -140,13 +175,23 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                 
                                                 <label for="status" class="control-label col-lg-3">Status</label>
                                                 <div class="col-lg-6">
-                                                    <select class="form-control m-bot15">
-                                                        <option <?php if($statusID == '2') echo 'selected="selected"';?>>Assigned</option>
-                                                        <option <?php if($statusID == '3') echo 'selected="selected"';?>>In Progress</option>
-                                                        <option <?php if($statusID == '4') echo 'selected="selected"';?>>Transferred</option>
-                                                        <option <?php if($statusID == '5') echo 'selected="selected"';?>>Waiting For Parts</option>
-                                                        <option <?php if($statusID == '6') echo 'selected="selected"';?>>Escalated</option>
-                                                        <option <?php if($statusID == '7') echo 'selected="selected"';?>>Closed</option>
+                                                    <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status'])) echo $_POST['status']; ?>" required >
+                                                        <?php
+
+                                                            $queryb="SELECT * FROM thesis.ref_ticketstatus";
+                                                            $resultb=mysqli_query($dbc,$queryb);
+                                                            while($rowb=mysqli_fetch_array($resultb,MYSQLI_ASSOC)){
+                                                            
+                                                                if ($statusID == $rowb['ticketID']){
+                                                                    echo "<option value='{$rowb['ticketID']}' selected>{$rowb['status']}</option>";
+                                                                }
+                                                                else{
+                                                                    echo "<option value='{$rowb['ticketID']}'>{$rowb['status']}</option>";
+                                                                }
+                                                                
+                                                            }
+                                                            
+                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -154,7 +199,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                             <div class="form-group ">
                                                 <label for="priority" class="control-label col-lg-3">Priority</label>
                                                 <div class="col-lg-6">
-                                                    <select class="form-control m-bot15">
+                                                    <select class="form-control m-bot15" name="priority" value="<?php if (isset($_POST['priority'])) echo $_POST['priority']; ?>" required>
                                                         <option <?php if($priority == 'Low') echo 'selected="selected"';?>>Low</option>
                                                         <option <?php if($priority == 'Medium') echo 'selected="selected"';?>>Medium</option>
                                                         <option <?php if($priority == 'High') echo 'selected="selected"';?>>High</option>
@@ -177,14 +222,13 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                     <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value=<?php echo "'".$dueDate."'";?> disabled/>
                                                 </div>
                                             </div>
-                                        </form>
                                     </div>
 
                                 </div>
                             </section>
                         </div>
-		
-						<div class="col-sm-12">
+        
+                        <div class="col-sm-12">
                             <section class="panel">
                                 <div class="panel-body ">
 
@@ -192,13 +236,15 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                         <h4>Comments (if needed)</h4>
                                     </div>
                                     <div class="view-mail">
-										<textarea class="form-control" style="resize:none" rows="5"></textarea>
+                                        <textarea class="form-control" style="resize:none" rows="5" name ="comment"><?php echo $comment;?></textarea>
                                     </div>
                                 </div>
                             </section>
-							<button onclick="return confirm('Send and close ticket?')" class="btn btn-success">Send</button></a>
-							<a href="engineer_all_ticket.php"><button class="btn btn-danger">Back</button></a>
+                             <!-- <button onclick="return confirm('Update ticket?')" class="btn btn-success">Send</button></a> -->
+                            <button type="submit" name="submit" id="submit" class="btn btn-success" data-dismiss="modal">Send</button> 
+                            <a ><button onclick="window.history.back()" type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
                         </div>
+                                        </form>
 
 
                     </div>

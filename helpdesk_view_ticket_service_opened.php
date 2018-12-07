@@ -194,7 +194,7 @@ if(isset($_POST['submit'])){
                                                 <div class="col-lg-6">
                                                     <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status'])) echo $_POST['status']; ?>" required >
                                                         <?php
-                                                                //do selected and form submitted
+                                                           
                                                             $queryb="SELECT * FROM thesis.ref_ticketstatus";
                                                             $resultb=mysqli_query($dbc,$queryb);
                                                             while($rowb=mysqli_fetch_array($resultb,MYSQLI_ASSOC)){
@@ -217,11 +217,11 @@ if(isset($_POST['submit'])){
                                                 <label for="priority" class="control-label col-lg-3">Priority</label>
                                                 <div class="col-lg-6">
                                                     <select class="form-control m-bot15" name="priority" value="<?php if (isset($_POST['priority'])) echo $_POST['priority']; ?>" required>
-                                                            <option <?php if($priority == 'Low') echo "selected"; ?> value='Low'>Low</option>
-                                                            <option <?php if($priority == 'Medium') echo "selected"; ?> value='Medium'>Medium</option>
-                                                            <option <?php if($priority == 'High') echo "selected"; ?> value='High'>High</option>
-                                                            <option <?php if($priority == 'Urgent') echo "selected"; ?> value='Urgent'>Urgent</option>
-                                                        </select>
+                                                        <option <?php if($priority == 'Low') echo "selected"; ?> value='Low'>Low</option>
+                                                        <option <?php if($priority == 'Medium') echo "selected"; ?> value='Medium'>Medium</option>
+                                                        <option <?php if($priority == 'High') echo "selected"; ?> value='High'>High</option>
+                                                        <option <?php if($priority == 'Urgent') echo "selected"; ?> value='Urgent'>Urgent</option>
+                                                    </select>
                                                 </div>
                                             </div>
 
