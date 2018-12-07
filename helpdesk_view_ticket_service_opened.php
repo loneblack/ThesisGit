@@ -38,10 +38,11 @@ if(isset($_POST['submit'])){
         $assigned=$_POST['assigned'];
         if($assigned == 0) $assigned = "NULL";
 
-        $queryTicket =  "UPDATE `thesis`.`ticket` SET `status` = '{$status}', `assigneeUserID` = '{$assigned}', `lastUpdateDate` = now(), `priority` = '{$priority}' 
+        $queryTicket =  "UPDATE `thesis`.`ticket` SET `status` = '{$status}', `assigneeUserID` = {$assigned}, `lastUpdateDate` = now(), `priority` = '{$priority}' 
                         WHERE (`ticketID` = '{$ticketID}');";
         $resultTicket = mysqli_query($dbc, $queryTicket);
         //Update status and steps
+
     }
 
 ?>
@@ -103,20 +104,20 @@ if(isset($_POST['submit'])){
                                             echo "<a class='btn btn-success'>{$statusName}</a>";
                                         }
                                         elseif($statusName=='Closed'){
-                                            echo "<a class='btn btn-success'>{$statusName}</a>";
+                                            echo "<a class='btn btn-danger'>{$statusName}</a>";
                                         }
                                         elseif($statusName=='Assigned'){
-                                            echo "<a class='btn btn-success'>{$statusName}</a>";
+                                            echo "<a class='btn btn-info'>{$statusName}</a>";
                                         }
                                         
                                         elseif($statusName=='In Progress'||$statusName=='Waiting for Parts'){
-                                            echo "<a class='btn btn-success'>{$statusName}</a>";
+                                            echo "<a class='btn btn-warning'>{$statusName}</a>";
                                         }
                                         elseif($statusName=='Transferred'){
-                                            echo "<a class='btn btn-success'>{$statusName}</a>";
+                                            echo "<a class='btn btn-primary'>{$statusName}</a>";
                                         }
                                         elseif($statusName=='Escalated'){
-                                            echo "<a class='btn btn-success'>{$statusName}</a>";
+                                            echo "<a class='btn btn-default'>{$statusName}</a>";
                                         }
 
                                     ?>

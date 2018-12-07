@@ -17,7 +17,7 @@
 
 	if(isset($_POST['submit'])){
 		
-		$status=$$_POST['status'];
+		$status=$_POST['status'];
 		$message=null;
 		$category=25;
 		$priority=$_POST['priority'];
@@ -34,7 +34,6 @@
 			$queryTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `summary`, `details`) 
 											VALUES ('{$status}', {$assigned}, '{$PersonRequestedID}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}', '{$summary}', 'Please test the following assets:')";
 			$resultTicket=mysqli_query($dbc,$queryTicket);
-			echo $queryTicket;
 		
 			//get ticket ID of recentyl inserted ticket
 			$queryTicketID="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";

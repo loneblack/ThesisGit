@@ -35,7 +35,7 @@ if(isset($_POST['submit'])){
         $assigned=$_POST['assigned'];
         if($assigned == 0) $assigned = "NULL";
 
-        $queryTicket =  "UPDATE `thesis`.`ticket` SET `status` = '{$status}', `assigneeUserID` = '{$assigned}', `lastUpdateDate` = now(), `priority` = '{$priority}' 
+        $queryTicket =  "UPDATE `thesis`.`ticket` SET `status` = '{$status}', `assigneeUserID` = {$assigned}, `lastUpdateDate` = now(), `priority` = '{$priority}' 
                         WHERE (`ticketID` = '{$ticketID}');";
         $resultTicket = mysqli_query($dbc, $queryTicket);
         //Update status and steps
