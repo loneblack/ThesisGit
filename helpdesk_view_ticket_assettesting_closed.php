@@ -1,6 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+require_once('db/mysql_connect.php');
 
+$userID = $_SESSION['userID'];
+$ticketID=$_GET['id'];
+
+$queryTicket="SELECT *, t.status as 'status', s.status as 'statusName' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.ticketID = '{$ticketID}';";
+$resultTicket=mysqli_query($dbc,$queryTicket);          
+$rowTicket=mysqli_fetch_array($resultTicket,MYSQLI_ASSOC);  
+
+$status=$rowTicket['status'];
+$summary=$rowTicket['summary'];
+$details=$rowTicket['details'];
+$priority=$rowTicket['priority'];
+$dueDate=$rowTicket['dueDate'];
+$dateCreated=$rowTicket['dateCreated'];
+$lastUpdateDate=$rowTicket['lastUpdateDate'];
+$description=$rowTicket['description'];
+$creatorUserID=$rowTicket['creatorUserID'];
+$assigneeUserID=$rowTicket['assigneeUserID'];
+
+$queryUser="SELECT * FROM thesis.employee WHERE UserID = '{$creatorUserID}';";
+$resultUser=mysqli_query($dbc,$queryUser);          
+$rowUser=mysqli_fetch_array($resultUser,MYSQLI_ASSOC);  
+
+$name=$rowUser['name'];
+
+if(isset($_POST['submit'])){
+        
+        $status=$_POST['status'];
+        $priority=$_POST['priority'];
+        $assigned=$_POST['assigned'];
+        if($assigned == 0) $assigned = "NULL";
+
+        $queryTicket =  "UPDATE `thesis`.`ticket` SET `status` = '{$status}', `assigneeUserID` = '{$assigned}', `lastUpdateDate` = now(), `priority` = '{$priority}' 
+                        WHERE (`ticketID` = '{$ticketID}');";
+        $resultTicket = mysqli_query($dbc, $queryTicket);
+        //Update status and steps
+    }
+
+?>
 <head>
     <meta charset="utf-8">
 
@@ -43,12 +84,20 @@
         <!--main content-->
         <section id="main-content">
             <section class="wrapper">
+
+                <?php
+                    if (isset($_POST['submit'])){
+
+                        echo "<div style='text-align:center' class='alert alert-success'>
+                                <strong><h3>Form Submitted!</h3></strong>
+                              </div>";
+                    }
+                ?>
                 <!-- page start-->
-
-
+                <form class="cmxform form-horizontal " id="signupForm" method="post" action=""> 
                 <div class="row">
                     <div class="col-sm-12">
-						
+                        
                         <div class="row">
                             <div class="col-sm-9">
                                 <section class="panel">
@@ -56,28 +105,28 @@
                                         Asset Testing Checklist
                                     </header>
                                     <div class="panel-body">
-									
-										<div class="panel-body">
-											<section>
-											<label><h5>Name:</h5></label><input type="text" class="form-control" disabled>
-											<br>
-											<label><h5>Office Building: </h5></label><input type="text" class="form-control" disabled>
-											<br>
-											<label><h5>Room Number: </h5></label><input type="text" class="form-control" disabled>
-											
-											</section>
-										</div>
+                                    
+                                        <div class="panel-body">
+                                            <section>
+                                            <label><h5>Name:</h5></label><input type="text" value="<?php echo $name ;?>" class="form-control" disabled>
+                                            <br>
+                                            
+                                            </section>
+                                        </div>
 
-										<section>
-											<p>Check those which are functioning as intended.
-											If any damage or defect is found, please specify it in the comments.</p>
-											<br>
-										</section>
+                                        <section>
+                                            <p>Check those which are functioning as intended.
+                                            If any damage or defect is found, please specify it in the comments.
+                                            Leave both checkbox and comment blank for escalation.</p>
+                                            <br>
+                                        </section>
+                                        
                                         <section id="unseen">
+                                        
                                             <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                 <thead>
                                                     <tr>
-														<th></th>
+                                                        <th></th>
                                                         <th>Property Code</th>
                                                         <th>Brand</th>
                                                         <th>Model</th>
@@ -85,129 +134,140 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-														<td style="text-align:center"><input type='checkbox' class='form-check-input' disabled></td>
-                                                        <td style="text-align:center">TBLT-001</td>
-                                                        <td style="text-align:center">Apple Tablet</td>
-                                                        <td style="text-align:center">iPad</td>
-														<th><input style="text" class="form-control" disabled></th>
-                                                        
-                                                    </tr>
-                                                    <tr >
-														<td style="text-align:center"><input type='checkbox' class='form-check-input' disabled></td>
-                                                        <td style="text-align:center; width:50px;">PC-0023</td>
-                                                        <td style="text-align:center">Windows</td>
-                                                        <td style="text-align:center">Windows 10</td>
-                                                        <th><input style="text" class="form-control" disabled></th>
-                                                    </tr>
-													<tr>
-                                                        <td style="text-align:center"><input type='checkbox' class='form-check-input' disabled></td>
-														<td style="text-align:center">PHN-0312</td>
-                                                        <td style="text-align:center">Smartphone</td>
-                                                        <td style="text-align:center">Samsung Galaxy J7 Pro</td>
-                                                        <th><input style="text" class="form-control" disabled></th>
-                                                    </tr>
+                                                <?php
+                                                    
+                                                    $query="SELECT b.name as 'brand',propertyCode,am.description as 'item',am.itemSpecification
+                                                            FROM thesis.ticketedasset t
+                                                            join asset a on t.assetID=a.assetID
+                                                            join assetmodel am on a.assetModel=am.assetModelID
+                                                            join ref_brand b on am.brand = b.brandID
+                                                            WHERE ticketID = '{$ticketID}';";
+                                                    $result=mysqli_query($dbc,$query);
+                                                    while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                        echo "<tr>
+                                                                <td style='text-align:center'><input type='checkbox' class='form-check-input' disabled></td>
+                                                                <td style='text-align:center'>{$row['propertyCode']}</td>
+                                                                <td style='text-align:center'>{$row['brand']}</td>
+                                                                <td style='text-align:center'>{$row['item']}</td>
+                                                                <td><input style='text' class='form-control' disabled></td>
+                                                            </tr>";
+                                                    }
+                                                    
+                                                ?>
+
                                                 </tbody>
                                             </table>
-											
-											
-											
+                                            
+                                            
+                                            
 
                                             <div>
-                                                <a href="engineer_all_ticket.php"><button type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
+                                                <button type="submit" name="submit" id="submit" class="btn btn-success" data-dismiss="modal" disabled>Send</button> 
+                                                <a ><button onclick="window.history.back()" type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
                                             </div>
 
                                         </section>
                                     </div>
                                 </section>
                             </div>
-							
-							
-							<div class="col-sm-3">
-								<section class="panel">
-									<div class="panel-body">
-										<ul class="nav nav-pills nav-stacked labels-info ">
-											<li>
-												<h4>Properties</h4>
-											</li>
-										</ul>
-										<div class="form">
-											<form class="cmxform form-horizontal " id="signupForm" method="post" action="">
-												<div class="form-group ">
-													<div class="form-group ">
-														<label style="padding-left:22px" for="category" class="control-label col-lg-4">Category</label>
-														<div class="col-lg-8" style="padding-right:30px">
-															<select class="form-control m-bot15" disabled>
-																<option selected="selected">Repair</option>
-																<option>Repair</option>
-																<option>Maintenance</option>
-																<option>Replacement</option>
-															</select>
-														</div>
-													</div>
+                            
+                            
+                            <div class="col-sm-3">
+                                <section class="panel">
+                                    <div class="panel-body">
+                                        <ul class="nav nav-pills nav-stacked labels-info ">
+                                            <li>
+                                                <h4>Properties</h4>
+                                            </li>
+                                        </ul>
+                                        <div class="form">
+                                            
+                                                <div class="form-group ">
+                                                    <div class="form-group ">
+                                                        <label style="padding-left:22px" for="category" class="control-label col-lg-4">Category</label>
+                                                        <div class="col-lg-8" style="padding-right:30px">
+                                                            <select class="form-control m-bot15" name="category" readonly>
+                                                                <option value = '25'>Repair</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
-													<label for="status" class="control-label col-lg-4">Status</label>
-													<div class="col-lg-8">
-														<select class="form-control m-bot15" disabled>
-															<option>Assigned</option>
-															<option>In Progress</option>
-															<option selected="selected">Transferred</option>
-															<option>Escalated</option>
-															<option>Waiting For Parts</option>
-															<option>Closed</option>
-														</select>
-													</div>
-												</div>
+                                                    <label for="status" class="control-label col-lg-4">Status</label>
+                                                    <div class="col-lg-8">
+                                                        <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status'])) echo $_POST['status']; ?>" disabled >
+                                                            <?php
+                                                                    //do selected and form submitted
+                                                                $queryb="SELECT * FROM thesis.ref_ticketstatus";
+                                                                $resultb=mysqli_query($dbc,$queryb);
+                                                                while($rowb=mysqli_fetch_array($resultb,MYSQLI_ASSOC)){
+                                                                
+                                                                    if ($status == $rowb['ticketID']){
+                                                                        echo "<option value='{$rowb['ticketID']}' selected>{$rowb['status']}</option>";
+                                                                    }
+                                                                    else{
+                                                                        echo "<option value='{$rowb['ticketID']}'>{$rowb['status']}</option>";
+                                                                    }
+                                                                    
+                                                                }
+                                                                
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
 
-												<div class="form-group ">
-													<label for="priority" class="control-label col-lg-4">Priority</label>
-													<div class="col-lg-8">
-														<select class="form-control m-bot15" disabled>
-															<option selected="selected">Low</option>
-															<option>Medium</option>
-															<option>High</option>
-															<option>Urgent</option>
-														</select>
-													</div>
-												</div>
+                                                <div class="form-group ">
+                                                    <label for="priority" class="control-label col-lg-4">Priority</label>
+                                                    <div class="col-lg-8">
+                                                        <select class="form-control m-bot15" name="priority" value="<?php if (isset($_POST['priority'])) echo $_POST['priority']; ?>" disabled>
+                                                            <option <?php if($priority == 'Low') echo "selected"; ?> value='Low'>Low</option>
+                                                            <option <?php if($priority == 'Medium') echo "selected"; ?> value='Medium'>Medium</option>
+                                                            <option <?php if($priority == 'High') echo "selected"; ?> value='High'>High</option>
+                                                            <option <?php if($priority == 'Urgent') echo "selected"; ?> value='Urgent'>Urgent</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
 
-												<div class="form-group ">
-													<label for="assign" class="control-label col-lg-4">Escalate To</label>
-													<div class="col-lg-8">
-														<select class="form-control m-bot15" disabled>
-															<option selected="selected">Eng. Marvin Lao</option>
-															<option>Eng. Marvin Lao</option>
-															<option>Eng. Marvin Lao</option>
-															<option>Eng. Marvin Lao</option>
-															<option>Eng. Marvin Lao</option>
-															<option>Eng. Marvin Lao</option>
-														</select>
-													</div>
-												</div>
+                                                <div class="form-group ">
+                                                    <label for="assign" class="control-label col-lg-4">Assign To</label>
+                                                    <div class="col-lg-8">
+                                                        <select class="form-control m-bot15" name="assigned" value="<?php if (isset($_POST['assigned'])) echo $_POST['assigned']; ?>" disabled>
+                                                            <option value='NULL'>None</option>
+                                                            <?php
+                                                                $query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer'";
+                                                                $result3=mysqli_query($dbc,$query3);
+                                                                
+                                                                while($row3=mysqli_fetch_array($result3,MYSQLI_ASSOC)){
+                                                                    if($assigneeUserID == $row3['UserID']){
+                                                                        echo "<option value='{$row3['UserID']}' selected>{$row3['fullname']}</option>";
+                                                                    }
+                                                                    else{
+                                                                        echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
+                                                                    }
+                                                                }                                       
+                                                            
+                                                            ?>
 
-												<div class="form-group">
-													<label class="control-label col-lg-4">Due Date</label>
-													<div class="col-lg-8">
-														<input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018" disabled />
-													</div>
-												</div>
+                                                        </select>
+                                                    </div>
+                                                </div>
 
-												<div class="form-group">
-													<label class="control-label col-lg-4">Repair Date *</label>
-													<div class="col-lg-8">
-														<input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="10-13-2018" disabled required />
-													</div>
-												</div>
-											</form>
-										</div>
-
-									</div>
-								</section>
-							</div>
-							
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Due Date</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control form-control-inline input-medium default-date-picker" name="dueDate" size="10" type="datetime" value="<?php echo $dueDate ?>" readonly />
+                                                    </div>
+                                                </div>
+                                            
+                                        </div>
+                                        
+                                    </div>
+                                </section>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
+                 </form>
                 <!-- page end-->
             </section>
         </section>
@@ -231,50 +291,10 @@
     <script src="js/scripts.js"></script>
 
     <script type="text/javascript">
-        // Shorthand for $( document ).ready()
-        $(function() {
-
-        });
-		
-        function addTest() {
-            var row_index = 0;
-            var isRenderd = false;
-
-            $("td").click(function() {
-                row_index = $(this).parent().index();
-
-            });
-
-            var delayInMilliseconds = 300; //1 second
-
-            setTimeout(function() {
-
-                appendTableRow(row_index);
-            }, delayInMilliseconds);
-
-
-
-        }
-
-        var appendTableRow = function(rowCount) {
-            var cnt = 0
-            var tr = "<tr>" +
-                "<td style=''></td>" +
-                "<td></td>" +
-                "<td></td>" +
-                "<td>" +
-				"<div>" +
-				"<label class='form-inline'>" +
-				"<input type='checkbox' class='form-check-input' hidden><input style='width:300px' type='text' class='form-control'></label></div>" +
-                "</td>" +
-				"<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
-                "</tr>";
-            $('#tableTest tbody tr').eq(rowCount).after(tr);
-        }
     </script>
-	
-	
-	
+    
+    
+    
 
 </body>
 
