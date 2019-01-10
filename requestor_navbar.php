@@ -17,7 +17,7 @@
                                 <span>Create New Request</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="requestor_service_request_form.php">Service</a></li>
+                                <li><a href="requestor_service_request_form.php">Repair</a></li>
                                 <li><a href="requestor_donation_request_form.php">Donation</a></li>
                                 <li><a href="requestor_request_for_procurement_service_material.php">Request to Purchase an Asset</a></li>
 								<li><a href="requestor_service_equipment_request.php">Borrow an Asset</a></li>

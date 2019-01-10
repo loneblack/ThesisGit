@@ -72,6 +72,8 @@ $_SESSION['count'] = 0;
                                                         unset($_SESSION['submitMessage']);
                                                     }
                                                 ?>
+
+                                                <!--
                                                 <section>
                                                     <h4>User Location Information</h4>
                                                     <div class="form-group ">
@@ -104,6 +106,8 @@ $_SESSION['count'] = 0;
                                                             </select>
                                                         </div>
                                                     </div>
+
+                                                    
                                                     <div class="form-group ">
                                                         <label for="recipient" class="control-label col-lg-3">Recipient</label>
                                                         <div class="col-lg-6">
@@ -117,6 +121,7 @@ $_SESSION['count'] = 0;
                                                         </div>
                                                     </div>
                                                 </section>
+                                                -->
                                                 <hr>
 
                                                 <section>
@@ -127,6 +132,31 @@ $_SESSION['count'] = 0;
                                                             <div class="form-group">
                                                                 <textarea class="form-control" rows="5" id="comment" name= "comment" style="resize: none" required></textarea>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+
+                                                <section>
+                                                    <h4>Endorsement (if applicable)</h4>
+
+                                                    <div class="form-group ">
+                                                        <label for="recipient" class="control-label col-lg-3">Recipient</label>
+                                                        <div class="col-lg-6">
+                                                            <input class="form-control" id="recipient" name="recipient" type="text" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group ">
+                                                        <label for="idNum" class="control-label col-lg-3">ID Number</label>
+                                                        <div class="col-lg-6">
+                                                            <input class="form-control" id="idNum" name="idNum" type="text" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group ">
+                                                        <label for="dateNeeded" class="control-label col-lg-3">Date needed</label>
+                                                        <div class="col-lg-6">
+                                                            <input class="form-control" id="dateNeeded" name="dateNeeded" type="datetime-local" />
                                                         </div>
                                                     </div>
                                                 </section>

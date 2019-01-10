@@ -102,7 +102,7 @@ $result1 = mysqli_query($dbc, $sql1);
                             <div class="col-lg-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        Service Request Form
+                                        Repair Request Form
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
@@ -118,40 +118,9 @@ $result1 = mysqli_query($dbc, $sql1);
                                                             unset($_SESSION['submitMessage']);
                                                         }
                                                     ?>
-                                                    <label for="serviceType" class="control-label col-lg-3">Type of Service Requested</label>
                                                     <div class="col-lg-6">
-                                                        <select name="serviceType" onchange='checkvalue(this.value)' class="form-control m-bot15" required>
-                                                            <option value="">Select Service Type</option>
-                                                            <option value="1">Access regulation/permission</option>
-                                                            <option value="2">Activation/Deactivation of MyLasalle account</option>
-                                                            <option value="3">Add/remove email address in mailing list</option>
-                                                            <option value="4">Computer lab management</option>
-                                                            <option value="5">Computer Set-up</option>
-                                                            <option value="6">Creation/Deletion of mailing list</option>
-                                                            <option value="7">Data extraction/Report generation/Printing</option>
-                                                            <option value="8">Data/Information update</option>
-                                                            <option value="9">Forms/Charts design</option>
-                                                            <option value="10">IT asset management</option>
-                                                            <option value="11">Network management</option>
-                                                            <option value="12">Photoshoot/Virtual tour</option>
-                                                            <option value="13">Print publishing</option>
-                                                            <option value="14">Program access request</option>
-                                                            <option value="15">Request for replacement unit</option>
-                                                            <option value="16">Security management</option>
-                                                            <option value="17">Server management</option>
-                                                            <option value="18">Service/Backup unit provisions</option>
-                                                            <option value="19">Stand by support Engineer</option>
-                                                            <option value="20">System development/Revision</option>
-                                                            <option value="21">Transfer and installation of application software</option>
-                                                            <option value="22">Web graphics publishing</option>
-                                                            <option value="23">Web site creation</option>
-                                                            <option value="24">Website updating</option>
-                                                            <option value="27">Repair Asset</option>
-                                                            <option value="29">Others</option>
-                                                        </select>
-                                                        <input type="text" class="form-control" name="others" id="others" placeholder="Specify request" style='display:none' />
 
-                                                        <div id="asset" style="display:none">
+                                                        <div id="asset" style="padding-left:400px">
                                                             ** Place Asset on Right for Repair
                                                             <select class="multi-select" multiple="" name = "assets[]" id="my_multi_select3">
                                                                 <?php
