@@ -72,7 +72,7 @@ require_once("db/mysql_connect.php");
                                                     <th>Date Needed</th>
                                                     <td style='display: none'>StatusID</td>
                                                     <th>Status</th>
-                                                    <th>Description</th>
+                                                    <!-- <th>Description</th> -->
                                                 </tr>
                                             </thead>
 
@@ -107,7 +107,7 @@ require_once("db/mysql_connect.php");
                                                             echo "<td><span class='label label-warning'>{$row['statusName']}</span></td>";
                                                         }
                                                         if($row['statusID'] == '2'){//ongoing
-                                                            echo "<td><span class='label label-info'>{$row['statusName']}</span></td>";
+                                                            echo "<td><span class='label label-info'>{$row['step']}</span></td>";
                                                         }
                                                         if($row['statusID'] == '3'){//completed
                                                             echo "<td><span class='label label-success'>{$row['statusName']}</span></td>";
@@ -115,7 +115,7 @@ require_once("db/mysql_connect.php");
                                                         if($row['statusID'] == '6'){//disapproved
                                                             echo "<td><span class='label label-danger'>{$row['statusName']}</span></td>";
                                                         }
-														echo "<td>{$row['step']}</td>";
+														//echo "<td>{$row['step']}</td>";
 
                                                           $count++;
                                                     }
@@ -147,7 +147,7 @@ require_once("db/mysql_connect.php");
                                                             echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
                                                         }
                                                         if($row['statusID'] == '2'){//ongoing
-                                                            echo "<td><span class='label label-info'>{$row['description']}</span></td>";
+                                                            echo "<td><span class='label label-info'>{$row['name']}</span></td>";
                                                         }
                                                         if($row['statusID'] == '3'){//completed
                                                             echo "<td><span class='label label-success'>{$row['description']}</span></td>";
@@ -156,7 +156,7 @@ require_once("db/mysql_connect.php");
                                                             echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
                                                         }
 
-                                                        echo "<td>{$row['name']}</td>";
+                                                        //echo "<td>{$row['name']}</td>";
                                                         echo "</tr>";
 
                                                           $count++;
@@ -195,7 +195,7 @@ require_once("db/mysql_connect.php");
                                                             echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
                                                         }
                                                         if($row['statusID'] == '2'){//ongoing
-                                                            echo "<td><span class='label label-info'>{$row['description']}</span></td>";
+                                                            echo "<td><span class='label label-info'>{$row['name']}</span></td>";
                                                         }
                                                         if($row['statusID'] == '3'){//completed
                                                             echo "<td><span class='label label-success'>{$row['description']}</span></td>";
@@ -205,10 +205,10 @@ require_once("db/mysql_connect.php");
                                                         }
 
 
-                                                        echo "<td>{$row['name']}</td>";
+                                                        //echo "<td>{$row['name']}</td>";
                                                         echo "</tr>";
 
-                                                          $count++;
+                                                        $count++;
                                                     }
 
                                                     
@@ -246,7 +246,7 @@ require_once("db/mysql_connect.php");
                                                             echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
                                                         }
                                                         if($row['statusID'] == '2'){//ongoing
-                                                            echo "<td><span class='label label-info'>{$row['description']}</span></td>";
+                                                            echo "<td><span class='label label-info'>{$row['name']}</span></td>";
                                                         }
                                                         if($row['statusID'] == '3'){//completed
                                                             echo "<td><span class='label label-success'>{$row['description']}</span></td>";
@@ -256,7 +256,7 @@ require_once("db/mysql_connect.php");
                                                         }
 
 
-                                                        echo "<td>{$row['name']}</td>";
+                                                        //echo "<td>{$row['name']}</td>";
                                                         echo "</tr>";
 
                                                           $count++;
@@ -275,7 +275,7 @@ require_once("db/mysql_connect.php");
                                                     <th>Date Needed</th>
                                                     <td style='display: none'>StatusID</td>
                                                     <th>Status</th>
-                                                    <th>Description</th>
+                                                    <!-- <th>Description</th> -->
                                                 </tr>
                                             </tfoot>
                                         </table>
