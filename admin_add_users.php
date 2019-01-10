@@ -21,6 +21,10 @@
         
         $department=$_POST['department'];
         
+        $building=$_POST['building'];
+        
+        $room=$_POST['room'];
+        
         $position=$_POST['position'];
         
         $number=$_POST['number'];
@@ -60,8 +64,14 @@
                 $userID = $row['id'];
             }
             
+            $query4="INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('".$building."', '".$room."');";
+            $result4=mysqli_query($dbc,$query4);
             
-            $query3="INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`) VALUES ('".$department."', '".$firstname." ".$lastname."', '".$position."', '".$number."', '".$email."', '".$userID."');";
+            $query5 = "SELECT MAX(FloorAndRoomID) AS `max` FROM floorandroom;";
+            $result5 =mysqli_query($dbc,$query5);
+            $frID = mysqli_fetch_array($result5, MYSQLI_ASSOC);
+            
+            $query3="INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`,`FloorAndRoomID`) VALUES ('".$department."', '".$firstname." ".$lastname."', '".$position."', '".$number."', '".$email."', '".$userID."', '".$frID['max']."');";
             $result3=mysqli_query($dbc,$query3);
 			
 			echo "<script type='text/javascript'>alert('Success');</script>"; // Show modal
@@ -161,12 +171,43 @@
                                             </div>
                                             
                                             <div class="form-group ">
-                                                <label for="lastname" class="control-label col-lg-3">Office</label>
+                                                <label for="lastname" class="control-label col-lg-3">Department</label>
                                                 <div class="col-lg-6">
                                                     <select class="form-control m-bot15" name="department" value="<?php if (isset($_POST['department']) && !$flag) echo $_POST['department']; ?>" required>
                                                         <option value="" disabled selected>Select Department</option>
-                                                        <option value="1">Student</option>
-                                                        <option value="2">Accounting</option>
+                                                        <?php
+																		
+																		$sql = "SELECT * FROM thesis.department;";
+
+                                                                        $result = mysqli_query($dbc, $sql);
+
+                                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                        {   
+                                                                            echo "<option value ={$row['DepartmentID']}>";
+                                                                            echo "{$row['name']}</option>";
+                                                                        }
+																	?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group ">
+                                                <label for="lastname" class="control-label col-lg-3">Building</label>
+                                                <div class="col-lg-6">
+                                                    <select class="form-control m-bot15" name="building" value="<?php if (isset($_POST['building']) && !$flag) echo $_POST['building']; ?>" required>
+                                                        <option value="" disabled selected>Select Building</option>
+                                                        <?php
+																		
+																		$sql = "SELECT * FROM thesis.building;";
+
+                                                                        $result = mysqli_query($dbc, $sql);
+
+                                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                        {   
+                                                                            echo "<option value ={$row['BuildingID']}>";
+                                                                            echo "{$row['name']}</option>";
+                                                                        }
+												        ?>
                                                     </select>
                                                 </div>
                                             </div>
