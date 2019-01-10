@@ -161,13 +161,20 @@
                                             </div>
                                             
                                             <div class="form-group ">
-                                                <label for="lastname" class="control-label col-lg-3">Department</label>
+                                                <label for="lastname" class="control-label col-lg-3">Office</label>
                                                 <div class="col-lg-6">
                                                     <select class="form-control m-bot15" name="department" value="<?php if (isset($_POST['department']) && !$flag) echo $_POST['department']; ?>" required>
                                                         <option value="" disabled selected>Select Department</option>
                                                         <option value="1">Student</option>
                                                         <option value="2">Accounting</option>
                                                     </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group ">
+                                                <label for="lastname" class="control-label col-lg-3">Room</label>
+                                                <div class="col-lg-6">
+                                                    <input type="text" class="form-control" id="room" name="room" value="<?php if (isset($_POST['room']) && !$flag) echo $_POST['room']; ?>" required>
                                                 </div>
                                             </div>
                                             
