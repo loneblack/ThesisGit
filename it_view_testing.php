@@ -102,7 +102,7 @@
 					$result2=mysqli_query($dbc,$query2);
 					
 					//UPDATE ASSET STATUS
-					$queryProp="UPDATE `thesis`.`asset` SET `assetStatus`='4' WHERE `assetID`='{$row0['assetID']}'";
+					$queryProp="UPDATE `thesis`.`asset` SET `assetStatus`='7' WHERE `assetID`='{$row0['assetID']}'";
 					$resultProp=mysqli_query($dbc,$queryProp);
 					
 					$totalCost=$totalCost+$row0['totalCost'];
