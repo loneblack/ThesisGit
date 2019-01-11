@@ -199,10 +199,10 @@
 																																		
 															
 															 //Borrow
-                                                            $query="SELECT *, t.name as 'stepName', e.name as 'Requestor' FROM thesis.request_borrow r 
+                                                            $query="SELECT *, t.name as 'stepName', CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as 'Requestor' FROM thesis.request_borrow r 
                                                                       JOIN ref_status s ON r.statusID = s.statusID
                                                                       JOIN ref_steps t ON r.steps = t.id
-                                                                      JOIN employee e ON r.personresponsibleID = e.UserID;";
+                                                                      join user u on r.personresponsibleID=u.UserID;";
                                                             $result=mysqli_query($dbc,$query);
                                                             while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
                                                                 echo "<tr> 
