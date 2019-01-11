@@ -314,9 +314,10 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
 																																		
 															
 															 //Borrow
-                                                            $query="SELECT * FROM thesis.request_borrow r 
+                                                            $query="SELECT *,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor` FROM thesis.request_borrow r 
                                                                       JOIN ref_status s ON r.statusID = s.statusID
-                                                                      JOIN ref_steps t ON r.steps = t.id;";
+                                                                      JOIN ref_steps t ON r.steps = t.id 
+																	  join user u on r.personresponsibleID=u.UserID;";
                                                             $result=mysqli_query($dbc,$query);
                                                             while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
                                                                 echo "<tr> 
@@ -340,7 +341,7 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                                                 echo "
                                                                     <td>Borrow</td>
                                                                     <td>{$row['name']}</td>
-                                                                    <td></td>
+                                                                    <td>{$row['requestor']}</td>
                                                                     <td>{$row['dateCreated']}</td>
                                                                 </tr>";
                                                                 
