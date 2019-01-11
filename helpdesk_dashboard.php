@@ -251,6 +251,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                                     <th class="hidden-phone">Status</th>
                                                 </tr>
                                             </tfoot>
+                                        </table>
                                     </section>
                                 </div>
                             </section>

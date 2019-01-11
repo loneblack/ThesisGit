@@ -118,6 +118,7 @@ $result1 = mysqli_query($dbc, $sql1);
                                                             unset($_SESSION['submitMessage']);
                                                         }
                                                     ?>
+                                                    <!--
                                                     <div class="col-lg-6">
 
                                                         <div id="asset" style="padding-left:400px">
@@ -140,15 +141,10 @@ $result1 = mysqli_query($dbc, $sql1);
                                                             </select>
                                                         </div>
                                                     </div>
+-->
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="details" class="control-label col-lg-3">Summary</label>
-                                                    <div class="col-lg-6">
-                                                        <input class=" form-control" id="summary" name="summary" type="input" maxlength = "45" required />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="details" class="control-label col-lg-3">Details</label>
+                                                    <label for="details" class="control-label col-lg-3">Description of the Problem</label>
                                                     <div class="col-lg-6">
                                                         <textarea class="form-control" rows="5" name="details" style="resize:none" required></textarea>
                                                     </div>
@@ -160,14 +156,35 @@ $result1 = mysqli_query($dbc, $sql1);
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="endDate" class="control-label col-lg-3">End date</label>
+                                                    <label for="dateNeeded" class="control-label col-lg-3"> </label>
                                                     <div class="col-lg-6">
-                                                        <input class=" form-control" id="endDate" name="endDate" type="datetime-local" required />
+                                                        <table class="table table-bordered table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th></th>
+                                                                    <th>Category</th>
+                                                                    <th>Property Code</th>
+                                                                    <th>Brand</th>
+                                                                    <th>Model</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><input type="checkbox"></td>
+                                                                    <td>Laptop</td>
+                                                                    <td>PC-0001</td>
+                                                                    <td>Samsung</td>
+                                                                    <td>GTX-1080</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        
+                                                        
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-3 col-lg-6">
-                                                        <button class="btn btn-primary" type="submit">Save</button>
+                                                        <button class="btn btn-primary" type="submit">Send</button>
                                                         <a href="requestor_dashboard.php"><button class="btn btn-default" type="button">Cancel</button></a>
                                                     </div>
                                                 </div>
