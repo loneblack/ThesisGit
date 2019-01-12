@@ -172,7 +172,7 @@
                                                                 <td style='display: none'>{$rowStep['testingID']}</td>
                                                                 <td>{$count}</td>
                                                                 <td>{$rowStep['purpose']}</td>
-                                                                <td>Asset Testing</td>
+                                                                <td>Borrow</td>
                                                                 <td>{$rowStep['startDate']}</td>";
 
                                                         if($rowStep['description']=="Pending"){ echo "<td><label class='label label-warning'>{$rowStep['description']}</label></td>"; }
