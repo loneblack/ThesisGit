@@ -311,7 +311,7 @@ require_once("db/mysql_connect.php");
                     var cell = row.getElementsByTagName("td")[2];
                     var requestType = cell.textContent;
                     
-					var cell2 = row.getElementsByTagName("td")[7];
+					var cell2 = row.getElementsByTagName("td")[6];
                     var step = cell2.textContent;
 					
                     if(requestType == 'Asset Request'){

@@ -57,6 +57,11 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 // Insertion to ticket
     
     if(isset($_POST['submit'])){
+		
+		//GET ASSET TEST DATA
+		$queryAssTest="SELECT * FROM thesis.assettesting where borrowID='{$id}'";
+		$resultAssTest=mysqli_query($dbc,$queryAssTest);
+		$rowAssTest=mysqli_fetch_array($resultAssTest, MYSQLI_ASSOC);
         
         $message=null;
         $status=$_POST['status'];
@@ -67,21 +72,29 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         if(!isset($message)){
 
             if($assigned=='0'){
-                $querya="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`) VALUES ('{$status}', '{$_SESSION['userID']}', now(), now(), '{$startDate}', '{$priority}', '27', '{$summary}', '{$description}', '{$details}')";
+                $querya="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`) VALUES ('{$status}', '{$_SESSION['userID']}', now(), now(), '{$startDate}', '{$priority}', '25', 'Test the selected assets for borrow', 'Test the selected assets for borrow', 'Test the selected assets for borrow')";
                 $resulta=mysqli_query($dbc,$querya);
             }
             else{
-                $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$startDate}', '{$priority}', '27', '{$summary}', '{$description}', '{$details}')";
+                $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$startDate}', '{$priority}', '25', 'Test the selected assets for borrow', 'Test the selected assets for borrow', 'Test the selected assets for borrow')";
                 $resulta=mysqli_query($dbc,$querya);
             }
         
             $queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
             $resultaa=mysqli_query($dbc,$queryaa);
             $rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
+			
+			//ADD TEST ID
+			$queryTestID="UPDATE `thesis`.`ticket` SET `testingID`='{$rowAssTest['testingID']}' WHERE `ticketID`='{$rowaa['ticketID']}'";
+            $resultTestID=mysqli_query($dbc,$queryTestID);
+			
+			//GET ASSET TEST DETAILS
+			$queryAssTestDet="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$rowAssTest['testingID']}'";
+            $resultAssTestDet=mysqli_query($dbc,$queryAssTestDet);
+			
+            while ($rowAssTestDet = mysqli_fetch_array($resultAssTestDet, MYSQLI_ASSOC)){
 
-            for ($i=0; $i < count($assets); $i++) { 
-
-                $queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`, `checked`) VALUES ('{$rowaa['ticketID']}', '{$assets[$i]}', '0');";
+                $queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`, `checked`) VALUES ('{$rowaa['ticketID']}', '{$rowAssTestDet['asset_assetID']}', '0');";
                 $resultaaaa=mysqli_query($dbc,$queryaaaa);
             }
 
