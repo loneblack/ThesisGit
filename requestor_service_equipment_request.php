@@ -5,7 +5,15 @@ session_start();
   require_once("db/mysql_connect.php");
   $_SESSION['count'] = 0;
   $_SESSION['previousPage'] = "requestor_service_equipment_request.php";
+  $userID = $_SESSION['userID'];
 
+  $sql = "SELECT userType FROM thesis.user where UserID = 9";
+  $result = mysqli_query($dbc, $sql);
+
+	while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+	{
+		$userTypeID = $row['userType'];
+	}
 ?>
 
 <head>
@@ -173,28 +181,34 @@ session_start();
                                                         <input class="form-control" id="purpose" name="purpose" type="text" />
                                                     </div>
                                                 </div>
-                                                <div class="form-group ">
-                                                    <label for="building" class="control-label col-lg-3">Building</label>
-                                                    <div class="col-lg-6">
-                                                        <select name="buildingID" class="form-control m-bot15" onChange="getRooms(this.value)" required>
-                                                            <option value =''>Select building</option>
-                                                            <?php
-
-                                                            $sql = "SELECT * FROM thesis.building;";
-
-                                                            $result = mysqli_query($dbc, $sql);
-
-                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                            {
-                                                                
-                                                                echo "<option value ={$row['BuildingID']}>";
-                                                                echo "{$row['name']}</option>";
-
-                                                            }
-                                                           ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
+												
+												<?php
+												if($userTypeID != 8)
+													{
+												?>
+													<div class="form-group ">
+														<label for="building" class="control-label col-lg-3">Building</label>
+														<div class="col-lg-6">
+															<select name="buildingID" class="form-control m-bot15" onChange="getRooms(this.value)" required>
+																<option value =''>Select building</option>
+																<?php
+																$sql = "SELECT * FROM thesis.building;";
+																$result = mysqli_query($dbc, $sql);
+																while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+																{
+																	
+																	echo "<option value ={$row['BuildingID']}>";
+																	echo "{$row['name']}</option>";
+																}
+															   ?>
+															</select>
+														</div>
+													</div>
+                                                <?php
+													}
+												?>
+												
+												
                                                 <div class="form-group">
                                                     <label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
                                                     <div class="col-lg-6">

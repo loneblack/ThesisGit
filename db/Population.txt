@@ -10,6 +10,7 @@
 	INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('5', 'Requestor');
 	INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('6', 'Procurement');
 	INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('7', 'Director');
+	INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('8', 'Student');
 
 	-- building
 	INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('1', 'Angelo King International Center');
