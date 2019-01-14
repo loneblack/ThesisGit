@@ -208,15 +208,21 @@ session_start();
 													}
 												?>
 												
-												
-                                                <div class="form-group">
-                                                    <label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
-                                                    <div class="col-lg-6">
-                                                        <select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15">
-                                                            <option valu=''>Select floor & room</option>
-                                                        </select>
+												<?php
+                                                if($userTypeID != 8)
+                                                    {
+                                                ?>
+                                                    <div class="form-group">
+                                                        <label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
+                                                        <div class="col-lg-6">
+                                                            <select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15">
+                                                                <option valu=''>Select floor & room</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                <?php
+                                                    }
+                                                ?>
                                                 <hr>
                                                 <div class="container-fluid">
                                                     <h5>**Note: Quantity dropdown is based on how many assets that are currently available.</h5>
