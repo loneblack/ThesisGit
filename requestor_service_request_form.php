@@ -143,16 +143,11 @@ $result1 = mysqli_query($dbc, $sql1);
                                                     </div>
 -->
                                                 </div>
+                                                <h4>Instructions: Write down a summary of the issue with the asset that needs to be repaired and on the table check the asset that needs to be repaired</h4>
                                                 <div class="form-group ">
                                                     <label for="details" class="control-label col-lg-3">Description of the Problem</label>
                                                     <div class="col-lg-6">
                                                         <textarea class="form-control" rows="5" name="details" style="resize:none" required></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="dateNeeded" class="control-label col-lg-3">Date needed</label>
-                                                    <div class="col-lg-6">
-                                                        <input class="form-control" id="dateNeeded" name="dateNeeded" type="datetime-local" required />
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
