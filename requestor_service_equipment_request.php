@@ -80,6 +80,10 @@ session_start();
                                                     unset($_SESSION['submitMessage']);
                                                 }
                                             ?>
+                                             <h4>Instructions: Place the item that you would like to borrow on the equipment then select the quantity that you would like to borrow. To add multiple items, press the add button on the right hand side of the table.</h4>
+                                            
+                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_equipment_request_DB.php">
+<!--
                                             <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_equipment_request_DB.php">
                                                 <div class="form-group ">
                                                     <label class="control-label col-lg-3">Affiliation</label>
@@ -224,9 +228,12 @@ session_start();
                                                     }
                                                 ?>
                                                 <hr>
+-->
+                                            <br><br>
                                                 <div class="container-fluid">
-                                                    <h5>**Note: Quantity dropdown is based on how many assets that are currently available.</h5>
+                                                    
                                                     <h4>Equipment to be borrowed</h4>
+                                                    <h5>**Note: Quantity dropdown is based on how many assets that are currently available.</h5>
 
                                                     <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                         <thead>
@@ -267,29 +274,10 @@ session_start();
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <hr>
-                                                <div class="container-fluid">
-                                                    <h4>Endorsement (if applicable)</h4>
-                                                    <h5>Kindly fill up both fields if there is a representative.</h5>
-                                                    <div class="form-group ">
-                                                        <label for="representative" class="control-label col-lg-3">Representative</label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" id="representative" name="representative" type="text" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group ">
-                                                        <label for="idNum" class="control-label col-lg-3">ID Number</label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" id="idNum" name="idNum" type="text" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="col-lg-offset-3 col-lg-6">
+                                                        <div class="col-lg-offset-0 col-lg-8">
                                                             <button class="btn btn-primary" type="submit">Save</button>
                                                             <button class="btn btn-default"  onclick="window.history.back();" type="button">Cancel</button>
                                                         </div>
-                                                    </div>
-                                                </div>
                                             </form>
                                         </div>
                                     </div>

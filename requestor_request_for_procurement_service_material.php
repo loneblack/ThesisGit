@@ -122,8 +122,9 @@ $_SESSION['count'] = 0;
                                                     </div>
                                                 </section>
                                                 -->
-                                                <hr>
+<!--                                                <hr>-->
 
+<!--
                                                 <section>
                                                     <h4>Request Details</h4>
                                                     <div class="form-group ">
@@ -163,6 +164,8 @@ $_SESSION['count'] = 0;
                                                 </section>
 
                                                 <hr>
+-->
+                                                 <h4>Instructions: Input the Quantity, Category (type of item) and your preferred specifications. To add another item for purchase, press the add button.</h4>
 
                                                 <section>
                                                     <h4>Requested Services/Materials</h4>
@@ -171,7 +174,7 @@ $_SESSION['count'] = 0;
                                                             <tr>
                                                                 <th>Quantity</th>
                                                                 <th>Category</th>
-                                                                <th>Description</th>
+                                                                <th>Specifications</th>
                                                                 <th>Remove</th>
                                                                 <th>Add</th>
                                                             </tr>
@@ -208,7 +211,7 @@ $_SESSION['count'] = 0;
 
                                                                 <td style="padding-top:5px; padding-bottom:5px">
                                                                     <div class="col-lg-12">
-                                                                        <input class="form-control" type="text" name="description0" id="description0" placeholder="Item description" />
+                                                                        <input class="form-control" type="text" name="description0" id="description0" placeholder="Item specifications" />
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -225,7 +228,7 @@ $_SESSION['count'] = 0;
                                                 </section>
 
                                                 <div class="form-group">
-                                                    <div class="col-lg-offset-3 col-lg-6">
+                                                    <div class="col-lg-offset-0 col-lg-8">
                                                         <button class="btn btn-primary" type="submit" onclick="getData('tblRequest');">Save</button>
                                                         <button class="btn btn-default" type="button">Cancel</button>
                                                     </div>
