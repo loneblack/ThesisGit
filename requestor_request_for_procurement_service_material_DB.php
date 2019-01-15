@@ -6,9 +6,25 @@
 
     $employeeID = 1;
     $userID = $_SESSION['userID'];
+    $buildingID = "";
+    $FloorAndRoomID = ""; 
 
-    $buildingID = $_POST['buildingID'];
-    $FloorAndRoomID = $_POST['FloorAndRoomID'];
+    //get the location from userID
+    $sql = "SELECT * FROM `thesis`.`emplyee` WHERE UserID = '{$userID}';";
+    $result = mysqli_query($dbc, $sql);
+
+    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+        $FloorAndRoomID = $row['FloorAndRoomID'];
+    }
+    // TO DO
+    //get the buildingId from the floor and room ID
+    $sql = "SELECT * FROM `thesis`.`floorandroom` WHERE FloorAndRoomID = '{$FloorAndRoomID}';";
+    $result = mysqli_query($dbc, $sql);
+
+    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+        $FloorAndRoomID = $row['FloorAndRoomID'];
+    }
+    
     $recipient = $_POST['recipient'];
     $dateNeeded = $_POST['dateNeeded'];
     $comment = $_POST['comment'];
