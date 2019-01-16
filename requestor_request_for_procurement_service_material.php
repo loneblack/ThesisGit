@@ -165,7 +165,8 @@ $_SESSION['count'] = 0;
 
                                                 <hr>
 -->
-                                                 <h4>Instructions: Input the Quantity, Category (type of item) and your preferred specifications. To add another item for purchase, press the add button.</h4>
+                                                 <h5>Instructions: Fill up all the fields in the table. If you wish to request for more assets, add another entry to the table.</h5>
+                                                 <hr>
 
                                                 <section>
                                                     <h4>Requested Services/Materials</h4>
@@ -175,6 +176,7 @@ $_SESSION['count'] = 0;
                                                                 <th>Quantity</th>
                                                                 <th>Category</th>
                                                                 <th>Specifications</th>
+                                                                <th>Purpose</th>
                                                                 <th>Remove</th>
                                                                 <th>Add</th>
                                                             </tr>
@@ -212,6 +214,11 @@ $_SESSION['count'] = 0;
                                                                 <td style="padding-top:5px; padding-bottom:5px">
                                                                     <div class="col-lg-12">
                                                                         <input class="form-control" type="text" name="description0" id="description0" placeholder="Item specifications" />
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="col-lg-12">
+                                                                        <input class="form-control" type="text" name="purpose0" id="purpose0" placeholder="Purpose">
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -342,6 +349,12 @@ $_SESSION['count'] = 0;
                     "<input class='form-control' type='text' id='description"+count+"' name ='description"+count+"' placeholder='Item description' />" +
                                         "</div>" +
                                     "</td>" +
+
+"<td style='padding-top:5px; padding-bottom:5px'>" +
+                                        "<div class='col-lg-12'>" +
+                    "<input class='form-control' type='text' id='purpose"+count+"' name ='purpose"+count+"' placeholder='Purpose' />" +
+                                        "</div>" +
+
                                     "<td>" +
         "<button id='remove' class='btn btn-danger' type='button' onClick='removeRow(this)'>Remove</button>" +
                                     "</td>" +
