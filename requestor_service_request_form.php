@@ -140,8 +140,7 @@ $result1 = mysqli_query($dbc, $sql1);
                                                                ?>
                                                             </select>
                                                         </div>
-                                                    </div>
--->
+                                                    </div>-->
                                                 </div>
                                                 <h4>Instructions: Write down a summary of the issue with the asset that needs to be repaired and on the table check the asset that needs to be repaired</h4>
                                                 <div class="form-group ">
@@ -228,7 +227,7 @@ $result1 = mysqli_query($dbc, $sql1);
     <script src="js/jquery.nicescroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
 
-    <script src="js/bootstrap-switch.js"></script>
+    
 
     <script type="text/javascript" src="js/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
     <script type="text/javascript" src="js/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
