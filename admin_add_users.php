@@ -160,7 +160,8 @@
                                                 <div class="col-lg-6">
                                                     <select class="form-control m-bot15" name="usertype" value="<?php if (isset($_POST['usertype']) && !$flag) echo $_POST['usertype']; ?>" required>
                                                         <option value="" disabled selected>Select User Type</option>
-                                                        <option value="1">Student</option>
+                                                        <option value="8">Student</option>
+                                                        <option value="5">Faculty</option>
                                                         <option value="2">IT Office</option>
                                                         <option value="3">Helpdesk</option>
                                                         <option value="6">Procurement</option>

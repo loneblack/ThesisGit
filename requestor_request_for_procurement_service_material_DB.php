@@ -10,22 +10,25 @@
     $FloorAndRoomID = ""; 
 
     //get the location from userID
-    $sql = "SELECT * FROM `thesis`.`emplyee` WHERE UserID = '{$userID}';";
+    $sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = '{$userID}';";
     $result = mysqli_query($dbc, $sql);
 
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         $FloorAndRoomID = $row['FloorAndRoomID'];
     }
+
     // TO DO
     //get the buildingId from the floor and room ID
     $sql = "SELECT * FROM `thesis`.`floorandroom` WHERE FloorAndRoomID = '{$FloorAndRoomID}';";
     $result = mysqli_query($dbc, $sql);
 
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-        $FloorAndRoomID = $row['FloorAndRoomID'];
+        $buildingID = $row['BuildingID'];
     }
     
+
     $recipient = $_POST['recipient'];
+    $idNumber = $_POST['idNumber'];
     $dateNeeded = $_POST['dateNeeded'];
     $comment = $_POST['comment'];
 
@@ -40,9 +43,18 @@
 
     $id = 0;    
 
-    //insertion to request table
-    $sql0 = "INSERT INTO `thesis`.`request` (`description`, `recipient`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`) VALUES ('{$comment}', '{$recipient}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '1');";//status is set to 1 for pending status
-    $result0 = mysqli_query($dbc, $sql0);
+    if(($recipient != "") && ($idNumber  != "")){
+        //insertion to request table
+        $sql0 = "INSERT INTO `thesis`.`request` (`description`, `recipient`, `idNumber`,`employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`) VALUES ('{$comment}', '{$recipient}', '{$idNumber}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '1');";//status is set to 1 for pending status
+        $result0 = mysqli_query($dbc, $sql0);
+        echo $sql0;
+    }
+    else{
+        //insertion to request table
+        $sql0 = "INSERT INTO `thesis`.`request` (`description`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`) VALUES ('{$comment}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '1');";//status is set to 1 for pending status
+        $result0 = mysqli_query($dbc, $sql0);
+        echo $sql0;
+    }
 
     $sql2 = "SELECT * FROM `thesis`.`request` order by requestID DESC LIMIT 1;";
     $result2 = mysqli_query($dbc, $sql2);
@@ -74,5 +86,5 @@
 
   unset($_SESSION['count']);  
 
-  header('Location: '.$header);
+  //header('Location: '.$header);
 ?>

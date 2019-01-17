@@ -124,7 +124,6 @@ $_SESSION['count'] = 0;
                                                 -->
 <!--                                                <hr>-->
 
-<!--
                                                 <section>
                                                     <h4>Request Details</h4>
                                                     <div class="form-group ">
@@ -158,13 +157,12 @@ $_SESSION['count'] = 0;
                                                     <div class="form-group ">
                                                         <label for="idNum" class="control-label col-lg-3">ID Number</label>
                                                         <div class="col-lg-6">
-                                                            <input class="form-control" id="idNum" name="idNum" type="text" />
+                                                            <input class="form-control" id="idNumber" name="idNumber" type="text" />
                                                         </div>
                                                     </div>
                                                 </section>
 
                                                 <hr>
--->
                                                  <h5>Instructions: Fill up all the fields in the table. If you wish to request for more assets, add another entry to the table.</h5>
                                                  <hr>
 

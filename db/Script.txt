@@ -736,6 +736,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   `unitHead` VARCHAR(45) NULL DEFAULT NULL,
   `contactPerson` VARCHAR(70) NULL,
   `recipient` VARCHAR(45) NULL DEFAULT NULL,
+  `idNumber` VARCHAR(45) NULL,
   `employeeID` INT(11) NULL DEFAULT NULL,
   `date` DATETIME NULL DEFAULT NULL,
   `FloorAndRoomID` INT(11) NULL DEFAULT NULL,
