@@ -64,14 +64,14 @@
                 $userID = $row['id'];
             }
             
-            $query4="INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('".$building."', '".$room."');";
-            $result4=mysqli_query($dbc,$query4);
+            //$query4="INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('".$building."', '".$room."');";
+            //$result4=mysqli_query($dbc,$query4);
             
-            $query5 = "SELECT MAX(FloorAndRoomID) AS `max` FROM floorandroom;";
-            $result5 =mysqli_query($dbc,$query5);
-            $frID = mysqli_fetch_array($result5, MYSQLI_ASSOC);
+            //$query5 = "SELECT MAX(FloorAndRoomID) AS `max` FROM floorandroom;";
+            //$result5 =mysqli_query($dbc,$query5);
+            //$frID = mysqli_fetch_array($result5, MYSQLI_ASSOC);
             
-            $query3="INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`,`FloorAndRoomID`) VALUES ('".$department."', '".$firstname." ".$lastname."', '".$position."', '".$number."', '".$email."', '".$userID."', '".$frID['max']."');";
+            $query3="INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`,`FloorAndRoomID`) VALUES ('".$department."', '".$firstname." ".$lastname."', '".$position."', '".$number."', '".$email."', '".$userID."', '".$room."');";
             $result3=mysqli_query($dbc,$query3);
 			
 			echo "<script type='text/javascript'>alert('Success');</script>"; // Show modal
@@ -195,7 +195,7 @@
                                             <div class="form-group ">
                                                 <label for="lastname" class="control-label col-lg-3">Building</label>
                                                 <div class="col-lg-6">
-                                                    <select class="form-control m-bot15" name="building" value="<?php if (isset($_POST['building']) && !$flag) echo $_POST['building']; ?>" required>
+                                                    <select class="form-control m-bot15" id="buildingID" name="building" onChange="getRooms(this.value)" value="<?php if (isset($_POST['building']) && !$flag) echo $_POST['building']; ?>" required>
                                                         <option value="" disabled selected>Select Building</option>
                                                         <?php
 																		
@@ -213,12 +213,21 @@
                                                 </div>
                                             </div>
                                             
-                                            <div class="form-group ">
+											<div class="form-group">
+                                                <label for="floorRoom" class="control-label col-lg-3">Room</label>
+                                                <div class="col-lg-6">
+                                                    <select id="FloorAndRoomID" class="form-control m-bot15" name="room" value="<?php if (isset($_POST['room']) && !$flag) echo $_POST['room']; ?>" required>
+                                                        <option value=''>Select a Room</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+											
+                                            <!-- <div class="form-group ">
                                                 <label for="lastname" class="control-label col-lg-3">Room</label>
                                                 <div class="col-lg-6">
                                                     <input type="text" class="form-control" id="room" name="room" value="<?php if (isset($_POST['room']) && !$flag) echo $_POST['room']; ?>" required>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             
                                             <div class="form-group ">
                                                 <label for="lastname" class="control-label col-lg-3">Position</label>
@@ -294,7 +303,19 @@
     
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
+	<script>
+			function getRooms(val){
+            $.ajax({
+            type:"POST",
+            url:"requestor_getRooms.php",
+            data: 'buildingID='+val,
+            success: function(data){
+                $("#FloorAndRoomID").html(data);
 
+                }
+            });
+        }
+	</script>
 </body>
 
 </html>
