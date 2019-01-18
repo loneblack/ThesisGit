@@ -33,6 +33,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
 $result1 = mysqli_query($dbc, $sql1);
 
+$count = 0;
 ?>
 
 <head>
@@ -118,29 +119,7 @@ $result1 = mysqli_query($dbc, $sql1);
                                                             unset($_SESSION['submitMessage']);
                                                         }
                                                     ?>
-                                                    <!--
-                                                    <div class="col-lg-6">
-
-                                                        <div id="asset" style="padding-left:400px">
-                                                            ** Place Asset on Right for Repair
-                                                            <select class="multi-select" multiple="" name = "assets[]" id="my_multi_select3">
-                                                                <?php
-                                                                    
-                                                                    while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC))
-                                                                    {
-                                                                        
-                                                                        echo "<option value ={$row['assetID']}>";
-                                                                        echo "{$row['propertyCode']} ";
-                                                                        echo "{$row['brand']} ";
-                                                                        echo "{$row['category']} ";
-                                                                        echo "{$row['itemSpecification']} ";
-                                                                        echo "</option>";
-
-                                                                    }
-                                                               ?>
-                                                            </select>
-                                                        </div>
-                                                    </div>-->
+                                                    </div>
                                                 </div>
                                                 <h4>Instructions: Write down a summary of the issue with the asset that needs to be repaired and on the table check the asset that needs to be repaired</h4>
                                                 <div class="form-group ">
@@ -163,13 +142,23 @@ $result1 = mysqli_query($dbc, $sql1);
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <td><input type="checkbox"></td>
-                                                                    <td>Laptop</td>
-                                                                    <td>PC-0001</td>
-                                                                    <td>Samsung</td>
-                                                                    <td>GTX-1080</td>
-                                                                </tr>
+                                                                <?php
+                                                                //echo $sql1;
+                                                                    while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC))
+                                                                    {
+                                                                        $count ++;
+                                                                        echo "<tr>";
+                                                                        echo "<td style='display:none'>{$count}</td>";
+                                                                        echo "<td><input type='checkbox' name='assets[]'' value='{$row['assetID']}'></td>";
+                                                                        echo "<td>{$row['propertyCode']}</td>";
+                                                                        echo "<td>{$row['brand']}</td>";
+                                                                        echo "<td>{$row['category']}</td>";
+                                                                        echo "<td>{$row['itemSpecification']}</td>";
+                                                                        echo "</tr>";
+
+                                                                    }
+
+                                                                ?>
                                                             </tbody>
                                                         </table>
                                                         
@@ -196,23 +185,6 @@ $result1 = mysqli_query($dbc, $sql1);
         <!--main content end-->
 
     </section>
-
-    <script>
-        function checkvalue(val) {
-            if (val === "29") {
-                document.getElementById('others').style.display = 'block';
-                document.getElementById('asset').style.display = 'none';
-            }
-            if (val === "27") {
-                document.getElementById('asset').style.display = 'block';
-                document.getElementById('others').style.display = 'none';
-            }
-            if (val != "29" && val != "27") {
-                document.getElementById('others').style.display = 'none';
-                document.getElementById('asset').style.display = 'none';
-            }
-        }
-    </script>
 
     <!-- WAG GALAWIN PLS LANG -->
 
