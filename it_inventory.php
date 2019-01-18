@@ -94,9 +94,9 @@
                                                                         </thead>
                                                                         <tbody>
 																			<?php
-																				$queryInv="SELECT i.assetCategoryID,rac.name as `assetCat`,i.floorLevel,i.ceilingLevel, count(IF(a.assetStatus = 1, a.assetID, null)) as `stockOnHand`,count(IF(a.assetStatus = 2, a.assetID, null)) as `borrowed`, count(IF(a.assetStatus = 2 or a.assetStatus = 1, a.assetID, null)) as `totalQty` FROM thesis.inventory i join ref_assetcategory rac on i.assetCategoryID=rac.assetCategoryID
-																							 join assetmodel am on i.assetCategoryID=am.assetCategory
-																							 join asset a on am.assetModelID=a.assetModel
+																				$queryInv="SELECT i.assetCategoryID,rac.name as `assetCat`,i.floorLevel,i.ceilingLevel, count(IF(a.assetStatus = 1, a.assetID, null)) as `stockOnHand`,count(IF(a.assetStatus = 2, a.assetID, null)) as `borrowed`, count(IF(a.assetStatus = 2 or a.assetStatus = 1, a.assetID, null)) as `totalQty` FROM thesis.inventory i left join ref_assetcategory rac on i.assetCategoryID=rac.assetCategoryID
+																							 left join assetmodel am on i.assetCategoryID=am.assetCategory
+																							 left join asset a on am.assetModelID=a.assetModel
 																							 group by i.assetCategoryID";
 																				$resultInv=mysqli_query($dbc, $queryInv);
 																				while($rowInv=mysqli_fetch_array($resultInv, MYSQLI_ASSOC)){
