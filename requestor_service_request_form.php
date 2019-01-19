@@ -109,6 +109,7 @@ $count = 0;
                                         <div class="form" method="post">
                                             <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_request_form_DB.php">
                                                 <div class="form-group ">
+                                                    <div>
                                                     <?php
                                                         if (isset($_SESSION['submitMessage'])){
 
@@ -122,14 +123,16 @@ $count = 0;
                                                     </div>
                                                 </div>
                                                 <h4>Instructions: Write down a summary of the issue with the asset that needs to be repaired and on the table check the asset that needs to be repaired</h4>
-                                                <div class="form-group ">
+                                                <hr>
+                                                <div class="form-group">
                                                     <label for="details" class="control-label col-lg-3">Description of the Problem</label>
                                                     <div class="col-lg-6">
                                                         <textarea class="form-control" rows="5" name="details" style="resize:none" required></textarea>
                                                     </div>
                                                 </div>
+
                                                 <div class="form-group ">
-                                                    <label for="dateNeeded" class="control-label col-lg-3"> </label>
+                                                    <label for="dateNeeded" class="control-label col-lg-3">Item details</label>
                                                     <div class="col-lg-6">
                                                         <table class="table table-bordered table-striped">
                                                             <thead>
