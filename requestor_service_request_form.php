@@ -131,6 +131,13 @@ $count = 0;
                                                     </div>
                                                 </div>
 
+                                                 <div class="form-group">
+                                                    <label for="dateNeeded" class="control-label col-lg-3">Date Needed</label>
+                                                    <div class="col-lg-6">
+                                                        <input type="date" onload="checkDate();" class="form-control" rows="5" id="dateNeeded" name="dateNeeded" required>
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group ">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Item details</label>
                                                     <div class="col-lg-6">
@@ -188,6 +195,15 @@ $count = 0;
         <!--main content end-->
 
     </section>
+
+    <script>
+        function checkDate(){
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementsByName("dateNeeded")[0].setAttribute('min', today);
+
+
+        }
+    </script>
 
     <!-- WAG GALAWIN PLS LANG -->
 
