@@ -61,30 +61,38 @@
                                                 <div class="col-sm-12">
                                                     <section class="panel">
                                                         <form>
-                                                            <div class="col-lg-6">
-                                                            <label>Select Month: </label>
-                                                            <select class="form-control input-sm">
-                                                                <option value="0">Select Month</option>
-                                                                <option value="1">January</option>
-                                                                <option value="2">February</option>
-                                                                <option value="3">March</option>
-                                                                <option value="4">April</option>
-                                                                <option value="5">May</option>
-                                                                <option value="6">June</option>
-                                                                <option value="7">July</option>
-                                                                <option value="8">August</option>
-                                                                <option value="9">September</option>
-                                                                <option value="10">October</option>
-                                                                <option value="11">November</option>
-                                                                <option value="12">December</option>
-                                                            </select>
+                                                            <div class="form-group">
+                                                                <label class="col-sm-3 control-label col-lg-3" for="inputSuccess">Select Month</label>
+                                                                <div class="col-lg-6">
+                                                                    <select class="form-control input-sm m-bot15">
+                                                                        <option value="0">Select Month</option>
+                                                                        <option value="1">January</option>
+                                                                        <option value="2">February</option>
+                                                                        <option value="3">March</option>
+                                                                        <option value="4">April</option>
+                                                                        <option value="5">May</option>
+                                                                        <option value="6">June</option>
+                                                                        <option value="7">July</option>
+                                                                        <option value="8">August</option>
+                                                                        <option value="9">September</option>
+                                                                        <option value="10">October</option>
+                                                                        <option value="11">November</option>
+                                                                        <option value="12">December</option>
+                                                                    </select>
                                                                 </div>
+                                                            </div>
                                                             <button type="submit" class="btn btn-success">Submit</button>
                                                         </form>
                                                         <div class="panel-body">
-                                                            <center><h3>Information Technology Services Office</h3></center>
-                                                            <center><h3>Repair Report</h3></center>
-                                                            <center><h5>For the Month of January</h5></center>
+                                                            <center>
+                                                                <h3>Information Technology Services Office</h3>
+                                                            </center>
+                                                            <center>
+                                                                <h3>Repair Report</h3>
+                                                            </center>
+                                                            <center>
+                                                                <h5>For the Month of January</h5>
+                                                            </center>
                                                             <h4>Week 1</h4>
                                                             <div class="adv-table">
                                                                 <table class="table table-hover general-table">
@@ -113,9 +121,9 @@
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
-                                                            
+
                                                             </div>
-                                                            
+
                                                             <h4>Week 2</h4>
                                                             <div class="adv-table">
                                                                 <table class="table table-hover general-table">
@@ -144,7 +152,7 @@
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
-                                                            
+
                                                             </div>
                                                         </div>
                                                     </section>
@@ -163,31 +171,31 @@
         <!--main content end-->
 
     </section>
-    
+
 
     <!-- WAG GALAWIN PLS LANG -->
-    
+
     <script>
-		function addRowHandlers() {
-			var table = document.getElementById("dynamic-table");
-			var rows = table.getElementsByTagName("tr");
-			for (i = 1; i < rows.length; i++) {
-				var currentRow = table.rows[i];
-				var createClickHandler = function(row) {
-					return function() {
-						var cell = row.getElementsByTagName("td")[0];
-						var idx = cell.textContent;
-						
+        function addRowHandlers() {
+            var table = document.getElementById("dynamic-table");
+            var rows = table.getElementsByTagName("tr");
+            for (i = 1; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function(row) {
+                    return function() {
+                        var cell = row.getElementsByTagName("td")[0];
+                        var idx = cell.textContent;
+
                         window.location.href = "it_inventory_specific.php?=";
-						
-					};
-				};
-				currentRow.onclick = createClickHandler(currentRow);
-			}
-		}
-		window.onload = addRowHandlers();
-	</script>
-    
+
+                    };
+                };
+                currentRow.onclick = createClickHandler(currentRow);
+            }
+        }
+        window.onload = addRowHandlers();
+    </script>
+
     <!--Core js-->
     <script src="js/jquery.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
@@ -201,8 +209,8 @@
 
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
-    
-    
+
+
 
 </body>
 
