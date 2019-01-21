@@ -83,6 +83,7 @@
                                                                     <table class="display table table-bordered table-striped" id="dynamic-table">
                                                                         <thead>
                                                                             <tr>
+																				<th style='display: none'></th>
                                                                                 <th>Check to Replenish</th>
                                                                                 <th>Asset Category</th>
                                                                                 <th>Floor</th>
@@ -101,6 +102,7 @@
 																				$resultInv=mysqli_query($dbc, $queryInv);
 																				while($rowInv=mysqli_fetch_array($resultInv, MYSQLI_ASSOC)){
 																					echo "<tr>
+																						<td style='display: none'>{$rowInv['assetCategoryID']}</td>
 																						<td style='text-align:center'><input type='checkbox' name='forReplenish[]' value='{$rowInv['assetCategoryID']}' ></td>
 																						<td>{$rowInv['assetCat']}</td>
 																						<td>{$rowInv['floorLevel']}</td>
@@ -177,8 +179,7 @@
                     return function() {
                         var cell = row.getElementsByTagName("td")[0];
                         var idx = cell.textContent;
-
-                        window.location.href = "it_inventory_specific.php?=";
+                        window.location.href = "it_inventory_specific.php?id=" + idx;
 
                     };
                 };

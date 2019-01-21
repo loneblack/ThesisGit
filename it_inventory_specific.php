@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+<?php 
+	session_start();
+	require_once('db/mysql_connect.php');
+	$id=$_GET['id'];
+	
+	//Get Asset Cat Name
+	$queryAssetCat="SELECT * FROM thesis.ref_assetcategory where assetCategoryID='{$id}' limit 1";
+	$resultAssetCat=mysqli_query($dbc, $queryAssetCat);
+	$rowAssetCat=mysqli_fetch_array($resultAssetCat, MYSQLI_ASSOC);
+	
+	
+?>
 <html lang="en">
 
 <head>
@@ -54,7 +66,10 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            PANGALAN NG NACLICK NA ASSET
+                                            <?php
+												echo $rowAssetCat['name'];
+											
+											?>
 
                                         </header>
                                         <div class="panel-body">
@@ -77,7 +92,33 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        <tr>
+																		<?php
+																			$queryInvDet="SELECT a.assetID, a.propertyCode,rb.name as `brandName`,am.description as `modelName`,ras.description as `assetStat`,CONCAT(bldg.name,' ',far.floorRoom) AS `location`,e.name as `borrower` FROM thesis.asset a left join assetmodel am on a.assetModel=am.assetModelID
+																							 left join ref_brand rb on am.brand=rb.brandID
+																							 left join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																							 left join borrow_details_item bdi on a.assetID=bdi.assetID
+																							 left join borrow_details bd on bdi.borrow_detailsID=bd.borrow_detailscol
+																							 left join request_borrow rbw on bd.borrowID=rbw.borrowID
+																							 left join floorandroom far on rbw.FloorAndRoomID=far.FloorAndRoomID
+																							 left join building bldg on far.BuildingID=bldg.BuildingID
+																							 left join employee e on rbw.personresponsibleID=e.employeeID
+																							 left join ref_assetstatus ras on a.assetStatus=ras.id
+																							 where am.assetCategory='{$id}'";
+																			$resultInvDet=mysqli_query($dbc, $queryInvDet);
+																			while($rowInvDet=mysqli_fetch_array($resultInvDet, MYSQLI_ASSOC)){
+																				echo "<tr>
+																					<td>{$rowInvDet['propertyCode']}</td>
+																					<td>{$rowInvDet['brandName']}</td>
+																					<td>{$rowInvDet['modelName']}</td>
+																					<td>{$rowInvDet['assetStat']}</td>
+																					<td></td>
+																					<td>{$rowInvDet['location']}</td>
+																					<td>{$rowInvDet['borrower']}</td>
+																					<td class='text-center'><a href='it_checkin.php?id={$rowInvDet['assetID']}'><button class='btn btn-info'>Checkin</button></a></td>
+																				</tr>";
+																			}
+																		?>
+                                                                        <!-- <tr>
                                                                             <td>99994447327</td>
                                                                             <td>Samsung</td>
                                                                             <td>S7 Edge</td>
@@ -116,7 +157,7 @@
                                                                             <td>Default</td>
                                                                             <td></td>
                                                                             <td class="text-center"><a href="it_checkout.php"><button class="btn btn-warning">Checkout</button></a></td>
-                                                                        </tr>
+                                                                        </tr> -->
                                                                     </tbody>
                                                                 </table>
                                                             </div>
