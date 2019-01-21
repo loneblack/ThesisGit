@@ -1,4 +1,23 @@
 <!DOCTYPE html>
+<?php 
+	session_start();
+	require_once('db/mysql_connect.php');
+	$id=$_GET['id'];
+	
+	$queryInvDet="SELECT a.assetID, a.propertyCode,rb.name as `brandName`,am.description as `modelName`,ras.description as `assetStat`,CONCAT(bldg.name,' ',far.floorRoom) AS `location`,e.name as `borrower` FROM thesis.asset a left join assetmodel am on a.assetModel=am.assetModelID
+																							 left join ref_brand rb on am.brand=rb.brandID
+																							 left join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																							 left join borrow_details_item bdi on a.assetID=bdi.assetID
+																							 left join borrow_details bd on bdi.borrow_detailsID=bd.borrow_detailscol
+																							 left join request_borrow rbw on bd.borrowID=rbw.borrowID
+																							 left join floorandroom far on rbw.FloorAndRoomID=far.FloorAndRoomID
+																							 left join building bldg on far.BuildingID=bldg.BuildingID
+																							 left join employee e on rbw.personresponsibleID=e.employeeID
+																							 left join ref_assetstatus ras on a.assetStatus=ras.id
+																							 where a.assetID='{$id}'";
+	$resultInvDet=mysqli_query($dbc, $queryInvDet);
+	$rowInvDet=mysqli_fetch_array($resultInvDet, MYSQLI_ASSOC);
+?>
 <html lang="en">
 
 <head>
@@ -60,7 +79,67 @@
                                 </header>
                                 <div class="panel-body">
                                     <div class="position-center">
-                                        <form class="form-horizontal" role="form">
+										<form class="form-horizontal" role="form">
+                                            <div class="form-group">
+                                                <label for="category" class="col-lg-2 col-sm-2 control-label">User</label>
+                                                <h5><?php echo $rowInvDet['borrower']; ?></h5>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="category" class="col-lg-2 col-sm-2 control-label">Property Code</label>
+                                                <h5><?php echo $rowInvDet['propertyCode']; ?></h5>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="category" class="col-lg-2 col-sm-2 control-label">Brand Name</label>
+                                                <h5><?php echo $rowInvDet['brandName']; ?></h5>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="category" class="col-lg-2 col-sm-2 control-label">Model</label>
+                                                <h5><?php echo $rowInvDet['modelName']; ?></h5>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="model" class="col-lg-2 col-sm-2 control-label">Asset Status</label>
+                                                <div class="col-lg-10">
+                                                    <select class="form-control m-bot15">
+                                                        <option>Select Asset Status</option>
+                                                        <option>Ready To Deploy</option>
+                                                        <option>Broken - Fixable</option>
+                                                        <option>Broken - Not Fixable</option>
+                                                        <option>Disposed</option>
+                                                        <option>Lost/ Stolen</option>
+                                                        <option>Out for Diagnostics</option>
+                                                        <option>Out for Repair</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-2 col-sm-2">Checkout Date</label>
+                                                <div class="col-lg-6">
+                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="" />
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label class="col-lg-2 col-sm-2 control-label">Notes</label>
+                                                <div class="col-lg-10">
+                                                    <textarea class="form-control" rows="5" id="notes" placeholder="Notes"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-2 col-lg-10">
+                                                    <button type="submit" class="btn btn-success">Checkin</button>
+                                                    <button type="submit" class="btn btn-danger">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- <form class="form-horizontal" role="form">
                                             <div class="form-group">
                                                 <label for="category" class="col-lg-2 col-sm-2 control-label">User</label>
                                                 <h5>Marvin Pogi</h5>
@@ -119,7 +198,7 @@
                                                     <button type="submit" class="btn btn-danger">Cancel</button>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </form> -->
                                     </div>
                                 </div>
                             </section>
