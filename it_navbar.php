@@ -51,7 +51,6 @@
                                 <li><a href="it_build_asset.php">Build Asset</a></li>
                                 <li><a href="it_bulk_checkout.php">Bulk Checkout</a></li>
                                 <li><a href="it_bulk_checkin.php">Bulk Checkin</a></li>
-                                <li><a href="it_inventory_report.php">Inventory Report</a></li>
                             </ul>
                         </li>
 						
@@ -85,6 +84,18 @@
                             <ul class="sub">
                                 <li><a href="it_all_supplier.php">All Suppliers</a></li>
                                 <li><a href="it_add_supplier.php">Add Supplier</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa-bar-chart-o"></i>
+                                <span>Reports</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="it_inventory_report.php">Inventory Report</a></li>
+                                <li><a href="it_preventive_maintenance_report.php">Preventive Maintenance Report</a></li>
+                                <li><a href="it_repair_report.php">Repair Report</a></li>
                             </ul>
                         </li>
                         
