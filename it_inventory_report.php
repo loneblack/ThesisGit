@@ -62,41 +62,39 @@
                                                 <div class="col-sm-12">
                                                     <section class="panel">
                                                         <div class="panel-body">
+                                                            <form>
+                                                                <label>Start Date:</label>
+                                                                <input type="date">    
+                                                                <label>End Date:</label>
+                                                                <input type="date">
+                                                                <button type="submit" class="btn btn-success">Submit</button>
+                                                            </form>
+                                                            <center><h3>DLSU Information Technology Office</h3></center>
+                                                            <center><h3>Inventory Report</h3></center>
                                                             <div class="adv-table">
-                                                                <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                                <table class="table table-hover general-table">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th>Asset Category</th>
-                                                                            <th>Action</th>
-                                                                            <th>Quantity</th>
-                                                                            <th>Date</th>
-                                                                            
+                                                                            <th>#</th>
+                                                                            <th>Property Code</th>
+                                                                            <th>Brand</th>
+                                                                            <th>Model</th>
+                                                                            <th>Building</th>
+                                                                            <th>Room No.</th>
+                                                                            <th>Office/ Department</th>
+                                                                            <th>User's Name</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr>
-                                                                            <td>Computer</td>
-                                                                            <td>Purchased</td>
-                                                                            <td>5</td>
-                                                                            <td>12-23-2018 9:00:00 AM</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Computer</td>
-                                                                            <td>Disposed</td>
-                                                                            <td>5</td>
-                                                                            <td>12-23-2018 9:00:00 AM</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Repaired</td>
-                                                                            <td>Purchased</td>
-                                                                            <td>5</td>
-                                                                            <td>12-23-2018 9:00:00 AM</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Computer</td>
-                                                                            <td>Purchased</td>
-                                                                            <td>5</td>
-                                                                            <td>12-23-2018 9:00:00 AM</td>
+                                                                            <td>1</td>
+                                                                            <td>PC-0001</td>
+                                                                            <td>Samsung</td>
+                                                                            <td>GT-000XS</td>
+                                                                            <td>Brother Andrew Gonzales</td>
+                                                                            <td>A1001</td>
+                                                                            <td>College of Computer Studies</td>
+                                                                            <td>Marvin Lao</td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>

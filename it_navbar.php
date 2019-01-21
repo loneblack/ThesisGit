@@ -51,7 +51,7 @@
                                 <li><a href="it_build_asset.php">Build Asset</a></li>
                                 <li><a href="it_bulk_checkout.php">Bulk Checkout</a></li>
                                 <li><a href="it_bulk_checkin.php">Bulk Checkin</a></li>
-                                <li><a href="it_inventory_report.php">Report</a></li>
+                                <li><a href="it_inventory_report.php">Inventory Report</a></li>
                             </ul>
                         </li>
 						
