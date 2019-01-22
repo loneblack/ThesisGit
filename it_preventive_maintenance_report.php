@@ -54,7 +54,7 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Inventory Report
+                                            Preventive Maintenance Report
 
                                         </header>
                                         <div class="panel-body">
@@ -63,20 +63,28 @@
                                                     <section class="panel">
                                                         <div class="panel-body">
                                                             <center><h3>Information Technology Services Office</h3></center>
-                                                            <center><h3>Inventory Report</h3></center>
+                                                            <center><h3>Preventive Maintenance Report</h3></center>
                                                             <center><h5>1/21/2019 12:00:00 AM</h5></center>
+                                                            <center><h5>Andrew Gonzales</h5></center>
+                                                            <center><h5>Checked By: Marvin Lao</h5></center>
+                                                            <h5><b>W-Working/ Maintained   N-Not Working/Defective  R-Repaired/Replaced  N-None/NA  M-Missing</b></h5>
                                                             <div class="adv-table">
                                                                 <table class="table table-hover general-table">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th>#</th>
-                                                                            <th>Property Code</th>
-                                                                            <th>Brand</th>
-                                                                            <th>Model</th>
-                                                                            <th>Building</th>
-                                                                            <th>Room No.</th>
-                                                                            <th>Office/ Department</th>
-                                                                            <th>User's Name</th>
+                                                                            <th>Room #</th>
+                                                                            <th>Projector</th>
+                                                                            <th>Projection Screen</th>
+                                                                            <th>Thin Client/ Nettop</th>
+                                                                            <th>LCD Monitor</th>
+                                                                            <th>Table Top/ Cabinet Tray</th>
+                                                                            <th>Keyboard</th>
+                                                                            <th>Mouse</th>
+                                                                            <th>Speaker</th>
+                                                                            <th>AV Face Plate/ VGA RCA Terminals</th>
+                                                                            <th>RCA Cable</th>
+                                                                            <th>User Guide Poster</th>
+                                                                            <th>Date Checked</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
