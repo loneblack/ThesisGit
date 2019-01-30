@@ -99,6 +99,19 @@
     <link href="css/bootstrap-reset.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
 
+    <link rel="stylesheet" href="css/bootstrap-switch.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-fileupload/bootstrap-fileupload.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-datepicker/css/datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-timepicker/compiled/timepicker.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-colorpicker/css/colorpicker.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+    <link rel="stylesheet" type="text/css" href="js/bootstrap-datetimepicker/css/datetimepicker.css" />
+    <link rel="stylesheet" type="text/css" href="js/jquery-multi-select/css/multi-select.css" />
+    <link rel="stylesheet" type="text/css" href="js/jquery-tags-input/jquery.tagsinput.css" />
+
+    <link rel="stylesheet" type="text/css" href="js/select2/select2.css" />
+
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
 </head>
@@ -162,55 +175,55 @@
                                                         <option value="3">Helpdesk</option>
                                                         <option value="6">Procurement</option>
                                                         <option value="4">Engineer</option>
-														<!-- did some changes in ref_usertype -->
+                                                        <!-- did some changes in ref_usertype -->
                                                     </select>
                                                 </div>
                                             </div>
-                                            
-                                            <div class="form-group ">
-                                                <label for="lastname" class="control-label col-lg-3">Department</label>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-3">Department</label>
                                                 <div class="col-lg-6">
-                                                    <select class="form-control m-bot15" name="department" value="<?php if (isset($_POST['department']) && !$flag) echo $_POST['department']; ?>" required>
-                                                        <option value="" disabled selected>Select Department</option>
-                                                        <?php
-																		
-																		$sql = "SELECT * FROM thesis.department;";
-
-                                                                        $result = mysqli_query($dbc, $sql);
-
-                                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                                        {   
-                                                                            echo "<option value ={$row['DepartmentID']}>";
-                                                                            echo "{$row['name']}</option>";
-                                                                        }
-																	?>
+                                                    <select multiple name="e9" id="e9" style="width:525" class="populate">
+                                                        <optgroup label="Select Department/s">
+                                                            <option value="1">Accounting</option>
+                                                            <option value="2">Computer Studies</option>
+                                                        </optgroup>
                                                     </select>
                                                 </div>
                                             </div>
-											
-                                            
+
+                                            <div class="form-group ">
+                                                <label for="lastname" class="control-label col-lg-3">Office</label>
+                                                <div class="col-lg-6">
+                                                    <select class="form-control m-bot15" name="department" value="" required>
+                                                        <option value="" selected>None</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
                                             <div class="form-group ">
                                                 <label for="lastname" class="control-label col-lg-3">Position</label>
                                                 <div class="col-lg-6">
                                                     <input type="text" class="form-control" id="position" name="position" value="<?php if (isset($_POST['position']) && !$flag) echo $_POST['position']; ?>" required>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="form-group ">
                                                 <label for="lastname" class="control-label col-lg-3">Contact Number</label>
                                                 <div class="col-lg-6">
                                                     <input type="text" class="form-control" id="number" name="number" value="<?php if (isset($_POST['number']) && !$flag) echo $_POST['number']; ?>" required>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="form-group ">
                                                 <label for="lastname" class="control-label col-lg-3">Email</label>
                                                 <div class="col-lg-6">
                                                     <input type="email" class="form-control" id="email" name="email" value="<?php if (isset($_POST['email']) && !$flag) echo $_POST['email']; ?>" required>
                                                 </div>
                                             </div>
-                                            
-                                            
+
+
                                             <div class="form-group ">
                                                 <label for="username" class="control-label col-lg-3">Username</label>
                                                 <div class="col-lg-6">
@@ -254,28 +267,71 @@
 
     <!--Core js-->
     <script src="js/jquery.js"></script>
+    <script src="js/jquery-1.8.3.min.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
     <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/easypiechart/jquery.easypiechart.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
+    <script src="js/jquery.nicescroll.js"></script>
 
-    
+    <script src="js/bootstrap-switch.js"></script>
+
+    <script type="text/javascript" src="js/fuelux/js/spinner.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-fileupload/bootstrap-fileupload.js"></script>
+    <script type="text/javascript" src="js/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
+    <script type="text/javascript" src="js/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-daterangepicker/moment.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+    <script type="text/javascript" src="js/jquery-multi-select/js/jquery.multi-select.js"></script>
+    <script type="text/javascript" src="js/jquery-multi-select/js/jquery.quicksearch.js"></script>
+
+    <script type="text/javascript" src="js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+
+    <script src="js/jquery-tags-input/jquery.tagsinput.js"></script>
+
+    <script src="js/select2/select2.js"></script>
+    <script src="js/select-init.js"></script>
+
+
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
-	<script>
-			function getRooms(val){
+
+    <script src="js/toggle-init.js"></script>
+
+    <script src="js/advanced-form.js"></script>
+    <!--Easy Pie Chart-->
+    <script src="js/easypiechart/jquery.easypiechart.js"></script>
+    <!--Sparkline Chart-->
+    <script src="js/sparkline/jquery.sparkline.js"></script>
+    <!--jQuery Flot Chart-->
+    <script src="js/flot-chart/jquery.flot.js"></script>
+    <script src="js/flot-chart/jquery.flot.tooltip.min.js"></script>
+    <script src="js/flot-chart/jquery.flot.resize.js"></script>
+    <script src="js/flot-chart/jquery.flot.pie.resize.js"></script>
+
+
+    <!--common script init for all pages-->
+    <script src="js/scripts.js"></script>
+    <script>
+        function getRooms(val) {
             $.ajax({
-            type:"POST",
-            url:"requestor_getRooms.php",
-            data: 'buildingID='+val,
-            success: function(data){
-                $("#FloorAndRoomID").html(data);
+                type: "POST",
+                url: "requestor_getRooms.php",
+                data: 'buildingID=' + val,
+                success: function(data) {
+                    $("#FloorAndRoomID").html(data);
 
                 }
             });
         }
-	</script>
+    </script>
 </body>
 
 </html>
