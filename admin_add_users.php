@@ -2,12 +2,11 @@
 
 <?php
 
-	$flag=0;
 	$key = "Fusion";
 	require_once('db/mysql_connect.php');
 	
 	if (isset($_POST['submit'])){
-		
+		$flag=0;
 		$message=NULL;
 		
 		//Firstname 
@@ -16,16 +15,30 @@
 		//Lastname
 		$lastname=$_POST['lastname'];
 		
+		//Fullname
+		$fullname=$firstname." ".$lastname;
+		
 		//User Type
 		$usertype=$_POST['usertype'];
         
-        $department=$_POST['department'];
+		//Dept
+        $departments=$_POST['departments'];
         
+		//Position
         $position=$_POST['position'];
         
+		//number
         $number=$_POST['number'];
         
+		//email
         $email=$_POST['email'];
+		
+		//offices
+		$office=null;
+		
+		if(isset($_POST['office'])){
+			$office=$_POST['office'];
+		}
 		
 		//User Name
 		
@@ -50,25 +63,29 @@
 		
 		if(!isset($message)){
 			
+			//Add to user
 			$query="INSERT INTO `thesis`.`user`(`username`, `password`, `userType`, `firstName`, `lastName`) VALUES ( AES_ENCRYPT('".$username."', '".$key."'), AES_ENCRYPT('".$password."', '".$key."'), '".$usertype."', AES_ENCRYPT('".$firstname."', '".$key."'), AES_ENCRYPT('".$lastname."', '".$key."'))";
 			$result=mysqli_query($dbc,$query);
             
-            $query2="SELECT MAX(userid) AS 'id' FROM USER";
+			//Get latest user id
+            $query2="SELECT * FROM thesis.user order by UserID desc limit 1";
             $result2=mysqli_query($dbc,$query2);
-            
-            while($row=mysqli_fetch_array($result2, MYSQLI_ASSOC)){
-                $userID = $row['id'];
-            }
-            
-            //$query4="INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('".$building."', '".$room."');";
-            //$result4=mysqli_query($dbc,$query4);
-            
-            //$query5 = "SELECT MAX(FloorAndRoomID) AS `max` FROM floorandroom;";
-            //$result5 =mysqli_query($dbc,$query5);
-            //$frID = mysqli_fetch_array($result5, MYSQLI_ASSOC);
-            
-            $query3="INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`,`FloorAndRoomID`) VALUES ('".$department."', '".$firstname." ".$lastname."', '".$position."', '".$number."', '".$email."', '".$userID."', '".$room."');";
+            $row=mysqli_fetch_array($result2, MYSQLI_ASSOC);
+               
+            //Add to employee
+            $query3="INSERT INTO `thesis`.`employee` (`name`, `position`, `contactNo`, `email`, `UserID`, `officeID`) VALUES ('{$fullname}', '{$position}', '{$number}', '{$email}', '{$row['UserID']}', '{$office}')";
             $result3=mysqli_query($dbc,$query3);
+			
+			//Get latest employee
+			$queryLatEmp="SELECT * FROM thesis.employee order by employeeID desc limit 1";
+            $resultLatEmp=mysqli_query($dbc,$queryLatEmp);
+			$rowLatEmp=mysqli_fetch_array($resultLatEmp, MYSQLI_ASSOC);
+			
+			//INSERT INTO department list
+			foreach($departments as $department){
+				$queryDepList="INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('{$department}', '{$rowLatEmp['employeeID']}')";
+				$resultDepList=mysqli_query($dbc,$queryDepList);
+			}
 			
 			echo "<script type='text/javascript'>alert('Success');</script>"; // Show modal
 			$flag=1;
@@ -183,7 +200,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-3">Department</label>
                                                 <div class="col-lg-6">
-                                                    <select multiple name="e9" id="e9" style="width:525px" class="populate">
+                                                    <select multiple name="departments[]" id="e9" style="width:525px" class="populate">
                                                         <optgroup label="Select Department/s">
 															<?php
 																$queryDept="SELECT * FROM thesis.department";
@@ -202,7 +219,7 @@
                                             <div class="form-group ">
                                                 <label for="lastname" class="control-label col-lg-3">Office</label>
                                                 <div class="col-lg-6">
-                                                    <select class="form-control m-bot15" name="department" value="" required>
+                                                    <select class="form-control m-bot15" name="office" value="<?php if (isset($_POST['office']) && !$flag) echo $_POST['office']; ?>" required>
 														<?php
 																$queryOff="SELECT * FROM thesis.offices";
 																$resultOff=mysqli_query($dbc,$queryOff);
