@@ -167,114 +167,46 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                 <div style="padding-top:55px" class="form" method="post">
 									<form class="cmxform form-horizontal " id="signupForm" method="get" action="">
 										<div class="form-group ">
-											<label for="serviceType" class="control-label col-lg-3">Office/Department/School Organization</label>
+											<label for="deliveryDate" class="control-label col-lg-3"> Date Needed</label>
 											<div class="col-lg-6">
-												<select name="serviceType" class="form-control m-bot15" disabled>
-												</select>
-											</div>
-										</div>
-										<div class="form-group ">
-											<label for="number" class="control-label col-lg-3">Contact No.</label>
-											<div class="col-lg-6">
-												<input class="form-control" rows="5" name="details" style="resize:none" value= type="text" disabled></input>
-											</div>
-										</div>
-										<div class="form-group ">
-											<label for="dateNeeded" class="control-label col-lg-3">Date & time needed</label>
-											<div class="col-lg-6">
-												<input class="form-control" id="dateNeeded" name="dateNeeded" type="text" value=<?php echo '"'.$startDate.'"'; ?> disabled/>
-											</div>
-										</div>
-										<div class="form-group ">
-											<label for="endDate" class="control-label col-lg-3">End date & time</label>
-											<div class="col-lg-6">
-												<input class=" form-control" id="endDate" name="endDate" type="text" value= <?php echo '"'.$endDate.'"' ; ?> disabled/>
-											</div>
-										</div>
-										<div class="form-group ">
-											<label for="purpose" class="control-label col-lg-3">Purpose</label>
-											<div class="col-lg-6">
-												<input class="form-control" id="purpose" name="purpose" type="text" value = <?php echo '"'.$purpose.'"' ; ?> disabled />
-											</div>
-										</div>
-										<div class="form-group ">
-											<label for="building" class="control-label col-lg-3">Building</label>
-											<div class="col-lg-6">
-												<select name="building" class="form-control m-bot15" disabled>
-												<?php
-													echo "<option >".$building."</option>";
-											    ?>
-												</select>
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
-											<div class="col-lg-6">
-												<select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15" disabled>
-													<?php
-													echo "<option >".$floorRoom."</option>";
-											    ?>
-												</select>
+												<input type="date" name="deliveryDate" class="form-control m-bot15" disabled>
 											</div>
 										</div>
 										<hr>
 										<div class="container-fluid">
-											<h4>Equipment to be borrowed</h4>
+											<h4>Equipment to be delivered</h4>
 											
 											<table style="width:670px" class="table table-bordered table-striped table-condensed table-hover" id="tblCustomers" align="center" cellpadding="0" cellspacing="0" border="1">
 												<thead>
 													<tr>
-														<th style="width:500px">Equipment</th>
-														<th style="width:150px">Quantity</th>
+                                                        <th style="width:50px"></th>
+                                                        <th style="width:140px">Property Code</th>
+														<th style="width:150px">Item</th>
+														<th style="width:150px">Model</th>
+                                                        <th style="width:130px">Brand</th>
+                                                        <th style="width:150px">Status</th>
+                                                        <th style="width:130px">Date Delivered</th>
 													</tr>
 												</thead>
 												<tbody>
-													<?php
-                                                        for ($i=0; $i < $count; $i++) { 
-
-                                                            echo 
-                                                            "<tr>
-                                                                <td>
-                                                                    <select class='form-control' disabled >
-                                                                        <option>{$requestedCategory[$i]}</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td>
-                                                                    <select class='form-control m-bot15' disabled required>              
-                                                                        <option>{$requestedQuantity[$i]}</option>
-                                                                    </select>
-                                                                </td>
-                                                               
-                                                            </tr>";
-                                                        }
-
-                                                    ?>
+                                                    <tr>
+                                                        <td style="text-align:center"><input type="checkbox"></td>
+                                                        <td>CP-001</td>
+                                                        <td>Cellphone</td>
+                                                        <td>Galaxy J7 Pro</td>
+                                                        <td>Samsung</td>
+                                                        <td><span class="label label-danger">Not Yet Delivered</span>
+                                                        <th>N/A</th>
+                                                    </tr>
 												</tbody>
 											</table>
 										</div>
-										<hr>
-										<div class="container-fluid">
-											<h4>Endorsement</h4>
-											<div class="form-group ">
-												<label for="representative" class="control-label col-lg-3">Representative</label>
-												<div class="col-lg-6">
-													<input class="form-control" id="representative" name="representative" type="text" value = <?php echo '"'.$personrepresentative.'"' ; ?> disabled />
-												</div>
-											</div>
-											<div class="form-group ">
-												<label for="idNum" class="control-label col-lg-3">ID Number</label>
-												<div class="col-lg-6">
-													<input class="form-control" id="idNum" name="idNum" type="text" value = <?php echo '"'.$personrepresentativeID.'"' ; ?> disabled />
-												</div>
-											</div>
-											<div class="form-group">
-												<div style="padding-left:10px">
-													<a href="helpdesk_all_request.php"><button style="float:left" class="btn btn-default" type="button">Back</button></a>
-												</div>
-											</div>
-										</div>
 									</form>
 								</div>
+                                <div style="padding-left:10px; padding-bottom:10px">
+                                    <button type="submit" name="submit" id="submit" class="btn btn-success" data-dismiss="modal">Deliver</button> 
+                                    <a ><button onclick="window.history.back()" type="button" class="btn btn-default" data-dismiss="modal">Back</button></a>
+                                </div>
                             </section>
 
                         </div>
