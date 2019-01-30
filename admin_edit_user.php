@@ -151,6 +151,17 @@ if (isset($_POST['submit'])){
                                                 </div>
                                             </div>
                                             <div class="form-group ">
+                                                <label class="control-label col-lg-3">Department</label>
+                                                <div class="col-lg-6">
+													<select class="form-control m-bot15" name="department" value="<?php echo $row['department'];  ?>" required>
+                                                        <option value="">Select Department</option>
+                                                        <option value="2">Computer Studies</option>
+                                                        <option value="3">Engineer</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group ">
                                                 <label for="password" class="control-label col-lg-3">Password</label>
                                                 <div class="col-lg-6">
                                                     <input class="form-control " id="password" name="password" type="password" value="<?php echo $row['password'];  ?>" required />

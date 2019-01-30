@@ -21,10 +21,6 @@
         
         $department=$_POST['department'];
         
-        $building=$_POST['building'];
-        
-        $room=$_POST['room'];
-        
         $position=$_POST['position'];
         
         $number=$_POST['number'];
@@ -191,43 +187,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            
-                                            <div class="form-group ">
-                                                <label for="lastname" class="control-label col-lg-3">Building</label>
-                                                <div class="col-lg-6">
-                                                    <select class="form-control m-bot15" id="buildingID" name="building" onChange="getRooms(this.value)" value="<?php if (isset($_POST['building']) && !$flag) echo $_POST['building']; ?>" required>
-                                                        <option value="" disabled selected>Select Building</option>
-                                                        <?php
-																		
-																		$sql = "SELECT * FROM thesis.building;";
-
-                                                                        $result = mysqli_query($dbc, $sql);
-
-                                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                                        {   
-                                                                            echo "<option value ={$row['BuildingID']}>";
-                                                                            echo "{$row['name']}</option>";
-                                                                        }
-												        ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            
-											<div class="form-group">
-                                                <label for="floorRoom" class="control-label col-lg-3">Room</label>
-                                                <div class="col-lg-6">
-                                                    <select id="FloorAndRoomID" class="form-control m-bot15" name="room" value="<?php if (isset($_POST['room']) && !$flag) echo $_POST['room']; ?>" required>
-                                                        <option value=''>Select a Room</option>
-                                                    </select>
-                                                </div>
-                                            </div>
 											
-                                            <!-- <div class="form-group ">
-                                                <label for="lastname" class="control-label col-lg-3">Room</label>
-                                                <div class="col-lg-6">
-                                                    <input type="text" class="form-control" id="room" name="room" value="<?php if (isset($_POST['room']) && !$flag) echo $_POST['room']; ?>" required>
-                                                </div>
-                                            </div> -->
                                             
                                             <div class="form-group ">
                                                 <label for="lastname" class="control-label col-lg-3">Position</label>

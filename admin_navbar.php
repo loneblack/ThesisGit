@@ -20,6 +20,12 @@
                             </ul>
                         </li>
                         <li>
+                            <a href="admin_departments.php">
+                                <i class="fa fa-users"></i>
+                                <span>Departments</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="admin_sy_list.php">
                                 <i class="fa fa-calendar"></i>
                                 <span>School Years</span>
