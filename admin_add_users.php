@@ -22,8 +22,11 @@
 		$usertype=$_POST['usertype'];
         
 		//Dept
-        $departments=$_POST['departments'];
-        
+        $departments=null;
+        if(isset($_POST['$departments'])){
+			$departments=$_POST['departments'];
+		}
+		
 		//Position
         $position=$_POST['position'];
         
@@ -34,11 +37,8 @@
         $email=$_POST['email'];
 		
 		//offices
-		$office=null;
 		
-		if(isset($_POST['office'])){
-			$office=$_POST['office'];
-		}
+		$office=$_POST['office'];
 		
 		//User Name
 		
@@ -73,18 +73,27 @@
             $row=mysqli_fetch_array($result2, MYSQLI_ASSOC);
                
             //Add to employee
-            $query3="INSERT INTO `thesis`.`employee` (`name`, `position`, `contactNo`, `email`, `UserID`, `officeID`) VALUES ('{$fullname}', '{$position}', '{$number}', '{$email}', '{$row['UserID']}', '{$office}')";
-            $result3=mysqli_query($dbc,$query3);
+			
+			if($office=""){
+				$query3="INSERT INTO `thesis`.`employee` (`name`, `position`, `contactNo`, `email`, `UserID`) VALUES ('{$fullname}', '{$position}', '{$number}', '{$email}', '{$row['UserID']}')";
+				$result3=mysqli_query($dbc,$query3);
+			}
+            else{
+				$query3="INSERT INTO `thesis`.`employee` (`name`, `position`, `contactNo`, `email`, `UserID`, `officeID`) VALUES ('{$fullname}', '{$position}', '{$number}', '{$email}', '{$row['UserID']}', '{$office}')";
+				$result3=mysqli_query($dbc,$query3);
+			}
 			
 			//Get latest employee
 			$queryLatEmp="SELECT * FROM thesis.employee order by employeeID desc limit 1";
             $resultLatEmp=mysqli_query($dbc,$queryLatEmp);
 			$rowLatEmp=mysqli_fetch_array($resultLatEmp, MYSQLI_ASSOC);
 			
-			//INSERT INTO department list
-			foreach($departments as $department){
-				$queryDepList="INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('{$department}', '{$rowLatEmp['employeeID']}')";
-				$resultDepList=mysqli_query($dbc,$queryDepList);
+			if(isset($_POST['$departments'])){
+				//INSERT INTO department list
+				foreach($departments as $department){
+					$queryDepList="INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('{$department}', '{$rowLatEmp['employeeID']}')";
+					$resultDepList=mysqli_query($dbc,$queryDepList);
+				}
 			}
 			
 			echo "<script type='text/javascript'>alert('Success');</script>"; // Show modal
@@ -228,7 +237,7 @@
 																}
 															
 														?>
-                                                        <option value="" selected>None</option>
+                                                        <option value='' selected>None</option>
                                                     </select>
                                                 </div>
                                             </div>
