@@ -53,6 +53,17 @@
                                 <li><a href="it_bulk_checkin.php">Bulk Checkin</a></li>
                             </ul>
                         </li>
+
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="glyphicon glyphicon-chevron-right"></i>
+                                <span>Delivery</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="it_delivery_schedule.php">Delivery Schedule</a></li>
+                                <!-- <li><a href="it_brands.php">Add New Delivery</a></li> -->
+                            </ul>
+                        </li>
 						
 						<li class="sub-menu">
                             <a href="javascript:;">
