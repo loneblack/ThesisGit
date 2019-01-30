@@ -183,7 +183,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-3">Department</label>
                                                 <div class="col-lg-6">
-                                                    <select multiple name="e9" id="e9" style="width:525" class="populate">
+                                                    <select multiple name="e9" id="e9" style="width:525px" class="populate">
                                                         <optgroup label="Select Department/s">
                                                             <option value="1">Accounting</option>
                                                             <option value="2">Computer Studies</option>
