@@ -62,36 +62,73 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Assets To Be Delivered
-                                            <span class="tools pull-right">
-                                                <a class="fa fa-plus" href="it_add_brand.php"></a>
-                                            </span>
+                                            Delivery Details
                                         </header>
                                         <div class="panel-body">
                                             <section id="unseen">
+
+                                                <div class="panel-body">
+                                                        <form class="form-inline" role="form">
+                                                            <div class="form-group">
+                                                                <label>Set Delivery Date</label>
+                                                                <input class="form-control" id="dateNeeded" name="dateNeeded" type="date" value="<?php echo date('Y-m-d'); ?>" min="<?php echo date('Y-m-d'); ?>" max="" />
+                                                            </div>
+                                                            <button type="submit" class="btn btn-success">Submit</button>
+                                                        </form>
+                                                </div>
+                                                
+                                                <h3>To Be Delivered: Date Pending</h3>
                                                 <div class="adv-table">
-                                                    <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                    <table class="table table-bordered table-striped table-hover">
                                                         <thead>
                                                             <tr>
-                                                                <th>#</th>
+                                                                <th></th>
+                                                                <th>Property Code</th>
+                                                                <th>Brand</th>
+                                                                <th>Model</th>
                                                                 <th>Delivery Date</th>
                                                                 <th>Status</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-                                                                <td>1</td>
-                                                                <td>No Date Please Set Date</td>
-                                                                <td>Incomplete</td>
+                                                                <th style="text-align:center"><input type="checkbox"></th>
+                                                                <td>PC-19291</td>
+                                                                <td>Samsung</td>
+                                                                <td>PC5x GTX</td>
+                                                                <td>Unknown</td>
+                                                                <td>Delivery Pending</td>
                                                             </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <button type="submit" class="btn btn-success">Received</button>
+                                                </div>
+                                                
+                                                
+                                                <h3>Pending Assets</h3>
+                                                <div class="adv-table">
+                                                    <table class="table table-bordered table-striped table-hover">
+                                                        <thead>
                                                             <tr>
-                                                                <td>2</td>
-                                                                <td>2019/1/1</td>
-                                                                <td>Completed</td>
+                                                                <th>Property Code</th>
+                                                                <th>Brand</th>
+                                                                <th>Model</th>
+                                                                <th>Delivery Date</th>
+                                                                <th>Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>PC-19291</td>
+                                                                <td>Samsung</td>
+                                                                <td>PC5x GTX</td>
+                                                                <td>Unknown</td>
+                                                                <td>Delivery Pending</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
+                                                
                                             </section>
                                         </div>
                                     </section>
@@ -108,26 +145,7 @@
     </section>
 
     <!-- WAG GALAWIN PLS LANG -->
-    <script>
-    function addRowHandlers() {
-        var table = document.getElementById("dynamic-table");
-        var rows = table.getElementsByTagName("tr");
-        for (i = 1; i < rows.length; i++) {
-            var currentRow = table.rows[i];
-            var createClickHandler = function(row) {
-                return function() {
-                    var cell = row.getElementsByTagName("td")[0];
-                    var id = cell.textContent;
 
-                    window.location.href = "requestor_view_delivery_details.php";
-
-                };
-            };
-            currentRow.onclick = createClickHandler(currentRow);
-        }
-    }
-    window.onload = addRowHandlers();
-    </script>
     <!--Core js-->
     <script src="js/jquery.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
@@ -135,7 +153,7 @@
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
-	
+
     <!--dynamic table-->
     <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>

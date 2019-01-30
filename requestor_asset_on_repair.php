@@ -80,33 +80,6 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <?php
-														    $count = 1;
-															$query="
-                                                                SELECT a.propertyCode, rb.name AS 'brand', am.description AS 'model', b.name, f.floorRoom, aa.startdate, aa.enddate, rs.description FROM thesis.assetassignment aa
-                                                                JOIN building b ON aa.BuildingID = b.buildingID
-                                                                JOIN floorandroom f ON aa.FloorAndRoomID = f.FloorAndRoomID
-                                                                JOIN employee e ON aa.personresponsibleID = e.employeeID
-                                                                JOIN asset a ON aa.assetID = a.assetID
-                                                                JOIN ref_assetstatus rs ON a.assetStatus = rs.id
-                                                                JOIN assetmodel am ON a.assetModel = am.assetModelID
-                                                                JOIN ref_brand rb ON am.brand = rb.brandID
-                                                                WHERE (personresponsibleID = {$userID});";
-															$result=mysqli_query($dbc,$query);
-															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-																echo "<tr>
-                                                                    <td>{$count}</td>
-																	<td>{$row['propertyCode']}</td>
-                                                                    <td>{$row['brand']}</td>
-                                                                    <td>{$row['model']}</td>
-																</tr>";
-                                                                $count++;
-															}
-														
-														
-														
-														?>
-
                                                         </tbody>
                                                     </table>
                                                 </div>
