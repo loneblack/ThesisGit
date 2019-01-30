@@ -94,7 +94,8 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
-                            <h2>Status: <?php 
+                            <h2>Status:
+                                <?php 
 											if($row['statusDesc']=='Pending'){
 												echo "<span class='label label-warning'>{$row['statusDesc']}</span>";
 											}
@@ -103,35 +104,47 @@
 											}
 											else{
 												echo "<span class='label label-success'>Approved</span>";
-											} ?></h2>
+											} ?>
+                            </h2>
                             <br><br>
                             <div class="col-lg-6">
-                                <h4><strong>Department:</strong> <?php echo $department; ?></h4>
-                                <h4><strong>Name:</strong> <?php echo $myName; ?></h4>
-                                <h4><strong>Contact Number:</strong> <?php echo $contactNo; ?></h4>
-                                <h4><strong>Email:</strong> <?php echo $email; ?></h4>
+                                <h4><strong>Department:</strong>
+                                    <?php echo $department; ?>
+                                </h4>
+                                <h4><strong>Name:</strong>
+                                    <?php echo $myName; ?>
+                                </h4>
+                                <h4><strong>Contact Number:</strong>
+                                    <?php echo $contactNo; ?>
+                                </h4>
+                                <h4><strong>Email:</strong>
+                                    <?php echo $email; ?>
+                                </h4>
                             </div>
-                            
+
                             <div class="col-lg-6">
-                                <h4><strong>Building:</strong> <?php echo $building; ?></h4>
-                                <h4><strong>Floor/ Room Number:</strong> <?php echo $floorRoom; ?></h4>
-                                <h4><strong>Date Needed:</strong> <?php echo $dateNeeded; ?></h4>
+                                <h4><strong>Building:</strong>
+                                    <?php echo $building; ?>
+                                </h4>
+                                <h4><strong>Floor/ Room Number:</strong>
+                                    <?php echo $floorRoom; ?>
+                                </h4>
+                                <h4><strong>Date Needed:</strong>
+                                    <?php echo $dateNeeded; ?>
+                                </h4>
                             </div>
-                            
+
                             <br><br><br><br><br><br><br><br>
-                            <table class="table">    
+                            <table class="table">
                                 <thead class="thead-light">
                                     <tr>
                                         <th>Quantity</th>
                                         <th>Hardware/ Software Requirements</th>
-										<th>Description</th>
-                                        <!-- <th>Estimated Cost</th> -->
-                                        <!-- <th>Source of Budget</th> -->
-                                        <!-- <th>Recommended Supplier</th> -->
+                                        <th>Description</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-									<?php
+                                    <?php
 									
 										require_once('db/mysql_connect.php');
 										$query1="SELECT rd.requestID,rd.quantity,rd.description as `reqDetDesc`,rac.name as `categoryName` FROM thesis.requestdetails rd
@@ -152,14 +165,19 @@
 									?>
                                 </tbody>
                             </table>
+                            <form action="upload.php" method="post" enctype="multipart/form-data">
+                                Select image to upload:
+                                <input type="file" name="fileToUpload" id="fileToUpload">
+                                <input type="submit" value="Upload Image" name="submit">
+                            </form>
                         </div>
 
-                    
-							<form method="post">
-								<button type="submit" class="btn btn-success" name="approve" <?php if($row['statusDesc'] != 'Pending') echo "disabled"; ?> ><i class="fa fa-check"></i> Approve</button>
-                                &nbsp;&nbsp;
-								<button type="submit" class="btn btn-danger" name="disapprove" <?php if($row['statusDesc'] != 'Pending') echo "disabled"; ?> ><i class="fa fa-ban"></i> Disapprove</button>
-                            </form>
+
+                        <form method="post">
+                            <button type="submit" class="btn btn-success" name="approve" <?php if($row['statusDesc'] !='Pending' ) echo "disabled" ; ?> ><i class="fa fa-check"></i> Approve</button>
+                            &nbsp;&nbsp;
+                            <button type="submit" class="btn btn-danger" name="disapprove" <?php if($row['statusDesc'] !='Pending' ) echo "disabled" ; ?> ><i class="fa fa-ban"></i> Disapprove</button>
+                        </form>
                     </div>
                 </div>
                 <!-- page end-->

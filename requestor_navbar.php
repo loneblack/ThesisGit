@@ -22,14 +22,19 @@
 								<li><a href="requestor_service_equipment_request.php">Borrow an Asset</a></li>
                             </ul>
                         </li>
-					   
-                       <li>
+                        
+                        <li class="sub-menu">
                             <a href="requestor_assets.php">
                                 <i class="fa fa-archive"></i>
                                 <span>My Assets</span>
                             </a>
+                            <ul class="sub">
+                                <li><a href="requestor_assets.php">Asset List</a></li>
+                                <li><a href="requestor_asset_delivery.php">Asset Delivery</a></li>
+								<li><a href="requestor_asset_on_repair.php">Assets on Repair</a></li>
+                            </ul>
                         </li>
-                        
+   
                         <li>
                             <a href="logout.php">
                                 <i class="glyphicon glyphicon-log-out"></i>
