@@ -367,7 +367,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `thesis`.`department` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`department` (
-  `DepartmentID` INT(11) NOT NULL,
+  `DepartmentID` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`DepartmentID`))
 ENGINE = InnoDB
@@ -1495,7 +1495,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `thesis`.`department_list` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`department_list` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `DepartmentID` INT(11) NULL,
   `employeeID` INT(11) NULL,
   INDEX `fk_department_list_department1_idx` (`DepartmentID` ASC),
@@ -1512,3 +1512,4 @@ CREATE TABLE IF NOT EXISTS `thesis`.`department_list` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
