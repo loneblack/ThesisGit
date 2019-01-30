@@ -1,7 +1,50 @@
 <!DOCTYPE html>
 <?php
+	
+	$flag=0;
 	require_once('db/mysql_connect.php');
-
+	if (isset($_POST['submit'])){
+		$message=NULL;
+		
+		//Check if department already exists
+		$queryDepIsEx="SELECT count(*) as `isExist` FROM thesis.department where name='{$_POST['department']}'";
+		$resultDepIsEx=mysqli_query($dbc,$queryDepIsEx);
+		$rowDepIsEx=mysqli_fetch_array($resultDepIsEx,MYSQLI_ASSOC);
+		
+		$department=null;
+		
+		if($rowDepIsEx['isExist']=='0'){
+			$department=$_POST['department'];
+		}
+		else{
+			$message.="Department already exists. ";
+		}
+		
+		$rooms=$_POST['rooms'];
+		//$roomsUniq=array_unique($rooms);
+		
+		//Insert data to db
+		if(!isset($message)){
+			$queryDep="INSERT INTO `thesis`.`department` (`name`) VALUES ('{$department}')";
+			$resultDep=mysqli_query($dbc,$queryDep);
+			
+			//Get Latest department
+			$queryLatDep="SELECT * FROM thesis.department order by DepartmentID desc limit 1";
+			$resultLatDep=mysqli_query($dbc,$queryLatDep);
+			$rowLatDep=mysqli_fetch_array($resultLatDep,MYSQLI_ASSOC);
+			
+			foreach($rooms as $room){
+				
+				//Get BuildingID
+				$queryBuildID="SELECT * FROM thesis.floorandroom where FloorAndRoomID='{$room}'";
+				$resultBuildID=mysqli_query($dbc,$queryBuildID);
+				$rowBuildID=mysqli_fetch_array($resultBuildID,MYSQLI_ASSOC);
+				
+				$queryRoom="INSERT INTO `thesis`.`departmentownsroom` (`BuildingID`, `FloorAndRoomID`, `DepartmentID`) VALUES ('{$rowBuildID['BuildingID']}', '{$room}', '{$rowLatDep['DepartmentID']}');";
+				$resultRoom=mysqli_query($dbc,$queryRoom);
+			}
+		}
+	}
 ?>
 <html lang="en">
 
@@ -85,7 +128,7 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-lg-3">Rooms</label>
                                                         <div class="col-lg-6">
-                                                            <select multiple name="e9" id="e9" style="width:505px" class="populate">
+                                                            <select multiple name="rooms[]" id="e9" style="width:505px" class="populate" required>
 																<?php
 																	//Get Building
 																	$queryBuild="SELECT * FROM thesis.building";
@@ -93,8 +136,8 @@
 																	while($rowBuild=mysqli_fetch_array($resultBuild,MYSQLI_ASSOC)){
 																		echo "<optgroup label='{$rowBuild['name']}'>";
 																		
-																		//Get Rooms on a Building
-																		$queryRoom="SELECT * FROM thesis.floorandroom";
+																		//Get Rooms of a Building
+																		$queryRoom="SELECT * FROM thesis.floorandroom where BuildingID='{$rowBuild['BuildingID']}'";
 																		$resultRoom=mysqli_query($dbc,$queryRoom);
 																		while($rowRoom=mysqli_fetch_array($resultRoom,MYSQLI_ASSOC)){
 																			echo "<option value='{$rowRoom['FloorAndRoomID']}'>{$rowRoom['floorRoom']}</option>";

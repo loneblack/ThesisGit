@@ -1,4 +1,56 @@
 <!DOCTYPE html>
+<?php
+	session_start();
+	$departmentID=$_GET['id'];
+	require_once('db/mysql_connect.php');
+	
+	//Get Past Data of a given ID
+	$queryEditDep="SELECT * FROM thesis.department where DepartmentID='{$departmentID}'";
+	$resultEditDep=mysqli_query($dbc,$queryEditDep);
+	$rowEditDep=mysqli_fetch_array($resultEditDep,MYSQLI_ASSOC);
+	
+	if (isset($_POST['submit'])){
+		$message=NULL;
+		
+		//Check if department already exists
+		$queryDepIsEx="SELECT count(*) as `isExist` FROM thesis.department where name='{$_POST['department']}'";
+		$resultDepIsEx=mysqli_query($dbc,$queryDepIsEx);
+		$rowDepIsEx=mysqli_fetch_array($resultDepIsEx,MYSQLI_ASSOC);
+		
+		$department=null;
+		
+		if($rowDepIsEx['isExist']=='0'){
+			$department=$_POST['department'];
+		}
+		else{
+			$message.="Department already exists. ";
+		}
+		
+		$rooms=$_POST['rooms'];
+		
+		if(!isset($message)){
+			$queryDep="UPDATE `thesis`.`department` SET `name`='{$department}' WHERE `DepartmentID`='{$departmentID}'";
+			$resultDep=mysqli_query($dbc,$queryDep);
+			
+			//Delete all rooms for a given deptID
+			$queryDelDepRooms="Delete FROM thesis.departmentownsroom where DepartmentID='{$departmentID}'";
+			$resultDelDepRooms=mysqli_query($dbc,$queryDelDepRooms);
+			
+			foreach($rooms as $room){
+				//Get BuildingID
+				$queryBuildID="SELECT * FROM thesis.floorandroom where FloorAndRoomID='{$room}'";
+				$resultBuildID=mysqli_query($dbc,$queryBuildID);
+				$rowBuildID=mysqli_fetch_array($resultBuildID,MYSQLI_ASSOC);
+				
+				$queryRoom="INSERT INTO `thesis`.`departmentownsroom` (`BuildingID`, `FloorAndRoomID`, `DepartmentID`) VALUES ('{$rowBuildID['BuildingID']}', '{$room}', '{$departmentID}');";
+				$resultRoom=mysqli_query($dbc,$queryRoom);
+			}
+		}
+		
+	}
+	
+
+?>
 <html lang="en">
 
 <head>
@@ -70,20 +122,49 @@
                                         </header>
                                         <div class="panel-body">
                                             <div class="form">
-                                                <form class="cmxform form-horizontal " id="signupForm" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                                <form class="cmxform form-horizontal " id="signupForm" method="post" action="<?php echo $_SERVER['PHP_SELF']."?id=".$departmentID; ?>">
 
                                                     <div class="form-group ">
                                                         <label class="control-label col-lg-3">Department Name</label>
                                                         <div class="col-lg-6">
-                                                            <input class=" form-control" id="departmentname" name="department" type="text" value="<?php ?>" required />
+                                                            <input class=" form-control" id="departmentname" name="department" type="text" value="<?php echo $rowEditDep['name']; ?>" required />
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="control-label col-lg-3">Rooms</label>
                                                         <div class="col-lg-6">
-                                                            <select multiple name="e9" id="e9" style="width:505px" class="populate">
-                                                                <optgroup label="Andrew">
+                                                            <select multiple name="rooms[]" id="e9" style="width:505px" class="populate" required>
+                                                                <?php
+																	//Get Building
+																	$queryBuild="SELECT * FROM thesis.building";
+																	$resultBuild=mysqli_query($dbc,$queryBuild);
+																	while($rowBuild=mysqli_fetch_array($resultBuild,MYSQLI_ASSOC)){
+																		echo "<optgroup label='{$rowBuild['name']}'>";
+																		
+																		//Get Rooms of a Building
+																		$queryRoom="SELECT * FROM thesis.floorandroom where BuildingID='{$rowBuild['BuildingID']}'";
+																		$resultRoom=mysqli_query($dbc,$queryRoom);
+																		while($rowRoom=mysqli_fetch_array($resultRoom,MYSQLI_ASSOC)){
+																			
+																			//Check if option is already selected
+																			$queryRoomSel="SELECT Count(*) as `isExist` FROM thesis.departmentownsroom where DepartmentID='{$departmentID}' and FloorAndRoomID='{$rowRoom['FloorAndRoomID']}'";
+																			$resultRoomSel=mysqli_query($dbc,$queryRoomSel);
+																			$rowRoomSel=mysqli_fetch_array($resultRoomSel,MYSQLI_ASSOC);
+																			
+																			if($rowRoomSel['isExist']==1){
+																				echo "<option selected value='{$rowRoom['FloorAndRoomID']}'>{$rowRoom['floorRoom']}</option>";
+																			}
+																			else{
+																				echo "<option value='{$rowRoom['FloorAndRoomID']}'>{$rowRoom['floorRoom']}</option>";
+																			}
+																			
+																		}
+																		echo "</optgroup>";
+																		
+																	}															
+																?>
+																<!--<optgroup label="Andrew">
                                                                     <option value="1">A1001</option>
                                                                     <option value="2">A1010 (Faculty Room)</option>
                                                                 </optgroup>
@@ -92,7 +173,7 @@
                                                                     <option value="4">G201</option>
                                                                     <option value="5">G301</option>
                                                                     <option value="6">G401</option>
-                                                                </optgroup>
+                                                                </optgroup>-->
                                                             </select>
                                                         </div>
                                                     </div>

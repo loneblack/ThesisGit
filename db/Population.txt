@@ -467,17 +467,17 @@
 
 
 		-- Employee
-		INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('20', 'Test User', 'Test', '09999999999', 'test@dlsu.edu.ph', '1', '1');
-		INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('20', 'Allan Borja', 'Director', '09999999999', 'allan.borja@dlsu.edu.ph', '2', '2');
-		INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('20', 'Sir Jojo', 'Asset Manager', '09999999999', 'jojo.soliva@dlsu.edu.ph', '3', '3');
-		INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('20', 'Giligan Crissa', 'Assistan Asset Manager', '0456789299', 'crissa.giligan@dlsu.edu.ph', '4', '4');
-		INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('20', 'Help Desk', 'Helpdesk', '09876543210', 'helpless.desk@dlsu.edu.ph', '5', '5');
-		INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('20', 'Pro Curement', 'Procurement', '09999999999', 'test@test', '6', '6');
-		INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('20', 'Mark Question', 'Engineer', '09876543210', 'question.mark@dlsu.edu.ph', '7', '7');
-		INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('20', 'Point Exclamation', 'Engineer', '09876543210', 'exclamation.point@dlsu.edu.ph', '8', '8');
-		INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('20', 'Teacher Matt', 'Professor', '09876543210', 'math.teacher@dlsu.edu.ph', '9', '9');
-		INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('20', 'Professor Psy', 'Professor', '09876543210', 'psych.prof@dlsu.edu.ph','10','10');
-		INSERT INTO `thesis`.`employee` (`DepartmentID`, `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('20', 'Lecturer Phil', 'Assistant Professor', '09876543210', 'filipino.lecturer@dlsu.edu.ph', '11', '11');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('Test User', 'Test', '09999999999', 'test@dlsu.edu.ph', '1', '1');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Allan Borja', 'Director', '09999999999', 'allan.borja@dlsu.edu.ph', '2', '2');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Sir Jojo', 'Asset Manager', '09999999999', 'jojo.soliva@dlsu.edu.ph', '3', '3');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('Giligan Crissa', 'Assistan Asset Manager', '0456789299', 'crissa.giligan@dlsu.edu.ph', '4', '4');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Help Desk', 'Helpdesk', '09876543210', 'helpless.desk@dlsu.edu.ph', '5', '5');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Pro Curement', 'Procurement', '09999999999', 'test@test', '6', '6');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Mark Question', 'Engineer', '09876543210', 'question.mark@dlsu.edu.ph', '7', '7');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Point Exclamation', 'Engineer', '09876543210', 'exclamation.point@dlsu.edu.ph', '8', '8');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Teacher Matt', 'Professor', '09876543210', 'math.teacher@dlsu.edu.ph', '9', '9');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Professor Psy', 'Professor', '09876543210', 'psych.prof@dlsu.edu.ph','10','10');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Lecturer Phil', 'Assistant Professor', '09876543210', 'filipino.lecturer@dlsu.edu.ph', '11', '11');
 
 		-- asset
 		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('1', 'LaptopPropertyCode', 'SerialNumberLaptop', 'MACADDRESSLAPTOP', '1');

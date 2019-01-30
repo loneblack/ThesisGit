@@ -73,11 +73,32 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>Department</th>
-                                                                <th>Room</th>
+                                                                <th>Rooms</th>
                                                                 <th>Edit</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+															<?php
+																//Get Dept
+																$queryDept="SELECT * FROM thesis.department";
+																$resultDept=mysqli_query($dbc,$queryDept);
+																while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
+																	echo "<tr>
+																		<td>{$rowDept['name']}</td>
+																		<td>";
+																	
+																	//Get Rooms of a Dept
+																	$queryRoomsDept="SELECT * FROM departmentownsroom dor join floorandroom far on dor.FloorAndRoomID=far.FloorAndRoomID where dor.DepartmentID='{$rowDept['DepartmentID']}'";
+																	$resultRoomsDept=mysqli_query($dbc,$queryRoomsDept);
+																	while($rowRoomsDept=mysqli_fetch_array($resultRoomsDept,MYSQLI_ASSOC)){
+																		echo $rowRoomsDept['floorRoom']." ";
+																	}
+																	
+																	echo "</td>
+																		<td><a href='admin_edit_department.php?id={$rowDept['DepartmentID']}'><button type='button' class='btn btn-primary'><i class='glyphicon glyphicon-pencil'></i> Edit</button></a></td>
+																	</tr>";
+																}
+															?>
                                                             <tr>
                                                                 <td>Economics</td>
                                                                 <td>LS301, FC102 (Faculty Center)</td>
