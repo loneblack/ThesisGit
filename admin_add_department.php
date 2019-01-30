@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php
+	require_once('db/mysql_connect.php');
+
+?>
 <html lang="en">
 
 <head>
@@ -82,7 +86,24 @@
                                                         <label class="control-label col-lg-3">Rooms</label>
                                                         <div class="col-lg-6">
                                                             <select multiple name="e9" id="e9" style="width:505px" class="populate">
-                                                                <optgroup label="Andrew">
+																<?php
+																	//Get Building
+																	$queryBuild="SELECT * FROM thesis.building";
+																	$resultBuild=mysqli_query($dbc,$queryBuild);
+																	while($rowBuild=mysqli_fetch_array($resultBuild,MYSQLI_ASSOC)){
+																		echo "<optgroup label='{$rowBuild['name']}'>";
+																		
+																		//Get Rooms on a Building
+																		$queryRoom="SELECT * FROM thesis.floorandroom";
+																		$resultRoom=mysqli_query($dbc,$queryRoom);
+																		while($rowRoom=mysqli_fetch_array($resultRoom,MYSQLI_ASSOC)){
+																			echo "<option value='{$rowRoom['FloorAndRoomID']}'>{$rowRoom['floorRoom']}</option>";
+																		}
+																		echo "</optgroup>";
+																		
+																	}															
+																?>
+                                                                <!--<optgroup label="Andrew">
                                                                     <option value="1">A1001</option>
                                                                     <option value="2">A1010 (Faculty Room)</option>
                                                                 </optgroup>
@@ -91,7 +112,7 @@
                                                                     <option value="4">G201</option>
                                                                     <option value="5">G301</option>
                                                                     <option value="6">G401</option>
-                                                                </optgroup>
+                                                                </optgroup>-->
                                                             </select>
                                                         </div>
                                                     </div>

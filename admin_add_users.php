@@ -185,8 +185,15 @@
                                                 <div class="col-lg-6">
                                                     <select multiple name="e9" id="e9" style="width:525px" class="populate">
                                                         <optgroup label="Select Department/s">
-                                                            <option value="1">Accounting</option>
-                                                            <option value="2">Computer Studies</option>
+															<?php
+																$queryDept="SELECT * FROM thesis.department";
+																$resultDept=mysqli_query($dbc,$queryDept);
+																while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
+																	echo "<option value='{$rowDept['DepartmentID']}'>{$rowDept['name']}</option>";
+																}
+															?>
+                                                            <!--<option value="1">Accounting</option>
+                                                            <option value="2">Computer Studies</option>-->
                                                         </optgroup>
                                                     </select>
                                                 </div>
@@ -196,6 +203,14 @@
                                                 <label for="lastname" class="control-label col-lg-3">Office</label>
                                                 <div class="col-lg-6">
                                                     <select class="form-control m-bot15" name="department" value="" required>
+														<?php
+																$queryOff="SELECT * FROM thesis.offices";
+																$resultOff=mysqli_query($dbc,$queryOff);
+																while($rowOff=mysqli_fetch_array($resultOff,MYSQLI_ASSOC)){
+																	echo "<option value='{$rowOff['officeID']}'>{$rowOff['Name']}</option>";
+																}
+															
+														?>
                                                         <option value="" selected>None</option>
                                                     </select>
                                                 </div>
