@@ -138,26 +138,7 @@ $_SESSION['count'] = 0;
                                                      <div class="form-group ">
                                                         <label for="dateNeeded" class="control-label col-lg-3">Date needed</label>
                                                         <div class="col-lg-6">
-                                                            <input class="form-control" id="dateNeeded" name="dateNeeded" type="datetime-local" />
-                                                        </div>
-                                                    </div>
-                                                </section>
-
-
-                                                <section>
-                                                    <h4>Endorsement (if applicable)</h4>
-
-                                                    <div class="form-group ">
-                                                        <label for="recipient" class="control-label col-lg-3">Recipient</label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" id="recipient" name="recipient" type="text" />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group ">
-                                                        <label for="idNum" class="control-label col-lg-3">ID Number</label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" id="idNumber" name="idNumber" type="text" />
+                                                            <input class="form-control" id="dateNeeded" name="dateNeeded" type="date" value="<?php echo date('Y-m-d'); ?>" min="<?php echo date('Y-m-d'); ?>" max="" />
                                                         </div>
                                                     </div>
                                                 </section>
@@ -192,7 +173,7 @@ $_SESSION['count'] = 0;
                                                                         <select class="form-control" name="category0" id="category0">
                                                                             <option>Select</option>
                                                                             <?php
-
+ 
                                                                                 $sql = "SELECT * FROM thesis.ref_assetcategory;";
 
                                                                                 $result = mysqli_query($dbc, $sql);
