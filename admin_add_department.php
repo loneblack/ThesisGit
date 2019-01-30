@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <?php
 	
-	$flag=0;
 	require_once('db/mysql_connect.php');
 	if (isset($_POST['submit'])){
+		$flag=0;
 		$message=NULL;
 		
 		//Check if department already exists
@@ -25,6 +25,7 @@
 		
 		//Insert data to db
 		if(!isset($message)){
+			$flag=1;
 			$queryDep="INSERT INTO `thesis`.`department` (`name`) VALUES ('{$department}')";
 			$resultDep=mysqli_query($dbc,$queryDep);
 			
@@ -43,7 +44,12 @@
 				$queryRoom="INSERT INTO `thesis`.`departmentownsroom` (`BuildingID`, `FloorAndRoomID`, `DepartmentID`) VALUES ('{$rowBuildID['BuildingID']}', '{$room}', '{$rowLatDep['DepartmentID']}');";
 				$resultRoom=mysqli_query($dbc,$queryRoom);
 			}
+			$_SESSION['submitMessage'] = "Success! The department has been added successfully.";
 		}
+		else{
+			$_SESSION['submitMessage'] = $message;
+		}
+		
 	}
 ?>
 <html lang="en">
@@ -104,7 +110,20 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-
+				<?php
+					if(isset($_SESSION['submitMessage'])&&$_SESSION['submitMessage']!="Success! The department has been added successfully."){
+						echo "<div class='alert alert-danger'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+					}
+					elseif (isset($_SESSION['submitMessage'])){
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
@@ -121,7 +140,7 @@
                                                     <div class="form-group ">
                                                         <label class="control-label col-lg-3">Department Name</label>
                                                         <div class="col-lg-6">
-                                                            <input class=" form-control" id="departmentname" name="department" type="text" value="<?php ?>" required />
+                                                            <input class=" form-control" id="departmentname" name="department" type="text" value="<?php if (isset($_POST['department']) && !$flag) echo $_POST['department']; ?>" required />
                                                         </div>
                                                     </div>
 
