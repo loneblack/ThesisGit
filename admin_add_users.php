@@ -74,7 +74,7 @@
                
             //Add to employee
 			
-			if($office=""){
+			if(empty($office)){
 				$query3="INSERT INTO `thesis`.`employee` (`name`, `position`, `contactNo`, `email`, `UserID`) VALUES ('{$fullname}', '{$position}', '{$number}', '{$email}', '{$row['UserID']}')";
 				$result3=mysqli_query($dbc,$query3);
 			}
