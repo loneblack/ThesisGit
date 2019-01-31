@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <?php
-
+session_start();
 require_once('db/mysql_connect.php');
-$_SESSION['userid']=$_GET['userid'];
+$userid=$_GET['userid'];
 
 $key = "Fusion";
 $flag=0;
 
-$query="Select Convert(AES_DECRYPT(username,'".$key."')USING utf8) as 'username',Convert(AES_DECRYPT(password,'".$key."')USING utf8) as 'password',Convert(AES_DECRYPT(firstName,'".$key."')USING utf8) as 'firstname',Convert(AES_DECRYPT(lastName,'".$key."')USING utf8) as 'lastname', userType from user where UserID='".$_SESSION['userid']."'";
+$query="Select Convert(AES_DECRYPT(username,'{$key}')USING utf8) as 'username',Convert(AES_DECRYPT(password,'{$key}')USING utf8) as 'password',Convert(AES_DECRYPT(firstName,'{$key}')USING utf8) as 'firstname',Convert(AES_DECRYPT(lastName,'{$key}')USING utf8) as 'lastname', userType from user where UserID='{$userid}'";
 $result=mysqli_query($dbc,$query);
 $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 
+//Get employee id of user
+$queryEmpID="SELECT * FROM thesis.employee where UserID='{$userid}'";
+$resultEmpID=mysqli_query($dbc,$queryEmpID);
+$rowEmpID=mysqli_fetch_array($resultEmpID, MYSQLI_ASSOC);
+
 if (isset($_POST['submit'])){
+	
+		
 		
 		$message=NULL;
 		
@@ -45,16 +52,43 @@ if (isset($_POST['submit'])){
 			$password=$_POST['password'];
 		}
 		
+		//Dept
+        $departments=null;
+       
+		
 		if(!isset($message)){
-			echo "<script type='text/javascript'>alert('Success');</script>"; // Show modal
-			$query="UPDATE `thesis`.`user` SET username=AES_ENCRYPT('".$username."', '".$key."'), password=AES_ENCRYPT('".$password."', '".$key."'), userType='".$usertype."', firstName=AES_ENCRYPT('".$firstname."', '".$key."'), lastName=AES_ENCRYPT('".$lastname."', '".$key."') WHERE `UserID`='".$_SESSION['userid']."'";
+			$_SESSION['submitMessage'] = "Success! The user has been edited successfully.";
+			$query="UPDATE `thesis`.`user` SET username=AES_ENCRYPT('{$username}', '{$key}'), password=AES_ENCRYPT('{$password}', '{$key}'), userType='{$usertype}', firstName=AES_ENCRYPT('{$firstname}', '{$key}'), lastName=AES_ENCRYPT('{$lastname}', '{$key}') WHERE `UserID`='{$userid}'";
 			$result=mysqli_query($dbc,$query);
 			$flag=1;
-			header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/admin_edit_user.php?userid=".$_SESSION['userid']."");
+			
+			//Update office
+			if(isset($_POST['office'])){
+				$office=$_POST['office'];
+				$queryOffi="UPDATE `thesis`.`employee` SET `officeID`='{$office}' WHERE `employeeID`='{$rowEmpID['employeeID']}'";
+				$resultOffi=mysqli_query($dbc,$queryOffi);
+			}
+			
+			
+			//Delete all departments for a given user
+			$queryDelUserDep="Delete FROM thesis.department_list 
+                                      where employeeID='{$rowEmpID['employeeID']}'";
+			$resultDelUserDep=mysqli_query($dbc,$queryDelUserDep);
+			
+			
+			$departments=$_POST['departments'];
+			//INSERT INTO department list
+			foreach($departments as $department){
+				$queryDepList="INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('{$department}', '{$rowEmpID['employeeID']}')";
+				$resultDepList=mysqli_query($dbc,$queryDepList);
+			}
+		
+			
+			//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/admin_edit_user.php?userid=".$userid."");
 		}
 		
 		else{
-			echo "<script type='text/javascript'>alert('".$message."');</script>";
+			$_SESSION['submitMessage'] = $message;
 		}
 		
 		
@@ -120,7 +154,20 @@ if (isset($_POST['submit'])){
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-
+				<?php
+					if(isset($_SESSION['submitMessage'])&&$_SESSION['submitMessage']!="Success! The user has been edited successfully."){
+						echo "<div class='alert alert-danger'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+					}
+					elseif (isset($_SESSION['submitMessage'])){
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
                 <div class="row">
                     <div class="row">
                         <div class="col-lg-12">
@@ -130,7 +177,7 @@ if (isset($_POST['submit'])){
                                 </header>
                                 <div class="panel-body">
                                     <div class="form" method="post">
-                                        <form class="cmxform form-horizontal " id="signupForm" method="post">
+                                        <form class="cmxform form-horizontal " id="signupForm" method="post" action="<?php echo $_SERVER['PHP_SELF']."?userid=".$userid; ?>">
                                             <div class="form-group ">
                                                 <label for="firstname" class="control-label col-lg-3">Firstname</label>
                                                 <div class="col-lg-6">
@@ -168,17 +215,27 @@ if (isset($_POST['submit'])){
                                             <div class="form-group">
                                                 <label class="control-label col-lg-3">Department</label>
                                                 <div class="col-lg-6">
-                                                    <select multiple name="e9" id="e9" style="width:525px" class="populate">
+                                                    <select multiple name="departments[]" id="e9" style="width:525px" class="populate">
                                                         <optgroup label="Select Department/s">
                                                             <?php
 																$queryDept="SELECT * FROM thesis.department";
 																$resultDept=mysqli_query($dbc,$queryDept);
 																while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
-																	echo "<option value='{$rowDept['DepartmentID']}'>{$rowDept['name']}</option>";
+																	//Check if department is selected
+																	$queryDeptIsSel="SELECT Count(*) as `isSelected` from user u join employee e on u.UserID=e.UserID
+																																 join department_list dl on e.employeeID=dl.employeeID where u.UserID='{$userid}' and dl.DepartmentID='{$rowDept['DepartmentID']}'";
+																	$resultDeptIsSel=mysqli_query($dbc,$queryDeptIsSel);
+																	$rowDeptIsSel=mysqli_fetch_array($resultDeptIsSel,MYSQLI_ASSOC);
+																	
+																	if($rowDeptIsSel['isSelected']==1){
+																		echo "<option selected value='{$rowDept['DepartmentID']}'>{$rowDept['name']}</option>";
+																	}
+																	else{
+																		echo "<option value='{$rowDept['DepartmentID']}'>{$rowDept['name']}</option>";
+																	}
+
 																}
-															
-															
-															
+
 															?>
                                                             <!--<option value="1">Accounting</option>
                                                             <option value="2">Computer Studies</option>-->
@@ -190,16 +247,28 @@ if (isset($_POST['submit'])){
                                             <div class="form-group ">
                                                 <label for="lastname" class="control-label col-lg-3">Office</label>
                                                 <div class="col-lg-6">
-													<select class="form-control m-bot15" name="department" value="" required>
+													<select class="form-control m-bot15" name="office" required>
+														<option value="">None</option>
 														<?php
-																$queryOff="SELECT * FROM thesis.offices";
-																$resultOff=mysqli_query($dbc,$queryOff);
-																while($rowOff=mysqli_fetch_array($resultOff,MYSQLI_ASSOC)){
+															//Get selected office
+															$querySelOff="SELECT officeID FROM thesis.employee where employeeID='{$rowEmpID['employeeID']}'";
+															$resultSelOff=mysqli_query($dbc,$querySelOff);
+															$rowSelOff=mysqli_fetch_array($resultSelOff,MYSQLI_ASSOC);
+															
+															$queryOff="SELECT * FROM thesis.offices";
+															$resultOff=mysqli_query($dbc,$queryOff);
+															while($rowOff=mysqli_fetch_array($resultOff,MYSQLI_ASSOC)){
+																if($rowSelOff['officeID']==$rowOff['officeID']){
+																	echo "<option selected value='{$rowOff['officeID']}'>{$rowOff['Name']}</option>";
+																}
+																else{
 																	echo "<option value='{$rowOff['officeID']}'>{$rowOff['Name']}</option>";
 																}
+																
+															}
 															
 														?>
-                                                        <option value="" selected>None</option>
+                                                        
                                                         
                                                     </select>
                                                 </div>
