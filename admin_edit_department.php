@@ -13,18 +13,18 @@
 		$message=NULL;
 		
 		//Check if department already exists
-		$queryDepIsEx="SELECT count(*) as `isExist` FROM thesis.department where name='{$_POST['department']}'";
-		$resultDepIsEx=mysqli_query($dbc,$queryDepIsEx);
-		$rowDepIsEx=mysqli_fetch_array($resultDepIsEx,MYSQLI_ASSOC);
+		//$queryDepIsEx="SELECT count(*) as `isExist` FROM thesis.department where name='{$_POST['department']}'";
+		//$resultDepIsEx=mysqli_query($dbc,$queryDepIsEx);
+		//$rowDepIsEx=mysqli_fetch_array($resultDepIsEx,MYSQLI_ASSOC);
 		
-		$department=null;
+		//$department=null;
 		
-		if($rowDepIsEx['isExist']=='0'){
+		//if($rowDepIsEx['isExist']=='0'){
 			$department=$_POST['department'];
-		}
-		else{
-			$message.="Department already exists. ";
-		}
+		//}
+		//else{
+			//$message.="Department already exists. ";
+		//}
 		
 		$rooms=$_POST['rooms'];
 		
@@ -45,6 +45,10 @@
 				$queryRoom="INSERT INTO `thesis`.`departmentownsroom` (`BuildingID`, `FloorAndRoomID`, `DepartmentID`) VALUES ('{$rowBuildID['BuildingID']}', '{$room}', '{$departmentID}');";
 				$resultRoom=mysqli_query($dbc,$queryRoom);
 			}
+			$_SESSION['submitMessage'] = "Success! The department has been edited successfully.";
+		}
+		else{
+			$_SESSION['submitMessage'] = $message;
 		}
 		
 	}
@@ -110,7 +114,20 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-
+				<?php
+					if(isset($_SESSION['submitMessage'])&&$_SESSION['submitMessage']!="Success! The department has been edited successfully."){
+						echo "<div class='alert alert-danger'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+					}
+					elseif (isset($_SESSION['submitMessage'])){
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">

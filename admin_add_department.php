@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-	
+	session_start();
 	require_once('db/mysql_connect.php');
 	if (isset($_POST['submit'])){
 		$flag=0;

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 
 <?php
-
+	session_start();
 	$key = "Fusion";
 	require_once('db/mysql_connect.php');
+	
 	
 	if (isset($_POST['submit'])){
 		$flag=0;
@@ -23,9 +24,7 @@
         
 		//Dept
         $departments=null;
-        if(isset($_POST['$departments'])){
-			$departments=$_POST['departments'];
-		}
+       
 		
 		//Position
         $position=$_POST['position'];
@@ -64,7 +63,7 @@
 		if(!isset($message)){
 			
 			//Add to user
-			$query="INSERT INTO `thesis`.`user`(`username`, `password`, `userType`, `firstName`, `lastName`) VALUES ( AES_ENCRYPT('".$username."', '".$key."'), AES_ENCRYPT('".$password."', '".$key."'), '".$usertype."', AES_ENCRYPT('".$firstname."', '".$key."'), AES_ENCRYPT('".$lastname."', '".$key."'))";
+			$query="INSERT INTO `thesis`.`user`(`username`, `password`, `userType`, `firstName`, `lastName`) VALUES ( AES_ENCRYPT('{$username}', '{$key}'), AES_ENCRYPT('{$password}', '{$key}'), '{$usertype}', AES_ENCRYPT('{$firstname}', '{$key}'), AES_ENCRYPT('{$lastname}', '{$key}'))";
 			$result=mysqli_query($dbc,$query);
             
 			//Get latest user id
@@ -88,7 +87,8 @@
             $resultLatEmp=mysqli_query($dbc,$queryLatEmp);
 			$rowLatEmp=mysqli_fetch_array($resultLatEmp, MYSQLI_ASSOC);
 			
-			if(isset($_POST['$departments'])){
+			if(isset($_POST['departments'])){
+				$departments=$_POST['departments'];
 				//INSERT INTO department list
 				foreach($departments as $department){
 					$queryDepList="INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('{$department}', '{$rowLatEmp['employeeID']}')";
@@ -96,12 +96,12 @@
 				}
 			}
 			
-			echo "<script type='text/javascript'>alert('Success');</script>"; // Show modal
+			$_SESSION['submitMessage'] = "Success! The user has been added successfully.";
 			$flag=1;
 		}
 		
 		else{
-			echo "<script type='text/javascript'>alert('".$message."');</script>";
+			$_SESSION['submitMessage'] = $message;
 		}
 		
 		
@@ -167,7 +167,20 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-
+				<?php
+					if(isset($_SESSION['submitMessage'])&&$_SESSION['submitMessage']!="Success! The user has been added successfully."){
+						echo "<div class='alert alert-danger'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+					}
+					elseif (isset($_SESSION['submitMessage'])){
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
                 <div class="row">
                     <div class="row">
                         <div class="col-lg-12">
