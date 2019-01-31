@@ -11,9 +11,14 @@ $query="Select Convert(AES_DECRYPT(username,'{$key}')USING utf8) as 'username',C
 $result=mysqli_query($dbc,$query);
 $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 
-
+//Get employee id of user
+$queryEmpID="SELECT * FROM thesis.employee where UserID='{$userid}'";
+$resultEmpID=mysqli_query($dbc,$queryEmpID);
+$rowEmpID=mysqli_fetch_array($resultEmpID, MYSQLI_ASSOC);
 
 if (isset($_POST['submit'])){
+	
+		
 		
 		$message=NULL;
 		
@@ -57,10 +62,13 @@ if (isset($_POST['submit'])){
 			$result=mysqli_query($dbc,$query);
 			$flag=1;
 			
-			//Get employee id of user
-			$queryEmpID="SELECT * FROM thesis.employee where UserID='{$userid}'";
-            $resultEmpID=mysqli_query($dbc,$queryEmpID);
-			$rowEmpID=mysqli_fetch_array($resultEmpID, MYSQLI_ASSOC);
+			//Update office
+			if(isset($_POST['office'])){
+				$office=$_POST['office'];
+				$queryOffi="UPDATE `thesis`.`employee` SET `officeID`='{$office}' WHERE `employeeID`='{$rowEmpID['employeeID']}'";
+				$resultOffi=mysqli_query($dbc,$queryOffi);
+			}
+			
 			
 			//Delete all departments for a given user
 			$queryDelUserDep="Delete FROM thesis.department_list 
@@ -239,18 +247,28 @@ if (isset($_POST['submit'])){
                                             <div class="form-group ">
                                                 <label for="lastname" class="control-label col-lg-3">Office</label>
                                                 <div class="col-lg-6">
-													<select class="form-control m-bot15" name="department" value="" required>
+													<select class="form-control m-bot15" name="office" required>
+														<option value="">None</option>
 														<?php
-																
-														
-																$queryOff="SELECT * FROM thesis.offices";
-																$resultOff=mysqli_query($dbc,$queryOff);
-																while($rowOff=mysqli_fetch_array($resultOff,MYSQLI_ASSOC)){
+															//Get selected office
+															$querySelOff="SELECT officeID FROM thesis.employee where employeeID='{$rowEmpID['employeeID']}'";
+															$resultSelOff=mysqli_query($dbc,$querySelOff);
+															$rowSelOff=mysqli_fetch_array($resultSelOff,MYSQLI_ASSOC);
+															
+															$queryOff="SELECT * FROM thesis.offices";
+															$resultOff=mysqli_query($dbc,$queryOff);
+															while($rowOff=mysqli_fetch_array($resultOff,MYSQLI_ASSOC)){
+																if($rowSelOff['officeID']==$rowOff['officeID']){
+																	echo "<option selected value='{$rowOff['officeID']}'>{$rowOff['Name']}</option>";
+																}
+																else{
 																	echo "<option value='{$rowOff['officeID']}'>{$rowOff['Name']}</option>";
 																}
+																
+															}
 															
 														?>
-                                                        <option value="" selected>None</option>
+                                                        
                                                         
                                                     </select>
                                                 </div>
