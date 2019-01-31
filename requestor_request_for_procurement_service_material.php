@@ -138,7 +138,28 @@ $_SESSION['count'] = 0;
                                                      <div class="form-group ">
                                                         <label for="dateNeeded" class="control-label col-lg-3">Date needed</label>
                                                         <div class="col-lg-6">
-                                                            <input class="form-control" id="dateNeeded" name="dateNeeded" type="date" value="<?php echo date('Y-m-d'); ?>" min="<?php echo date('Y-m-d'); ?>" max="" />
+                                                            <input class="form-control" id="dateNeeded" name="dateNeeded" type="date" value="<?php 
+															
+																																				$date = new DateTime(date("Y-m-d"));
+																																				$date->modify('+7 day');
+																																				$defDate = $date->format('Y-m-d');
+																																				echo $defDate;
+																																			
+																																			?>" min="<?php 
+																																						
+																																						$date = new DateTime(date("Y-m-d"));
+																																						$date->modify('+7 day');
+																																						$minDate = $date->format('Y-m-d');
+																																						echo $minDate;
+																																						
+																																					?>" max="<?php 
+																																																					
+																																								$date = new DateTime(date("Y-m-d"));
+																																								$date->modify('+50 day');
+																																								$finDate = $date->format('Y-m-d');
+																																								echo $finDate;
+																																																						
+																																							?>" />
                                                         </div>
                                                     </div>
                                                 </section>

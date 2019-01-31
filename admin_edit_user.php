@@ -68,22 +68,19 @@ if (isset($_POST['submit'])){
 				$queryOffi="UPDATE `thesis`.`employee` SET `officeID`='{$office}' WHERE `employeeID`='{$rowEmpID['employeeID']}'";
 				$resultOffi=mysqli_query($dbc,$queryOffi);
 			}
-			
-			
-			//Delete all departments for a given user
-			$queryDelUserDep="Delete FROM thesis.department_list 
-                                      where employeeID='{$rowEmpID['employeeID']}'";
-			$resultDelUserDep=mysqli_query($dbc,$queryDelUserDep);
-			
-			
-			$departments=$_POST['departments'];
-			//INSERT INTO department list
-			foreach($departments as $department){
-				$queryDepList="INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('{$department}', '{$rowEmpID['employeeID']}')";
-				$resultDepList=mysqli_query($dbc,$queryDepList);
+			else{
+				//Delete all departments for a given user
+				$queryDelUserDep="Delete FROM thesis.department_list 
+										  where employeeID='{$rowEmpID['employeeID']}'";
+				$resultDelUserDep=mysqli_query($dbc,$queryDelUserDep);
+				
+				$departments=$_POST['departments'];
+				//INSERT INTO department list
+				foreach($departments as $department){
+					$queryDepList="INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('{$department}', '{$rowEmpID['employeeID']}')";
+					$resultDepList=mysqli_query($dbc,$queryDepList);
+				}
 			}
-		
-			
 			//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/admin_edit_user.php?userid=".$userid."");
 		}
 		
