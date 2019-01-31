@@ -165,19 +165,39 @@
 									?>
                                 </tbody>
                             </table>
-                            <form action="upload.php" method="post" enctype="multipart/form-data">
-                                Select image to upload:
-                                <input type="file" name="fileToUpload" id="fileToUpload">
-                                <input type="submit" value="Upload Image" name="submit">
-                            </form>
+
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="col-lg-4">
+                                        <form action=".php" method="post" enctype="multipart/form-data">
+                                            <input type="file" name="fileToUpload" id="fileToUpload">
+                                            <input type="submit" value="Submit" name="submit">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding-top:40%">
+                            <div class="col-lg-12"></div>
                         </div>
 
 
-                        <form method="post">
-                            <button type="submit" class="btn btn-success" name="approve" <?php if($row['statusDesc'] !='Pending' ) echo "disabled" ; ?> ><i class="fa fa-check"></i> Approve</button>
-                            &nbsp;&nbsp;
-                            <button type="submit" class="btn btn-danger" name="disapprove" <?php if($row['statusDesc'] !='Pending' ) echo "disabled" ; ?> ><i class="fa fa-ban"></i> Disapprove</button>
-                        </form>
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                </div>
+                                <div class="col-xs-4">
+                                    <form method="post">
+                                        <button type="submit" class="btn btn-success" name="approve" <?php if($row['statusDesc'] !='Pending' ) echo "disabled" ; ?> ><i class="fa fa-check"></i> Approve</button>
+                                        &nbsp;&nbsp;
+                                        <button type="submit" class="btn btn-danger" name="disapprove" <?php if($row['statusDesc'] !='Pending' ) echo "disabled" ; ?> ><i class="fa fa-ban"></i> Disapprove</button>
+                                    </form>
+                                </div>
+                                <div class="col-xs-4">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- page end-->
