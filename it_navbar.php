@@ -31,6 +31,13 @@
                             </a>
                         </li>
                         
+                        <li>
+                            <a href="it_maintenance_teams.php">
+                                <i class="fa fa-clock-o"></i>
+                                <span>Maintenance Teams</span>
+                            </a>
+                        </li>
+                        
 						<li>
                             <a href="it_view_deployed_assets.php">
                                 <i class="glyphicon glyphicon-asterisk"></i>
