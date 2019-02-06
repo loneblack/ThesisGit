@@ -148,14 +148,35 @@ $_SESSION['count'] = 0;
 																																			?>" min="<?php 
 																																						
 																																						$date = new DateTime(date("Y-m-d"));
-																																						$date->modify('+7 day');
+																																						$date->modify('+1 week');
 																																						$minDate = $date->format('Y-m-d');
 																																						echo $minDate;
 																																						
 																																					?>" max="<?php 
+																																								$CurDate = date("Y-m-d"); //Current date.
+																																								$check = false;
+																																								$dateNeeded=null;
+																																								
+																																								//GET END OF TERM DATE
+																																								$querySY="SELECT * FROM thesis.schoolyear order by SchoolYearID asc";
+																																								$resultSY=mysqli_query($dbc,$querySY);
+																																								while($rowSY=mysqli_fetch_array($resultSY, MYSQLI_ASSOC)){
+																																									if($CurDate<$rowSY['Term1End']&&$check==false){
+																																										$dateNeeded=$rowSY['Term1End'];
+																																										$check = true;
+																																									}
+																																									elseif($CurDate<$rowSY['Term2End']&&$check==false){
+																																										$dateNeeded=$rowSY['Term2End'];
+																																										$check = true;
+																																									}
+																																									elseif($CurDate<$rowSY['Term3End']&&$check==false){
+																																										$dateNeeded=$rowSY['Term3End'];
+																																										$check = true;
+																																									}
+																																								}
 																																																					
-																																								$date = new DateTime(date("Y-m-d"));
-																																								$date->modify('+50 day');
+																																								$date = new DateTime($dateNeeded);
+																																								$date->modify('-1 week');
 																																								$finDate = $date->format('Y-m-d');
 																																								echo $finDate;
 																																																						
