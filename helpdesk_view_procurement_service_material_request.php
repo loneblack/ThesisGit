@@ -224,11 +224,11 @@
                                                         <div class="form-group ">
                                                             <label for="priority" class="control-label col-lg-3">Priority</label>
                                                             <div class="col-lg-6">
-                                                                <select class="form-control m-bot15" name="priority" value="<?php if (isset($_POST['priority']) && !$flag) echo $_POST['priority']; ?>" required>
+                                                                <select class="form-control m-bot15" name="priority" value="<?php if (isset($_POST['priority']) && !$flag) echo $_POST['priority']; ?>" required readonly>
                                                                     <option value='Low'>Low</option>
                                                                     <option value='Medium'>Medium</option>
-                                                                    <option value='High' selected>High</option>
-                                                                    <option value='Urgent'>Urgent</option>
+                                                                    <option value='High'>High</option>
+                                                                    <option value='Urgent' selected>Urgent</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -255,7 +255,57 @@
                                                             <label class="control-label col-lg-3">Due Date</label>
                                                             <div class="col-lg-6">
                                                                 <!-- class="form-control form-control-inline input-medium default-date-picker" -->
-                                                                <input class="form-control m-bot15" size="10" name="dueDate" type="datetime-local" value="<?php if (isset($_POST['dueDate']) && !$flag) echo $_POST['dueDate']; ?>" required />
+                                                                <input class="form-control m-bot15" size="10" name="dueDate" type="date" min="<?php 
+																																					//GET NUMBER OF REQ ITEMS
+																																					$queryNumReqItems="SELECT SUM(quantity) as `numItems` FROM thesis.requestdetails where requestID='{$requestID}'";
+																																					$resultNumReqItems=mysqli_query($dbc,$queryNumReqItems);
+																																					$rowNumReqItems=mysqli_fetch_array($resultNumReqItems,MYSQLI_ASSOC);
+																																					
+																																					if($rowNumReqItems['numItems']<50){
+																																						$date = new DateTime(date("Y-m-d"));
+																																						$date->modify('+1 day');
+																																						$minDate = $date->format('Y-m-d');
+																																						echo $minDate;
+																																					}
+																																					else{
+																																						$date = new DateTime(date("Y-m-d"));
+																																						$date->modify('+1 week');
+																																						$minDate = $date->format('Y-m-d');
+																																						echo $minDate;
+																																					}
+																																					
+																																				?>" max="<?php 
+																																							//GET DUE DATE
+																																							$queryDueDate="SELECT dateNeeded FROM thesis.request where requestID='{$requestID}'";
+																																							$resultDueDate=mysqli_query($dbc,$queryDueDate);
+																																							$rowDueDate=mysqli_fetch_array($resultDueDate,MYSQLI_ASSOC);
+																																							
+																																							$date = new DateTime($rowDueDate['dateNeeded']);
+																																							//$date->modify('-1 week');
+																																							$finDate = $date->format('Y-m-d');
+																																							echo $finDate;
+																																						?>" value="<?php 
+															
+																																					//GET NUMBER OF REQ ITEMS
+																																					$queryNumReqItems="SELECT SUM(quantity) as `numItems` FROM thesis.requestdetails where requestID='{$requestID}'";
+																																					$resultNumReqItems=mysqli_query($dbc,$queryNumReqItems);
+																																					$rowNumReqItems=mysqli_fetch_array($resultNumReqItems,MYSQLI_ASSOC);
+																																					
+																																					if($rowNumReqItems['numItems']<50){
+																																						$date = new DateTime(date("Y-m-d"));
+																																						$date->modify('+1 day');
+																																						$minDate = $date->format('Y-m-d');
+																																						echo $minDate;
+																																					}
+																																					else{
+																																						$date = new DateTime(date("Y-m-d"));
+																																						$date->modify('+1 week');
+																																						$minDate = $date->format('Y-m-d');
+																																						echo $minDate;
+																																					}
+																																					
+																																			
+																																				?>" required />
                                                             </div>
                                                         </div>
 																

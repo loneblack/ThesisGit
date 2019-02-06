@@ -237,25 +237,28 @@
 															where ci.canvasID='{$canvasID}'";
 														$result=mysqli_query($dbc,$query);
 														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-															echo "<tr>
-															<input type='hidden' name='cavasItemID[]' value='{$row['cavasItemID']}'>
-															<td style='width:50px;'>{$row['quantity']}</td>
-															<td>{$row['assetModel']}</td>
-															<td>{$row['itemSpecification']}</td>
-															<td>
-																<select class='form-control' id='exampleFormControlSelect1' name='supplier[]' required>
-																<option selected disabled>Select Supplier</option>";
-;
-																$query1="SELECT * FROM thesis.supplier";
-																$result1=mysqli_query($dbc,$query1);
-																while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
-																	echo "<option value='{$row1['supplierID']}'>{$row1['name']}</option>";
-																}
-															echo "</select>
-															</td>
-															<td><input type='number' class='form-control' min='0.00' name='unitPrice[]' required></td>
-															<td><button type='button' class='btn btn-primary' onclick='addTest({$row['cavasItemID']})'> Add </button></td>
-														</tr>";
+															for($i=0;$i<3;$i++){
+																echo "<tr>
+																	<input type='hidden' name='cavasItemID[]' value='{$row['cavasItemID']}'>
+																	<td style='width:50px;'>{$row['quantity']}</td>
+																	<td>{$row['assetModel']}</td>
+																	<td>{$row['itemSpecification']}</td>
+																	<td>
+																		<select class='form-control' id='exampleFormControlSelect1' name='supplier[]' required>
+																		<option selected disabled>Select Supplier</option>";
+		;
+																		$query1="SELECT * FROM thesis.supplier";
+																		$result1=mysqli_query($dbc,$query1);
+																		while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
+																			echo "<option value='{$row1['supplierID']}'>{$row1['name']}</option>";
+																		}
+																	echo "</select>
+																	</td>
+																	<td><input type='number' class='form-control' min='0.00' name='unitPrice[]' required></td>
+																	<td><button type='button' class='btn btn-primary' onclick='addTest({$row['cavasItemID']})'> Add </button></td>
+																</tr>";
+															}
+															
 														}
 													
 													
