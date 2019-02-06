@@ -165,7 +165,7 @@ $_SESSION['count'] = 0;
                                                 </section>
 
                                                 <hr>
-                                                 <h5>Instructions: Fill up all the fields in the table. If you wish to request for more assets, add another entry to the table.</h5>
+                                                 <h5>Instructions: Fill up all the fields in the table. If you wish to request for more assets, add another entry to the table. The start of the date needed is 1 week after the request and the latest you could order is 1 week before the end of the term.</h5>
                                                  <hr>
 
                                                 <section>
