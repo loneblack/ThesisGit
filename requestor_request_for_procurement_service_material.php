@@ -254,7 +254,21 @@ $_SESSION['count'] = 0;
 
                                                     <br>
                                                 </section>
+                                                
+                                                
+                                                
+                                                
+                                                <section>
+                                                    <input type="checkbox" name="check"> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
+                                                    <br><br><br>
+                                                </section>
 
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-0 col-lg-8">
                                                         <button class="btn btn-primary" type="submit" onclick="getData('tblRequest');">Save</button>
