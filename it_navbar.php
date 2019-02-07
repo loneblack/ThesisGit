@@ -1,3 +1,10 @@
+<link href="bs3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+
 <?php  echo '<aside>
             <div id="sidebar" class="nav-collapse">
                 <!-- sidebar menu start-->
@@ -13,7 +20,7 @@
                         <li>
                             <a href="it_requests.php">
                                 <i class="fa fa-envelope-o"></i>
-                                <span>Requests</span>
+                                <span>Requests <span class="badge badge-light">4</span> </span>
                             </a>
                         </li>
                         

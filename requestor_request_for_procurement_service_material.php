@@ -183,6 +183,15 @@ $_SESSION['count'] = 0;
 																																							?>" />
                                                         </div>
                                                     </div>
+                                                    
+                                                    <div class="form-group ">
+                                                        <label for="dateNeeded" class="control-label col-lg-3">Room</label>
+                                                        <div class="col-lg-6">
+                                                            <select class="form-control">
+                                                                <option value="0">Select Room</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </section>
 
                                                 <hr>
