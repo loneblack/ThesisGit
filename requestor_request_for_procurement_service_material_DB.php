@@ -7,24 +7,24 @@
     $employeeID = 1;
     $userID = $_SESSION['userID'];
     $buildingID = "";
-    $FloorAndRoomID = ""; 
+    $FloorAndRoomID = $_POST['room']; 
 
     //get the location from userID
-    $sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = '{$userID}';";
-    $result = mysqli_query($dbc, $sql);
+    //$sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = '{$userID}';";
+    //$result = mysqli_query($dbc, $sql);
 
-    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-        $FloorAndRoomID = $row['FloorAndRoomID'];
-    }
+    //while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+        //$FloorAndRoomID = $row['FloorAndRoomID'];
+    //}
 
     // TO DO
     //get the buildingId from the floor and room ID
-    $sql = "SELECT * FROM `thesis`.`floorandroom` WHERE FloorAndRoomID = '{$FloorAndRoomID}';";
-    $result = mysqli_query($dbc, $sql);
+    //$sql = "SELECT * FROM `thesis`.`floorandroom` WHERE FloorAndRoomID = '{$FloorAndRoomID}';";
+    //$result = mysqli_query($dbc, $sql);
 
-    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-        $buildingID = $row['BuildingID'];
-    }
+    //while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+        //$buildingID = $row['BuildingID'];
+    //}
     
 
     $dateNeeded = $_POST['dateNeeded'];
@@ -40,7 +40,7 @@
     $count = $_SESSION['count'];
 
     $id = 0;    
-        $sql0 = "INSERT INTO `thesis`.`request` (`description`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`) VALUES ('{$comment}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '1');";//status is set to 1 for pending status
+        $sql0 = "INSERT INTO `thesis`.`request` (`description`, `employeeID`, `date`, `FloorAndRoomID`, `dateNeeded`, `UserID`, `status`, `step`) VALUES ('{$comment}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$dateNeeded}', '{$userID}', '1', '1');";//status is set to 1 for pending status
         $result0 = mysqli_query($dbc, $sql0);
         echo $sql0;
 
@@ -61,7 +61,7 @@
     $quantity = $_POST['quantity'.$i];
     $category = $_POST['category'.$i];
     $description = $_POST['description'.$i];
-	$purpose = $_POST['purpose'.$i];
+	//$purpose = $_POST['purpose'.$i];
 
         $sql = "INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `assetCategory`, `description`) 
                 VALUES ('{$id}', '{$quantity}', '{$category}', '{$description}');";

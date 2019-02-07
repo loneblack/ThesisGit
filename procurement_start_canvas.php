@@ -237,7 +237,7 @@
 															where ci.canvasID='{$canvasID}'";
 														$result=mysqli_query($dbc,$query);
 														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-															for($i=0;$i<3;$i++){
+															
 																echo "<tr>
 																	<input type='hidden' name='cavasItemID[]' value='{$row['cavasItemID']}'>
 																	<td style='width:50px;'>{$row['quantity']}</td>
@@ -257,7 +257,7 @@
 																	<td><input type='number' class='form-control' min='0.00' name='unitPrice[]' required></td>
 																	<td><button type='button' class='btn btn-primary' onclick='addTest({$row['cavasItemID']})'> Add </button></td>
 																</tr>";
-															}
+															
 															
 														}
 													
