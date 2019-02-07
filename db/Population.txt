@@ -547,6 +547,8 @@
 		INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('19', 'Approval Pending');
 		INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('20', 'Disapproved');	
 		INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('21', 'Completed');
+		INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('22', 'IT Approval');
+		INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('23', 'Receiver Approval');
 		
 
 
