@@ -125,10 +125,6 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                         <h4 class="control-label col-lg-1"><?php echo $floorRoom;?></h4>
                                                     </div>
                                                     <div class="form-group ">
-                                                        <h4 class="control-label col-lg-3">Recipient</h4>
-                                                        <h4 class="control-label col-lg-1"><?php echo $recipient;?></h4>
-                                                    </div>
-                                                    <div class="form-group ">
                                                        <h4 class="control-label col-lg-3">Date Needed</h4>
                                                        <h4 class="control-label col-lg-1"><?php echo $dateneeded;?></h4>
                                                     </div>

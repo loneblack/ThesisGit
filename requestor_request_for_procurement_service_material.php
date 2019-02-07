@@ -259,7 +259,7 @@ $_SESSION['count'] = 0;
                                                 
                                                 
                                                 <section>
-                                                    <input type="checkbox" name="check"> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
+                                                    <input type="checkbox" name="check"> Check if you would like the IT Asset Team to select the best alternative in case no supplier can provide the specifications mentioned. If you wish to be the one to select among the alternatives, leave it blank.
                                                     <br><br><br>
                                                 </section>
 

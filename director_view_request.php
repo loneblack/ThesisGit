@@ -171,7 +171,6 @@
                                     <div class="col-lg-4">
                                         <form action=".php" method="post" enctype="multipart/form-data">
                                             <input type="file" name="fileToUpload" id="fileToUpload">
-                                            <input type="submit" value="Submit" name="submit">
                                         </form>
                                     </div>
                                 </div>

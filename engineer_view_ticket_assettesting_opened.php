@@ -528,7 +528,7 @@
 													<div class="form-group ">
 														<label style="padding-left:22px" for="category" class="control-label col-lg-4">Category</label>
 														<div class="col-lg-8" style="padding-right:30px">
-															<select class="form-control m-bot15" name="category" readonly>
+															<select class="form-control m-bot15" name="category" disabled>
 																<?php
 																	$query2 = "SELECT * FROM thesis.ref_servicetype";
 																	$result2 = mysqli_query($dbc, $query2);
@@ -581,7 +581,7 @@
 												<div class="form-group ">
 													<label for="priority" class="control-label col-lg-4">Priority</label>
 													<div class="col-lg-8">
-														<select class="form-control m-bot15" id="priority" name="priority" value="<?php if (isset($_POST['priority']) && !$flag) echo $_POST['priority']; ?>" >
+														<select class="form-control m-bot15" id="priority" name="priority" value="<?php if (isset($_POST['priority']) && !$flag) echo $_POST['priority']; ?>" disabled>
 															<option value="">Select Priority</option>
 															<option value="Low">Low</option>
 															<option value="Medium">Medium</option>
