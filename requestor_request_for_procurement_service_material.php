@@ -187,8 +187,28 @@ $_SESSION['count'] = 0;
                                                     <div class="form-group ">
                                                         <label for="dateNeeded" class="control-label col-lg-3">Room</label>
                                                         <div class="col-lg-6">
-                                                            <select class="form-control">
-                                                                <option value="0">Select Room</option>
+                                                            <select class="form-control" name="room" id="room">
+                                                                <option>Select</option>
+                                                                <?php
+ 
+                                                                                $sql = "SELECT fr.FloorAndRoomID, fr.floorRoom FROM department_list dl
+                                                                                JOIN employee e ON dl.employeeid = e.employeeID
+                                                                                JOIN department d ON dl.DepartmentID = d.DepartmentID
+                                                                                JOIN departmentownsroom dor ON d.DepartmentID = dor.DepartmentID
+                                                                                JOIN floorandroom fr ON dor.FloorAndRoomID = fr.FloorAndRoomID
+                                                                                JOIN user u ON e.userID = u.userID
+                                                                                WHERE u.UserID = {$_SESSION['userID']}";
+
+                                                                                $result = mysqli_query($dbc, $sql);
+
+                                                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                                {
+                                                                                    
+                                                                                    echo "<option value ={$row['FloorAndRoomID']}>";
+                                                                                    echo "{$row['floorRoom']}</option>";
+
+                                                                                }
+                                                                           ?>
                                                             </select>
                                                         </div>
                                                     </div>
