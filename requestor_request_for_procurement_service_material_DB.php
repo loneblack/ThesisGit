@@ -61,7 +61,7 @@
     $quantity = $_POST['quantity'.$i];
     $category = $_POST['category'.$i];
     $description = $_POST['description'.$i];
-
+	$purpose = $_POST['purpose'.$i];
 
         $sql = "INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `assetCategory`, `description`) 
                 VALUES ('{$id}', '{$quantity}', '{$category}', '{$description}');";

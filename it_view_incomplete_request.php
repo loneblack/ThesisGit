@@ -135,6 +135,7 @@ if(isset($_POST['submit'])){
                                                     <th>Brand</th>
                                                     <th>Model</th>
                                                     <th>Specification</th>
+													<th>Purpose</th>
                                                     <th>Remove</th>
                                                     <th>Add</th>
                                                 </tr>
@@ -157,6 +158,7 @@ if(isset($_POST['submit'])){
 														<td style='width:50px;'>{$row1['quantity']}</td>
 														<td>{$row1['name']}</td>
 														<td>{$row1['description']}</td>
+														<td></td>
 														<td></td>
 														<td></td>
 														<td></td>
@@ -340,6 +342,9 @@ if(isset($_POST['submit'])){
                                 "<input type='text' class='form-control' id='specs" + clicks + "' placeholder='Specification' name='specs[]' required readonly>" +
                                 "</div>" +
                                 "</div>" +
+                                "</td>" +
+								"<td class='text-center'>" +
+                                
                                 "</td>" +
                                 "<td class='text-center'>" +
                                 "<button id='remove' class='btn btn-warning' onClick='removeRow(this)'>Remove</button> " +
