@@ -258,8 +258,9 @@ $_SESSION['count'] = 0;
                                                 
                                                 
                                                 
-                                                <section>
-                                                    <input type="checkbox" name="check"> Check if you would like the IT Asset Team to select the best alternative in case no supplier can provide the specifications mentioned. If you wish to be the one to select among the alternatives, leave it blank.
+                                               <section>
+                                                    <input type="checkbox" name="check"> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications.
+                                                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
                                                     <br><br><br>
                                                 </section>
 
@@ -271,10 +272,35 @@ $_SESSION['count'] = 0;
                                                 
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-0 col-lg-8">
-                                                        <button class="btn btn-primary" type="submit" onclick="getData('tblRequest');">Save</button>
+                                                        <button class="btn btn-primary" type="button"data-toggle="modal" data-target="#myModal">Save</button>
                                                         <button class="btn btn-default" type="button">Cancel</button>
                                                     </div>
                                                 </div>
+
+
+                                                <!-- Modal -->
+                                                  <div class="modal fade" id="myModal" role="dialog">
+                                                    <div class="modal-dialog">
+                                                    
+                                                      <!-- Modal content-->
+                                                      <div class="modal-content">
+                                                        <div class="modal-header">
+                                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                          <h4 class="modal-title">Confirmation</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                          <p>Are you sure about your request? Once you submit, this cannot be changed.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-primary" type="submit" onclick="getData('tblRequest');">Save</button>
+                                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                      </div>
+                                                      
+                                                    </div>
+                                                  </div>
+                                                <!-- Modal End-->
+
                                             </form>
                                         </div>
                                     </div>
