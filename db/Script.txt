@@ -1179,6 +1179,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`requestdetails` (
   `quantity` INT(11) NULL DEFAULT NULL,
   `assetCategory` INT(11) NOT NULL,
   `description` VARCHAR(45) NULL DEFAULT NULL,
+  `purpose` VARCHAR(45) NULL,
   INDEX `fk_RequestDetails_Request1_idx` (`requestID` ASC),
   INDEX `fk_requestdetails_ref_assetcategory1_idx` (`assetCategory` ASC),
   CONSTRAINT `fk_RequestDetails_Request1`
