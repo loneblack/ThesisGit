@@ -238,23 +238,6 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group ">
-                                                <label for="lastname" class="control-label col-lg-3">Office</label>
-                                                <div class="col-lg-6">
-                                                    <select class="form-control m-bot15" name="office" value="<?php if (isset($_POST['office']) && !$flag) echo $_POST['office']; ?>" required>
-														<?php
-																$queryOff="SELECT * FROM thesis.offices";
-																$resultOff=mysqli_query($dbc,$queryOff);
-																while($rowOff=mysqli_fetch_array($resultOff,MYSQLI_ASSOC)){
-																	echo "<option value='{$rowOff['officeID']}'>{$rowOff['Name']}</option>";
-																}
-															
-														?>
-                                                        <option value='' selected>None</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
 
                                             <div class="form-group ">
                                                 <label for="lastname" class="control-label col-lg-3">Position</label>
