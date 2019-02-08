@@ -103,7 +103,7 @@
                             <div class="col-sm-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        Start Canvas
+                                        Final Supplier List
                                     </header>
                                     <div class="panel-body">
                                         <section id="unseen">
