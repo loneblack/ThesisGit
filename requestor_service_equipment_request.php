@@ -155,7 +155,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                             <tr>
                                                                 <th>Equipment</th>
                                                                 <th>Quantity</th>
-                                                                <th>Purpose</th>
+                                                                <th>Purpose/ Proposed Specs</th>
                                                                 <th>Add/ Remove</th>
                                                             </tr>
                                                         </thead>
