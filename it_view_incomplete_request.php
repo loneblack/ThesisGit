@@ -125,17 +125,40 @@ if(isset($_POST['submit'])){
 
                                             </div>
                                         </div>
+                                        
+                                        <h4><b>Items Requested</b></h4>
+                                        <table class="table table-bordered table-striped table-condensed table-hover" id="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Quantity</th>
+                                                    <th>Category</th>
+                                                    <th>Specifications</th>
+                                                    <th>Purpose</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>5</td>
+                                                    <td>Desktop</td>
+                                                    <td>GTX 1050Ti</td>
+                                                    <td>For gaming please</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
+                                        
+                                        
+                                        
+                                        <h4><b>Items To Be Purchased</b></h4>
 										<form method="post" action="it_view_incomplete_request.php?requestID=<?php echo $requestID; ?>">
                                         <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                             <thead>
                                                 <tr>
                                                     <th>Quantity</th>
                                                     <th>Category</th>
-                                                    <th>Description</th>
                                                     <th>Brand</th>
                                                     <th>Model</th>
                                                     <th>Specification</th>
-													<th>Purpose</th>
                                                     <th>Remove</th>
                                                     <th>Add</th>
                                                 </tr>
@@ -157,8 +180,6 @@ if(isset($_POST['submit'])){
 													echo "<tr>
 														<td style='width:50px;'>{$row1['quantity']}</td>
 														<td>{$row1['name']}</td>
-														<td>{$row1['description']}</td>
-														<td></td>
 														<td></td>
 														<td></td>
 														<td></td>
