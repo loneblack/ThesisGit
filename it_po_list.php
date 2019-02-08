@@ -67,10 +67,10 @@
                                             <thead>
                                                 <tr>
                                                     <th>Purchase Order #</th>
-                                                    <th>Dated</th>
+                                                    <th>Supplier</th>
+                                                    <th>Expected Delivery Date</th>
+                                                    <th>Actual Delivery Date</th>
                                                     <th>Status</th>
-                                                    <th>Prepared By</th>
-                                                    <th>Delivery Date Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

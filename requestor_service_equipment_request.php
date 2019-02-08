@@ -155,6 +155,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                             <tr>
                                                                 <th>Equipment</th>
                                                                 <th>Quantity</th>
+                                                                <th>Purpose</th>
                                                                 <th>Add/ Remove</th>
                                                             </tr>
                                                         </thead>
@@ -184,6 +185,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                                         <option value=''>0</option>
                                                                     </select>
                                                                 </td>
+                                                                <td><input class="form-control" type="text" id="purpose"></td>
                                                                 <td><button type = "button" class="btn btn-success" onclick="addTest(4)"> Add </button></td>
                                                             </tr>
                                                         </tbody>
