@@ -125,8 +125,8 @@ if(isset($_POST['submit'])){
 
                                             </div>
                                         </div>
-                                        
-                                        <h4><b>Items Requested</b></h4>
+										
+										<h4><b>Items Requested</b></h4>
                                         <table class="table table-bordered table-striped table-condensed table-hover" id="table">
                                             <thead>
                                                 <tr>
@@ -137,19 +137,32 @@ if(isset($_POST['submit'])){
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td>Desktop</td>
-                                                    <td>GTX 1050Ti</td>
-                                                    <td>For gaming please</td>
-                                                </tr>
+                                               
+												<?php
+												
+												//$query1="SELECT ci.cavasItemID as `canvasItemID`,ci.quantity as `canvasQty`,rac.name as `categoryName`,rb.name as `brandName`,am.description as 'modelDesc',am.itemSpecification as `itemSpec` FROM thesis.canvasitem ci 
+													//							   join assetmodel am on ci.assetModel=am.assetModelID
+														//						   join ref_brand rb on am.brand=rb.brandID
+															//					   join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+												//where ci.canvasID='{$row['canvasID']}'";
+												
+												$query1="SELECT * FROM thesis.requestdetails rd join ref_assetcategory rac on rd.assetCategory=rac.assetCategoryID where rd.requestID='{$requestID}'";
+												$result1=mysqli_query($dbc,$query1);
+												
+												while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
+													
+													echo "<tr>
+															<td style='width:50px;'>{$row1['quantity']}</td>
+															<td>{$row1['name']}</td>
+															<td>{$row1['description']}</td>
+															<td>{$row1['purpose']}</td>
+														</tr>";	
+												}
+											?>
                                             </tbody>
                                         </table>
-                                        
-                                        
-                                        
-                                        
-                                        <h4><b>Items To Be Purchased</b></h4>
+										
+										<h4><b>Items To Be Purchased</b></h4>
 										<form method="post" action="it_view_incomplete_request.php?requestID=<?php echo $requestID; ?>">
                                         <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                             <thead>
@@ -370,6 +383,8 @@ if(isset($_POST['submit'])){
                                 "<td class='text-center'>" +
                                 "<button id='remove' class='btn btn-warning' onClick='removeRow(this)'>Remove</button> " +
                                 "</td>" +
+								"<td class='text-center'>" +
+								"</td>" +
                                 "</tr>";
                             $('#tableTest tbody tr').eq(rowCount).after(tr);
 							getCategory(assetCategory,clicks);
