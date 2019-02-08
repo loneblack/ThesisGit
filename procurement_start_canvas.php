@@ -4,40 +4,12 @@
 
  -->
 <?php
-	$canvasID=$_GET['canvasID'];
-	
-	
+	session_start();
 	require_once('db/mysql_connect.php');
-	if (isset($_POST['submit'])){
-		$canvasItemID=$_POST['cavasItemID'];
-		$supplier=$_POST['supplier'];
-		$unitPrice=$_POST['unitPrice'];
-		$count = sizeof($canvasItemID);
-		for ($i=0; $i < $count; $i++) { 
-			$querya="INSERT INTO `thesis`.`canvasitemdetails` (`cavasItemID`, `supplier_supplierID`, `price`, `status`) VALUES ('{$canvasItemID[$i]}', '{$supplier[$i]}', '{$unitPrice[$i]}', '1')";
-			$resulta=mysqli_query($dbc,$querya);
-		}
-		
-		$queryReqID="SELECT requestID FROM thesis.canvas where canvasID='{$canvasID}'";
-		$resultReqID=mysqli_query($dbc,$queryReqID);
-		$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
-		
-		$queryd="UPDATE `thesis`.`request` SET `step`='4' WHERE `requestID`='{$rowReqID['requestID']}'";
-		$resultd=mysqli_query($dbc,$queryd);
-		
-		$message = "Form submitted!";
-		$_SESSION['submitMessage'] = $message;
-		
-		//$queryb="UPDATE `thesis`.`canvas` SET `status`='6' WHERE `canvasID`='{$canvasID}'";
-		//$resultb=mysqli_query($dbc,$queryb);
-		
-		//$queryc="SELECT requestID FROM thesis.canvas where canvasID='{$canvasID}'";
-		//$resultc=mysqli_query($dbc,$queryc);
-		//$rowc=mysqli_fetch_array($resultc,MYSQLI_ASSOC);
-		
-		//$queryd="UPDATE `thesis`.`request` SET `status`='6' WHERE `requestID`='{$rowc['requestID']}'";
-		//$resultd=mysqli_query($dbc,$queryd);
-	}
+	$canvasID=$_GET['canvasID'];
+	$_SESSION['previousPage1'] = "procurement_start_canvas.php?canvasID=".$canvasID;
+	$_SESSION['count'] = 0;
+	
 	
 	if(isset($_POST['save'])){
 		$companyName=$_POST['companyName'];
@@ -214,11 +186,12 @@
 												</div>
 												<!-- Modal -->
 												</form>
-											<form method="post">
+											<form method="post" id="formSend" action="procurement_start_canvas_DB.php">
                                             <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                 <thead>
                                                     <tr>
-                                                        <th>Quantity</th>
+                                                        <th>Quantity to Order</th>
+														<th>Overall Quantity</th>
                                                         <th>Item</th>
                                                         <th>Specification</th>
                                                         <th>Supplier</th>
@@ -239,8 +212,10 @@
 														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 															
 																echo "<tr>
-																	<input type='hidden' name='cavasItemID[]' value='{$row['cavasItemID']}'>
-																	<td style='width:50px;'>{$row['quantity']}</td>
+																	<input type='hidden' name='cavasItemID[]' class='cavasItemIDs' value='{$row['cavasItemID']}'>
+																	<input type='hidden' name='cavasItemQtys[]' class='cavasItemQtys' value='{$row['quantity']}'>
+																	<td style='width:50px;'><input type='number' class='form-control cavasItemQty".$row['cavasItemID']."' min='0' max='{$row['quantity']}' name='qty[]' value='{$row['quantity']}' required></td>
+																	<td>{$row['quantity']}</td>
 																	<td>{$row['assetModel']}</td>
 																	<td>{$row['itemSpecification']}</td>
 																	<td>
@@ -255,7 +230,7 @@
 																	echo "</select>
 																	</td>
 																	<td><input type='number' class='form-control' min='0.00' name='unitPrice[]' required></td>
-																	<td><button type='button' class='btn btn-primary' onclick='addTest({$row['cavasItemID']})'> Add </button></td>
+																	<td><button type='button' class='btn btn-primary' onclick='addTest({$row['cavasItemID']},{$row['quantity']})'> Add </button></td>
 																</tr>";
 															
 															
@@ -340,7 +315,7 @@
                                             </table>
 
                                             <div>
-                                                <button type="submit" class="btn btn-success" name="submit" data-dismiss="modal">Send</button>
+                                                <button type="button" class="btn btn-success" onclick="formSubmit()" name="btnSubmit" data-dismiss="modal">Send</button>
                                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                                             </div>
 											</form>
@@ -417,7 +392,7 @@
 	<script>
         
 
-        function addTest(cavasItemID) {
+        function addTest(cavasItemID,maxQty) {
             var row_index = 0;
 			var canvasItemID=cavasItemID;
             var isRenderd = false;
@@ -430,20 +405,37 @@
             var delayInMilliseconds = 300; //1 second
 
             setTimeout(function() {
-
-                appendTableRow(row_index,canvasItemID);
+				if(checkAllQty(canvasItemID,maxQty)){
+					appendTableRow(row_index,canvasItemID,maxQty);
+				}
             }, delayInMilliseconds);
 
 
 
         }
-
-        var appendTableRow = function(rowCount,canvasItemID) {
+		
+		function checkAllQty(cavasItemID,maxQty) {
+			var sumQty=0;
+			var x = document.getElementsByClassName("cavasItemQty"+cavasItemID);
+			for(var i=0;i<x.length;i++){
+				var inVal=parseInt(x[i].value);
+				sumQty+=inVal;
+			}
+			
+			if(sumQty<maxQty){
+				return true;
+				
+			}
+			return false;
+		}
+		
+        var appendTableRow = function(rowCount,canvasItemID,maxQty) {
             var cnt = 0;
             var tr = "<tr>" +
 				"<input type='hidden' name='cavasItemID[]' value='"+ canvasItemID +"'>"+
-                "<td style='width:50px;'></td>" +
+                "<td style='width:50px;'><input type='number' class='form-control cavasItemQty"+ canvasItemID +"' min='0' max='"+ maxQty +"' name='qty[]' value='"+ maxQty +"' required></td>" +
                 "<td></td>" +
+				"<td></td>" +
                 "<td></td>" +
                 "<td>" +
                 "<select class='form-control' id='exampleFormControlSelect1' name='supplier[]' required>" +
@@ -460,6 +452,37 @@
                 "</tr>";
             $('#tableTest tbody tr').eq(rowCount).after(tr);
         }
+		
+		function formSubmit(){
+			var cavasItemIDs  = document.getElementsByClassName("cavasItemIDs");
+			var cavasItemQtys  = document.getElementsByClassName("cavasItemQtys");
+			var isQtyCorrect = true;
+			var message="";
+			
+			for(var i=0;i<cavasItemIDs.length;i++){
+				var x = document.getElementsByClassName("cavasItemQty"+cavasItemIDs[i].value);
+				var sumQty=0;
+				
+				for(var j=0;j<x.length;j++){
+					var inVal=parseInt(x[j].value);
+					
+					sumQty+=inVal;
+				}
+				
+				if(sumQty!=cavasItemQtys[i].value){
+					isQtyCorrect=false;
+					message+="Quantities entered reach the maximum quantity";
+				}
+			}
+			
+			if(isQtyCorrect==true){
+				document.getElementById("formSend").submit();
+			}
+			else{
+				alert(message);
+			}
+			
+		}
     </script>
 
 
