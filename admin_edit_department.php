@@ -198,6 +198,7 @@
                                                     <div class="form-group">
                                                         <div class="col-lg-offset-2 col-lg-10">
                                                             <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                                                            <button class="btn btn-default"  onclick="window.history.back();" type="button">Cancel</button>
                                                         </div>
                                                     </div>
                                                 </form>

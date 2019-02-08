@@ -83,90 +83,7 @@ session_start();
                                              <h4>Instructions: Place the item that you would like to borrow on the equipment then select the quantity that you would like to borrow. To add multiple items, press the add button on the right hand side of the table.</h4>
                                             
                                             <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_equipment_request_DB.php">
-<!--
-                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_equipment_request_DB.php">
-                                                <div class="form-group ">
-                                                    <label class="control-label col-lg-3">Affiliation</label>
-                                                    <div class="col-lg-6">
-                                                        <select class="form-control" id="ddl1" onchange="checkvalue(this.value)" name="affiliation">
-                                                            <option value="0">Select Affiliation</option>
-                                                            <option value="1">Office</option>
-                                                            <option value="2">Department</option>
-                                                            <option value="3">School Organization</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
 
-
-
-                                                <div class="form-group" id="office" style="display:none">
-                                                    <label class="control-label col-lg-3"></label>
-                                                    <div class="col-lg-6">
-                                                        <select class="form-control" id="office" name = "office">
-                                                            <option value=''>Select Office</option>
-                                                            <?php
-
-                                                                            $sql = "SELECT * FROM thesis.offices;";
-
-                                                                            $result = mysqli_query($dbc, $sql);
-
-                                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                                            {
-                                                                                    
-                                                                                echo "<option value ={$row['officeID']}>";
-                                                                                echo "{$row['Name']}</option>";
-
-                                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="form-group" id="department" style="display:none">
-                                                    <label class="control-label col-lg-3"></label>
-                                                    <div class="col-lg-6">
-                                                        <select class="form-control" id="department" name = "department">
-                                                            <option value=''>Select Department</option>
-                                                            <?php
-
-                                                                            $sql = "SELECT * FROM thesis.department;";
-
-                                                                            $result = mysqli_query($dbc, $sql);
-
-                                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                                            {
-                                                                                    
-                                                                                echo "<option value ={$row['DepartmentID']}>";
-                                                                                echo "{$row['name']}</option>";
-
-                                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="form-group" id="org" style="display:none">
-                                                    <label class="control-label col-lg-3"></label>
-                                                    <div class="col-lg-6">
-                                                        <select class="form-control" id="organization" name = "organization">
-                                                            <option value =''>Select Organizaiton</option>
-                                                            <?php
-
-                                                                            $sql = "SELECT * FROM thesis.organization;";
-
-                                                                            $result = mysqli_query($dbc, $sql);
-
-                                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                                            {
-                                                                                    
-                                                                                echo "<option value ={$row['id']}>";
-                                                                                echo "{$row['name']}</option>";
-
-                                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
                                                 <div class="form-group ">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Date & time needed</label>
                                                     <div class="col-lg-6">
@@ -174,7 +91,7 @@ session_start();
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <label for="endDate" class="control-label col-lg-3">End date & time</label>
+                                                    <label for="endDate" class="control-label col-lg-3">Asset Return date & time</label>
                                                     <div class="col-lg-6">
                                                         <input class=" form-control" id="endDate" name="endDate" type="datetime-local" />
                                                     </div>
@@ -185,37 +102,8 @@ session_start();
                                                         <input class="form-control" id="purpose" name="purpose" type="text" />
                                                     </div>
                                                 </div>
-												
-												<?php
-												if($userTypeID != 8)
-													{
-												?>
-													<div class="form-group ">
-														<label for="building" class="control-label col-lg-3">Building</label>
-														<div class="col-lg-6">
-															<select name="buildingID" class="form-control m-bot15" onChange="getRooms(this.value)" required>
-																<option value =''>Select building</option>
-																<?php
-																$sql = "SELECT * FROM thesis.building;";
-																$result = mysqli_query($dbc, $sql);
-																while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-																{
-																	
-																	echo "<option value ={$row['BuildingID']}>";
-																	echo "{$row['name']}</option>";
-																}
-															   ?>
-															</select>
-														</div>
-													</div>
-                                                <?php
-													}
-												?>
-												
-												<?php
-                                                if($userTypeID != 8)
-                                                    {
-                                                ?>
+                                                
+
                                                     <div class="form-group">
                                                         <label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
                                                         <div class="col-lg-6">
@@ -224,11 +112,8 @@ session_start();
                                                             </select>
                                                         </div>
                                                     </div>
-                                                <?php
-                                                    }
-                                                ?>
                                                 <hr>
--->
+
                                             <br><br>
                                                 <div class="container-fluid">
                                                     

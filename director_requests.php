@@ -59,6 +59,7 @@
                                     </header>
                                     <div class="panel-body">
                                         <div class="adv-table" id="ctable">
+                                            *Note: double click the row to view the request.
                                             <table class="display table table-bordered table-striped" id="dynamic-table">
                                                 <thead>
                                                     <tr>
