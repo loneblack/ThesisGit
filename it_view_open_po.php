@@ -186,7 +186,7 @@
                                     <section id="unseen">
                                         <div class="row invoice-to">
                                             <div class="col-md-4 col-sm-4 pull-left">
-                                                <h4>Purchase Order To:</h4>
+                                                <h4>Receive Order From:</h4>
                                                 <h2><?php echo $rowz['supplierName']; ?></h2>
                                                 <h5>Address: <?php echo $rowz['address']; ?></h5>
                                             </div>
