@@ -359,7 +359,7 @@ if(isset($_POST['submit'])){
 								"<select class='form-control' id='exampleFormControlSelect1" + clicks + "' name='category[]' readonly>" +
                                 "</select>" +
 								"</td>"+
-								"<td><input type='text' class='form-control' id='desc' placeholder='Description' name='desc[]'></td>" +
+								
                                 "<td>" +
                                 "<select class='form-control' id='exampleFormControlSelect2" + clicks + "' required name='brand[]' onchange='getModel(\"" + clicks + "\")'>" +
                                 "<option selected disabled>Select Brand</option>" +
@@ -377,9 +377,7 @@ if(isset($_POST['submit'])){
                                 "</div>" +
                                 "</div>" +
                                 "</td>" +
-								"<td class='text-center'>" +
-                                
-                                "</td>" +
+								
                                 "<td class='text-center'>" +
                                 "<button id='remove' class='btn btn-warning' onClick='removeRow(this)'>Remove</button> " +
                                 "</td>" +
