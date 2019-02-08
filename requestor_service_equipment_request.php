@@ -6,6 +6,7 @@ session_start();
   $_SESSION['count'] = 0;
   $_SESSION['previousPage'] = "requestor_service_equipment_request.php";
   $userID = $_SESSION['userID'];
+  $departments = array();
 
   $sql = "SELECT userType FROM thesis.user where UserID = 9";
   $result = mysqli_query($dbc, $sql);
@@ -14,6 +15,15 @@ session_start();
 	{
 		$userTypeID = $row['userType'];
 	}
+
+$sql = "SELECT * FROM thesis.department_list where employeeID = '{$userID}'";
+$result = mysqli_query($dbc, $sql);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+    {
+        array_push($departments, $row['DepartmentID']);
+    }
+
 ?>
 
 <head>
@@ -96,19 +106,39 @@ session_start();
                                                         <input class=" form-control" id="endDate" name="endDate" type="datetime-local" />
                                                     </div>
                                                 </div>
+                                                
+                                                <!--
                                                 <div class="form-group ">
                                                     <label for="purpose" class="control-label col-lg-3">Purpose</label>
                                                     <div class="col-lg-6">
                                                         <input class="form-control" id="purpose" name="purpose" type="text" />
                                                     </div>
-                                                </div>
-                                                
+                                                </div> 
+                                                -->
+
 
                                                     <div class="form-group">
                                                         <label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
                                                         <div class="col-lg-6">
                                                             <select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15">
-                                                                <option valu=''>Select floor & room</option>
+                                                                <option value=''>Select floor & room</option>
+                                                                <?php
+                                                                for($i = 0; $i < sizeof($departments); $i++)
+                                                                { 
+                                                                
+                                                                   $sql = "SELECT * FROM thesis.floorandroom f JOIN departmentownsroom d ON f.FloorAndRoomID = d.FloorAndRoomID WHERE DepartmentID = '$departments[$i]';";
+                                                                   
+                                                                   $result = mysqli_query($dbc, $sql);
+
+                                                                   while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                   {
+                                                                           
+                                                                       echo "<option value ={$row['FloorAndRoomID']}>";
+                                                                       echo "{$row['floorRoom']}</option>";
+
+                                                                   }
+                                                                }
+                                                                ?>
                                                             </select>
                                                         </div>
                                                     </div>
