@@ -102,6 +102,8 @@
                                                             <th>Model</th>
                                                             <!-- <th class="hidden-phone">Comments</th> -->
                                                             <th class="hidden-phone">Brand</th>
+                                                            <th>Specifications</th>
+                                                            <th>Years in Hand</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
