@@ -7,6 +7,7 @@
 	session_start();
 	require_once('db/mysql_connect.php');
 	$canvasID=$_GET['canvasID'];
+	$_SESSION['canvasID']=$canvasID;
 	$_SESSION['previousPage1'] = "procurement_start_canvas.php?canvasID=".$canvasID;
 	$_SESSION['count'] = 0;
 	

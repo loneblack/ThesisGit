@@ -15,11 +15,11 @@
 		$resulta=mysqli_query($dbc,$querya);
 	}
 		
-	$queryReqID="SELECT requestID FROM thesis.canvas where canvasID='{$canvasID}'";
+	$queryReqID="SELECT requestID FROM thesis.canvas where canvasID='{$_SESSION['canvasID']}'";
 	$resultReqID=mysqli_query($dbc,$queryReqID);
 	$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
 		
-	$queryd="UPDATE `thesis`.`request` SET `step`='4' WHERE `requestID`='{$rowReqID['requestID']}'";
+	$queryd="UPDATE `thesis`.`request` SET `step`='6' WHERE `requestID`='{$rowReqID['requestID']}'";
 	$resultd=mysqli_query($dbc,$queryd);
 		
 	$message = "Form submitted!";
