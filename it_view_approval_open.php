@@ -79,10 +79,10 @@ $_SESSION['count'] = 0;
                                                         Status: <span class='label label-warning'>Pending</span>
                                                     </h2>
                                                     <br>
-                                                    
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye"></i>  View Inventory</button>
-                                                    
-                                                    
+
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye"></i> View Inventory</button>
+
+
                                                     <h4>Request Details</h4>
                                                     <div class="form-group ">
                                                         <label for="dateNeeded" class="control-label col-lg-3">Room</label>
@@ -197,7 +197,12 @@ $_SESSION['count'] = 0;
 
 
                                                             <div class="modal-body">
-
+                                                                <form class="form-inline">
+                                                                    <div class="form-group mb-2">
+                                                                        <label>Reason For Disapproval:  </label>
+                                                                        <input type="text"  class="form-control" id="" required> 
+                                                                    </div>
+                                                                
                                                                 <div class="adv-table" id="ctable">
                                                                     <table class="display table table-bordered table-striped" id="dynamic-table">
                                                                         <thead>
@@ -320,11 +325,11 @@ $_SESSION['count'] = 0;
                                                                                 <td>Phone</td>
                                                                                 <td>On Hand</td>
                                                                             </tr>
-                                                                            
+
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-
+                                                                </form>
                                                             </div>
                                                             <br><br>
                                                             <div class="modal-footer">
