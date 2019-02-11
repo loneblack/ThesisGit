@@ -5,6 +5,7 @@
 	require_once("db/mysql_connect.php");
 	$_SESSION['count'] = 0;
 	$requestID=$_GET['requestID'];
+	$_SESSION['assetCatID']=null;
 	
 	//Get Request Data
 	$queryReq="SELECT * FROM thesis.request r join floorandroom far on r.FloorAndRoomID=far.FloorAndRoomID where r.requestID='{$requestID}'";
@@ -87,7 +88,7 @@
                                                     </h2>
                                                     <br>
 
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye"></i> View Inventory</button>
+                                                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye"></i> View Inventory</button> -->
 
 
                                                     <h4>Request Details</h4>
@@ -160,7 +161,7 @@
 																	</td>
 																	<td>
 																		<div class='col-lg-12'>
-																			<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#myModal'><i class='fa fa-eye'></i> View Inventory</button>
+																			<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#myModal' onclick='setAssetCatID(\"{$rowReqDet['assetCategory']}\")'><i class='fa fa-eye'></i> View Inventory</button>
 																		</div>
 																	</td>
 																</tr>";
@@ -221,8 +222,8 @@
 
 
                                                             <div class="modal-body">
-                                                                <form class="form-inline">
-                                                                <input type="hidden" id="assetCatID" name="assetCatID">
+                                                                <form class="form-inline" method="post">
+                                                                
                                                                 <div class="adv-table" id="ctable">
                                                                     <table class="display table table-bordered table-striped" id="dynamic-table">
                                                                         <thead>
@@ -236,116 +237,8 @@
                                                                                 <th>Status</th>
                                                                             </tr>
                                                                         </thead>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td><input type="checkbox"></td>
-                                                                                <td>PC-0001</td>
-                                                                                <td>Samsung</td>
-                                                                                <td>S7 Edge</td>
-                                                                                <td>CPU 1050</td>
-                                                                                <td>Phone</td>
-                                                                                <td>On Hand</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><input type="checkbox"></td>
-                                                                                <td>PC-0001</td>
-                                                                                <td>Samsung</td>
-                                                                                <td>S7 Edge</td>
-                                                                                <td>CPU 1050</td>
-                                                                                <td>Phone</td>
-                                                                                <td>On Hand</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><input type="checkbox"></td>
-                                                                                <td>PC-0001</td>
-                                                                                <td>Samsung</td>
-                                                                                <td>S7 Edge</td>
-                                                                                <td>CPU 1050</td>
-                                                                                <td>Phone</td>
-                                                                                <td>On Hand</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><input type="checkbox"></td>
-                                                                                <td>PC-0001</td>
-                                                                                <td>Samsung</td>
-                                                                                <td>S7 Edge</td>
-                                                                                <td>CPU 1050</td>
-                                                                                <td>Phone</td>
-                                                                                <td>On Hand</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><input type="checkbox"></td>
-                                                                                <td>PC-0001</td>
-                                                                                <td>Samsung</td>
-                                                                                <td>S7 Edge</td>
-                                                                                <td>CPU 1050</td>
-                                                                                <td>Phone</td>
-                                                                                <td>On Hand</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><input type="checkbox"></td>
-                                                                                <td>PC-0001</td>
-                                                                                <td>Samsung</td>
-                                                                                <td>S7 Edge</td>
-                                                                                <td>CPU 1050</td>
-                                                                                <td>Phone</td>
-                                                                                <td>On Hand</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><input type="checkbox"></td>
-                                                                                <td>PC-0001</td>
-                                                                                <td>Samsung</td>
-                                                                                <td>S7 Edge</td>
-                                                                                <td>CPU 1050</td>
-                                                                                <td>Phone</td>
-                                                                                <td>On Hand</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><input type="checkbox"></td>
-                                                                                <td>PC-0001</td>
-                                                                                <td>Samsung</td>
-                                                                                <td>S7 Edge</td>
-                                                                                <td>CPU 1050</td>
-                                                                                <td>Phone</td>
-                                                                                <td>On Hand</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><input type="checkbox"></td>
-                                                                                <td>PC-0001</td>
-                                                                                <td>Samsung</td>
-                                                                                <td>S7 Edge</td>
-                                                                                <td>CPU 1050</td>
-                                                                                <td>Phone</td>
-                                                                                <td>On Hand</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><input type="checkbox"></td>
-                                                                                <td>PC-0001</td>
-                                                                                <td>Samsung</td>
-                                                                                <td>S7 Edge</td>
-                                                                                <td>CPU 1050</td>
-                                                                                <td>Phone</td>
-                                                                                <td>On Hand</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><input type="checkbox"></td>
-                                                                                <td>PC-0001</td>
-                                                                                <td>Samsung</td>
-                                                                                <td>S7 Edge</td>
-                                                                                <td>CPU 1050</td>
-                                                                                <td>Phone</td>
-                                                                                <td>On Hand</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><input type="checkbox"></td>
-                                                                                <td>PC-0001</td>
-                                                                                <td>Samsung</td>
-                                                                                <td>S7 Edge</td>
-                                                                                <td>CPU 1050</td>
-                                                                                <td>Phone</td>
-                                                                                <td>On Hand</td>
-                                                                            </tr>
-
+                                                                        <tbody id='assetList'>
+																			
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
@@ -398,7 +291,16 @@
 
         });
 		
-		
+		function setAssetCatID(assetCatID) {
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("assetList").innerHTML = this.responseText;
+				}
+			};
+			xmlhttp.open("GET", "setAssetCatIDForIt_view_approval_ajax.php?category=" + assetCatID, true);
+			xmlhttp.send();
+		}
 		
         $.ajax({
             type: "POST",
@@ -410,8 +312,7 @@
             }
         });
 
-        }
-
+        
         function getRooms(val) {
             $.ajax({
                 type: "POST",
