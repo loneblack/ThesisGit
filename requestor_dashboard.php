@@ -37,29 +37,24 @@ require_once("db/mysql_connect.php");
                 <a href="#" class="logo">
                     <img src="images/dlsulogo.png" alt="" width="200px" height="40px">
                 </a>
-
             </div>
 
             <div class="nav notify-row" id="top_menu">
-                <div style="text-align: right; padding-bottom: 10px; padding-right:10px">
-                    <button class="btn btn-primary" style="">
-                        Logout
-                    </button> 
-                </div>
+
             </div>
 
-            </header>
-            <!--header end-->
-            <?php //include 'requestor_navbar.php' ?>
+        </header>
+        <!--header end-->
+        <?php include 'requestor_navbar.php' ?>
 
         <!--main content-->
-        <section>
+        <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
 
-                <div >
-                    <div>
-                        <div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="col-sm-12">
                             
                             <section class="panel">
                                 <header class="panel-heading">
