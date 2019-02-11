@@ -1,9 +1,3 @@
--- MySQL Workbench Forward Engineering
-
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
-
 -- -----------------------------------------------------
 -- Schema thesis
 -- -----------------------------------------------------
@@ -753,6 +747,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   `UserID` INT(11) NULL DEFAULT NULL,
   `status` INT(11) NOT NULL,
   `step` INT NULL,
+  `reasonForDisaprroval` LONGTEXT NULL,
+  `requestcol` TINYINT NULL,
   PRIMARY KEY (`requestID`),
   INDEX `fk_Request_Employee1_idx` (`employeeID` ASC),
   INDEX `fk_Request_FloorAndRoom1_idx` (`FloorAndRoomID` ASC),
@@ -1197,33 +1193,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`requestdetails` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
---- -----------------------------------------------------
--- Table `thesis`.`receiving`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `thesis`.`receiving` ;
-
-CREATE TABLE IF NOT EXISTS `thesis`.`receiving` (
-  `id` INT NOT NULL,
-  `imagepath` VARCHAR(45) NULL,
-  `datetime` DATETIME NULL,
-  `comments` VARCHAR(45) NULL,
-  `UserID` INT(11) NOT NULL,
-  `statusID` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_receiving_user1_idx` (`UserID` ASC),
-  INDEX `fk_receiving_ref_status1_idx` (`statusID` ASC),
-  CONSTRAINT `fk_receiving_user1`
-    FOREIGN KEY (`UserID`)
-    REFERENCES `thesis`.`user` (`UserID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_receiving_ref_status1`
-    FOREIGN KEY (`statusID`)
-    REFERENCES `thesis`.`ref_status` (`statusID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `thesis`.`ticketedasset`
@@ -1345,7 +1314,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`canvasitemdetails` (
   `price` DECIMAL NULL,
   `status` INT(11) NULL,
   `comment` VARCHAR(45) NULL,
-  `quantity` INT(11) NULL,
   INDEX `fk_canvasitemdetails_supplier1_idx` (`supplier_supplierID` ASC),
   INDEX `fk_canvasitemdetails_ref_status1_idx` (`status` ASC),
   CONSTRAINT `fk_canvasitemdetails_canvasitem1`
@@ -1549,6 +1517,52 @@ CREATE TABLE IF NOT EXISTS `thesis`.`department_list` (
 ENGINE = InnoDB;
 
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- -----------------------------------------------------
+-- Table `thesis`.`receiving`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`receiving` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`receiving` (
+  `id` INT NOT NULL,
+  `imagepath` VARCHAR(45) NULL,
+  `datetime` DATETIME NULL,
+  `comments` VARCHAR(45) NULL,
+  `UserID` INT(11) NOT NULL,
+  `statusID` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_receiving_user1_idx` (`UserID` ASC),
+  INDEX `fk_receiving_ref_status1_idx` (`statusID` ASC),
+  CONSTRAINT `fk_receiving_user1`
+    FOREIGN KEY (`UserID`)
+    REFERENCES `thesis`.`user` (`UserID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_receiving_ref_status1`
+    FOREIGN KEY (`statusID`)
+    REFERENCES `thesis`.`ref_status` (`statusID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`recommended_assets`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`recommended_assets` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`recommended_assets` (
+  `requestID` INT(11) NULL,
+  `assetID` INT(11) NULL,
+  INDEX `fk_recommended_assets_request1_idx` (`requestID` ASC),
+  INDEX `fk_recommended_assets_asset1_idx` (`assetID` ASC),
+  CONSTRAINT `fk_recommended_assets_request1`
+    FOREIGN KEY (`requestID`)
+    REFERENCES `thesis`.`request` (`requestID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_recommended_assets_asset1`
+    FOREIGN KEY (`assetID`)
+    REFERENCES `thesis`.`asset` (`assetID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
