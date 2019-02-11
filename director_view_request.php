@@ -2,34 +2,31 @@
 <?php
 	session_start();
 	require_once('db/mysql_connect.php');
-	$_SESSION['requestid']=$_GET['requestid'];
+	$requestID=$_GET['requestid'];
 	$query="SELECT rs.description as `statusDesc` FROM thesis.request r join thesis.ref_status rs on r.status=rs.statusID
 										   join thesis.user u on r.UserID=u.UserID
-										   where r.requestID='{$_SESSION['requestid']}'";
+										   where r.requestID='{$requestID}'";
 	$result=mysqli_query($dbc,$query);
 	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 
-
-	
 	if(isset($_POST['approve'])){
-		$query="UPDATE `thesis`.`request` SET `status`='2', `step`='2'  WHERE `requestID`='{$_SESSION['requestid']}'";
+		$query="UPDATE `thesis`.`request` SET `status`='2', `step`='2'  WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
-		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
+		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$requestID}");
 	}
 	elseif(isset($_POST['disapprove'])){
-		$query="UPDATE `thesis`.`request` SET `status`='6', `step`='20' WHERE `requestID`='{$_SESSION['requestid']}'";
+		$query="UPDATE `thesis`.`request` SET `status`='6', `step`='20' WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
-		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$_SESSION['requestid']}");
+		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$requestID}");
 	}
-
-
+	
     $sql="SELECT *, d.name as 'department', e.name as 'myName', b.name as 'building'
             FROM thesis.request r 
             JOIN employee e ON r.UserID = e.UserID 
             JOIN department d ON e.DepartmentID = d.DepartmentID 
             JOIN building b ON r.BuildingID = b.BuildingID
             JOIN floorandroom f ON r.FloorAndRoomID = f.FloorAndRoomID
-            WHERE requestID = {$_SESSION['requestid']};";
+            WHERE requestID = {$requestID};";
 
     $output=mysqli_query($dbc,$sql);
     $column=mysqli_fetch_array($output,MYSQLI_ASSOC);
@@ -96,21 +93,18 @@
                         <div class="col-sm-12">
                             <h2>Status:
                                 <?php 
-											if($row['statusDesc']=='Pending'){
-												echo "<span class='label label-warning'>{$row['statusDesc']}</span>";
-											}
-											elseif($row['statusDesc']=='Disapproved'){
-												echo "<span class='label label-danger'>{$row['statusDesc']}</span>";
-											}
-											else{
-												echo "<span class='label label-success'>Approved</span>";
-											} ?>
+									if($row['statusDesc']=='Pending'){
+										echo "<span class='label label-warning'>{$row['statusDesc']}</span>";
+									}
+									elseif($row['statusDesc']=='Disapproved'){
+										echo "<span class='label label-danger'>{$row['statusDesc']}</span>";
+									}
+									else{
+										echo "<span class='label label-success'>Approved</span>";
+									} ?>
                             </h2>
                             <br><br>
                             <div class="col-lg-6">
-                                <h4><strong>Department:</strong>
-                                    <?php echo $department; ?>
-                                </h4>
                                 <h4><strong>Name:</strong>
                                     <?php echo $myName; ?>
                                 </h4>
@@ -141,21 +135,23 @@
                                         <th>Quantity</th>
                                         <th>Hardware/ Software Requirements</th>
                                         <th>Description</th>
+										<th>Purpose</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
 									
 										require_once('db/mysql_connect.php');
-										$query1="SELECT rd.requestID,rd.quantity,rd.description as `reqDetDesc`,rac.name as `categoryName` FROM thesis.requestdetails rd
+										$query1="SELECT rd.purpose,rd.requestID,rd.quantity,rd.description as `reqDetDesc`,rac.name as `categoryName` FROM thesis.requestdetails rd
 															join thesis.ref_assetcategory rac on rd.assetCategory=rac.assetCategoryID
-															where rd.requestID='{$_SESSION['requestid']}}'";
+															where rd.requestID='{$requestID}}'";
 										$result1=mysqli_query($dbc,$query1);
 										while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
 											echo "<tr>
 												<td>{$row1['quantity']}</td>
 												<td>{$row1['categoryName']}</td>
 												<td>{$row1['reqDetDesc']}</td>
+												<td>{$row1['purpose']}</td>
 											</tr>";
 											
 											

@@ -85,15 +85,7 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-				<?php
-                    if (isset($_SESSION['submitMessage'])){
-
-                        echo "<div class='alert alert-success'>
-                                {$_SESSION['submitMessage']}
-							  </div>";
-                        unset($_SESSION['submitMessage']);
-                    }
-				?>
+				
                 <div class="row">
                     <div class="row">
                         <div class="col-lg-12">
@@ -114,7 +106,7 @@
 
                                                         unset($_SESSION['submitMessage']);
                                                     }
-                                                ?>
+                                                ?> 
 
                                                 <section>
                                                     <h2>
