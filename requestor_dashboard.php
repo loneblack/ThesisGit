@@ -55,7 +55,11 @@ require_once("db/mysql_connect.php");
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
-                            
+
+                            <div class="alert alert-info">
+                                Hello! Your Assets Are Now Ready! Please Click this <a href="requestor_set_delivery.php" class="alert-link">link</a> to schedule asset delivery.
+                            </div>
+
                             <section class="panel">
                                 <header class="panel-heading">
                                     All Requests
@@ -79,8 +83,8 @@ require_once("db/mysql_connect.php");
                                             <tbody>
 
 
-                                                
-                                                 <?php
+
+                                                <?php
                                                     // view for purchase request
                                                     $count = 1;
 
@@ -121,7 +125,7 @@ require_once("db/mysql_connect.php");
                                                     }
                                                   ?>
 
-                                                  <?php
+                                                <?php
                                                     //view for service
                                                     $query = "SELECT *, sr.id as'serviceID' FROM thesis.service sr   
                                                               JOIN ref_status st ON sr.status = st.statusID 
@@ -163,7 +167,7 @@ require_once("db/mysql_connect.php");
                                                     }
                                                   ?>
 
-                                                  <?php
+                                                <?php
                                                     // view for borrow
                                                     $sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = {$userID};";//get the employeeID using userID
                                                     $result = mysqli_query($dbc, $sql);
@@ -213,7 +217,7 @@ require_once("db/mysql_connect.php");
 
                                                     
                                                   ?>
-                                                  <?php
+                                                <?php
                                                     // view for donation
                                                   
                                                     $sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = {$userID};";//get the employeeID using userID
@@ -264,7 +268,7 @@ require_once("db/mysql_connect.php");
 
                                                   ?>
 
-                                                
+
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -282,8 +286,8 @@ require_once("db/mysql_connect.php");
                                     </div>
                                 </div>
                             </section>
-                            
-                            
+
+
                         </div>
                     </div>
                 </div>
@@ -297,66 +301,56 @@ require_once("db/mysql_connect.php");
     <!-- WAG GALAWIN PLS LANG -->
 
     <script>
-    function addRowHandlers() {
-        var table = document.getElementById("dynamic-table");
-        var rows = table.getElementsByTagName("tr");
-        for (i = 1; i < rows.length; i++) {
-            var currentRow = table.rows[i];
-            var createClickHandler = function(row) {
-                return function() {
+        function addRowHandlers() {
+            var table = document.getElementById("dynamic-table");
+            var rows = table.getElementsByTagName("tr");
+            for (i = 1; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function(row) {
+                    return function() {
 
-                   var cell1 = row.getElementsByTagName("td")[0];
-                    var id = cell1.textContent;
+                        var cell1 = row.getElementsByTagName("td")[0];
+                        var id = cell1.textContent;
 
-                    var cell = row.getElementsByTagName("td")[2];
-                    var requestType = cell.textContent;
-                    
-					var cell2 = row.getElementsByTagName("td")[6];
-                    var step = cell2.textContent;
-					
-                    if(requestType == 'Asset Request'){
-						if(step == "Conforme Pending"){
-							window.location.href = "requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType;
-						}
-						else{
-							window.location.href = "requestor_view_request_for_procurement_service_material.php?id=" + id;
-						}
-                    }
+                        var cell = row.getElementsByTagName("td")[2];
+                        var requestType = cell.textContent;
 
-                    else if(requestType == "Borrow"){
-						if(step == "Conforme Pending"){
-							window.location.href = "requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType;
-						}
-						else{
-							window.location.href = "requestor_view_service_equipment_request.php?id=" + id;
-						}
-                    }
-                    
-                    else if(requestType == "Donation"){
-                        if(step == "Conforme Pending"){
-							window.location.href = "requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType;
-						}
-						else{
-							window.location.href = "requestor_view_donation_request.php?id=" + id;
-						}
-                    }
+                        var cell2 = row.getElementsByTagName("td")[6];
+                        var step = cell2.textContent;
 
-                    else if(requestType == "Service" || requestType == "Repair"){
-						if(step == "Conforme Pending"){
-							window.location.href = "requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType;
-						}
-						else{
-							window.location.href = "requestor_view_service_request.php?id=" + id;
-						}
-                        
-                    }
-                    
+                        if (requestType == 'Asset Request') {
+                            if (step == "Conforme Pending") {
+                                window.location.href = "requestor_service_request_form_conforme.php?id=" + id + "&requestType=" + requestType;
+                            } else {
+                                window.location.href = "requestor_view_request_for_procurement_service_material.php?id=" + id;
+                            }
+                        } else if (requestType == "Borrow") {
+                            if (step == "Conforme Pending") {
+                                window.location.href = "requestor_service_request_form_conforme.php?id=" + id + "&requestType=" + requestType;
+                            } else {
+                                window.location.href = "requestor_view_service_equipment_request.php?id=" + id;
+                            }
+                        } else if (requestType == "Donation") {
+                            if (step == "Conforme Pending") {
+                                window.location.href = "requestor_service_request_form_conforme.php?id=" + id + "&requestType=" + requestType;
+                            } else {
+                                window.location.href = "requestor_view_donation_request.php?id=" + id;
+                            }
+                        } else if (requestType == "Service" || requestType == "Repair") {
+                            if (step == "Conforme Pending") {
+                                window.location.href = "requestor_service_request_form_conforme.php?id=" + id + "&requestType=" + requestType;
+                            } else {
+                                window.location.href = "requestor_view_service_request.php?id=" + id;
+                            }
+
+                        }
+
+                    };
                 };
-            };
-            currentRow.onclick = createClickHandler(currentRow);
+                currentRow.onclick = createClickHandler(currentRow);
+            }
         }
-    }
-    window.onload = addRowHandlers();
+        window.onload = addRowHandlers();
     </script>
 
     <!--Core js-->
