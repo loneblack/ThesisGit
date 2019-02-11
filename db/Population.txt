@@ -13,29 +13,23 @@
 		INSERT INTO `thesis`.`ref_usertype` (`id`, `description`) VALUES ('8', 'Student');
 
 		-- building
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('1', 'Angelo King International Center');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('2', 'BGC-Rufino Campus');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('3', 'Br. Andrew B. Gonzalez FSC Hall (AGH)');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('4', 'Br. Celba John FSC Hall (JH)');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('5', 'Br. Gabriel Connon FSC Hall (CH)');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('6', 'DLSU Laguna Campus');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('7', 'Don Enrique T. Yuchengco Hall (YH)');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('8', 'Enrique M. Razon Sports Center (ERSC)');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('9', 'Faculty Center (FC)');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('10', 'Henry S. Sy Sr. Hall (HSSH)');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('11', 'John Gokongwei Sr. Hall (GH)');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('12', 'Lasallian Study Center');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('13', 'Makati Extension Campus');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('14', 'Milagros Hall');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('15', 'Science and Technology Campus');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('16', 'Science and Technology Research Center (STRC)');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('17', 'St. Joseph Hall (SJ)');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('18', 'St. La Salle Hall (LS)');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('19', 'St. Miguel Febres Cordero Hall (MH)');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('20', 'Tuluyan Center');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('21', 'Urbano J. Velasco Hall (VH)');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('22', 'Warehouse');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('23', 'William J. Shaw Hall (WH)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('1', 'Br. Andrew B. Gonzalez FSC Hall (AGH)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('2', 'Br. Celba John FSC Hall (JH)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('3', 'Br. Gabriel Connon FSC Hall (CH)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('4', 'Don Enrique T. Yuchengco Hall (YH)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('5', 'Enrique M. Razon Sports Center (ERSC)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('6', 'Faculty Center (FC)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('7', 'Henry S. Sy Sr. Hall (HSSH)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('8', 'John Gokongwei Sr. Hall (GH)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('9', 'Brother Bloemen Hall ');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('10', 'St. Mutien Marie Hall');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('11', 'Science and Technology Research Center (STRC)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('12', 'St. Joseph Hall (SJ)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('13', 'St. La Salle Hall (LS)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('14', 'St. Miguel Febres Cordero Hall (MH)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('15', 'Inventory Management Office (IMO)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('16', 'Urbano J. Velasco Hall (VH)');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('17', 'William J. Shaw Hall (WH)');
 
 		-- ref_assetcategory
 		INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Access Point');
@@ -362,41 +356,162 @@
 		INSERT INTO `thesis`.`organization` (`id`, `name`) VALUES ('50', 'La Salle Debate Society');
 
 		-- Insertion to floorRoom ---------------------------------------------------------------------------------------
-		-- Andrew Building
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('3', 'AGH1706');
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('3', 'AGH1904');
+		-- Andrew Building [1]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('1', 'AGH1706');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('1', 'AGH1904');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('1', 'AGH204');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('1', 'AGH205');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('1', 'AGH206');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('1', 'AGH207');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('1', 'AGH305');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('1', 'AGH307');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('1', 'AGH308');
 
-		-- Yuchengco Building
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('7', 'YH602 ');
+		-- Br. Celba John FSC Hall [2]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('2', 'JH202');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('2', 'JH201');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('2', 'JH203');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('2', 'JH206');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('2', 'JH208');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('2', 'JH110');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('2', 'JH107');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('2', 'JH102');
 
-		-- Gokongwei Building
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH301');
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH302A');
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH302B');
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH304A');
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH304B');
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH306A');
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH306B');
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'GH404');
+		-- Br. Gabriel Connon FSC Hall [3]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('3', 'CH202');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('3', 'CH201');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('3', 'CH203');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('3', 'CH206');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('3', 'CH208');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('3', 'CH110');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('3', 'CH107');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('3', 'CH102');
 
-		-- Makati Extension Campus
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('13', 'MEC');
+		-- Yuchengco Building [4]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('4', 'YH602');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('4', 'YH402');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('4', 'YH201');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('4', 'YH306');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('4', 'YH302');		
 
-		-- Scienc and Technology Research Center(STRC)
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('16', 'STRC 314');
+		-- Enrique M. Razon Sports Center [5]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('5', 'ERSC201');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('5', 'ERSC305');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('5', 'ERSC407');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('5', 'ERSC506');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('5', 'ERSC602');
 
-		-- St. Joseph Hall
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('17', 'SJ212');
+		-- Faculty Center (FC) [6]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('6', 'FC201');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('6', 'FC305');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('6', 'FC407');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('6', 'FC506');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('6', 'FC105');
+		
 
-		-- St. Miguel Hall
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('19', 'M303');
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('19', 'M404');
+		-- Henry S. Sy Sr. Hall (HSSH) [7]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('7', 'HSSH201');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('7', 'HSSH301');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('7', 'HSSH701');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('7', 'HSSH501');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('7', 'HSSH1201');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('7', 'HSSH1301');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('7', 'HSSH1401');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('7', 'HSSH602');	
 
-		-- Velasco Hall
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('21', 'VH103');
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('21', 'VH301');
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('21', 'VH310');
-		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('21', 'VH153');
+		-- Gokongwei Building [8]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('8', 'GH301');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('8', 'GH302A');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('8', 'GH302B');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('8', 'GH304A');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('8', 'GH304B');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('8', 'GH306A');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('8', 'GH306B');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('8', 'GH404');
+
+		-- Brother Bloemen Hall [9]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('9', 'BB201');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('9', 'BB102');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('9', 'BB101');
+
+		-- St. Mutien Marie Hall [10]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('10', 'MM301');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('10', 'MM302');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('10', 'MM303');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('10', 'MM204');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('10', 'MM104');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('10', 'MM206');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('10', 'MM206');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('10', 'MM103');
+
+		-- Science and Technology Research Center (STRC) [11]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'STRC102');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'STRC203');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'STRC103');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'STRC104');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'STRC201');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'STRC206');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'STRC302');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('11', 'STRC301');
+
+		-- St. Joseph Hall [12]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('12', 'SJ102');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('12', 'SJ104');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('12', 'SJ201');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('12', 'SJ202');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('12', 'SJ203');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('12', 'SJ204');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('12', 'SJ205');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('12', 'SJ303');
+
+		-- St. La Salle Hall (LS) [13]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('13', 'LS103');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('13', 'LS104');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('13', 'LS105');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('13', 'LS201');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('13', 'LS202');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('13', 'LS203');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('13', 'LS204');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('13', 'LS205');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('13', 'LS302');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('13', 'LS305');
+
+		-- St. Miguel Febres Cordero Hall [14]		
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('14', 'MH101');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('14', 'MH102');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('14', 'MH103');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('14', 'MH201');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('14', 'MH202');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('14', 'MH203');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('14', 'MH204');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('14', 'MH303');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('14', 'MH304');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('14', 'MH301');
+
+		-- Inventory Management Office [15]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('15', 'IMO101');
+
+		-- Urbano J. Velasco Hall (VH) [16]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('16', 'VH102');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('16', 'VH104');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('16', 'VH105');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('16', 'VH201');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('16', 'VH202');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('16', 'VH203');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('16', 'VH302');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('16', 'VH301');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('16', 'VH303');
+
+		-- William J. Shaw Hall (WH) [17]
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('17', 'WH102');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('17', 'WH104');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('17', 'WH105');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('17', 'WH201');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('17', 'WH202');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('17', 'WH203');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('17', 'WH302');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('17', 'WH301');
+		INSERT INTO `thesis`.`floorandroom` (`BuildingID`, `floorRoom`) VALUES ('17', 'WH303');				 		
 
 		-- End of Flooroom Insertion -------------------------------------------------------------------------------------
 
@@ -435,7 +550,7 @@
 		VALUES ( AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '1', AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('admin', 'Fusion'));
 		-- 2
 		INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-		VALUES ( AES_ENCRYPT('Director', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '7', AES_ENCRYPT('Allan', 'Fusion'), AES_ENCRYPT('Borja', 'Fusion'));
+		VALUES ( AES_ENCRYPT('Receiver', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '7', AES_ENCRYPT('Allan', 'Fusion'), AES_ENCRYPT('Borja', 'Fusion'));
 		-- 3
 		INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
 		VALUES ( AES_ENCRYPT('ITOffice1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Jojo', 'Fusion'), AES_ENCRYPT('Soliva', 'Fusion'));
@@ -444,26 +559,34 @@
 		VALUES ( AES_ENCRYPT('ITOffice2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Giligan', 'Fusion'), AES_ENCRYPT('Crissa', 'Fusion'));
 		-- 5
 		INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-		VALUES ( AES_ENCRYPT('Helpdesk', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '3', AES_ENCRYPT('help', 'Fusion'), AES_ENCRYPT('desk', 'Fusion')); 
+		VALUES ( AES_ENCRYPT('Helpdesk', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '3', AES_ENCRYPT('Christina', 'Fusion'), AES_ENCRYPT('Lao', 'Fusion')); 
 		-- 6
 		INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-		VALUES ( AES_ENCRYPT('Procurement', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '6', AES_ENCRYPT('Procurement', 'Fusion'), AES_ENCRYPT('Procurement', 'Fusion'));
+		VALUES ( AES_ENCRYPT('Procurement', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '6', AES_ENCRYPT('Ezhra', 'Fusion'), AES_ENCRYPT('Bahala', 'Fusion'));
 		-- 7
 		INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-		VALUES ( AES_ENCRYPT('Engineer1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('One', 'Fusion'), AES_ENCRYPT('Engineer', 'Fusion'));
+		VALUES ( AES_ENCRYPT('Engineer1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Aaron', 'Fusion'), AES_ENCRYPT('Capuno', 'Fusion'));
 		-- 8
 		INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-		VALUES ( AES_ENCRYPT('Engineer2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Two', 'Fusion'), AES_ENCRYPT('Engineer', 'Fusion')); 
+		VALUES ( AES_ENCRYPT('Engineer2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Jane', 'Fusion'), AES_ENCRYPT('Doe', 'Fusion')); 
 		-- 9
 		INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-		VALUES ( AES_ENCRYPT('Requestor1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('One', 'Fusion'), AES_ENCRYPT('Requestor', 'Fusion'));
+		VALUES ( AES_ENCRYPT('Requestor1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Matthew', 'Fusion'), AES_ENCRYPT('Vidallon', 'Fusion'));
 		-- 10
 		INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-		VALUES ( AES_ENCRYPT('Requestor2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Two', 'Fusion'), AES_ENCRYPT('Requestor', 'Fusion'));
+		VALUES ( AES_ENCRYPT('Requestor2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Ronald', 'Fusion'), AES_ENCRYPT('Petrola', 'Fusion'));
 		-- 11
 		INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-		VALUES ( AES_ENCRYPT('Requestor3', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Three', 'Fusion'), AES_ENCRYPT('Requestor', 'Fusion'));
-		-- 696969696969696969
+		VALUES ( AES_ENCRYPT('Requestor3', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Gian', 'Fusion'), AES_ENCRYPT('Purisima', 'Fusion'));
+		-- 12
+		INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+		VALUES ( AES_ENCRYPT('Jan', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Jan', 'Fusion'), AES_ENCRYPT('Austin', 'Fusion'));
+		-- 13
+		INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+		VALUES ( AES_ENCRYPT('marvinlao', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Marvin', 'Fusion'), AES_ENCRYPT('Lao', 'Fusion'));
+		-- 14
+		INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+		VALUES ( AES_ENCRYPT('johannessia', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '8', AES_ENCRYPT('Johannes', 'Fusion'), AES_ENCRYPT('Sia', 'Fusion'));
 
 
 		-- Employee
@@ -471,28 +594,31 @@
 		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Allan Borja', 'Director', '09999999999', 'allan.borja@dlsu.edu.ph', '2', '2');
 		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Sir Jojo', 'Asset Manager', '09999999999', 'jojo.soliva@dlsu.edu.ph', '3', '3');
 		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('Giligan Crissa', 'Assistan Asset Manager', '0456789299', 'crissa.giligan@dlsu.edu.ph', '4', '4');
-		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Help Desk', 'Helpdesk', '09876543210', 'helpless.desk@dlsu.edu.ph', '5', '5');
-		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Pro Curement', 'Procurement', '09999999999', 'test@test', '6', '6');
-		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Mark Question', 'Engineer', '09876543210', 'question.mark@dlsu.edu.ph', '7', '7');
-		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Point Exclamation', 'Engineer', '09876543210', 'exclamation.point@dlsu.edu.ph', '8', '8');
-		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Teacher Matt', 'Professor', '09876543210', 'math.teacher@dlsu.edu.ph', '9', '9');
-		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Professor Psy', 'Professor', '09876543210', 'psych.prof@dlsu.edu.ph','10','10');
-		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Lecturer Phil', 'Assistant Professor', '09876543210', 'filipino.lecturer@dlsu.edu.ph', '11', '11');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Christina Lao', 'Helpdesk', '09876543210', 'christina.lao@dlsu.edu.ph', '5', '5');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Pro Curement', 'Procurement', '09999999999', 'aaron.capuno@dlsu.edu.ph', '6', '6');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Aaron Capuno', 'Engineer', '09876543210', 'question.mark@dlsu.edu.ph', '7', '7');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Jane Doe', 'Engineer', '09876543210', 'jane.doe@dlsu.edu.ph', '8', '8');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Matthew Vidallon', 'Professor', '09876543210', 'matthew.vidallon@dlsu.edu.ph', '9', '9');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Ronald Petrola', 'Professor', '09876543210', 'ronald.petrola@dlsu.edu.ph','10','10');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Gian Purisima', 'Assistant Professor', '09876543210', 'gian.purisima@dlsu.edu.ph', '11', '11');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Jan Austin', 'Engineer', '0928349444', 'jan_austin@dlsu.edu.ph', '12', '15');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Marvin Lao', 'Engineer', '0928559444', 'marvin.lao@dlsu.edu.ph', '13', '12');
+		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Johannes Sia', 'Student', '039444421', 'johannes_sia@dlsu.edu.ph', '14', '12');
 
 		-- asset
-		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('1', 'LaptopPropertyCode', 'SerialNumberLaptop', 'MACADDRESSLAPTOP', '1');
-		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('2', 'CameraPropertyCode', 'SerialNumberCamera', 'MACCamera', '1');
-		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('3', 'KeyboardPropertyCode', 'SerialNumberKeyboard', 'MacKeyboard', '1');
-		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('4', 'FlashdrivePropertyCode', 'SerialNumberFlashdrive', 'MacFlashdrive', '1');
-		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('5', 'ProcessorPropertyCode', 'SerialNumberProcessor', 'MacProcessor', '1');
-		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('6', 'VideoCardPropertyCode', 'SerialNumberVideoCard', 'MacVideoCard', '1');
-		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('7', 'PocketWifiPropertyCode', 'SerialNumberPocketWifi', 'MacPocketWifi', '1');
-		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('8', 'MonitorPropertyCode', 'SerialNumberMonitor', 'MacMonitor', '1');
-		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('9', 'MediaPlayerPropertyCode', 'SerialNumberMediaPlayer', 'MacMediaPlayer', '1');
-		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('10', 'TabletPropertyCode', 'SerialNumberTablet', 'MacTablet', '1');
-		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('11', 'AccessPointPropertyCode1', 'SerialNumberAccessPoint1', 'MacAccessPoint1', '1');
-		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('11', 'AccessPointPropertyCode2', 'SerialNumberAccessPoint2', 'MacAccessPoint2', '1');
-		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('11', 'AccessPointPropertyCode3', 'SerialNumberAccessPoint3', 'MacAccessPoint3', '1');
+		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('1', 'LPTP-0001', 'X3SdZu8U', 'FF-13-A2-B4-A3-02', '1');
+		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('2', 'CMR-0001', 'coXDQWRK', 'C6-1C-B0-E0-FF-F9', '1');
+		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('3', 'KB-0001', 'RF32QqZM', '8A-7D-68-EB-38-57', '1');
+		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('4', 'FD-0012', 'AqdjQSg6', '56-CB-AD-08-F5-D3', '2');
+		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('5', 'PROCES-0021', 'uoChbm7F', 'E2-22-5C-D3-5E-AD', '2');
+		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('6', 'VIDCRD-0111', 'aVpifFQ5', 'A2-F4-ED-B2-EC-3D', '1');
+		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('7', 'PCKTWF-0001', 'PdpQ7RnL', '3A-72-58-81-44-2F', '2');
+		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('8', 'MNTR-0001', 'oYHsA8PJ', '6D-96-DF-DF-4B-4F', '1');
+		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('9', 'MEDPLAY-0001', 'VqZ6oEb3', '51-31-A4-F4-D6-3B', '1');
+		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('10', 'TABLET-0001', 'VQVc7xL6', '82-41-46-5F-40-1C', '1');
+		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('11', 'AP-0001', 'XDvTnSkL', 'A8-4E-13-2B-49-11', '1');
+		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('11', 'AP-0002', 'GSHxbiWd', '3F-CB-94-0F-D9-1F', '1');
+		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('11', 'AP-0003', '8X5ta9Ek', 'DD-60-BA-BB-EA-AE', '1');
 
 
 		-- asset audit for new items
@@ -509,10 +635,11 @@
 
 
 		-- Asset Assignment
-		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('1', '3', '1', '2018-07-24', '2018-07-25', '1', '2');
-		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('2', '3', '2', '2018-07-24', '2018-07-25', '9', '2');
-	    INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('3', '3', '2', '2018-07-24', '2018-07-25', '9', '2');
-
+		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('1', '3', '1', '2019-01-08', '2019-02-25', '1', '2');
+		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('2', '3', '2', '2019-07-24', '2019-12-25', '9', '2');
+	    	INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('3', '3', '2', '2019-07-24', '2019-07-25', '9', '2');
+		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('4', '2', '13', '2019-02-12', '2019-02-25', '9', '2');
+		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('5', '3', '2', '2019-02-17', '2018-04-21', '9', '2');
 
 		-- asseet audit for asset assignment
 		INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '1', '1');
@@ -631,8 +758,7 @@
 		INSERT INTO `schoolyear` (`SchoolYearID`,`SchoolYear`,`Term1Start`,`Term2Start`,`Term3Start`,`Term1End`,`Term2End`,`Term3End`) VALUES (1,'2018-2019','2018-01-01','2018-05-01','2018-09-01','2018-04-30','2018-08-31','2018-12-31');
 		INSERT INTO `schoolyear` (`SchoolYearID`,`SchoolYear`,`Term1Start`,`Term2Start`,`Term3Start`,`Term1End`,`Term2End`,`Term3End`) VALUES (2,'2019-2020','2019-01-01','2019-05-01','2019-09-01','2019-04-30','2019-08-31','2019-12-31');
 
-		INSERT INTO `assetassignment` (`AssetAssignmentID`,`assetID`,`computerID`,`BuildingID`,`FloorAndRoomID`,`DepartmentID`,`startDate`,`endDate`,`personresponsibleID`,`persondirectlyID`,`statusID`) VALUES (4,4,NULL,7,3,NULL,NULL,NULL,NULL,NULL,2);
-		INSERT INTO `assetassignment` (`AssetAssignmentID`,`assetID`,`computerID`,`BuildingID`,`FloorAndRoomID`,`DepartmentID`,`startDate`,`endDate`,`personresponsibleID`,`persondirectlyID`,`statusID`) VALUES (5,5,NULL,11,4,NULL,NULL,NULL,NULL,NULL,2);
+
 		INSERT INTO `assetassignment` (`AssetAssignmentID`,`assetID`,`computerID`,`BuildingID`,`FloorAndRoomID`,`DepartmentID`,`startDate`,`endDate`,`personresponsibleID`,`persondirectlyID`,`statusID`) VALUES (6,6,NULL,11,5,NULL,NULL,NULL,NULL,NULL,2);
 		INSERT INTO `assetassignment` (`AssetAssignmentID`,`assetID`,`computerID`,`BuildingID`,`FloorAndRoomID`,`DepartmentID`,`startDate`,`endDate`,`personresponsibleID`,`persondirectlyID`,`statusID`) VALUES (7,7,NULL,11,6,NULL,NULL,NULL,NULL,NULL,2);
 		INSERT INTO `assetassignment` (`AssetAssignmentID`,`assetID`,`computerID`,`BuildingID`,`FloorAndRoomID`,`DepartmentID`,`startDate`,`endDate`,`personresponsibleID`,`persondirectlyID`,`statusID`) VALUES (8,8,NULL,11,7,NULL,NULL,NULL,NULL,NULL,2);
