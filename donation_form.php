@@ -217,7 +217,7 @@ if(isset($_POST['save'])){
         };
 
         function lettersOnly(input){
-            var regex = /[^a-z]/gi;
+            var regex = /[^a-z, , 0-9, &, #, @, %, *]/gi;
             input.value = input.value.replace(regex, "");
         }
         
