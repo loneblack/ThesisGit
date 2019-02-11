@@ -391,7 +391,7 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-				<?php
+                <?php
                     if (isset($_SESSION['submitMessage']) && $_SESSION['submitMessage']=="Form submitted!"){
 
                         echo "<div class='alert alert-success'>
@@ -406,50 +406,53 @@
 						 unset($_SESSION['submitMessage']);
 					}
 				?>
-				<form class="cmxform form-horizontal " id="signupForm" method="post" action=""> 
-                <div class="row">
-                    <div class="col-sm-12">
-						
-                        <div class="row">
-                            <div class="col-sm-9">
-                                <section class="panel">
-                                    <header class="panel-heading">
-                                        Asset Testing Checklist
-                                    </header>
-                                    <div class="panel-body">
-									
-										<div class="panel-body">
-											<section>
-											<label><h5>Name:</h5></label><input type="text" value="<?php echo $rowx['fullname']; ?>" class="form-control" disabled>
-											<br>
-										<!--	<label><h5>Office Building: </h5></label><input type="text" class="form-control" disabled> 
-											<br> -->
-										<!--	<label><h5>Room Number: </h5></label><input type="text" value="<?php //echo $rowx['floorRoom']; ?>" class="form-control" disabled> -->
-											
-											</section>
-										</div>
+                <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
+                    <div class="row">
+                        <div class="col-sm-12">
 
-										<section>
-											<p>Check those which are functioning as intended.
-											If any damage or defect is found, please specify it in the comments.
-											Leave both checkbox and comment blank for escalation.</p>
-											<br>
-										</section>
-										
-                                        <section id="unseen">
-										
-                                            <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
-                                                <thead>
-                                                    <tr>
-														<th></th>
-                                                        <!-- <th>Property Code</th> -->
-                                                        <th style="text-align:center">Brand</th>
-                                                        <th style="text-align:center">Model</th>
-                                                        <th style="text-align:center">Comments</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-													<?php
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <section class="panel">
+                                        <header class="panel-heading">
+                                            Asset Testing Checklist
+                                        </header>
+                                        <div class="panel-body">
+
+                                            <div class="panel-body">
+                                                <section>
+                                                    <label>
+                                                        <h5>Name:</h5>
+                                                    </label><input type="text" value="<?php echo $rowx['fullname']; ?>" class="form-control" disabled>
+                                                    <br>
+                                                    <!--	<label><h5>Office Building: </h5></label><input type="text" class="form-control" disabled> 
+											<br> -->
+                                                    <!--	<label><h5>Room Number: </h5></label><input type="text" value="<?php //echo $rowx['floorRoom']; ?>" class="form-control" disabled> -->
+
+                                                </section>
+                                            </div>
+
+                                            <section>
+                                                <p>Check those which are functioning as intended.
+                                                    If any damage or defect is found, please specify it in the comments.
+                                                    Leave both checkbox and comment blank for escalation.</p>
+                                                <br>
+                                            </section>
+
+                                            <section id="unseen">
+
+                                                <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Property Code</th>
+                                                            <th style="text-align:center">Brand</th>
+                                                            <th style="text-align:center">Model</th>
+                                                            <th style="text-align:center">Comments</th>
+                                                            <th>Asset Status</th>
+                                                            <th>Escalated To</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
 														$query = "SELECT atd.asset_assetID as `assetID`,rb.name as `brand`, am.description as `model` FROM thesis.assettesting_details atd join assettesting at on atd.assettesting_testingID=at.testingID 
 																	  join ticket t on at.testingID=t.testingID
 																	  join asset a on atd.asset_assetID=a.assetID
@@ -474,62 +477,59 @@
 													
 													
 													?>
-                                                    <!-- <tr>
-														<td style="text-align:center"><input type='checkbox' class='form-check-input'></td>
-                                                        <td style="text-align:center">TBLT-001</td>
-                                                        <td style="text-align:center">Apple Tablet</td>
-                                                        <td style="text-align:center">iPad</td>
-														<th><input style="text" class="form-control"></th>
-                                                        
-                                                    </tr>
-                                                    <tr >
-														<td style="text-align:center"><input type='checkbox' class='form-check-input'></td>
-                                                        <td style="text-align:center; width:50px;">PC-0023</td>
-                                                        <td style="text-align:center">Windows</td>
-                                                        <td style="text-align:center">Windows 10</td>
-                                                        <th><input style="text" class="form-control"></th>
-                                                    </tr>
-													<tr>
-                                                        <td style="text-align:center"><input type='checkbox' class='form-check-input'></td>
-														<td style="text-align:center">PHN-0312</td>
-                                                        <td style="text-align:center">Smartphone</td>
-                                                        <td style="text-align:center">Samsung Galaxy J7 Pro</td>
-                                                        <th><input style="text" class="form-control"></th>
-                                                    </tr> -->
-                                                </tbody>
-                                            </table>
-											
-											
-											
+                                                        <tr>
+                                                            <td style="text-align:center">TBLT-001</td>
+                                                            <td style="text-align:center">Apple Tablet</td>
+                                                            <td style="text-align:center">iPad</td>
+                                                            <th><input style="text" class="form-control"></th>
+                                                            <th>
+                                                                <select id="assetStatus" class="form-control" onchange="checkValue()">
+                                                                    <option value="0">Select Asset Status</option>
+                                                                    <option value="1">Working</option>
+                                                                    <option value="2">Escalated To</option>
+                                                                    <option value="3">Defective</option>
+                                                                </select>
+                                                            </th>
+                                                            <th>
+                                                                <select class="form-control" id="escalateEng" disabled>
+                                                                    <option value="0">Select Engineer</option>
+                                                                </select>
+                                                            </th>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
 
-                                            <div>
-												<button onclick="return confirm('Confirm checklist?')" type="submit" name="save" id="save" class="btn btn-success" data-dismiss="modal">Save</button> 
-												<!-- <button onclick="return confirm('Confirm checklist?')" type="button" class="btn btn-success" data-dismiss="modal">Save</button> -->
-                                                <a href="engineer_all_ticket.php"><button type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
-                                            </div>
 
-                                        </section>
-                                    </div>
-                                </section>
-                            </div>
-							
-							
-							<div class="col-sm-3">
-								<section class="panel">
-									<div class="panel-body">
-										<ul class="nav nav-pills nav-stacked labels-info ">
-											<li>
-												<h4>Properties</h4>
-											</li>
-										</ul>
-										<div class="form">
-											
-												<div class="form-group ">
-													<div class="form-group ">
-														<label style="padding-left:22px" for="category" class="control-label col-lg-4">Category</label>
-														<div class="col-lg-8" style="padding-right:30px">
-															<select class="form-control m-bot15" name="category" disabled>
-																<?php
+
+
+                                                <div>
+                                                    <button onclick="return confirm('Confirm checklist?')" type="submit" name="save" id="save" class="btn btn-success" data-dismiss="modal">Save</button>
+                                                    <!-- <button onclick="return confirm('Confirm checklist?')" type="button" class="btn btn-success" data-dismiss="modal">Save</button> -->
+                                                    <a href="engineer_all_ticket.php"><button type="button" class="btn btn-danger" data-dismiss="modal">Back</button></a>
+                                                </div>
+
+                                            </section>
+                                        </div>
+                                    </section>
+                                </div>
+
+
+                                <div class="col-sm-3">
+                                    <section class="panel">
+                                        <div class="panel-body">
+                                            <ul class="nav nav-pills nav-stacked labels-info ">
+                                                <li>
+                                                    <h4>Properties</h4>
+                                                </li>
+                                            </ul>
+                                            <div class="form">
+
+                                                <div class="form-group ">
+                                                    <div class="form-group ">
+                                                        <label style="padding-left:22px" for="category" class="control-label col-lg-4">Category</label>
+                                                        <div class="col-lg-8" style="padding-right:30px">
+                                                            <select class="form-control m-bot15" name="category" disabled>
+                                                                <?php
 																	$query2 = "SELECT * FROM thesis.ref_servicetype";
 																	$result2 = mysqli_query($dbc, $query2);
 																	while($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
@@ -542,18 +542,18 @@
 																	}
 																
 																?>
-																<!-- <option selected="selected">Repair</option>
+                                                                <!-- <option selected="selected">Repair</option>
 																<option>Repair</option>
 																<option>Maintenance</option>
 																<option>Replacement</option> -->
-															</select>
-														</div>
-													</div>
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
-													<label for="status" class="control-label col-lg-4">Status</label>
-													<div class="col-lg-8">
-														<select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status']) && !$flag) echo $_POST['status']; ?>" >
-															<?php
+                                                    <label for="status" class="control-label col-lg-4">Status</label>
+                                                    <div class="col-lg-8">
+                                                        <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status']) && !$flag) echo $_POST['status']; ?>">
+                                                            <?php
 																$query1 = "SELECT * FROM thesis.ref_ticketstatus";
 																$result1 = mysqli_query($dbc, $query1);
 																while($row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC)){
@@ -567,36 +567,36 @@
 
 															
 															?>
-														
-														<!--<option>Assigned</option>
+
+                                                            <!--<option>Assigned</option>
 															<option>In Progress</option>
 															<option selected="selected">Transferred</option>
 															<option>Escalated</option>
 															<option>Waiting For Parts</option>
 															<option>Closed</option> -->
-														</select>
-													</div>
-												</div>
+                                                        </select>
+                                                    </div>
+                                                </div>
 
-												<div class="form-group ">
-													<label for="priority" class="control-label col-lg-4">Priority</label>
-													<div class="col-lg-8">
-														<select class="form-control m-bot15" id="priority" name="priority" value="<?php if (isset($_POST['priority']) && !$flag) echo $_POST['priority']; ?>" disabled>
-															<option value="">Select Priority</option>
-															<option value="Low">Low</option>
-															<option value="Medium">Medium</option>
-															<option value="High">High</option>
-															<option value="Urgent">Urgent</option>
-														</select>
-													</div>
-												</div>
+                                                <div class="form-group ">
+                                                    <label for="priority" class="control-label col-lg-4">Priority</label>
+                                                    <div class="col-lg-8">
+                                                        <select class="form-control m-bot15" id="priority" name="priority" value="<?php if (isset($_POST['priority']) && !$flag) echo $_POST['priority']; ?>" disabled>
+                                                            <option value="">Select Priority</option>
+                                                            <option value="Low">Low</option>
+                                                            <option value="Medium">Medium</option>
+                                                            <option value="High">High</option>
+                                                            <option value="Urgent">Urgent</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
 
-												<div class="form-group ">
-													<label for="assign" class="control-label col-lg-4">Escalate To</label>
-													<div class="col-lg-8">
-														<select class="form-control m-bot15" id="escalate" name="escalate" value="<?php if (isset($_POST['escalate']) && !$flag) echo $_POST['escalate']; ?>" >
-															<option value="">Select Engineer</option>
-															<?php
+                                                <div class="form-group ">
+                                                    <label for="assign" class="control-label col-lg-4">Escalate To</label>
+                                                    <div class="col-lg-8">
+                                                        <select class="form-control m-bot15" id="escalate" name="escalate" value="<?php if (isset($_POST['escalate']) && !$flag) echo $_POST['escalate']; ?>">
+                                                            <option value="">Select Engineer</option>
+                                                            <?php
 																$query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer' and u.UserID<>'{$userid}'";
 																$result3=mysqli_query($dbc,$query3);
 																		
@@ -605,39 +605,39 @@
 																}										
 																
 															?>
-														</select>
-													</div>
-												</div>
+                                                        </select>
+                                                    </div>
+                                                </div>
 
-												<div class="form-group">
-													<label class="control-label col-lg-4">Due Date</label>
-													<div class="col-lg-8">
-														<input class="form-control form-control-inline input-medium default-date-picker" name="dueDate" size="10" type="datetime" value="<?php if(isset($rowx['dueDate'])){
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Due Date</label>
+                                                    <div class="col-lg-8">
+                                                        <input class="form-control form-control-inline input-medium default-date-picker" name="dueDate" size="10" type="datetime" value="<?php if(isset($rowx['dueDate'])){
 																																																	echo $rowx['dueDate'];
 																																																}
 																																																else{
 																																																	echo $rowOut['dueDate'];
 																																																}?>" readonly />
-													</div>
-												</div>
+                                                    </div>
+                                                </div>
 
-												<!-- <div class="form-group">
+                                                <!-- <div class="form-group">
 													<label class="control-label col-lg-4">Repair Date *</label>
 													<div class="col-lg-8">
 														<input class="form-control form-control-inline input-medium default-date-picker" name="repairDate" size="10" type="date" value="<?php if (isset($_POST['repairDate']) && !$flag) echo $_POST['repairDate']; ?>" />
 													</div>
 												</div> -->
-											
-										</div>
-										
-									</div>
-								</section>
-							</div>
-							
+
+                                            </div>
+
+                                        </div>
+                                    </section>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </div>
-				 </form>
+                </form>
                 <!-- page end-->
             </section>
         </section>
@@ -665,7 +665,7 @@
         $(function() {
 
         });
-		
+
         function addTest() {
             var row_index = 0;
             var isRenderd = false;
@@ -693,60 +693,66 @@
                 "<td></td>" +
                 "<td></td>" +
                 "<td>" +
-				"<div>" +
-				"<label class='form-inline'>" +
-				"<input type='checkbox' class='form-check-input' hidden><input style='width:300px' type='text' class='form-control'></label></div>" +
+                "<div>" +
+                "<label class='form-inline'>" +
+                "<input type='checkbox' class='form-check-input' hidden><input style='width:300px' type='text' class='form-control'></label></div>" +
                 "</td>" +
-				"<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
+                "<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
                 "</tr>";
             $('#tableTest tbody tr').eq(rowCount).after(tr);
         }
-		
-		$('.myCheck').change(function(){
-			var disapp = "Disapp_" + this.value;
-			if($(this).is(':checked')) {
-			// Checkbox is checked..
-			
-				//document.getElementById(this.value).required = false;
-				document.getElementById(this.value).disabled = true;
-				document.getElementById(disapp).disabled=true;
-				
-			} else {
-				// Checkbox is not checked..
-				
-				//document.getElementById(this.value).required = true;
-				document.getElementById(this.value).disabled = false;
-				document.getElementById(disapp).disabled=false;
-				
-				
-			}
-		});
-		
-		$('#save').click(function () {
-			var isExist=false;
-			for(var i=0;i<document.getElementsByClassName("comments").length;i++){
-				if(document.getElementsByClassName("comments")[i].value == '' && !document.getElementsByClassName("comments")[i].disabled){
-					isExist=true;
-				}
-			}
-			if(isExist){
-				document.getElementById("priority").required = true;
-				document.getElementById("escalate").required = true;
-			}
-			else{
-				document.getElementById("priority").required = false;
-				document.getElementById("escalate").required = false;
-			}
-		});
-		
-		//$('select').on('change', function() {
-		  //alert( this.value );
-		//});
-		
+
+        $('.myCheck').change(function() {
+            var disapp = "Disapp_" + this.value;
+            if ($(this).is(':checked')) {
+                // Checkbox is checked..
+
+                //document.getElementById(this.value).required = false;
+                document.getElementById(this.value).disabled = true;
+                document.getElementById(disapp).disabled = true;
+
+            } else {
+                // Checkbox is not checked..
+
+                //document.getElementById(this.value).required = true;
+                document.getElementById(this.value).disabled = false;
+                document.getElementById(disapp).disabled = false;
+
+
+            }
+        });
+
+        $('#save').click(function() {
+            var isExist = false;
+            for (var i = 0; i < document.getElementsByClassName("comments").length; i++) {
+                if (document.getElementsByClassName("comments")[i].value == '' && !document.getElementsByClassName("comments")[i].disabled) {
+                    isExist = true;
+                }
+            }
+            if (isExist) {
+                document.getElementById("priority").required = true;
+                document.getElementById("escalate").required = true;
+            } else {
+                document.getElementById("priority").required = false;
+                document.getElementById("escalate").required = false;
+            }
+        });
+
+        //$('select').on('change', function() {
+        //alert( this.value );
+        //});
+
+        function checkValue() {
+            if(document.getElementById("assetStatus").value == "2"){
+                document.getElementById("escalateEng").disabled = false;
+            } else {
+                document.getElementById("escalateEng").disabled = true;
+            }
+        }
     </script>
-	
-	
-	
+
+
+
 
 </body>
 
