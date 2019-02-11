@@ -432,9 +432,6 @@
                                             </div>
 
                                             <section>
-                                                <p>Check those which are functioning as intended.
-                                                    If any damage or defect is found, please specify it in the comments.
-                                                    Leave both checkbox and comment blank for escalation.</p>
                                                 <br>
                                             </section>
 
@@ -481,20 +478,20 @@
                                                             <td style="text-align:center">TBLT-001</td>
                                                             <td style="text-align:center">Apple Tablet</td>
                                                             <td style="text-align:center">iPad</td>
-                                                            <th><input style="text" class="form-control"></th>
-                                                            <th>
+                                                            <td><input style="text" class="form-control"></td>
+                                                            <td>
                                                                 <select id="assetStatus" class="form-control" onchange="checkValue()">
                                                                     <option value="0">Select Asset Status</option>
                                                                     <option value="1">Working</option>
                                                                     <option value="2">Escalated To</option>
                                                                     <option value="3">Defective</option>
                                                                 </select>
-                                                            </th>
-                                                            <th>
+                                                            </td>
+                                                            <td>
                                                                 <select class="form-control" id="escalateEng" disabled>
                                                                     <option value="0">Select Engineer</option>
                                                                 </select>
-                                                            </th>
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
