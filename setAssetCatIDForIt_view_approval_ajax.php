@@ -9,15 +9,18 @@
 												where am.assetCategory='{$_SESSION['assetCatID']}' and a.assetStatus='1'";
 	$resultAssList=mysqli_query($dbc,$queryAssList);
 	while($rowAssList=mysqli_fetch_array($resultAssList,MYSQLI_ASSOC)){
-		echo "<tr>
-			<td><input type='checkbox'></td>
-			<td>{$rowAssList['propertyCode']}</td>
-			<td>{$rowAssList['brandName']}</td>
-			<td>{$rowAssList['modelName']}</td>
-			<td>{$rowAssList['modelSpec']}</td>
-			<td>{$rowAssList['assetCatName']}</td>
-			<td>{$rowAssList['assetStat']}</td>
-		</tr>";
+		if(!in_array($rowAssList['assetID'], $_SESSION['recommAsset'])){
+			echo "<tr>
+				<td><input type='checkbox' name='recommAsset[]' value='{$rowAssList['assetID']}'></td>
+				<td>{$rowAssList['propertyCode']}</td>
+				<td>{$rowAssList['brandName']}</td>
+				<td>{$rowAssList['modelName']}</td>
+				<td>{$rowAssList['modelSpec']}</td>
+				<td>{$rowAssList['assetCatName']}</td>
+				<td>{$rowAssList['assetStat']}</td>
+			</tr>";
+		}
+		
 	}
 
 ?>

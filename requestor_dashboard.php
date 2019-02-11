@@ -113,7 +113,13 @@ require_once("db/mysql_connect.php");
                                                             echo "<td><span class='label label-success'>{$row['statusName']}</span></td>";
                                                         }
                                                         if($row['statusID'] == '6'){//disapproved
-                                                            echo "<td><span class='label label-danger'>{$row['statusName']}</span></td>";
+															if($row['step'] == 'IT Approval'){
+																echo "<td><span class='label label-danger'>IT Office Disapproved Request</span></td>";
+															}
+															elseif($row['step'] == 'Receiver Approval'){
+																echo "<td><span class='label label-danger'>Receiver Disapproved Request</span></td>";
+															}
+                                                            
                                                         }
 														//echo "<td>{$row['step']}</td>";
 
@@ -317,6 +323,9 @@ require_once("db/mysql_connect.php");
                     if(requestType == 'Asset Request'){
 						if(step == "Conforme Pending"){
 							window.location.href = "requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType;
+						}
+						else if(step == "IT Office Disapproved Request"){
+							window.location.href = "requestor_view_disapproved_request_for_procurement.php?id=" + id;
 						}
 						else{
 							window.location.href = "requestor_view_request_for_procurement_service_material.php?id=" + id;

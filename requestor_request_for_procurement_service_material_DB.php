@@ -39,10 +39,20 @@
 
     $count = $_SESSION['count'];
 		
-    $id = 0;    
-        $sql0 = "INSERT INTO `thesis`.`request` (`description`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`) VALUES ('{$comment}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '22')";//status is set to 1 for pending status
-        $result0 = mysqli_query($dbc, $sql0);
-        echo $sql0;
+    $id = 0;   
+
+	if(isset($_POST['isITTeamChooseSpecs'])){
+		
+		$sql0 = "INSERT INTO `thesis`.`request` (`description`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`, `requestcol`) VALUES ('{$comment}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '22', true)";//status is set to 1 for pending status
+		$result0 = mysqli_query($dbc, $sql0);
+		echo $sql0;
+	}
+	else{
+		$sql0 = "INSERT INTO `thesis`.`request` (`description`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`, `requestcol`) VALUES ('{$comment}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '22', false)";//status is set to 1 for pending status
+		$result0 = mysqli_query($dbc, $sql0);
+		echo $sql0;
+	}
+    
 
     $sql2 = "SELECT * FROM `thesis`.`request` order by requestID DESC LIMIT 1;";
     $result2 = mysqli_query($dbc, $sql2);

@@ -6,11 +6,37 @@
 	$_SESSION['count'] = 0;
 	$requestID=$_GET['requestID'];
 	$_SESSION['assetCatID']=null;
+	$_SESSION['recommAsset']=array();
 	
 	//Get Request Data
 	$queryReq="SELECT * FROM thesis.request r join floorandroom far on r.FloorAndRoomID=far.FloorAndRoomID where r.requestID='{$requestID}'";
 	$resultReq=mysqli_query($dbc,$queryReq);
 	$rowReq=mysqli_fetch_array($resultReq,MYSQLI_ASSOC);
+	
+	if(isset($_POST['send'])){
+		if(!empty($_POST['recommAsset'])){
+			$_SESSION['recommAsset']=$_POST['recommAsset'];
+		}
+	}
+	
+	if(isset($_POST['approve'])){
+		$query="UPDATE `thesis`.`request` SET `step`='23' WHERE `requestID`='{$requestID}'";
+		$result=mysqli_query($dbc,$query);
+		$_SESSION['submitMessage']="Form submitted!";
+	}
+	
+	if(isset($_POST['disapprove'])){
+		$query="UPDATE `thesis`.`request` SET `status`='6', `reasonForDisaprroval`='{$_POST['reasOfDisapprov']}' WHERE `requestID`='{$requestID}'";
+		$result=mysqli_query($dbc,$query);
+		
+		//Insert recommended asset
+		foreach($_SESSION['recommAsset'] as $recommAsset){
+			$queryRecomm="INSERT INTO `thesis`.`recommended_assets` (`requestID`, `assetID`) VALUES ('{$requestID}', '{$recommAsset}')";
+			$resultRecomm=mysqli_query($dbc,$queryRecomm);
+		}
+		
+		$_SESSION['submitMessage']="Form submitted!";
+	}
 	
 ?>
 
@@ -59,7 +85,15 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				<?php
+                    if (isset($_SESSION['submitMessage'])){
 
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
                 <div class="row">
                     <div class="row">
                         <div class="col-lg-12">
@@ -174,16 +208,67 @@
 
                                                     <br>
                                                 </section>
-												<section>
-                                                    <h4>Reason for Disapproval</h4>
-													<textarea class="form-control" rows="5" id="comment" name="reasOfDisapprov" style="resize: none"></textarea>
-												</section>
-												<br>
 												
-                                                <section>
-                                                    <input type="checkbox" name="check" disabled> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
+												<section>
+                                                    <input type="checkbox" name="check" disabled <?php if($rowReq['requestcol']==1){
+														echo "checked";
+													} ?>> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
                                                     <br><br><br>
                                                 </section>
+												<form method="post" action="<?php echo $_SERVER['PHP_SELF']."?requestID=".$requestID; ?>">
+												<section>
+                                                    <h4>Reason for Disapproval</h4>
+													<textarea class="form-control" rows="5" id="reasOfDisapprov" name="reasOfDisapprov" style="resize: none"></textarea>
+													<br>
+												</section>
+												
+												<section>
+                                                    <h4>Recommended Assets</h4>
+														<table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+														<thead>
+															<tr>
+																<th>Property Code</th>
+																<th>Brand</th>
+																<th>Model</th>
+																<th>Specifications</th>
+																<th>Asset Category</th>
+																<th>Status</th>
+																<th></th>
+															</tr>
+														</thead>
+														<tbody>
+															<?php
+																if(isset($_SESSION['recommAsset'])){
+																	foreach($_SESSION['recommAsset'] as $recommAsset){
+																		$queryRecommAss="SELECT *,rb.name as `brandName`,am.description as `modelName`,rac.name as `assetCatName`,am.itemSpecification as `modelSpec`,ras.description as `assetStat` FROM thesis.asset a left join assetmodel am on a.assetModel=am.assetModelID
+																										 left join ref_brand rb on am.brand=rb.brandID
+																										 left join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																										 left join ref_assetstatus ras on a.assetStatus=ras.id where a.assetID='{$recommAsset}'";
+																		$resultRecommAss=mysqli_query($dbc,$queryRecommAss);
+																		while($rowRecommAss=mysqli_fetch_array($resultRecommAss,MYSQLI_ASSOC)){
+																			echo "<tr>
+																					<input type='hidden' name='assCatID[]' value='{$recommAsset}'>
+																					<td>{$rowRecommAss['propertyCode']}</td>
+																					<td>{$rowRecommAss['brandName']}</td>
+																					<td>{$rowRecommAss['modelName']}</td>
+																					<td>{$rowRecommAss['modelSpec']}</td>
+																					<td>{$rowRecommAss['assetCatName']}</td>
+																					<td>{$rowRecommAss['assetStat']}</td>
+																					<td><button id='remove' class='btn btn-warning' onClick='removeRow(this,\"{$recommAsset}\")'>Remove</button></td>
+																				</tr>";
+																		}
+																		
+																		
+																	}
+																	
+																}
+																
+															?>
+															
+														</tbody>
+													</table>
+													<br>
+												</section>
 
 
 
@@ -196,19 +281,19 @@
                                                         <div class="col-xs-4">
                                                         </div>
                                                         <div class="col-xs-4">
-                                                            <form method="post">
-                                                                <button type="submit" class="btn btn-success" name="approve"><i class="fa fa-check"></i> Approve</button>
+                                                            
+                                                                <button type="submit" class="btn btn-success" id="approve" name="approve"><i class="fa fa-check"></i> Approve</button>
                                                                 &nbsp;&nbsp;
+																<button type="submit" class="btn btn-danger" id="disapprove" name="disapprove"><i class="fa fa-ban"></i> Disapprove</button>
+                                                                <!-- <button type="button" class="btn btn-danger" id="disapprove" data-toggle="modal" data-target="#myModal"><i class="fa fa-ban"></i> Disapprove</button> -->
 
-                                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal"><i class="fa fa-ban"></i> Disapprove</button>
-
-                                                            </form>
+                                                            
                                                         </div>
                                                         <div class="col-xs-4">
                                                         </div>
                                                     </div>
                                                 </div>
-
+												</form>
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="myModal" role="dialog">
                                                     <div class="modal-dialog">
@@ -220,9 +305,9 @@
                                                                 <h4 class="modal-title">Search Inventory for Specifications that are exactly or close to request</h4>
                                                             </div>
 
-
+															<form class="form-inline" method="post" action="<?php echo $_SERVER['PHP_SELF']."?requestID=".$requestID; ?>">
                                                             <div class="modal-body">
-                                                                <form class="form-inline" method="post">
+                                                                
                                                                 
                                                                 <div class="adv-table" id="ctable">
                                                                     <table class="display table table-bordered table-striped" id="dynamic-table">
@@ -242,13 +327,16 @@
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
-                                                                </form>
+                                                                
                                                             </div>
-                                                            <br><br>
+															<br><br>
                                                             <div class="modal-footer">
-                                                                <button class="btn btn-primary" type="submit" onclick="getData('tblRequest');">Send</button>
+                                                                <button class="btn btn-primary" type="submit" name="send">Send</button>
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                             </div>
+															
+															</form>
+                                                            
                                                         </div>
 
                                                     </div>
@@ -290,7 +378,19 @@
         $(function() {
 
         });
-		
+		function removeRow(o,recommAsset) {
+            var p = o.parentNode.parentNode;
+            p.parentNode.removeChild(p);
+			
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					this.responseText;
+				}
+			};
+			xmlhttp.open("GET", "removeRecommAssetData_ajax.php?assetID=" + recommAsset, true);
+			xmlhttp.send();
+        }
 		function setAssetCatID(assetCatID) {
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.onreadystatechange = function() {
@@ -324,6 +424,17 @@
                 }
             });
         }
+		
+		$('#disapprove').click(function () {
+			document.getElementById("reasOfDisapprov").required = true;
+			
+			
+		});
+		$('#approve').click(function () {
+			document.getElementById("reasOfDisapprov").required = false;
+			
+		});
+		
     </script>
 
 </body>
