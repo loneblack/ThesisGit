@@ -298,6 +298,11 @@
                                     window.location.href = "it_view_checklist.php";
                                 }
                             }
+							if (id == "Pending") {
+								if (idDesc == "IT Approval") {
+                                    window.location.href = "it_view_approval_open.php?requestID=" + ida;
+                                }
+							}
                             if (id == "Completed" || id == "Incomplete") {
                                 window.location.href = "it_view_checklist.php";
                             }
