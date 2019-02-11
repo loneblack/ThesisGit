@@ -37,7 +37,7 @@
 		
 		//offices
 		
-		$office=$_POST['office'];
+		//$office=$_POST['office'];
 		
 		//User Name
 		
@@ -73,14 +73,14 @@
                
             //Add to employee
 			
-			if(empty($office)){
-				$query3="INSERT INTO `thesis`.`employee` (`name`, `position`, `contactNo`, `email`, `UserID`) VALUES ('{$fullname}', '{$position}', '{$number}', '{$email}', '{$row['UserID']}')";
-				$result3=mysqli_query($dbc,$query3);
-			}
-            else{
-				$query3="INSERT INTO `thesis`.`employee` (`name`, `position`, `contactNo`, `email`, `UserID`, `officeID`) VALUES ('{$fullname}', '{$position}', '{$number}', '{$email}', '{$row['UserID']}', '{$office}')";
-				$result3=mysqli_query($dbc,$query3);
-			}
+			//if(empty($office)){
+				//$query3="INSERT INTO `thesis`.`employee` (`name`, `position`, `contactNo`, `email`, `UserID`) VALUES ('{$fullname}', '{$position}', '{$number}', '{$email}', '{$row['UserID']}')";
+				//$result3=mysqli_query($dbc,$query3);
+			//}
+            //else{
+				//$query3="INSERT INTO `thesis`.`employee` (`name`, `position`, `contactNo`, `email`, `UserID`, `officeID`) VALUES ('{$fullname}', '{$position}', '{$number}', '{$email}', '{$row['UserID']}', '{$office}')";
+				//$result3=mysqli_query($dbc,$query3);
+			//}
 			
 			//Get latest employee
 			$queryLatEmp="SELECT * FROM thesis.employee order by employeeID desc limit 1";
