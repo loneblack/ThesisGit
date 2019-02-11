@@ -30,7 +30,7 @@
 		$result=mysqli_query($dbc,$query);
 		
 		//Insert recommended asset
-		foreach($_SESSION['recommAsset'] as $recommAsset){
+		foreach($_POST['recommAss'] as $recommAsset){
 			$queryRecomm="INSERT INTO `thesis`.`recommended_assets` (`requestID`, `assetID`) VALUES ('{$requestID}', '{$recommAsset}')";
 			$resultRecomm=mysqli_query($dbc,$queryRecomm);
 		}
@@ -247,7 +247,7 @@
 																		$resultRecommAss=mysqli_query($dbc,$queryRecommAss);
 																		while($rowRecommAss=mysqli_fetch_array($resultRecommAss,MYSQLI_ASSOC)){
 																			echo "<tr>
-																					<input type='hidden' name='assCatID[]' value='{$recommAsset}'>
+																					<input type='hidden' name='recommAss[]' value='{$recommAsset}'>
 																					<td>{$rowRecommAss['propertyCode']}</td>
 																					<td>{$rowRecommAss['brandName']}</td>
 																					<td>{$rowRecommAss['modelName']}</td>
