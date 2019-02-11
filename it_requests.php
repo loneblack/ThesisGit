@@ -63,6 +63,7 @@
                                         <section class="panel">
                                             <div class="panel-body">
                                                 <div class="adv-table">
+                                                    <h4>*Note: Double Click the row to view the request.</h4>
                                                     <table class="display table table-bordered table-striped" id="dynamic-table">
                                                         <thead>
                                                             <tr>

@@ -80,10 +80,10 @@ if(isset($_POST['save'])){
                         <form id="contact" action="" method="post">
                             <h3>Request For Donation</h3>
                             <fieldset>
-                                <input id="schoolorg" name="schoolorg" class="form-control" placeholder="School / Organization" type="text" required>
+                                <input id="schoolorg" name="schoolorg" class="form-control" placeholder="School / Organization" type="text" onkeyup="lettersOnly(this)" required>
                             </fieldset>
                             <fieldset>
-                                <input id="contactPerson" name="contactPerson" class="form-control" placeholder="Contact Person" type="text" required>
+                                <input id="contactPerson" name="contactPerson" class="form-control" placeholder="Contact Person" type="text" onkeyup="lettersOnly(this)" required>
                             </fieldset>
                             <fieldset>
                                 <input id="contactNo" name="contactNo" class="form-control" placeholder="Contact No." type="text" required>
@@ -92,7 +92,7 @@ if(isset($_POST['save'])){
                                 <input id="dateNeeded" name="dateNeeded" class="form-control" type="datetime-local" placeholder="Date and Time Needed" required />
                             </fieldset>
                             <fieldset>
-                                <input id="purpose" name="purpose" class="form-control" placeholder="Purpose" type="text" required>
+                                <input id="purpose" name="purpose" class="form-control" placeholder="Purpose" type="text"  onkeyup="lettersOnly(this)" required>
                             </fieldset>
                             <fieldset>
                                 <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest" align="center" cellpadding="0" cellspacing="0" border="1" required>
@@ -216,7 +216,10 @@ if(isset($_POST['save'])){
             }
         };
 
-
+        function lettersOnly(input){
+            var regex = /[^a-z]/gi;
+            input.value = input.value.replace(regex, "");
+        }
         
     </script>
 

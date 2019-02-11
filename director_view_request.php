@@ -175,8 +175,19 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <br><br>
+                            
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label>Reason For Disapproval</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" name="reason" class="form-control">
+                                </div>
+                            </div>
                         </div>
-
+                        <br>
                         <div class="row" style="padding-top:40%">
                             <div class="col-lg-12"></div>
                         </div>
