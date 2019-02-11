@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-session_start();
-require_once("db/mysql_connect.php");
-$_SESSION['count'] = 0;
+	session_start();
+	require_once("db/mysql_connect.php");
+	$_SESSION['count'] = 0;
+	$requestID=$_GET['id'];
+	//Get Request Data
+	$queryReq="SELECT * FROM thesis.request r join floorandroom far on r.FloorAndRoomID=far.FloorAndRoomID where r.requestID='{$requestID}'";
+	$resultReq=mysqli_query($dbc,$queryReq);
+	$rowReq=mysqli_fetch_array($resultReq,MYSQLI_ASSOC);
+
 ?>
 
 <head>
@@ -84,21 +90,21 @@ $_SESSION['count'] = 0;
                                                     <div class="form-group ">
                                                         <label for="dateNeeded" class="control-label col-lg-3">Room</label>
                                                         <div class="col-lg-6">
-                                                            <input class="form-control" value="" disabled />
+                                                            <input class="form-control" value="<?php echo $rowReq['floorRoom']; ?>" disabled />
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group ">
                                                         <label for="dateNeeded" class="control-label col-lg-3">Date needed</label>
                                                         <div class="col-lg-6">
-                                                            <input class="form-control" value="" disabled />
+                                                            <input class="form-control" value="<?php echo $rowReq['dateNeeded']; ?>" disabled />
                                                         </div>
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="building" class="control-label col-lg-3">Reason of Request</label>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <textarea class="form-control" rows="5" id="comment" name="comment" style="resize: none" disabled></textarea>
+                                                                <textarea class="form-control" rows="5" id="comment" name="comment" style="resize: none" disabled><?php echo $rowReq['description']; ?></textarea>
                                                             </div>
                                                         </div>
 
@@ -112,36 +118,46 @@ $_SESSION['count'] = 0;
                                                     <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                         <thead>
                                                             <tr>
-                                                                <th>Quantity</th>
                                                                 <th>Category</th>
+																<th>Quantity</th>
                                                                 <th>Specifications</th>
                                                                 <th>Purpose</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="col-lg-12">
-                                                                        <input class="form-control" type="text" name="purpose0" id="purpose0" disabled>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="col-lg-12">
-                                                                        <input class="form-control" type="text" name="purpose0" id="purpose0" disabled>
-                                                                    </div>
-                                                                </td>
+															<?php
+																//Get Request Details data
+																$queryReqDet="SELECT *,rac.name as `assetCatName` FROM thesis.requestdetails rd
+																				join ref_assetcategory rac on rd.assetCategory=rac.assetCategoryID where rd.requestID='{$requestID}'";
+																$resultReqDet=mysqli_query($dbc,$queryReqDet);
+																while($rowReqDet=mysqli_fetch_array($resultReqDet,MYSQLI_ASSOC)){
+																	echo "<tr>
+																	<td>
+																		<div class='col-lg-12'>
+																			<input class='form-control' type='text' name='category[]' value='{$rowReqDet['assetCatName']}' id='purpose0' disabled>
+																		</div>
+																	</td>
+																	<td>
+																		<div class='col-lg-12'>
+																			<input class='form-control' type='text' name='qty[]' value='{$rowReqDet['quantity']}' id='purpose0' disabled>
+																		</div>
+																	</td>
 
-                                                                <td style="padding-top:5px; padding-bottom:5px">
-                                                                    <div class="col-lg-12">
-                                                                        <input class="form-control" type="text" name="purpose0" id="purpose0" disabled>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="col-lg-12">
-                                                                        <input class="form-control" type="text" name="purpose0" id="purpose0" disabled>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+																	<td style='padding-top:5px; padding-bottom:5px'>
+																		<div class='col-lg-12'>
+																			<input class='form-control' type='text' name='specs[]' value='{$rowReqDet['description']}' id='purpose0' disabled>
+																		</div>
+																	</td>
+																	<td>
+																		<div class='col-lg-12'>
+																			<input class='form-control' type='text' name='purpose[]' value='{$rowReqDet['purpose']}' id='purpose0' disabled>
+																		</div>
+																	</td>
+																	
+																</tr>";
+																}
+															?>
+                                                            
                                                         </tbody>
                                                     </table>
 
@@ -153,7 +169,9 @@ $_SESSION['count'] = 0;
 
 
                                                 <section>
-                                                    <input type="checkbox" name="check" disabled> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
+                                                    <input type="checkbox" name="check" disabled <?php if($rowReq['requestcol']==1){
+														echo "checked";
+													} ?>> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
                                                     <br><br><br>
                                                 </section>
                                             </form>
@@ -161,7 +179,7 @@ $_SESSION['count'] = 0;
                                                 <div class="form-group ">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Reason For Disapproval</label>
                                                     <div class="col-lg-6">
-                                                        <input class="form-control" value="" readonly />
+                                                        <textarea class="form-control" rows="5" id="reasOfDisapprov" name="reasOfDisapprov" style="resize: none" disabled><?php echo $rowReq['reasonForDisaprroval']; ?></textarea>
                                                     </div>
                                                 </div>
                                                 <br>
@@ -182,15 +200,29 @@ $_SESSION['count'] = 0;
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td><input type="checkbox"> </td>
-                                                            <td>PC-0001</td>
-                                                            <td>Samsung</td>
-                                                            <td>S7 Edge</td>
-                                                            <td>CPU 1050</td>
-                                                            <td>Phone</td>
-                                                            <td>On Hand</td>
-                                                        </tr>
+														<?php
+															$queryAssList="SELECT *,rb.name as `brandName`,am.description as `modelName`,rac.name as `assetCatName`,am.itemSpecification as `modelSpec`,ras.description as `assetStat` FROM thesis.recommended_assets rca left join asset a on rca.assetID=a.assetID
+																																																																		  left join assetmodel am on a.assetModel=am.assetModelID
+																																																																		  left join ref_brand rb on am.brand=rb.brandID
+																																																																		  left join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																																																																		  left join ref_assetstatus ras on a.assetStatus=ras.id where rca.requestID='{$requestID}' and a.assetStatus='1'";
+															$resultAssList=mysqli_query($dbc,$queryAssList);
+															while($rowAssList=mysqli_fetch_array($resultAssList,MYSQLI_ASSOC)){
+																echo "<tr>
+																	<td><input type='checkbox' name='recommAss[]' value='{$rowAssList['assetID']}'></td>
+																	<td>{$rowAssList['propertyCode']}</td>
+																	<td>{$rowAssList['brandName']}</td>
+																	<td>{$rowAssList['modelName']}</td>
+																	<td>{$rowAssList['modelSpec']}</td>
+																	<td>{$rowAssList['assetCatName']}</td>
+																	<td>{$rowAssList['assetStat']}</td>
+																</tr>";
+															}
+														
+														
+														
+														?>
+                                                        
                                                     </tbody>
                                                 </table>
                                                 <button class="btn btn-success" type="submit">Request</button>
