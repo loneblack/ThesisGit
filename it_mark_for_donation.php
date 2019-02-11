@@ -164,7 +164,8 @@
                                             </div>
                                         </div>
                                         <div style="padding-left:10px; padding-bottom:10px">
-                                            <button type="submit" name="confirm" onclick="Confirm()" class="btn btn-info">Confirm</button>
+                                            <!-- Trigger the modal with a button -->
+                                            <button type="button"class="btn btn-info" data-toggle="modal" data-target="#myModal">Confirm</button>
 											<button type="button" onclick="window.history.back()" class="btn btn-secondary">Back</button>
                                         </div>
 										</form>
@@ -182,6 +183,29 @@
         <!--main content end-->
 
     </section>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Confirmation</h4>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" name="confirm" onclick="Confirm()" class="btn btn-info">Confirm</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- Modal End -->
 
     <!-- WAG GALAWIN PLS LANG -->
 	

@@ -17,6 +17,7 @@ if(isset($_POST['save'])){
     //INSERT TO DONATION TABLE
     $queryDon = "INSERT INTO `thesis`.`donation` (`contactNumber`, `dateNeed`, `dateCreated`, `purpose`, `schoolName`, `contactPerson`, `statusID`, `stepsID`) VALUES ('{$contactNo}', '{$dateNeeded}', now(), '{$purpose}', '{$schoolorg}', '{$contactPerson}', '1', '1')";
     $resultDon = mysqli_query($dbc, $queryDon);
+
 	
 	//GET DONATION ID
     $queryDonID = "SELECT * FROM thesis.donation order by donationID desc limit 1;";
@@ -28,6 +29,7 @@ if(isset($_POST['save'])){
         //INSERT TO DONATIONDETAILS TABLE
         $queryDonDet = "INSERT INTO `thesis`.`donationdetails` (`donationID`, `assetCategoryID`, `quantity`) VALUES ('{$rowDonID['donationID']}', '{$assetCat}', '{$qty}');";
         $resultDonDet = mysqli_query($dbc, $queryDonDet);
+
         
     }
 	echo "<script>alert('Success');</script>";
@@ -78,7 +80,7 @@ if(isset($_POST['save'])){
                         <form id="contact" action="" method="post">
                             <h3>Request For Donation</h3>
                             <fieldset>
-                                <input id="schoolorg" name="schoolorg" class="form-control" placeholder="School" type="text" required>
+                                <input id="schoolorg" name="schoolorg" class="form-control" placeholder="School / Organization" type="text" required>
                             </fieldset>
                             <fieldset>
                                 <input id="contactPerson" name="contactPerson" class="form-control" placeholder="Contact Person" type="text" required>

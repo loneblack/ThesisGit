@@ -266,8 +266,11 @@
                                                     <textarea class="form-control" rows="5" id="comment" name="reason" style="resize:none"></textarea>
                                                 </div>
 
-                                                <button class="btn btn-success" type="submit" id="approve" name="approve">Approve</button>
-                                                <button class="btn btn-danger" type="submit" id="disapprove" name="disapprove">Disapprove</button>
+                                                <!-- Trigger the modal with a button -->
+												<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#denyModal">Disapprove</button>
+
+                                                <!-- Trigger the modal with a button -->
+												<button type="button" class="btn btn-success" data-toggle="modal" data-target="#approveModal">Approve</button>
                                             </div>
 
                                         </div>
@@ -278,113 +281,7 @@
 
                         </div>
 						</form>
-                        <!-- <div class="row">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <section class="panel">
-                                        <header class="panel-heading">
-                                            View Donation Request
-                                        </header>
-                                        <div class="panel-body">
-                                            <button class="btn btn-danger" onclick="location.href='it_requests.php'">Back</button>
-                                            <h5><b>Office/ Department/ School Organization: Gaylord Academy</b></h5>
-                                            <h5><b>Contact Number: 09178328851</b></h5>
-                                            <h5><b>Date Time Needed: 12/23/2018 12:00:00AM</b></h5>
-                                            <h5><b>Purpose: To serve our gay community</b></h5>
-
-                                            <div>
-
-                                                <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Category</th>
-                                                            <th>Quantity</th>
-                                                            <th>Brand</th>
-                                                            <th>Model</th>
-                                                            <th>Property Code</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Computer</td>
-                                                            <td>3</td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Brand</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Model</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Property Code</option>
-                                                                </select>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Brand</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Model</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Property Code</option>
-                                                                </select>
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Brand</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Model</option>
-                                                                </select>
-                                                            </td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Property Code</option>
-                                                                </select>
-                                                            </td>
-                                                        </tr>
-
-                                                    </tbody>
-                                                </table>
-                                                
-                                                <br>
-                                                <div class="form-group">
-                                                    <label for="comment">Please Fill Reason if Disapproved</label>
-                                                    <textarea class="form-control" rows="5" id="comment" style="resize:none"></textarea>
-                                                </div>
-
-                                                <button class="btn btn-success">Approve</button>
-                                                <button class="btn btn-danger">Disapprove</button>
-                                            </div>
-
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
-
-
-                        </div> -->
+                       
                     </div>
                 </div>
                 <!-- page end-->
@@ -393,6 +290,53 @@
         <!--main content end-->
 
     </section>
+
+<!-- Modal -->
+<div id="approveModal" class="modal" role="dialog">
+  <div class="modal-dialog">
+
+  <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure?</p>
+      </div>
+      <div class="modal-footer">
+      	<button class="btn btn-success" type="submit" id="approve" name="approve">Okay</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Modal content-->
+
+<!-- Modal -->
+<div id="denyModal" class="modal" role="dialog">
+  <div class="modal-dialog">
+
+  <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure?</p>
+      </div>
+      <div class="modal-footer">
+      	<button class="btn btn-danger" type="submit" id="disapprove" name="disapprove">Okay</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Modal content-->
+
 
     <!-- WAG GALAWIN PLS LANG -->
 
