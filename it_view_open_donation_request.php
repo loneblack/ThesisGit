@@ -202,17 +202,26 @@
                                             
                                             <div><br><br><br>
                                                 <h4>Assets to Be Donated</h4>
-                                                <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+                                                <table class="table table-bordered table-striped table-condensed table-hover" id="dynamic-table">
                                                     <thead>
                                                         <tr>
+                                                        	<th style="width:50px"></th>
+                                                            <th>Property Code</th>
                                                             <th>Brand</th>
                                                             <th>Model</th>
-                                                            <th>Property Code</th>
-                                                            <th>Add/ Remove</th>
+                                                            <th>Specifications</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                    	<td style="text-align:center"><input type="checkbox"></td>
+                                                    	<td>LPTP-0001</td>
+                                                    	<td>Acer</td>
+                                                    	<td>Aspire E14</td>
+                                                    	<td>4 GB RAM, 1 TB, i5 something</td>
+
+                                                    	
 														<?php
+														/** PREVIOUS VERSION
 															//GET DONATIONDETAILS
 															$queryDonDet = "SELECT *,rac.name as `assetCatName` FROM thesis.donationdetails dd join ref_assetcategory rac on dd.assetCategoryID=rac.assetCategoryID where donationID='{$donationID}'";
 															$resultDonDet = mysqli_query($dbc, $queryDonDet);
@@ -285,6 +294,7 @@
 																}
 																
 															}
+														END OF PREVIOUS VERSION */
 														?>
                                                     </tbody>
                                                 </table>
