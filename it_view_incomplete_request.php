@@ -347,7 +347,7 @@ $_SESSION['previousPage2']="it_view_incomplete_request.php?requestID=".$requestI
                         var appendTableRow = function(rowCount,requestID,assetCategory,qty,reqCode,clicks) {
                             var cnt = 0;
                             var tr = "<tr>" +
-                                "<td><input type='number' class='form-control assetCatQty"+ assetCategory +"' min='0.00' name='qty[]' max='" + qty + "' value='"+ qty +"' required></td>" +
+                                "<td><input type='number' class='form-control assetCatQty"+ assetCategory +"' min='1' name='qty[]' max='" + qty + "' value='"+ qty +"' required></td>" +
                                 "<td>" +
 								"<select class='form-control' id='exampleFormControlSelect1" + clicks + "' name='category[]' readonly>" +
                                 "</select>" +
