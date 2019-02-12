@@ -8,36 +8,9 @@
 session_start();
 require_once('db/mysql_connect.php');
 $requestID=$_GET['requestID'];
-if(isset($_POST['submit'])){
-	
-	$quantityArray=$_POST['qty'];
-	$desc=$_POST['desc'];
-	$categoryArray=$_POST['category'];
-	$brandArray=$_POST['brand'];
-	$modelArray=$_POST['model'];
-	$specsArray=$_POST['specs'];
-	
-	$count = sizeof($modelArray);
-	
-	$queryx="INSERT INTO `thesis`.`canvas` (`requestID`, `status`) VALUES ('{$requestID}', '1')";
-	$resultx=mysqli_query($dbc,$queryx);
-	
-	$queryy="SELECT * FROM thesis.canvas order by canvasID desc";
-	$resulty=mysqli_query($dbc,$queryy);
-	$rowy=mysqli_fetch_array($resulty,MYSQLI_ASSOC);
-	
-	//auto increment for canvasItemID
-	for ($i=0; $i < $count; $i++) { 
-		$querya="INSERT INTO `thesis`.`canvasitem` (`canvasID`, `quantity`, `description`, `assetCategory`, `assetModel`) VALUES ('{$rowy['canvasID']}', '{$quantityArray[$i]}', '{$desc[$i]}', '{$categoryArray[$i]}', '{$modelArray[$i]}')";
-		$resulta=mysqli_query($dbc,$querya);
-	}
-	
-	$queryz="UPDATE `thesis`.`request` SET `step`='3' WHERE `requestID`='{$requestID}'";
-	$resultz=mysqli_query($dbc,$queryz);
-	
-	$message = "Form submitted!";
-	$_SESSION['submitMessage'] = $message;
-}
+$_SESSION['requestID']=$requestID;
+$_SESSION['previousPage2']="it_view_incomplete_request.php?requestID=".$requestID;
+
 ?>
 <html lang="en">
 
@@ -163,7 +136,7 @@ if(isset($_POST['submit'])){
                                         </table>
 										
 										<h4><b>Items To Be Purchased</b></h4>
-										<form method="post" action="it_view_incomplete_request.php?requestID=<?php echo $requestID; ?>">
+										<form method="post" id="formSend" action="it_view_incomplete_request_DB.php">
                                         <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                             <thead>
                                                 <tr>
@@ -189,8 +162,11 @@ if(isset($_POST['submit'])){
 												$result1=mysqli_query($dbc,$query1);
 												
 												while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
+													
 													$reqCode=$row1['requestID']."_".$row1['assetCategory']."_".$row1['quantity'];
 													echo "<tr>
+														<input type='hidden' name='assetCatID[]' class='assetCatIDs' value='{$row1['assetCategory']}'>
+														<input type='hidden' name='assetCatQtys[]' class='assetCatQtys' value='{$row1['quantity']}'>
 														<td style='width:50px;'>{$row1['quantity']}</td>
 														<td>{$row1['name']}</td>
 														<td></td>
@@ -198,14 +174,13 @@ if(isset($_POST['submit'])){
 														<td></td>
 														<td></td>
 														<td><button type='button' class='btn btn-primary' onclick='addTest(\"{$reqCode}\")'> Add </button></td>
-														
 													</tr>";	
 												}
 											?>
                                             </tbody>
                                         </table>
 										<div style="padding-top:10px">
-											<button type="submit" class="btn btn-success" name="submit">Submit</button>
+											<button type="button" class="btn btn-success" onclick="formSubmit()" name="btnSubmit">Submit</button>
                                             <a href="it_requests.php"><button type="button" class="btn btn-danger glyphicon glyphicon-chevron-left"> Back</button></a>
                                         </div>
 										
@@ -278,7 +253,7 @@ if(isset($_POST['submit'])){
                         $(function() {
                         });
 						var clicks = 0;
-                        function addTest(reqCode) {
+                        function addTest(reqCode,maxQty) {
 							clicks++;
                             var row_index = 0;
 							var codeStr=""+reqCode;
@@ -293,9 +268,27 @@ if(isset($_POST['submit'])){
                             });
                             var delayInMilliseconds = 300; //1 second
                             setTimeout(function() {
-                                appendTableRow(row_index,requestID,assetCategory,qty,reqCode,clicks);
+								if(checkAllQty(assetCategory,qty)){
+									 appendTableRow(row_index,requestID,assetCategory,qty,reqCode,clicks);
+								}
                             }, delayInMilliseconds);
                         }
+						
+						function checkAllQty(assetCategory,maxQty) {
+							var sumQty=0;
+							var x = document.getElementsByClassName("assetCatQty"+assetCategory);
+							for(var i=0;i<x.length;i++){
+								var inVal=parseInt(x[i].value);
+								sumQty+=inVal;
+							}
+							
+							if(sumQty<maxQty){
+								return true;
+								
+							}
+							return false;
+						}
+						
 						function getCategory(assetCategory,clicks){
 							var xmlhttp = new XMLHttpRequest();
 							var code = "exampleFormControlSelect1" + clicks;
@@ -354,7 +347,7 @@ if(isset($_POST['submit'])){
                         var appendTableRow = function(rowCount,requestID,assetCategory,qty,reqCode,clicks) {
                             var cnt = 0;
                             var tr = "<tr>" +
-                                "<td><input type='number' class='form-control' min='0.00' name='qty[]' max='" + qty + "' required></td>" +
+                                "<td><input type='number' class='form-control assetCatQty"+ assetCategory +"' min='0.00' name='qty[]' max='" + qty + "' value='"+ qty +"' required></td>" +
                                 "<td>" +
 								"<select class='form-control' id='exampleFormControlSelect1" + clicks + "' name='category[]' readonly>" +
                                 "</select>" +
@@ -387,6 +380,37 @@ if(isset($_POST['submit'])){
                             $('#tableTest tbody tr').eq(rowCount).after(tr);
 							getCategory(assetCategory,clicks);
                         }
+						
+						function formSubmit(){
+							var assetCatIDs  = document.getElementsByClassName("assetCatIDs");
+							var assetCatQtys  = document.getElementsByClassName("assetCatQtys");
+							var isQtyCorrect = true;
+							var message="";
+							
+							for(var i=0;i<assetCatIDs.length;i++){
+								var x = document.getElementsByClassName("assetCatQty"+assetCatIDs[i].value);
+								var sumQty=0;
+								
+								for(var j=0;j<x.length;j++){
+									var inVal=parseInt(x[j].value);
+									
+									sumQty+=inVal;
+								}
+								
+								if(sumQty!=assetCatQtys[i].value){
+									isQtyCorrect=false;
+									message+="Quantities entered reach the maximum quantity";
+								}
+							}
+							
+							if(isQtyCorrect==true){
+								document.getElementById("formSend").submit();
+							}
+							else{
+								alert(message);
+							}
+							
+						}
 						
 					</script>
                     <!-- <script type="text/javascript">
