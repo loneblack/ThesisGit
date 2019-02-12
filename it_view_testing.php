@@ -358,6 +358,7 @@
 														<th class="text-center">Brand</th>
 														<th>Model</th>
 														<th class="text-center">Comments</th>
+                                                        <th>Warranty (In Months)</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -387,11 +388,14 @@
 																}	
 																	
 															echo "' disabled></td>
+                                                            <td><input class='form-control' type='number' min='3' value='3'/> </td>
 															</tr>";
 														}
 													
 													
 													?>
+                                                    
+                                                    
 												</tbody> 
 												<!-- <tbody>
 													<tr>
