@@ -103,7 +103,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                 <div class="form-group ">
                                                     <label for="endDate" class="control-label col-lg-3">Asset Return date & time</label>
                                                     <div class="col-lg-6">
-                                                        <input class=" form-control" id="endDate" name="endDate" type="datetime-local" />
+                                                        <input class=" form-control" id="endDate" name="endDate" type="date" min="<?php echo date('Y-m-d'); ?>" value="<?php echo date('Y-m-d'); ?>" />
                                                     </div>
                                                 </div>
                                                 
