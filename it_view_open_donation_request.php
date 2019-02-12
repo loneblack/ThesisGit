@@ -165,17 +165,50 @@
                                             <h5><b>Contact Number: <?php echo $row['contactNumber']; ?></b></h5>
                                             <h5><b>Date Time Needed: <?php echo $row['dateNeed']; ?></b></h5>
                                             <h5><b>Purpose: <?php echo $row['purpose']; ?></b></h5>
-
-                                            <div>
-
+                                            
+                                            
+                                            
+                                            <div><br><br>
+                                                <h4>Request Details</h4>
                                                 <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                     <thead>
                                                         <tr>
                                                             <th>Category</th>
                                                             <th>Quantity</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+															//GET DONATIONDETAILS
+															$queryDonDet = "SELECT *,rac.name as `assetCatName` FROM thesis.donationdetails dd join ref_assetcategory rac on dd.assetCategoryID=rac.assetCategoryID where donationID='{$donationID}'";
+															$resultDonDet = mysqli_query($dbc, $queryDonDet);
+															$count=0;
+															while($rowDonDet=mysqli_fetch_array($resultDonDet, MYSQLI_ASSOC)){
+																echo 
+																"<tr>
+																	<input type='hidden' name='donDetailsID[]' value='{$rowDonDet['id']}'>
+																	<td>{$rowDonDet['assetCatName']}</td>
+																	<td>{$rowDonDet['quantity']}</td>";
+                                                            }
+														?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <div><br><br><br>
+                                                <h4>Assets to Be Donated</h4>
+                                                <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+                                                    <thead>
+                                                        <tr>
                                                             <th>Brand</th>
                                                             <th>Model</th>
                                                             <th>Property Code</th>
+                                                            <th>Add/ Remove</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -188,8 +221,6 @@
 																echo 
 																"<tr>
 																	<input type='hidden' name='donDetailsID[]' value='{$rowDonDet['id']}'>
-																	<td>{$rowDonDet['assetCatName']}</td>
-																	<td>{$rowDonDet['quantity']}</td>
 																	<td>
 																<select class='form-control donreq' id='brand".$count."' required onchange='getModel({$count},{$rowDonDet['assetCategoryID']})'>
 																		<option value=''>Select Brand</option>";
@@ -222,8 +253,6 @@
 																for($i=0;$i<$rowDonDet['quantity']-1;$i++){
 																	echo "<tr>
 																		  <input type='hidden' name='donDetailsID1[]' value='{$rowDonDet['id']}'>
-																		  <td></td>
-																		  <td></td>
 																		  <td>
 																		  <select class='form-control donreq' id='brand".$count."' required onchange='getModel({$count},{$rowDonDet['assetCategoryID']})'>
 																		  <option value=''>Select Brand</option>";
