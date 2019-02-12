@@ -11,6 +11,10 @@
 	$_SESSION['previousPage1'] = "procurement_start_canvas.php?canvasID=".$canvasID;
 	$_SESSION['count'] = 0;
 	
+	//GET DATE NEEDED
+	$queryDateNeeded="SELECT * FROM thesis.canvas c join request r on c.requestID=r.requestID where c.canvasID='{$canvasID}'";
+	$resultDateNeeded=mysqli_query($dbc,$queryDateNeeded);
+	$rowDateNeeded=mysqli_fetch_array($resultDateNeeded,MYSQLI_ASSOC);
 	
 	if(isset($_POST['save'])){
 		$companyName=$_POST['companyName'];
@@ -197,6 +201,7 @@
                                                         <th>Specification</th>
                                                         <th>Supplier</th>
                                                         <th>Unit Price in Php</th>
+														<th>Expected Delivery Date</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -231,6 +236,14 @@
 																	echo "</select>
 																	</td>
 																	<td><input type='number' class='form-control' min='0.00' name='unitPrice[]' required></td>
+																	<td><input class='form-control' name='expectedDelivery[]' type='date' min='";
+																	echo date("Y-m-d");
+																	echo "' max='";
+																	$maxDate = new DateTime($rowDateNeeded['dateNeeded']);
+																	echo date_format($maxDate,"Y-m-d");
+																	echo "' value='";
+																	echo date("Y-m-d");
+																	echo "' required></td>
 																	<td><button type='button' class='btn btn-primary' onclick='addTest({$row['cavasItemID']},{$row['quantity']})'> Add </button></td>
 																</tr>";
 															
@@ -450,6 +463,15 @@
                 "</select>" +
                 "</td>" +
                 "<td><input type='number' class='form-control' min='0.00' name='unitPrice[]' required></td>" +
+				"<td><input class='form-control' name='expectedDelivery[]' type='date' min='" +
+				"<?php echo date("Y-m-d"); ?>" +
+				"' max='" +
+				"<?php $maxDate = new DateTime($rowDateNeeded['dateNeeded']);
+						echo date_format($maxDate,"Y-m-d"); ?>" +
+				"' value='" +
+				"<?php echo date("Y-m-d"); ?>" +
+				"' required>" +
+				"</td>" +
                 "</tr>";
             $('#tableTest tbody tr').eq(rowCount).after(tr);
         }

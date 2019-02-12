@@ -7,11 +7,12 @@
 	$canvasItemID=$_POST['cavasItemID'];
 	$supplier=$_POST['supplier'];
 	$unitPrice=$_POST['unitPrice'];
+	$expectedDate=$_POST['expectedDelivery'];
 	$count = sizeof($canvasItemID);
 	$qty=$_POST['qty'];
 	
 	for ($i=0; $i < $count; $i++) { 
-		$querya="INSERT INTO `thesis`.`canvasitemdetails` (`cavasItemID`, `supplier_supplierID`, `price`, `status`, `quantity`) VALUES ('{$canvasItemID[$i]}', '{$supplier[$i]}', '{$unitPrice[$i]}', '1','{$qty[$i]}')";
+		$querya="INSERT INTO `thesis`.`canvasitemdetails` (`cavasItemID`, `supplier_supplierID`, `price`, `status`, `quantity`,`expectedDate`) VALUES ('{$canvasItemID[$i]}', '{$supplier[$i]}', '{$unitPrice[$i]}', '1','{$qty[$i]}','{$expectedDate[$i]}')";
 		$resulta=mysqli_query($dbc,$querya);
 	}
 		
@@ -23,6 +24,7 @@
 	$resultd=mysqli_query($dbc,$queryd);
 		
 	$message = "Form submitted!";
+	
 	$_SESSION['submitMessage'] = $message;
 		
 	//$queryb="UPDATE `thesis`.`canvas` SET `status`='6' WHERE `canvasID`='{$canvasID}'";
