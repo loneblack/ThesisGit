@@ -1321,6 +1321,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`canvasitemdetails` (
   `status` INT(11) NULL,
   `comment` VARCHAR(45) NULL,
   `quantity` INT(11) NULL,
+  `expectedDate` DATE NULL,
   INDEX `fk_canvasitemdetails_supplier1_idx` (`supplier_supplierID` ASC) VISIBLE,
   INDEX `fk_canvasitemdetails_ref_status1_idx` (`status` ASC) VISIBLE,
   CONSTRAINT `fk_canvasitemdetails_canvasitem1`
