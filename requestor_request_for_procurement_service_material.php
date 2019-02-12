@@ -140,17 +140,18 @@ $_SESSION['count'] = 0;
                                                         <div class="col-lg-6">
                                                             <input class="form-control" id="dateNeeded" name="dateNeeded" type="date" value="<?php 
 															
-																																				$date = new DateTime(date("Y-m-d"));
-																																				$date->modify('+7 day');
-																																				$defDate = $date->format('Y-m-d');
-																																				echo $defDate;
+																																				$date0 = new DateTime(date("Y-m-d"));
+																																				date_modify($date0,"+1 week");
+																																				echo date_format($date0,"Y-m-d");
 																																			
 																																			?>" min="<?php 
 																																						
 																																						$date = new DateTime(date("Y-m-d"));
-																																						$date->modify('+1 week');
-																																						$minDate = $date->format('Y-m-d');
-																																						echo $minDate;
+																																						date_modify($date,"+1 week");
+																																						echo date_format($date,"Y-m-d");
+																																						//$date->modify('+1 week');
+																																						//$minDate = $date->format('Y-m-d');
+																																						//echo $minDate;
 																																						
 																																					?>" max="<?php 
 																																								$CurDate = date("Y-m-d"); //Current date.
@@ -175,10 +176,12 @@ $_SESSION['count'] = 0;
 																																									}
 																																								}
 																																																					
-																																								$date = new DateTime($dateNeeded);
-																																								$date->modify('-1 week');
-																																								$finDate = $date->format('Y-m-d');
-																																								echo $finDate;
+																																								$date1 = new DateTime($dateNeeded);
+																																								date_modify($date1,"-1 week");
+																																								echo date_format($date1,"Y-m-d");
+																																								//$date->modify('-1 week');
+																																								//$finDate = $date->format('Y-m-d');
+																																								//echo $finDate;
 																																																						
 																																							?>" />
                                                         </div>
