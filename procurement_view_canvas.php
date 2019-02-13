@@ -69,7 +69,7 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
                                                         <th>Date Needed</th>
                                                         <th>Status</th>
                                                         <th>Description</th>
-                                                        <th >Requestor</th>
+                                                        <th>Requestor</th>
                                                         <th>Requested Date</th>
                                                     </tr>
                                                 </thead>
@@ -106,12 +106,13 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
                                                     </tr> -->
                                                     
 													<?php
-													
+														$key = "Fusion";
 														require_once('db/mysql_connect.php');
-														$query="SELECT c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.recipient,r.date as `requestedDate`,rstp.name as `step` FROM thesis.canvas c 
+														$query="SELECT Convert(AES_DECRYPT(firstName,'".$key."')USING utf8) as 'firstname',Convert(AES_DECRYPT(lastName,'".$key."')USING utf8) as 'lastname',c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.date as `requestedDate`,rstp.name as `step` FROM thesis.canvas c 
 																   join ref_status rs on c.status=rs.statusID
                                                                    join request r on c.requestID=r.requestID
-																   join ref_steps rstp on r.step=rstp.id";
+																   join ref_steps rstp on r.step=rstp.id
+																   join user u on r.UserID=u.UserID";
 														$result=mysqli_query($dbc,$query);
 														
 														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
@@ -154,7 +155,9 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
 															
 																
 															echo "<td>{$row['description']}</td>
-																<td>{$row['recipient']}</td>
+																<td>";
+															echo $row['firstname']." ".$row['lastname'];
+															echo "</td>
 																<td>{$row['requestedDate']}</td>
 															</tr>";
 														}
