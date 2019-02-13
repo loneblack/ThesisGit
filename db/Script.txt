@@ -1,5 +1,3 @@
--- MySQL Workbench Forward Engineering
-
 -- -----------------------------------------------------
 -- Schema thesis
 -- -----------------------------------------------------
@@ -1579,7 +1577,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `thesis`.`Delivery` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`Delivery` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `status` VARCHAR(45) NULL,
   `procurementID` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -1604,9 +1602,11 @@ CREATE TABLE IF NOT EXISTS `thesis`.`DeliveryDetails` (
   `assetModelID` INT(11) NOT NULL,
   `itemsReceived` INT(11) NULL,
   `deliveryDate` DATE NULL,
+  `deliveryDetailsID` INT(11) NOT NULL AUTO_INCREMENT,
   INDEX `fk_DeliveryDetails_Delivery1_idx` (`DeliveryID` ASC) ,
   INDEX `fk_DeliveryDetails_ref_assetcategory1_idx` (`ref_assetCategoryID` ASC) ,
   INDEX `fk_DeliveryDetails_assetmodel1_idx` (`assetModelID` ASC) ,
+  PRIMARY KEY (`deliveryDetailsID`),
   CONSTRAINT `fk_DeliveryDetails_Delivery1`
     FOREIGN KEY (`DeliveryID`)
     REFERENCES `thesis`.`Delivery` (`id`)
@@ -1683,6 +1683,27 @@ CREATE TABLE IF NOT EXISTS `thesis`.`receiving_details` (
   CONSTRAINT `fk_receiving_details_requestor_receiving1`
     FOREIGN KEY (`receivingID`)
     REFERENCES `thesis`.`requestor_receiving` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`DeliveryDetailsAssets`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`DeliveryDetailsAssets` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`DeliveryDetailsAssets` (
+  `DeliveryDetails_deliveryDetailsID` INT(11) NOT NULL,
+  `asset_assetID` INT(11) NOT NULL,
+  CONSTRAINT `fk_DeliveryDetailsAssets_DeliveryDetails1`
+    FOREIGN KEY (`DeliveryDetails_deliveryDetailsID`)
+    REFERENCES `thesis`.`DeliveryDetails` (`deliveryDetailsID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_DeliveryDetailsAssets_asset1`
+    FOREIGN KEY (`asset_assetID`)
+    REFERENCES `thesis`.`asset` (`assetID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
