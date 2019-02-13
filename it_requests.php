@@ -63,7 +63,7 @@
                                         <section class="panel">
                                             <div class="panel-body">
                                                 <div class="adv-table">
-                                                    <h4>*Note: Double Click the row to view the request.</h4>
+                                                    
                                                     <table class="display table table-bordered table-striped" id="dynamic-table">
                                                         <thead>
                                                             <tr>
@@ -292,7 +292,7 @@
                                     window.location.href = "it_view_canvas_completed.php?requestID=" + ida;
                                 } else if (idDesc == "IT Create Specs") {
                                     window.location.href = "it_view_incomplete_request.php?requestID=" + ida;
-                                } else if (idDesc == "Replacement needed") {
+                                } else if (idDesc == "Create Purchase Order") {
                                     window.location.href = "it_view_open_po.php?requestID=" + ida;
                                 } else if (idDesc == "Conforme pending") {
                                     window.location.href = "it_view_checklist.php";
