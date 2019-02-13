@@ -16,13 +16,6 @@
 		//$queryd="UPDATE `thesis`.`request` SET `status`='3' WHERE `requestID`='{$rowc['requestID']}'";
 		//$resultd=mysqli_query($dbc,$queryd);
 		
-		//Get totalSum of approved canvas item
-		$querye="SELECT sum(cid.price*ci.quantity) as `totalPrice` FROM thesis.canvas c join canvasitem ci on c.canvasID=ci.canvasID
-							  join canvasitemdetails cid on ci.cavasItemID=cid.cavasItemID
-                              where c.canvasID='{$canvasID}' and cid.status='5'";
-		$resulte=mysqli_query($dbc,$querye);
-		$rowe=mysqli_fetch_array($resulte,MYSQLI_ASSOC);
-		
 		//Get Employee Name
 		$queryf="SELECT employeeID FROM thesis.employee where UserID='{$_SESSION['userID']}'";
 		$resultf=mysqli_query($dbc,$queryf);
@@ -32,7 +25,7 @@
 		$queryg="SELECT cid.supplier_supplierID as `supplierID`,s.name as `supplierName`,s.address FROM thesis.canvasitem ci 
 							join canvasitemdetails cid on ci.cavasItemID=cid.cavasItemID 
 							join supplier s on cid.supplier_supplierID=s.supplierID
-							where ci.canvasID='{$canvasID}' and cid.status='5'
+							where ci.canvasID='{$canvasID}' 
 							group by cid.supplier_supplierID";
 		$resultg=mysqli_query($dbc,$queryg);
 		
@@ -41,6 +34,13 @@
 		$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
 		
 		while($rowg=mysqli_fetch_array($resultg,MYSQLI_ASSOC)){
+			//Get totalSum of approved canvas item
+			$querye="SELECT sum(cid.price*ci.quantity) as `totalPrice` FROM thesis.canvas c join canvasitem ci on c.canvasID=ci.canvasID
+							  join canvasitemdetails cid on ci.cavasItemID=cid.cavasItemID
+                              where c.canvasID='{$canvasID}' and cid.supplier_supplierID='{$rowg['supplierID']}'";
+			$resulte=mysqli_query($dbc,$querye);
+			$rowe=mysqli_fetch_array($resulte,MYSQLI_ASSOC);
+			
 			$queryh="INSERT INTO `thesis`.`procurement` (`requestID`, `date`, `totalCost`, `status`, `preparedBy`, `supplierID`) VALUES ('{$rowc['requestID']}', now(), '{$rowe['totalPrice']}', '1', '{$rowf['employeeID']}', '{$rowg['supplierID']}')";
 			$resulth=mysqli_query($dbc,$queryh);
 			
@@ -54,7 +54,7 @@
 				join assetModel am on ci.assetModel=am.assetModelID
 				join ref_brand rb on am.brand=rb.brandID
 				join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
-				where ci.canvasID='{$canvasID}' and cid.status='5' and cid.supplier_supplierID='{$rowg['supplierID']}'";
+				where ci.canvasID='{$canvasID}'  and cid.supplier_supplierID='{$rowg['supplierID']}'";
 			$resulti=mysqli_query($dbc,$queryi);
 			while($rowi=mysqli_fetch_array($resulti,MYSQLI_ASSOC)){
 				$queryj="INSERT INTO `thesis`.`procurementdetails` (`procurementID`, `description`, `quantity`, `cost`, `subtotal`, `assetCategoryID`, `assetModelID`) VALUES ('{$rowx['procurementID']}', '{$rowi['description']}', '{$rowi['quantity']}', '{$rowi['price']}', '{$rowi['totalPrice']}', '{$rowi['assetCategory']}', '{$rowi['assetModel']}')";
@@ -143,7 +143,7 @@
 						$query="SELECT cid.supplier_supplierID as `supplierID`,s.name as `supplierName`,s.address FROM thesis.canvasitem ci 
 							join canvasitemdetails cid on ci.cavasItemID=cid.cavasItemID 
 							join supplier s on cid.supplier_supplierID=s.supplierID
-							where ci.canvasID='{$canvasID}' and cid.status='5'
+							where ci.canvasID='{$canvasID}'
 							group by cid.supplier_supplierID";
 						$result=mysqli_query($dbc,$query);
 						
@@ -164,18 +164,8 @@
 														<h5>Address: {$row['address']}</h5>
 													</div>
 													<div class='col-md-4 col-sm-5 pull-right'>
-														<div class='row'>
-															<div class='col-md-4 col-sm-5 inv-label'>Purchase Order #</div>
-															<div class='col-md-8 col-sm-7'>233426</div>
-														</div>
-														<br>
-														<div class='row'>
-															<div class='col-md-4 col-sm-5 inv-label'>Date </div>
-															<div class='col-md-8 col-sm-7'>21 December 2018</div>
-														</div>
-														<br>
-
-
+														
+														
 													</div>
 												</div>
 												<table class='table table-invoice'>
@@ -186,17 +176,18 @@
 															<th class='text-center'>Unit Cost</th>
 															<th class='text-center'>Quantity</th>
 															<th class='text-center'>Total</th>
+															<th class='text-center'>Expected Delivery Date</th>
 														</tr>
 													</thead>
 													<tbody>";
 													
 													
-													$querya="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,am.itemSpecification,ci.description,ci.quantity,cid.price,(ci.quantity*cid.price) as `totalPrice` FROM thesis.canvasitemdetails cid
+													$querya="SELECT cid.expectedDate,ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,am.itemSpecification,ci.description,ci.quantity,cid.price,(ci.quantity*cid.price) as `totalPrice` FROM thesis.canvasitemdetails cid
 																join canvasitem ci on cid.cavasItemID=ci.cavasItemID 
 																join assetModel am on ci.assetModel=am.assetModelID
 																join ref_brand rb on am.brand=rb.brandID
 																join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
-																where ci.canvasID='{$canvasID}' and cid.supplier_supplierID='{$row['supplierID']}' and cid.status='5'";
+																where ci.canvasID='{$canvasID}' and cid.supplier_supplierID='{$row['supplierID']}'";
 													$resulta=mysqli_query($dbc,$querya);
 													while($rowa=mysqli_fetch_array($resulta,MYSQLI_ASSOC)){
 														echo "<tr>
@@ -208,6 +199,7 @@
 															<td class='text-center'>₱ {$rowa['price']}</td>
 															<td class='text-center'>{$rowa['quantity']}</td>
 															<td class='text-center'>₱ {$rowa['totalPrice']}</td>
+															<td class='text-center'>{$rowa['expectedDate']}</td>
 														</tr>";
 													}
 													
