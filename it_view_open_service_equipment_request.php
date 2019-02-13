@@ -116,6 +116,7 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     }
 
 ?>
+
 <head>
     <meta charset="utf-8">
 
@@ -180,8 +181,9 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     ?>
                                     <div class="panel-body">
                                         <div class="form" method="post">
-											<a href="it_requests.php"><button type="button" class="btn btn-link"><strong>< Back</strong></button></a>
-                                            <h4 style="float: right;">Status: <?php 
+                                            <a href="it_requests.php"><button type="button" class="btn btn-link"><strong>
+                                                        < Back</strong> </button> </a> <h4 style="float: right;">Status:
+                                                            <?php 
                                             if($description=='Pending'){
                                                 echo "<span class='label label-warning'>{$description}</span>";
                                             }
@@ -190,86 +192,76 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             }
                                             else{
                                                 echo "<span class='label label-success'>Approved</span>";
-                                            } ?></h4>
-                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
-                                                <div class="form-group ">
-                                                    <label for="serviceType" class="control-label col-lg-3">Office/Department/School Organization</label>
-                                                    <div class="col-lg-6">
-														<textarea class="form-control" style="resize:none" disabled><?php echo $office.$department.$organization;?></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="number" class="control-label col-lg-3">Contact No.</label>
-                                                    <div class="col-lg-6">
-                                                        <input class="form-control" rows="5" name="details" style="resize:none" type="text" required disabled value=<?php echo "'".$contactNo."'";?>>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="dateNeeded" class="control-label col-lg-3">Date & time needed</label>
-                                                    <div class="col-lg-6">
-                                                        <input class="form-control" id="dateNeeded" name="dateNeeded" disabled value=<?php echo "'".$startDate."'";?>/>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="endDate" class="control-label col-lg-3">End date & time</label>
-                                                    <div class="col-lg-6">
-                                                        <input class=" form-control" id="endDate" name="endDate" disabled value=<?php echo "'".$endDate."'";?>/>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="purpose" class="control-label col-lg-3">Purpose</label>
-                                                    <div class="col-lg-6">
-                                                        <input class="form-control" id="purpose" name="purpose" type="text" disabled value=<?php echo "'".$purpose."'";?>/>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="building" class="control-label col-lg-3">Building</label>
-                                                    <div class="col-lg-6">
-                                                        <select name="building" class="form-control m-bot15" disabled >
-                                                            <option><?php echo $building;?></option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
-                                                    <div class="col-lg-6">
-                                                        <select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15" disabled>
-                                                            <option value=''><?php echo $floorRoom;?></option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <hr>
+                                            } ?>
+                                                            </h4>
+                                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
+                                                                <div class="form-group ">
+                                                                    <label for="serviceType" class="control-label col-lg-3">Office/Department/School Organization</label>
+                                                                    <div class="col-lg-6">
+                                                                        <textarea class="form-control" style="resize:none" disabled><?php echo $office.$department.$organization;?></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group ">
+                                                                    <label for="number" class="control-label col-lg-3">Contact No.</label>
+                                                                    <div class="col-lg-6">
+                                                                        <input class="form-control" rows="5" name="details" style="resize:none" type="text" required disabled value=<?php echo "'" .$contactNo."'";?>>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group ">
+                                                                    <label for="dateNeeded" class="control-label col-lg-3">Date & time needed</label>
+                                                                    <div class="col-lg-6">
+                                                                        <input class="form-control" id="dateNeeded" name="dateNeeded" disabled value=<?php echo "'" .$startDate."'";?>/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group ">
+                                                                    <label for="endDate" class="control-label col-lg-3">End date & time</label>
+                                                                    <div class="col-lg-6">
+                                                                        <input class=" form-control" id="endDate" name="endDate" disabled value=<?php echo "'" .$endDate."'";?>/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group ">
+                                                                    <label for="purpose" class="control-label col-lg-3">Purpose</label>
+                                                                    <div class="col-lg-6">
+                                                                        <input class="form-control" id="purpose" name="purpose" type="text" disabled value=<?php echo "'" .$purpose."'";?>/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group ">
+                                                                    <label for="building" class="control-label col-lg-3">Building</label>
+                                                                    <div class="col-lg-6">
+                                                                        <select name="building" class="form-control m-bot15" disabled>
+                                                                            <option>
+                                                                                <?php echo $building;?>
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="floorRoom" class="control-label col-lg-3">Floor and Room</label>
+                                                                    <div class="col-lg-6">
+                                                                        <select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15" disabled>
+                                                                            <option value=''>
+                                                                                <?php echo $floorRoom;?>
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
 
-                                                <h4>Endorsement (if applicable)</h4>
-                                                    <div class="form-group ">
-                                                        <label for="representative" class="control-label col-lg-3">Representative</label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" id="representative" name="representative" type="text" disabled value=<?php echo "'".$personrepresentative."'";?>/>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group ">
-                                                        <label for="idNum" class="control-label col-lg-3">ID Number</label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" id="idNum" name="idNum" type="text" disabled value=<?php echo "'".$personrepresentativeID."'";?>/>
-                                                        </div>
-                                                    </div>
-                                                <hr>
+                                                                <div class="container-fluid">
+                                                                    <h4>Equipment to Lend</h4>
 
-                                                <div class="container-fluid">
-                                                    <h4>Equipment to Lend</h4>
-
-                                                    <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Equipment</th>
-                                                                <th>Quantity</th>
-                                                                <th>Brand</th>
-																<th>Model</th>
-																<th>Property Code</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <?php
+                                                                    <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Equipment</th>
+                                                                                <th>Quantity</th>
+                                                                                <th>Brand</th>
+                                                                                <th>Model</th>
+                                                                                <th>Property Code</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <?php
                                                             $count=0;
                                                             for ($i=0; $i < count($category); $i++){ 
                                                             echo
@@ -346,29 +338,30 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 																	}
                                                             }
                                                         ?>
-                                                        </tbody>
-                                                    </table>
+                                                                        </tbody>
+                                                                    </table>
 
 
 
-                                                </div>
-                                                <hr>
-                                                <div class="container-fluid">
-                                                    
-													<hr>
-                                                    <div class="form-group">
-														<button id="approveBtn" name="approveBtn" class="btn btn-success" <?php if($description != 'Pending') echo "disabled"; ?> type="submit">Approve</button>
-														&nbsp;
-														<button id="denyBtn" name="denyBtn" class="btn btn-danger"<?php if($description != 'Pending') echo "disabled"; ?> type="submit">Deny</button>
-                                                    </div>
-                                                </div>
-                                            </form>
+                                                                </div>
+                                                                <hr>
+                                                                <div class="container-fluid">
+
+                                                                    <hr>
+                                                                    <div class="form-group">
+                                                                        <button id="approveBtn" name="approveBtn" class="btn btn-success" <?php if($description !='Pending' ) echo "disabled" ; ?> type="submit">Approve</button>
+                                                                        &nbsp;
+                                                                        <button id="denyBtn" name="denyBtn" class="btn btn-danger" <?php if($description !='Pending' ) echo "disabled" ; ?> type="submit" data-toggle="modal" data-target="#myModal">Deny</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
                                         </div>
                                     </div>
                                 </section>
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
                 <!-- page end-->
             </section>
@@ -377,7 +370,35 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
     </section>
 
-   
+
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Reason for Disapproval</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST">
+                        <label>Reason for Disapproval</label>
+                        <input type="text" class="form-control" name="reason">
+                        <br><br>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
     <!-- WAG GALAWIN PLS LANG -->
 
     <!--Core js-->
@@ -417,39 +438,39 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
 
         }
-		
-		function getModel(count,assetCat){
-			
-			var code1 = "brand" + count;
-			var code3 = "model" + count;
-			var brand=document.getElementById(code1).value;
-			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				document.getElementById(code3).innerHTML = this.responseText;
-			}
-			};
-			xmlhttp.open("GET", "model_ajax.php?category=" + assetCat + "&brand=" + brand, true);
-			xmlhttp.send();
-							
-		}
-		
-		function getPropCode(count){
-			
-			var code3 = "model" + count;
-			var code4 = "propCode" + count;
-			var model=document.getElementById(code3).value;
-			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-				document.getElementById(code4).innerHTML = this.responseText;
-				}
-			};
-			xmlhttp.open("GET", "propcode_ajax2.php?model=" + model, true);
-			xmlhttp.send();
-							
-		}
-		
+
+        function getModel(count, assetCat) {
+
+            var code1 = "brand" + count;
+            var code3 = "model" + count;
+            var brand = document.getElementById(code1).value;
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById(code3).innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "model_ajax.php?category=" + assetCat + "&brand=" + brand, true);
+            xmlhttp.send();
+
+        }
+
+        function getPropCode(count) {
+
+            var code3 = "model" + count;
+            var code4 = "propCode" + count;
+            var model = document.getElementById(code3).value;
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById(code4).innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "propcode_ajax2.php?model=" + model, true);
+            xmlhttp.send();
+
+        }
+
         var appendTableRow = function(rowCount, canvasItemID) {
             var cnt = 0;
             var tr = "<tr>" +
