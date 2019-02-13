@@ -103,7 +103,7 @@ $count = 0;
                             <div class="col-lg-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        Repair Request Form
+                                        Repair Your Broken Asset Form
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
@@ -122,7 +122,7 @@ $count = 0;
                                                     ?>
                                                     </div>
                                                 </div>
-                                                <h4>Instructions: Write down a summary of the issue with the asset that needs to be repaired and on the table check the asset that needs to be repaired</h4>
+                                                <h4>Instructions: Write down a summary of the issue with the asset that seems to be broken and on the table check the asset that needs to be repaired</h4>
                                                 <hr>
                                                 <div class="form-group">
                                                     <label for="details" class="control-label col-lg-3">Description of the Problem</label>
