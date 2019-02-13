@@ -279,6 +279,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 
                 +"</select></td>" +
                 "<td><select name='quantity"+count+"' id='quantity"+count+"' class='form-control m-bot15'></select></td>" +
+                "<td><input type='text' name='purpose"+count+"' id='purpose"+count+"' class='form-control m-bot15'></select></td>" +
                 "<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
                 "</tr>";
             $('#tableTest tbody tr').eq(rowCount).after(tr);
