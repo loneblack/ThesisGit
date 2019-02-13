@@ -31,7 +31,6 @@
                             <ul class="sub">
                                 <li><a href="requestor_assets.php">Asset List</a></li>
                                 <li><a href="requestor_asset_delivery.php">Asset Delivery</a></li>
-								<li><a href="requestor_asset_on_repair.php">Assets on Repair</a></li>
                             </ul>
                         </li>
    
