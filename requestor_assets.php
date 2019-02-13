@@ -73,7 +73,6 @@
                                                     <table class="display table table-bordered table-striped" id="dynamic-table">
                                                         <thead>
                                                             <tr>
-                                                                <th>#</th>
                                                                 <th>Property Code</th>
                                                                 <th>Brand</th>
                                                                 <th>Model</th>
@@ -100,7 +99,6 @@
 															$result=mysqli_query($dbc,$query);
 															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 																echo "<tr>
-                                                                    <td>{$count}</td>
 																	<td>{$row['propertyCode']}</td>
                                                                     <td>{$row['brand']}</td>
                                                                     <td>{$row['model']}</td>
