@@ -220,7 +220,7 @@
 																echo "<tr>
 																	<input type='hidden' name='cavasItemID[]' class='cavasItemIDs' value='{$row['cavasItemID']}'>
 																	<input type='hidden' name='cavasItemQtys[]' class='cavasItemQtys' value='{$row['quantity']}'>
-																	<td style='width:50px;'><input type='number' class='form-control cavasItemQty".$row['cavasItemID']."' min='1' max='{$row['quantity']}' name='qty[]' value='{$row['quantity']}' required></td>
+																	<td style='width:50px;'><input type='number' class='form-control cavasItemQty".$row['cavasItemID']."' min='1' max='{$row['quantity']}' name='cavItQty[]' value='{$row['quantity']}' required></td>
 																	<td>{$row['quantity']}</td>
 																	<td>{$row['assetModel']}</td>
 																	<td>{$row['itemSpecification']}</td>
@@ -447,7 +447,7 @@
             var cnt = 0;
             var tr = "<tr>" +
 				"<input type='hidden' name='cavasItemID[]' value='"+ canvasItemID +"'>"+
-                "<td style='width:50px;'><input type='number' class='form-control cavasItemQty"+ canvasItemID +"' min='1' max='"+ maxQty +"' name='qty[]' value='"+ maxQty +"' required></td>" +
+                "<td style='width:50px;'><input type='number' class='form-control cavasItemQty"+ canvasItemID +"' min='1' max='"+ maxQty +"' name='cavItQty[]' value='"+ maxQty +"' required></td>" +
                 "<td></td>" +
 				"<td></td>" +
                 "<td></td>" +

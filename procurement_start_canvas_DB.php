@@ -9,7 +9,7 @@
 	$unitPrice=$_POST['unitPrice'];
 	$expectedDate=$_POST['expectedDelivery'];
 	$count = sizeof($canvasItemID);
-	$qty=$_POST['qty'];
+	$qty=$_POST['cavItQty'];
 	
 	for ($i=0; $i < $count; $i++) { 
 		$querya="INSERT INTO `thesis`.`canvasitemdetails` (`cavasItemID`, `supplier_supplierID`, `price`, `status`, `quantity`,`expectedDate`) VALUES ('{$canvasItemID[$i]}', '{$supplier[$i]}', '{$unitPrice[$i]}', '1','{$qty[$i]}','{$expectedDate[$i]}')";

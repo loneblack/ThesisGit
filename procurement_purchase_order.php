@@ -49,7 +49,7 @@
 			$rowx=mysqli_fetch_array($resultx,MYSQLI_ASSOC);
 			
 			//Get Canvas Items
-			$queryi="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,am.itemSpecification,ci.description,ci.quantity,cid.price,(ci.quantity*cid.price) as `totalPrice`,ci.assetModel,ci.assetCategory,cid.expectedDate FROM thesis.canvasitemdetails cid
+			$queryi="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,am.itemSpecification,ci.description,cid.quantity,cid.price,(ci.quantity*cid.price) as `totalPrice`,ci.assetModel,ci.assetCategory,cid.expectedDate FROM thesis.canvasitemdetails cid
 				join canvasitem ci on cid.cavasItemID=ci.cavasItemID 
 				join assetModel am on ci.assetModel=am.assetModelID
 				join ref_brand rb on am.brand=rb.brandID
@@ -182,7 +182,7 @@
 													<tbody>";
 													
 													
-													$querya="SELECT cid.expectedDate,ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,am.itemSpecification,ci.description,ci.quantity,cid.price,(ci.quantity*cid.price) as `totalPrice` FROM thesis.canvasitemdetails cid
+													$querya="SELECT cid.expectedDate,ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,am.itemSpecification,ci.description,cid.quantity,cid.price,(ci.quantity*cid.price) as `totalPrice` FROM thesis.canvasitemdetails cid
 																join canvasitem ci on cid.cavasItemID=ci.cavasItemID 
 																join assetModel am on ci.assetModel=am.assetModelID
 																join ref_brand rb on am.brand=rb.brandID
