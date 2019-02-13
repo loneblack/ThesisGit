@@ -1,9 +1,5 @@
 -- MySQL Workbench Forward Engineering
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
 -- -----------------------------------------------------
 -- Schema thesis
 -- -----------------------------------------------------
@@ -41,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`user` (
   `firstName` VARBINARY(100) NOT NULL,
   `lastName` VARBINARY(100) NOT NULL,
   PRIMARY KEY (`UserID`),
-  INDEX `fk_User_ref_userType1_idx` (`userType` ASC) VISIBLE,
+  INDEX `fk_User_ref_userType1_idx` (`userType` ASC) ,
   CONSTRAINT `fk_User_ref_userType1`
     FOREIGN KEY (`userType`)
     REFERENCES `thesis`.`ref_usertype` (`id`))
@@ -72,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`floorandroom` (
   `BuildingID` INT(11) NOT NULL,
   `floorRoom` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`FloorAndRoomID`),
-  INDEX `fk_FloorAndRoom_Building1_idx` (`BuildingID` ASC) VISIBLE,
+  INDEX `fk_FloorAndRoom_Building1_idx` (`BuildingID` ASC) ,
   CONSTRAINT `fk_FloorAndRoom_Building1`
     FOREIGN KEY (`BuildingID`)
     REFERENCES `thesis`.`building` (`BuildingID`))
@@ -108,9 +104,9 @@ CREATE TABLE IF NOT EXISTS `thesis`.`employee` (
   `FloorAndRoomID` INT(11) NULL,
   `officeID` INT(11) NULL,
   PRIMARY KEY (`employeeID`),
-  INDEX `fk_employee_user1_idx` (`UserID` ASC) VISIBLE,
-  INDEX `fk_employee_floorandroom1_idx` (`FloorAndRoomID` ASC) VISIBLE,
-  INDEX `fk_employee_offices1_idx` (`officeID` ASC) VISIBLE,
+  INDEX `fk_employee_user1_idx` (`UserID` ASC) ,
+  INDEX `fk_employee_floorandroom1_idx` (`FloorAndRoomID` ASC) ,
+  INDEX `fk_employee_offices1_idx` (`officeID` ASC) ,
   CONSTRAINT `fk_employee_user1`
     FOREIGN KEY (`UserID`)
     REFERENCES `thesis`.`user` (`UserID`)
@@ -187,11 +183,11 @@ CREATE TABLE IF NOT EXISTS `thesis`.`service` (
   `status` INT(11) NOT NULL,
   `steps` INT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Service_User1_idx` (`UserID` ASC) VISIBLE,
-  INDEX `fk_service_ref_serviceType1_idx` (`serviceType` ASC) VISIBLE,
-  INDEX `fk_service_employee1_idx` (`employeeID` ASC) VISIBLE,
-  INDEX `fk_service_ref_status1_idx` (`status` ASC) VISIBLE,
-  INDEX `fk_service_ref_steps1_idx` (`steps` ASC) VISIBLE,
+  INDEX `fk_Service_User1_idx` (`UserID` ASC) ,
+  INDEX `fk_service_ref_serviceType1_idx` (`serviceType` ASC) ,
+  INDEX `fk_service_employee1_idx` (`employeeID` ASC) ,
+  INDEX `fk_service_ref_status1_idx` (`status` ASC) ,
+  INDEX `fk_service_ref_steps1_idx` (`steps` ASC) ,
   CONSTRAINT `fk_Service_User1`
     FOREIGN KEY (`UserID`)
     REFERENCES `thesis`.`user` (`UserID`),
@@ -221,7 +217,7 @@ DROP TABLE IF EXISTS `thesis`.`actionstaken` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`actionstaken` (
   `ServiceID` INT(11) NOT NULL,
   `details` VARCHAR(45) NULL DEFAULT NULL,
-  INDEX `fk_ActionsTaken_Service1_idx` (`ServiceID` ASC) VISIBLE,
+  INDEX `fk_ActionsTaken_Service1_idx` (`ServiceID` ASC) ,
   CONSTRAINT `fk_ActionsTaken_Service1`
     FOREIGN KEY (`ServiceID`)
     REFERENCES `thesis`.`service` (`id`))
@@ -268,8 +264,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assetmodel` (
   `softwareName` VARCHAR(45) NULL DEFAULT NULL,
   `description` LONGTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`assetModelID`),
-  INDEX `fk_AssetType_ref_brand_idx` (`brand` ASC) VISIBLE,
-  INDEX `fk_assettype_ref_assetCategory1_idx` (`assetCategory` ASC) VISIBLE,
+  INDEX `fk_AssetType_ref_brand_idx` (`brand` ASC) ,
+  INDEX `fk_assettype_ref_assetCategory1_idx` (`assetCategory` ASC) ,
   CONSTRAINT `fk_AssetType_ref_brand`
     FOREIGN KEY (`brand`)
     REFERENCES `thesis`.`ref_brand` (`brandID`),
@@ -332,9 +328,9 @@ CREATE TABLE IF NOT EXISTS `thesis`.`asset` (
   `swEndDate` DATE NULL DEFAULT NULL,
   `assetStatus` INT(11) NOT NULL,
   PRIMARY KEY (`assetID`),
-  INDEX `fk_asset_supplier1_idx` (`supplierID` ASC) VISIBLE,
-  INDEX `fk_asset_assetModel1_idx` (`assetModel` ASC) VISIBLE,
-  INDEX `fk_asset_ref_assetstatus1_idx` (`assetStatus` ASC) VISIBLE,
+  INDEX `fk_asset_supplier1_idx` (`supplierID` ASC) ,
+  INDEX `fk_asset_assetModel1_idx` (`assetModel` ASC) ,
+  INDEX `fk_asset_ref_assetstatus1_idx` (`assetStatus` ASC) ,
   CONSTRAINT `fk_asset_assetModel1`
     FOREIGN KEY (`assetModel`)
     REFERENCES `thesis`.`assetmodel` (`assetModelID`),
@@ -359,7 +355,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`computer` (
   `unitCost` DECIMAL(10,0) NULL DEFAULT NULL,
   `assetStatus` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`computerID`),
-  INDEX `fk_computer_ref_assetstatus1_idx` (`assetStatus` ASC) VISIBLE,
+  INDEX `fk_computer_ref_assetstatus1_idx` (`assetStatus` ASC) ,
   CONSTRAINT `fk_computer_ref_assetstatus1`
     FOREIGN KEY (`assetStatus`)
     REFERENCES `thesis`.`ref_assetstatus` (`id`))
@@ -390,7 +386,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`persondirectly` (
   `employeeID` INT(11) NULL DEFAULT NULL,
   `IDNumber` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_PersonDirectly_Employee1_idx` (`employeeID` ASC) VISIBLE,
+  INDEX `fk_PersonDirectly_Employee1_idx` (`employeeID` ASC) ,
   CONSTRAINT `fk_PersonDirectly_Employee1`
     FOREIGN KEY (`employeeID`)
     REFERENCES `thesis`.`employee` (`employeeID`))
@@ -416,14 +412,14 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assetassignment` (
   `persondirectlyID` INT(11) NULL DEFAULT NULL,
   `statusID` INT(11) NOT NULL,
   PRIMARY KEY (`AssetAssignmentID`),
-  INDEX `fk_AssetAssignment_Asset1_idx` (`assetID` ASC) VISIBLE,
-  INDEX `fk_AssetAssignment_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) VISIBLE,
-  INDEX `fk_AssetAssignment_Department1_idx` (`DepartmentID` ASC) VISIBLE,
-  INDEX `fk_AssetAssignment_Computer1_idx` (`computerID` ASC) VISIBLE,
-  INDEX `fk_assetassignment_persondirectly1_idx` (`persondirectlyID` ASC) VISIBLE,
-  INDEX `fk_assetassignment_ref_status1_idx` (`statusID` ASC) VISIBLE,
-  INDEX `fk_assetassignment_employee1_idx` (`personresponsibleID` ASC) VISIBLE,
-  INDEX `fk_assetassignment_building1_idx` (`BuildingID` ASC) VISIBLE,
+  INDEX `fk_AssetAssignment_Asset1_idx` (`assetID` ASC) ,
+  INDEX `fk_AssetAssignment_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) ,
+  INDEX `fk_AssetAssignment_Department1_idx` (`DepartmentID` ASC) ,
+  INDEX `fk_AssetAssignment_Computer1_idx` (`computerID` ASC) ,
+  INDEX `fk_assetassignment_persondirectly1_idx` (`persondirectlyID` ASC) ,
+  INDEX `fk_assetassignment_ref_status1_idx` (`statusID` ASC) ,
+  INDEX `fk_assetassignment_employee1_idx` (`personresponsibleID` ASC) ,
+  INDEX `fk_assetassignment_building1_idx` (`BuildingID` ASC) ,
   CONSTRAINT `fk_AssetAssignment_Asset1`
     FOREIGN KEY (`assetID`)
     REFERENCES `thesis`.`asset` (`assetID`),
@@ -480,9 +476,9 @@ CREATE TABLE IF NOT EXISTS `thesis`.`departmentownsroom` (
   `FloorAndRoomID` INT(11) NULL,
   `DepartmentID` INT(11) NULL,
   PRIMARY KEY (`departmentOwnsRoomID`),
-  INDEX `fk_DepartmentOwnsRoom_Building1_idx` (`BuildingID` ASC) VISIBLE,
-  INDEX `fk_DepartmentOwnsRoom_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) VISIBLE,
-  INDEX `fk_DepartmentOwnsRoom_Department1_idx` (`DepartmentID` ASC) VISIBLE,
+  INDEX `fk_DepartmentOwnsRoom_Building1_idx` (`BuildingID` ASC) ,
+  INDEX `fk_DepartmentOwnsRoom_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) ,
+  INDEX `fk_DepartmentOwnsRoom_Department1_idx` (`DepartmentID` ASC) ,
   CONSTRAINT `fk_DepartmentOwnsRoom_Building1`
     FOREIGN KEY (`BuildingID`)
     REFERENCES `thesis`.`building` (`BuildingID`),
@@ -531,15 +527,15 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request_borrow` (
   `statusID` INT(11) NOT NULL,
   `steps` INT NULL,
   PRIMARY KEY (`borrowID`),
-  INDEX `fk_AssetAssignment_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) VISIBLE,
-  INDEX `fk_assetassignment_persondirectly1_idx` (`persondirectlyID` ASC) VISIBLE,
-  INDEX `fk_assetassignment_ref_status1_idx` (`statusID` ASC) VISIBLE,
-  INDEX `fk_assetassignment_employee1_idx` (`personresponsibleID` ASC) VISIBLE,
-  INDEX `fk_request_borrow_building1_idx` (`BuildingID` ASC) VISIBLE,
-  INDEX `fk_request_borrow_offices1_idx` (`officeID` ASC) VISIBLE,
-  INDEX `fk_request_borrow_organization1_idx` (`organizationID` ASC) VISIBLE,
-  INDEX `fk_request_borrow_department1_idx` (`DepartmentID` ASC) VISIBLE,
-  INDEX `fk_request_borrow_ref_steps1_idx` (`steps` ASC) VISIBLE,
+  INDEX `fk_AssetAssignment_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) ,
+  INDEX `fk_assetassignment_persondirectly1_idx` (`persondirectlyID` ASC) ,
+  INDEX `fk_assetassignment_ref_status1_idx` (`statusID` ASC) ,
+  INDEX `fk_assetassignment_employee1_idx` (`personresponsibleID` ASC) ,
+  INDEX `fk_request_borrow_building1_idx` (`BuildingID` ASC) ,
+  INDEX `fk_request_borrow_offices1_idx` (`officeID` ASC) ,
+  INDEX `fk_request_borrow_organization1_idx` (`organizationID` ASC) ,
+  INDEX `fk_request_borrow_department1_idx` (`DepartmentID` ASC) ,
+  INDEX `fk_request_borrow_ref_steps1_idx` (`steps` ASC) ,
   CONSTRAINT `fk_AssetAssignment_FloorAndRoom10`
     FOREIGN KEY (`FloorAndRoomID`)
     REFERENCES `thesis`.`floorandroom` (`FloorAndRoomID`),
@@ -601,13 +597,13 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assettesting` (
   `serviceType` INT(11) NOT NULL,
   `borrowID` INT(11) NULL,
   PRIMARY KEY (`testingID`),
-  INDEX `fk_AssetTesting_User1_idx` (`PersonRequestedID` ASC) VISIBLE,
-  INDEX `fk_AssetTesting_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) VISIBLE,
-  INDEX `fk_AssetTesting_DepartmentOwnsRoom1_idx` (`departmentOwnsRoomID` ASC) VISIBLE,
-  INDEX `fk_assettesting_ref_status1_idx` (`statusID` ASC) VISIBLE,
-  INDEX `fk_assettesting_offices1_idx` (`officeID` ASC) VISIBLE,
-  INDEX `fk_assettesting_ref_servicetype1_idx` (`serviceType` ASC) VISIBLE,
-  INDEX `fk_assettesting_request_borrow1_idx` (`borrowID` ASC) VISIBLE,
+  INDEX `fk_AssetTesting_User1_idx` (`PersonRequestedID` ASC) ,
+  INDEX `fk_AssetTesting_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) ,
+  INDEX `fk_AssetTesting_DepartmentOwnsRoom1_idx` (`departmentOwnsRoomID` ASC) ,
+  INDEX `fk_assettesting_ref_status1_idx` (`statusID` ASC) ,
+  INDEX `fk_assettesting_offices1_idx` (`officeID` ASC) ,
+  INDEX `fk_assettesting_ref_servicetype1_idx` (`serviceType` ASC) ,
+  INDEX `fk_assettesting_request_borrow1_idx` (`borrowID` ASC) ,
   CONSTRAINT `fk_AssetTesting_DepartmentOwnsRoom1`
     FOREIGN KEY (`departmentOwnsRoomID`)
     REFERENCES `thesis`.`departmentownsroom` (`departmentOwnsRoomID`),
@@ -659,12 +655,12 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
   `comment` LONGTEXT NULL,
   `service_id` INT(11) NULL,
   PRIMARY KEY (`ticketID`),
-  INDEX `fk_Ticket_ref_TicketStatus1_idx` (`status` ASC) VISIBLE,
-  INDEX `fk_Ticket_User1_idx` (`creatorUserID` ASC) VISIBLE,
-  INDEX `fk_Ticket_User2_idx` (`assigneeUserID` ASC) VISIBLE,
-  INDEX `fk_ticket_assettesting1_idx` (`testingID` ASC) VISIBLE,
-  INDEX `fk_ticket_ref_servicetype1_idx` (`serviceType` ASC) VISIBLE,
-  INDEX `fk_ticket_service1_idx` (`service_id` ASC) VISIBLE,
+  INDEX `fk_Ticket_ref_TicketStatus1_idx` (`status` ASC) ,
+  INDEX `fk_Ticket_User1_idx` (`creatorUserID` ASC) ,
+  INDEX `fk_Ticket_User2_idx` (`assigneeUserID` ASC) ,
+  INDEX `fk_ticket_assettesting1_idx` (`testingID` ASC) ,
+  INDEX `fk_ticket_ref_servicetype1_idx` (`serviceType` ASC) ,
+  INDEX `fk_ticket_service1_idx` (`service_id` ASC) ,
   CONSTRAINT `fk_Ticket_User1`
     FOREIGN KEY (`creatorUserID`)
     REFERENCES `thesis`.`user` (`UserID`),
@@ -704,12 +700,12 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assetaudit` (
   `ticketID` INT(11) NULL DEFAULT NULL,
   `assetStatus` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_assetaudit_assetassignment1_idx` (`assetAssignmentID` ASC) VISIBLE,
-  INDEX `fk_assetaudit_computer1_idx` (`computerID` ASC) VISIBLE,
-  INDEX `fk_assetaudit_asset1_idx` (`assetID` ASC) VISIBLE,
-  INDEX `fk_assetaudit_user1_idx` (`UserID` ASC) VISIBLE,
-  INDEX `fk_assetaudit_ticket1_idx` (`ticketID` ASC) VISIBLE,
-  INDEX `fk_assetaudit_ref_assetstatus1_idx` (`assetStatus` ASC) VISIBLE,
+  INDEX `fk_assetaudit_assetassignment1_idx` (`assetAssignmentID` ASC) ,
+  INDEX `fk_assetaudit_computer1_idx` (`computerID` ASC) ,
+  INDEX `fk_assetaudit_asset1_idx` (`assetID` ASC) ,
+  INDEX `fk_assetaudit_user1_idx` (`UserID` ASC) ,
+  INDEX `fk_assetaudit_ticket1_idx` (`ticketID` ASC) ,
+  INDEX `fk_assetaudit_ref_assetstatus1_idx` (`assetStatus` ASC) ,
   CONSTRAINT `fk_assetaudit_asset1`
     FOREIGN KEY (`assetID`)
     REFERENCES `thesis`.`asset` (`assetID`),
@@ -756,13 +752,13 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   `reasonForDisaprroval` LONGTEXT NULL,
   `requestcol` TINYINT NULL,
   PRIMARY KEY (`requestID`),
-  INDEX `fk_Request_Employee1_idx` (`employeeID` ASC) VISIBLE,
-  INDEX `fk_Request_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) VISIBLE,
-  INDEX `fk_Request_Building1_idx` (`BuildingID` ASC) VISIBLE,
-  INDEX `fk_request_department1_idx` (`DepartmentID` ASC) VISIBLE,
-  INDEX `fk_request_user1_idx` (`UserID` ASC) VISIBLE,
-  INDEX `fk_request_ref_status1_idx` (`status` ASC) VISIBLE,
-  INDEX `fk_request_ref_steps1_idx` (`step` ASC) VISIBLE,
+  INDEX `fk_Request_Employee1_idx` (`employeeID` ASC) ,
+  INDEX `fk_Request_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) ,
+  INDEX `fk_Request_Building1_idx` (`BuildingID` ASC) ,
+  INDEX `fk_request_department1_idx` (`DepartmentID` ASC) ,
+  INDEX `fk_request_user1_idx` (`UserID` ASC) ,
+  INDEX `fk_request_ref_status1_idx` (`status` ASC) ,
+  INDEX `fk_request_ref_steps1_idx` (`step` ASC) ,
   CONSTRAINT `fk_Request_Building1`
     FOREIGN KEY (`BuildingID`)
     REFERENCES `thesis`.`building` (`BuildingID`),
@@ -805,10 +801,10 @@ CREATE TABLE IF NOT EXISTS `thesis`.`procurement` (
   `preparedBy` INT(11) NULL,
   `supplierID` INT(11) NOT NULL,
   PRIMARY KEY (`procurementID`),
-  INDEX `fk_Procurement_Request1_idx` (`requestID` ASC) VISIBLE,
-  INDEX `fk_procurement_ref_status1_idx` (`status` ASC) VISIBLE,
-  INDEX `fk_procurement_employee1_idx` (`preparedBy` ASC) VISIBLE,
-  INDEX `fk_procurement_supplier1_idx` (`supplierID` ASC) VISIBLE,
+  INDEX `fk_Procurement_Request1_idx` (`requestID` ASC) ,
+  INDEX `fk_procurement_ref_status1_idx` (`status` ASC) ,
+  INDEX `fk_procurement_employee1_idx` (`preparedBy` ASC) ,
+  INDEX `fk_procurement_supplier1_idx` (`supplierID` ASC) ,
   CONSTRAINT `fk_Procurement_Request1`
     FOREIGN KEY (`requestID`)
     REFERENCES `thesis`.`request` (`requestID`),
@@ -847,9 +843,9 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assetdocument` (
   `RRtoWH` DATE NULL DEFAULT NULL,
   `purchaseOrder` VARCHAR(45) NULL DEFAULT NULL,
   `forwardToPO` DATE NULL DEFAULT NULL,
-  INDEX `fk_AssetDocument_Asset1_idx` (`assetID` ASC) VISIBLE,
-  INDEX `fk_AssetDocument_Request1_idx` (`requestID` ASC) VISIBLE,
-  INDEX `fk_AssetDocument_Procurement1_idx` (`procurementID` ASC) VISIBLE,
+  INDEX `fk_AssetDocument_Asset1_idx` (`assetID` ASC) ,
+  INDEX `fk_AssetDocument_Request1_idx` (`requestID` ASC) ,
+  INDEX `fk_AssetDocument_Procurement1_idx` (`procurementID` ASC) ,
   CONSTRAINT `fk_AssetDocument_Asset1`
     FOREIGN KEY (`assetID`)
     REFERENCES `thesis`.`asset` (`assetID`),
@@ -873,8 +869,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assettesting_details` (
   `asset_assetID` INT(11) NULL,
   `comment` VARCHAR(45) NULL,
   `check` TINYINT NULL,
-  INDEX `fk_assettesting_details_assettesting_idx` (`assettesting_testingID` ASC) VISIBLE,
-  INDEX `fk_assettesting_details_asset1_idx` (`asset_assetID` ASC) VISIBLE,
+  INDEX `fk_assettesting_details_assettesting_idx` (`assettesting_testingID` ASC) ,
+  INDEX `fk_assettesting_details_asset1_idx` (`asset_assetID` ASC) ,
   CONSTRAINT `fk_assettesting_details_asset1`
     FOREIGN KEY (`asset_assetID`)
     REFERENCES `thesis`.`asset` (`assetID`),
@@ -910,10 +906,10 @@ CREATE TABLE IF NOT EXISTS `thesis`.`borrow` (
   `organizationID` INT NULL,
   `statusID` INT(11) NOT NULL,
   PRIMARY KEY (`borrowID`),
-  INDEX `fk_Borrow_offices1_idx` (`officeID` ASC) VISIBLE,
-  INDEX `fk_Borrow_department1_idx` (`DepartmentID` ASC) VISIBLE,
-  INDEX `fk_Borrow_ref_status1_idx` (`statusID` ASC) VISIBLE,
-  INDEX `fk_borrow_organization1_idx` (`organizationID` ASC) VISIBLE,
+  INDEX `fk_Borrow_offices1_idx` (`officeID` ASC) ,
+  INDEX `fk_Borrow_department1_idx` (`DepartmentID` ASC) ,
+  INDEX `fk_Borrow_ref_status1_idx` (`statusID` ASC) ,
+  INDEX `fk_borrow_organization1_idx` (`organizationID` ASC) ,
   CONSTRAINT `fk_Borrow_department1`
     FOREIGN KEY (`DepartmentID`)
     REFERENCES `thesis`.`department` (`DepartmentID`),
@@ -943,8 +939,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`borrow_details` (
   `assetCategoryID` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL,
   `borrow_detailsID` VARCHAR(45) NULL,
-  INDEX `fk_borrow_details_request_borrow1_idx` (`borrowID` ASC) VISIBLE,
-  INDEX `fk_borrow_details_ref_assetcategory1_idx` (`assetCategoryID` ASC) VISIBLE,
+  INDEX `fk_borrow_details_request_borrow1_idx` (`borrowID` ASC) ,
+  INDEX `fk_borrow_details_ref_assetcategory1_idx` (`assetCategoryID` ASC) ,
   PRIMARY KEY (`borrow_detailscol`),
   CONSTRAINT `fk_borrow_details_request_borrow1`
     FOREIGN KEY (`borrowID`)
@@ -966,8 +962,8 @@ DROP TABLE IF EXISTS `thesis`.`computercomponent` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`computercomponent` (
   `assetID` INT(11) NOT NULL,
   `computerID` INT(11) NOT NULL,
-  INDEX `fk_ComputerComponent_Computer1_idx` (`computerID` ASC) VISIBLE,
-  INDEX `fk_ComputerComponent_Asset1` (`assetID` ASC) VISIBLE,
+  INDEX `fk_ComputerComponent_Computer1_idx` (`computerID` ASC) ,
+  INDEX `fk_ComputerComponent_Asset1` (`assetID` ASC) ,
   CONSTRAINT `fk_ComputerComponent_Asset1`
     FOREIGN KEY (`assetID`)
     REFERENCES `thesis`.`asset` (`assetID`),
@@ -988,8 +984,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`departmenthead` (
   `employeeID` INT(11) NOT NULL,
   `startDate` DATE NULL DEFAULT NULL,
   `endDate` DATE NULL DEFAULT NULL,
-  INDEX `fk_DepartmentHead_Department1_idx` (`DepartmentID` ASC) VISIBLE,
-  INDEX `fk_DepartmentHead_Employee1_idx` (`employeeID` ASC) VISIBLE,
+  INDEX `fk_DepartmentHead_Department1_idx` (`DepartmentID` ASC) ,
+  INDEX `fk_DepartmentHead_Employee1_idx` (`employeeID` ASC) ,
   CONSTRAINT `fk_DepartmentHead_Department1`
     FOREIGN KEY (`DepartmentID`)
     REFERENCES `thesis`.`department` (`DepartmentID`),
@@ -1021,12 +1017,12 @@ CREATE TABLE IF NOT EXISTS `thesis`.`donation` (
   `stepsID` INT NOT NULL,
   `user_UserID` INT(11) NULL,
   PRIMARY KEY (`donationID`),
-  INDEX `fk_donation_organization1_idx` (`organizationID` ASC) VISIBLE,
-  INDEX `fk_donation_department1_idx` (`DepartmentID` ASC) VISIBLE,
-  INDEX `fk_donation_offices1_idx` (`officeID` ASC) VISIBLE,
-  INDEX `fk_donation_ref_status1_idx` (`statusID` ASC) VISIBLE,
-  INDEX `fk_donation_ref_steps1_idx` (`stepsID` ASC) VISIBLE,
-  INDEX `fk_donation_user1_idx` (`user_UserID` ASC) VISIBLE,
+  INDEX `fk_donation_organization1_idx` (`organizationID` ASC) ,
+  INDEX `fk_donation_department1_idx` (`DepartmentID` ASC) ,
+  INDEX `fk_donation_offices1_idx` (`officeID` ASC) ,
+  INDEX `fk_donation_ref_status1_idx` (`statusID` ASC) ,
+  INDEX `fk_donation_ref_steps1_idx` (`stepsID` ASC) ,
+  INDEX `fk_donation_user1_idx` (`user_UserID` ASC) ,
   CONSTRAINT `fk_donation_organization1`
     FOREIGN KEY (`organizationID`)
     REFERENCES `thesis`.`organization` (`id`)
@@ -1077,10 +1073,10 @@ CREATE TABLE IF NOT EXISTS `thesis`.`evaluation` (
   `requestID` INT(11) NULL,
   `borrowID` INT(11) NULL,
   `donationID` INT NULL,
-  INDEX `fk_evaluation_service1_idx` (`serviceID` ASC) VISIBLE,
-  INDEX `fk_evaluation_request1_idx` (`requestID` ASC) VISIBLE,
-  INDEX `fk_evaluation_request_borrow1_idx` (`borrowID` ASC) VISIBLE,
-  INDEX `fk_evaluation_donation1_idx` (`donationID` ASC) VISIBLE,
+  INDEX `fk_evaluation_service1_idx` (`serviceID` ASC) ,
+  INDEX `fk_evaluation_request1_idx` (`requestID` ASC) ,
+  INDEX `fk_evaluation_request_borrow1_idx` (`borrowID` ASC) ,
+  INDEX `fk_evaluation_donation1_idx` (`donationID` ASC) ,
   CONSTRAINT `fk_evaluation_service1`
     FOREIGN KEY (`serviceID`)
     REFERENCES `thesis`.`service` (`id`)
@@ -1116,7 +1112,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`license` (
   `dateAcquired` DATE NULL DEFAULT NULL,
   `dateExpired` DATE NULL DEFAULT NULL,
   PRIMARY KEY (`licenseID`),
-  INDEX `fk_License_Asset1_idx` (`assetID` ASC) VISIBLE,
+  INDEX `fk_License_Asset1_idx` (`assetID` ASC) ,
   CONSTRAINT `fk_License_Asset1`
     FOREIGN KEY (`assetID`)
     REFERENCES `thesis`.`asset` (`assetID`))
@@ -1139,8 +1135,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`procurementdetails` (
   `assetModelID` INT(11) NOT NULL,
   `comment` VARCHAR(45) NULL,
   `expectedDeliveryDate` DATE NULL,
-  INDEX `fk_procurementdetails_ref_assetcategory1_idx` (`assetCategoryID` ASC) VISIBLE,
-  INDEX `fk_procurementdetails_assetmodel1_idx` (`assetModelID` ASC) VISIBLE,
+  INDEX `fk_procurementdetails_ref_assetcategory1_idx` (`assetCategoryID` ASC) ,
+  INDEX `fk_procurementdetails_assetmodel1_idx` (`assetModelID` ASC) ,
   CONSTRAINT `fk_ProcurementDetails_Procurement1`
     FOREIGN KEY (`procurementID`)
     REFERENCES `thesis`.`procurement` (`procurementID`),
@@ -1166,8 +1162,8 @@ DROP TABLE IF EXISTS `thesis`.`replaceditem` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`replaceditem` (
   `IDReplacement` INT(11) NOT NULL,
   `IDReplaced` INT(11) NOT NULL,
-  INDEX `fk_ReplacedItem_AssetAssignment1_idx` (`IDReplacement` ASC) VISIBLE,
-  INDEX `fk_ReplacedItem_AssetAssignment2_idx` (`IDReplaced` ASC) VISIBLE,
+  INDEX `fk_ReplacedItem_AssetAssignment1_idx` (`IDReplacement` ASC) ,
+  INDEX `fk_ReplacedItem_AssetAssignment2_idx` (`IDReplaced` ASC) ,
   CONSTRAINT `fk_ReplacedItem_AssetAssignment1`
     FOREIGN KEY (`IDReplacement`)
     REFERENCES `thesis`.`assetassignment` (`AssetAssignmentID`),
@@ -1189,8 +1185,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`requestdetails` (
   `assetCategory` INT(11) NOT NULL,
   `description` VARCHAR(45) NULL DEFAULT NULL,
   `purpose` VARCHAR(45) NULL,
-  INDEX `fk_RequestDetails_Request1_idx` (`requestID` ASC) VISIBLE,
-  INDEX `fk_requestdetails_ref_assetcategory1_idx` (`assetCategory` ASC) VISIBLE,
+  INDEX `fk_RequestDetails_Request1_idx` (`requestID` ASC) ,
+  INDEX `fk_requestdetails_ref_assetcategory1_idx` (`assetCategory` ASC) ,
   CONSTRAINT `fk_RequestDetails_Request1`
     FOREIGN KEY (`requestID`)
     REFERENCES `thesis`.`request` (`requestID`),
@@ -1211,9 +1207,9 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticketedasset` (
   `assetID` INT(11) NULL DEFAULT NULL,
   `computerID` INT(11) NULL DEFAULT NULL,
   `checked` TINYINT NULL,
-  INDEX `fk_TicketedAsset_Ticket1_idx` (`ticketID` ASC) VISIBLE,
-  INDEX `fk_TicketedAsset_Asset1_idx` (`assetID` ASC) VISIBLE,
-  INDEX `fk_TicketedAsset_Computer1_idx` (`computerID` ASC) VISIBLE,
+  INDEX `fk_TicketedAsset_Ticket1_idx` (`ticketID` ASC) ,
+  INDEX `fk_TicketedAsset_Asset1_idx` (`assetID` ASC) ,
+  INDEX `fk_TicketedAsset_Computer1_idx` (`computerID` ASC) ,
   CONSTRAINT `fk_TicketedAsset_Asset1`
     FOREIGN KEY (`assetID`)
     REFERENCES `thesis`.`asset` (`assetID`),
@@ -1239,8 +1235,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`warranty` (
   `assetID` INT(11) NOT NULL,
   `supplierID` INT(11) NOT NULL,
   PRIMARY KEY (`warrantyID`),
-  INDEX `fk_Warranty_Asset1_idx` (`assetID` ASC) VISIBLE,
-  INDEX `fk_warranty_supplier1_idx` (`supplierID` ASC) VISIBLE,
+  INDEX `fk_Warranty_Asset1_idx` (`assetID` ASC) ,
+  INDEX `fk_warranty_supplier1_idx` (`supplierID` ASC) ,
   CONSTRAINT `fk_Warranty_Asset1`
     FOREIGN KEY (`assetID`)
     REFERENCES `thesis`.`asset` (`assetID`),
@@ -1261,8 +1257,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`canvas` (
   `requestID` INT(11) NOT NULL,
   `status` INT(11) NOT NULL,
   PRIMARY KEY (`canvasID`),
-  INDEX `fk_canvas_request1_idx` (`requestID` ASC) VISIBLE,
-  INDEX `fk_canvas_ref_status1_idx` (`status` ASC) VISIBLE,
+  INDEX `fk_canvas_request1_idx` (`requestID` ASC) ,
+  INDEX `fk_canvas_ref_status1_idx` (`status` ASC) ,
   CONSTRAINT `fk_canvas_request1`
     FOREIGN KEY (`requestID`)
     REFERENCES `thesis`.`request` (`requestID`)
@@ -1289,9 +1285,9 @@ CREATE TABLE IF NOT EXISTS `thesis`.`canvasitem` (
   `assetCategory` INT(11) NOT NULL,
   `assetModel` INT(11) NOT NULL,
   PRIMARY KEY (`cavasItemID`),
-  INDEX `fk_canvasitem_ref_assetcategory1_idx` (`assetCategory` ASC) VISIBLE,
-  INDEX `fk_canvasitem_canvas1_idx` (`canvasID` ASC) VISIBLE,
-  INDEX `fk_canvasitem_assetmodel1_idx` (`assetModel` ASC) VISIBLE,
+  INDEX `fk_canvasitem_ref_assetcategory1_idx` (`assetCategory` ASC) ,
+  INDEX `fk_canvasitem_canvas1_idx` (`canvasID` ASC) ,
+  INDEX `fk_canvasitem_assetmodel1_idx` (`assetModel` ASC) ,
   CONSTRAINT `fk_canvasitem_ref_assetcategory1`
     FOREIGN KEY (`assetCategory`)
     REFERENCES `thesis`.`ref_assetcategory` (`assetCategoryID`)
@@ -1323,8 +1319,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`canvasitemdetails` (
   `comment` VARCHAR(45) NULL,
   `quantity` INT(11) NULL,
   `expectedDate` DATE NULL,
-  INDEX `fk_canvasitemdetails_supplier1_idx` (`supplier_supplierID` ASC) VISIBLE,
-  INDEX `fk_canvasitemdetails_ref_status1_idx` (`status` ASC) VISIBLE,
+  INDEX `fk_canvasitemdetails_supplier1_idx` (`supplier_supplierID` ASC) ,
+  INDEX `fk_canvasitemdetails_ref_status1_idx` (`status` ASC) ,
   CONSTRAINT `fk_canvasitemdetails_canvasitem1`
     FOREIGN KEY (`cavasItemID`)
     REFERENCES `thesis`.`canvasitem` (`cavasItemID`)
@@ -1351,8 +1347,8 @@ DROP TABLE IF EXISTS `thesis`.`servicedetails` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`servicedetails` (
   `serviceID` INT(11) NOT NULL,
   `asset` INT(11) NOT NULL,
-  INDEX `fk_table1_service1_idx` (`serviceID` ASC) VISIBLE,
-  INDEX `fk_table1_asset1_idx` (`asset` ASC) VISIBLE,
+  INDEX `fk_table1_service1_idx` (`serviceID` ASC) ,
+  INDEX `fk_table1_asset1_idx` (`asset` ASC) ,
   CONSTRAINT `fk_table1_service1`
     FOREIGN KEY (`serviceID`)
     REFERENCES `thesis`.`service` (`id`)
@@ -1376,8 +1372,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`donationdetails` (
   `donationID` INT NOT NULL,
   `assetCategoryID` INT(11) NULL,
   `quantity` VARCHAR(45) NULL,
-  INDEX `fk_table1_donation1_idx` (`donationID` ASC) VISIBLE,
-  INDEX `fk_table1_ref_assetcategory1_idx` (`assetCategoryID` ASC) VISIBLE,
+  INDEX `fk_table1_donation1_idx` (`donationID` ASC) ,
+  INDEX `fk_table1_ref_assetcategory1_idx` (`assetCategoryID` ASC) ,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_table1_donation1`
     FOREIGN KEY (`donationID`)
@@ -1400,8 +1396,8 @@ DROP TABLE IF EXISTS `thesis`.`donationdetails_item` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`donationdetails_item` (
   `id` INT(11) NULL,
   `assetID` INT(11) NOT NULL,
-  INDEX `fk_donationdetails_item_donationdetails1_idx` (`id` ASC) VISIBLE,
-  INDEX `fk_donationdetails_item_asset1_idx` (`assetID` ASC) VISIBLE,
+  INDEX `fk_donationdetails_item_donationdetails1_idx` (`id` ASC) ,
+  INDEX `fk_donationdetails_item_asset1_idx` (`assetID` ASC) ,
   CONSTRAINT `fk_donationdetails_item_donationdetails1`
     FOREIGN KEY (`id`)
     REFERENCES `thesis`.`donationdetails` (`id`)
@@ -1427,7 +1423,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`Inventory` (
   `floorLevel` INT(11) NULL,
   `ceilingLevel` INT NULL,
   PRIMARY KEY (`InventoryID`),
-  INDEX `fk_Inventory_ref_assetcategory1_idx` (`assetCategoryID` ASC) VISIBLE,
+  INDEX `fk_Inventory_ref_assetcategory1_idx` (`assetCategoryID` ASC) ,
   CONSTRAINT `fk_Inventory_ref_assetcategory1`
     FOREIGN KEY (`assetCategoryID`)
     REFERENCES `thesis`.`ref_assetcategory` (`assetCategoryID`)
@@ -1462,8 +1458,8 @@ DROP TABLE IF EXISTS `thesis`.`borrow_details_item` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`borrow_details_item` (
   `borrow_detailsID` INT(11) NOT NULL,
   `assetID` INT(11) NOT NULL,
-  INDEX `fk_borrow_details_item_borrow_details1_idx` (`borrow_detailsID` ASC) VISIBLE,
-  INDEX `fk_borrow_details_item_asset1_idx` (`assetID` ASC) VISIBLE,
+  INDEX `fk_borrow_details_item_borrow_details1_idx` (`borrow_detailsID` ASC) ,
+  INDEX `fk_borrow_details_item_asset1_idx` (`assetID` ASC) ,
   CONSTRAINT `fk_borrow_details_item_borrow_details1`
     FOREIGN KEY (`borrow_detailsID`)
     REFERENCES `thesis`.`borrow_details` (`borrow_detailscol`)
@@ -1486,8 +1482,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`requestParts` (
   `serviceID` INT(11) NULL,
   `assetModelID` INT(11) NULL,
   `quantity` INT(11) NULL,
-  INDEX `fk_requestParts_service1_idx` (`serviceID` ASC) VISIBLE,
-  INDEX `fk_requestParts_assetmodel1_idx` (`assetModelID` ASC) VISIBLE,
+  INDEX `fk_requestParts_service1_idx` (`serviceID` ASC) ,
+  INDEX `fk_requestParts_assetmodel1_idx` (`assetModelID` ASC) ,
   CONSTRAINT `fk_requestParts_service1`
     FOREIGN KEY (`serviceID`)
     REFERENCES `thesis`.`service` (`id`)
@@ -1510,8 +1506,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`department_list` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `DepartmentID` INT(11) NULL,
   `employeeID` INT(11) NULL,
-  INDEX `fk_department_list_department1_idx` (`DepartmentID` ASC) VISIBLE,
-  INDEX `fk_department_list_employee1_idx` (`employeeID` ASC) VISIBLE,
+  INDEX `fk_department_list_department1_idx` (`DepartmentID` ASC) ,
+  INDEX `fk_department_list_employee1_idx` (`employeeID` ASC) ,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_department_list_department1`
     FOREIGN KEY (`DepartmentID`)
@@ -1539,8 +1535,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`receiving` (
   `UserID` INT(11) NOT NULL,
   `statusID` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_receiving_user1_idx` (`UserID` ASC) VISIBLE,
-  INDEX `fk_receiving_ref_status1_idx` (`statusID` ASC) VISIBLE,
+  INDEX `fk_receiving_user1_idx` (`UserID` ASC) ,
+  INDEX `fk_receiving_ref_status1_idx` (`statusID` ASC) ,
   CONSTRAINT `fk_receiving_user1`
     FOREIGN KEY (`UserID`)
     REFERENCES `thesis`.`user` (`UserID`)
@@ -1562,8 +1558,8 @@ DROP TABLE IF EXISTS `thesis`.`recommended_assets` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`recommended_assets` (
   `requestID` INT(11) NULL,
   `assetID` INT(11) NULL,
-  INDEX `fk_recommended_assets_request1_idx` (`requestID` ASC) VISIBLE,
-  INDEX `fk_recommended_assets_asset1_idx` (`assetID` ASC) VISIBLE,
+  INDEX `fk_recommended_assets_request1_idx` (`requestID` ASC) ,
+  INDEX `fk_recommended_assets_asset1_idx` (`assetID` ASC) ,
   CONSTRAINT `fk_recommended_assets_request1`
     FOREIGN KEY (`requestID`)
     REFERENCES `thesis`.`request` (`requestID`)
@@ -1587,7 +1583,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`Delivery` (
   `status` VARCHAR(45) NULL,
   `procurementID` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_Delivery_procurement1_idx` (`procurementID` ASC) VISIBLE,
+  INDEX `fk_Delivery_procurement1_idx` (`procurementID` ASC) ,
   CONSTRAINT `fk_Delivery_procurement1`
     FOREIGN KEY (`procurementID`)
     REFERENCES `thesis`.`procurement` (`procurementID`)
@@ -1608,9 +1604,9 @@ CREATE TABLE IF NOT EXISTS `thesis`.`DeliveryDetails` (
   `assetModelID` INT(11) NOT NULL,
   `itemsReceived` INT(11) NULL,
   `deliveryDate` DATE NULL,
-  INDEX `fk_DeliveryDetails_Delivery1_idx` (`DeliveryID` ASC) VISIBLE,
-  INDEX `fk_DeliveryDetails_ref_assetcategory1_idx` (`ref_assetCategoryID` ASC) VISIBLE,
-  INDEX `fk_DeliveryDetails_assetmodel1_idx` (`assetModelID` ASC) VISIBLE,
+  INDEX `fk_DeliveryDetails_Delivery1_idx` (`DeliveryID` ASC) ,
+  INDEX `fk_DeliveryDetails_ref_assetcategory1_idx` (`ref_assetCategoryID` ASC) ,
+  INDEX `fk_DeliveryDetails_assetmodel1_idx` (`assetModelID` ASC) ,
   CONSTRAINT `fk_DeliveryDetails_Delivery1`
     FOREIGN KEY (`DeliveryID`)
     REFERENCES `thesis`.`Delivery` (`id`)
@@ -1641,10 +1637,10 @@ CREATE TABLE IF NOT EXISTS `thesis`.`requestor_receiving` (
   `borrowID` INT(11) NULL,
   `statusID` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_requestor_receiving_user1_idx` (`UserID` ASC) VISIBLE,
-  INDEX `fk_requestor_receiving_request1_idx` (`requestID` ASC) VISIBLE,
-  INDEX `fk_requestor_receiving_request_borrow1_idx` (`borrowID` ASC) VISIBLE,
-  INDEX `fk_requestor_receiving_ref_status1_idx` (`statusID` ASC) VISIBLE,
+  INDEX `fk_requestor_receiving_user1_idx` (`UserID` ASC) ,
+  INDEX `fk_requestor_receiving_request1_idx` (`requestID` ASC) ,
+  INDEX `fk_requestor_receiving_request_borrow1_idx` (`borrowID` ASC) ,
+  INDEX `fk_requestor_receiving_ref_status1_idx` (`statusID` ASC) ,
   CONSTRAINT `fk_requestor_receiving_user1`
     FOREIGN KEY (`UserID`)
     REFERENCES `thesis`.`user` (`UserID`)
@@ -1677,8 +1673,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`receiving_details` (
   `receivingID` INT NOT NULL,
   `assetID` INT(11) NOT NULL,
   `received` TINYINT NULL,
-  INDEX `fk_receiving_details_asset1_idx` (`assetID` ASC) VISIBLE,
-  INDEX `fk_receiving_details_requestor_receiving1_idx` (`receivingID` ASC) VISIBLE,
+  INDEX `fk_receiving_details_asset1_idx` (`assetID` ASC) ,
+  INDEX `fk_receiving_details_requestor_receiving1_idx` (`receivingID` ASC) ,
   CONSTRAINT `fk_receiving_details_asset1`
     FOREIGN KEY (`assetID`)
     REFERENCES `thesis`.`asset` (`assetID`)
@@ -1690,8 +1686,3 @@ CREATE TABLE IF NOT EXISTS `thesis`.`receiving_details` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
