@@ -82,9 +82,7 @@ require_once("db/mysql_connect.php");
                                             </thead>
 
                                             <tbody>
-
-
-                                                
+  
                                                  <?php
                                                     // view for purchase request
                                                     $count = 1;
@@ -93,7 +91,7 @@ require_once("db/mysql_connect.php");
                                                               FROM thesis.request r
                                                               JOIN ref_status s ON r.status = s.statusID
 														      JOIN ref_steps rs on r.step=rs.id
-															  WHERE UserID = {$userID};";
+															  WHERE UserID = {$userID} AND rs.id = '7';";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -125,50 +123,7 @@ require_once("db/mysql_connect.php");
                                                           $count++;
                                                     }
                                                   ?>
-
-                                                  <?php
-                                                    //view for service
-                                                    $query = "SELECT *, sr.id as'serviceID' FROM thesis.service sr   
-                                                              JOIN ref_status st ON sr.status = st.statusID 
-                                                              JOIN ref_steps s ON steps = s.id
-                                                              WHERE UserID = {$userID};";
-                                                                  
-                                                    $result = mysqli_query($dbc, $query);
-                                                    
-                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                    {
-                                                      
-                                                        echo "<tr class='gradeA'>
-                                                            <td style='display: none'>{$row['serviceID']}</td>
-                                                            <td>{$count}</td>";
-                                                            
-                                                        if($row['serviceType']=='27') echo "<td>Repair</td>";
-                                                        else echo "<td>Service</td>";
-                                                        echo "<td>{$row['dateReceived']}</td>
-                                                            <td>{$row['dateNeed']}</td>
-                                                            <td style='display: none'>{$row['statusID']}</td>";
-
-                                                        if($row['statusID'] == '1'){//pending
-                                                            echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
-                                                        }
-                                                        if($row['statusID'] == '2'){//ongoing
-                                                            echo "<td><span class='label label-info'>{$row['name']}</span></td>";
-                                                        }
-                                                        if($row['statusID'] == '3'){//completed
-                                                            echo "<td><span class='label label-success'>{$row['description']}</span></td>";
-                                                        }
-                                                        if($row['statusID'] == '4'){//disapproved
-                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
-                                                        }
-
-                                                        //echo "<td>{$row['name']}</td>";
-                                                        echo "</tr>";
-
-                                                          $count++;
-                                                    }
-                                                  ?>
-
-                                                  <?php
+                                                   <?php
                                                     // view for borrow
                                                     $sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = {$userID};";//get the employeeID using userID
                                                     $result = mysqli_query($dbc, $sql);
@@ -218,57 +173,6 @@ require_once("db/mysql_connect.php");
 
                                                     
                                                   ?>
-                                                  <?php
-                                                    // view for donation
-                                                  
-                                                    $sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = {$userID};";//get the employeeID using userID
-                                                    $result = mysqli_query($dbc, $sql);
-
-                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-                                                        $employeeID = $row['employeeID'];
-                                                        
-                                                    }
-
-                                                    $query = "SELECT * FROM thesis.donation d 
-                                                              JOIN ref_status s ON d.statusID = s.statusID
-                                                              JOIN ref_steps ON stepsID = id 
-                                                              WHERE user_UserID = {$userID}";
-                                                                  
-                                                    $result = mysqli_query($dbc, $query);
-                                                    
-                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                    {
-                                                      
-                                                      echo "<tr class='gradeA'>
-                                                            <td style='display: none'>{$row['donationID']}</td>
-                                                            <td>{$count}</td>
-                                                            <td>Donation</td>
-                                                            <td>{$row['dateNeed']}</td>
-                                                            <td>{$row['dateNeed']}</td>
-                                                            <td style='display: none'>{$row['statusID']}</td>";
-
-                                                        if($row['statusID'] == '1'){//pending
-                                                            echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
-                                                        }
-                                                        if($row['statusID'] == '2'){//ongoing
-                                                            echo "<td><span class='label label-info'>{$row['name']}</span></td>";
-                                                        }
-                                                        if($row['statusID'] == '3'){//completed
-                                                            echo "<td><span class='label label-success'>{$row['description']}</span></td>";
-                                                        }
-                                                        if($row['statusID'] == '4'){//disapproved
-                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
-                                                        }
-
-
-                                                        //echo "<td>{$row['name']}</td>";
-                                                        echo "</tr>";
-
-                                                          $count++;
-                                                    }
-
-                                                  ?>
-
                                                 
                                             </tbody>
                                             <tfoot>
@@ -320,40 +224,7 @@ require_once("db/mysql_connect.php");
                     var step = cell2.textContent;
 					
                     if(requestType == 'Asset Request'){
-						if(step == "Conforme Pending"){
-							window.location.href = "requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType;
-						}
-						else{
-							window.location.href = "requestor_view_request_for_procurement_service_material.php?id=" + id;
-						}
-                    }
-
-                    else if(requestType == "Borrow"){
-						if(step == "Conforme Pending"){
-							window.location.href = "requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType;
-						}
-						else{
-							window.location.href = "requestor_view_service_equipment_request.php?id=" + id;
-						}
-                    }
-                    
-                    else if(requestType == "Donation"){
-                        if(step == "Conforme Pending"){
-							window.location.href = "requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType;
-						}
-						else{
-							window.location.href = "requestor_view_donation_request.php?id=" + id;
-						}
-                    }
-
-                    else if(requestType == "Service" || requestType == "Repair"){
-						if(step == "Conforme Pending"){
-							window.location.href = "requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType;
-						}
-						else{
-							window.location.href = "requestor_view_service_request.php?id=" + id;
-						}
-                        
+						window.location.href = "requestor_view_receiving.php?id=" + id;
                     }
                     
                 };
