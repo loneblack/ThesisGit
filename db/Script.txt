@@ -1634,7 +1634,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `thesis`.`requestor_receiving` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`requestor_receiving` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `UserID` INT(11) NOT NULL,
   `requestID` INT(11) NULL,
   `borrowID` INT(11) NULL,
