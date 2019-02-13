@@ -494,7 +494,7 @@
 				
 				if(sumQty!=cavasItemQtys[i].value){
 					isQtyCorrect=false;
-					message+="Quantities entered reach the maximum quantity";
+					message+="Quantities entered reach the maximum quantity. ";
 				}
 			}
 			
