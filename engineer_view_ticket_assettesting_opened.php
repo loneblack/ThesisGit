@@ -554,7 +554,7 @@
 																$query1 = "SELECT * FROM thesis.ref_ticketstatus";
 																$result1 = mysqli_query($dbc, $query1);
 																while($row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC)){
-																	if($row1['ticketID']==5){
+																	if($row1['ticketID']==2){
 																		echo "<option selected value='{$row1['ticketID']}'>{$row1['status']}</option>";
 																	}
 																	else{
