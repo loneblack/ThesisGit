@@ -58,6 +58,10 @@
 				$queryasd="INSERT INTO `thesis`.`assetdocument` (`assetID`, `requestID`, `procurementID`) VALUES ('{$rowLatAss['assetID']}', '{$rowReqDat['requestID']}', '{$procID}')";
 				$resultasd=mysqli_query($dbc,$queryasd);
 				
+				//INSERT TO DELIVERYDETAILSASSETS
+				$queryDelDetAss="INSERT INTO `thesis`.`deliverydetailsassets` (`DeliveryDetails_deliveryDetailsID`, `asset_assetID`) VALUES ('{$rowLatDelDet['deliveryDetailsID']}', '{$rowLatAss['assetID']}')";
+				$resultDelDetAss=mysqli_query($dbc,$queryDelDetAss);
+				
 			}
 			
 		}
@@ -77,16 +81,16 @@
 		}
 		
 		//Check if all the procurement order is complete
-		$queryStep="SELECT count(*) as `isComplete` FROM thesis.procurement where requestID='{$rowaa['requestID']}' and status!=3";
+		$queryStep="SELECT count(*) as `isComplete` FROM thesis.procurement where requestID='{$rowReqDat['requestID']}' and status!=3";
 		$resultStep=mysqli_query($dbc,$queryStep);
 		$rowStep=mysqli_fetch_array($resultStep,MYSQLI_ASSOC);
 		
 		if($rowStep['isComplete']==0){
-			$queryUpd="UPDATE `thesis`.`request` SET `step`='9' WHERE `requestID`='{$rowaa['requestID']}'";
+			$queryUpd="UPDATE `thesis`.`request` SET `step`='9' WHERE `requestID`='{$rowReqDat['requestID']}'";
 			$resultUpd=mysqli_query($dbc,$queryUpd);
 		}
 		else{
-			$queryUpd="UPDATE `thesis`.`request` SET `step`='8' WHERE `requestID`='{$rowaa['requestID']}'";
+			$queryUpd="UPDATE `thesis`.`request` SET `step`='8' WHERE `requestID`='{$rowReqDat['requestID']}'";
 			$resultUpd=mysqli_query($dbc,$queryUpd);
 		}
 		
