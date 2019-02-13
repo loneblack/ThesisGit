@@ -97,7 +97,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                 <div class="form-group ">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Date & time needed</label>
                                                     <div class="col-lg-6">
-                                                        <input class="form-control" id="dateNeeded" name="dateNeeded" type="datetime-local" />
+                                                        <input class="form-control" id="dateNeeded" name="dateNeeded" type="date" value="<?php echo date('Y-m-d'); ?>" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group ">
