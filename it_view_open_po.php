@@ -4,105 +4,79 @@
 	require_once('db/mysql_connect.php');
 	$procID=$_GET['procID'];
 	
-	$queryz="SELECT rs.description as `statusDesc`,p.date,s.name as `supplierName`,s.address FROM thesis.procurement p join supplier s on p.supplierID=s.supplierID
+	//GET PROCUREMENT DATA
+	$queryProcDat="SELECT p.supplierID,rs.description as `statusDesc`,p.date,s.name as `supplierName`,s.address FROM thesis.procurement p join supplier s on p.supplierID=s.supplierID
 								   join ref_status rs on p.status=rs.statusID where p.procurementID='{$procID}'";
-	$resultz=mysqli_query($dbc,$queryz);
-	$rowz=mysqli_fetch_array($resultz,MYSQLI_ASSOC);
+	$resultProcDat=mysqli_query($dbc,$queryProcDat);
+	$rowProcDat=mysqli_fetch_array($resultProcDat,MYSQLI_ASSOC);
 	
 	
 	if (isset($_POST['submit'])){
-		//GET REQUEST DATA
-		$queryaa="SELECT p.requestID,r.UserID,r.FloorAndRoomID FROM thesis.procurement p join request r on p.requestID=r.requestID where p.procurementID='{$procID}'";
-		$resultaa=mysqli_query($dbc,$queryaa);
-		$rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
+		$overallQty=0;
 		
-		$isEmpty=true;
-		for($i=0;$i<sizeof($_POST['comment']);$i++){
-			if(!empty($_POST['comment'][$i])){
-				$isEmpty=false;
+		$dateReceived=$_POST['dateReceived'];
+		$qtyReceived=$_POST['qtyReceived'];
+		$assetCategoryIDArr=$_POST['assetCategoryID'];
+		$assetModelIDArr=$_POST['assetModelID'];
+		$qtyOrdered=$_POST['qtyOrdered'];
+		$costs=$_POST['costs'];
+		
+		//GET REQUEST DATA
+		$queryReqDat="SELECT p.requestID,r.UserID,r.FloorAndRoomID FROM thesis.procurement p join request r on p.requestID=r.requestID where p.procurementID='{$procID}'";
+		$resultReqDat=mysqli_query($dbc,$queryReqDat);
+		$rowReqDat=mysqli_fetch_array($resultReqDat,MYSQLI_ASSOC);
+		
+		//INSERT INTO DELIVERY TABLE
+		$queryDeliv="INSERT INTO `thesis`.`delivery` (`procurementID`) VALUES ('{$procID}')";
+		$resultDeliv=mysqli_query($dbc,$queryDeliv);
+		
+		//GET LATEST DELIVERY DATA
+		$queryLatDeliv="SELECT * FROM thesis.delivery order by id desc limit 1";
+		$resultLatDeliv=mysqli_query($dbc,$queryLatDeliv);
+		$rowLatDeliv=mysqli_fetch_array($resultLatDeliv,MYSQLI_ASSOC);
+		
+		for($i=0;$i<sizeOf($assetModelIDArr);$i++){
+			//INSERT INTO DELIVERY DETAILS TABLE
+			$queryDelivDet="INSERT INTO `thesis`.`deliverydetails` (`DeliveryID`, `quantity`, `ref_assetCategoryID`, `assetModelID`, `itemsReceived`, `deliveryDate`) VALUES ('{$rowLatDeliv['id']}', '{$qtyOrdered[$i]}', '{$assetCategoryIDArr[$i]}', '{$assetModelIDArr[$i]}', '{$qtyReceived[$i]}', '{$dateReceived[$i]}')";
+			$resultDelivDet=mysqli_query($dbc,$queryDelivDet);
+		}
+		//GET LATEST DELIVERYDETAILS DATA
+		$queryLatDelDet="SELECT * FROM thesis.deliverydetails where DeliveryID='{$rowLatDeliv['id']}'";
+		$resultLatDelDet=mysqli_query($dbc,$queryLatDelDet);
+		while($rowLatDelDet=mysqli_fetch_array($resultLatDelDet,MYSQLI_ASSOC)){
+			//INSERT TO ASSET TABLE
+			for($i=0;$i<$rowLatDelDet['itemsReceived'];$i++){
+				$queryInsAss="INSERT INTO `thesis`.`asset` (`supplierID`, `assetModel`, `assetStatus`) VALUES ('{$rowProcDat['supplierID']}', '{$rowLatDelDet['assetModelID']}', '8')";
+				$resultInsAss=mysqli_query($dbc,$queryInsAss);
+				
+				//SELECT LATEST ASSET	
+				$queryLatAss="SELECT * FROM thesis.asset order by assetID desc limit 1";
+				$resultLatAss=mysqli_query($dbc,$queryLatAss);
+				$rowLatAss=mysqli_fetch_array($resultLatAss,MYSQLI_ASSOC);
+				
+				//Insert to assetdocument table	
+				$queryasd="INSERT INTO `thesis`.`assetdocument` (`assetID`, `requestID`, `procurementID`) VALUES ('{$rowLatAss['assetID']}', '{$rowReqDat['requestID']}', '{$procID}')";
+				$resultasd=mysqli_query($dbc,$queryasd);
+				
 			}
+			
 		}
 		
-		if($isEmpty){
+		//Check if a specific procurement order is complete
+		$queryIsProcComp="SELECT SUM(quantity) as `qtyOrdered`,SUM(itemsReceived) as `qtyReceived` FROM thesis.deliverydetails where DeliveryID='{$rowLatDeliv['id']}'";
+		$resultIsProcComp=mysqli_query($dbc,$queryIsProcComp);
+		$rowIsProcComp=mysqli_fetch_array($resultIsProcComp,MYSQLI_ASSOC);
+		
+		if($rowIsProcComp['qtyOrdered']==$rowIsProcComp['qtyReceived']){
 			$querya="UPDATE `thesis`.`procurement` SET `status`='3' WHERE `procurementID`='{$procID}'";
 			$resulta=mysqli_query($dbc,$querya);
-			
-			//INSERT ASSET TESTING
-			
-			//$queryt="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`) VALUES ('1', '{$rowaa['UserID']}', '{$rowaa['FloorAndRoomID']}', '25');";
-			//$resultt=mysqli_query($dbc,$queryt);
-			
-			//$queryt="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`) VALUES ('1', '{$_SESSION['userID']}', now(), now(), now() + INTERVAL 1 week, 'High', '25')";
-			//$resultt=mysqli_query($dbc,$queryt);
-			
-			//GET LATEST ASSET TEST
-			
-			//$query0="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
-			//$result0=mysqli_query($dbc,$query0);
-			//$row0=mysqli_fetch_array($result0,MYSQLI_ASSOC);
-			
-			//$query0="SELECT * FROM thesis.ticket order by ticketID desc";
-			//$result0=mysqli_query($dbc,$query0);
-			//$row0=mysqli_fetch_array($result0,MYSQLI_ASSOC);
-			
-			//GET ALL ASSET MODELS
-			
-			$querys="SELECT * FROM thesis.procurementdetails pd join procurement p on pd.procurementID=p.procurementID where pd.procurementID='{$procID}'";
-			$results=mysqli_query($dbc,$querys);
-			
-			while($rows=mysqli_fetch_array($results,MYSQLI_ASSOC)){
-				for($i=0;$i<$rows['quantity'];$i++){
-					//Insert to asset table
-					$queryr="INSERT INTO `thesis`.`asset` (`supplierID`, `assetModel`, `unitCost`, `assetStatus`) VALUES ('{$rows['supplierID']}', '{$rows['assetModelID']}', '{$rows['cost']}', '8')";
-					$resultr=mysqli_query($dbc,$queryr);
-					
-					//SELECT LATEST ASSET
-					
-					$queryrr="SELECT * FROM thesis.asset order by assetID desc limit 1";
-					$resultrr=mysqli_query($dbc,$queryrr);
-					$rowrr=mysqli_fetch_array($resultrr,MYSQLI_ASSOC);
-					
-					//Insert to assettesting_details table
-					
-					//$queryrrr="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$row0['testingID']}', '{$rowrr['assetID']}')";
-					//$resultrrr=mysqli_query($dbc,$queryrrr);
-					
-					//Insert to assetdocument table
-					
-					$queryasd="INSERT INTO `thesis`.`assetdocument` (`assetID`, `requestID`, `procurementID`) VALUES ('{$rowrr['assetID']}', '{$rowaa['requestID']}', '{$procID}')";
-					$resultasd=mysqli_query($dbc,$queryasd);
-					
-					//$queryrrr="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$row0['ticketID']}', '{$rowrr['assetID']}')";
-					//$resultrrr=mysqli_query($dbc,$queryrrr);
-				}
-			}
-			//echo "<script>alert('empty');</script>";
 		}
 		else{
-			$comment=$_POST['comment'];
-			$assetCategoryIDArr=$_POST['assetCategoryID'];
-			$assetModelIDArr=$_POST['assetModelID'];
-			
-			//UPDATE STATUS
 			$querya="UPDATE `thesis`.`procurement` SET `status`='4' WHERE `procurementID`='{$procID}'";
 			$resulta=mysqli_query($dbc,$querya);
-			
-			$mi = new MultipleIterator();
-			$mi->attachIterator(new ArrayIterator($comment));
-			$mi->attachIterator(new ArrayIterator($assetCategoryIDArr));
-			$mi->attachIterator(new ArrayIterator($assetModelIDArr));
-			
-			foreach ($mi as $value) {
-				list($comment, $assetCategoryIDArr, $assetModelIDArr) = $value;
-				$queryb="UPDATE `thesis`.`procurementdetails` SET `comment`='{$comment}' WHERE `assetCategoryID`='{$assetCategoryIDArr}' and `procurementID`='{$procID}' and `assetModelID`='{$assetModelIDArr}'";
-				$resultb=mysqli_query($dbc,$queryb);
-			}
-			
-			//echo "<script>alert('not empty');</script>";
 		}
 		
 		//Check if all the procurement order is complete
-		
 		$queryStep="SELECT count(*) as `isComplete` FROM thesis.procurement where requestID='{$rowaa['requestID']}' and status!=3";
 		$resultStep=mysqli_query($dbc,$queryStep);
 		$rowStep=mysqli_fetch_array($resultStep,MYSQLI_ASSOC);
@@ -115,8 +89,10 @@
 			$queryUpd="UPDATE `thesis`.`request` SET `step`='8' WHERE `requestID`='{$rowaa['requestID']}'";
 			$resultUpd=mysqli_query($dbc,$queryUpd);
 		}
+		
 		$message = "Form Submitted!";
 		$_SESSION['submitMessage'] = $message;
+		
 	}
 												
 ?>
@@ -187,8 +163,8 @@
                                         <div class="row invoice-to">
                                             <div class="col-md-4 col-sm-4 pull-left">
                                                 <h4>Receive Order From:</h4>
-                                                <h2><?php echo $rowz['supplierName']; ?></h2>
-                                                <h5>Address: <?php echo $rowz['address']; ?></h5>
+                                                <h2><?php echo $rowProcDat['supplierName']; ?></h2>
+                                                <h5>Address: <?php echo $rowProcDat['address']; ?></h5>
                                             </div>
                                             <div class="col-md-4 col-sm-5 pull-right">
                                                 <div class="row">
@@ -198,7 +174,7 @@
                                                 <br>
                                                 <div class="row">
                                                     <div class="col-md-4 col-sm-5 inv-label">Date </div>
-                                                    <div class="col-md-8 col-sm-7"><?php echo $rowz['date']; ?></div>
+                                                    <div class="col-md-8 col-sm-7"><?php echo $rowProcDat['date']; ?></div>
 													<br>
 													<br>
 													
@@ -206,15 +182,15 @@
 														<strong>Status:</strong>
 														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 														<?php
-															if($rowz['statusDesc']=="Completed"){
-																echo "<label class='btn btn-success'>{$rowz['statusDesc']}</label>";
+															if($rowProcDat['statusDesc']=="Completed"){
+																echo "<label class='btn btn-success'>{$rowProcDat['statusDesc']}</label>";
 															
 															}
-															elseif($rowz['statusDesc']=="Incomplete"){
-																echo "<label class='btn btn-danger'>{$rowz['statusDesc']}</label>";
+															elseif($rowProcDat['statusDesc']=="Incomplete"){
+																echo "<label class='btn btn-danger'>{$rowProcDat['statusDesc']}</label>";
 															}
 															else{
-																echo "<label class='btn btn-warning'>{$rowz['statusDesc']}</label>";
+																echo "<label class='btn btn-warning'>{$rowProcDat['statusDesc']}</label>";
 															}
 														
 														
@@ -229,7 +205,7 @@
                                             </div>
                                         </div>
                                         
-                                        <h5>*Note: If Items are complete, please leave the comment field blank. If items are incomplete, just place the quantity received in the comment box.</h5>
+                                        <!--<h5>*Note: If Items are complete, please leave the comment field blank. If items are incomplete, just place the quantity received in the comment box.</h5>-->
                                         <form method="post">
 										<table class="table table-invoice">
                                             <thead>
@@ -237,9 +213,11 @@
                                                     <th>#</th>
                                                     <th>Item Description</th>
                                                     <th class="text-center">Unit Cost</th>
-                                                    <th class="text-center">Quantity</th>
+                                                    <th class="text-center">Qty Ordered</th>
                                                     <th class="text-center">Total</th>
-                                                    <th>Number of Missing Items</th>
+													<th class="text-center">Expected Delivery Date</th>
+													<th class="text-center">Date Received</th>
+                                                    <th>Qty Received</th>
 
                                                 </tr>
                                             </thead>
@@ -247,7 +225,7 @@
 												
 												<?php
 													
-													$query="SELECT pd.assetModelID as `assetModelID`,CONCAT(rb.name, ' ',rac.name) as `itemName`,pd.cost,pd.quantity,(pd.cost*pd.quantity) as `totalCost`,am.description as `assetModelDesc`,am.assetCategory as `assetCategory` FROM thesis.procurementdetails pd join assetmodel am on pd.assetModelID=am.assetModelID join ref_brand rb on am.brand=rb.brandID
+													$query="SELECT pd.assetModelID as `assetModelID`,CONCAT(rb.name, ' ',rac.name) as `itemName`,pd.cost,pd.quantity,(pd.cost*pd.quantity) as `totalCost`,am.description as `assetModelDesc`,am.assetCategory as `assetCategory`,pd.expectedDeliveryDate FROM thesis.procurementdetails pd join assetmodel am on pd.assetModelID=am.assetModelID join ref_brand rb on am.brand=rb.brandID
 															join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID where pd.procurementID='{$procID}'";
 													$result=mysqli_query($dbc,$query);
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
@@ -255,6 +233,8 @@
 															<tr>
 															<input type='hidden' name='assetCategoryID[]' value='{$row['assetCategory']}'>
 															<input type='hidden' name='assetModelID[]' value='{$row['assetModelID']}'>
+															<input type='hidden' name='qtyOrdered[]' value='{$row['quantity']}'>
+															<input type='hidden' name='costs[]' value='{$row['cost']}'>
 															<td>{$row['assetModelID']}</td>
 															<td>
 																<h4>{$row['itemName']}</h4>
@@ -263,12 +243,10 @@
 															<td class='text-center'>{$row['cost']}</td>
 															<td class='text-center'>{$row['quantity']}</td>
 															<td class='text-center'>P {$row['totalCost']}</td>
+															<td class='text-center'>{$row['expectedDeliveryDate']}</td>
+															<td class='text-center'><input class='form-control' name='dateReceived[]' type='date' required></td>
 															<td>
-																<div class='form-group'>
-																	<div class='col-sm-12'>
-																		<input type='number' min='0' max='{$row['quantity']}' class='form-control' name='comment[]'>
-																	</div>
-																</div>
+															<input type='number' min='0' max='{$row['quantity']}' class='form-control' name='qtyReceived[]' required>
 															</td>
 															</tr>";
 													}
