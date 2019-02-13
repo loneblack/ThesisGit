@@ -68,30 +68,24 @@
                                                 <tr>
                                                     <th>Purchase Order #</th>
                                                     <th>Supplier</th>
-                                                    <th>Expected Delivery Date</th>
-                                                    <th>Actual Delivery Date</th>
+                                                    <!--<th>Expected Delivery Date</th>
+                                                    <th>Actual Delivery Date</th>-->
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
 												<?php
 													require_once('db/mysql_connect.php');
-													$query="SELECT p.procurementID,p.date,p.totalCost,rs.description as `status`,p.deliveryDate,e.name as 'employeeName' FROM thesis.procurement p join ref_status rs on p.status=rs.statusID
-																																										  join employee e on p.preparedBy=e.employeeID";
+													$query="SELECT p.procurementID,s.name as `supplierName`,rs.description as `status` FROM thesis.procurement p join ref_status rs on p.status=rs.statusID
+																																								 join employee e on p.preparedBy=e.employeeID
+																																								 join supplier s on p.supplierID=s.supplierID";
 													$result=mysqli_query($dbc,$query);
 													
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 														echo "<tr id='{$row['procurementID']}'>
 															<td>{$row['procurementID']}</td>
-															<td>{$row['date']}</td>";
+															<td>{$row['supplierName']}</td>";
 															
-														//if($row['status']=="Open"){
-															//echo "<td><span class='label label-success label-mini'>{$row['status']}</span></td>";
-														//}
-														//else{
-															//echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
-														//}
-														
 														if($row['status']=="Pending"){
 															echo "<td><span class='label label-warning label-mini'>{$row['status']}</span></td>";
 														}
@@ -102,8 +96,7 @@
 															echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
 														}
 														
-														echo "<td>{$row['employeeName']}</td>
-															<td>{$row['deliveryDate']}</td>
+														echo "	
 														</tr>";
 													}
 												
