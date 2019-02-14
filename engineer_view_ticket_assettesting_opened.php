@@ -549,13 +549,13 @@
 
                                                     <label for="status" class="control-label col-lg-4">Status</label>
                                                     <div class="col-lg-8">
-                                                        <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status']) && !$flag) echo $_POST['status']; ?>">
+                                                        <select class="form-control m-bot15" name="status" value="<?php if (isset($_POST['status']) && !$flag) echo $_POST['status']; ?>" disabled>
                                                             <?php
 																$query1 = "SELECT * FROM thesis.ref_ticketstatus";
 																$result1 = mysqli_query($dbc, $query1);
 																while($row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC)){
 																	if($row1['ticketID']==2){
-																		echo "<option selected value='{$row1['ticketID']}'>{$row1['status']}</option>";
+																		echo "<option disabled selected value='{$row1['ticketID']}' >{$row1['status']}</option>";
 																	}
 																	else{
 																		echo "<option value='{$row1['ticketID']}'>{$row1['status']}</option>";
@@ -588,23 +588,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group ">
-                                                    <label for="assign" class="control-label col-lg-4">Escalate To</label>
-                                                    <div class="col-lg-8">
-                                                        <select class="form-control m-bot15" id="escalate" name="escalate" value="<?php if (isset($_POST['escalate']) && !$flag) echo $_POST['escalate']; ?>">
-                                                            <option value="">Select Engineer</option>
-                                                            <?php
-																$query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer' and u.UserID<>'{$userid}'";
-																$result3=mysqli_query($dbc,$query3);
-																		
-																while($row3=mysqli_fetch_array($result3,MYSQLI_ASSOC)){
-																	echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
-																}										
-																
-															?>
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                                
 
                                                 <div class="form-group">
                                                     <label class="control-label col-lg-4">Due Date</label>
