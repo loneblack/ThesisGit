@@ -87,7 +87,7 @@
 				
 				//UPDATE DELIVERY TABLE STATUS
 				$queryUpDelStat="UPDATE `thesis`.`delivery` SET `status`='For Testing' WHERE `id`='{$deliveryID}'";
-				$resultUpDelStat=mysqli_query($dbc,$queryUpDelStat;
+				$resultUpDelStat=mysqli_query($dbc,$queryUpDelStat);
 				
 				$message = "Form submitted!";
 				$_SESSION['submitMessage'] = $message;
@@ -220,7 +220,7 @@
 																		$queryb="SELECT * FROM thesis.ref_ticketstatus";
 																		$resultb=mysqli_query($dbc,$queryb);
 																		while($rowb=mysqli_fetch_array($resultb,MYSQLI_ASSOC)){
-																			if($rowb['id']=='1'){
+																			if($rowb['ticketID']=='2'){
 																				echo "<option value='{$rowb['ticketID']}' selected>{$rowb['status']}</option>";
 																			}
 																			else{

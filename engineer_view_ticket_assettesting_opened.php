@@ -4,7 +4,15 @@
 	require_once('db/mysql_connect.php');
 	$userid=$_SESSION['userID'];
 	$ticketID=$_GET['id'];
-		
+	
+	// PHP function to check if asset is for escalate 
+	function isEscalate($array){ 
+		if($array=='2') 
+			return TRUE; 
+		else 
+			return FALSE;  
+	} 
+	
 	//$queryx = "SELECT CONCAT(Convert(AES_DECRYPT(u.lastName,'Fusion')USING utf8),' ',Convert(AES_DECRYPT(u.firstName,'Fusion')USING utf8)) as `fullname`,far.floorRoom,t.dueDate FROM thesis.ticket t join assettesting at on t.testingID=at.testingID 
 	//										 join user u on at.PersonRequestedID=u.UserID 
 	//										 join floorandroom far on at.FloorAndRoomID=far.FloorAndRoomID
@@ -16,7 +24,7 @@
     $resultx = mysqli_query($dbc, $queryx);
 	$rowx = mysqli_fetch_array($resultx, MYSQLI_ASSOC);
 	
-	$queryOut = "SELECT t.dueDate FROM thesis.ticket t join assettesting at on t.testingID=at.testingID 
+	$queryOut = "SELECT t.dueDate,t.priority FROM thesis.ticket t join assettesting at on t.testingID=at.testingID 
 											 where t.ticketID='{$ticketID}'";
     $resultOut = mysqli_query($dbc, $queryOut);
 	$rowOut = mysqli_fetch_array($resultOut, MYSQLI_ASSOC);
@@ -31,99 +39,95 @@
 		$message=null;
 		//ASSET Request Code
 		if($row7['remarks']=="Asset Request"){
-			//For functioning assets
-			if(!empty($_POST['funcAsset'])){
-				$funcAsset=$_POST['funcAsset'];
-				
-				foreach($funcAsset as $value){
-					$query5="UPDATE `thesis`.`assettesting_details` SET `check`='1' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$value}'";
+			$testStat=$_POST['testStat'];
+			$listOfTestAss=$_POST['listOfTestAss'];
+			
+			//Check the dropdown for asset status
+			foreach (array_combine($testStat, $listOfTestAss) as $tStat => $testAsset){
+				//For functioning assets
+				if($tStat=='1'){
+					$query5="UPDATE `thesis`.`assettesting_details` SET `check`='1' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$testAsset}'";
+					$result5=mysqli_query($dbc,$query5);
+				}
+				//For defected assets
+				elseif($tStat=='3'){
+					$query5="UPDATE `thesis`.`assettesting_details` SET `check`='0' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$testAsset}'";
 					$result5=mysqli_query($dbc,$query5);
 				}
 			}
 			
-			if(!empty($_POST['disapprovedAsset'])){
+			//For escalation code
+			if(isset($_POST['escEngineer'])){
+				$escEngineer=$_POST['escEngineer'];
+				$escEngineerUniq=array_unique($escEngineer);
 				
-				//For defected assets
-				$disapprovedAsset=$_POST['disapprovedAsset'];
-				$comments=$_POST['comments'];
-				
-				//CHECK IF THERE'S AN EMPTY COMMENT FOR ESCALATION
-				$isThereEmp=false;
-				foreach($comments as $isThere){
-					if(empty($isThere)){
-						$isThereEmp=true;
-					}
-				}
-				//Escalate Code
-				if($isThereEmp){
-					if(isset($_POST['priority'])&&isset($_POST['escalate'])){
-						//GETTESTINGID
-						$queryTestID = "SELECT * FROM thesis.ticket where ticketID='{$ticketID}'";
-						$resultTestID = mysqli_query($dbc, $queryTestID);
-						$rowTestID = mysqli_fetch_array($resultTestID, MYSQLI_ASSOC);
+				//GETTESTINGID
+				$queryTestID = "SELECT * FROM thesis.ticket where ticketID='{$ticketID}'";
+				$resultTestID = mysqli_query($dbc, $queryTestID);
+				$rowTestID = mysqli_fetch_array($resultTestID, MYSQLI_ASSOC);
 						
-						//GET REQUEST DATA
-						$queryReqDat="SELECT ad.requestID,r.UserID,r.FloorAndRoomID FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
-																							   join assetdocument ad on a.assetID=ad.assetID
-																							   join request r on ad.requestID=r.requestID 
-																							   where atd.assettesting_testingID='{$rowTestID['testingID']}' limit 1";
-						$resultReqDat=mysqli_query($dbc,$queryReqDat);
-						$rowReqDat=mysqli_fetch_array($resultReqDat,MYSQLI_ASSOC);
+				//GET REQUEST DATA
+				$queryReqDat="SELECT ad.requestID,r.UserID,r.FloorAndRoomID FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
+																						   join assetdocument ad on a.assetID=ad.assetID
+																						   join request r on ad.requestID=r.requestID 
+																						   where atd.assettesting_testingID='{$rowTestID['testingID']}' limit 1";
+				$resultReqDat=mysqli_query($dbc,$queryReqDat);
+				$rowReqDat=mysqli_fetch_array($resultReqDat,MYSQLI_ASSOC);
+				foreach($escEngineerUniq as $escEng){
+					//CREATE ASSETTESTING
+					$queryAssTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`,`remarks`) VALUES ('1', '{$rowReqDat['UserID']}', '{$rowReqDat['FloorAndRoomID']}', '25', 'Asset Request');";
+					$resultAssTest=mysqli_query($dbc,$queryAssTest);
 						
-						//CREATE ASSETTESTING
-						$queryAssTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`,`remarks`) VALUES ('1', '{$rowReqDat['UserID']}', '{$rowReqDat['FloorAndRoomID']}', '25', 'Asset Request');";
-						$resultAssTest=mysqli_query($dbc,$queryAssTest);
-						
-						//GET LATEST ASSET TEST
-						$queryLatAss="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
-						$resultLatAss=mysqli_query($dbc,$queryLatAss);
-						$rowLatAss=mysqli_fetch_array($resultLatAss,MYSQLI_ASSOC);
-						
-						//INSERT TO ASSETTESTDETAILS
-						foreach(array_combine($disapprovedAsset, $comments) as $escAsset => $com){
-							if(empty($com)){
-								$queryAtd="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowLatAss['testingID']}', '{$escAsset}')";
-								$resultAtd=mysqli_query($dbc,$queryAtd);
-								
-								//DELETE ASSET TO ASSET TESTING
-								$queryDelAss="DELETE FROM `thesis`.`assettesting_details` WHERE `assettesting_testingID`='{$rowTestID['testingID']}' and `asset_assetID`='{$escAsset}'";
-								$resultDelAss=mysqli_query($dbc,$queryDelAss);
-							}
-						}
-						
-						//CREATE TICKET FOR ESCALATION
-						$queryEsc="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('5', '{$_POST['escalate']}', '{$_SESSION['userID']}', now(), now(), '{$_POST['dueDate']}', '{$_POST['priority']}', '{$rowLatAss['testingID']}', '25')";
-						$resultEsc=mysqli_query($dbc,$queryEsc);
-						
-						//GET LATEST TICKET
-						$queryLatTic="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
-						$resultLatTic=mysqli_query($dbc,$queryLatTic);
-						$rowLatTic=mysqli_fetch_array($resultLatTic,MYSQLI_ASSOC);
-						
-						//INSERT TO TICKETEDASSET
-						foreach(array_combine($disapprovedAsset, $comments) as $escAsset => $com){
-							if(empty($com)){
-								$queryTicAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTic['ticketID']}', '{$escAsset}');";
-								$resultTicAss=mysqli_query($dbc,$queryTicAss);
-								
-								//DELETE ASSET TO TICKETEDASSET
-								$queryDelTic="DELETE FROM `thesis`.`ticketedasset` WHERE `ticketID`='{$ticketID}' and `assetID`='{$escAsset}'";
-								$resultDelTic=mysqli_query($dbc,$queryDelTic);
-							}
-						}
-					}
-							
-				}
+					//GET LATEST ASSET TEST
+					$queryLatAss="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
+					$resultLatAss=mysqli_query($dbc,$queryLatAss);
+					$rowLatAss=mysqli_fetch_array($resultLatAss,MYSQLI_ASSOC);
 					
-				//For defected asset code
-				foreach (array_combine($disapprovedAsset, $comments) as $value1 => $value2){
-					if(!empty($value2)){
-						$query6="UPDATE `thesis`.`assettesting_details` SET `check`='0',`comment`='{$value2}' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$value1}'";
-						$result6=mysqli_query($dbc,$query6);
+					//CREATE TICKET FOR ESCALATION
+					$queryEsc="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('5', '{$escEng}', '{$_SESSION['userID']}', now(), now(), '{$_POST['dueDate']}', '{$rowOut['priority']}', '{$rowLatAss['testingID']}', '25')";
+					$resultEsc=mysqli_query($dbc,$queryEsc);
+						
+					//GET LATEST TICKET
+					$queryLatTic="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
+					$resultLatTic=mysqli_query($dbc,$queryLatTic);
+					$rowLatTic=mysqli_fetch_array($resultLatTic,MYSQLI_ASSOC);
+					
+					foreach (array_combine($_POST['forEscAsset'], $escEngineer) as $forEscAss => $escEngi){
+						if($escEngi==$escEng){
+							//INSERT TO ASSETTESTDETAILS
+							$queryAtd="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowLatAss['testingID']}', '{$forEscAss}')";
+							$resultAtd=mysqli_query($dbc,$queryAtd);
+								
+							//DELETE ASSET TO ASSET TESTING
+							$queryDelAss="DELETE FROM `thesis`.`assettesting_details` WHERE `assettesting_testingID`='{$rowTestID['testingID']}' and `asset_assetID`='{$forEscAss}'";
+							$resultDelAss=mysqli_query($dbc,$queryDelAss);
+							
+							//INSERT TO TICKETEDASSET
+							$queryTicAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTic['ticketID']}', '{$forEscAss}');";
+							$resultTicAss=mysqli_query($dbc,$queryTicAss);
+								
+							//DELETE ASSET TO TICKETEDASSET
+							$queryDelTic="DELETE FROM `thesis`.`ticketedasset` WHERE `ticketID`='{$ticketID}' and `assetID`='{$forEscAss}'";
+							$resultDelTic=mysqli_query($dbc,$queryDelTic);
+						}
 					}
+					
 				}
 			}
+			
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		//DONATION CODE
 		elseif($row7['remarks']=="Donation"){
 			//For functioning assets
@@ -440,12 +444,11 @@
                                                 <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                     <thead>
                                                         <tr>
-                                                            <th>Property Code</th>
                                                             <th style="text-align:center">Brand</th>
                                                             <th style="text-align:center">Model</th>
-                                                            <th style="text-align:center">Comments</th>
                                                             <th>Asset Status</th>
                                                             <th>Escalated To</th>
+															<th style="text-align:center">Comments</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -461,11 +464,40 @@
                                                     
 														while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 															$idDisapp="Disapp_".$row['assetID'];
-															echo "<tr><td style='text-align:center'><input type='checkbox' name='funcAsset[]' class='form-check-input myCheck' value='{$row['assetID']}'></td>
+															$idWorking="Working_".$row['assetID'];
+															$idForEsc="ForEsc_".$row['assetID'];
+															$idEscEng="escalateEng_".$row['assetID'];
+															echo "<tr>
 																<td style='text-align:center'>{$row['brand']}</td>
 																<td style='text-align:center'>{$row['model']}</td>
+																<td>
+																	<select id='assetStatus' name='testStat[]' class='form-control' onchange='checkValue(\"{$row['assetID']}\")' required>
+																		<option value=''>Select Asset Status</option>
+																		<option value='1'>Working</option>
+																		<option value='2'>Escalated To</option>
+																		<option value='3'>Defective</option>
+																	</select>
+																</td>
+																<td>
+																	<select class='form-control' id='{$idEscEng}' name='escEngineer[]' required disabled>
+																		<option value=''>Select Engineer</option>";
+																		//GET List Of Engineers
+																		$queryListEng = "SELECT * FROM thesis.employee e join user u on e.UserID=u.UserID where u.userType='4'";
+																		$resultListEng = mysqli_query($dbc, $queryListEng);
+																		while ($rowListEng = mysqli_fetch_array($resultListEng, MYSQLI_ASSOC)){
+																			if($_SESSION['userID']!=$rowListEng['UserID']){
+																				echo "<option value='{$rowListEng['UserID']}'>{$rowListEng['name']}</option>";
+																			}
+																		}
+
+																
+																echo "</select>
+																</td>
 																<td><input style='text' id='{$row['assetID']}' name='comments[]' class='form-control comments'></td>
 																<input type='hidden' id='{$idDisapp}' name='disapprovedAsset[]' value='{$row['assetID']}'>
+																<input type='hidden' id='{$idWorking}' name='workingAsset[]' value='{$row['assetID']}'>
+																<input type='hidden' id='{$idForEsc}' name='forEscAsset[]' value='{$row['assetID']}'>
+																<input type='hidden' name='listOfTestAss[]' value='{$row['assetID']}'>
 																</tr>";
 														}
 													
@@ -474,11 +506,11 @@
 													
 													
 													?>
-                                                        <tr>
-                                                            <td style="text-align:center">TBLT-001</td>
+                                                        <!-- <tr>
+                                                           
                                                             <td style="text-align:center">Apple Tablet</td>
                                                             <td style="text-align:center">iPad</td>
-                                                            <td><input style="text" class="form-control"></td>
+                                                            
                                                             <td>
                                                                 <select id="assetStatus" class="form-control" onchange="checkValue()">
                                                                     <option value="0">Select Asset Status</option>
@@ -492,7 +524,8 @@
                                                                     <option value="0">Select Engineer</option>
                                                                 </select>
                                                             </td>
-                                                        </tr>
+															<td><input style="text" class="form-control"></td>
+                                                        </tr> -->
                                                     </tbody>
                                                 </table>
 
@@ -580,10 +613,33 @@
                                                     <div class="col-lg-8">
                                                         <select class="form-control m-bot15" id="priority" name="priority" value="<?php if (isset($_POST['priority']) && !$flag) echo $_POST['priority']; ?>" disabled>
                                                             <option value="">Select Priority</option>
-                                                            <option value="Low">Low</option>
-                                                            <option value="Medium">Medium</option>
-                                                            <option value="High">High</option>
-                                                            <option value="Urgent">Urgent</option>
+															<?php
+																if($rowOut['priority']=='Low'){
+																	echo "  <option value='Low' selected>Low</option>
+																			<option value='Medium'>Medium</option>
+																			<option value='High'>High</option>
+																			<option value='Urgent'>Urgent</option>";
+																}
+																elseif($rowOut['priority']=='Medium'){
+																	echo "  <option value='Low'>Low</option>
+																			<option value='Medium' selected>Medium</option>
+																			<option value='High'>High</option>
+																			<option value='Urgent'>Urgent</option>";
+																}
+																elseif($rowOut['priority']=='High'){
+																	echo "  <option value='Low'>Low</option>
+																			<option value='Medium'>Medium</option>
+																			<option value='High' selected>High</option>
+																			<option value='Urgent'>Urgent</option>";
+																}
+																elseif($rowOut['priority']=='Urgent'){
+																	echo "  <option value='Low' selected>Low</option>
+																			<option value='Medium'>Medium</option>
+																			<option value='High'>High</option>
+																			<option value='Urgent' selected>Urgent</option>";
+																}
+															?>
+                                                            
                                                         </select>
                                                     </div>
                                                 </div>
@@ -683,26 +739,74 @@
             $('#tableTest tbody tr').eq(rowCount).after(tr);
         }
 
-        $('.myCheck').change(function() {
-            var disapp = "Disapp_" + this.value;
-            if ($(this).is(':checked')) {
+        //$('.myCheck').change(function() {
+            //var disapp = "Disapp_" + this.value;
+            //if ($(this).is(':checked')) {
                 // Checkbox is checked..
 
                 //document.getElementById(this.value).required = false;
-                document.getElementById(this.value).disabled = true;
-                document.getElementById(disapp).disabled = true;
+                //document.getElementById(this.value).disabled = true;
+                //document.getElementById(disapp).disabled = true;
 
-            } else {
+            //} else {
                 // Checkbox is not checked..
 
                 //document.getElementById(this.value).required = true;
-                document.getElementById(this.value).disabled = false;
-                document.getElementById(disapp).disabled = false;
+              //  document.getElementById(this.value).disabled = false;
+                //document.getElementById(disapp).disabled = false;
 
 
+            //}
+        //});
+		
+		function checkValue(x) {
+			var disapp = "Disapp_" + x;
+			var working = "Working_" + x
+			var forEsc = "ForEsc_" + x;
+			var escEng = "escalateEng_" + x;
+			
+			//Working stat
+			if(document.getElementById("assetStatus").value == "1"){
+				//comments
+				document.getElementById(x).disabled = true;
+				
+				//for asset stat
+                //document.getElementById(disapp).disabled = true;
+				//document.getElementById(working).disabled = false;
+				document.getElementById(forEsc).disabled = true;
+				
+				//for esc engineer
+				document.getElementById(escEng).disabled = true;
+			}
+			//Escalate stat
+            else if(document.getElementById("assetStatus").value == "2"){
+				//comments
+				document.getElementById(x).disabled = true;
+				
+				//for asset stat
+                //document.getElementById(disapp).disabled = true;
+				//document.getElementById(working).disabled = true;
+				document.getElementById(forEsc).disabled = false;
+				
+				//for esc engineer
+				document.getElementById(escEng).disabled = false;
+				
             }
-        });
-
+			else{
+				//comments
+				document.getElementById(x).disabled = false;
+				
+				//for asset stat
+				//document.getElementById(disapp).disabled = true;
+				//document.getElementById(working).disabled = true;
+				document.getElementById(forEsc).disabled = false
+				
+				//for esc engineer
+				document.getElementById(escEng).disabled = true;
+				
+            }
+        }
+		
         $('#save').click(function() {
             var isExist = false;
             for (var i = 0; i < document.getElementsByClassName("comments").length; i++) {
@@ -723,13 +827,7 @@
         //alert( this.value );
         //});
 
-        function checkValue() {
-            if(document.getElementById("assetStatus").value == "2"){
-                document.getElementById("escalateEng").disabled = false;
-            } else {
-                document.getElementById("escalateEng").disabled = true;
-            }
-        }
+        
     </script>
 
 
