@@ -4,12 +4,7 @@
 
 	$userID = $_SESSION['userID'];
 
-	$serviceType = $_POST['serviceType'];
-	$others = $_POST['others'];
-	$summary = $_POST['summary'];
 	$details = $_POST['details'];
-	$dateNeeded = $_POST['dateNeeded'];
-	$endDate = $_POST['endDate'];
 
 	$header =  $_SESSION['previousPage'];
 
@@ -20,8 +15,8 @@
     $date = date('Y-m-d H:i:s', strtotime($value." ".$time));
 
     //insertion to service table
-	$sql = "INSERT INTO `thesis`.`service` (`summary`, `details`, `dateNeed`, `endDate`, `dateReceived`, `UserID`, `serviceType`, `others`, `status`, `steps`)
-	                                VALUES ('{$summary}', '{$details}', '{$dateNeeded}', '{$endDate}', '{$date}', '{$userID}', '{$serviceType}', '{$others}', '1', '14');";//status is set to 1 for pending status
+	$sql = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`)
+	                                VALUES ('{$details}', '{$date}', '{$userID}', '27', '1', '14');";//status is set to 1 for pending status
 
 	$result = mysqli_query($dbc, $sql);
 
