@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <?php
 	session_start();
 	require_once('db/mysql_connect.php');
@@ -12,7 +12,8 @@
 	
 	if(isset($_POST['send'])){
 		
-		if($rowTesDat['remarks']=="Asset Request"){
+		if($rowTesDat['remarks']=="Asset Request")
+		{
 			//GET REQID
 			$queryReqID="SELECT ad.requestID FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
 																				  join assetdocument ad on a.assetID=ad.assetID where atd.assettesting_testingID='{$testingID}' limit 1";
@@ -29,9 +30,25 @@
 																												join assetmodel am on a.assetModel=am.assetModelID
 																												join ref_brand rb on am.brand=rb.brandID
 																												where atd.assettesting_testingID='{$testingID}' and atd.check='1'";
+			//GET REQUESTDATA
+			$queryReqData="SELECT * FROM thesis.request where requestID='{$rowReqID['requestID']}'";
+			$resultReqData=mysqli_query($dbc,$queryReqData);
+			$rowReqData=mysqli_fetch_array($resultReqData,MYSQLI_ASSOC);
+
+
+			//receiving - make receiving table
+			$queryReceiving="INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `requestID`, `statusID`) VALUES ('{$rowReqData['UserID']}', '{$rowReqID['requestID']}', '1');";
+			$resultReceiving=mysqli_query($dbc,$receiving);
+
+			//get newly inserted receiving data
+			$queryGetReceeiving="SELECT * FROM `thesis`.`requestor_receiving` where requestID='{$rowReqID['requestID']}'";
+			$resultGetReceiving=mysqli_query($dbc,$queryGetReceeiving);
+			$rowGetReceiving=mysqli_fetch_array($resultGetReceiving,MYSQLI_ASSOC);
+
 			$result1=mysqli_query($dbc,$query1);
 			//Functioning asset
-			while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
+			while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC))
+			{
 				//GENERATE PROPERTY CODE
 				
 				//UPDATE ASSET STATUS
@@ -50,18 +67,14 @@
 				$queryProp="UPDATE `thesis`.`asset` SET `propertyCode`='{$propertyCode}' WHERE `assetID`='{$row1['assetID']}'";
 				$resultProp=mysqli_query($dbc,$queryProp);
 				
-				//GET REQUESTDATA
-				$queryReqData="SELECT * FROM thesis.request where requestID='{$rowReqID['requestID']}'";
-				$resultReqData=mysqli_query($dbc,$queryReqData);
-				$rowReqData=mysqli_fetch_array($resultReqData,MYSQLI_ASSOC);
-				
 				//INSERT Asset that passed the test to ASSETASSIGNMENT
 				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `personresponsibleID`, `statusID`) VALUES ('{$row1['assetID']}', '{$rowReqData['BuildingID']}', '{$rowReqData['FloorAndRoomID']}', '{$rowReqData['UserID']}', '2')";
 				$resultAssAss=mysqli_query($dbc,$queryAssAss);
-				
-				
-				
-					
+
+				$queryReceivingDetails = "INSERT INTO `thesis`.`receiving_details`(`receivingID`, `assetID`, `received`) VALUES('{$rowGetReceiving['id']}', '{$row1['assetID']}', FALSE);";
+				$resultReceivingDetails = mysqli_query($dbc,$queryReceivingDetails);
+
+
 			}	
 			//Defect asset 
 			
@@ -78,7 +91,8 @@
 												  group by a.supplierID";
 			$resultg=mysqli_query($dbc,$queryg);
 			
-			while($rowg=mysqli_fetch_array($resultg,MYSQLI_ASSOC)){
+			while($rowg=mysqli_fetch_array($resultg,MYSQLI_ASSOC))
+			{
 				//CREATE PO
 				$query3="INSERT INTO `thesis`.`procurement` (`requestID`, `date`, `status`, `preparedBy`, `supplierID`) VALUES ('{$rowg['requestID']}', now(), '1', '{$rowEmp['employeeID']}', '{$rowg['supplierID']}')";
 				$result3=mysqli_query($dbc,$query3);
@@ -96,7 +110,8 @@
 												  group by a.assetModel";
 				$result0=mysqli_query($dbc,$query0);
 				$totalCost=0;
-				while($row0=mysqli_fetch_array($result0,MYSQLI_ASSOC)){
+				while($row0=mysqli_fetch_array($result0,MYSQLI_ASSOC))
+				{
 					//INSERT PO DETAILS
 					$query2="INSERT INTO `thesis`.`procurementdetails` (`procurementID`, `quantity`, `cost`, `subtotal`, `assetCategoryID`, `assetModelID`) VALUES ('{$rowProcID['procurementID']}', '{$row0['qty']}', '{$row0['unitCost']}', '{$row0['totalCost']}', '{$row0['assetCategory']}', '{$row0['assetModel']}')";
 					$result2=mysqli_query($dbc,$query2);
@@ -135,12 +150,12 @@
 			
 			
 			
-			if($rowReq['totalQty']==$rowPass['passedAsset']){
+			if($rowReq['totalQty']==$rowPass['passedAsset'])
+			{
 				$queryComp="UPDATE `thesis`.`request` SET `step`='11' WHERE `requestID`='{$rowReqID['requestID']}'";
 				$resultComp=mysqli_query($dbc,$queryComp);
-			}
-			
-			
+			}	
+
 		}
 		elseif($rowTesDat['remarks']=="Donation"){
 			//UPDATE ASSET TESTING STATUS
@@ -228,10 +243,34 @@
 			
 		}
 		elseif($rowTesDat['remarks']=="Borrow"){
+
+
+			//GET REQID
+			$queryReqID="SELECT borrowID FROM thesis.assettesting where testingID='{$testingID}';";
+			$resultReqID=mysqli_query($dbc,$queryReqID);
+			$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
+
 			//UPDATE ASSET TESTING STATUS
 			$query8="UPDATE `thesis`.`assettesting` SET `statusID`='3' WHERE `testingID`='{$testingID}'";
 			$result8=mysqli_query($dbc,$query8);
 			
+
+			//receiving - make receiving table
+			$queryReceiving="INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `borrowID`, `statusID`) VALUES ('{$rowReqData['UserID']}', '{$rowReqID['borrowID']}', '1');";
+			$resultReceiving=mysqli_query($dbc,$receiving);
+
+			//get newly inserted receiving data
+			$queryGetReceeiving="SELECT * FROM `thesis`.`requestor_receiving` where borrowID='{$rowReqID['borrowID']}'";
+			$resultGetReceiving=mysqli_query($dbc,$queryGetReceeiving);
+			$rowGetReceiving=mysqli_fetch_array($resultGetReceiving,MYSQLI_ASSOC);
+
+
+			//GET BORROWDATA
+			$queryBorrowData="SELECT * FROM thesis.request_borrow where borrowID='{$rowReqID['borrowID']}'";
+			$resultBorrowData=mysqli_query($dbc,$queryBorrowData);
+			$rowBorrowData=mysqli_fetch_array($resultBorrowData,MYSQLI_ASSOC);
+
+
 			//GET PASSED TEST ASSET
 			$queryPassTest="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$testingID}' and `check`='1'";
 			$resultPassTest=mysqli_query($dbc,$queryPassTest);
@@ -244,10 +283,15 @@
 				$queryBorDat="SELECT * FROM thesis.borrow_details bd where bd.borrowID='{$rowTesDat['borrowID']}'";
 				$resultBorDat=mysqli_query($dbc,$queryBorDat);
 				$rowBorDat=mysqli_fetch_array($resultBorDat,MYSQLI_ASSOC);
+
 				
 				//INSERT TO BORROWDETAILSITEM
 				$queryInsBor="INSERT INTO `thesis`.`borrow_details_item` (`borrow_detailsID`, `assetID`) VALUES ('{$rowBorDat['borrow_detailscol']}', '{$rowPassTest['asset_assetID']}');";
 				$resultInsBor=mysqli_query($dbc,$queryInsBor);
+
+				//INSERT Asset that passed the test to ASSETASSIGNMENT
+				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `personresponsibleID`, `statusID`) VALUES ('{$row1['assetID']}', '{$rowBorrowData['BuildingID']}', '{$rowBorrowData['FloorAndRoomID']}', '{$rowBorrowData['personresponsibleID']}', '2')";
+				$resultAssAss=mysqli_query($dbc,$queryAssAss);
 				
 			}
 			

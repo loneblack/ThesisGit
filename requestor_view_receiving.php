@@ -162,12 +162,13 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                                 echo
                                                                     '<tr>
                                                                         <td>
-                                                                                <input class="form-control" type="checkbox" value="'. $requestedQuantity[$i].'" />
+                                                                                <input class="form-control" name="assets[]"  type="checkbox" value="'. $requestedQuantity[$i].'" />
                                                                         </td>
 
                                                                         <td style="width:1%">
 
-                                                                                '. $requestedQuantity[$i].'                                                                        </td>
+                                                                            '.$requestedQuantity[$i].'                                                                       
+                                                                        </td>
 
                                                                         <td>
 
