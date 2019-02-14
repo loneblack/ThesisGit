@@ -270,7 +270,7 @@
 						}
                         
                         if(idx == "Procurement of Service and Material"){
-                            window.location.href = "helpdesk_view_procurement_service_material_request.php?requestID=" + id;
+                            window.location.href = "helpdesk_view_procurement_service_material_request.php?deliveryID=" + id;
 						}
 						
 						if(idx == "Borrow"){

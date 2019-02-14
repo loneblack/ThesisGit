@@ -4,7 +4,18 @@
 	require_once('db/mysql_connect.php');
 	
 	$key="Fusion";
-	$requestID=$_GET['requestID'];
+	
+	$deliveryID=$_GET['deliveryID'];
+	
+	//GET REQ ID
+	$queryReqID="SELECT r.requestID FROM thesis.delivery d join procurement p on d.procurementID=p.procurementID
+														 join request r on p.requestID=r.requestID
+														 where d.id='{$deliveryID}'";
+	$resultReqID=mysqli_query($dbc,$queryReqID);			
+	$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
+	
+	
+	$requestID=$rowReqID['requestID'];
 	
 	//GET REQ DATA
 	
@@ -38,45 +49,46 @@
 			
 			if(!isset($message)){
 				//INSERT ASSET TESTING
-				$queryt="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`, `remarks`) VALUES ('1', '{$rowReq['UserID']}', '{$rowReq['FloorAndRoomID']}', '25', 'Asset Request');";
-				$resultt=mysqli_query($dbc,$queryt);
+				$queryInsAss="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`, `remarks`) VALUES ('1', '{$rowReq['UserID']}', '{$rowReq['FloorAndRoomID']}', '25', 'Asset Request');";
+				$resultInsAss=mysqli_query($dbc,$queryInsAss);
 				
 				//GET LATEST ASSET TEST
 				
-				$query0="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
-				$result0=mysqli_query($dbc,$query0);
-				$row0=mysqli_fetch_array($result0,MYSQLI_ASSOC);
+				$queryLatAssTest="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
+				$resultLatAssTest=mysqli_query($dbc,$queryLatAssTest);
+				$rowLatAssTest=mysqli_fetch_array($resultLatAssTest,MYSQLI_ASSOC);
 				
-				//GET Procurement DATA
-				$queryProc="SELECT * FROM thesis.procurement where requestID='{$requestID}'";
-				$resultProc=mysqli_query($dbc,$queryProc);
-				while($rowProc=mysqli_fetch_array($resultProc,MYSQLI_ASSOC)){
-					//GET ALL ASSET INTO ASSETDOC
-					$querys="SELECT * FROM thesis.assetdocument ad join asset a on ad.assetID=a.assetID where requestID='{$requestID}' and procurementID='{$rowProc['procurementID']}' and a.assetStatus='8'";
-					$results=mysqli_query($dbc,$querys);
-					while($rows=mysqli_fetch_array($results,MYSQLI_ASSOC)){		
-						//Insert to assettesting_details table
-						$queryrrr="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$row0['testingID']}', '{$rows['assetID']}')";
-						$resultrrr=mysqli_query($dbc,$queryrrr);
-					}
+				//GET ALL ASSET INTO DeliveryDetailsAssets
+				$queryDelDetAss="SELECT * FROM thesis.deliverydetailsassets dda join deliverydetails dd on dda.DeliveryDetails_deliveryDetailsID=dd.deliveryDetailsID
+															   where dd.DeliveryID='{$deliveryID}'";
+				$resultDelDetAss=mysqli_query($dbc,$queryDelDetAss);
+				while($rowDelDetAss=mysqli_fetch_array($resultDelDetAss,MYSQLI_ASSOC)){		
+					//Insert to assettesting_details table
+					$queryInAssTesDet="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowLatAssTest['testingID']}', '{$rowDelDetAss['asset_assetID']}')";
+					$resultInAssTesDet=mysqli_query($dbc,$queryInAssTesDet);
 				}
+				
 				//Create ticket
-				$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$row0['testingID']}', '{$category}')";
-				$resulta=mysqli_query($dbc,$querya);
+				$queryCreTick="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$rowLatAssTest['testingID']}', '{$category}')";
+				$resultCreTick=mysqli_query($dbc,$queryCreTick);
 				
 				//Get Latest ticket
-				$queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
-				$resultaa=mysqli_query($dbc,$queryaa);
-				$rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
+				$queryLatTick="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
+				$resultLatTick=mysqli_query($dbc,$queryLatTick);
+				$rowLatTick=mysqli_fetch_array($resultLatTick,MYSQLI_ASSOC);
 				
 				//Select Asset testingID
-				$queryaaa="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$row0['testingID']}'";
-				$resultaaa=mysqli_query($dbc,$queryaaa);
-				while($rowaaa=mysqli_fetch_array($resultaaa,MYSQLI_ASSOC)){
-					$queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$rowaaa['asset_assetID']}');";
+				$querySelAssTest="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$rowLatAssTest['testingID']}'";
+				$resultSelAssTest=mysqli_query($dbc,$querySelAssTest);
+				while($rowSelAssTest=mysqli_fetch_array($resultSelAssTest,MYSQLI_ASSOC)){
+					$queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTick['ticketID']}', '{$rowSelAssTest['asset_assetID']}');";
 					$resultaaaa=mysqli_query($dbc,$queryaaaa);
 				}
-			
+				
+				//UPDATE DELIVERY TABLE STATUS
+				$queryUpDelStat="UPDATE `thesis`.`delivery` SET `status`='For Testing' WHERE `id`='{$deliveryID}'";
+				$resultUpDelStat=mysqli_query($dbc,$queryUpDelStat;
+				
 				$message = "Form submitted!";
 				$_SESSION['submitMessage'] = $message;
 			}
@@ -373,21 +385,23 @@
                                             </section>
 											<hr>
 											<section>
-												<h4>Requested Services/Materials</h4>
+												<h4>Delivered Assets</h4>
 												<table class="table-bordered" align="center" id="tblCustomers" border="1">
 													<thead>
 														<tr>
 															<th>Quantity</th>
-															<th style="width:47%">Category dropdown</th>
-															<th>Description</th>
-															<th></th>
+															<th style="width:47%">Asset Model</th>
+															<th>Asset Category</th>
+															
 														</tr>
 													</thead>
 
 													<tbody>
 														<?php
-															//Get req details
-															$queryReqDet="SELECT * from thesis.requestdetails rd join ref_assetcategory ras on rd.assetCategory=ras.assetCategoryID where rd.requestID='{$requestID}'";
+															//Get delivery details
+															$queryReqDet="SELECT am.description as `modelName`,ras.name as `assetCatName`,dd.itemsReceived FROM thesis.deliverydetails dd join assetmodel am on dd.assetModelID=am.assetModelID
+																																														  join ref_assetcategory ras on dd.ref_assetCategoryID=ras.assetCategoryID
+																																														  where dd.DeliveryID='{$deliveryID}'";
 															$resultReqDet=mysqli_query($dbc,$queryReqDet);			
 															
 															while($rowReqDet=mysqli_fetch_array($resultReqDet,MYSQLI_ASSOC)){
@@ -395,22 +409,26 @@
 															echo "<tr>
 																<td>
 																	<div class='col-lg-12'>
-																		<input class='form-control' type='number' id='txtCountry' min='1' step='1' value='{$rowReqDet['quantity']}' disabled />
+																		<input class='form-control' type='number' id='txtCountry' min='1' step='1' value='{$rowReqDet['itemsReceived']}' disabled />
 																	</div>
 																</td>
 																<td>
 																	<div class='col-lg-12'>
 																		<select class='form-control' id='amount' disabled>
-																			<option selected>{$rowReqDet['name']}</option>
+																			<option selected>{$rowReqDet['modelName']}</option>
 																		
 																		</select>
 																	</div>
 																</td>
-																<td style='padding-top:5px; padding-bottom:5px'>
+																<td>
 																	<div class='col-lg-12'>
-																		<input class='form-control' type='text' id='txtName' value='{$rowReqDet['description']}' disabled />
+																		<select class='form-control' id='amount' disabled>
+																			<option selected>{$rowReqDet['assetCatName']}</option>
+																		
+																		</select>
 																	</div>
 																</td>
+																
 																</tr>";
 														
 														
