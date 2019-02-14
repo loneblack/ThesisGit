@@ -166,8 +166,12 @@
 						//window.location.replace = "it_view_closed_po.php";
 					//}
 					
-					if(status == "Pending"||status == "Incomplete"){
+					if(status == "Pending"){
 						window.location.href = "it_view_open_po.php?procID=" + row.getAttribute("id");
+					}
+					
+					if(status == "Incomplete"){
+						window.location.href = "it_view_incomplete_po.php?procID=" + row.getAttribute("id");
 					}
 					
 					if(status == "Completed"){
