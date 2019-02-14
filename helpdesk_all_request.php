@@ -79,25 +79,49 @@
                                             <tbody>
 												<?php 
                                                     $count = 1;
-													//GET REQUEST FOR Procurement Service Material
-													$queryReqProc="SELECT *,rs.description as `statusDesc` FROM thesis.request r join ref_status rs on r.status=rs.statusID where r.step='9'";
-													$resultReqProc=mysqli_query($dbc,$queryReqProc);
-													while($rowReqProc=mysqli_fetch_array($resultReqProc,MYSQLI_ASSOC)){
+													//GET DELIVER DATA
+													$queryDeliv="SELECT d.id as `deliveryID`,r.requestID,r.description,r.dateNeeded,rs.description as `statusDesc` FROM thesis.delivery d join procurement p on d.procurementID=p.procurementID
+																																join request r on p.requestID=r.requestID
+																																join ref_status rs on r.status=rs.statusID
+																																where d.status='Delivered'";
+													$resultDeliv=mysqli_query($dbc,$queryDeliv);
+													while($rowDeliv=mysqli_fetch_array($resultDeliv,MYSQLI_ASSOC)){
 														echo "<tr class='gradeA'>
-                                                            <td style='display: none'>{$rowReqProc['requestID']}</td>
+                                                            <td style='display: none'>{$rowDeliv['deliveryID']}</td>
 															<td>{$count}</td>
-															<td>{$rowReqProc['description']}</td>
+															<td>{$rowDeliv['description']}</td>
 															<td>Procurement of Service and Material</td>
-															<td>{$rowReqProc['dateNeeded']}</td>";
-															if($rowReqProc['statusDesc']=="Pending"){ echo "<td><label class='label label-warning'>{$rowReqProc['statusDesc']}</label></td>"; }
-															if($rowReqProc['statusDesc']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowReqProc['statusDesc']}</label></td>"; }
-															if($rowReqProc['statusDesc']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowReqProc['statusDesc']}</label></td>"; }
-															if($rowReqProc['statusDesc']=="Completed"){ echo "<td><label class='label label-success'>{$rowReqProc['statusDesc']}</label></td>"; }
+															<td>{$rowDeliv['dateNeeded']}</td>";
+															if($rowDeliv['statusDesc']=="Pending"){ echo "<td><label class='label label-warning'>{$rowDeliv['statusDesc']}</label></td>"; }
+															if($rowDeliv['statusDesc']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowDeliv['statusDesc']}</label></td>"; }
+															if($rowDeliv['statusDesc']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowDeliv['statusDesc']}</label></td>"; }
+															if($rowDeliv['statusDesc']=="Completed"){ echo "<td><label class='label label-success'>{$rowDeliv['statusDesc']}</label></td>"; }
 															
 															echo"</tr>";
 
                                                         $count++;
 													}
+													
+													
+													//GET REQUEST FOR Procurement Service Material
+													//$queryReqProc="SELECT *,rs.description as `statusDesc` FROM thesis.request r join ref_status rs on r.status=rs.statusID where r.step='9'";
+													//$resultReqProc=mysqli_query($dbc,$queryReqProc);
+													//while($rowReqProc=mysqli_fetch_array($resultReqProc,MYSQLI_ASSOC)){
+														//echo "<tr class='gradeA'>
+                                                            //<td style='display: none'>{$rowReqProc['requestID']}</td>
+															//<td>{$count}</td>
+															//<td>{$rowReqProc['description']}</td>
+															//<td>Procurement of Service and Material</td>
+															//<td>{$rowReqProc['dateNeeded']}</td>";
+															//if($rowReqProc['statusDesc']=="Pending"){ echo "<td><label class='label label-warning'>{$rowReqProc['statusDesc']}</label></td>"; }
+															//if($rowReqProc['statusDesc']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowReqProc['statusDesc']}</label></td>"; }
+															//if($rowReqProc['statusDesc']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowReqProc['statusDesc']}</label></td>"; }
+															//if($rowReqProc['statusDesc']=="Completed"){ echo "<td><label class='label label-success'>{$rowReqProc['statusDesc']}</label></td>"; }
+															
+															//echo"</tr>";
+
+                                                        //$count++;
+													//}
 												?>
 												
 												<?php 

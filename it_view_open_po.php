@@ -27,7 +27,7 @@
 		$rowReqDat=mysqli_fetch_array($resultReqDat,MYSQLI_ASSOC);
 		
 		//INSERT INTO DELIVERY TABLE
-		$queryDeliv="INSERT INTO `thesis`.`delivery` (`procurementID`) VALUES ('{$procID}')";
+		$queryDeliv="INSERT INTO `thesis`.`delivery` (`status`, `procurementID`) VALUES ('Delivered', '{$procID}')";
 		$resultDeliv=mysqli_query($dbc,$queryDeliv);
 		
 		//GET LATEST DELIVERY DATA
