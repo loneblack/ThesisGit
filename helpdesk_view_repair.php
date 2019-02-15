@@ -196,7 +196,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                                 ?>
                                                                 </select>
                                                             </div>
-                                                        </div>
+                                                        </div>z
 
                                                         <button type="submit" class="btn btn-success" name="submit">Update</button>
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
