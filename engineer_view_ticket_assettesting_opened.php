@@ -43,18 +43,19 @@
 			$listOfTestAss=$_POST['listOfTestAss'];
 			
 			//Check the dropdown for asset status
-			foreach (array_combine($testStat, $listOfTestAss) as $tStat => $testAsset){
+			for($i=0;$i<sizeOf($testStat);$i++){
 				//For functioning assets
-				if($tStat=='1'){
-					$query5="UPDATE `thesis`.`assettesting_details` SET `check`='1' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$testAsset}'";
+				if($testStat[$i]=='1'){
+					$query5="UPDATE `thesis`.`assettesting_details` SET `check`='1' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$listOfTestAss[$i]}'";
 					$result5=mysqli_query($dbc,$query5);
 				}
 				//For defected assets
-				elseif($tStat=='3'){
-					$query5="UPDATE `thesis`.`assettesting_details` SET `check`='0' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$testAsset}'";
-					$result5=mysqli_query($dbc,$query5);
+				elseif($testStat[$i]=='3'){
+					$query5="UPDATE `thesis`.`assettesting_details` SET `check`='0' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$listOfTestAss[$i]}'";
+					$result5=mysqli_query($dbc,$query5);	
 				}
 			}
+			
 			
 			//For escalation code
 			if(isset($_POST['escEngineer'])){
