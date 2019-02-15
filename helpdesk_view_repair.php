@@ -162,15 +162,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         <div class="form-group ">
                                                             <label for="status" class="control-label col-lg-3">Status</label>
                                                             <div class="col-lg-6">
-                                                                <select class="form-control m-bot15" name="status" required>
-                                                                <?php
-                                                                    $query2="SELECT * FROM thesis.ref_ticketstatus";
-                                                                    $result2=mysqli_query($dbc,$query2);
-                                                                    
-                                                                    while($row2=mysqli_fetch_array($result2,MYSQLI_ASSOC)){
-                                                                        echo "<option value='{$row2['ticketID']}'>{$row2['status']}</option>";
-                                                                    }
-                                                                ?>
+                                                                <select class="form-control m-bot15" name="status" value="2" readOnly>
+                                                                    <option value="2">Assigned</option>
                                                                 </select>
                                                             </div>
                                                         </div>
