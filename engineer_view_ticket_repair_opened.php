@@ -280,12 +280,11 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Repaired</th>
-												<th>For Escalation</th>
                                                 <th>Property Code</th>
                                                 <th>Asset/ Software Name</th>
                                                 <th>Building</th>
                                                 <th>Room</th>
+                                                <th>Asset Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -317,16 +316,15 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
 
                                                    echo "<tr>
-													<td align='center'>
-														<input type='checkbox' name='repAsset[]' class='form-check-input' id='myCheckRep_".$row['assetID']."' onchange='repairCheck(this);' value='{$row['assetID']}'>
-													</td>
-													<td align='center'>
-														<input type='checkbox' name='forEscAsset[]' class='form-check-input forEsc' id='myCheckEsc_".$row['assetID']."' onchange='forEscCheck(this);' value='{$row['assetID']}'>
-													</td>
                                                     <td>{$row['propertyCode']}</td>
                                                     <td>{$row['brand']} {$row['category']} {$row['description']}</td>
                                                     <td>{$row['building']}</td>
                                                     <td>{$row['floorroom']}</td>
+                                                    <td>
+                                                        <select name='assetStatus' class='form-control'>
+                                                            <option>Select Asset Status</option>
+                                                        </select>
+                                                    </td>
                                                     </tr>";
                                                 }  
 
@@ -364,7 +362,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                                                 <label for="status" class="control-label col-lg-4">Status</label>
                                                 <div class="col-lg-8">
-                                                    <select class="form-control m-bot15" name="status">
+                                                    <select class="form-control m-bot15" name="status" readonly>
                                                         <option value='1' <?php if($status=='1' ) echo "selected" ;?> >Open</option>
                                                         <option value='2' <?php if($status=='2' ) echo "selected" ;?> >Assigned</option>
                                                         <option value='3' <?php if($status=='3' ) echo "selected" ;?> >In Progress</option>
