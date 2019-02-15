@@ -471,7 +471,7 @@
 																<td style='text-align:center'>{$row['brand']}</td>
 																<td style='text-align:center'>{$row['model']}</td>
 																<td>
-																	<select id='assetStatus' name='testStat[]' class='form-control' onchange='checkValue(\"{$row['assetID']}\")' required>
+																	<select id='assetStatus_".$row['assetID']."' name='testStat[]' class='form-control' onchange='checkValue(\"{$row['assetID']}\")' required>
 																		<option value=''>Select Asset Status</option>
 																		<option value='1'>Working</option>
 																		<option value='2'>Escalated To</option>
@@ -760,32 +760,30 @@
         //});
 		
 		function checkValue(x) {
+			
 			var disapp = "Disapp_" + x;
 			var working = "Working_" + x
 			var forEsc = "ForEsc_" + x;
 			var escEng = "escalateEng_" + x;
+			var selectID = "assetStatus_" + x;
 			
 			//Working stat
-			if(document.getElementById("assetStatus").value == "1"){
+			if(document.getElementById(selectID).value == "1"){
 				//comments
 				document.getElementById(x).disabled = true;
 				
 				//for asset stat
-                //document.getElementById(disapp).disabled = true;
-				//document.getElementById(working).disabled = false;
 				document.getElementById(forEsc).disabled = true;
-				
+                
 				//for esc engineer
 				document.getElementById(escEng).disabled = true;
 			}
 			//Escalate stat
-            else if(document.getElementById("assetStatus").value == "2"){
+            else if(document.getElementById(selectID).value == "2"){
 				//comments
 				document.getElementById(x).disabled = true;
 				
 				//for asset stat
-                //document.getElementById(disapp).disabled = true;
-				//document.getElementById(working).disabled = true;
 				document.getElementById(forEsc).disabled = false;
 				
 				//for esc engineer
@@ -797,9 +795,7 @@
 				document.getElementById(x).disabled = false;
 				
 				//for asset stat
-				//document.getElementById(disapp).disabled = true;
-				//document.getElementById(working).disabled = true;
-				document.getElementById(forEsc).disabled = false
+				document.getElementById(forEsc).disabled = true;
 				
 				//for esc engineer
 				document.getElementById(escEng).disabled = true;

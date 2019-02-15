@@ -27,7 +27,7 @@
 		$rowReqDat=mysqli_fetch_array($resultReqDat,MYSQLI_ASSOC);
 		
 		//INSERT INTO DELIVERY TABLE
-		$queryDeliv="INSERT INTO `thesis`.`delivery` (`procurementID`) VALUES ('{$procID}')";
+		$queryDeliv="INSERT INTO `thesis`.`delivery` (`status`, `procurementID`) VALUES ('Delivered', '{$procID}')";
 		$resultDeliv=mysqli_query($dbc,$queryDeliv);
 		
 		//GET LATEST DELIVERY DATA
@@ -236,7 +236,8 @@
 																																																																					group by dd.assetModelID";
 													$result=mysqli_query($dbc,$query);
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-														echo "
+														if($row['qtyRemaining']!='0'){
+															echo "
 															<tr>
 															<input type='hidden' name='assetCategoryID[]' value='{$row['assetCategory']}'>
 															<input type='hidden' name='assetModelID[]' value='{$row['assetModelID']}'>
@@ -253,6 +254,8 @@
 															<input type='number' min='0' max='{$row['qtyRemaining']}' class='form-control' name='qtyReceived[]' required>
 															</td>
 															</tr>";
+														}
+														
 													}
 												
 												
