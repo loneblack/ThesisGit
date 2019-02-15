@@ -268,6 +268,46 @@ require_once("db/mysql_connect.php");
                                                     }
 
                                                   ?>
+												  <?php
+													//GET ALL REQUEST SCHEDULE FOR DELIVERY
+													$query = "SELECT rr.id,r.date,r.dateNeeded,s.description,rr.statusID FROM thesis.requestor_receiving rr join request r on rr.requestID=r.requestID
+																				  join ref_status s ON rr.statusID = s.statusID";
+                                                                  
+                                                    $result = mysqli_query($dbc, $query);
+                                                    
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                      
+                                                      echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$row['id']}</td>
+                                                            <td>{$count}</td>
+                                                            <td>Delivery Request</td>
+                                                            <td>{$row['date']}</td>
+                                                            <td>{$row['dateNeeded']}</td>
+                                                            <td style='display: none'>{$row['statusID']}</td>";
+
+                                                        if($row['statusID'] == '1'){//pending
+                                                            echo "<td><span class='label label-warning'>Schedule For Delivery</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '2'){//ongoing
+                                                            echo "<td><span class='label label-info'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '3'){//completed
+                                                            echo "<td><span class='label label-success'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '4'){//disapproved
+                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
+                                                        }
+
+
+                                                        //echo "<td>{$row['name']}</td>";
+                                                        echo "</tr>";
+
+                                                          $count++;
+                                                    }
+													
+												  
+												  ?>
 
                                                 
                                             </tbody>
@@ -358,6 +398,11 @@ require_once("db/mysql_connect.php");
 						}
                         
                     }
+					else if(requestType == "Delivery Request"){
+						if(step == "Schedule For Delivery"){
+							window.location.href = "requestor_scheduling_request_for_procurement_service_material.php?id=" + id;
+						}
+					}
                     
                 };
             };

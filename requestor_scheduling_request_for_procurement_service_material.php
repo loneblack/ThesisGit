@@ -4,7 +4,20 @@
 session_start();
 require_once("db/mysql_connect.php");
 
+//GET REQUEST RECEIVING ID
 $id = $_GET['id'];
+
+//GET REQUEST Information
+$queryReqInfo="SELECT * FROM thesis.requestor_receiving rr join request r on rr.requestID=r.requestID 
+											where rr.id='{$id}'";
+$resultReqInfo=mysqli_query($dbc,$queryReqInfo);
+$rowReqInfo=mysqli_fetch_array($resultReqInfo,MYSQLI_ASSOC);
+
+
+
+
+
+
 
 $sql = "SELECT  b.name AS 'building', floorRoom, recipient, dateneeded, r.description
             FROM thesis.request r 
@@ -14,7 +27,7 @@ $sql = "SELECT  b.name AS 'building', floorRoom, recipient, dateneeded, r.descri
             ON r.BuildingID = b.BuildingID
         JOIN floorandroom f
             ON  r.FloorAndRoomID = f.FloorAndRoomID
-            WHERE requestID =  {$id};";
+            WHERE requestID =  {$rowReqInfo['requestID']};";
 $result = mysqli_query($dbc, $sql);
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
@@ -28,25 +41,10 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         $description = $row['description'];
 
     }
-
-$sql = "SELECT * FROM thesis.requestdetails JOIN ref_assetcategory ON assetCategory = assetCategoryID WHERE requestID  =  {$id};";
-$result = mysqli_query($dbc, $sql);
-
-$count = 0;
-
-$requestedQuantity = array();
-$requestedCategory = array();
-$requestedDescription = array();
-
-while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-
-        array_push($requestedQuantity, $row['quantity']);
-        array_push($requestedDescription, $row['description']);
-        array_push($requestedCategory, $row['name']);
-
-        $count++;
-
-    }
+	
+	if(isset($_POST['save'])){
+		$deliverySched=$_POST['deliverySched'];
+	}
 ?>
 
 <head>
@@ -103,7 +101,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
-                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_request_for_procurement_service_material_DB.php">
+                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="<?php echo $_SERVER['PHP_SELF']."?id=".$id; ?>">
                                                 <?php
                                                     if (isset($_SESSION['submitMessage'])){
 
@@ -142,41 +140,51 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                 <hr>
 
                                                 <section>
-                                                    <h4>Requested Services/Materials</h4>
+                                                    <h4>Assets For Delivery</h4>
                                                     <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                         <thead>
                                                             <tr>
                                                                 <th>Quantity</th>
                                                                 <th>Category</th>
-                                                                <th>Description</th>
+                                                                <th>Model Name</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <?php
-                                                            for ($i=0; $i < $count; $i++) { 
-                                                                echo
-                                                                    '<tr>
-                                                                        <td>
-                                                                            <div class="col-lg-12">
-                                                                                <input class="form-control" type="number" value="'. $requestedQuantity[$i].'" disabled />
+															//GET data by asset category and description
+															$queryGetRecDat = "SELECT count(rd.assetID) as `qty`,am.description as `modelName`,rac.name as `assetCatName` FROM thesis.receiving_details rd left join asset a on rd.assetID=a.assetID
+																															left join assetmodel am on a.assetModel=am.assetModelID
+																															left join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+                                                                                                                            where rd.receivingID='{$id}'
+																															group by a.assetModel";
+                                                                  
+															$resultGetRecDat = mysqli_query($dbc, $queryGetRecDat);
+															while($rowGetRecDat = mysqli_fetch_array($resultGetRecDat, MYSQLI_ASSOC)){
+																echo "<tr>
+																		<td>
+																			<div class='col-lg-12'>
+                                                                                <input class='form-control' type='number' value='{$rowGetRecDat['qty']}' disabled />
                                                                             </div>
                                                                         </td>
 
                                                                         <td>
-                                                                            <div class="col-lg-12">
-                                                                                <select class="form-control"  disabled>
-                                                                                    <option value ="">'.$requestedCategory[$i].'</option>
-                                                                                </select>
+                                                                            <div class='col-lg-12'>
+                                                                                <input class='form-control' type='text' value='{$rowGetRecDat['assetCatName']}' disabled/>
                                                                             </div>
                                                                         </td>
 
-                                                                        <td style="padding-top:5px; padding-bottom:5px">
-                                                                            <div class="col-lg-12">
-                                                                                <input class="form-control" type="text" value="'.$requestedDescription[$i].'" disabled/>
+                                                                        <td style='padding-top:5px; padding-bottom:5px'>
+                                                                            <div class='col-lg-12'>
+                                                                                <input class='form-control' type='text' value='{$rowGetRecDat['modelName']}' disabled/>
                                                                             </div>
                                                                         </td>
-                                                                    </tr>';
-                                                            }
+																
+																
+																</tr>";
+															}
+															
+															
+                                                           
                                                             ?>
                                                         </tbody>
                                                     </table>
@@ -189,7 +197,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                 <section>
                                                     <div class="col-lg-3">
                                                         <h4>Delivery Scheduling</h4>
-                                                        <input class="form-control" type="datetime-local">
+                                                        <input class="form-control" type="datetime-local" name="deliverySched" required>
                                                     </div>
                                                 </section>
                                                 <br>
@@ -200,6 +208,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
                                                 <div class="form-group">
                                                     <div class=" col-lg-6">
+														<button class="btn btn-primary" type="submit" name="save">Save</button>
                                                         <a href="requestor_dashboard.php"><button class="btn btn-default" type="button">Back</button></a>
                                                     </div>
                                                 </div>
