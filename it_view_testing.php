@@ -25,11 +25,15 @@
 			$queryTestStat="UPDATE `thesis`.`assettesting` SET `statusID`='3' WHERE `testingID`='{$testingID}'";
 			$resultTestStat=mysqli_query($dbc,$queryTestStat);
 			
-			$query1="SELECT rb.name as `brand`,am.description as `assetModelName`,atd.asset_assetID as `assetID`,atd.comment,a.assetModel,am.assetCategory FROM thesis.assettesting_details atd 
-																												join asset a on atd.asset_assetID=a.assetID 
-																												join assetmodel am on a.assetModel=am.assetModelID
-																												join ref_brand rb on am.brand=rb.brandID
-																												where atd.assettesting_testingID='{$testingID}' and atd.check='1'";
+			//GET PASSED ASSETS
+			$assetPass=$_POST['assetPass'];
+			$warranty=$_POST['warranty'];
+			//$query1="SELECT rb.name as `brand`,am.description as `assetModelName`,atd.asset_assetID as `assetID`,atd.comment,a.assetModel,am.assetCategory FROM thesis.assettesting_details atd 
+			//																									join asset a on atd.asset_assetID=a.assetID 
+			//																									join assetmodel am on a.assetModel=am.assetModelID
+			//																									join ref_brand rb on am.brand=rb.brandID
+			//																								where atd.assettesting_testingID='{$testingID}' and atd.check='1'";
+			//$result1=mysqli_query($dbc,$query1);
 			//GET REQUESTDATA
 			$queryReqData="SELECT * FROM thesis.request where requestID='{$rowReqID['requestID']}'";
 			$resultReqData=mysqli_query($dbc,$queryReqData);
@@ -38,42 +42,56 @@
 
 			//receiving - make receiving table
 			$queryReceiving="INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `requestID`, `statusID`) VALUES ('{$rowReqData['UserID']}', '{$rowReqID['requestID']}', '1');";
-			$resultReceiving=mysqli_query($dbc,$receiving);
+			$resultReceiving=mysqli_query($dbc,$queryReceiving);
 
 			//get newly inserted receiving data
 			$queryGetReceeiving="SELECT * FROM `thesis`.`requestor_receiving` where requestID='{$rowReqID['requestID']}'";
 			$resultGetReceiving=mysqli_query($dbc,$queryGetReceeiving);
 			$rowGetReceiving=mysqli_fetch_array($resultGetReceiving,MYSQLI_ASSOC);
 
-			$result1=mysqli_query($dbc,$query1);
+			
 			//Functioning asset
-			while($row1=mysqli_fetch_array($result1,MYSQLI_ASSOC))
-			{
+			foreach(array_combine($assetPass, $warranty) as $assPass => $war){
 				//GENERATE PROPERTY CODE
 				
 				//UPDATE ASSET STATUS
-				$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='1' WHERE `assetID`='{$row1['assetID']}'";
+				$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='1' WHERE `assetID`='{$assPass}'";
 				$resultStat=mysqli_query($dbc,$queryStat);
+				
+				//GET INFO OF AN ASSET";
+				$queryGetAssInf = "SELECT * FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID where a.assetID='{$assPass}'";
+				$resultGetAssInf = mysqli_query($dbc,$queryGetAssInf);
+				$rowGetAssInf= mysqli_fetch_array($resultGetAssInf,MYSQLI_ASSOC);
 				
 				//Count Curr Assets based on assetCategory
 				$queryCount="SELECT Count(assetID) as `assetPosition` FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID
-																						  where a.assetID<='{$row1['assetID']}' and am.assetCategory='{$row1['assetCategory']}' and a.assetStatus='1'";
+																						  where a.assetID<='{$assPass}' and am.assetCategory='{$rowGetAssInf['assetCategory']}' and a.assetStatus='1'";
 				$resultCount=mysqli_query($dbc,$queryCount);
 				$rowCount=$rowg=mysqli_fetch_array($resultCount,MYSQLI_ASSOC);
 				
 				//$propertyCode="0".$row1['assetCategory']."-".sprintf('%06d', $rowCount['assetPosition']);
-				$propertyCode=sprintf('%03d', $row1['assetCategory'])."-".sprintf('%06d', $rowCount['assetPosition']);
+				$propertyCode=sprintf('%03d', $rowGetAssInf['assetCategory'])."-".sprintf('%06d', $rowCount['assetPosition']);
+				
 				//INSERT Property Code
-				$queryProp="UPDATE `thesis`.`asset` SET `propertyCode`='{$propertyCode}' WHERE `assetID`='{$row1['assetID']}'";
+				$queryProp="UPDATE `thesis`.`asset` SET `propertyCode`='{$propertyCode}' WHERE `assetID`='{$assPass}'";
 				$resultProp=mysqli_query($dbc,$queryProp);
 				
 				//INSERT Asset that passed the test to ASSETASSIGNMENT
-				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `personresponsibleID`, `statusID`) VALUES ('{$row1['assetID']}', '{$rowReqData['BuildingID']}', '{$rowReqData['FloorAndRoomID']}', '{$rowReqData['UserID']}', '2')";
+				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `personresponsibleID`, `statusID`) VALUES ('{$assPass}', '{$rowReqData['BuildingID']}', '{$rowReqData['FloorAndRoomID']}', '{$rowReqData['UserID']}', '2')";
 				$resultAssAss=mysqli_query($dbc,$queryAssAss);
 
-				$queryReceivingDetails = "INSERT INTO `thesis`.`receiving_details`(`receivingID`, `assetID`, `received`) VALUES('{$rowGetReceiving['id']}', '{$row1['assetID']}', FALSE);";
+				$queryReceivingDetails = "INSERT INTO `thesis`.`receiving_details`(`receivingID`, `assetID`, `received`) VALUES('{$rowGetReceiving['id']}', '{$assPass}', FALSE);";
 				$resultReceivingDetails = mysqli_query($dbc,$queryReceivingDetails);
-
+				
+				
+				//SET DATE EXPIRED
+				$dateExp = new DateTime($rowGetAssInf['dateDelivered']);
+				date_modify($dateExp,"+".$war." month");
+				$finDateExp=date_format($dateExp,"Y-m-d");
+				
+				//INSERT Warranty to assets that passed the test 
+				$queryInsWar = "INSERT INTO `thesis`.`warranty` (`dateAcquired`, `dateExpired`, `assetID`, `supplierID`) VALUES ('{$rowGetAssInf['dateDelivered']}', '{$finDateExp}', '{$assPass}', '{$rowGetAssInf['supplierID']}')";
+				$resultInsWar = mysqli_query($dbc,$queryInsWar);
 
 			}	
 			//Defect asset 
@@ -123,9 +141,10 @@
 					$totalCost=$totalCost+$row0['totalCost'];
 				}
 				
+				//UPDATE TOTAL COST OF PO
 				$queryTotC="UPDATE `thesis`.`procurement` SET `totalCost`='{$totalCost}' WHERE `procurementID`='{$rowProcID['procurementID']}'";
 				$resultTotC=mysqli_query($dbc,$queryTotC);
-				//UPDATE TOTAL COST OF PO
+				
 				
 			}
 			
@@ -432,8 +451,18 @@
 																}	
 																	
 															echo "' disabled></td>
-                                                            <td><input class='form-control' type='number' min='3' value='3'/> </td>
-															</tr>";
+                                                            <td><input class='form-control' type='number' name='warranty[]' min='3' value='3'";
+															
+															if($row['check']=='0'){
+																echo "disabled";
+															}
+															
+															echo "required/></td>";
+															
+															if($row['check']=='1'){
+																echo "<input type='hidden' name='assetPass[]' value='{$row['asset_assetID']}'>";
+															}
+															echo "</tr>";
 														}
 													
 													

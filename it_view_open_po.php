@@ -46,9 +46,8 @@
 		while($rowLatDelDet=mysqli_fetch_array($resultLatDelDet,MYSQLI_ASSOC)){
 			//INSERT TO ASSET TABLE
 			for($i=0;$i<$rowLatDelDet['itemsReceived'];$i++){
-				$queryInsAss="INSERT INTO `thesis`.`asset` (`supplierID`, `assetModel`, `assetStatus`) VALUES ('{$rowProcDat['supplierID']}', '{$rowLatDelDet['assetModelID']}', '8')";
+				$queryInsAss="INSERT INTO `thesis`.`asset` (`supplierID`, `assetModel`, `dateDelivered`, `assetStatus`) VALUES ('{$rowProcDat['supplierID']}', '{$rowLatDelDet['assetModelID']}', '{$rowLatDelDet['deliveryDate']}', '8')";
 				$resultInsAss=mysqli_query($dbc,$queryInsAss);
-				
 				//SELECT LATEST ASSET	
 				$queryLatAss="SELECT * FROM thesis.asset order by assetID desc limit 1";
 				$resultLatAss=mysqli_query($dbc,$queryLatAss);
