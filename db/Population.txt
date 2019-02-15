@@ -515,6 +515,21 @@
 
 		-- End of Flooroom Insertion -------------------------------------------------------------------------------------
 
+
+		-- Insertion of Department owns room -----------------------------------------------------------------------------
+
+		INSERT INTO `thesis`.`departmentownsroom` (`BuildingID`, `FloorAndRoomID`, `DepartmentID`) VALUES ('8', '49', '20');
+		INSERT INTO `thesis`.`departmentownsroom` (`BuildingID`, `FloorAndRoomID`, `DepartmentID`) VALUES ('8', '50', '20');
+		INSERT INTO `thesis`.`departmentownsroom` (`BuildingID`, `FloorAndRoomID`, `DepartmentID`) VALUES ('8', '51', '20');
+		INSERT INTO `thesis`.`departmentownsroom` (`BuildingID`, `FloorAndRoomID`, `DepartmentID`) VALUES ('8', '52', '20');
+		INSERT INTO `thesis`.`departmentownsroom` (`BuildingID`, `FloorAndRoomID`, `DepartmentID`) VALUES ('8', '53', '20');
+		INSERT INTO `thesis`.`departmentownsroom` (`BuildingID`, `FloorAndRoomID`, `DepartmentID`) VALUES ('8', '54', '20');
+		INSERT INTO `thesis`.`departmentownsroom` (`BuildingID`, `FloorAndRoomID`, `DepartmentID`) VALUES ('8', '55', '20');
+		INSERT INTO `thesis`.`departmentownsroom` (`BuildingID`, `FloorAndRoomID`, `DepartmentID`) VALUES ('8', '56', '20');
+
+		-- End of Department owns rooom ----------------------------------------------------------------------------------		
+		
+
 		-- brand
 		INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('1', 'Acer');
 		INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('2', 'Samsung');
@@ -604,6 +619,28 @@
 		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Jan Austin', 'Engineer', '0928349444', 'jan_austin@dlsu.edu.ph', '12', '15');
 		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Marvin Lao', 'Engineer', '0928559444', 'marvin.lao@dlsu.edu.ph', '13', '12');
 		INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Johannes Sia', 'Student', '039444421', 'johannes_sia@dlsu.edu.ph', '14', '12');
+
+
+
+		-- Insertion of Department list ----------------------------------------------------------------------------------
+
+		INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('20', '3');
+		INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('20', '4');
+		INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('20', '5');
+		INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('20', '6');
+		INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('20', '7');
+		INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('20', '8');
+		INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('20', '12');
+		INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('20', '13');
+
+		INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('18', '9');
+		INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('10', '10');
+		INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('22', '11');
+		INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('20', '14');
+
+
+		-- End of Department List ----------------------------------------------------------------------------------------
+
 
 		-- asset
 		INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('1', 'LPTP-0001', 'X3SdZu8U', 'FF-13-A2-B4-A3-02', '1');
