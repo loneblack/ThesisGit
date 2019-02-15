@@ -23,7 +23,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
     {
         array_push($departments, $row['DepartmentID']);
     }
-
+echo print_r($departments);
 ?>
 
 <head>
@@ -126,8 +126,11 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                                 for($i = 0; $i < sizeof($departments); $i++)
                                                                 { 
                                                                 
-                                                                   $sql = "SELECT * FROM thesis.floorandroom f JOIN departmentownsroom d ON f.FloorAndRoomID = d.FloorAndRoomID WHERE DepartmentID = '$departments[$i]';";
+                                                                   $sql = "     SELECT * FROM thesis.floorandroom f 
+                                                                                JOIN departmentownsroom d ON f.FloorAndRoomID = d.FloorAndRoomID 
+                                                                                WHERE d.DepartmentID = '{$departments[$i]}';";
                                                                    
+
                                                                    $result = mysqli_query($dbc, $sql);
 
                                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -138,12 +141,18 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 
                                                                    }
                                                                 }
+
                                                                 ?>
                                                             </select>
                                                         </div>
                                                     </div>
                                                 <hr>
+                                                <?php
 
+                                                echo sizeof($departments)."ASDASDASD";
+                                                echo $sql;
+
+                                                ?>
                                             <br><br>
                                                 <div class="container-fluid">
                                                     
