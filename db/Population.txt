@@ -527,6 +527,17 @@
 		INSERT INTO `thesis`.`departmentownsroom` (`BuildingID`, `FloorAndRoomID`, `DepartmentID`) VALUES ('8', '55', '20');
 		INSERT INTO `thesis`.`departmentownsroom` (`BuildingID`, `FloorAndRoomID`, `DepartmentID`) VALUES ('8', '56', '20');
 
+		INSERT INTO `thesis`.`departmentownsroom` (`FloorAndRoomID`, `DepartmentID`) VALUES ('114', '18');
+		INSERT INTO `thesis`.`departmentownsroom` (`FloorAndRoomID`, `DepartmentID`) VALUES ('115', '18');
+		INSERT INTO `thesis`.`departmentownsroom` (`FloorAndRoomID`, `DepartmentID`) VALUES ('116', '18');
+		INSERT INTO `thesis`.`departmentownsroom` (`FloorAndRoomID`, `DepartmentID`) VALUES ('117', '18');
+		INSERT INTO `thesis`.`departmentownsroom` (`FloorAndRoomID`, `DepartmentID`) VALUES ('118', '18');
+		INSERT INTO `thesis`.`departmentownsroom` (`FloorAndRoomID`, `DepartmentID`) VALUES ('119', '18');
+		INSERT INTO `thesis`.`departmentownsroom` (`FloorAndRoomID`, `DepartmentID`) VALUES ('120', '18');
+		INSERT INTO `thesis`.`departmentownsroom` (`FloorAndRoomID`, `DepartmentID`) VALUES ('121', '18');
+		INSERT INTO `thesis`.`departmentownsroom` (`FloorAndRoomID`, `DepartmentID`) VALUES ('122', '18');
+
+
 		-- End of Department owns rooom ----------------------------------------------------------------------------------		
 		
 
