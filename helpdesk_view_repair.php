@@ -22,15 +22,11 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
     
         $name = $row['name'];      
         $dateReceived = $row['dateReceived'];
-        $summary = $row['summary'];
         $details = $row['details'];
-        $dateNeed = $row['dateNeed'];
-        $endDate = $row['endDate'];
         $serviceTypeID = $row['serviceTypeID'];
         $serviceType = $row['serviceType'];
         $statusID = $row['statusID'];
         $description = $row['description'];
-        $others = $row['others'];
         $steps = $row['steps'];
 
     }
@@ -61,7 +57,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
               //  $resulta=mysqli_query($dbc,$querya);
             //}
             //else{
-                $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`, `service_id`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dateNeed}', '{$priority}', '27', '{$summary}', '{$description}', '{$details}','{$id}')";
+                $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `priority`, `serviceType`, `details`, `service_id`) 
+                VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$priority}', '27', '{$details}, '{$id}')";
                 $resulta=mysqli_query($dbc,$querya);
             //}
         
@@ -258,16 +255,10 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                             <div class="col-md-4">
                                                                 <h5>Date Created: <?php echo $dateReceived;?></h5>
                                                             </div>
-                                                            <div class="col-md-8">
-                                                                <h5>Summary: <?php echo $summary;?></h5>
-                                                            </div>
                                                             <div class="cp;-col-md-4">
                                                             </div>
 
                                                             <div class="col-md-8">
-                                                            </div>
-                                                            <div class="cp;-col-md-4">
-                                                                <h5>&nbsp; &nbsp; Due Date: <?php echo $dateNeed;?></h5>
                                                             </div>
                                                         </div>
                                                     </div>
