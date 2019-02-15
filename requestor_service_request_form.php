@@ -138,10 +138,10 @@ $count = 0;
                                                             <thead>
                                                                 <tr>
                                                                     <th></th>
-                                                                    <th>Category</th>
                                                                     <th>Property Code</th>
                                                                     <th>Brand</th>
-                                                                    <th>Model</th>
+                                                                    <th>Category</th>
+                                                                    <th>Specification</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
