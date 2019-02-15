@@ -51,15 +51,22 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         $currDate=date("Y-m-d H:i:s");
 
         if(!isset($message)){
-
+			//echo "<script>alert('{$status}');</script>";
+			//echo "<script>alert('{$assigned}');</script>";
+			//echo "<script>alert('{$_SESSION['userID']}');</script>";
+			//echo "<script>alert('{$priority}');</script>";
+			//echo "<script>alert('{$details}');</script>";
+			//echo "<script>alert('{$id}');</script>";
             //if($assigned=='0'){
               //  $querya="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`) VALUES ('{$status}', '{$_SESSION['userID']}', now(), now(), '{$dateNeed}', '{$priority}', '27', '{$summary}', '{$description}', '{$details}')";
               //  $resulta=mysqli_query($dbc,$querya);
             //}
             //else{
-                $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `priority`, `serviceType`, `details`, `service_id`) 
-                VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$priority}', '27', '{$details}, '{$id}')";
+				$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `priority`, `serviceType`, `description`, `details`, `service_id`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$priority}', '27', '{$description}', '{$details}','{$id}')";
                 $resulta=mysqli_query($dbc,$querya);
+                //$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `priority`, `serviceType`, `details`, `service_id`) 
+                //VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$priority}', '27', '{$details}, '{$id}')";
+                //$resulta=mysqli_query($dbc,$querya);
             //}
         
             $queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
