@@ -3,17 +3,17 @@
 	session_start();
 	require_once('db/mysql_connect.php');
 
-	if(isset($_POST['confirm'])){
-		if(!empty($_POST['markForDon'])){
-			$markForDon=$_POST['markForDon'];
-			foreach($markForDon as $forDon){
-				$queryForDon="UPDATE `thesis`.`asset` SET `assetStatus`='16' WHERE `assetID`='{$forDon}'";
-				$resultForDon=mysqli_query($dbc,$queryForDon);
-			}
-			$message = "Form submitted!";
-			$_SESSION['submitMessage'] = $message; 
+	
+	if(!empty($_POST['markForDon'])){
+		$markForDon=$_POST['markForDon'];
+		foreach($markForDon as $forDon){
+			$queryForDon="UPDATE `thesis`.`asset` SET `assetStatus`='16' WHERE `assetID`='{$forDon}'";
+			$resultForDon=mysqli_query($dbc,$queryForDon);
 		}
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message; 
 	}
+	
 ?>
 <html lang="en">
 
@@ -83,7 +83,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <section class="panel">
-										<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+										<form method="post" id="formSend" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                         <header class="panel-heading">
                                             Mark for Donation
                                             <span class="tools pull-right">
@@ -169,7 +169,7 @@
                                         </div>
                                         <div style="padding-left:10px; padding-bottom:10px">
                                             <!-- Trigger the modal with a button -->
-                                            <button type="button"class="btn btn-info" data-toggle="modal" data-target="#myModal">Confirm</button>
+                                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Confirm</button>
 											<button type="button" onclick="window.history.back()" class="btn btn-secondary">Back</button>
                                         </div>
 										</form>
@@ -202,7 +202,7 @@
             <p>Are you sure?</p>
           </div>
           <div class="modal-footer">
-            <button type="submit" name="confirm" onclick="Confirm()" class="btn btn-info">Confirm</button>
+            <button type="button" name="confirm" onclick="Confirm()" class="btn btn-info">Confirm</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </div>
@@ -215,7 +215,7 @@
 	
 	<script>
 	function Confirm() {
-		confirm("Are you sure?");
+		document.getElementById("formSend").submit();
 	}
 	</script>
 
