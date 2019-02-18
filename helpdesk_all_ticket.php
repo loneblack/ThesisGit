@@ -69,12 +69,12 @@ require_once("db/mysql_connect.php");
                                                 <tr>
                                                     <td style='display: none'>ticketID</td>
                                                     <th>#</th>
-                                                    <th>Title</th>
                                                     <td style='display: none'>ServiceTypeID</td>
                                                     <th>Category</th>
                                                     <th>Updated</th>
                                                     <th>Date Needed</th>
                                                     <th>Status</th>
+                                                    <th>Requested By</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -138,12 +138,12 @@ require_once("db/mysql_connect.php");
                                                 <tr>
                                                     <td style='display: none'>ticketID</td>
                                                     <th>#</th>
-                                                    <th>Title</th>
                                                     <td style='display: none'>ServiceTypeID</td>
                                                     <th>Category</th>
                                                     <th>Updated</th>
                                                     <th>Date Needed</th>
                                                     <th class="hidden-phone">Status</th>
+                                                    <th>Requested By</th>
                                                 </tr>
                                             </tfoot>
                                         </table>

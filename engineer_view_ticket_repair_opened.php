@@ -377,7 +377,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             <div class="form-group ">
                                                 <label for="priority" class="control-label col-lg-4">Priority</label>
                                                 <div class="col-lg-8">
-                                                    <select class="form-control m-bot15" name="priority">
+                                                    <select class="form-control m-bot15" name="priority" readonly>
                                                         <option value="Low" <?php if($priority=='Low' ) echo "selected" ;?> >Low</option>
                                                         <option value="Medium" <?php if($priority=='Medium' ) echo "selected" ;?> >Medium</option>
                                                         <option value="High" <?php if($priority=='High' ) echo "selected" ;?> >High</option>
