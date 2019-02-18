@@ -17,13 +17,17 @@
         
     }
 
+    $sql0 = "SELECT * FROM `thesis`.`department_list` WHERE employeeID = {$employeeID};";//get the employeeID using userID
+    $result0 = mysqli_query($dbc, $sql0);
+
+    while ($row = mysqli_fetch_array($result0, MYSQLI_ASSOC)){
+        $DepartmentID = $row['DepartmentID'];
+        
+    }
+
     $dateNeeded = $_POST['dateNeeded'];
     $endDate = $_POST['endDate'];
-    $purpose = $_POST['purpose'];
-    $buildingID = $_POST['buildingID'];
     $FloorAndRoomID = $_POST['FloorAndRoomID'];
-    $representative = $_POST['representative'];
-    $idNum = $_POST['idNum']; 
 
     date_default_timezone_set("Asia/Singapore");
 
@@ -33,19 +37,23 @@
 
     $count = $_SESSION['count'];
 
+    echo $count;
+
     $id = 0;    
 
+
+    $sql1 = "SELECT * FROM `thesis`.`floorandroom` WHERE FloorAndRoomID = '{$FloorAndRoomID}';";
+    $result1 = mysqli_query($dbc, $sql1);
+
+    while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC)){
+        $buildingID = $row['BuildingID'];
+    }
+
     //insertion to request table
-
-
-    $sql2 = "INSERT INTO `thesis`.`request_borrow` ( `DepartmentID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `personrepresentativeID`, `personrepresentative`, `dateCreated`, `purpose`, `statusID`, `steps`) VALUES ('{$department}', '{$buildingID}', '{$FloorAndRoomID }', '{$dateNeeded}', '{$endDate}', '{$employeeID}', '{$idNum}', '{$representative}', '{$date}', '{$purpose}', '1', '12');";//status is set to 1 for pending status
+    $sql2 = "INSERT INTO `thesis`.`request_borrow` ( `DepartmentID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `dateCreated`, `statusID`, `steps`) VALUES ('{$DepartmentID}', '{$buildingID}', '{$FloorAndRoomID }', '{$dateNeeded}', '{$endDate}', '{$employeeID}', '{$date}', '1', '12');";//status is set to 1 for pending status
     $result2 = mysqli_query($dbc, $sql2);
 
     echo $sql2;
-   
-    
-    $sql4 = "SELECT * FROM `thesis`.`request_borrow` order by borrowID DESC LIMIT 1;";
-    $result4 = mysqli_query($dbc, $sql4);
 
     //get the id of the recently inserted item to request table
     $sql5 = "SELECT * FROM `thesis`.`request_borrow` order by borrowID DESC LIMIT 1;";
@@ -56,14 +64,15 @@
     }
    
    //insertion to requestdetails table using the id taken earlier
-   for ($i=0; $i <= $count; $i++) { 
+   for ($i=0; $i < $count; $i++) { 
 
     $quantity = $_POST['quantity'.$i];
     $category = $_POST['category'.$i];
+    $purpose = $_POST['purpose'.$i];
 
 
-        $sql6 = "INSERT INTO `thesis`.`borrow_details` (`borrowID`, `quantity`, `assetCategoryID`) 
-                VALUES ('{$id}', '{$quantity}', '{$category}');";
+        $sql6 = "INSERT INTO `thesis`.`borrow_details` (`borrowID`, `quantity`, `assetCategoryID`, `purpose`) 
+                VALUES ('{$id}', '{$quantity}', '{$category}', '{$purpose}');";
         $result6 = mysqli_query($dbc, $sql6); 
 
    }
@@ -73,6 +82,6 @@
 
   unset($_SESSION['count']);  
 
-  //header('Location: '.$header);
+  header('Location: '.$header);
 
 ?>
