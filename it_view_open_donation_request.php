@@ -3,70 +3,13 @@
 	session_start();
 	require_once("db/mysql_connect.php");
 	$donationID=$_GET['id'];
+	$_SESSION['donationID']=$donationID;
+	$_SESSION['previousPage3']="it_view_open_donation_request.php?id=".$donationID;
+	
 	$query="SELECT * FROM thesis.donation where donationID='{$donationID}' limit 1";
 	$result=mysqli_query($dbc,$query);
 	$row=mysqli_fetch_array($result, MYSQLI_ASSOC);
 	
-	if(isset($_POST['approve'])){
-		$donDetailsID=$_POST['donDetailsID'];
-		$propCode=$_POST['propCode'];
-		
-		
-		//Update status
-		$queryApp="UPDATE `thesis`.`donation` SET `statusID`='2',`stepsID`='9' WHERE `donationID`='{$donationID}'";
-		$resultApp=mysqli_query($dbc,$queryApp);
-		
-		//Get donation data
-		$queryDonDat="SELECT * FROM thesis.donation where `donationID`='{$donationID}' limit 1";
-		$resultDonDat=mysqli_query($dbc,$queryDonDat);
-		$rowDonDat=mysqli_fetch_array($resultDonDat, MYSQLI_ASSOC);
-		
-		//Create asset testing
-		//$queryAssT="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`) VALUES ('1', '{$rowDonDat['user_UserID']}', '25');";
-		//$resultAssT=mysqli_query($dbc,$queryAssT);
-		
-		//GET asset testing data
-		//$queryAssTData="SELECT * FROM thesis.assettesting order by testingID desc limit 1";
-		//$resultAssTData=mysqli_query($dbc,$queryAssTData);
-		//$rowAssTData=mysqli_fetch_array($resultAssTData, MYSQLI_ASSOC);
-		
-		foreach(array_combine($donDetailsID, $propCode) as $donID => $asset){
-			//INSERT TO DONATIONDETAILS_ITEM
-			$queryDonDetIt="INSERT INTO `thesis`.`donationdetails_item` (`id`, `assetID`) VALUES ('{$donID}', '{$asset}');";
-			$resultDonDetIt=mysqli_query($dbc,$queryDonDetIt);
-			
-			//INSERT to Asset testing details
-			//$queryAssTDet="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowAssTData['testingID']}', '{$asset}');";
-			//$resultAssTDet=mysqli_query($dbc,$queryAssTDet);	
-		}
-		if(!empty($_POST['donDetailsID1'])&&!empty($_POST['propCode1'])){
-			$donDetailsID1=$_POST['donDetailsID1'];
-			$propCode1=$_POST['propCode1'];
-			foreach(array_combine($donDetailsID1, $propCode1) as $donID1 => $asset1){
-				//INSERT TO DONATIONDETAILS_ITEM
-				$queryDonDetIt="INSERT INTO `thesis`.`donationdetails_item` (`id`, `assetID`) VALUES ('{$donID1}', '{$asset1}');";
-				$resultDonDetIt=mysqli_query($dbc,$queryDonDetIt);
-			
-				//INSERT to Asset testing details
-				//$queryAssTDet="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowAssTData['testingID']}', '{$asset1}');";
-				//$resultAssTDet=mysqli_query($dbc,$queryAssTDet);	
-			}
-		}
-		
-		
-		$message = "Form submitted!";
-		$_SESSION['submitMessage'] = $message; 
-		
-	}
-	if(isset($_POST['disapprove'])){
-		
-		//Update status
-		$queryDisapp="UPDATE `thesis`.`donation` SET `reason`='{$_POST['reason']}', `statusID`='5' WHERE `donationID`='{$donationID}'";
-		$resultDisapp=mysqli_query($dbc,$queryDisapp);
-		
-		$message = "Form submitted!";
-		$_SESSION['submitMessage'] = $message; 
-	}
 ?>
 <html lang="en">
 
@@ -127,9 +70,10 @@
                         unset($_SESSION['submitMessage']);
                     }
 				?>
+				<form method="post" id="formSend" action="it_view_open_donation_request_DB.php">
                 <div class="col-sm-12">
                     <div class="col-sm-12">
-						<form method="post">
+						
 						<div class="row">
                             <div class="row">
                                 <div class="col-sm-12">
@@ -209,16 +153,37 @@
                                                             <th>Property Code</th>
                                                             <th>Brand</th>
                                                             <th>Model</th>
+															<th>Asset Category</th>
                                                             <th>Specifications</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                    	<td style="text-align:center"><input type="checkbox"></td>
-                                                    	<td>LPTP-0001</td>
-                                                    	<td>Acer</td>
-                                                    	<td>Aspire E14</td>
-                                                    	<td>4 GB RAM, 1 TB, i5 something</td>
-
+														<?php
+															//GET ALL ASSET CATEGORY OF A DONATION REQUEST 
+															$queryGetAllCat = "SELECT * FROM thesis.donationdetails where id='{$donationID}'";
+															$resultGetAllCat = mysqli_query($dbc,$queryGetAllCat);
+															while($rowGetAllCat = mysqli_fetch_array($resultGetAllCat, MYSQLI_ASSOC)){
+																//GET ALL ASSETS MARKED FOR DONATION
+																$queryGetAllDonAss = "SELECT a.propertyCode,a.assetID, rac.name as `assetCatName`, am.description as `modelName`,am.itemSpecification,rb.name as `brandName` FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID 
+																												   join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
+																												   join ref_brand rb on am.brand=rb.brandID
+																												   where am.assetCategory='{$rowGetAllCat['assetCategoryID']}' and a.assetStatus='16'";
+																$resultGetAllDonAss = mysqli_query($dbc,$queryGetAllDonAss);
+																while($rowGetAllDonAss = mysqli_fetch_array($resultGetAllDonAss, MYSQLI_ASSOC)){
+																	echo "<tr>
+																			  <td style='text-align:center'><input type='checkbox' name='assetsForDon[]' value='{$rowGetAllDonAss['assetID']}'></td>
+																			  <td>{$rowGetAllDonAss['propertyCode']}</td>
+																			  <td>{$rowGetAllDonAss['brandName']}</td>
+																			  <td>{$rowGetAllDonAss['modelName']}</td>
+																			  <td>{$rowGetAllDonAss['assetCatName']}</td>
+																			  <td>{$rowGetAllDonAss['itemSpecification']}</td>
+																		  </tr>";
+																}
+															}
+															
+															echo "<input type='hidden' name='submitResult' id='submitResult'>";
+														?>
+                                                    	
                                                     	
 														<?php
 														/** PREVIOUS VERSION
@@ -299,17 +264,18 @@
                                                     </tbody>
                                                 </table>
                                                 
-                                                <br>
+                                                <br><br><br><br>
                                                 <div class="form-group">
                                                     <label for="comment">Please Fill Reason if Disapproved</label>
                                                     <textarea class="form-control" rows="5" id="comment" name="reason" style="resize:none"></textarea>
                                                 </div>
+												
+												<!-- Trigger the modal with a button -->
+												<button type="button" class="btn btn-success" data-toggle="modal" data-target="#approveModal">Approve</button>
 
                                                 <!-- Trigger the modal with a button -->
 												<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#denyModal">Disapprove</button>
 
-                                                <!-- Trigger the modal with a button -->
-												<button type="button" class="btn btn-success" data-toggle="modal" data-target="#approveModal">Approve</button>
                                             </div>
 
                                         </div>
@@ -319,62 +285,63 @@
 
 
                         </div>
-						</form>
+						
                        
                     </div>
                 </div>
+				<!-- Modal -->
+			<div id="approveModal" class="modal" role="dialog">
+			  <div class="modal-dialog">
+
+			  <!-- Modal content-->
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Confirmation</h4>
+				  </div>
+				  <div class="modal-body">
+					<p>Are you sure?</p>
+				  </div>
+				  <div class="modal-footer">
+					<button type="submit" name="approve" id="approve" class="btn btn-info">Confirm</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				  </div>
+				</div>
+
+			  </div>
+			</div>
+			<!-- Modal content-->
+
+			<!-- Modal -->
+			<div id="denyModal" class="modal" role="dialog">
+			  <div class="modal-dialog">
+
+			  <!-- Modal content-->
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Confirmation</h4>
+				  </div>
+				  <div class="modal-body">
+					<p>Are you sure?</p>
+				  </div>
+				  <div class="modal-footer">
+					<button class="btn btn-danger" type="submit" name="disapprove" id="disapprove">Confirm</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				  </div>
+				</div>
+
+			  </div>
+			</div>
+			<!-- Modal content-->
+				</form>
                 <!-- page end-->
             </section>
         </section>
         <!--main content end-->
 
     </section>
-
-<!-- Modal -->
-<div id="approveModal" class="modal" role="dialog">
-  <div class="modal-dialog">
-
-  <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Confirmation</h4>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure?</p>
-      </div>
-      <div class="modal-footer">
-      	<button class="btn btn-success" type="submit" id="approve" name="approve">Okay</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- Modal content-->
-
-<!-- Modal -->
-<div id="denyModal" class="modal" role="dialog">
-  <div class="modal-dialog">
-
-  <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Confirmation</h4>
-      </div>
-      <div class="modal-body">
-        <p>Are you sure?</p>
-      </div>
-      <div class="modal-footer">
-      	<button class="btn btn-danger" type="submit" id="disapprove" name="disapprove">Okay</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-<!-- Modal content-->
+	
 
 
     <!-- WAG GALAWIN PLS LANG -->
@@ -434,17 +401,20 @@
 		
 		$('#disapprove').click(function () {
 			document.getElementById("comment").required = true;
-			for(var i=0;i<document.getElementsByClassName("donreq").length;i++){
-				document.getElementsByClassName("donreq")[i].required = false;
-			}
+			//for(var i=0;i<document.getElementsByClassName("donreq").length;i++){
+				//document.getElementsByClassName("donreq")[i].required = false;
+			//}
 			
 		});
+		
 		$('#approve').click(function () {
 			document.getElementById("comment").required = false;
-			for(var i=0;i<document.getElementsByClassName("donreq").length;i++){
-				document.getElementsByClassName("donreq")[i].required = true;
-			}
+			//for(var i=0;i<document.getElementsByClassName("donreq").length;i++){
+				//document.getElementsByClassName("donreq")[i].required = true;
+			//}
+			
 		});
+		
 	</script>
 
 </body>
