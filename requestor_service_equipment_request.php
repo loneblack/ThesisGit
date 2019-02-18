@@ -23,7 +23,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
     {
         array_push($departments, $row['DepartmentID']);
     }
-echo print_r($departments);
+
 ?>
 
 <head>
@@ -147,12 +147,7 @@ echo print_r($departments);
                                                         </div>
                                                     </div>
                                                 <hr>
-                                                <?php
 
-                                                echo sizeof($departments)."ASDASDASD";
-                                                echo $sql;
-
-                                                ?>
                                             <br><br>
                                                 <div class="container-fluid">
                                                     
@@ -194,7 +189,7 @@ echo print_r($departments);
                                                                         <option value=''>0</option>
                                                                     </select>
                                                                 </td>
-                                                                <td><input class="form-control" type="text" id="purpose"></td>
+                                                                <td><input class="form-control" type="text" name="purpose0" id="purpose0"></td>
                                                                 <td><button type = "button" class="btn btn-success" onclick="addTest(4)"> Add </button></td>
                                                             </tr>
                                                         </tbody>
@@ -259,7 +254,7 @@ echo print_r($departments);
 
         }
         var appendTableRow = function(rowCount, canvasItemID) {
-            var cnt = 0;
+
             count++;
             var tr = "<tr>" +
                 "<td><select class='form-control' name='category"+count+"' id='category"+count+"' onChange='getMax(this.value)' >"+
@@ -292,24 +287,6 @@ echo print_r($departments);
                 "<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
                 "</tr>";
             $('#tableTest tbody tr').eq(rowCount).after(tr);
-        }
-         function checkvalue(val){
-            if(val==="1"){
-                document.getElementById('office').style.display='block';
-                document.getElementById('department').style.display='none';
-                document.getElementById('org').style.display='none';}
-            if(val==="2"){
-                document.getElementById('office').style.display='none';
-                document.getElementById('department').style.display='block';
-                document.getElementById('org').style.display='none';}
-            if(val==="3"){
-                document.getElementById('office').style.display='none';
-                document.getElementById('department').style.display='none';
-                document.getElementById('org').style.display='block';}
-            if(val==="0"){
-                document.getElementById('office').style.display='none';
-                document.getElementById('department').style.display='none';
-                document.getElementById('org').style.display='none';}
         }
 
            function getRooms(val){

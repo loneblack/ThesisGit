@@ -936,7 +936,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`borrow_details` (
   `borrowID` INT(11) NOT NULL,
   `assetCategoryID` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL,
-  `borrow_detailsID` VARCHAR(45) NULL,
+  `purpose` VARCHAR(45) NULL,
   INDEX `fk_borrow_details_request_borrow1_idx` (`borrowID` ASC),
   INDEX `fk_borrow_details_ref_assetcategory1_idx` (`assetCategoryID` ASC),
   PRIMARY KEY (`borrow_detailscol`),

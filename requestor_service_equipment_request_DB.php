@@ -25,13 +25,6 @@
     $representative = $_POST['representative'];
     $idNum = $_POST['idNum']; 
 
-    $affiliation = $_POST['affiliation']; 
-    $department = $_POST['department']; 
-    $organization = $_POST['organization']; 
-    $office = $_POST['office']; 
-
-
-
     date_default_timezone_set("Asia/Singapore");
 
     $value = date("Y/m/d");
@@ -43,23 +36,12 @@
     $id = 0;    
 
     //insertion to request table
-    if($affiliation == '1'){
 
-        $sql1 = "INSERT INTO `thesis`.`request_borrow` (`officeID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `personrepresentativeID`, `personrepresentative`, `dateCreated`, `purpose`, `statusID`, `steps`) VALUES ('{$office}', '{$buildingID}', '{$FloorAndRoomID }', '{$dateNeeded}', '{$endDate}', '{$employeeID}', '{$idNum}', '{$representative}', '{$date}', '{$purpose}', '1', '12');";//status is set to 1 for pending status
-        $result1 = mysqli_query($dbc, $sql1);
-    }
 
-    if($affiliation == '2'){
+    $sql2 = "INSERT INTO `thesis`.`request_borrow` ( `DepartmentID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `personrepresentativeID`, `personrepresentative`, `dateCreated`, `purpose`, `statusID`, `steps`) VALUES ('{$department}', '{$buildingID}', '{$FloorAndRoomID }', '{$dateNeeded}', '{$endDate}', '{$employeeID}', '{$idNum}', '{$representative}', '{$date}', '{$purpose}', '1', '12');";//status is set to 1 for pending status
+    $result2 = mysqli_query($dbc, $sql2);
 
-        $sql2 = "INSERT INTO `thesis`.`request_borrow` ( `DepartmentID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `personrepresentativeID`, `personrepresentative`, `dateCreated`, `purpose`, `statusID`, `steps`) VALUES ('{$department}', '{$buildingID}', '{$FloorAndRoomID }', '{$dateNeeded}', '{$endDate}', '{$employeeID}', '{$idNum}', '{$representative}', '{$date}', '{$purpose}', '1', '12');";//status is set to 1 for pending status
-        $result2 = mysqli_query($dbc, $sql2);
-    }
-    if($affiliation == '3'){
-
-        $sql3 = "INSERT INTO `thesis`.`request_borrow` (`organizationID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `personrepresentativeID`, `personrepresentative`, `dateCreated`, `purpose`, `statusID`, `steps`) VALUES ('{$organization}', '{$buildingID}', '{$FloorAndRoomID }', '{$dateNeeded}', '{$endDate}', '{$employeeID}', '{$idNum}', '{$representative}', '{$date}', '{$purpose}', '1', '12');";//status is set to 1 for pending status
-
-        $result3 = mysqli_query($dbc, $sql3);
-    }
+    echo $sql2;
    
     
     $sql4 = "SELECT * FROM `thesis`.`request_borrow` order by borrowID DESC LIMIT 1;";
@@ -91,6 +73,6 @@
 
   unset($_SESSION['count']);  
 
-  header('Location: '.$header);
+  //header('Location: '.$header);
 
 ?>
