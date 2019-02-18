@@ -65,13 +65,17 @@
 			}
 			
 		}
+		//GET TOTAL OF ASSETS ORDERED BASED ONITS DELIVERYID
+		$queryTotAss="SELECT sum(quantity) as `qtyOrdered` FROM thesis.deliverydetails where DeliveryID='{$rowLatDeliv['id']}'";
+		$resultTotAss=mysqli_query($dbc,$queryTotAss);
+		$rowTotAss=mysqli_fetch_array($resultTotAss,MYSQLI_ASSOC);
 		
 		//Check if a specific procurement order is complete
-		$queryIsProcComp="SELECT SUM(DISTINCT dd.quantity) as `qtyOrdered`,SUM(dd.itemsReceived) as `qtyReceived` FROM thesis.deliverydetails dd join delivery d on dd.DeliveryID=d.id where d.procurementID='{$procID}'";
+		$queryIsProcComp="SELECT SUM(dd.itemsReceived) as `qtyReceived` FROM thesis.deliverydetails dd join delivery d on dd.DeliveryID=d.id where d.procurementID='{$procID}'";
 		$resultIsProcComp=mysqli_query($dbc,$queryIsProcComp);
 		$rowIsProcComp=mysqli_fetch_array($resultIsProcComp,MYSQLI_ASSOC);
 		
-		if($rowIsProcComp['qtyOrdered']==$rowIsProcComp['qtyReceived']){
+		if($rowTotAss['qtyOrdered']==$rowIsProcComp['qtyReceived']){
 			$querya="UPDATE `thesis`.`procurement` SET `status`='3' WHERE `procurementID`='{$procID}'";
 			$resulta=mysqli_query($dbc,$querya);
 		}

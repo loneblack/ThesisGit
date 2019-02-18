@@ -120,7 +120,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                     <div class="form-group">
                                                         <label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
                                                         <div class="col-lg-6">
-                                                            <select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15">
+                                                            <select name="FloorAndRoomID" id="FloorAndRoomID" class="form-control m-bot15" required="">
                                                                 <option value=''>Select floor & room</option>
                                                                 <?php
                                                                 for($i = 0; $i < sizeof($departments); $i++)
@@ -166,8 +166,8 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                         <tbody>
                                                             <tr>
                                                                 <td>
-                                                                    <select name = "category0" class="form-control"  onChange="getMax(this.value)" >
-                                                                        <option>Select Category</option>
+                                                                    <select name = "category0" class="form-control"  onChange="getMax(this.value)" required="">
+                                                                        <option value=''>Select Category</option>
                                                                          <?php
 
                                                                             $sql = "SELECT * FROM thesis.ref_assetcategory;";
@@ -185,12 +185,13 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                                     </select>
                                                                 </td>
                                                                 <td>
+                                                                    <input style="display: none" type="number" id="count" value=<?php echo $_SESSION['count'];?>/>
                                                                     <select name='quantity0' id='quantity0' class='form-control m-bot15' required>              
                                                                         <option value=''>0</option>
                                                                     </select>
                                                                 </td>
                                                                 <td><input class="form-control" type="text" name="purpose0" id="purpose0"></td>
-                                                                <td><button type = "button" class="btn btn-success" onclick="addTest(4)"> Add </button></td>
+                                                                <td><button type = "button" class="btn btn-success" onclick="addTest()"> Add </button></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -255,17 +256,21 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
         }
         var appendTableRow = function(rowCount, canvasItemID) {
 
+             $("#count").val(count);
+
             count++;
             var tr = "<tr>" +
                 "<td><select class='form-control' name='category"+count+"' id='category"+count+"' onChange='getMax(this.value)' >"+
 
-                "<option>Select Category</option>"+
+                "<option value=''>Select Category</option>"+
 
-                '<?php
+                "<?php
 
-                    $sql = "SELECT * FROM thesis.ref_assetcategory;";
+                    $sql = 'SELECT * FROM thesis.ref_assetcategory;';
 
                     $result = mysqli_query($dbc, $sql);
+
+                     $_SESSION['count'] += 1;
 
                     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                     {
@@ -275,10 +280,8 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
 
                     }
 
-                    $_SESSION['count']++;
 
-
-                ?>'
+                ?>" 
 
 
                 +"</select></td>" +
@@ -286,7 +289,18 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                 "<td><input type='text' name='purpose"+count+"' id='purpose"+count+"' class='form-control m-bot15'></select></td>" +
                 "<td><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
                 "</tr>";
+
             $('#tableTest tbody tr').eq(rowCount).after(tr);
+
+            $.ajax({
+            type:"POST",
+            url:"count.php",
+            data: 'count='+count,
+            success: function(data){
+                $("#count").html(data);
+
+                }
+            });
         }
 
            function getRooms(val){

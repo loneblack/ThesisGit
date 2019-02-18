@@ -109,10 +109,10 @@
                                                     <tbody>
 														<?php
 															//GET STOCKED ASSET TEST
-															$queryAsset="SELECT a.assetID,rac.name as `assetCat`,rb.name as `brandName`,am.description as `assetModel`,ras.description as `assetStat`,a.propertyCode FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID
+															$queryAsset="SELECT a.assetID,rac.name as `assetCat`,rb.name as `brandName`,am.description as `assetModel`,ras.description as `assetStat`,a.propertyCode,am.itemSpecification,floor(DATEDIFF(now(),a.dateDelivered)/365) as `yearsOnHand` FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID
 																		  join ref_assetstatus ras on a.assetStatus=ras.id
 																		  join ref_brand rb on am.brand=rb.brandID
-																		  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID where a.assetStatus='1'";
+																		  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID where a.assetStatus='1' and DATEDIFF(now(),a.dateDelivered) >= '1825'";
 															$resultAsset=mysqli_query($dbc,$queryAsset);
 															while($rowAsset=mysqli_fetch_array($resultAsset,MYSQLI_ASSOC)){
 																echo "<tr class='gradeX'>
@@ -122,6 +122,8 @@
 																<td>{$rowAsset['propertyCode']}</td>
 																<td>{$rowAsset['assetModel']}</td>
 																<td>{$rowAsset['brandName']}</td>
+																<td>{$rowAsset['itemSpecification']}</td>
+																<td>{$rowAsset['yearsOnHand']}</td>
 															</tr>";
 															}
 														
@@ -158,6 +160,8 @@
                                                             <th>Model</th>
                                                            <!-- <th class="hidden-phone">Comments</th> -->
                                                             <th class="hidden-phone">Brand</th>
+															<th>Specifications</th>
+                                                            <th>Years in Hand</th>
                                                         </tr>
                                                     </tfoot>
                                                 </table>

@@ -45,7 +45,7 @@
 			$resultReceiving=mysqli_query($dbc,$queryReceiving);
 
 			//get newly inserted receiving data
-			$queryGetReceiving="SELECT * FROM `thesis`.`requestor_receiving` where requestID='{$rowReqID['requestID']}'";
+			$queryGetReceiving="SELECT * FROM `thesis`.`requestor_receiving` where requestID='{$rowReqID['requestID']}' order by id desc limit 1";
 			$resultGetReceiving=mysqli_query($dbc,$queryGetReceiving);
 			$rowGetReceiving=mysqli_fetch_array($resultGetReceiving,MYSQLI_ASSOC);
 

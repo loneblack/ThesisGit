@@ -68,13 +68,13 @@ require_once("db/mysql_connect.php");
                                                 <tr>
                                                     <td style='display: none'>{$row['ticketID']}</td>
                                                     <th>#</th>
-                                                    <th>Title</th>
                                                     <td style='display: none'>{$row['ticketID']}</td>
                                                     <th>Category</th>
                                                     <th>Updated</th>
                                                     <th>Date Needed</th>
                                                     <th>Priority</th>
                                                     <th>Status</th>
+                                                    <th>Requested By</th>
                                                 </tr>
                                             </thead>
 
@@ -148,13 +148,13 @@ require_once("db/mysql_connect.php");
                                                 <tr>
                                                     <td style='display: none'>{$row['ticketID']}</td>
                                                     <th>#</th>
-                                                    <th>Title</th>
                                                     <td style='display: none'>{$row['ticketID']}</td>
                                                     <th>Category</th>
                                                     <th>Updated</th>
                                                     <th>Date Needed</th>
                                                     <th>Priority</th>
                                                     <th>Status</th>
+                                                    <th>Requested By</th>
                                                 </tr>
                                             </tfoot>
                                         </table>

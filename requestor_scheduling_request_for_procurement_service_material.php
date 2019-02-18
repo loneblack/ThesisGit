@@ -14,11 +14,6 @@ $resultReqInfo=mysqli_query($dbc,$queryReqInfo);
 $rowReqInfo=mysqli_fetch_array($resultReqInfo,MYSQLI_ASSOC);
 
 
-
-
-
-
-
 $sql = "SELECT  b.name AS 'building', floorRoom, recipient, dateneeded, r.description
             FROM thesis.request r 
         JOIN ref_status s 
@@ -44,6 +39,13 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 	
 	if(isset($_POST['save'])){
 		$deliverySched=$_POST['deliverySched'];
+		
+		//UPDATE DELIVERY DATE
+		$queryUpdDelDate="UPDATE `thesis`.`requestor_receiving` SET `statusID`='2', `deliveryDate`='{$deliverySched}' WHERE `id`='{$id}'";
+		$resultUpdDelDate=mysqli_query($dbc,$queryUpdDelDate);
+		
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message; 
 	}
 ?>
 
@@ -90,7 +92,14 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-
+				<?php
+                    if (isset($_SESSION['submitMessage']) && $_SESSION['submitMessage']=="Form submitted!"){
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
                 <div class="row">
                     <div class="row">
                         <div class="col-lg-12">
