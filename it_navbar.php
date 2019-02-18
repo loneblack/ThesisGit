@@ -36,14 +36,7 @@
                                 <i class="fa fa-tasks"></i>
                                 <span>Testing</span>
                             </a>
-                        </li>
-                        
-                        <li>
-                            <a href="it_maintenance_teams.php">
-                                <i class="fa fa-clock-o"></i>
-                                <span>Maintenance Teams</span>
-                            </a>
-                        </li>
+                        </li>s
                         
                         <li class="sub-menu">
                             <a href="javascript:;">

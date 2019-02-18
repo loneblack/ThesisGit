@@ -28,7 +28,7 @@
                         <li class="sub-menu">
                             <a href="helpdesk_maintenance.php">
                                 <i class="fa fa-wrench"></i>
-                                <span>Maintenance</span>
+                                <span>Maintenance Teams</span>
                             </a>
                         </li>
                         

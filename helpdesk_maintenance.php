@@ -11,14 +11,12 @@
 
     <title>DLSU IT Asset Management</title>
 
+
     <link href="bs3/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-reset.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link rel="stylesheet" href="js/morris-chart/morris.css">
-    <!--dynamic table-->
-    <link href="js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
-    <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
     <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css" />
+    <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
@@ -49,67 +47,56 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-				<?php
-                    if (isset($_SESSION['submitMessage'])){
 
-                        echo "<div class='alert alert-success'>
-                                {$_SESSION['submitMessage']}
-							  </div>";
-                        unset($_SESSION['submitMessage']);
-                    }
-				?>
-                <div class="col-sm-12">
+                <div class="row">
                     <div class="col-sm-12">
-                        
-                        <div class="row">
 
 
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <section class="panel">
-										<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                                        <header class="panel-heading">
-                                            Select Buildings to Perform Maintenance
-                                            <span class="tools pull-right">
-                                                <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                            </span>
-                                        </header>
-                                        <div class="panel-body">
-                                            <div class="adv-table">
-                                                <table class="display table table-bordered table-striped" id="dynamic-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th></th>
-                                                            <th>Building</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr class="gradeX">
-                                                            <td style="width:7px; text-align:center"><input type="checkbox" class="form-check-input" id="exampleCheck1"></td>
-                                                            <td>Gokongwei</td>
-                                                        </tr> 
-                                                        
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <th></th>
-                                                            <th>Building</th>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
+                        <div class="col-sm-12">
+                            <section class="panel">
+                                <header class="panel-heading">
+                                    Maintenance Team List
+                                </header>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <section class="panel">
+                                            <div class="panel-body">
+                                                <form method="post">
+                                                    <button class="btn btn-success" type="submit">Save</button><br><br>
+                                                    <div class="adv-table">
+                                                        <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="display: none">id</th>
+                                                                    <th>Assignment</th>
+                                                                    <th>Engineer Assigned</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td style="display: none"></td>
+                                                                    <td class="col-lg-7">Gokongwei</td>
+                                                                    <td class="col-lg-5"> 
+                                                                        <select class="form-control">
+                                                                            <option value="0">Select Engineer</option>
+                                                                        </select>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        </div>
-                                        <div style="padding-left:10px; padding-bottom:10px">
-                                            <button type="submit" name="confirm" onclick="Confirm()" class="btn btn-info">Confirm</button>
-											<button type="button" onclick="window.history.back()" class="btn btn-secondary">Back</button>
-                                        </div>
-										</form>
-                                    </section>
+                                        </section>
+                                    </div>
                                 </div>
-                            </div>
 
 
+                            </section>
                         </div>
+
+
                     </div>
                 </div>
                 <!-- page end-->
@@ -119,33 +106,27 @@
 
     </section>
 
-    <!-- WAG GALAWIN PLS LANG -->
-	
-	<script>
-	function Confirm() {
-		confirm("Are you sure?");
-	}
-	</script>
+    <script>
+       
+    </script>
 
+    <!-- WAG GALAWIN PLS LANG -->
+
+    <!--Core js-->
     <script src="js/jquery.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
     <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
-
-    <!--dynamic table-->
     <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+    <script src="js/dynamic_table_init.js"></script>
+
+
+
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
-
-    <script src="js/morris-chart/morris.js"></script>
-    <script src="js/morris-chart/raphael-min.js"></script>
-    <script src="js/morris.init.js"></script>
-
-    <!--dynamic table initialization -->
-    <script src="js/dynamic_table_init.js"></script>
 
 </body>
 
