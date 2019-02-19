@@ -20,73 +20,66 @@ if (isset($_POST['submit'])){
 	
 		
 		
-		$message=NULL;
+	$message=NULL;
 		
-		//Firstname 
-		$firstname=$_POST['firstname'];
+	//Firstname 
+	$firstname=$_POST['firstname'];
+	
+	//Lastname
+	$lastname=$_POST['lastname'];
 		
-		//Lastname
-		$lastname=$_POST['lastname'];
+	//User Type
+	$usertype=$_POST['usertype'];
 		
-		//User Type
-		$usertype=$_POST['usertype'];
+	//User Name
 		
-		//User Name
+	//$checkQuery1 = "SELECT CONVERT(AES_DECRYPT(userName, '{$key}') USING utf8) FROM user WHERE username = AES_ENCRYPT('{$_POST['username']}', '{$key}')";
+	//$checkResult1 = mysqli_query($dbc, $checkQuery1);
 		
-		//$checkQuery1 = "SELECT CONVERT(AES_DECRYPT(userName, '{$key}') USING utf8) FROM user WHERE username = AES_ENCRYPT('{$_POST['username']}', '{$key}')";
-		//$checkResult1 = mysqli_query($dbc, $checkQuery1);
+	//if($checkResult1->num_rows > 0){
+		//$username=FALSE;
+		//$message.="Username already exists. ";
+	//}
+	//else
+		$username=$_POST['username'];
 		
-		//if($checkResult1->num_rows > 0){
-			//$username=FALSE;
-			//$message.="Username already exists. ";
-		//}
-		//else
-			$username=$_POST['username'];
+	//Password
+	if($_POST['password']!=$_POST['confirm_password']){
+		$password=FALSE;
+		$message.="Passwords entered does not match. ";
+	}
+	else{
+		$password=$_POST['password'];
+	}
 		
-		//Password
-		if($_POST['password']!=$_POST['confirm_password']){
-			$password=FALSE;
-			$message.="Passwords entered does not match. ";
-		}
-		else{
-			$password=$_POST['password'];
-		}
-		
-		//Dept
-        $departments=null;
+	//Dept
+    $departments=null;
        
 		
-		if(!isset($message)){
-			$_SESSION['submitMessage'] = "Success! The user has been edited successfully.";
-			$query="UPDATE `thesis`.`user` SET username=AES_ENCRYPT('{$username}', '{$key}'), password=AES_ENCRYPT('{$password}', '{$key}'), userType='{$usertype}', firstName=AES_ENCRYPT('{$firstname}', '{$key}'), lastName=AES_ENCRYPT('{$lastname}', '{$key}') WHERE `UserID`='{$userid}'";
-			$result=mysqli_query($dbc,$query);
-			$flag=1;
-			
-			//Update office
-			if(isset($_POST['office'])){
-				$office=$_POST['office'];
-				$queryOffi="UPDATE `thesis`.`employee` SET `officeID`='{$office}' WHERE `employeeID`='{$rowEmpID['employeeID']}'";
-				$resultOffi=mysqli_query($dbc,$queryOffi);
-			}
-			else{
-				//Delete all departments for a given user
-				$queryDelUserDep="Delete FROM thesis.department_list 
+	if(!isset($message)){
+		$_SESSION['submitMessage'] = "Success! The user has been edited successfully.";
+		$query="UPDATE `thesis`.`user` SET password=AES_ENCRYPT('{$password}', '{$key}'), userType='{$usertype}', firstName=AES_ENCRYPT('{$firstname}', '{$key}'), lastName=AES_ENCRYPT('{$lastname}', '{$key}') WHERE `UserID`='{$userid}'";
+		$result=mysqli_query($dbc,$query);
+		$flag=1;
+		
+		//Delete all departments for a given user
+		$queryDelUserDep="Delete FROM thesis.department_list 
 										  where employeeID='{$rowEmpID['employeeID']}'";
-				$resultDelUserDep=mysqli_query($dbc,$queryDelUserDep);
+		$resultDelUserDep=mysqli_query($dbc,$queryDelUserDep);
 				
-				$departments=$_POST['departments'];
-				//INSERT INTO department list
-				foreach($departments as $department){
-					$queryDepList="INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('{$department}', '{$rowEmpID['employeeID']}')";
-					$resultDepList=mysqli_query($dbc,$queryDepList);
-				}
-			}
-			//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/admin_edit_user.php?userid=".$userid."");
+		$departments=$_POST['departments'];
+		//INSERT INTO department list
+		foreach($departments as $department){
+			$queryDepList="INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('{$department}', '{$rowEmpID['employeeID']}')";
+			$resultDepList=mysqli_query($dbc,$queryDepList);
 		}
 		
-		else{
-			$_SESSION['submitMessage'] = $message;
-		}
+		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/admin_edit_user.php?userid=".$userid."");
+	}
+		
+	else{
+		$_SESSION['submitMessage'] = $message;
+	}
 		
 		
 	}
@@ -241,36 +234,6 @@ if (isset($_POST['submit'])){
                                                 </div>
                                             </div>
 
-                                            <div class="form-group ">
-                                                <label for="lastname" class="control-label col-lg-3">Office</label>
-                                                <div class="col-lg-6">
-													<select class="form-control m-bot15" name="office" required>
-														<option value="">None</option>
-														<?php
-															//Get selected office
-															$querySelOff="SELECT officeID FROM thesis.employee where employeeID='{$rowEmpID['employeeID']}'";
-															$resultSelOff=mysqli_query($dbc,$querySelOff);
-															$rowSelOff=mysqli_fetch_array($resultSelOff,MYSQLI_ASSOC);
-															
-															$queryOff="SELECT * FROM thesis.offices";
-															$resultOff=mysqli_query($dbc,$queryOff);
-															while($rowOff=mysqli_fetch_array($resultOff,MYSQLI_ASSOC)){
-																if($rowSelOff['officeID']==$rowOff['officeID']){
-																	echo "<option selected value='{$rowOff['officeID']}'>{$rowOff['Name']}</option>";
-																}
-																else{
-																	echo "<option value='{$rowOff['officeID']}'>{$rowOff['Name']}</option>";
-																}
-																
-															}
-															
-														?>
-                                                        
-                                                        
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            
                                             <div class="form-group ">
                                                 <label for="password" class="control-label col-lg-3">Password</label>
                                                 <div class="col-lg-6">
