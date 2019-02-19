@@ -73,8 +73,6 @@ require_once("db/mysql_connect.php");
                                                     <td style='display: none'>ID</td>
                                                     <th>#</th>
                                                     <th>Type of Request</th>
-                                                    <th>Date Made</th>
-                                                    <th>Date Needed</th>
                                                     <td style='display: none'>StatusID</td>
                                                     <th>Status</th>
                                                     <!-- <th>Description</th> -->
@@ -85,13 +83,8 @@ require_once("db/mysql_connect.php");
   
                                                  <?php
                                                     // view for purchase request
-                                                    $count = 1;
 
-                                                    $query = "SELECT *, s.description as `statusName`,rs.name as `step`
-                                                              FROM thesis.request r
-                                                              JOIN ref_status s ON r.status = s.statusID
-														      JOIN ref_steps rs on r.step=rs.id
-															  WHERE UserID = {$userID} AND rs.id = '7';";
+                                                    $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN request b ON r.requestID = b.requestID JOIN ref_status s ON r.statusID = s.statusID WHERE r.statusID = 1;";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -100,27 +93,17 @@ require_once("db/mysql_connect.php");
                                                       
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['requestID']}</td>
-                                                            <td>{$count}</td>
+                                                            <td>{$row['receivingID']}</td>
                                                             <td>Asset Request</td>
-                                                            <td>{$row['date']}</td>
-                                                            <td>{$row['dateNeeded']}</td>
                                                             <td style='display: none'>{$row['statusID']}</td>";
 
                                                         if($row['statusID'] == '1'){//pending
-                                                            echo "<td><span class='label label-warning'>{$row['statusName']}</span></td>";
+                                                            echo "<td>{$row['description']}</td>";
                                                         }
-                                                        if($row['statusID'] == '2'){//ongoing
-                                                            echo "<td><span class='label label-info'>{$row['step']}</span></td>";
+                                                        if($row['statusID'] == '4'){//ongoing
+                                                            echo "<td>{$row['description']}</td>";
                                                         }
-                                                        if($row['statusID'] == '3'){//completed
-                                                            echo "<td><span class='label label-success'>{$row['statusName']}</span></td>";
-                                                        }
-                                                        if($row['statusID'] == '6'){//disapproved
-                                                            echo "<td><span class='label label-danger'>{$row['statusName']}</span></td>";
-                                                        }
-														//echo "<td>{$row['step']}</td>";
 
-                                                          $count++;
                                                     }
                                                   ?>
                                                    <?php
@@ -133,10 +116,7 @@ require_once("db/mysql_connect.php");
                                                         
                                                     }
 
-                                                    $query = "SELECT * FROM thesis.request_borrow r 
-                                                              JOIN ref_status s ON r.statusID = s.statusID
-                                                              JOIN ref_steps t ON r.steps = t.id
-                                                              AND personresponsibleID = {$employeeID};";
+                                                    $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN request_borrow b ON r.borrowID = b.borrowID JOIN ref_status s ON r.statusID = s.statusID WHERE r.statusID = 1;";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -145,30 +125,20 @@ require_once("db/mysql_connect.php");
                                                       
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['borrowID']}</td>
-                                                            <td>{$count}</td>
+                                                            <td>{$row['receivingID']}</td>
                                                             <td>Borrow</td>
-                                                            <td>{$row['dateCreated']}</td>
-                                                            <td>{$row['startDate']}</td>
                                                             <td style='display: none'>{$row['statusID']}</td>";
 
                                                         if($row['statusID'] == '1'){//pending
-                                                            echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
+                                                            echo "<td>{$row['description']}</td>";
                                                         }
-                                                        if($row['statusID'] == '2'){//ongoing
-                                                            echo "<td><span class='label label-info'>{$row['name']}</span></td>";
-                                                        }
-                                                        if($row['statusID'] == '3'){//completed
-                                                            echo "<td><span class='label label-success'>{$row['description']}</span></td>";
-                                                        }
-                                                        if($row['statusID'] == '4'){//disapproved
-                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
+                                                        if($row['statusID'] == '4'){//ongoing
+                                                            echo "<td>{$row['description']}</td>";
                                                         }
 
 
                                                         //echo "<td>{$row['name']}</td>";
                                                         echo "</tr>";
-
-                                                        $count++;
                                                     }
 
                                                     
@@ -180,8 +150,6 @@ require_once("db/mysql_connect.php");
                                                     <td style='display: none'>ID</td>
                                                     <th>#</th>
                                                     <th>Type of Request</th>
-                                                    <th>Date Made</th>
-                                                    <th>Date Needed</th>
                                                     <td style='display: none'>StatusID</td>
                                                     <th>Status</th>
                                                     <!-- <th>Description</th> -->
@@ -215,17 +183,12 @@ require_once("db/mysql_connect.php");
                 return function() {
 
                    var cell1 = row.getElementsByTagName("td")[0];
-                    var id = cell1.textContent;
+                    var id1 = cell1.textContent;
 
-                    var cell = row.getElementsByTagName("td")[2];
-                    var requestType = cell.textContent;
-                    
-					var cell2 = row.getElementsByTagName("td")[6];
-                    var step = cell2.textContent;
+                    var cell = row.getElementsByTagName("td")[1];
+                    var id2 = cell.textContent;
 					
-                    if(requestType == 'Asset Request'){
-						window.location.href = "requestor_view_receiving.php?id=" + id;
-                    }
+                    window.location.href = "requestor_view_receiving.php?id=" + id2;
                     
                 };
             };

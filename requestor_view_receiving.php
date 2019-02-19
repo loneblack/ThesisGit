@@ -6,43 +6,89 @@ require_once("db/mysql_connect.php");
 
 $id = $_GET['id'];
 
-$sql = "SELECT  b.name AS 'building', floorRoom, recipient, dateneeded, r.description
-            FROM thesis.request r 
-        JOIN ref_status s 
-            ON r.status = s.statusID
-        JOIN building b
-            ON r.BuildingID = b.BuildingID
-        JOIN floorandroom f
-            ON  r.FloorAndRoomID = f.FloorAndRoomID
-            WHERE requestID =  {$id};";
+$sql = "SELECT * FROM thesis.requestor_receiving WHERE id = {$id};";
 $result = mysqli_query($dbc, $sql);
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
-        $description = $row['description'];
-        $building = $row['building'];
+        $borrowID = $row['borrowID'];
+        $requestID = $row['requestID'];
+    }
+
+if($borrowID > 0)//have borrow
+{
+  
+    $sql = "SELECT *, r.id as 'receivingID' 
+            FROM thesis.requestor_receiving r 
+            JOIN request_borrow b ON r.borrowID = b.borrowID 
+            JOIN building g ON b.BuildingID = g.BuildingID 
+            JOIN floorandroom f ON b.FloorAndRoomID = f.FloorAndRoomID  
+            WHERE r.id = '{$id}';";
+    $result = mysqli_query($dbc, $sql);
+
+    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+        $startDate = $row['startDate'];
+        $building = $row['name'];
         $floorRoom = $row['floorRoom'];
-        $recipient = $row['recipient'];
-        $recipient = $row['recipient'];
-        $dateneeded = $row['dateneeded'];
-        $description = $row['description'];
 
     }
 
-$sql = "SELECT * FROM thesis.requestdetails JOIN ref_assetcategory ON assetCategory = assetCategoryID WHERE requestID  =  {$id};";
+
+}
+if($requestID > 0)//have request
+{
+
+    $sql = "SELECT *, r.id as 'receivingID' 
+            FROM thesis.requestor_receiving r 
+            JOIN request t ON r.requestID = t.requestID 
+            JOIN building b ON r.BuildingID = b.BuildingID 
+            JOIN floorandroom f ON r.FloorAndRoomID = f.FloorAndRoomID 
+            WHERE r.id = '{$id}';";
+    $result = mysqli_query($dbc, $sql);
+
+    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+        $startDate = $row['startDate'];
+        $building = $row['building'];
+        $floorRoom = $row['floorRoom'];
+        $endDate = $row['endDate'];
+        $purpose = $row['purpose'];
+
+    }
+
+}
+
+$sql = "SELECT a.assetID, rb.name as 'brand', rac.name as 'category', description, received
+        FROM thesis.receiving_details r
+        JOIN asset a ON r.assetID = a.assetID 
+        JOIN assetmodel am on a.assetModel = am.assetModelID
+        JOIN ref_brand rb on am.brand = rb.brandID
+        JOIN ref_assetcategory rac on am.assetCategory = rac.assetCategoryID;";
 $result = mysqli_query($dbc, $sql);
 
 $count = 0;
 
-$requestedQuantity = array();
+$requestedID = array();
 $requestedCategory = array();
+$requestedBrand = array();
 $requestedDescription = array();
+$requestedBrand = array();
+$requestedCheck = array();
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
-        array_push($requestedQuantity, $row['quantity']);
+        array_push($requestedID, $row['assetID']);
+        array_push($requestedCategory, $row['category']);
+        array_push($requestedBrand, $row['brand']);
         array_push($requestedDescription, $row['description']);
-        array_push($requestedCategory, $row['name']);
+
+        if($row['received'] == 1){
+            array_push($requestedCheck, "checked disabled");
+        }
+        else {
+            array_push($requestedCheck, "");
+        }
 
         $count++;
 
@@ -81,11 +127,12 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
             </div>
 
             <div class="nav notify-row" id="top_menu">
-                <a href="">
+                <a href="logout.php">
                     <button class="btn btn-primary" style="">
 
                         Logout
                     </button> 
+                </a>
             </div>
 
         </header>
@@ -107,7 +154,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
-                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_request_for_procurement_service_material_DB.php">
+                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="receiving_dashboard.php">
                                                 <?php
                                                     if (isset($_SESSION['submitMessage'])){
 
@@ -130,49 +177,39 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                     </div>
                                                     <div class="form-group ">
                                                        <h4 class="control-label col-lg-1" style="text-align: left;">Date Needed</h4>
-                                                       <h4 class="control-label col-lg-1" style="text-align: left;"><?php echo $dateneeded;?></h4>
+                                                       <h4 class="control-label col-lg-1" style="text-align: left;"><?php echo $startDate;?></h4>
                                                     </div>
                                                 </section>
                                                 <hr>
-
-                                                <section>
-                                                    <h4>Request Details</h4>
-                                                    <div class="form-group ">
-                                                        <h4 class="control-label col-lg-1" style="text-align: left;">Reason Of Request</h4>
-                                                        <h4 class="control-label col-lg-1" style="text-align: left;"><?php echo $description;?></h4>
-                                                    </div>
-                                                </section>
-
-                                                <hr>
-
                                                 <section>
                                                     <h4>Requested Services/Materials</h4>
-                                                    <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+                                                    <table class="table table-bordered table-striped table-condensed table-hover" id="mama">
                                                         <thead>
                                                             <tr>
                                                                 <th></th>
-                                                                <th>Quantity</th>
                                                                 <th>Category</th>
-                                                                <th>Description</th>
+                                                                <th>Brand</th>
+                                                                <th>Model</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <?php
+
                                                             for ($i=0; $i < $count; $i++) { 
                                                                 echo
                                                                     '<tr>
                                                                         <td>
-                                                                                <input class="form-control" name="assets[]"  type="checkbox" value="'. $requestedQuantity[$i].'" />
+                                                                                <input class="form-control" name="assets[]"  type="checkbox" value="'. $requestedID[$i].'"'.$requestedCheck[$i].'/>
                                                                         </td>
 
                                                                         <td style="width:1%">
 
-                                                                            '.$requestedQuantity[$i].'                                                                       
+                                                                            '.$requestedCategory[$i].'                                                                       
                                                                         </td>
 
                                                                         <td>
 
-                                                                         '.$requestedCategory[$i].'
+                                                                         '.$requestedBrand[$i].'
 
                                                                         </td>
 
@@ -190,10 +227,34 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                 </section>
 
                                                 <div class="form-group">
-                                                    <div class="col-lg-offset-3 col-lg-6">
-                                                        <a href="requestor_dashboard.php"><button class="btn btn-default" type="button">Back</button></a>
+                                                    <div style="padding-left: 15px">
+                                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Submit</button>
+                                                        <a href="receiving_dashboard.php"><button class="btn btn-default" type="button">Back</button></a>
                                                     </div>
                                                 </div>
+
+                                                <!-- Modal -->
+                                                <div id="myModal" class="modal fade" role="dialog">
+                                                  <div class="modal-dialog">
+
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Confirmation</h4>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                        <p>Are you sure?</p>
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#myModal">Submit</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                      </div>
+                                                    </div>
+
+                                                  </div>
+                                                </div>
+                                                <!-- Modal End-->
                                             </form>
                                         </div>
                                     </div>
@@ -208,6 +269,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         <!--main content end-->
 
     </section>
+
 
     
     <!-- WAG GALAWIN PLS LANG -->

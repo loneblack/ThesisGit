@@ -1671,11 +1671,13 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `thesis`.`receiving_details` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`receiving_details` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `receivingID` INT NOT NULL,
   `assetID` INT(11) NOT NULL,
   `received` TINYINT NULL,
   INDEX `fk_receiving_details_asset1_idx` (`assetID` ASC),
   INDEX `fk_receiving_details_requestor_receiving1_idx` (`receivingID` ASC),
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_receiving_details_asset1`
     FOREIGN KEY (`assetID`)
     REFERENCES `thesis`.`asset` (`assetID`)
@@ -1708,4 +1710,3 @@ CREATE TABLE IF NOT EXISTS `thesis`.`DeliveryDetailsAssets` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
