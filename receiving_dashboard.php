@@ -84,7 +84,7 @@ require_once("db/mysql_connect.php");
                                                  <?php
                                                     // view for purchase request
 
-                                                    $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN request b ON r.requestID = b.requestID JOIN ref_status s ON r.statusID = s.statusID WHERE r.statusID = 1;";
+                                                    $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN request b ON r.requestID = b.requestID JOIN ref_status s ON r.statusID = s.statusID WHERE r.statusID != 3;";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -98,10 +98,10 @@ require_once("db/mysql_connect.php");
                                                             <td style='display: none'>{$row['statusID']}</td>";
 
                                                         if($row['statusID'] == '1'){//pending
-                                                            echo "<td>{$row['description']}</td>";
+                                                            echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
                                                         }
                                                         if($row['statusID'] == '4'){//ongoing
-                                                            echo "<td>{$row['description']}</td>";
+                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
                                                         }
 
                                                     }
@@ -116,7 +116,7 @@ require_once("db/mysql_connect.php");
                                                         
                                                     }
 
-                                                    $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN request_borrow b ON r.borrowID = b.borrowID JOIN ref_status s ON r.statusID = s.statusID WHERE r.statusID = 1;";
+                                                    $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN request_borrow b ON r.borrowID = b.borrowID JOIN ref_status s ON r.statusID = s.statusID WHERE r.statusID != 3;";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -130,10 +130,10 @@ require_once("db/mysql_connect.php");
                                                             <td style='display: none'>{$row['statusID']}</td>";
 
                                                         if($row['statusID'] == '1'){//pending
-                                                            echo "<td>{$row['description']}</td>";
+                                                            echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
                                                         }
                                                         if($row['statusID'] == '4'){//ongoing
-                                                            echo "<td>{$row['description']}</td>";
+                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
                                                         }
 
 

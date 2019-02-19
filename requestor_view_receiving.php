@@ -5,6 +5,8 @@ session_start();
 require_once("db/mysql_connect.php");
 
 $id = $_GET['id'];
+$startDate = "";
+$dateNeeded = "";
 
 $sql = "SELECT * FROM thesis.requestor_receiving WHERE id = {$id};";
 $result = mysqli_query($dbc, $sql);
@@ -42,18 +44,16 @@ if($requestID > 0)//have request
     $sql = "SELECT *, r.id as 'receivingID' 
             FROM thesis.requestor_receiving r 
             JOIN request t ON r.requestID = t.requestID 
-            JOIN building b ON r.BuildingID = b.BuildingID 
-            JOIN floorandroom f ON r.FloorAndRoomID = f.FloorAndRoomID 
+            JOIN building b ON t.BuildingID = b.BuildingID 
+            JOIN floorandroom f ON t.FloorAndRoomID = f.FloorAndRoomID 
             WHERE r.id = '{$id}';";
     $result = mysqli_query($dbc, $sql);
 
     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
-        $startDate = $row['startDate'];
-        $building = $row['building'];
+        $building = $row['name'];
         $floorRoom = $row['floorRoom'];
-        $endDate = $row['endDate'];
-        $purpose = $row['purpose'];
+        $dateNeeded = $row['dateNeeded'];;
 
     }
 
@@ -64,7 +64,8 @@ $sql = "SELECT a.assetID, rb.name as 'brand', rac.name as 'category', descriptio
         JOIN asset a ON r.assetID = a.assetID 
         JOIN assetmodel am on a.assetModel = am.assetModelID
         JOIN ref_brand rb on am.brand = rb.brandID
-        JOIN ref_assetcategory rac on am.assetCategory = rac.assetCategoryID;";
+        JOIN ref_assetcategory rac on am.assetCategory = rac.assetCategoryID
+        WHERE r.receivingID = '{$id}';";
 $result = mysqli_query($dbc, $sql);
 
 $count = 0;
@@ -127,12 +128,6 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
             </div>
 
             <div class="nav notify-row" id="top_menu">
-                <a href="logout.php">
-                    <button class="btn btn-primary" style="">
-
-                        Logout
-                    </button> 
-                </a>
             </div>
 
         </header>
@@ -154,7 +149,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
-                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="receiving_dashboard.php">
+                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_view_receiving_DB.php?id=<?php echo $id;?>">
                                                 <?php
                                                     if (isset($_SESSION['submitMessage'])){
 
@@ -177,7 +172,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                     </div>
                                                     <div class="form-group ">
                                                        <h4 class="control-label col-lg-1" style="text-align: left;">Date Needed</h4>
-                                                       <h4 class="control-label col-lg-1" style="text-align: left;"><?php echo $startDate;?></h4>
+                                                       <h4 class="control-label col-lg-1" style="text-align: left;"><?php echo $startDate; echo $dateNeeded;?></h4>
                                                     </div>
                                                 </section>
                                                 <hr>
