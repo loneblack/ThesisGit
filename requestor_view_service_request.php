@@ -136,20 +136,6 @@ if($serviceTypeID=='27'){
                                                     <div class="col-lg-6">
                                                         <textarea class="form-control" rows="5" name="details" style="resize:none"  disabled><?php echo $details;?></textarea>
                                                     </div>
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="dateNeeded" class="control-label col-lg-3">Date needed</label>
-                                                    <div class="col-lg-6">
-                                                        <input class="form-control" id="dateNeeded" name="dateNeeded" type="text" disabled value=
-                                                        <?php echo "'".$dateNeed."'";?>
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="endDate" class="control-label col-lg-3">End date</label>
-                                                    <div class="col-lg-6">
-                                                        <input class=" form-control" id="endDate" name="endDate"  disabled value = <?php echo "'".$endDate."'";?>/>
-                                                    </div>
                                                 </div><br><br>
 
                                                 <?php if($serviceTypeID=='27'){ ?>
@@ -208,7 +194,7 @@ if($serviceTypeID=='27'){
 
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-3 col-lg-6">
-                                                        <a href="requestor_dashboard.php"><button class="btn btn-default" type="button">Back</button></a>
+                                                        <a href="requestor_dashboard.php"><button class="btn btn-danger" type="button">Back</button></a>
                                                     </div>
                                                 </div>
                                             </form>
