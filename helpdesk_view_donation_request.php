@@ -202,7 +202,7 @@
 																		$queryb="SELECT * FROM thesis.ref_ticketstatus";
 																		$resultb=mysqli_query($dbc,$queryb);
 																		while($rowb=mysqli_fetch_array($resultb,MYSQLI_ASSOC)){
-																			if($rowb['id']=='1'){
+																			if($rowb['ticketID']=='2'){
 																				echo "<option value='{$rowb['ticketID']}' selected>{$rowb['status']}</option>";
 																			}
 																			else{
@@ -249,7 +249,7 @@
                                                             <label class="control-label col-lg-3">Due Date</label>
                                                             <div class="col-lg-6">
                                                                 <!-- class="form-control form-control-inline input-medium default-date-picker" -->
-                                                                <input class="form-control m-bot15" size="10" name="dueDate" type="datetime-local" value="<?php if (isset($_POST['dueDate']) && !$flag) echo $_POST['dueDate']; ?>" required />
+                                                                <input class="form-control m-bot15" size="10" name="dueDate" type="date" value="<?php if (isset($_POST['dueDate']) && !$flag) echo $_POST['dueDate']; ?>" required />
                                                             </div>
                                                         </div>
 																

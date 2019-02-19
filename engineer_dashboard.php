@@ -215,7 +215,6 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['ticketID']}</td>
                                                             <td>{$count}</td>
-                                                            <td>{$row['summary']}</td>
                                                             <td style='display: none'>{$row['serviceTypeID']}</td>
                                                             <td>{$row['serviceType']}</td>
                                                             <td>{$row['lastUpdateDate']}</td>
@@ -251,7 +250,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                                             echo "<td><span class='label label-danger'>{$row['status']}</span></td>";
                                                         }
                                                     
-                                                        echo "</tr>";
+                                                        echo "<td></td></tr>";
 
                                                           $count++;
                                                     }
@@ -292,7 +291,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                         var cell1 = row.getElementsByTagName("td")[0];
                         var id = cell1.textContent;
 
-                        var cell2 = row.getElementsByTagName("td")[3];
+                        var cell2 = row.getElementsByTagName("td")[2];
                         var serviceTypeID = cell2.textContent;
 
                         var cell3 = row.getElementsByTagName("td")[8];

@@ -206,9 +206,8 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                                         echo "<tr class='gradeA' id='{$row['ticketID']}'>
                                                             <td style='display: none'>{$row['ticketID']}</td>
                                                             <td>{$row['ticketID']}</td>
-                                                            <td>{$row['summary']}</td>
-                                                            <td style='display: none'>{$row['id']}</td>
                                                             <td>{$row['serviceType']}</td>
+                                                            <td style='display: none'>{$row['id']}</td>
                                                             <td>{$row['lastUpdateDate']}</td>
                                                             <td>{$row['dueDate']}</td>";
 
@@ -231,7 +230,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                                         elseif($row['status']=='Escalated'){
                                                             echo "<td><span class='label label-default'>{$row['status']}</span></td>";
                                                         }
-
+														 echo "<td></td></tr>";
                                                         $count++;
                                                         
                                                     }

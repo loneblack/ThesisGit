@@ -223,7 +223,7 @@
 				//$rowPass=mysqli_fetch_array($resultPass,MYSQLI_ASSOC);
 				
 				if($rowNumAss['numAssetTest']==$rowNumComp['numCompTest']){
-					$queryComp="UPDATE `thesis`.`donation` SET `stepsID`='11' WHERE `donationID`='{$rowDonDet['donationID']}'";
+					$queryComp="UPDATE `thesis`.`donation` SET `stepsID`='21' WHERE `donationID`='{$rowDonDet['donationID']}'";
 					$resultComp=mysqli_query($dbc,$queryComp);
 				}
 			}
