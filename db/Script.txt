@@ -649,6 +649,31 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `thesis`.`engineer_assignment`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`engineer_assignment` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`engineer_assignment` (
+  `assignmentID` INT NOT NULL,
+  `BuildingID` INT(11) NOT NULL,
+  `roomtypeID` INT NOT NULL,
+  PRIMARY KEY (`assignmentID`),
+  INDEX `fk_engineer_assignment_building1_idx` (`BuildingID` ASC),
+  INDEX `fk_engineer_assignment_ref_roomtype1_idx` (`roomtypeID` ASC),
+  CONSTRAINT `fk_engineer_assignment_building1`
+    FOREIGN KEY (`BuildingID`)
+    REFERENCES `thesis`.`building` (`BuildingID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_engineer_assignment_ref_roomtype1`
+    FOREIGN KEY (`roomtypeID`)
+    REFERENCES `thesis`.`ref_roomtype` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `thesis`.`ticket`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `thesis`.`ticket` ;
@@ -671,6 +696,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
   `others` LONGTEXT NULL DEFAULT NULL,
   `comment` LONGTEXT NULL,
   `service_id` INT(11) NULL,
+  `assignmentID` INT NULL,
   PRIMARY KEY (`ticketID`),
   INDEX `fk_Ticket_ref_TicketStatus1_idx` (`status` ASC),
   INDEX `fk_Ticket_User1_idx` (`creatorUserID` ASC),
@@ -678,6 +704,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
   INDEX `fk_ticket_assettesting1_idx` (`testingID` ASC),
   INDEX `fk_ticket_ref_servicetype1_idx` (`serviceType` ASC),
   INDEX `fk_ticket_service1_idx` (`service_id` ASC),
+  INDEX `fk_ticket_engineer_assignment1_idx` (`assignmentID` ASC),
   CONSTRAINT `fk_Ticket_User1`
     FOREIGN KEY (`creatorUserID`)
     REFERENCES `thesis`.`user` (`UserID`),
@@ -696,6 +723,11 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
   CONSTRAINT `fk_ticket_service1`
     FOREIGN KEY (`service_id`)
     REFERENCES `thesis`.`service` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ticket_engineer_assignment1`
+    FOREIGN KEY (`assignmentID`)
+    REFERENCES `thesis`.`engineer_assignment` (`assignmentID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -1729,3 +1761,4 @@ CREATE TABLE IF NOT EXISTS `thesis`.`DeliveryDetailsAssets` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
