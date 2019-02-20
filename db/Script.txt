@@ -57,19 +57,38 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `thesis`.`ref_roomtype`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`ref_roomtype` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`ref_roomtype` (
+  `id` INT NOT NULL,
+  `roomtype` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `thesis`.`floorandroom`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `thesis`.`floorandroom` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`floorandroom` (
   `FloorAndRoomID` INT(11) NOT NULL AUTO_INCREMENT,
+  `roomtype` INT NOT NULL,
   `BuildingID` INT(11) NOT NULL,
   `floorRoom` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`FloorAndRoomID`),
   INDEX `fk_FloorAndRoom_Building1_idx` (`BuildingID` ASC),
+  INDEX `fk_floorandroom_ref_roomtype1_idx` (`roomtype` ASC),
   CONSTRAINT `fk_FloorAndRoom_Building1`
     FOREIGN KEY (`BuildingID`)
-    REFERENCES `thesis`.`building` (`BuildingID`))
+    REFERENCES `thesis`.`building` (`BuildingID`),
+  CONSTRAINT `fk_floorandroom_ref_roomtype1`
+    FOREIGN KEY (`roomtype`)
+    REFERENCES `thesis`.`ref_roomtype` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
