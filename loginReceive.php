@@ -40,8 +40,10 @@
                 <input name="password" type="password" class="form-control" placeholder="Password" required><!-- added name-->
             </div>
             <button class="btn btn-lg btn-login btn-block" type="submit">Sign in</button>
-        </div>
       </form>
+      <a href="login.php"><button class="btn btn-lg btn-block">Back</button></a>
+
+        </div>
     </div>
 
     <!-- Wag nga galawin kulit -->
