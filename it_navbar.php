@@ -36,7 +36,7 @@
                                 <i class="fa fa-tasks"></i>
                                 <span>Testing</span>
                             </a>
-                        </li>s
+                        </li>
                         
                         <li class="sub-menu">
                             <a href="javascript:;">
