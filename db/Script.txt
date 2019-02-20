@@ -1,3 +1,5 @@
+-- MySQL Workbench Forward Engineering
+
 -- -----------------------------------------------------
 -- Schema thesis
 -- -----------------------------------------------------
@@ -654,7 +656,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `thesis`.`engineer_assignment` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`engineer_assignment` (
-  `assignmentID` INT NOT NULL,
+  `assignmentID` INT NOT NULL AUTO_INCREMENT,
   `BuildingID` INT(11) NOT NULL,
   `roomtypeID` INT NOT NULL,
   `employeeID` INT(11) NOT NULL,
