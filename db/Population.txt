@@ -822,6 +822,88 @@
 		INSERT INTO `schoolyear` (`SchoolYearID`,`SchoolYear`,`Term1Start`,`Term2Start`,`Term3Start`,`Term1End`,`Term2End`,`Term3End`) VALUES (1,'2018-2019','2018-01-01','2018-05-01','2018-09-01','2018-04-30','2018-08-31','2018-12-31');
 		INSERT INTO `schoolyear` (`SchoolYearID`,`SchoolYear`,`Term1Start`,`Term2Start`,`Term3Start`,`Term1End`,`Term2End`,`Term3End`) VALUES (2,'2019-2020','2019-01-01','2019-05-01','2019-09-01','2019-04-30','2019-08-31','2019-12-31');
 
+		-- Roomtype
+		INSERT INTO `thesis`.`ref_roomtype` (`id`, `roomtype`) VALUES ('1', 'Classroom');
+		INSERT INTO `thesis`.`ref_roomtype` (`id`, `roomtype`) VALUES ('2', 'Office');
+		INSERT INTO `thesis`.`ref_roomtype` (`id`, `roomtype`) VALUES ('3', 'Gate');
+		INSERT INTO `thesis`.`ref_roomtype` (`id`, `roomtype`) VALUES ('4', 'Computer Laboratory');
+
+		-- FloorandRoom
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '1', '1', '100');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('2', '1', '1', '101');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('3', '1', '1', '102');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '1', '1', '103');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('5', '1', '1', '104');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('6', '2', '1', '105');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('7', '2', '1', '106');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('8', '2', '1', '107');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('9', '3', '1', '');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('10', '4', '1', '208');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('11', '4', '1', '408');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('12', '1', '2', '201');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('13', '1', '2', '202');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('14', '1', '2', '100');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('15', '2', '2', '301');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`) VALUES ('16', '3', '2');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('17', '4', '2', '202');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('18', '1', '2', '564');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('19', '2', '2', '465');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('20', '1', '3', '435');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`) VALUES ('21', '3', '3');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('22', '2', '3', '234');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('23', '4', '3', '355');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('24', '1', '3', '3452');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('25', '2', '3', '132432');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('26', '4', '3', '4243');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('27', '1', '4', '123');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('28', '2', '4', '876');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`) VALUES ('29', '3', '4');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('30', '4', '4', '645');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('31', '1', '4', '6453');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('32', '2', '4', '423');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('33', '1', '5', '564');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('34', '2', '5', '572');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`) VALUES ('35', '3', '5');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('36', '4', '5', '899');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('37', '1', '5', '564');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('38', '4', '6', '4233');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('39', '1', '6', '213');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('40', '2', '6', '231');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('41', '3', '6', '978');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('42', '4', '6', '645');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('43', '1', '7', '345');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('44', '2', '7', '765');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`) VALUES ('45', '3', '7');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('46', '4', '7', '111');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('47', '4', '7', '13242');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('48', '1', '8', '322');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('49', '2', '8', '542');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`) VALUES ('50', '3', '8');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('51', '4', '8', '344');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('52', '1', '8', '2134');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('53', '1', '9', '765');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('54', '2', '9', '3423');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`) VALUES ('55', '3', '9');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('56', '4', '9', '4311');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('57', '2', '9', '312');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('58', '1', '10', '4323');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('59', '2', '10', '352');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`) VALUES ('60', '3', '10');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('61', '4', '10', '258');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('62', '1', '10', '5637');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('63', '1', '11', '2344');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('64', '2', '11', '543');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`) VALUES ('65', '3', '11');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('66', '4', '11', '234');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('67', '1', '11', '543');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('68', '1', '12', '456');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('69', '2', '12', '231');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('70', '3', '12', '');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('71', '4', '12', '101');
+		INSERT INTO `thesis`.`floorandroom` (`FloorAndRoomID`, `roomtype`, `BuildingID`, `floorRoom`) VALUES ('72', '1', '12', '201');
+
+
+
 
 		
 
