@@ -69,14 +69,16 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th style="display: none">id</th>
-                                                                    <th>Assignment</th>
+                                                                    <th>Building Assignment</th>
+                                                                    <th>Room Type</th>
                                                                     <th>Engineer Assigned</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
                                                                     <td style="display: none"></td>
-                                                                    <td class="col-lg-7">Gokongwei</td>
+                                                                    <td class="">Gokongwei</td>
+                                                                    <td class="">Classroom</td>
                                                                     <td class="col-lg-5"> 
                                                                         <select class="form-control">
                                                                             <option value="0">Select Engineer</option>
