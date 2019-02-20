@@ -36,7 +36,14 @@
                                 <i class="fa fa-tasks"></i>
                                 <span>Testing</span>
                             </a>
-                        </li>s
+                        </li>
+                        
+                        <li>
+                            <a href="it_maintenance.php">
+                                <i class="fa fa-wrench"></i>
+                                <span>Maintenance</span>
+                            </a>
+                        </li>
                         
                         <li class="sub-menu">
                             <a href="javascript:;">

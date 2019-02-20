@@ -22,7 +22,7 @@
 		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('7', 'Henry S. Sy Sr. Hall (HSSH)');
 		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('8', 'John Gokongwei Sr. Hall (GH)');
 		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('9', 'Brother Bloemen Hall ');
-		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('10', 'St. Mutien Marie Hall');
+		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('10', 'St. Mutien Marie Hall (MM)');
 		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('11', 'Science and Technology Research Center (STRC)');
 		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('12', 'St. Joseph Hall (SJ)');
 		INSERT INTO `thesis`.`building` (`BuildingID`, `name`) VALUES ('13', 'St. La Salle Hall (LS)');
