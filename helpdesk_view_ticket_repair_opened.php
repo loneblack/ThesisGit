@@ -314,7 +314,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             <div class="form-group">
                                                 <label class="control-label col-lg-4">Due Date</label>
                                                 <div class="col-lg-8">
-                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value=<?php echo $dueDate;?> disabled/>
+                                                    <input readonly class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" 
+                                                    value= "<?php echo $dueDate;?>"  >
                                                 </div>
                                             </div>
                                        

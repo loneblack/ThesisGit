@@ -70,10 +70,11 @@
                                                 <tr>
                                                     <th style="display: none"></th>
                                                     <th>#</th>
-                                                    <th>Title</th>
+                                                    <th>Purpose</th>
                                                     <th>Type of Request</th>
                                                     <th>Date Needed</th>
                                                     <th>Status</th>
+                                                    <th>Requested By</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -95,8 +96,8 @@
 															if($rowDeliv['statusDesc']=="Pending"){ echo "<td><label class='label label-warning'>{$rowDeliv['statusDesc']}</label></td>"; }
 															if($rowDeliv['statusDesc']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowDeliv['statusDesc']}</label></td>"; }
 															if($rowDeliv['statusDesc']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowDeliv['statusDesc']}</label></td>"; }
-															if($rowDeliv['statusDesc']=="Completed"){ echo "<td><label class='label label-success'>{$rowDeliv['statusDesc']}</label></td>"; }
-															
+															if($rowDeliv['statusDesc']=="Completed"){ echo "<td><label class='label label-success'>{$rowDeliv['statusDesc']}</label></td>"; }    
+															//echo"<td>{$count}</td>";
 															echo"</tr>";
 
                                                         $count++;
@@ -150,7 +151,8 @@
                                                     //view for service
                                                     $query = "SELECT *, sr.id as 'serviceID' FROM thesis.service sr   
                                                               JOIN ref_status st ON sr.status = st.statusID 
-                                                              JOIN ref_steps s ON steps = s.id;";
+                                                              JOIN ref_steps s ON steps = s.id
+                                                              JOIN employee e ON e.UserID = sr.UserID;";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -175,7 +177,7 @@
                                                         if($row['description']=="Ongoing"){ echo "<td><label class='label label-primary'>{$row['description']}</label></td>"; }
                                                         if($row['description']=="Incomplete"){ echo "<td><label class='label label-danger'>{$row['description']}</label></td>"; }
                                                         if($row['description']=="Completed"){ echo "<td><label class='label label-success'>{$row['description']}</label></td>"; }
-
+                                                        echo "<td>{$row['name']}</td>";
                                                         echo "</tr>";
 
                                                           $count++;
@@ -213,10 +215,11 @@
                                                 <tr>
                                                     <th style="display: none"></th>
                                                     <th>#</th>
-                                                    <th>Title</th>
+                                                    <th>Purpose</th>
                                                     <th>Type of Request</th>
                                                     <th>Date Needed</th>
                                                     <th>Status</th>
+                                                    <th>Requested By</th>
                                                 </tr>
                                             </tfoot>
                                         </table>

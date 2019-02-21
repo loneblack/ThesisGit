@@ -280,6 +280,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
+                                                <th style="width:50px"></th>
                                                 <th>Property Code</th>
                                                 <th>Asset/ Software Name</th>
                                                 <th>Building</th>
@@ -316,6 +317,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
 
                                                    echo "<tr>
+                                                    <td><input type='checkbox'></td>
                                                     <td>{$row['propertyCode']}</td>
                                                     <td>{$row['brand']} {$row['category']} {$row['description']}</td>
                                                     <td>{$row['building']}</td>

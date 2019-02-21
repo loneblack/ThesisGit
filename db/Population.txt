@@ -829,3 +829,5 @@
 		INSERT INTO `schoolyear` (`SchoolYearID`,`SchoolYear`,`Term1Start`,`Term2Start`,`Term3Start`,`Term1End`,`Term2End`,`Term3End`) VALUES (2,'2019-2020','2019-01-01','2019-05-01','2019-09-01','2019-04-30','2019-08-31','2019-12-31');
 
 
+		-- Service insert
+		INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`) VALUES ('Screen is busted', NOW(), '9', '27', '1', '14');
