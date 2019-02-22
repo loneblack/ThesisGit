@@ -39,8 +39,6 @@ $result2 = mysqli_query($dbc, $query2);
 while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     array_push($assets, $row['asset']);
 }
-echo $assets[0];
-echo count($assets);
 ?>
 <?php
 // Insertion to ticket
@@ -201,7 +199,7 @@ echo count($assets);
                                                             </div>
                                                         </div>
 
-                                                        <button type="submit" class="btn btn-success" name="submit">Update</button>
+                                                        <button type="submit" class="btn btn-success" name="submit">Create</button>
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
                                                     </form>
@@ -311,7 +309,6 @@ echo count($assets);
                                                                         WHERE a.assetID = {$assets[$i]};";
 
                                                             $result3 = mysqli_query($dbc, $query3);  
-                                                            echo $query3;
 
 
                                                             while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
