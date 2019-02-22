@@ -58,7 +58,7 @@ if($rowCheck['isExist']=='0'){
 	$resultEngAssMain=mysqli_query($dbc,$queryEngAssMain);
 	while ($rowEngAssMain = mysqli_fetch_array($resultEngAssMain, MYSQLI_ASSOC)){
 		//CREATE MAINTENANCE TICKET
-		$queryCreMainTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`,  `lastUpdateDate`, `dateCreated`, `priority`, `serviceType`, `assignmentID`) VALUES ('1', '7', '{$_SESSION['everyTwoWeeks']}', '{$_SESSION['everyTwoWeeks']}', 'High', '28', '{$rowEngAssMain['assignmentID']}')";
+		$queryCreMainTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`,  `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `assignmentID`) VALUES ('1', '7', '{$_SESSION['everyTwoWeeks']}', '{$_SESSION['everyTwoWeeks']}', '{$_SESSION['everyTwoWeeks']}', 'High', '28', '{$rowEngAssMain['assignmentID']}')";
 		$resultCreMainTicket=mysqli_query($dbc,$queryCreMainTicket);
 		
 		//GET LATEST MAINTENANCE TICKET
