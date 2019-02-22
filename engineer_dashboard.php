@@ -27,7 +27,64 @@ while ($row5 = mysqli_fetch_array($result5, MYSQLI_ASSOC)){ $OnHold = $row5['cou
 
 $query6="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.priority = 'Urgent' AND assigneeUserID = {$userID};";
 $result6=mysqli_query($dbc,$query6);
-while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['count']; }                           
+while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['count']; }     
+
+//Every 2 weeks of friday
+$StartDate = strtotime('2019-1-4'); //Start date from which we begin count
+$CurDate = date("Y-m-d"); //Current date.
+$NextDate = date("Y-m-d", strtotime("+2 week", $StartDate)); //Next date = +2 week from start date
+while ($CurDate > $NextDate ) { 
+	$NextDate = date("Y-m-d", strtotime("+2 week", strtotime($NextDate)));
+}
+$_SESSION['everyTwoWeeks']=date("Y-m-d", strtotime($NextDate)); 
+
+
+
+//Check if there's already a maintenance ticket created at a given time
+$queryCheck="SELECT count(*) as 'isExist' FROM thesis.ticket where date(dateCreated) = '{$_SESSION['everyTwoWeeks']}' and serviceType='28' and assigneeUserID='{$_SESSION['userID']}'";
+$resultCheck=mysqli_query($dbc,$queryCheck);
+$rowCheck = mysqli_fetch_array($resultCheck, MYSQLI_ASSOC);
+
+if($rowCheck['isExist']=='0'){
+	//CREATE MAINTENANCE TICKET FOR LAB AND CLASSROOM
+	
+	//GET EMPLOYEE ID
+	$queryEmpID="SELECT * FROM thesis.employee where UserID='{$_SESSION['userID']}'";
+	$resultEmpID=mysqli_query($dbc,$queryEmpID);
+	$rowEmpID= mysqli_fetch_array($resultEmpID, MYSQLI_ASSOC);
+	
+	//GET ALL ENGINEER ASSIGNMENT FOR A GIVEN ENGINEER
+	$queryEngAssMain="SELECT * FROM thesis.engineer_assignment where employeeID='{$rowEmpID['employeeID']}' and (roomtypeID='3' or roomtypeID='4')";
+	$resultEngAssMain=mysqli_query($dbc,$queryEngAssMain);
+	while ($rowEngAssMain = mysqli_fetch_array($resultEngAssMain, MYSQLI_ASSOC)){
+		//CREATE MAINTENANCE TICKET
+		$queryCreMainTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`,  `lastUpdateDate`, `dateCreated`, `priority`, `serviceType`, `assignmentID`) VALUES ('1', '7', '{$_SESSION['everyTwoWeeks']}', '{$_SESSION['everyTwoWeeks']}', 'High', '28', '{$rowEngAssMain['assignmentID']}')";
+		$resultCreMainTicket=mysqli_query($dbc,$queryCreMainTicket);
+		
+		//GET LATEST MAINTENANCE TICKET
+		$queryLatMainTicket="SELECT * FROM thesis.ticket order by ticketID desc limit 1";
+		$resultLatMainTicket=mysqli_query($dbc,$queryLatMainTicket);
+		$rowLatMainTicket= mysqli_fetch_array($resultLatMainTicket, MYSQLI_ASSOC);
+		
+		//GET ALL FLOORROOM OF A GIVEN BUILDING
+		$queryGetAllFlrRm="SELECT * FROM thesis.floorandroom where BuildingID='{$rowEngAssMain['BuildingID']}' and (roomtype='3' or roomtype='4')";
+		$resultGetAllFlrRm=mysqli_query($dbc,$queryGetAllFlrRm);
+		while ($rowGetAllFlrRm = mysqli_fetch_array($resultGetAllFlrRm, MYSQLI_ASSOC)){
+			//GET ALL ASSETS ASSIGNED ON A GIVEN FLOORROOM
+			$queryAssAssFlrRoom="SELECT * FROM thesis.assetassignment aa join asset a on aa.assetID=a.assetID where aa.personresponsibleID is null and aa.FloorAndRoomID='{$rowGetAllFlrRm['FloorAndRoomID']}' and a.assetStatus='2'";
+			$resultAssAssFlrRoom=mysqli_query($dbc,$queryAssAssFlrRoom);
+			while ($rowAssAssFlrRoom = mysqli_fetch_array($resultAssAssFlrRoom, MYSQLI_ASSOC)){
+				//INSERT TO TICKETTED ASSETS
+				$queryInsTickAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`, `checked`) VALUES ('{$rowLatMainTicket['ticketID']}', '{$rowAssAssFlrRoom['assetID']}', false);";
+				$resultInsTickAss=mysqli_query($dbc,$queryInsTickAss);
+			}
+		}
+		
+		
+		
+	}     
+	
+}
 
 ?>
 <head>
