@@ -360,7 +360,7 @@ if($CurDate>=$endOfTermDate){
                                                  <?php
                                                     $count = 1;
 
-                                                    $query = "SELECT t.ticketID, (convert(aes_decrypt(au.firstName, 'Fusion') using utf8)) AS 'firstName' ,(convert(aes_decrypt(au.lastName, 'Fusion')using utf8)) AS 'lastName', lastUpdateDate, dateCreated, dateClosed, dueDate, priority,summary,
+                                                    $query = "SELECT name, t.requestedBy, t.ticketID, (convert(aes_decrypt(au.firstName, 'Fusion') using utf8)) AS 'firstName' ,(convert(aes_decrypt(au.lastName, 'Fusion')using utf8)) AS 'lastName', lastUpdateDate, dateCreated, dateClosed, dueDate, priority,summary,
                                                              t.description, t.serviceType as 'serviceTypeID', st.serviceType,t.status as 'statusID', s.status
                                                             FROM thesis.ticket t
                                                             JOIN user au
@@ -369,8 +369,10 @@ if($CurDate>=$endOfTermDate){
                                                                 ON t.status = s.ticketID
                                                             JOIN ref_servicetype st
                                                                 ON t.serviceType = st.id
-                                                            WHERE au.UserID = {$userID} 
-                                                            ORDER BY dateCreated DESC LIMIT 10;;";
+                                                            JOIN employee e 
+                                                                ON t.requestedBy = e.UserID
+                                                            WHERE au.UserID = {$userID}
+                                                            ORDER BY dateCreated DESC LIMIT 10;";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -415,7 +417,7 @@ if($CurDate>=$endOfTermDate){
                                                             echo "<td><span class='label label-danger'>{$row['status']}</span></td>";
                                                         }
                                                     
-                                                        echo "<td></td></tr>";
+                                                        echo "<td>{$row['name']}</td></tr>";
 
                                                           $count++;
                                                     }

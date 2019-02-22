@@ -699,33 +699,46 @@
 		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('2', '8', '56', '2019-07-24', '2019-12-25', '9', '2');
 	    	INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('3', '17', '114', '2019-07-24', '2019-07-25', '9', '2');
 		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('4', '17', '114', '2019-02-12', '2019-02-25', '9', '2');
-		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('5', '17', '115', '2019-02-17', '2018-04-21', '9', '2');
-		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('6', '17', '117', '2019-02-17', '2018-04-21', '9', '2');
-		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('8', '17', '116', '2019-02-19', '2018-04-21', '9', '2');
-		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('4', '17', '120', '2019-02-18', '2018-04-21', '9', '2');
-		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('13', '17', '114', '2019-02-20', '2018-04-21', '9', '2');
-		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('1', '17', '118', '2019-02-21', '2018-04-21', '9', '2');
-		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('7', '17', '115', '2019-02-26', '2018-04-22', '9', '2');
-		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('9', '17', '118', '2019-02-26', '2018-04-22', '9', '2');
-
-		INSERT INTO `assetassignment` (`assetID`,`computerID`,`BuildingID`,`FloorAndRoomID`,`DepartmentID`,`startDate`,`endDate`,`personresponsibleID`,`persondirectlyID`,`statusID`) VALUES (6,NULL,11,5,NULL,NULL,NULL,NULL,NULL,2);
-		INSERT INTO `assetassignment` (`assetID`,`computerID`,`BuildingID`,`FloorAndRoomID`,`DepartmentID`,`startDate`,`endDate`,`personresponsibleID`,`persondirectlyID`,`statusID`) VALUES (7,NULL,11,6,NULL,NULL,NULL,NULL,NULL,2);
-		INSERT INTO `assetassignment` (`assetID`,`computerID`,`BuildingID`,`FloorAndRoomID`,`DepartmentID`,`startDate`,`endDate`,`personresponsibleID`,`persondirectlyID`,`statusID`) VALUES (8,NULL,11,7,NULL,NULL,NULL,NULL,NULL,2);
-		INSERT INTO `assetassignment` (`assetID`,`computerID`,`BuildingID`,`FloorAndRoomID`,`DepartmentID`,`startDate`,`endDate`,`personresponsibleID`,`persondirectlyID`,`statusID`) VALUES (9,NULL,11,8,NULL,NULL,NULL,NULL,NULL,2);
-		INSERT INTO `assetassignment` (`assetID`,`computerID`,`BuildingID`,`FloorAndRoomID`,`DepartmentID`,`startDate`,`endDate`,`personresponsibleID`,`persondirectlyID`,`statusID`) VALUES (10,NULL,11,9,NULL,NULL,NULL,NULL,NULL,2);
-		INSERT INTO `assetassignment` (`assetID`,`computerID`,`BuildingID`,`FloorAndRoomID`,`DepartmentID`,`startDate`,`endDate`,`personresponsibleID`,`persondirectlyID`,`statusID`) VALUES (11,NULL,11,10,NULL,NULL,NULL,NULL,NULL,2);
-		INSERT INTO `assetassignment` (`assetID`,`computerID`,`BuildingID`,`FloorAndRoomID`,`DepartmentID`,`startDate`,`endDate`,`personresponsibleID`,`persondirectlyID`,`statusID`) VALUES (12,NULL,13,11,NULL,NULL,NULL,NULL,NULL,2);
-		INSERT INTO `assetassignment` (`assetID`,`computerID`,`BuildingID`,`FloorAndRoomID`,`DepartmentID`,`startDate`,`endDate`,`personresponsibleID`,`persondirectlyID`,`statusID`) VALUES (13,NULL,16,12,NULL,NULL,NULL,NULL,NULL,2);
+		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('5', '17', '115', '2019-02-17', '2019-04-21', '9', '2');
+		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('6', '17', '117', '2019-02-17', '2019-04-21', '9', '2');
+		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('7', '17', '116', '2019-02-19', '2019-04-21', '9', '2');
+		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('8', '17', '120', '2019-02-18', '2019-04-21', '9', '2');
+		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('9', '17', '114', '2019-02-20', '2019-04-21', '9', '2');
+		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('10', '17', '118', '2019-02-21', '2019-04-21', '9', '2');
+		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('11', '17', '115', '2019-02-26', '2019-04-22', '9', '2');
+		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('12', '17', '118', '2019-02-26', '2019-04-22', '9', '2');
+		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('13', '17', '118', '2019-02-26', '2019-04-22', '9', '2');
 
 		-- asseet audit for asset assignment
 		INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '1', '1');
 		INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '2', '2');
-	    INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '2', '2');
+	    INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '3', '3');
+	    INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '4', '4');
+		INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '5', '5');
+	    INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '6', '6');
+	    INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '7', '7');
+		INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '8', '8');
+	    INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '9', '9');
+	    INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '10', '10');
+		INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '11', '11');
+	    INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '12, '12');
+	    INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '13, '13');
+
 
 		-- change asset status to deployed
 		UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '1');
 		UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '2');
 	    UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '3');
+	    UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '4');
+		UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '5');
+	    UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '6');
+	    UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '7');
+		UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '8');
+	    UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '9');
+	    UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '10');
+		UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '11');
+	    UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '12');
+	    UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '13');
 
 
 		-- steps pa lang ng completo na pala
@@ -837,3 +850,4 @@
 
 		-- Service insert
 		INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`) VALUES ('Screen is busted', NOW(), '9', '27', '1', '14');
+		INSERT INTO `thesis`.`servicedetails` VALUES ('1','1'); 
