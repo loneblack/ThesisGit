@@ -84,6 +84,12 @@
 		INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Voice Recorder (Digital)');
 		INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Webcam');
 		INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Wireless Presenter');
+		INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Thin Client');
+		INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Table Top');
+		INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('AV face Plate');
+		INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('RCA Cable');
+		INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('User Guide Poster');
+		INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Biometrics');
 
 		-- ref_assetstatus
 		INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('1', 'Stocked');
