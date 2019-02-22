@@ -70,7 +70,7 @@
                                                 <tr>
                                                     <th style="display: none"></th>
                                                     <th>#</th>
-                                                    <th>Purpose</th>
+                                                    <th>Description</th>
                                                     <th>Type of Request</th>
                                                     <th>Date Needed</th>
                                                     <th>Status</th>
@@ -149,7 +149,8 @@
 												?>	
 												<?php
                                                     //view for service
-                                                    $query = "SELECT *, sr.id as 'serviceID' FROM thesis.service sr   
+                                                    $query = "SELECT *, sr.id as 'serviceID' , e.name as 'requestedby'
+                                                              FROM thesis.service sr   
                                                               JOIN ref_status st ON sr.status = st.statusID 
                                                               JOIN ref_steps s ON steps = s.id
                                                               JOIN employee e ON e.UserID = sr.UserID;";
@@ -162,7 +163,7 @@
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['serviceID']}</td>
                                                             <td>{$count}</td>
-                                                            <td>{$row['summary']}</td>
+                                                            <td>{$row['details']}</td>
                                                             <td>";
 
                                                        if($row['serviceType']=='27') echo "Repair";
@@ -215,7 +216,7 @@
                                                 <tr>
                                                     <th style="display: none"></th>
                                                     <th>#</th>
-                                                    <th>Purpose</th>
+                                                    <th>Description</th>
                                                     <th>Type of Request</th>
                                                     <th>Date Needed</th>
                                                     <th>Status</th>

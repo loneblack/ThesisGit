@@ -28,6 +28,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         $statusID = $row['statusID'];
         $description = $row['description'];
         $steps = $row['steps'];
+        $UserID = $row['UserID'];
 
     }
 $assets = array();
@@ -62,7 +63,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
               //  $resulta=mysqli_query($dbc,$querya);
             //}
             //else{
-				$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `priority`, `serviceType`, `description`, `details`, `service_id`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$priority}', '27', '{$description}', '{$details}','{$id}')";
+				$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `priority`, `serviceType`, `description`, `details`, `service_id`, `requestedBy`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$priority}', '27', '{$description}', '{$details}','{$id}', '{$UserID}')";
                 $resulta=mysqli_query($dbc,$querya);
                 //$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `priority`, `serviceType`, `details`, `service_id`) 
                 //VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$priority}', '27', '{$details}, '{$id}')";
@@ -196,7 +197,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                                 ?>
                                                                 </select>
                                                             </div>
-                                                        </div>z
+                                                        </div>
 
                                                         <button type="submit" class="btn btn-success" name="submit">Update</button>
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -289,7 +290,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         for ($i=0; $i < count($assets); $i++) { 
                                                             
                                                             
-                                                            $query3 =  "SELECT a.assetID, propertyCode, b.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
+                                                            $query3 =  "SELECT a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
                                                                     FROM asset a 
                                                                         JOIN assetModel m
                                                                     ON assetModel = assetModelID

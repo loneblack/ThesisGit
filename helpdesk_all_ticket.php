@@ -82,7 +82,7 @@ require_once("db/mysql_connect.php");
 												<?php
                                                     $count = 1;
 
-													$query="SELECT t.ticketID,t.summary, rst.id,rst.serviceType,t.lastUpdateDate,t.dueDate,rts.status FROM thesis.ticket t 
+													$query="SELECT t.requestedBy, t.ticketID,t.summary, rst.id,rst.serviceType,t.lastUpdateDate,t.dueDate,rts.status FROM thesis.ticket t 
                                                                                         join thesis.ref_ticketstatus rts on t.status=rts.ticketID
                                                                                         join thesis.ref_servicetype rst on t.serviceType=rst.id";
 													$result=mysqli_query($dbc,$query);
@@ -91,9 +91,8 @@ require_once("db/mysql_connect.php");
 														echo "<tr class='gradeA' id='{$row['ticketID']}'>
                                                             <td style='display: none'>{$row['ticketID']}</td>
 															<td>{$count}</td>
-															<td>{$row['summary']}</td>
-                                                            <td style='display: none'>{$row['id']}</td>
 															<td>{$row['serviceType']}</td>
+                                                            <td style='display: none'>{$row['id']}</td>
 															<td>{$row['lastUpdateDate']}</td>
 															<td>{$row['dueDate']}</td>";
 															
@@ -126,6 +125,8 @@ require_once("db/mysql_connect.php");
 														elseif($row['status']=='Escalated'){
 															echo "<td><span class='label label-default'>{$row['status']}</span></td>";
 														}
+
+                                                        echo "<td>{$row['requestedBy']}</td>";
 
                                                         $count++;
 														
