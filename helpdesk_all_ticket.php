@@ -82,9 +82,11 @@ require_once("db/mysql_connect.php");
 												<?php
                                                     $count = 1;
 
-													$query="SELECT t.requestedBy, t.ticketID,t.summary, rst.id,rst.serviceType,t.lastUpdateDate,t.dueDate,rts.status FROM thesis.ticket t 
+													$query="SELECT name,t.requestedBy, t.ticketID,t.summary, rst.id,rst.serviceType,t.lastUpdateDate,t.dueDate,rts.status
+                                                                                        FROM thesis.ticket t 
                                                                                         join thesis.ref_ticketstatus rts on t.status=rts.ticketID
-                                                                                        join thesis.ref_servicetype rst on t.serviceType=rst.id";
+                                                                                        join thesis.ref_servicetype rst on t.serviceType=rst.id
+                                                                                        join employee e on t.requestedBy = e.UserID;";
 													$result=mysqli_query($dbc,$query);
 												
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
@@ -126,7 +128,7 @@ require_once("db/mysql_connect.php");
 															echo "<td><span class='label label-default'>{$row['status']}</span></td>";
 														}
 
-                                                        echo "<td>{$row['requestedBy']}</td>";
+                                                        echo "<td>{$row['name']}</td>";
 
                                                         $count++;
 														
