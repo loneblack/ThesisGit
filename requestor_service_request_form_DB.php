@@ -8,18 +8,29 @@
 
 	$header =  $_SESSION['previousPage'];
 
+	$serviceUnit = $_POST['serviceUnit'];
+
+	echo $serviceUnit;
 	date_default_timezone_set("Asia/Singapore");
 
     $value = date("Y/m/d");
     $time = date("h:i:sa");
     $date = date('Y-m-d H:i:s', strtotime($value." ".$time));
 
-    //insertion to service table
-	$sql = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`)
-	                                VALUES ('{$details}', '{$date}', '{$userID}', '27', '1', '14');";//status is set to 1 for pending status
+	if($serviceUnit == "on"){
+		//insertion to service table
+		$sql = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`)
+	                                VALUES ('{$details}', '{$date}', '{$userID}', '27', '1', '14', '1');";//status is set to 1 for pending status
 
-	$result = mysqli_query($dbc, $sql);
+		$result = mysqli_query($dbc, $sql);
+	}
+	else{
+		//insertion to service table
+		$sql = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`)
+		                                VALUES ('{$details}', '{$date}', '{$userID}', '27', '1', '14', '0');";//status is set to 1 for pending status
 
+		$result = mysqli_query($dbc, $sql);
+	}
 	echo $sql;
 
 	//get the id of previously inserted service
@@ -49,5 +60,5 @@
 	$message = "Form submitted!";
 	$_SESSION['submitMessage'] = $message;
 
-	header('Location: '.$header);
+	//header('Location: '.$header);
 ?>	
