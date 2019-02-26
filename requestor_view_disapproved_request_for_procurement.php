@@ -186,6 +186,20 @@
                                                 <h4>These are the assets that are the closest or have the exact specifications. Click the checkbox and press the request button in order to make a borrow request.</h4>
 
                                                 <br>
+                                                
+                                                    <div class="form-group ">
+                                                        <label class="control-label col-lg-3">Borrow Start Date</label>
+                                                        <div class="col-lg-6">
+                                                            <input class="form-control" type="date" required/>
+                                                        </div>
+                                                    </div>
+                                                
+                                                    <div class="form-group ">
+                                                        <label class="control-label col-lg-3">Borrow End Date</label>
+                                                        <div class="col-lg-6">
+                                                            <input class="form-control" type="date" />
+                                                        </div>
+                                                    </div>                                                
 
                                                 <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                     <thead>
