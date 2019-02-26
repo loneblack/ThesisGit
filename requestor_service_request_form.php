@@ -108,6 +108,30 @@ $count = 0;
                                     <div class="panel-body">
                                         <div class="form" method="post">
                                             <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_request_form_DB.php">
+
+                                                <!-- Modal -->
+                                                <div id="myModal" class="modal fade" role="dialog">
+                                                  <div class="modal-dialog">
+
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h3 class="modal-title">Confimation</h3>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                        Are you sure?
+                                                      </div>
+                                                      <div class="modal-footer">
+                                                        <button class="btn btn-primary" type="submit">Yes</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                                      </div>
+                                                    </div>
+
+                                                  </div>
+                                                </div>
+                                                <!-- Modal End-->
+
                                                 <div class="form-group ">
                                                     <div>
                                                     <?php
@@ -167,10 +191,33 @@ $count = 0;
                                                         
                                                         
                                                     </div>
+
                                                 </div>
+                                                <div class="form-group ">
+                                                    <label for="dateNeeded" class="control-label col-lg-3">Service Unit Opt-in</label>
+                                                    <div class="col-lg-6">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th><p><input type="checkbox" name="serviceUnit"> Opt-in for service unit?</p></th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            </tbody>
+                                                        </table>
+                                                        
+                                                        
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group">
+
+
                                                     <div class="col-lg-offset-3 col-lg-6">
-                                                        <button class="btn btn-primary" type="submit">Send</button>
+
+                                                        <!-- Trigger the modal with a button -->
+                                                        <button type="button"  class="btn btn-primary" data-toggle="modal" data-target="#myModal">Send</button>
                                                         <a href="requestor_dashboard.php"><button class="btn btn-default" type="button">Cancel</button></a>
                                                     </div>
                                                 </div>
