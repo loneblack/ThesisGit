@@ -187,19 +187,7 @@
 
                                                 <br>
                                                 
-                                                    <div class="form-group ">
-                                                        <label class="control-label col-lg-3">Borrow Start Date</label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" type="date" required/>
-                                                        </div>
-                                                    </div>
-                                                
-                                                    <div class="form-group ">
-                                                        <label class="control-label col-lg-3">Borrow End Date</label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" type="date" />
-                                                        </div>
-                                                    </div>                                                
+                                                                                     
 
                                                 <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                     <thead>
