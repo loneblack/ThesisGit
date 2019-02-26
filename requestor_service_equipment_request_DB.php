@@ -26,11 +26,8 @@
     }
 
     $dateNeeded = $_POST['dateNeeded'];
-    $endDate = $_POST['endDate'];
+    $endDate = $_POST['endDate'];   
 
-    if($endDate == ""){
-        $endDate = NULL;
-    }
     $FloorAndRoomID = $_POST['FloorAndRoomID'];
 
     date_default_timezone_set("Asia/Singapore");
@@ -57,6 +54,10 @@
     $sql2 = "INSERT INTO `thesis`.`request_borrow` ( `DepartmentID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `dateCreated`, `statusID`, `steps`) VALUES ('{$DepartmentID}', '{$buildingID}', '{$FloorAndRoomID }', '{$dateNeeded}', '{$endDate}', '{$employeeID}', '{$date}', '1', '12');";//status is set to 1 for pending status
     $result2 = mysqli_query($dbc, $sql2);
 
+    if($endDate == ""){
+        $sql2 = "INSERT INTO `thesis`.`request_borrow` ( `DepartmentID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `dateCreated`, `statusID`, `steps`) VALUES ('{$DepartmentID}', '{$buildingID}', '{$FloorAndRoomID }', '{$dateNeeded}', NULL, '{$employeeID}', '{$date}', '1', '12');";//status is set to 1 for pending status
+        $result2 = mysqli_query($dbc, $sql2);
+    }
     echo $sql2;
 
     //get the id of the recently inserted item to request table

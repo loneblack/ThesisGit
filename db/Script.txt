@@ -325,23 +325,6 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `thesis`.`computer`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `thesis`.`computer` ;
-
-CREATE TABLE IF NOT EXISTS `thesis`.`computer` (
-  `computerID` INT(11) NOT NULL AUTO_INCREMENT,
-  `assetStatus` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`computerID`),
-  INDEX `fk_computer_ref_assetstatus1_idx` (`assetStatus` ASC),
-  CONSTRAINT `fk_computer_ref_assetstatus1`
-    FOREIGN KEY (`assetStatus`)
-    REFERENCES `thesis`.`ref_assetstatus` (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `thesis`.`asset`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `thesis`.`asset` ;
@@ -362,12 +345,10 @@ CREATE TABLE IF NOT EXISTS `thesis`.`asset` (
   `swStartDate` DATE NULL DEFAULT NULL,
   `swEndDate` DATE NULL DEFAULT NULL,
   `assetStatus` INT(11) NOT NULL,
-  `computerID` INT(11) NULL,
   PRIMARY KEY (`assetID`),
   INDEX `fk_asset_supplier1_idx` (`supplierID` ASC),
   INDEX `fk_asset_assetModel1_idx` (`assetModel` ASC),
   INDEX `fk_asset_ref_assetstatus1_idx` (`assetStatus` ASC),
-  INDEX `fk_asset_computer1_idx` (`computerID` ASC),
   CONSTRAINT `fk_asset_assetModel1`
     FOREIGN KEY (`assetModel`)
     REFERENCES `thesis`.`assetmodel` (`assetModelID`),
@@ -376,10 +357,29 @@ CREATE TABLE IF NOT EXISTS `thesis`.`asset` (
     REFERENCES `thesis`.`ref_assetstatus` (`id`),
   CONSTRAINT `fk_asset_supplier1`
     FOREIGN KEY (`supplierID`)
-    REFERENCES `thesis`.`supplier` (`supplierID`),
-  CONSTRAINT `fk_asset_computer1`
-    FOREIGN KEY (`computerID`)
-    REFERENCES `thesis`.`computer` (`computerID`)
+    REFERENCES `thesis`.`supplier` (`supplierID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`computer`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`computer` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`computer` (
+  `computerID` INT(11) NOT NULL AUTO_INCREMENT,
+  `assetStatus` INT(11) NULL DEFAULT NULL,
+  `assetID` INT(11) NULL,
+  PRIMARY KEY (`computerID`),
+  INDEX `fk_computer_ref_assetstatus1_idx` (`assetStatus` ASC),
+  INDEX `fk_computer_asset1_idx` (`assetID` ASC),
+  CONSTRAINT `fk_computer_ref_assetstatus1`
+    FOREIGN KEY (`assetStatus`)
+    REFERENCES `thesis`.`ref_assetstatus` (`id`),
+  CONSTRAINT `fk_computer_asset1`
+    FOREIGN KEY (`assetID`)
+    REFERENCES `thesis`.`asset` (`assetID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -1822,4 +1822,3 @@ CREATE TABLE IF NOT EXISTS `thesis`.`replacement` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
