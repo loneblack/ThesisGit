@@ -1792,7 +1792,7 @@ DROP TABLE IF EXISTS `thesis`.`replacement` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`replacement` (
   `replacementID` INT NOT NULL AUTO_INCREMENT,
   `lostAssetID` INT(11) NOT NULL,
-  `replacementAssetID` INT(11) NOT NULL,
+  `replacementAssetID` INT(11) NULL,
   `BuildingID` INT(11) NOT NULL,
   `FloorAndRoomID` INT(11) NOT NULL,
   `dateTiimeLost` DATETIME NULL,
@@ -1822,3 +1822,45 @@ CREATE TABLE IF NOT EXISTS `thesis`.`replacement` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`serviceUnit`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`serviceUnit` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`serviceUnit` (
+  `serviceUnitID` INT NOT NULL AUTO_INCREMENT,
+  `assetID` INT(11) NOT NULL,
+  `serviceID` INT(11) NOT NULL,
+  `UserID` INT(11) NOT NULL,
+  `date` DATE NULL,
+  `dateEnd` DATE NULL,
+  `statusID` INT(11) NOT NULL,
+  PRIMARY KEY (`serviceUnitID`),
+  INDEX `fk_serviceUnit_asset1_idx` (`assetID` ASC),
+  INDEX `fk_serviceUnit_service1_idx` (`serviceID` ASC),
+  INDEX `fk_serviceUnit_user1_idx` (`UserID` ASC),
+  INDEX `fk_serviceUnit_ref_status1_idx` (`statusID` ASC),
+  CONSTRAINT `fk_serviceUnit_asset1`
+    FOREIGN KEY (`assetID`)
+    REFERENCES `thesis`.`asset` (`assetID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_serviceUnit_service1`
+    FOREIGN KEY (`serviceID`)
+    REFERENCES `thesis`.`service` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_serviceUnit_user1`
+    FOREIGN KEY (`UserID`)
+    REFERENCES `thesis`.`user` (`UserID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_serviceUnit_ref_status1`
+    FOREIGN KEY (`statusID`)
+    REFERENCES `thesis`.`ref_status` (`statusID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
