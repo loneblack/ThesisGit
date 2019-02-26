@@ -85,7 +85,7 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-				
+
                 <div class="row">
                     <div class="row">
                         <div class="col-lg-12">
@@ -106,7 +106,7 @@
 
                                                         unset($_SESSION['submitMessage']);
                                                     }
-                                                ?> 
+                                                ?>
 
                                                 <section>
                                                     <h2>
@@ -149,15 +149,15 @@
                                                     <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                         <thead>
                                                             <tr>
-																<th>Category</th>
+                                                                <th>Category</th>
                                                                 <th>Quantity</th>
                                                                 <th>Specifications</th>
                                                                 <th>Purpose</th>
-																<th>Inventory</th>
+                                                                <th>Inventory</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-															<?php
+                                                            <?php
 																//Get Request Details data
 																$queryReqDet="SELECT *,rac.name as `assetCatName` FROM thesis.requestdetails rd
 																				join ref_assetcategory rac on rd.assetCategory=rac.assetCategoryID where rd.requestID='{$requestID}'";
@@ -193,43 +193,110 @@
 																</tr>";
 																}
 															?>
-                                                            
+
                                                         </tbody>
                                                     </table>
 
 
                                                     <br>
                                                 </section>
-												
-												<section>
-                                                    <input type="checkbox" name="check" disabled <?php if($rowReq['requestcol']==1){
-														echo "checked";
-													} ?>> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
+
+                                                <section>
+                                                    <input type="checkbox" name="check" disabled <?php if($rowReq['requestcol']==1){ echo "checked" ; } ?>> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
                                                     <br><br><br>
                                                 </section>
-												<form method="post" action="<?php echo $_SERVER['PHP_SELF']."?requestID=".$requestID; ?>">
-												<section>
-                                                    <h4>Reason for Disapproval</h4>
-													<textarea class="form-control" rows="5" id="reasOfDisapprov" name="reasOfDisapprov" style="resize: none"></textarea>
-													<br>
-												</section>
-												
-												<section>
-                                                    <h4>Recommended Assets</h4>
-														<table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
-														<thead>
-															<tr>
-																<th>Property Code</th>
-																<th>Brand</th>
-																<th>Model</th>
-																<th>Specifications</th>
-																<th>Asset Category</th>
-																<th>Status</th>
-																<th></th>
-															</tr>
-														</thead>
-														<tbody>
-															<?php
+                                                <form method="post" action="<?php echo $_SERVER['PHP_SELF']." ?requestID=".$requestID; ?>">
+
+                                                    <section>
+
+                                                        <h4>Fill up requested assets from the described request.</h4>
+                                                        <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Quantity</th>
+                                                                    <th>Category</th>
+                                                                    <th>Specifications</th>
+                                                                    <th>Purpose</th>
+                                                                    <th>Remove</th>
+                                                                    <th>Add</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="col-lg-12">
+                                                                            <input style="display: none" type="number" id="count" value=<?php echo $_SESSION['count'];?>/>
+                                                                            <input class="form-control" type="number" name="quantity0" id="quantity0" min="1" step="1" placeholder="Quantity" />
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12">
+                                                                            <select class="form-control" name="category0" id="category0">
+                                                                                <option>Select</option>
+                                                                                <?php
+ 
+                                                                                $sql = "SELECT * FROM thesis.ref_assetcategory;";
+
+                                                                                $result = mysqli_query($dbc, $sql);
+
+                                                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                                                {
+                                                                                    
+                                                                                    echo "<option value ={$row['assetCategoryID']}>";
+                                                                                    echo "{$row['name']}</option>";
+
+                                                                                }
+                                                                           ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+
+                                                                    <td style="padding-top:5px; padding-bottom:5px">
+                                                                        <div class="col-lg-12">
+                                                                            <input class="form-control" type="text" name="description0" id="description0" placeholder="Item specifications" />
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="col-lg-12">
+                                                                            <input class="form-control" type="text" name="purpose0" id="purpose0" placeholder="Purpose">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type='button' class='btn btn-primary' onclick='addTest();'> Add </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+
+                                                        <br>
+
+                                                    </section>
+
+                                                    <section>
+                                                        <h4>Reason for Disapproval</h4>
+                                                        <textarea class="form-control" rows="5" id="reasOfDisapprov" name="reasOfDisapprov" style="resize: none"></textarea>
+                                                        <br>
+                                                    </section>
+
+                                                    <section>
+                                                        <h4>Recommended Assets</h4>
+                                                        <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Property Code</th>
+                                                                    <th>Brand</th>
+                                                                    <th>Model</th>
+                                                                    <th>Specifications</th>
+                                                                    <th>Asset Category</th>
+                                                                    <th>Status</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <?php
 																if(isset($_SESSION['recommAsset'])){
 																	foreach($_SESSION['recommAsset'] as $recommAsset){
 																		$queryRecommAss="SELECT *,rb.name as `brandName`,am.description as `modelName`,rac.name as `assetCatName`,am.itemSpecification as `modelSpec`,ras.description as `assetStat` FROM thesis.asset a left join assetmodel am on a.assetModel=am.assetModelID
@@ -256,11 +323,11 @@
 																}
 																
 															?>
-															
-														</tbody>
-													</table>
-													<br>
-												</section>
+
+                                                            </tbody>
+                                                        </table>
+                                                        <br>
+                                                    </section>
 
 
 
@@ -268,24 +335,24 @@
 
 
 
-                                                <div class="col-lg-12">
-                                                    <div class="row">
-                                                        <div class="col-xs-4">
-                                                        </div>
-                                                        <div class="col-xs-4">
-                                                            
+                                                    <div class="col-lg-12">
+                                                        <div class="row">
+                                                            <div class="col-xs-4">
+                                                            </div>
+                                                            <div class="col-xs-4">
+
                                                                 <button type="submit" class="btn btn-success" id="approve" name="approve"><i class="fa fa-check"></i> Approve</button>
                                                                 &nbsp;&nbsp;
-																<button type="submit" class="btn btn-danger" id="disapprove" name="disapprove"><i class="fa fa-ban"></i> Disapprove</button>
+                                                                <button type="submit" class="btn btn-danger" id="disapprove" name="disapprove"><i class="fa fa-ban"></i> Disapprove</button>
                                                                 <!-- <button type="button" class="btn btn-danger" id="disapprove" data-toggle="modal" data-target="#myModal"><i class="fa fa-ban"></i> Disapprove</button> -->
 
-                                                            
-                                                        </div>
-                                                        <div class="col-xs-4">
+
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-												</form>
+                                                </form>
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="myModal" role="dialog">
                                                     <div class="modal-dialog">
@@ -297,38 +364,38 @@
                                                                 <h4 class="modal-title">Search Inventory for Specifications that are exactly or close to request</h4>
                                                             </div>
 
-															<form class="form-inline" method="post" action="<?php echo $_SERVER['PHP_SELF']."?requestID=".$requestID; ?>">
-                                                            <div class="modal-body">
-                                                                
-                                                                
-                                                                <div class="adv-table" id="ctable">
-                                                                    <table class="display table table-bordered table-striped" id="dynamic-table">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th></th>
-                                                                                <th>Property Code</th>
-                                                                                <th>Brand</th>
-                                                                                <th>Model</th>
-                                                                                <th>Specifications</th>
-                                                                                <th>Asset Category</th>
-                                                                                <th>Status</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody id='assetList'>
-																			
-                                                                        </tbody>
-                                                                    </table>
+                                                            <form class="form-inline" method="post" action="<?php echo $_SERVER['PHP_SELF']." ?requestID=".$requestID; ?>">
+                                                                <div class="modal-body">
+
+
+                                                                    <div class="adv-table" id="ctable">
+                                                                        <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th></th>
+                                                                                    <th>Property Code</th>
+                                                                                    <th>Brand</th>
+                                                                                    <th>Model</th>
+                                                                                    <th>Specifications</th>
+                                                                                    <th>Asset Category</th>
+                                                                                    <th>Status</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody id='assetList'>
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+
                                                                 </div>
-                                                                
-                                                            </div>
-															<br><br>
-                                                            <div class="modal-footer">
-                                                                <button class="btn btn-primary" type="submit" name="send">Send</button>
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                            </div>
-															
-															</form>
-                                                            
+                                                                <br><br>
+                                                                <div class="modal-footer">
+                                                                    <button class="btn btn-primary" type="submit" name="send">Send</button>
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                </div>
+
+                                                            </form>
+
                                                         </div>
 
                                                     </div>
@@ -370,30 +437,32 @@
         $(function() {
 
         });
-		function removeRow(o,recommAsset) {
+
+        function removeRow(o, recommAsset) {
             var p = o.parentNode.parentNode;
             p.parentNode.removeChild(p);
-			
-			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					this.responseText;
-				}
-			};
-			xmlhttp.open("GET", "removeRecommAssetData_ajax.php?assetID=" + recommAsset, true);
-			xmlhttp.send();
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "removeRecommAssetData_ajax.php?assetID=" + recommAsset, true);
+            xmlhttp.send();
         }
-		function setAssetCatID(assetCatID) {
-			var xmlhttp = new XMLHttpRequest();
-			xmlhttp.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					document.getElementById("assetList").innerHTML = this.responseText;
-				}
-			};
-			xmlhttp.open("GET", "setAssetCatIDForIt_view_approval_ajax.php?category=" + assetCatID, true);
-			xmlhttp.send();
-		}
-		
+
+        function setAssetCatID(assetCatID) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("assetList").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "setAssetCatIDForIt_view_approval_ajax.php?category=" + assetCatID, true);
+            xmlhttp.send();
+        }
+
         $.ajax({
             type: "POST",
             url: "count.php",
@@ -404,7 +473,7 @@
             }
         });
 
-        
+
         function getRooms(val) {
             $.ajax({
                 type: "POST",
@@ -416,17 +485,16 @@
                 }
             });
         }
-		
-		$('#disapprove').click(function () {
-			document.getElementById("reasOfDisapprov").required = true;
-			
-			
-		});
-		$('#approve').click(function () {
-			document.getElementById("reasOfDisapprov").required = false;
-			
-		});
-		
+
+        $('#disapprove').click(function() {
+            document.getElementById("reasOfDisapprov").required = true;
+
+
+        });
+        $('#approve').click(function() {
+            document.getElementById("reasOfDisapprov").required = false;
+
+        });
     </script>
 
 </body>
