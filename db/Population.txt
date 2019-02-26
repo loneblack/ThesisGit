@@ -708,7 +708,6 @@
 		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('10', '17', '118', '2019-02-21', '2019-04-21', '9', '2');
 		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('11', '17', '115', '2019-02-26', '2019-04-22', '9', '2');
 		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('12', '17', '118', '2019-02-26', '2019-04-22', '9', '2');
-		INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('13', '17', '118', '2019-02-26', '2019-04-22', '9', '2');
 
 		-- asseet audit for asset assignment
 		INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '1', '1');
@@ -723,7 +722,6 @@
 	    INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '10', '10');
 		INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '11', '11');
 	    INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '12', '12');
-	    INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '13', '13');
 
 
 		-- change asset status to deployed
@@ -739,7 +737,6 @@
 	    UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '10');
 		UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '11');
 	    UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '12');
-	    UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '13');
 
 
 		-- steps pa lang ng completo na pala
