@@ -169,7 +169,7 @@
 
 
                                                 <section>
-                                                    <input type="checkbox" name="check" disabled <?php if($rowReq['requestcol']==1){
+                                                    <input type="checkbox" name="check" disabled <?php if($rowReq['specs']==1){
 														echo "checked";
 													} ?>> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
                                                     <br><br><br>
@@ -187,7 +187,19 @@
 
                                                 <br>
                                                 
-                                                                                     
+                                                    <div class="form-group ">
+                                                        <label class="control-label col-lg-3">Borrow Start Date</label>
+                                                        <div class="col-lg-6">
+                                                            <input class="form-control" type="date" required/>
+                                                        </div>
+                                                    </div>
+                                                
+                                                    <div class="form-group ">
+                                                        <label class="control-label col-lg-3">Borrow End Date</label>
+                                                        <div class="col-lg-6">
+                                                            <input class="form-control" type="date" />
+                                                        </div>
+                                                    </div>                                                
 
                                                 <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                     <thead>
