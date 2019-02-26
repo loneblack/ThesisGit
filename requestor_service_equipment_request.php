@@ -152,7 +152,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                 <div class="container-fluid">
                                                     
                                                     <h4>Equipment to be borrowed</h4>
-                                                    <h5>**Note: Quantity dropdown is based on how many assets that are currently available.</h5>
+                                                    <h5>**Note: Quantity dropdown is based on how many assets that are currently available. If item is not available in the list, click <b><a href="http://localhost/ThesisGit/requestor_request_for_procurement_service_material.php">here</a></b> to request for purchase.</h5>
 
                                                     <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                         <thead>
