@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <?php
@@ -34,15 +35,27 @@ if(isset($_POST['save'])){
     }
 	echo "<script>alert('Success');</script>";
 }
-?>    
-    
-    
+?>        
+
 <head>
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="images/favicon.png">
+
+    <title>DLSU IT Asset Management</title>
+
+    <link href="bs3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css" />
+    <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    
     <link rel="shortcut icon" href="images/favicon.png">
 
     <title>Request For Donation Outsider</title>
@@ -58,47 +71,74 @@ if(isset($_POST['save'])){
     <link href="css/outside_form.css" rel="stylesheet" />
 </head>
 
-<body class="full-width">
+<body>
 
-    <section id="container" class="hr-menu">
+    <section id="container">
         <!--header start-->
+        <header class="header fixed-top clearfix">
+            <!--logo start-->
+            <div class="brand">
 
+                <a href="#" class="logo">
+                    <img src="images/dlsulogo.png" alt="" width="200px" height="40px">
+                </a>
+            </div>
+
+            <div class="nav notify-row" id="top_menu">
+
+            </div>
+
+        </header>
+        <!--header end-->
+        <?php include 'director_navbar.php' ?>
+
+        <!--main content-->
         <section id="main-content">
             <section class="wrapper">
-                <div class="panel-body">
-                    <div class="container">
-                        <form id="contact" action="" method="post">
-                            <h3>Request For Donation</h3>
-                            <fieldset>
-                                <input id="schoolorg" name="schoolorg" class="form-control" placeholder="School / Organization" type="text" onkeyup="lettersOnly(this)" required>
-                            </fieldset>
-                            <fieldset>
-                                <input id="contactPerson" name="contactPerson" class="form-control" placeholder="Contact Person" type="text" onkeyup="lettersOnly(this)" required>
-                            </fieldset>
-                            <fieldset>
-                                <input id="contactNo" name="contactNo" class="form-control" placeholder="Contact No." type="text" required>
-                            </fieldset>
-                            <fieldset>
-                                <input id="dateNeeded" name="dateNeeded" class="form-control" type="datetime-local" placeholder="Date and Time Needed" required />
-                            </fieldset>
-                            <fieldset>
-                                <input id="purpose" name="purpose" class="form-control" placeholder="Purpose" type="text"  onkeyup="lettersOnly(this)" required>
-                            </fieldset>
-                            <fieldset>
-                                <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest" align="center" cellpadding="0" cellspacing="0" border="1" required>
+                <!-- page start-->
+
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <section class="panel">
+
+
+                                    <div class="panel-body">
+                                        <div class="container">
+                                            <form id="contact" action="" method="post" class="col-lg-18">
+                                                <h3>Request For Donation</h3>
+                                                <fieldset>
+                                                    <input id="schoolorg" name="schoolorg" class="form-control" placeholder="School / Organization" type="text" onkeyup="lettersOnly(this)" required>
+                                                </fieldset><br>
+                                                <fieldset>
+                                                    <input id="contactPerson" name="contactPerson" class="form-control" placeholder="Contact Person" type="text" onkeyup="lettersOnly(this)" required>
+                                                </fieldset><br>
+                                                <fieldset>
+                                                    <input id="contactNo" name="contactNo" class="form-control" placeholder="Contact No." type="text" required>
+                                                </fieldset><br>
+                                                <fieldset>
+                                                    <input id="dateNeeded" name="dateNeeded" class="form-control" type="datetime-local" placeholder="Date and Time Needed" required />
+                                                </fieldset><br>
+                                                <fieldset>
+                                                    <input id="purpose" name="purpose" class="form-control" placeholder="Purpose" type="text" onkeyup="lettersOnly(this)" required>
+                                                </fieldset><br>
+                                                <fieldset>
+                                                    <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest" align="center" cellpadding="0" cellspacing="0" border="1" required>
                                                         <thead>
                                                             <tr>
                                                                 <th style="width:500px">Equipment</th>
                                                                 <th style="width:150px">Quantity</th>
-                                                                <th></th>
+                                                                <th>Add More Items</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-														<tr>
-                                                            <td>
-                                                                <select class="form-control" id="txtName" name="assetCategory[]" required>
-                                                                    <option value="">Select</option>
-																	<?php
+                                                            <tr>
+                                                                <td>
+                                                                    <select class="form-control" id="txtName" name="assetCategory[]" required>
+                                                                        <option value="">Select</option>
+                                                                        <?php
 																		
 																		$sql = "SELECT * FROM thesis.ref_assetcategory;";
 
@@ -110,33 +150,49 @@ if(isset($_POST['save'])){
                                                                             echo "{$row['name']}</option>";
                                                                         }
 																	?>
-                                                                </select>
-                                                            </td>
-                                                            <td><input class="form-control" type="number" min="1" id="txtCountry" name="qty[]" required /></td>
-                                                            <td style="text-align:center"><input class="btn btn-primary" type="button" onclick="Add()" value="Add" /></td>
+                                                                    </select>
+                                                                </td>
+                                                                <td><input class="form-control" type="number" min="1" id="txtCountry" name="qty[]" required /></td>
+                                                                <td style="text-align:center"><input class="btn btn-primary" type="button" onclick="Add()" value="Add" /></td>
                                                             </tr>
                                                         </tbody>
-                                                        <tfoot>  
-                                                        </tfoot>
                                                     </table>
-                            </fieldset>
-                            <fieldset>
-                                <button id="save" name="save" class="btn btn-success" type="submit">Submit</button>
-                            </fieldset>
-                            <fieldset>
-                                <button class="btn btn-danger" type="submit" onclick="window.location.href='login.php'">Back</button>
-                            </fieldset>
+                                                </fieldset>
+                                                <fieldset>
+                                                    <button id="save" name="save" class="btn btn-success" type="submit">Submit</button>
+                                                </fieldset>
 
-                        </form>
+                                            </form>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </section>
+                            </div>
+                        </div>
+
                     </div>
-
                 </div>
+                <!-- page end-->
             </section>
         </section>
+        <!--main content end-->
+
     </section>
 
-    <!-- Placed js at the end of the document so the pages load faster -->
-    
+    <!-- WAG BAGUHIN ANG BABA PLS LANG -->
+
+    <script src="js/jquery.js"></script>
+    <script src="bs3/js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
+    <script src="js/jquery.nicescroll.js"></script>
+    <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+    <script src="js/dynamic_table_init.js"></script>
     <script type="text/javascript">
         window.onload = function() {
             //Build an array containing Customer records.
@@ -212,27 +268,6 @@ if(isset($_POST['save'])){
         }
         
     </script>
-
-    
-    
-    
-    <!--Core js-->
-    <script src="js/jquery.js"></script>
-    <script src="bs3/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/hover-dropdown.js"></script>
-    <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-    <script src="js/jquery.nicescroll.js"></script>
-    <!--Easy Pie Chart-->
-    <script src="js/easypiechart/jquery.easypiechart.js"></script>
-    <!--Sparkline Chart-->
-    <script src="js/sparkline/jquery.sparkline.js"></script>
-    <!--jQuery Flot Chart-->
-    <script src="js/flot-chart/jquery.flot.js"></script>
-    <script src="js/flot-chart/jquery.flot.tooltip.min.js"></script>
-    <script src="js/flot-chart/jquery.flot.resize.js"></script>
-    <script src="js/flot-chart/jquery.flot.pie.resize.js"></script>
-
-
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
 

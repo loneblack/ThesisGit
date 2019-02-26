@@ -11,6 +11,13 @@
                         </li>
                         
                         <li>
+                            <a href="director_donation.php">
+                                <i class="fa fa-money"></i>
+                                <span>Donation Form</span>
+                            </a>
+                        </li>
+                        
+                        <li>
                             <a href="logout.php">
                                 <i class="glyphicon glyphicon-log-out"></i>
                                 <span>Logout</span>
