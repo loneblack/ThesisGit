@@ -133,8 +133,8 @@ $_SESSION['count'] = 0;
                                                                 <textarea class="form-control" rows="5" id="comment" name= "comment" style="resize: none" required></textarea>
                                                             </div>
                                                         </div>
-                                                        
                                                      </div>
+                                                    
                                                      <div class="form-group ">
                                                         <label for="dateNeeded" class="control-label col-lg-3">Date needed</label>
                                                         <div class="col-lg-6">
@@ -215,6 +215,16 @@ $_SESSION['count'] = 0;
                                                             </select>
                                                         </div>
                                                     </div>
+                                                    
+                                                    <div class="form-group ">
+                                                        <label for="building" class="control-label col-lg-3">Asset Description</label>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <textarea class="form-control" rows="5" id="" name= "" style="resize: none" placeholder="If you do not know what the asset is called, kindly describe the asset that you would like us to purchase for you."></textarea>
+                                                            </div>
+                                                        </div>
+                                                     </div>
+                                                    
                                                 </section>
 
                                                 <hr>
