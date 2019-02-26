@@ -189,8 +189,7 @@ require_once("db/mysql_connect.php");
                         var cell3 = row.getElementsByTagName("td")[8];
                         var status = cell3.textContent;
 
-                        alert(id+" - "+serviceTypeID+" - "+status);
-											
+                      				
 						if(serviceTypeID == '25'){
                             //asset testing
 							if(status == "Closed"){
