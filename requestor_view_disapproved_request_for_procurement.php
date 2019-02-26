@@ -9,7 +9,98 @@
 	$queryReq="SELECT * FROM thesis.request r join floorandroom far on r.FloorAndRoomID=far.FloorAndRoomID where r.requestID='{$requestID}'";
 	$resultReq=mysqli_query($dbc,$queryReq);
 	$rowReq=mysqli_fetch_array($resultReq,MYSQLI_ASSOC);
-
+	
+	if(isset($_POST['request'])){
+		if(!empty($_POST['recommAss'])){
+			$recommAss=$_POST['recommAss'];
+			
+			//Get EmployeeID
+			$queryEmpID = "SELECT * FROM `thesis`.`employee` WHERE UserID = {$_SESSION['userID']};"; //get the employeeID using userID
+			$resultEmpID = mysqli_query($dbc, $queryEmpID);
+			$rowEmpID = mysqli_fetch_array($resultEmpID, MYSQLI_ASSOC);
+			
+			if(isset($_POST['endDate'])){
+				//insertion to request table
+				$endDate=$_POST['endDate'];
+				
+				$sql2 = "INSERT INTO `thesis`.`request_borrow` (`BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `dateCreated`, `statusID`, `steps`) VALUES ('{$rowReq['BuildingID']}', '{$rowReq['FloorAndRoomID']}', '{$rowReq['dateNeeded']}', '{$endDate}', '{$rowEmpID['employeeID']}', now(), '2', '13');";//status is set to 1 for pending status
+				$result2 = mysqli_query($dbc, $sql2);
+			}
+			else{
+				//insertion to request table
+				$sql2 = "INSERT INTO `thesis`.`request_borrow` (`BuildingID`, `FloorAndRoomID`, `startDate`, `personresponsibleID`, `dateCreated`, `statusID`, `steps`) VALUES ('{$rowReq['BuildingID']}', '{$rowReq['FloorAndRoomID']}', '{$rowReq['dateNeeded']}', '{$rowEmpID['employeeID']}', now(), '2', '13');";//status is set to 1 for pending status
+				$result2 = mysqli_query($dbc, $sql2);
+			}
+			
+			//GET LATEST BORROW
+			$queryGetLatBor = "SELECT * FROM thesis.request_borrow order by borrowID desc limit 1";
+			$resultGetLatBor = mysqli_query($dbc, $queryGetLatBor);
+			$rowGetLatBor = mysqli_fetch_array($resultGetLatBor, MYSQLI_ASSOC);
+			
+			
+			//Insert into borrow details table part
+			foreach($recommAss as $assetBorrow){
+				//GET ASSET CATEGORY
+				$queryGetAssCat = "SELECT am.assetCategory FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID where a.assetID='{$assetBorrow}'";
+				$resultGetAssCat= mysqli_query($dbc, $queryGetAssCat);
+				$rowGetAssCat = mysqli_fetch_array($resultGetAssCat, MYSQLI_ASSOC);
+				
+				//CHECK IF AN ASSET CATEGORY ALREADY EXISTS IN BORROW DETAILS
+				$queryIsAssCatEx = "SELECT count(*) as `isExist` FROM thesis.borrow_details where borrowID='{$rowGetLatBor['borrowID']}' and assetCategoryID='{$rowGetAssCat['assetCategory']}'";
+				$resultIsAssCatEx= mysqli_query($dbc, $queryIsAssCatEx);
+				$rowIsAssCatEx = mysqli_fetch_array($resultIsAssCatEx, MYSQLI_ASSOC);
+				
+				if($rowIsAssCatEx['isExist']=='0'){
+					//INSERT INTO BORROW DETAILS
+					$sql6 = "INSERT INTO `thesis`.`borrow_details` (`borrowID`, `quantity`, `assetCategoryID`, `purpose`) 
+							VALUES ('{$rowGetLatBor['borrowID']}', '1', '{$rowGetAssCat['assetCategory']}', '{$rowReq['description']}');";
+					$result6 = mysqli_query($dbc, $sql6); 
+					
+					//GET LATEST BORROW DETAILS
+					$queryGetLatBorDet = "SELECT * FROM thesis.borrow_details order by borrow_detailscol desc limit 1";
+					$resultGetLatBorDet = mysqli_query($dbc, $queryGetLatBorDet);
+					$rowGetLatBorDet = mysqli_fetch_array($resultGetLatBorDet, MYSQLI_ASSOC);
+					
+					//INSERT ASSET INTO BORROWDETAILSITEM
+					$queryInsBorDetIt = "INSERT INTO `thesis`.`borrow_details_item` (`borrow_detailsID`, `assetID`) 
+										VALUES ('{$rowGetLatBorDet['borrow_detailscol']}', '{$assetBorrow}');";
+					$resultInsBorDetIt = mysqli_query($dbc, $queryInsBorDetIt);
+					
+					//update asset status
+					$QAssetStatus = "UPDATE `thesis`.`asset` SET `assetStatus` = '8' WHERE (`assetID` = '{$assetBorrow}');";
+					$RAssetStatus = mysqli_query($dbc,$QAssetStatus);
+				}
+				else{
+					//GET BORROW DETAILS DATA
+					$queryGetBorDetDat = "SELECT * FROM thesis.borrow_details where borrowID='{$rowGetLatBor['borrowID']}' and assetCategoryID='{$rowGetAssCat['assetCategory']}'";
+					$resultGetBorDetDat = mysqli_query($dbc, $queryGetBorDetDat);
+					$rowGetBorDetDat = mysqli_fetch_array($resultGetBorDetDat, MYSQLI_ASSOC);
+					
+					$addedQty=$rowGetBorDetDat['quantity']+1;
+					
+					//UPDATE BORROW DETAILS
+					$sql6 = "UPDATE `thesis`.`borrow_details` SET `quantity` = '{$addedQty}' WHERE `borrow_detailscol` = '{$rowGetBorDetDat['borrow_detailscol']}';";
+					$result6 = mysqli_query($dbc, $sql6); 
+					
+					//INSERT ASSET INTO BORROWDETAILSITEM
+					$queryInsBorDetIt = "INSERT INTO `thesis`.`borrow_details_item` (`borrow_detailsID`, `assetID`) 
+										VALUES ('{$rowGetBorDetDat['borrow_detailscol']}', '{$assetBorrow}');";
+					$resultInsBorDetIt = mysqli_query($dbc, $queryInsBorDetIt);
+					
+					//update asset status
+					$QAssetStatus = "UPDATE `thesis`.`asset` SET `assetStatus` = '8' WHERE (`assetID` = '{$assetBorrow}');";
+					$RAssetStatus = mysqli_query($dbc,$QAssetStatus);
+				}
+				
+			}
+			//UPDATE STEP TO COMPLETED
+			$queryUpdStepComp = "UPDATE `thesis`.`request` SET `step` = '21' WHERE (`requestID` = '{$requestID}');";
+			$resultUpdStepComp = mysqli_query($dbc, $queryUpdStepComp);
+			
+		}
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message; 
+	}
 ?>
 
 <head>
@@ -175,7 +266,7 @@
                                                     <br><br><br>
                                                 </section>
                                             </form>
-                                            <form class="cmxform form-horizontal">
+                                            <form class="cmxform form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']." ?id=".$requestID; ?>">
                                                 <div class="form-group ">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Reason For Disapproval</label>
                                                     <div class="col-lg-6">
@@ -188,16 +279,9 @@
                                                 <br>
                                                 
                                                     <div class="form-group ">
-                                                        <label class="control-label col-lg-3">Borrow Start Date</label>
+                                                        <label class="control-label col-lg-3">Asset Return date</label>
                                                         <div class="col-lg-6">
-                                                            <input class="form-control" type="date" required/>
-                                                        </div>
-                                                    </div>
-                                                
-                                                    <div class="form-group ">
-                                                        <label class="control-label col-lg-3">Borrow End Date</label>
-                                                        <div class="col-lg-6">
-                                                            <input class="form-control" type="date" />
+                                                            <input class="form-control" type="date" name="endDate" min="<?php echo date('Y-m-d'); ?>" value="<?php echo date('Y-m-d'); ?>" />
                                                         </div>
                                                     </div>                                                
 
@@ -233,13 +317,11 @@
 																</tr>";
 															}
 														
-														
-														
 														?>
                                                         
                                                     </tbody>
                                                 </table>
-                                                <button class="btn btn-success" type="submit">Request</button>
+                                                <button class="btn btn-success" type="submit" name="request">Request</button>
                                                 <button class="btn btn-danger" onclick="window.history.back()">Back</button>
                                             </form>
                                         </div>

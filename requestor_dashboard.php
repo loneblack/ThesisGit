@@ -127,6 +127,9 @@ require_once("db/mysql_connect.php");
 															elseif($row['step'] == 'Receiver Approval'){
 																echo "<td><span class='label label-danger'>Receiver Disapproved Request</span></td>";
 															}
+															else{
+																echo "<td><span class='label label-danger'>{$row['step']}</span></td>";
+															}
                                                         }
 														//echo "<td>{$row['step']}</td>";
 
