@@ -48,6 +48,14 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
     <link href="css/style-responsive.css" rel="stylesheet" />
 </head>
 
+        <?php
+            $count = 1;
+            $query = "SELECT e.name AS `naame` FROM employee e JOIN user u ON e.userID = u.userID WHERE e.userID = {$userID};";
+            $result = mysqli_query($dbc, $query);
+            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            $name = $row['naame'];
+        ?>    
+    
 <body>
 
     <section id="container">
@@ -62,7 +70,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
             </div>
 
             <div class="nav notify-row" id="top_menu">
-
+                <h4>Welcome! <?php echo $name; ?></h4>
             </div>
 
         </header>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
 	session_start();
+    $userID = $_SESSION['userID'];
 	require_once('db/mysql_connect.php');
 	$StartDate = strtotime('2018-1-3'); //Start date from which we begin count
 	$CurDate = date("Y-m-d"); //Current date.
@@ -82,6 +83,14 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
     <link href="css/style-responsive.css" rel="stylesheet" />
 </head>
 
+        <?php
+            $count = 1;
+            $query = "SELECT e.name AS `naame` FROM employee e JOIN user u ON e.userID = u.userID WHERE e.userID = {$userID};";
+            $result = mysqli_query($dbc, $query);
+            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            $name = $row['naame'];
+        ?>    
+
 <body>
 
     <section id="container">
@@ -96,7 +105,7 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
             </div>
 
             <div class="nav notify-row" id="top_menu">
-
+                <h4>Welcome! <?php echo $name; ?></h4>
             </div>
 
         </header>

@@ -21,6 +21,14 @@
 
 <body>
 
+        <?php
+            $count = 1;
+            $query = "SELECT e.name AS `naame` FROM employee e JOIN user u ON e.userID = u.userID WHERE e.userID = {$userID};";
+            $result = mysqli_query($dbc, $query);
+            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            $name = $row['naame'];
+        ?>
+    
     <section id="container">
         <!--header start-->
         <header class="header fixed-top clearfix">
@@ -33,7 +41,7 @@
             </div>
 
             <div class="nav notify-row" id="top_menu">
-
+                <h4>Welcome! <?php echo $name; ?></h4>
             </div>
 
         </header>
