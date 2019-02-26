@@ -16,6 +16,14 @@
 			$remarks=$_POST['remarks'];
 			$assetStat=$_POST['assetStat'];
 			
+            //Check if there's an asset needed for repair
+            if(in_array('9', $assetStat)){
+                //insertion to service table
+	            $queryGenRepairReq = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`)
+	                    VALUES ('Repair needed on the following assets', now(), '{$_SESSION['userID']}', '27', '1', '14');";
+                $resultGenRepairReq=mysqli_query($dbc,$queryGenRepairReq);
+            }
+            
 			$mi = new MultipleIterator();
 			$mi->attachIterator(new ArrayIterator($asset));
 			$mi->attachIterator(new ArrayIterator($remarks));
@@ -26,11 +34,25 @@
 				//UPDATE ASSET STATUS
 				$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='{$assetStat}' WHERE `assetID`='{$asset}'";
 				$resultStat=mysqli_query($dbc,$queryStat);
+
+                if($assetStat=='9'){
+                     //Get Latest Repair Request
+					$queryGetLatRep="SELECT * FROM thesis.service where serviceType='27' order by id desc limit 1";
+					$resultGetLatRep=mysqli_query($dbc,$queryGetLatRep);
+					$rowGetLatRep=mysqli_fetch_array($resultGetLatRep,MYSQLI_ASSOC);
+					 
+					//insert asset to service details
+					$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`) VALUES ('{$rowGetLatRep['id']}', '{$asset}');";
+					$resulted = mysqli_query($dbc, $query);
+                }
+				elseif($assetStat=='18'){
+					
+				}
 			}
 			
 			//UPDATE SERVICE STATUS (STILL NEEDS TO BE FIXED)
-			$queryComp="UPDATE `thesis`.`service` SET `status`='3' WHERE `id`='{$id}'";
-			$resultComp=mysqli_query($dbc,$queryComp);
+			//$queryComp="UPDATE `thesis`.`service` SET `status`='3' WHERE `id`='{$id}'";
+			//$resultComp=mysqli_query($dbc,$queryComp);
 			
 			//UPDATE TICKET
 			$queryTickUp="UPDATE `thesis`.`ticket` SET `status`='7', `dateClosed`=now() WHERE `ticketID`='{$id}'";
@@ -172,11 +194,6 @@
                                                 <div class="col-lg-6">
                                                     <select class="form-control m-bot15" disabled>
                                                         <option selected="selected"><?php echo $rowTickDat['fullname']; ?></option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
-                                                        <option>Eng. Marvin Lao</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -243,7 +260,7 @@
 															
 														//GET ASSET Status
 														
-														$queryAssStat="SELECT * FROM thesis.ref_assetstatus";
+														$queryAssStat="SELECT * FROM thesis.ref_assetstatus where id='2' or id='9' or id='18'";
 														$resultAssStat=mysqli_query($dbc,$queryAssStat);
 														while($rowAssStat=mysqli_fetch_array($resultAssStat,MYSQLI_ASSOC)){
 															echo "<option value='{$rowAssStat['id']}'>{$rowAssStat['description']}</option>";
