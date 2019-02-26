@@ -220,7 +220,7 @@ $_SESSION['count'] = 0;
                                                         <label for="building" class="control-label col-lg-3">Asset Description</label>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <textarea class="form-control" rows="5" id="" name= "" style="resize: none" placeholder="If you do not know what the asset is called, kindly describe the asset that you would like us to purchase for you."></textarea>
+                                                                <textarea class="form-control" rows="5" id="" name= "assetDescription" style="resize: none" placeholder="If you do not know what the asset is called, kindly describe the asset that you would like us to purchase for you."></textarea>
                                                             </div>
                                                         </div>
                                                      </div>

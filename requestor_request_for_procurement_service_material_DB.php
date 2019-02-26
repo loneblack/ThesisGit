@@ -8,7 +8,7 @@
     $userID = $_SESSION['userID'];
     $buildingID = null;
     $FloorAndRoomID = $_POST['room']; 
-
+	
     //get the location from userID
     //$sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = '{$userID}';";
     //$result = mysqli_query($dbc, $sql);
@@ -29,7 +29,7 @@
 
     $dateNeeded = $_POST['dateNeeded'];
     $comment = $_POST['comment'];
-
+	$assetDescription=$_POST['assetDescription'];
 
     date_default_timezone_set("Asia/Singapore");
 
@@ -42,21 +42,16 @@
     $id = 0;   
 
 	if(isset($_POST['isITTeamChooseSpecs'])){
-		
-		$sql0 = "INSERT INTO `thesis`.`request` (`description`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`, `requestcol`) VALUES ('{$comment}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '22', true)";//status is set to 1 for pending status
+		$sql0 = "INSERT INTO `thesis`.`request` (`description`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`, `specs`) VALUES ('{$comment}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '22', true)";//status is set to 1 for pending status
 		$result0 = mysqli_query($dbc, $sql0);
 		echo $sql0;
 	}
 	else{
-		$sql0 = "INSERT INTO `thesis`.`request` (`description`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`, `requestcol`) VALUES ('{$comment}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '22', false)";//status is set to 1 for pending status
+		$sql0 = "INSERT INTO `thesis`.`request` (`description`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`, `specs`) VALUES ('{$comment}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '22', false)";//status is set to 1 for pending status
 		$result0 = mysqli_query($dbc, $sql0);
 		echo $sql0;
 	}
-    
-
-    $sql2 = "SELECT * FROM `thesis`.`request` order by requestID DESC LIMIT 1;";
-    $result2 = mysqli_query($dbc, $sql2);
-
+	
     //get the id of the recently inserted item to request table
     $sql1 = "SELECT * FROM `thesis`.`request` order by requestID DESC LIMIT 1;";
     $result1 = mysqli_query($dbc, $sql1);
@@ -64,6 +59,14 @@
     while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC)){
         $id = $row['requestID'];
     }
+	
+	//Set Asset Description
+	
+	if(isset($assetDescription)){
+		$sqlUpdAssDesc = "UPDATE `thesis`.`request` SET `assetDescription` = '{$assetDescription}' WHERE `requestID` = '{$id}';";
+		$resultUpdAssDesc = mysqli_query($dbc, $sqlUpdAssDesc);
+	}
+    
    
    //insertion to requestdetails table using the id taken earlier
    for ($i=0; $i < $count; $i++) { 
