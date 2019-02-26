@@ -87,6 +87,6 @@
 
   unset($_SESSION['count']);  
 
-  //header('Location: '.$header);
+  header('Location: '.$header);
 
 ?>
