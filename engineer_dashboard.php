@@ -76,6 +76,10 @@ if($everyTwoWeeks<=$CurDate){
 					//INSERT TO TICKETTED ASSETS
 					$queryInsTickAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`, `checked`) VALUES ('{$rowLatMainTicket['ticketID']}', '{$rowAssAssFlrRoom['assetID']}', false);";
 					$resultInsTickAss=mysqli_query($dbc,$queryInsTickAss);
+					
+					//UPDATE ASSET STATUS TO FOR MAINTENANCE
+					$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='17' WHERE `assetID`='{$rowAssAssFlrRoom['assetID']}'";
+					$resultStat=mysqli_query($dbc,$queryStat);
 				}
 			}	
 		}     
