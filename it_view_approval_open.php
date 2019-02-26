@@ -167,7 +167,7 @@
                                                         <label for="building" class="control-label col-lg-3">Asset Description</label>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <textarea class="form-control" rows="5" id="" name= "assetDescription" style="resize: none" disabled><?php if(isset($rowReq['assetDescription'])){
+                                                                <textarea class="form-control" rows="5" id="" name= "assetDescription" style="resize: none" disabled><?php if(!$rowReq['assetDescription']==null){
 																	echo $rowReq['assetDescription'];
 																} ?></textarea>
                                                             </div>
@@ -258,12 +258,16 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="col-lg-12">
-                                                                            <input class="form-control" type="number" name="quantity[]" id="quantity0" min="1" step="1" placeholder="Quantity" />
+                                                                            <input class="form-control" type="number" name="quantity[]" id="quantity0" min="1" step="1" placeholder="Quantity" <?php if($rowReq['assetDescription']==null){
+																				echo "disabled";
+																			} ?> />
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="col-lg-12">
-                                                                            <select class="form-control" name="category[]" id="category0">
+                                                                            <select class="form-control" name="category[]" id="category0" <?php if($rowReq['assetDescription']==null){
+																					echo "disabled";
+																				} ?>>
                                                                                 <option>Select</option>
                                                                                 <?php
  
@@ -283,20 +287,26 @@
                                                                         </div>
                                                                     </td>
 
-                                                                    <td style="padding-top:5px; padding-bottom:5px">
+                                                                    <td>
                                                                         <div class="col-lg-12">
-                                                                            <input class="form-control" type="text" name="description[]" id="description0" placeholder="Item specifications" />
+                                                                            <input class="form-control" type="text" name="description[]" id="description0" placeholder="Item specifications" <?php if($rowReq['assetDescription']==null){
+																					echo "disabled";
+																				} ?> />
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="col-lg-12">
-                                                                            <input class="form-control" type="text" name="purpose[]" id="purpose0" placeholder="Purpose">
+                                                                            <input class="form-control" type="text" name="purpose[]" id="purpose0" placeholder="Purpose" <?php if($rowReq['assetDescription']==null){
+																					echo "disabled";
+																				} ?>>
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                     </td>
                                                                     <td>
-                                                                        <button type='button' class='btn btn-primary' onclick='addTest();'> Add </button>
+                                                                        <button type='button' class='btn btn-primary' onclick='addTest();' <?php if($rowReq['assetDescription']==null){
+																					echo "disabled";
+																				} ?>> Add </button>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
