@@ -820,6 +820,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   `step` INT NULL,
   `reasonForDisaprroval` LONGTEXT NULL,
   `assetDescription` LONGTEXT NULL,
+  `specs` TINYINT NULL,
   PRIMARY KEY (`requestID`),
   INDEX `fk_Request_Employee1_idx` (`employeeID` ASC),
   INDEX `fk_Request_FloorAndRoom1_idx` (`FloorAndRoomID` ASC),
@@ -1792,13 +1793,13 @@ CREATE TABLE IF NOT EXISTS `thesis`.`replacement` (
   `replacementID` INT NOT NULL AUTO_INCREMENT,
   `lostAssetID` INT(11) NOT NULL,
   `replacementAssetID` INT(11) NOT NULL,
-  `building_BuildingID` INT(11) NOT NULL,
+  `BuildingID` INT(11) NOT NULL,
   `FloorAndRoomID` INT(11) NOT NULL,
   `dateTiimeLost` DATETIME NULL,
   PRIMARY KEY (`replacementID`),
   INDEX `fk_replacement_asset1_idx` (`lostAssetID` ASC),
   INDEX `fk_replacement_asset2_idx` (`replacementAssetID` ASC),
-  INDEX `fk_replacement_building1_idx` (`building_BuildingID` ASC),
+  INDEX `fk_replacement_building1_idx` (`BuildingID` ASC),
   INDEX `fk_replacement_floorandroom1_idx` (`FloorAndRoomID` ASC),
   CONSTRAINT `fk_replacement_asset1`
     FOREIGN KEY (`lostAssetID`)
@@ -1811,7 +1812,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`replacement` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_replacement_building1`
-    FOREIGN KEY (`building_BuildingID`)
+    FOREIGN KEY (`BuildingID`)
     REFERENCES `thesis`.`building` (`BuildingID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,

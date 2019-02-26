@@ -27,6 +27,10 @@
 
     $dateNeeded = $_POST['dateNeeded'];
     $endDate = $_POST['endDate'];
+
+    if($endDate == ""){
+        $endDate = NULL;
+    }
     $FloorAndRoomID = $_POST['FloorAndRoomID'];
 
     date_default_timezone_set("Asia/Singapore");
@@ -82,6 +86,6 @@
 
   unset($_SESSION['count']);  
 
-  header('Location: '.$header);
+  //header('Location: '.$header);
 
 ?>
