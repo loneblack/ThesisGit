@@ -46,6 +46,14 @@
 					$resulted = mysqli_query($dbc, $query);
                 }
 				elseif($assetStat=='18'){
+					//GET FLOORANDROOMID AND BUILDINGID
+					$queryGetAssLoc="SELECT * FROM thesis.assetassignment where assetID='{$asset}' and personresponsibleID is null";
+					$resultGetAssLoc=mysqli_query($dbc,$queryGetAssLoc);
+					$rowGetAssLoc=mysqli_fetch_array($resultGetAssLoc,MYSQLI_ASSOC);
+					
+					//INSERT INTO REPLACEMENT TABLE
+					$queryInsRep = "INSERT INTO `thesis`.`replacement` (`lostAssetID`, `BuildingID`, `FloorAndRoomID`, `dateTiimeLost`) VALUES ('{$asset}', '{$rowGetAssLoc['BuildingID']}', '{$rowGetAssLoc['FloorAndRoomID']}', now());";
+					$resultInsRep = mysqli_query($dbc, $queryInsRep);
 					
 				}
 			}
