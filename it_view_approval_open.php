@@ -3,7 +3,7 @@
 <?php
 	session_start();
 	require_once("db/mysql_connect.php");
-	$_SESSION['count'] = 0;
+	
 	$requestID=$_GET['requestID'];
 	$_SESSION['assetCatID']=null;
 	$_SESSION['recommAsset']=array();
@@ -20,6 +20,28 @@
 	}
 	
 	if(isset($_POST['approve'])){
+		//Add data to request details
+		
+		$quantity = $_POST['quantity'];
+		$category = $_POST['category'];
+		$description = $_POST['description'];
+		$purpose = $_POST['purpose'];
+		
+		$mi = new MultipleIterator();
+		$mi->attachIterator(new ArrayIterator($quantity));
+		$mi->attachIterator(new ArrayIterator($category));
+		$mi->attachIterator(new ArrayIterator($description));
+		$mi->attachIterator(new ArrayIterator($purpose));
+		
+		//insertion to requestdetails table using the id taken earlier
+		
+		foreach($mi as $value){
+			list($quantity, $category, $description, $purpose) = $value;
+			
+			$sql = "INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `assetCategory`, `description`, `purpose`) VALUES ('{$requestID}', '{$quantity}', '{$category}', '{$description}', '{$purpose}')";
+			$result = mysqli_query($dbc, $sql);   
+		}
+
 		$query="UPDATE `thesis`.`request` SET `step`='23' WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
 		$_SESSION['submitMessage']="Form submitted!";
@@ -96,7 +118,7 @@
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
-                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
+                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="<?php echo $_SERVER['PHP_SELF']." ?requestID=".$requestID; ?>">
                                                 <?php
                                                     if (isset($_SESSION['submitMessage'])){
 
@@ -140,13 +162,24 @@
                                                         </div>
 
                                                     </div>
+													
+													 <div class="form-group ">
+                                                        <label for="building" class="control-label col-lg-3">Asset Description</label>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <textarea class="form-control" rows="5" id="" name= "assetDescription" style="resize: none" disabled><?php if(isset($rowReq['assetDescription'])){
+																	echo $rowReq['assetDescription'];
+																} ?></textarea>
+                                                            </div>
+                                                        </div>
+                                                     </div>
 
                                                 </section>
 
 
                                                 <section>
                                                     <h4>Requested Services/Materials</h4>
-                                                    <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+                                                    <table class="table table-bordered table-striped table-condensed table-hover" >
                                                         <thead>
                                                             <tr>
                                                                 <th>Category</th>
@@ -202,14 +235,14 @@
                                                 </section>
 
                                                 <section>
-                                                    <input type="checkbox" name="check" disabled <?php if($rowReq['requestcol']==1){ echo "checked" ; } ?>> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
+                                                    <input type="checkbox" name="check" disabled <?php if($rowReq['specs']==1){ echo "checked" ; } ?>> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
                                                     <br><br><br>
                                                 </section>
-                                                <form method="post" action="<?php echo $_SERVER['PHP_SELF']." ?requestID=".$requestID; ?>">
+                                                
 
                                                     <section>
 
-                                                        <h4>Fill up requested assets from the described request.</h4>
+                                                        <h4>Fill up requested assets based from its described asset description.</h4>
                                                         <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                             <thead>
                                                                 <tr>
@@ -225,13 +258,12 @@
                                                                 <tr>
                                                                     <td>
                                                                         <div class="col-lg-12">
-                                                                            <input style="display: none" type="number" id="count" value=<?php echo $_SESSION['count'];?>/>
-                                                                            <input class="form-control" type="number" name="quantity0" id="quantity0" min="1" step="1" placeholder="Quantity" />
+                                                                            <input class="form-control" type="number" name="quantity[]" id="quantity0" min="1" step="1" placeholder="Quantity" />
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="col-lg-12">
-                                                                            <select class="form-control" name="category0" id="category0">
+                                                                            <select class="form-control" name="category[]" id="category0">
                                                                                 <option>Select</option>
                                                                                 <?php
  
@@ -253,12 +285,12 @@
 
                                                                     <td style="padding-top:5px; padding-bottom:5px">
                                                                         <div class="col-lg-12">
-                                                                            <input class="form-control" type="text" name="description0" id="description0" placeholder="Item specifications" />
+                                                                            <input class="form-control" type="text" name="description[]" id="description0" placeholder="Item specifications" />
                                                                         </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="col-lg-12">
-                                                                            <input class="form-control" type="text" name="purpose0" id="purpose0" placeholder="Purpose">
+                                                                            <input class="form-control" type="text" name="purpose[]" id="purpose0" placeholder="Purpose">
                                                                         </div>
                                                                     </td>
                                                                     <td>
@@ -401,8 +433,8 @@
                                                     </div>
                                                 </div>
                                                 <!-- Modal End-->
-
-                                            </form>
+											
+                                            
                                         </div>
                                     </div>
                                 </section>
@@ -437,6 +469,99 @@
         $(function() {
 
         });
+		
+		function addTest() {
+
+            var row_index = 0;
+            var isRenderd = false;
+
+			$("td").click(function() {
+                row_index = $(this).parent().index();
+
+            });
+			
+            var delayInMilliseconds = 300; //1 second
+
+            setTimeout(function() {
+
+                appendTableRow(row_index);
+            }, delayInMilliseconds);
+
+
+
+        }
+		
+		
+        var appendTableRow = function(rowCount) {
+
+            var tr = 
+                            "<tr>" +
+                                    "<td>" +
+                                       " <div class='col-lg-12'>" +
+                                            "<input class='form-control' type='number' id='quantity' name = 'quantity[]' min='1'" + "step='1' placeholder='Quantity' />" +
+                                        "</div>" +
+                                    "</td>" +
+                                    "<td>" +
+                                        "<div class='col-lg-12'>" +
+                                            "<select class='form-control' id='category' name = 'category[]'>" +
+                                                "<option>Select</option>" +
+
+                                                '<?php
+
+                                                    $sql = "SELECT * FROM thesis.ref_assetcategory;";
+
+                                                    $result = mysqli_query($dbc, $sql);
+
+                                                    
+
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                        
+                                                        echo "<option value ={$row['assetCategoryID']}>";
+                                                        echo "{$row['name']}</option>";
+
+                                                    }
+                                                ?>'
+
+                                            +"</select>" +
+                                        "</div>" +
+                                    "</td>" +
+                                    "<td style='padding-top:5px; padding-bottom:5px'>" +
+                                        "<div class='col-lg-12'>" +
+                    "<input class='form-control' type='text' id='description' name ='description[]' placeholder='Item description' />" +
+                                        "</div>" +
+                                    "</td>" +
+
+"<td style='padding-top:5px; padding-bottom:5px'>" +
+                                        "<div class='col-lg-12'>" +
+                    "<input class='form-control' type='text' id='purpose' name ='purpose[]' placeholder='Purpose' />" +
+                                        "</div>" +
+
+                                    "<td>" +
+        "<button id='remove' class='btn btn-danger' type='button' onClick='removeRow(this)'>Remove</button>" +
+                                    "</td>" +
+                                    "<td>" +
+                                    "</td>" +
+                                    "</tr>"
+				
+				
+				
+				
+            $('#tableTest tbody tr').eq(rowCount).after(tr);
+
+            count++;
+
+             $.ajax({
+            type:"POST",
+            url:"count.php",
+            data: 'count='+count,
+            success: function(data){
+                $("#count").html(data);
+
+                }
+            });
+			
+        }
 
         function removeRow(o, recommAsset) {
             var p = o.parentNode.parentNode;
