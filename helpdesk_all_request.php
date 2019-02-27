@@ -186,17 +186,16 @@
                                                   ?>
                                                 <?php 
                                                     
-                                                    //GET ASSET TESTING REQUEST borrow
-                                                    $queryTest="SELECT * FROM thesis.assettesting a 
-                                                                JOIN request_borrow b
-                                                                ON a.borrowID = b.borrowID
+                                                    //view for borrow request
+                                                    $queryTest="SELECT * FROM  request_borrow b
                                                                 JOIN ref_status s
-                                                                ON a.statusID = s.statusID
-                                                                ORDER BY testingID DESC LIMIT 1;";
+                                                                ON b.statusID = s.statusID
+                                                                JOIN employee e ON e.UserID = b.personresponsibleID
+                                                                ORDER BY borrowID DESC;";
                                                     $resultTest=mysqli_query($dbc,$queryTest);
                                                     while($rowStep=mysqli_fetch_array($resultTest,MYSQLI_ASSOC)){
                                                         echo "<tr class='gradeA'>
-                                                                <td style='display: none'>{$rowStep['testingID']}</td>
+                                                                <td style='display: none'>{$rowStep['borrowID']}</td>
                                                                 <td>{$count}</td>
                                                                 <td>{$rowStep['purpose']}</td>
                                                                 <td>Borrow</td>
@@ -206,7 +205,7 @@
                                                         if($rowStep['description']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowStep['description']}</label></td>"; }
                                                         if($rowStep['description']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowStep['description']}</label></td>"; }
                                                         if($rowStep['description']=="Completed"){ echo "<td><label class='label label-success'>{$rowStep['description']}</label></td>"; }
-                                                                
+                                                        echo "<td>{$rowStep['name']}</td>"; 
                                                         echo "</tr>";
                                                         }
 

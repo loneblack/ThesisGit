@@ -328,9 +328,10 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 												</tbody>
 											</table>
 										</div>
-										<hr>
-										<div class="container-fluid">
-											<h4>Endorsement</h4>
+                                        <div class="container-fluid">
+                                        <!--
+                                        <hr>
+                                            <h4>Endorsement</h4>
 											<div class="form-group ">
 												<label for="representative" class="control-label col-lg-3">Representative</label>
 												<div class="col-lg-6">
@@ -343,6 +344,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 													<input class="form-control" id="idNum" name="idNum" type="text" value = <?php echo '"'.$personrepresentativeID.'"' ; ?> disabled />
 												</div>
 											</div>
+                                        -->
 											<div class="form-group">
 												<div style="padding-left:10px">
 													<a href="helpdesk_all_request.php"><button style="float:left" class="btn btn-default" type="button">Back</button></a>

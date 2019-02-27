@@ -106,16 +106,6 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                         <input class=" form-control" id="endDate" name="endDate" type="date" min="<?php echo date('Y-m-d'); ?>" value="<?php echo date('Y-m-d'); ?>" />
                                                     </div>
                                                 </div>
-                                                
-                                                <!--
-                                                <div class="form-group ">
-                                                    <label for="purpose" class="control-label col-lg-3">Purpose</label>
-                                                    <div class="col-lg-6">
-                                                        <input class="form-control" id="purpose" name="purpose" type="text" />
-                                                    </div>
-                                                </div> 
-                                                -->
-
 
                                                     <div class="form-group">
                                                         <label for="floorRoom" class="control-label col-lg-3">Floor & Room</label>
@@ -146,6 +136,13 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                             </select>
                                                         </div>
                                                     </div>
+
+                                                    <div class="form-group">
+                                                    <label for="details" class="control-label col-lg-3">Reason for borrowing</label>
+                                                    <div class="col-lg-6">
+                                                        <textarea class="form-control" rows="5" name="purpose" id = "purpose" style="resize:none" required></textarea>
+                                                    </div>
+                                                </div>
                                                 <hr>
 
                                             <br><br>
@@ -159,7 +156,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                             <tr>
                                                                 <th>Equipment</th>
                                                                 <th>Quantity</th>
-                                                                <th>Purpose/ Proposed Specs</th>
+                                                                <th>Item Description/ Proposed Specs</th>
                                                                 <th>Add/ Remove</th>
                                                             </tr>
                                                         </thead>
