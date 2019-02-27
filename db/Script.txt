@@ -1800,6 +1800,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`replacement` (
   `statusID` INT(11) NOT NULL,
   `dateNeeded` DATE NULL,
   `stepID` INT NOT NULL,
+  `remarks` LONGTEXT NULL,
   PRIMARY KEY (`replacementID`),
   INDEX `fk_replacement_asset1_idx` (`lostAssetID` ASC) ,
   INDEX `fk_replacement_asset2_idx` (`replacementAssetID` ASC) ,
