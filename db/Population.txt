@@ -111,6 +111,7 @@
 			INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('17', 'For Maintenance');
 			INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('18', 'Missing');
 			INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('19', 'Deployed - Component');
+			INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('20', 'Stocked - Component');
 
 			-- ref_status
 			INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('1', 'Pending');
@@ -621,6 +622,8 @@
 
 			INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('28', '14', '8', '1 TB', 'Hard disk drive'); -- Hard disk drive
 
+			INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('29', '40', '6', '', 'Hosting a system'); -- Server
+
 			-- user
 			-- 1
 			INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
@@ -839,33 +842,50 @@
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0009', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 112, Processor
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0010', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 113, Processor
 
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'UPS-0001', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 114, Power Supply
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'UPS-0002', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 115, Power Supply
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'UPS-0003', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 116, Power Supply
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'UPS-0004', 'c5zQziHe','20-8F-1F-AD-85-0A', '19'); -- ID 117, Power Supply
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'UPS-0005', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 118, Power Supply
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'UPS-0006', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 119, Power Supply
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'UPS-0007', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 120, Power Supply
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'UPS-0008', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 121, Power Supply
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'UPS-0009', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 122, Power Supply
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'UPS-0010', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 123, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0001', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 114, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0002', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 115, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0003', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 116, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0004', 'c5zQziHe','20-8F-1F-AD-85-0A', '19'); -- ID 117, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0005', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 118, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0006', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 119, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0007', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 120, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0008', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 121, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0009', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 122, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0010', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 123, Power Supply
 
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0001', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 124, Hard Disk Drive
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'HDD-0002', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 125, Hard Disk Drive
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'HDD-0003', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 126, Hard Disk Drive
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'HDD-0004', 'c5zQziHe','20-8F-1F-AD-85-0A', '19'); -- ID 127, Hard Disk Drive
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'HDD-0005', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 128, Hard Disk Drive
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'HDD-0006', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 129, Hard Disk Drive
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'HDD-0007', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 130, Hard Disk Drive
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'HDD-0008', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 131, Hard Disk Drive
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'HDD-0009', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 132, Hard Disk Drive
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'HDD-0010', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 133, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0002', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 125, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0003', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 126, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0004', 'c5zQziHe','20-8F-1F-AD-85-0A', '19'); -- ID 127, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0005', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 128, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0006', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 129, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0007', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 130, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0008', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 131, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0009', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 132, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0010', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 133, Hard Disk Drive
 
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('25', 'PRNT-0001', 'i75jT7YM', 'F1-01-48-F8-7C-55', '2'); -- ID 134, Printer
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('25', 'PRNT-0002', 'sqGjQXjo', '6E-F0-ED-AE-B9-67', '2'); -- ID 135, Printer
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES (d'25', 'PRNT-0002', 'sqGjQXjo', '6E-F0-ED-AE-B9-67', '2'); -- ID 135, Printer
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('25', 'PRNT-0003', 'cf93F8sz', 'B7-DC-A3-00-56-F0', '2'); -- ID 136, Printer
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('25', 'PRNT-0004', 'BxWjLqan', '1E-A2-27-A2-8F-C7', '2'); -- ID 137, Printer
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('25', 'PRNT-0005', 'GwYCPoyL', '99-76-08-20-B9-53', '2'); -- ID 138, Printer
+
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'PC-0006', 'KBnpZCh2', '77-BB-D9-A5-D0-1F', '1'); -- ID 139, PC
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0011', 'pTks6Peq', '', '20'); -- ID 140, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0011', 'itNQVcn5', '', '20'); -- ID 141, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0011', 'c5zQziHe', '', '20'); -- ID 142, Processor
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('17', 'KB-0011', 'Hbpj8NX3', '', '19'); -- ID 143, keyboard
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0011', 'Rx5CzCGx', '', '20'); -- ID 144, memory
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0011', 'fVduLYDP', '', '20'); -- ID 145, monitor
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0011', 'qxMunck3', '', '20'); -- ID 146, motherboard
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0011', 'CdbFtDrY', '', '20'); -- ID 147, mouse
+
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('29', 'SRVR-0001', 'RZktVh37', '77-BB-D9-A5-D0-1F', '1'); -- ID 148, Server
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0012', 'wBZRdaNd', '', '20'); -- ID 149, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0012', 'etWPM4cV', '', '20'); -- ID 150, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0012', 'hBA7eWCn', '', '20'); -- ID 151, Processor
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0012', '8aRwQrtF', '', '20'); -- ID 152, memory
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0012', 'nicEezrN', '', '20'); -- ID 153, motherboard
 
 			-- asset audit for new items
 			INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');
@@ -1091,17 +1111,20 @@
 			INSERT INTO `thesis`.`servicedetails` VALUES ('1','1'); 
 
 			-- Computer
-			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 14); -- 1
-			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 15); -- 2
-			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 16); -- 3
-			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 17); -- 4
-			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 18); -- 5
+			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 14); -- TC-0001
+			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 15); -- TC-0002
+			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 16); -- TC-0003
+			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 17); -- TC-0004
+			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 18); -- TC-0005
 
-			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 74);
-			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 75);
-			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 76);
-			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 77);
-			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 78);
+			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 74);	-- PC-0001
+			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 75); -- PC-0002
+			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 76); -- PC-0003
+			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 77);	-- PC-0004
+			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 78);	-- PC-0005
+
+			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (1, 139); -- PC-0006
+			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (1, 148); -- SRVR-0001
 
 			-- Computer Component
 				-- Thin client 1 
@@ -1120,9 +1143,9 @@
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (30, 2); -- motherboard
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (35, 2); -- mouse
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (40, 2); -- keyboard
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (105, 1); -- processor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (115, 1); -- power supply
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (125, 1); -- hard disk drive
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (105, 2); -- processor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (115, 2); -- power supply
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (125, 2); -- hard disk drive
 
 
 				-- Thin client 3
@@ -1131,9 +1154,9 @@
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (31, 3); -- motherboard
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (36, 3); -- mouse
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (41, 3); -- keyboard
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (106, 1); -- processor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (116, 1); -- power supply
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (126, 1); -- hard disk drive
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (106, 3); -- processor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (116, 3); -- power supply
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (126, 3); -- hard disk drive
 
 
 				-- Thin client 4
@@ -1142,9 +1165,9 @@
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (32, 4); -- motherboard
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (37, 4); -- mouse
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (42, 4); -- keyboard
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (107, 1); -- processor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (117, 1); -- power supply
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (127, 1); -- hard disk drive
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (107, 4); -- processor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (117, 4); -- power supply
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (127, 4); -- hard disk drive
 
 
 				-- Thin client 5
@@ -1153,57 +1176,74 @@
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (33, 5); -- motherboard
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (38, 5); -- mouse
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (43, 5); -- keyboard
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (108, 1); -- processor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (108, 1); -- power supply
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (128, 1); -- hard disk drive
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (108, 5); -- processor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (108, 5); -- power supply
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (128, 5); -- hard disk drive
 
 
 				-- PC-0001
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (79, 5); -- memory
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (84, 5); -- monitor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (89, 5); -- motherboard
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (94, 5); -- mouse
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (99, 5); -- kayboard
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (109, 1); -- processor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (119, 1); -- power supply
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (129, 1); -- hard disk drive
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (79, 6); -- memory
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (84, 6); -- monitor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (89, 6); -- motherboard
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (94, 6); -- mouse
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (99, 6); -- kayboard
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (109, 6); -- processor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (119, 6); -- power supply
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (129, 6); -- hard disk drive
 
 				-- PC-0002
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (80, 5); -- memory
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (88, 5); -- monitor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (90, 5); -- motherboard
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (95, 5); -- mouse
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (100, 5); -- kayboard
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (110, 1); -- processor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (120, 1); -- power supply
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (130, 1); -- hard disk drive
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (80, 7); -- memory
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (88, 7); -- monitor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (90, 7); -- motherboard
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (95, 7); -- mouse
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (100, 7); -- kayboard
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (110, 7); -- processor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (120, 7); -- power supply
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (130, 7); -- hard disk drive
 
 				-- PC-0003
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (81, 5); -- memory
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (85, 5); -- monitor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (91, 5); -- motherboard
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (96, 5); -- mouse
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (101, 5); -- kayboard
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (111, 1); -- processor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (121, 1); -- power supply
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (131, 1); -- hard disk drive
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (81, 8); -- memory
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (85, 8); -- monitor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (91, 8); -- motherboard
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (96, 8); -- mouse
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (101, 8); -- kayboard
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (111, 8); -- processor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (121, 8); -- power supply
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (131, 8); -- hard disk drive
 
 				-- PC-0004
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (82, 5); -- memory
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (86, 5); -- monitor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (92, 5); -- motherboard
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (97, 5); -- mouse
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (102, 5); -- kayboard
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (112, 1); -- processor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (122, 1); -- power supply
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (132, 1); -- hard disk drive
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (82, 9); -- memory
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (86, 9); -- monitor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (92, 9); -- motherboard
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (97, 9); -- mouse
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (102, 9); -- kayboard
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (112, 9); -- processor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (122, 9); -- power supply
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (132, 9); -- hard disk drive
 
 				-- PC-0005
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (83, 5); -- memory
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (87, 5); -- monitor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (93, 5); -- motherboard
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (98, 5); -- mouse
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (103, 5); -- kayboard
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (113, 1); -- processor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (123, 1); -- power supply
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (133, 1); -- hard disk drive
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (83, 10); -- memory
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (87, 10); -- monitor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (93, 10); -- motherboard
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (98, 10); -- mouse
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (103, 10); -- kayboard
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (113, 10); -- processor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (123, 10); -- power supply
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (133, 10); -- hard disk drive
+
+				-- Stocked PC PC-0006
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (140, 11);	-- Hard disk drive
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (142, 11);	-- Power supply
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (143, 11);	-- Processor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (143, 11);	-- Keyboard
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (144, 11);	-- Memory
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (145, 11);	-- Monitor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (146, 11);	-- Motherboard
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (147, 11);	-- Mouse
+
+				-- Stocked Server SRVR-0001
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (140, 11);	-- Hard disk drive
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (142, 11);	-- Power supply
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (143, 11);	-- Processor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (144, 11);	-- Memory
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (146, 11);	-- Motherboard
