@@ -318,7 +318,7 @@
                                                     </section>
 
                                                     <section>
-                                                        <h4>Reason for Disapproval</h4>
+                                                        <h4>Place A Comment/ Instruction if User Should Proceed to Borrow</h4>
                                                         <textarea class="form-control" rows="5" id="reasOfDisapprov" name="reasOfDisapprov" style="resize: none"></textarea>
                                                         <br>
                                                     </section>
@@ -385,7 +385,7 @@
 
                                                                 <button type="submit" class="btn btn-success" id="approve" name="approve"><i class="fa fa-check"></i> Approve</button>
                                                                 &nbsp;&nbsp;
-                                                                <button type="submit" class="btn btn-danger" id="disapprove" name="disapprove"><i class="fa fa-ban"></i> Disapprove</button>
+                                                                <button type="submit" class="btn btn-danger" id="disapprove" name="disapprove"><i class="fa fa-ban"></i> Proceed To Borrow</button>
                                                                 <!-- <button type="button" class="btn btn-danger" id="disapprove" data-toggle="modal" data-target="#myModal"><i class="fa fa-ban"></i> Disapprove</button> -->
 
 
