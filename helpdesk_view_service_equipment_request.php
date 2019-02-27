@@ -58,11 +58,6 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 // Insertion to ticket
     
     if(isset($_POST['submit'])){
-		
-		//GET ASSET TEST DATA
-		$queryAssTest="SELECT * FROM thesis.assettesting where borrowID='{$id}'";
-		$resultAssTest=mysqli_query($dbc,$queryAssTest);
-		$rowAssTest=mysqli_fetch_array($resultAssTest, MYSQLI_ASSOC);
         
         $message=null;
         $status=$_POST['status'];
@@ -71,6 +66,21 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         $currDate=date("Y-m-d H:i:s");
 
         if(!isset($message)){
+
+            //INSERT ASSET TESTING
+            $queryInsAss="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`, `remarks`, `borrowID`) VALUES ('1', '{$personresponsibleID}', '{$floorRoom}', '25', 'Borrow', '{$id}');";
+            $resultInsAss=mysqli_query($dbc,$queryInsAss);
+                
+            //GET ASSET TEST DATA
+            $queryAssTest="SELECT * FROM thesis.assettesting where borrowID='{$id}'";
+            $resultAssTest=mysqli_query($dbc,$queryAssTest);
+            $rowAssTest=mysqli_fetch_array($resultAssTest, MYSQLI_ASSOC);
+
+            while($rowDelDetAss=mysqli_fetch_array($resultDelDetAss,MYSQLI_ASSOC)){     
+                    //Insert to assettesting_details table
+                    $queryInAssTesDet="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowAssTest['testingID']}', '{$rowDelDetAss['asset_assetID']}')";
+                    $resultInAssTesDet=mysqli_query($dbc,$queryInAssTesDet);
+                }
 
             if($assigned=='0'){
                 $querya="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`, `requestedBY`) VALUES ('{$status}', '{$_SESSION['userID']}', now(), now(), '{$startDate}', '{$priority}', '25', 'Test the selected assets for borrow', 'Test the selected assets for borrow', 'Test the selected assets for borrow', '{$personresponsibleID}')";
@@ -155,7 +165,6 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
@@ -165,7 +174,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                     Service Equipment Request
                                 </header>
 								<div style="padding-top:10px; padding-left:10px; float:left">
-									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Create Ticket</button>
+									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" <?php ?>>Create Ticket</button>
 								</div>
                                 <!-- Modal -->
                                 <div class="modal fade" id="myModal" role="dialog">
