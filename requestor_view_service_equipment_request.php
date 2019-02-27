@@ -164,6 +164,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                         </tbody>
                                                     </table>
                                                 </div>
+                                                <!--
                                                 <hr>
                                                 <div class="container-fluid">
                                                     <h4>Endorsement</h4>
@@ -174,9 +175,9 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                     <div class="form-group ">
                                                         <h5 class="control-label col-lg-3">ID Number</h5>
                                                         <h5 class="control-label col-lg-1"><?php echo $personrepresentativeID; ?></h5>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="form-group">
-                                                        <div class="col-lg-offset-3 col-lg-6">
+                                                        <div class="col-lg-6" style="padding-left: 30px">
                                                             <a href="requestor_dashboard.php"><button class="btn btn-default" type="button">Back</button></a>
                                                         </div>
                                                     </div>
