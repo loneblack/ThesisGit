@@ -63,7 +63,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
               //  $resulta=mysqli_query($dbc,$querya);
             //}
             //else{
-				$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `priority`, `serviceType`, `description`, `details`, `service_id`, `requestedBy`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$priority}', '27', '{$description}', '{$details}','{$id}', '{$UserID}')";
+				$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`,`priority`, `serviceType`, `description`, `details`, `service_id`, `requestedBy`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), (NOW(), INTERVAL 7 DAY),'{$priority}', '27', '{$description}', '{$details}','{$id}', '{$UserID}')";
                 $resulta=mysqli_query($dbc,$querya);
                 //$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `priority`, `serviceType`, `details`, `service_id`) 
                 //VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$priority}', '27', '{$details}, '{$id}')";

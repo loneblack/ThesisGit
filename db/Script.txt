@@ -1798,6 +1798,9 @@ CREATE TABLE IF NOT EXISTS `thesis`.`replacement` (
   `dateTiimeLost` DATETIME NULL,
   `userID` INT(11) NOT NULL,
   `statusID` INT(11) NOT NULL,
+  `dateNeeded` DATE NULL,
+  `stepID` INT NOT NULL,
+  `remarks` LONGTEXT NULL,
   PRIMARY KEY (`replacementID`),
   INDEX `fk_replacement_asset1_idx` (`lostAssetID` ASC) ,
   INDEX `fk_replacement_asset2_idx` (`replacementAssetID` ASC) ,
@@ -1805,6 +1808,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`replacement` (
   INDEX `fk_replacement_floorandroom1_idx` (`FloorAndRoomID` ASC) ,
   INDEX `fk_replacement_user1_idx` (`userID` ASC) ,
   INDEX `fk_replacement_ref_status1_idx` (`statusID` ASC) ,
+  INDEX `fk_replacement_ref_steps1_idx` (`stepID` ASC) ,
   CONSTRAINT `fk_replacement_asset1`
     FOREIGN KEY (`lostAssetID`)
     REFERENCES `thesis`.`asset` (`assetID`)
@@ -1833,6 +1837,11 @@ CREATE TABLE IF NOT EXISTS `thesis`.`replacement` (
   CONSTRAINT `fk_replacement_ref_status1`
     FOREIGN KEY (`statusID`)
     REFERENCES `thesis`.`ref_status` (`statusID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_replacement_ref_steps1`
+    FOREIGN KEY (`stepID`)
+    REFERENCES `thesis`.`ref_steps` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
