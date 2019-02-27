@@ -112,6 +112,7 @@
 			INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('18', 'Missing');
 			INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('19', 'Deployed - Component');
 			INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('20', 'Stocked - Component');
+			INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('21', 'For Refurbish - Component');
 
 			-- ref_status
 			INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('1', 'Pending');
@@ -865,27 +866,27 @@
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0010', 'c5zQziHe', '20-8F-1F-AD-85-0A', '19'); -- ID 133, Hard Disk Drive
 
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('25', 'PRNT-0001', 'i75jT7YM', 'F1-01-48-F8-7C-55', '2'); -- ID 134, Printer
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES (d'25', 'PRNT-0002', 'sqGjQXjo', '6E-F0-ED-AE-B9-67', '2'); -- ID 135, Printer
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('25', 'PRNT-0002', 'sqGjQXjo', '6E-F0-ED-AE-B9-67', '2'); -- ID 135, Printer
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('25', 'PRNT-0003', 'cf93F8sz', 'B7-DC-A3-00-56-F0', '2'); -- ID 136, Printer
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('25', 'PRNT-0004', 'BxWjLqan', '1E-A2-27-A2-8F-C7', '2'); -- ID 137, Printer
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('25', 'PRNT-0005', 'GwYCPoyL', '99-76-08-20-B9-53', '2'); -- ID 138, Printer
 
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'PC-0006', 'KBnpZCh2', '77-BB-D9-A5-D0-1F', '1'); -- ID 139, PC
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0011', 'pTks6Peq', '', '20'); -- ID 140, Hard Disk Drive
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0011', 'itNQVcn5', '', '20'); -- ID 141, Power Supply
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0011', 'c5zQziHe', '', '20'); -- ID 142, Processor
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('17', 'KB-0011', 'Hbpj8NX3', '', '19'); -- ID 143, keyboard
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0011', 'Rx5CzCGx', '', '20'); -- ID 144, memory
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0011', 'fVduLYDP', '', '20'); -- ID 145, monitor
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0011', 'qxMunck3', '', '20'); -- ID 146, motherboard
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0011', 'CdbFtDrY', '', '20'); -- ID 147, mouse
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'PC-0006', 'KBnpZCh2', '77-BB-D9-A5-D0-1F', '10'); -- ID 139, PC
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0011', 'pTks6Peq', '', '21'); -- ID 140, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0011', 'itNQVcn5', '', '21'); -- ID 141, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0011', 'c5zQziHe', '', '21'); -- ID 142, Processor
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('17', 'KB-0011', 'Hbpj8NX3', '', '21'); -- ID 143, keyboard
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0011', 'Rx5CzCGx', '', '21'); -- ID 144, memory
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0011', 'fVduLYDP', '', '21'); -- ID 145, monitor
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0011', 'qxMunck3', '', '21'); -- ID 146, motherboard
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0011', 'CdbFtDrY', '', '21'); -- ID 147, mouse
 
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('29', 'SRVR-0001', 'RZktVh37', '77-BB-D9-A5-D0-1F', '1'); -- ID 148, Server
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0012', 'wBZRdaNd', '', '20'); -- ID 149, Hard Disk Drive
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0012', 'etWPM4cV', '', '20'); -- ID 150, Power Supply
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0012', 'hBA7eWCn', '', '20'); -- ID 151, Processor
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0012', '8aRwQrtF', '', '20'); -- ID 152, memory
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0012', 'nicEezrN', '', '20'); -- ID 153, motherboard
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('29', 'SRVR-0001', 'RZktVh37', '77-BB-D9-A5-D0-1F', '10'); -- ID 148, Server
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0012', 'wBZRdaNd', '', '21'); -- ID 149, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0012', 'etWPM4cV', '', '21'); -- ID 150, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0012', 'hBA7eWCn', '', '21'); -- ID 151, Processor
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0012', '8aRwQrtF', '', '21'); -- ID 152, memory
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0012', 'nicEezrN', '', '21'); -- ID 153, motherboard
 
 			-- asset audit for new items
 			INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');
