@@ -74,6 +74,7 @@
                                                         <th>Model</th>
                                                         <th>Specifications</th>
                                                         <th>Location</th>
+                                                        <th>Comments</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
