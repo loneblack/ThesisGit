@@ -113,6 +113,8 @@
 			INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('19', 'Deployed - Component');
 			INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('20', 'Stocked - Component');
 			INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('21', 'For Refurbish - Component');
+			INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('22', 'False Report');
+			INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('23', 'Repaired');
 
 			-- ref_status
 			INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('1', 'Pending');
@@ -373,7 +375,7 @@
 
 			-- Insertion to floorRoom ---------------------------------------------------------------------------------------
 			-- Andrew Building [1]
-			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '1', 'AGH1706');
+			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('2', '1', 'AGH1706');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('2', '1', 'AGH1904');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('2', '1', 'AGH204');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('2', '1', 'AGH205');
@@ -383,6 +385,8 @@
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '1', 'AGH307');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '1', 'AGH308');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('2', '1', 'AGH1004');
+			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '1', 'AG Gate 1');
+			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '1', 'AG Gate 2');
 
 			-- Br. Celba John FSC Hall [2]
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('2', '2', 'JH202');
@@ -417,6 +421,8 @@
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('2', '5', 'ERSC407');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('2', '5', 'ERSC506');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '5', 'ERSC602');
+			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '5', 'ERSC Gate 1');
+			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '5', 'ERSC Gate 2');
 
 			-- Faculty Center (FC) [6]
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('3', '6', 'FC201');
@@ -434,7 +440,9 @@
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '7', 'HSSH1201');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '7', 'HSSH1301');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '7', 'HSSH1401');
-			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '7', 'HSSH602');	
+			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '7', 'HSSH602');
+			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '7', 'HSSH Gate');
+			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '7', 'HSSH Library Gate');	
 
 			-- Gokongwei Building [8]
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '8', 'GH301');
@@ -450,6 +458,8 @@
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('3', '8', 'GH203');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('3', '8', 'GH204');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('3', '8', 'GH205');
+			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '5', 'ERSC Gate 1');
+			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '5', 'ERSC Gate 1');
 
 			-- Brother Bloemen Hall [9]
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '9', 'BB201');
@@ -475,6 +485,7 @@
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('2', '11', 'STRC206');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '11', 'STRC302');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '11', 'STRC301');
+			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '11', 'STRC Gate');
 
 			-- St. Joseph Hall [12]
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('2', '12', 'SJ102');
@@ -497,6 +508,7 @@
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('2', '13', 'LS205');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('3', '13', 'LS302');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('3', '13', 'LS305');
+			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '13', 'LS Gate');
 
 			-- St. Miguel Febres Cordero Hall [14]		
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('2', '14', 'MH101');
@@ -523,6 +535,8 @@
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('2', '16', 'VH302');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '16', 'VH301');
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '16', 'VH303');
+			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '16', 'VH Gate 1');
+			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('1', '11', 'VH Gate 2');
 
 			-- William J. Shaw Hall (WH) [17]
 			INSERT INTO `thesis`.`floorandroom` (`roomtype`, `BuildingID`, `floorRoom`) VALUES ('4', '17', 'WH102');
@@ -624,6 +638,8 @@
 			INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('28', '14', '8', '1 TB', 'Hard disk drive'); -- Hard disk drive
 
 			INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('29', '40', '6', '', 'Hosting a system'); -- Server
+
+			INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('30', '58', '14', '', 'Used for scanning IDs'); -- Biometrics
 
 			-- user
 			-- 1
@@ -888,6 +904,14 @@
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0012', '8aRwQrtF', '', '21'); -- ID 152, memory
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0012', 'nicEezrN', '', '21'); -- ID 153, motherboard
 
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('29', 'PC-0007', 'zQydMxz6', '49-6F-3F-18-FF-2B', '2'); -- ID 154, PC (Gate)
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0013', 'sCxHNZVd', '', '21'); -- ID 155, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0013', 'KkeyiSiL', '', '21'); -- ID 156, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0013', 'BSWwk25n', '', '21'); -- ID 157, Processor
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0013', 'bUuZwJje', '', '21'); -- ID 158, memory
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0013', '2Pf6dX8R', '', '21'); -- ID 159, motherboard
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('30', 'BIOM-0001', 'NyvxTtoi', '', '2'); -- ID 160, Biometrics
+
 			-- asset audit for new items
 			INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');
 			INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '2');
@@ -968,6 +992,9 @@
 			INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('136', '6', '38', '2019-02-26', '2019-04-21', '2'); -- PRINTER ASSIGNMENT
 			INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('137', '6', '39', '2019-02-26', '2019-04-21', '2'); -- PRINTER ASSIGNMENT
 			INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('138', '6', '40', '2019-02-26', '2019-04-21', '2'); -- PRINTER ASSIGNMENT
+
+			INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('154', '1', '11', '2019-02-26', '2019-04-21', '2'); -- GATE PC ASSIGNMENT
+			INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('160', '1', '11', '2019-02-26', '2019-04-21', '2'); -- GATE BIOMETRICS ASSIGNMENT
 
 			-- asseet audit for asset assignment
 			INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '1', '1');
@@ -1127,6 +1154,8 @@
 			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (1, 139); -- PC-0006
 			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (1, 148); -- SRVR-0001
 
+			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 154); -- PC-0007 (Gate PC)
+
 			-- Computer Component
 				-- Thin client 1 
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (19, 1); -- memory
@@ -1243,8 +1272,15 @@
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (147, 11);	-- Mouse
 
 				-- Stocked Server SRVR-0001
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (140, 11);	-- Hard disk drive
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (142, 11);	-- Power supply
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (143, 11);	-- Processor
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (144, 11);	-- Memory
-				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (146, 11);	-- Motherboard
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (140, 12);	-- Hard disk drive
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (142, 12);	-- Power supply
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (143, 12);	-- Processor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (144, 12);	-- Memory
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (146, 12);	-- Motherboard
+
+				-- Gate PC PC-0007
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (155, 13);	-- Hard disk drive
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (156, 13);	-- Power supply
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (157, 13);	-- Processor
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (158, 13);	-- Memory
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (159, 13);	-- Motherboard
