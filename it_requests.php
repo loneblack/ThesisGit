@@ -371,8 +371,10 @@
                             }
                         }
 						if (idx == "Replacement") {
-                            if (id == "Pending") {
-                                window.location.href = "it_missing_form.php?id=" + ida;
+                            if (id == "Ongoing" || id == "Pending") {
+								if(idDesc == "Assigning of New Replacement"){
+									window.location.href = "it_missing_form.php?id=" + ida;
+								}
                             } else if (id == "Completed" || id == "Incomplete") {
                                 
                             }

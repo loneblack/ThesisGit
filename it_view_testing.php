@@ -1,4 +1,4 @@
-	<!DOCTYPE html>
+<!DOCTYPE html>
 <?php
 	session_start();
 	require_once('db/mysql_connect.php');
@@ -65,7 +65,7 @@
 				
 				//Count Curr Assets based on assetCategory
 				$queryCount="SELECT Count(assetID) as `assetPosition` FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID
-																						  where a.assetID<='{$assPass}' and am.assetCategory='{$rowGetAssInf['assetCategory']}' and a.assetStatus='1'";
+																						  where a.assetID<='{$assPass}' and am.assetCategory='{$rowGetAssInf['assetCategory']}' and a.assetStatus='1' or a.assetStatus='2'";
 				$resultCount=mysqli_query($dbc,$queryCount);
 				$rowCount=$rowg=mysqli_fetch_array($resultCount,MYSQLI_ASSOC);
 				
@@ -263,7 +263,6 @@
 		}
 		elseif($rowTesDat['remarks']=="Borrow"){
 
-
 			//GET REQID
 			$queryReqID="SELECT borrowID FROM thesis.assettesting where testingID='{$testingID}';";
 			$resultReqID=mysqli_query($dbc,$queryReqID);
@@ -321,6 +320,67 @@
 			$resultComp=mysqli_query($dbc,$queryComp);
 			
 		}
+		
+		elseif($rowTesDat['remarks']=="Replacement"){
+			//UPDATE ASSET TESTING STATUS
+			$query8="UPDATE `thesis`.`assettesting` SET `statusID`='3' WHERE `testingID`='{$testingID}'";
+			$result8=mysqli_query($dbc,$query8);
+			
+			//GET REPLACEMENT DATA
+			$queryGetRepDat="SELECT * FROM thesis.assettesting at join replacement r on at.replacementID=r.replacementID where at.testingID='{$testingID}'";
+			$resultGetRepDat=mysqli_query($dbc,$queryGetRepDat);
+			$rowGetRepDat=mysqli_fetch_array($resultGetRepDat,MYSQLI_ASSOC);
+			
+			//CHECK IF THE ASSET PASSED THE TEST
+			$queryCheckAssPass="SELECT rb.name as `brand`,am.description as `assetModelName`,atd.asset_assetID as `assetID`,atd.comment,a.assetModel,am.assetCategory,atd.check FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID 
+																												join assetmodel am on a.assetModel=am.assetModelID
+																												join ref_brand rb on am.brand=rb.brandID
+																												where atd.assettesting_testingID='{$testingID}'";
+			$resultCheckAssPass=mysqli_query($dbc,$queryCheckAssPass);
+			while($rowCheckAssPass=mysqli_fetch_array($resultCheckAssPass,MYSQLI_ASSOC)){
+				//PASSED THE TEST
+				if($rowCheckAssPass['check']=='1'){
+					//UPDATE ASSET STATUS
+					$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='2' WHERE `assetID`='{$rowCheckAssPass['assetID']}'";
+					$resultStat=mysqli_query($dbc,$queryStat);
+
+					//INSERT Asset that passed the test to ASSETASSIGNMENT
+					$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `statusID`) VALUES ('{$rowCheckAssPass['assetID']}', '{$rowGetRepDat['BuildingID']}', '{$rowGetRepDat['FloorAndRoomID']}', '2')";
+					$resultAssAss=mysqli_query($dbc,$queryAssAss);
+					
+					//CHANGE STATUS OF ASSET ASSIGNMENT OF THE MISSING ASSET
+					$queryChaStatAssAss="UPDATE `thesis`.`assetassignment` SET `statusID` = '3' WHERE `assetID` = '{$rowGetRepDat['lostAssetID']}' AND `statusID` = '2' AND `personresponsibleID` is null";
+					$resultChaStatAssAss=mysqli_query($dbc,$queryChaStatAssAss);
+					
+					//CHANGE REPLACEMENT STATUS TO COMPLETED
+					$queryUpdRepStat="UPDATE `thesis`.`replacement` SET `statusID` = '3', `stepID` = '21' WHERE (`replacementID` = '{$rowGetRepDat['replacementID']}');";
+					$resultUpdRepStat=mysqli_query($dbc,$queryUpdRepStat);
+					
+				}
+				//FAILED THE TEST
+				else{
+					//GENERATE REPAIR REQUEST 
+					$queryGenRepairReq = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`)
+	                    VALUES ('Repair needed on the following assets', now(), '{$_SESSION['userID']}', '27', '1', '14');";
+					$resultGenRepairReq=mysqli_query($dbc,$queryGenRepairReq);
+					
+					 //Get Latest Repair Request
+					$queryGetLatRep="SELECT * FROM thesis.service where serviceType='27' order by id desc limit 1";
+					$resultGetLatRep=mysqli_query($dbc,$queryGetLatRep);
+					$rowGetLatRep=mysqli_fetch_array($resultGetLatRep,MYSQLI_ASSOC);
+					 
+					//insert asset to service details
+					$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`) VALUES ('{$rowGetLatRep['id']}', '{$rowCheckAssPass['assetID']}');";
+					$resulted = mysqli_query($dbc, $query);
+					
+					//CHANGE REPLACEMENT STEP BACK TO Assigning of New Replacement
+					$queryUpdRepStat="UPDATE `thesis`.`replacement` SET `stepID` = '26' WHERE (`replacementID` = '{$rowGetRepDat['replacementID']}');";
+					$resultUpdRepStat=mysqli_query($dbc,$queryUpdRepStat);
+				}
+			}
+
+		}
+		
 		$message = "Form submitted!";
 		$_SESSION['submitMessage'] = $message; 
 		
@@ -451,10 +511,17 @@
 																}	
 																	
 															echo "' disabled></td>
-                                                            <td><input class='form-control' type='number' name='warranty[]' min='3' value='3'";
+                                                            <td><input class='form-control' type='number' name='warranty[]' min='3' ";
+															
+															if($rowTesDat['remarks']=="Asset Request"){
+																echo "value='3' ";
+															}
 															
 															if($row['check']=='0'){
-																echo "disabled";
+																echo "disabled ";
+															}
+															elseif($rowTesDat['remarks']!="Asset Request"){
+																echo "disabled ";
 															}
 															
 															echo "required/></td>";
