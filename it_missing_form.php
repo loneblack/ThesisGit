@@ -62,7 +62,7 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-				 <?php
+				<?php
                     if (isset($_SESSION['submitMessage'])){
                         echo "<div style='text-align:center' class='alert alert-success'>
 								<strong><h3>{$_SESSION['submitMessage']}</h3></strong>

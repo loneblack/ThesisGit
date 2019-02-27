@@ -2,6 +2,7 @@
 <?php
 	session_start();
 	require_once('db/mysql_connect.php');
+	$key = "Fusion";
 ?>
 <html lang="en">
 
@@ -210,7 +211,35 @@
                                                         }
 
                                                 ?>
-											
+												
+												<?php 
+													
+													//GET REPLACEMENT REQUEST
+													$queryGetRep="SELECT *,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `Requestor`,rs.description as `statusDesc`,rstp.name as `stepName` FROM thesis.replacement r 
+																			JOIN ref_status rs ON r.statusID = rs.statusID
+																			JOIN user u on r.userID=u.UserID
+																			JOIN ref_steps rstp on r.stepID=rstp.id
+																			where r.stepID='9'";
+                                                    $resultGetRep=mysqli_query($dbc,$queryGetRep);
+                                                    while($rowGetRep=mysqli_fetch_array($resultGetRep,MYSQLI_ASSOC)){
+														echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$rowGetRep['replacementID']}</td>
+															<td>{$count}</td>
+															<td>{$rowGetRep['remarks']}</td>
+															<td>Replacement</td>
+															<td>{$rowGetRep['dateNeeded']}</td>";
+															if($rowGetRep['statusDesc']=="Pending"){ echo "<td><label class='label label-warning'>{$rowGetRep['statusDesc']}</label></td>"; }
+															if($rowGetRep['statusDesc']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowGetRep['statusDesc']}</label></td>"; }
+															if($rowGetRep['statusDesc']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowGetRep['statusDesc']}</label></td>"; }
+															if($rowGetRep['statusDesc']=="Completed"){ echo "<td><label class='label label-success'>{$rowGetRep['statusDesc']}</label></td>"; }
+															echo "
+															<td>{$rowGetRep['Requestor']}</td>
+															</tr>";
+
+                                                            $count++;
+													}
+													
+												?>	
                                             <tfoot>
                                                 <tr>
                                                     <th style="display: none"></th>
@@ -290,6 +319,10 @@
 						
 						if(idx == "Maintenance"){
 							window.location.href = "helpdesk_view_ticket_maintenance_opened.php?id="+id;
+						}
+						
+						if(idx == "Replacement"){
+							window.location.href = "helpdesk_view_replacement_request.php?id="+id;
 						}
 					};
 				};

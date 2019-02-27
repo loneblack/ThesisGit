@@ -114,6 +114,20 @@
 					}
 					
 				}
+				//Check if final asset testing details is empty
+				$queryAssTestIsEx="SELECT count(*) as `isExist` FROM thesis.assettesting_details where assettesting_testingID='{$rowLatAss['testingID']}'";
+				$resultAssTestIsEx=mysqli_query($dbc,$queryAssTestIsEx);
+				$rowAssTestIsEx=mysqli_fetch_array($resultAssTestIsEx,MYSQLI_ASSOC);
+				
+				if($rowAssTestIsEx['isExist']=='0'){
+					//Set Asset testing id in ticket to null
+					$querySetAssTestID="UPDATE `thesis`.`ticket` SET `testingID` = null WHERE (`ticketID` = '{$ticketID}');";
+					$resultSetAssTestID=mysqli_query($dbc,$querySetAssTestID);
+					
+					//Delete Asset TESTING
+					$queryDelAssTest="Delete FROM thesis.assettesting where testingID='{$rowLatAss['testingID']}'";
+					$resultDelAssTest=mysqli_query($dbc,$queryDelAssTest);
+				}
 			}
 			
 		}
@@ -197,7 +211,20 @@
 					}
 					
 				}
+				//Check if final asset testing details is empty
+				$queryAssTestIsEx="SELECT count(*) as `isExist` FROM thesis.assettesting_details where assettesting_testingID='{$rowLatAss['testingID']}'";
+				$resultAssTestIsEx=mysqli_query($dbc,$queryAssTestIsEx);
+				$rowAssTestIsEx=mysqli_fetch_array($resultAssTestIsEx,MYSQLI_ASSOC);
 				
+				if($rowAssTestIsEx['isExist']=='0'){
+					//Set Asset testing id in ticket to null
+					$querySetAssTestID="UPDATE `thesis`.`ticket` SET `testingID` = null WHERE (`ticketID` = '{$ticketID}');";
+					$resultSetAssTestID=mysqli_query($dbc,$querySetAssTestID);
+					
+					//Delete Asset TESTING
+					$queryDelAssTest="Delete FROM thesis.assettesting where testingID='{$rowLatAss['testingID']}'";
+					$resultDelAssTest=mysqli_query($dbc,$queryDelAssTest);
+				}
 				
 			}
 			
@@ -299,11 +326,102 @@
 						$result6=mysqli_query($dbc,$query6);
 					}
 				}
-			}
-			
-			
+			}	
 		}
 		
+		elseif($row7['remarks']=="Replacement"){
+			$testStat=$_POST['testStat'];
+			$listOfTestAss=$_POST['listOfTestAss'];
+			
+			//Check the dropdown for asset status
+			for($i=0;$i<sizeOf($testStat);$i++){
+				//For functioning assets
+				if($testStat[$i]=='1'){
+					$query5="UPDATE `thesis`.`assettesting_details` SET `check`='1' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$listOfTestAss[$i]}'";
+					$result5=mysqli_query($dbc,$query5);
+				}
+				//For defected assets
+				elseif($testStat[$i]=='3'){
+					$query5="UPDATE `thesis`.`assettesting_details` SET `check`='0' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$listOfTestAss[$i]}'";
+					$result5=mysqli_query($dbc,$query5);	
+				}
+			}
+			
+			//For escalation code
+			if(isset($_POST['escEngineer'])){
+				$escEngineer=$_POST['escEngineer'];
+				$escEngineerUniq=array_unique($escEngineer);
+				
+				//GETTESTINGID
+				$queryTestID = "SELECT * FROM thesis.ticket where ticketID='{$ticketID}'";
+				$resultTestID = mysqli_query($dbc, $queryTestID);
+				$rowTestID = mysqli_fetch_array($resultTestID, MYSQLI_ASSOC);
+				
+				//GET Replacement DATA
+				$queryRepDat="SELECT * FROM thesis.assettesting at join replacement r on at.replacementID=r.replacementID where at.testingID='{$rowTestID['testingID']}'";
+				$resultRepDat=mysqli_query($dbc,$queryRepDat);
+				$rowRepDat=mysqli_fetch_array($resultRepDat,MYSQLI_ASSOC);
+				
+				foreach($escEngineerUniq as $escEng){
+					//CREATE ASSETTESTING
+					$queryAssTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`, `remarks`, `replacementID`) VALUES ('1', '{$_SESSION['userID']}', '25', 'Replacement', '{$rowRepDat['replacementID']}');";
+					$resultAssTest=mysqli_query($dbc,$queryAssTest);
+						
+					//GET LATEST ASSET TEST
+					$queryLatAss="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
+					$resultLatAss=mysqli_query($dbc,$queryLatAss);
+					$rowLatAss=mysqli_fetch_array($resultLatAss,MYSQLI_ASSOC);
+					
+					//CREATE TICKET FOR ESCALATION
+					$queryEsc="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('5', '{$escEng}', '{$_SESSION['userID']}', now(), now(), '{$_POST['dueDate']}', '{$rowOut['priority']}', '{$rowLatAss['testingID']}', '25')";
+					$resultEsc=mysqli_query($dbc,$queryEsc);
+						
+					//GET LATEST TICKET
+					$queryLatTic="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
+					$resultLatTic=mysqli_query($dbc,$queryLatTic);
+					$rowLatTic=mysqli_fetch_array($resultLatTic,MYSQLI_ASSOC);
+					
+					foreach (array_combine($_POST['forEscAsset'], $escEngineer) as $forEscAss => $escEngi){
+						if($escEngi==$escEng){
+							//INSERT TO ASSETTESTDETAILS
+							$queryAtd="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowLatAss['testingID']}', '{$forEscAss}')";
+							$resultAtd=mysqli_query($dbc,$queryAtd);
+								
+							//DELETE ASSET TO ASSET TESTING
+							$queryDelAss="DELETE FROM `thesis`.`assettesting_details` WHERE `assettesting_testingID`='{$rowTestID['testingID']}' and `asset_assetID`='{$forEscAss}'";
+							$resultDelAss=mysqli_query($dbc,$queryDelAss);
+							
+							//INSERT TO TICKETEDASSET
+							$queryTicAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTic['ticketID']}', '{$forEscAss}');";
+							$resultTicAss=mysqli_query($dbc,$queryTicAss);
+								
+							//DELETE ASSET TO TICKETEDASSET
+							$queryDelTic="DELETE FROM `thesis`.`ticketedasset` WHERE `ticketID`='{$ticketID}' and `assetID`='{$forEscAss}'";
+							$resultDelTic=mysqli_query($dbc,$queryDelTic);
+						}
+					}
+					
+				}
+				
+				//Check if final asset testing details is empty
+				$queryAssTestIsEx="SELECT count(*) as `isExist` FROM thesis.assettesting_details where assettesting_testingID='{$rowLatAss['testingID']}'";
+				$resultAssTestIsEx=mysqli_query($dbc,$queryAssTestIsEx);
+				$rowAssTestIsEx=mysqli_fetch_array($resultAssTestIsEx,MYSQLI_ASSOC);
+				
+				if($rowAssTestIsEx['isExist']=='0'){
+					//Set Asset testing id in ticket to null
+					$querySetAssTestID="UPDATE `thesis`.`ticket` SET `testingID` = null WHERE (`ticketID` = '{$ticketID}');";
+					$resultSetAssTestID=mysqli_query($dbc,$querySetAssTestID);
+					
+					//Delete Asset TESTING
+					$queryDelAssTest="Delete FROM thesis.assettesting where testingID='{$rowLatAss['testingID']}'";
+					$resultDelAssTest=mysqli_query($dbc,$queryDelAssTest);
+				}
+				
+				
+			}
+			
+		}
 		//UPDATE ASSET TESTING STATUS
 		$query8="UPDATE `thesis`.`assettesting` SET `statusID`='2' WHERE `testingID`='{$row7['testingID']}'";
 		$result8=mysqli_query($dbc,$query8);
@@ -311,6 +429,7 @@
 		//UPDATE TICKET STATUS TO CLOSED
 		$queryTicStat="UPDATE `thesis`.`ticket` SET `status`='7', `dateClosed`=now() WHERE `ticketID`='{$ticketID}'";
 		$resultTicStat=mysqli_query($dbc,$queryTicStat);
+		
 		
 		if(!isset($message)){
 			$message = "Form submitted!";
