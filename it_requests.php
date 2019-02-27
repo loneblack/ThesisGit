@@ -200,7 +200,7 @@
 																																		
 															
 															 //Borrow
-                                                            $query="SELECT *, t.name as 'stepName', CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as 'Requestor' FROM thesis.request_borrow r 
+                                                            $query="SELECT *, t.name as `stepName`, CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `Requestor` FROM thesis.request_borrow r 
                                                                       JOIN ref_status s ON r.statusID = s.statusID
                                                                       JOIN ref_steps t ON r.steps = t.id
                                                                       join user u on r.personresponsibleID=u.UserID;";
@@ -238,6 +238,46 @@
                                                                 
                                                             
                                                             }
+															
+															//Replacement 
+															$queryGetRep="SELECT *,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `Requestor`,rs.description as `statusDesc` FROM thesis.replacement r 
+																			JOIN ref_status rs ON r.statusID = rs.statusID
+																			JOIN user u on r.userID=u.UserID";
+                                                            $resultGetRep=mysqli_query($dbc,$queryGetRep);
+                                                            while($rowGetRep=mysqli_fetch_array($resultGetRep,MYSQLI_ASSOC)){
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$rowGetRep['replacementID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td></td>";
+                                                                    
+                                                                    if($row['description']=='Pending'){
+                                                                        echo "<td><span class='label label-warning label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Incomplete'){
+                                                                        echo "<td><span class='label label-danger label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Completed'){
+                                                                        echo "<td><span class='label label-success label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+                                                                    }
+                                                                    //elseif($row['description']=='Ongoing'){
+                                                                        //echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    //}
+                                                                    else{
+                                                                        echo "<td><span class='label label-default label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+                                                                    }
+                                                                    
+                                                                echo "
+                                                                    <td>Replacement</td>
+                                                                    <td>Assigning of New Replacement</td>
+                                                                    <td>{$rowGetRep['Requestor']}</td>
+                                                                    <td>{$rowGetRep['dateTiimeLost']}</td>
+                                                                </tr>";
+                                                                
+                                                                $count++;
+                                                                
+                                                            
+                                                            }
+															
 															?>
                                                         </tbody>
                                                     </table>
@@ -327,6 +367,13 @@
                                 window.location.href = "it_view_open_service_equipment_request.php?id=" + ida;
                             } else if (id == "Completed" || id == "Incomplete") {
                                 window.location.href = "it_view_closed_service_equipment_request.php?id=" + ida;
+                            }
+                        }
+						if (idx == "Replacement") {
+                            if (id == "Pending") {
+                                window.location.href = "it_missing_form.php?id=" + ida;
+                            } else if (id == "Completed" || id == "Incomplete") {
+                                
                             }
                         }
                     };
