@@ -2,10 +2,20 @@
 <?php
 	session_start();
 	require_once('db/mysql_connect.php');
-
-
-
-
+	$replacementID=$_GET['id'];
+	
+	if(isset($_POST['submit'])){
+		$replacedAsset=$_POST['replacedAsset'];
+		
+		//Update replacement table
+		$queryUpdRepTab="UPDATE `thesis`.`replacement` SET `statusID`='2',`stepID`='9', `replacementAssetID`='{$replacedAsset}' WHERE `replacementID`='{$replacementID}'";
+		$resultUpdRepTab=mysqli_query($dbc,$queryUpdRepTab);
+		
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message; 
+		
+	}
+	
 ?>
 <html lang="en">
 
@@ -52,7 +62,14 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-
+				 <?php
+                    if (isset($_SESSION['submitMessage'])){
+                        echo "<div style='text-align:center' class='alert alert-success'>
+								<strong><h3>{$_SESSION['submitMessage']}</h3></strong>
+                            </div>";
+						unset($_SESSION['submitMessage']);
+                    }
+                ?>
                 <div class="row">
                     <div class="col-sm-12">
 
@@ -63,10 +80,11 @@
                                     Replace Missing Items
                                 </header>
                                 <div class="panel-body">
+									<form method="post" action="<?php echo $_SERVER['PHP_SELF']." ?id=".$replacementID; ?>">
                                     <section id="unseen">
                                         <h4>Items Missing</h4>
                                         <div class="adv-table">
-                                            <table class="table table-bordered table-striped table-condensed table-hover " id="">
+                                            <table class="table table-bordered table-striped table-condensed table-hover">
                                                 <thead>
                                                     <tr>
                                                         <th>Property Code</th>
@@ -78,7 +96,27 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-
+													<?php
+														//GET ITEMS MISSING 
+														$queryGetItMis="SELECT am.assetCategory,a.propertyCode,rb.name as `brandName`,rac.name as `assetCatName`,am.itemSpecification,am.description as `modelName`,b.name as `buildingName`,far.floorRoom,r.remarks FROM thesis.replacement r join asset a on r.lostAssetID=a.assetID
+																		   join assetmodel am on a.assetModel=am.assetModelID
+																		   join ref_brand rb on am.brand=rb.brandID
+																		   join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																		   join floorandroom far on r.FloorAndRoomID=far.FloorAndRoomID
+																		   join building b on r.BuildingID=b.BuildingID
+																		   where r.replacementID='{$replacementID}'";
+                                                        $resultGetItMis=mysqli_query($dbc,$queryGetItMis);
+                                                        while($rowGetItMis=mysqli_fetch_array($resultGetItMis,MYSQLI_ASSOC)){
+															echo "<tr>
+																	  <td>{$rowGetItMis['propertyCode']}</td>
+																	  <td>{$rowGetItMis['brandName']}</td>
+																	  <td>{$rowGetItMis['modelName']}</td>
+																	  <td>{$rowGetItMis['itemSpecification']}</td>
+																	  <td>".$rowGetItMis['buildingName']." ".$rowGetItMis['floorRoom']."</td>
+																	  <td>{$rowGetItMis['remarks']}</td>
+																  </tr>";
+														}
+													?>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -88,23 +126,48 @@
                                             <table class="table table-bordered table-striped table-condensed table-hover " id="">
                                                 <thead>
                                                     <tr>
+														<th></th>
                                                         <th>Property Code</th>
                                                         <th>Brand</th>
                                                         <th>Model</th>
                                                         <th>Specifications</th>
-                                                        <th>Location</th>
+                                                        
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-
+													<?php
+														
+														//GET ASSET CATEGORY
+														$queryGetAssCat="SELECT * FROM thesis.replacement r join asset a on r.lostAssetID=a.assetID
+																		   join assetmodel am on a.assetModel=am.assetModelID
+																		   where r.replacementID='{$replacementID}'";
+                                                        $resultGetAssCat=mysqli_query($dbc,$queryGetAssCat);
+														$rowGetAssCat=mysqli_fetch_array($resultGetAssCat,MYSQLI_ASSOC);
+														
+														//GET ASSETS BASED ON THE ASSET CATEGORY OF THE LOST ASSET
+														$queryGetAllAss="SELECT *,rb.name as `brandName`,am.description as `modelName`,rac.name as `assetCatName`,am.itemSpecification as `modelSpec`,ras.description as `assetStat` FROM thesis.asset a left join assetmodel am on a.assetModel=am.assetModelID
+																			left join ref_brand rb on am.brand=rb.brandID
+																			left join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																			left join ref_assetstatus ras on a.assetStatus=ras.id 
+																			where am.assetCategory='{$rowGetAssCat['assetCategory']}' and a.assetStatus='1'";
+                                                        $resultGetAllAss=mysqli_query($dbc,$queryGetAllAss);
+                                                        while($rowGetAllAss=mysqli_fetch_array($resultGetAllAss,MYSQLI_ASSOC)){
+															echo "<tr>
+																	<td><input type='radio' name='replacedAsset' required value='{$rowGetAllAss['assetID']}'></td>
+																	<td>{$rowGetAllAss['propertyCode']}</td>
+																	<td>{$rowGetAllAss['brandName']}</td>
+																	<td>{$rowGetAllAss['modelName']}</td>
+																	<td>{$rowGetAllAss['itemSpecification']}</td>
+																  </tr>";
+														}	
+													?>
                                                 </tbody>
                                             </table>
                                         </div>
-                                        
-                                        <button class="btn btn-success">Submit</button>
+                                        <button type="submit" name="submit" class="btn btn-success">Submit</button>
                                         <button class="btn btn-danger">Back</button>
                                     </section>
-
+									</form>
                                 </div>
                             </section>
                         </div>
