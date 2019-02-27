@@ -38,7 +38,7 @@ while ($CurDate > $NextDate ) {
 }
 $everyTwoWeeks=date("Y-m-d", strtotime($NextDate)); 
 
-if($everyTwoWeeks<=$CurDate){
+if($everyTwoWeeks==$CurDate){
 	//Check if there's already a maintenance ticket created at a given time
 	$queryCheck="SELECT count(*) as 'isExist' FROM thesis.ticket t join engineer_assignment ea on t.assignmentID=ea.assignmentID where date(t.dateCreated) = '{$everyTwoWeeks}' and t.serviceType='28' and t.assigneeUserID='{$_SESSION['userID']}' and (ea.roomtypeID='3' or ea.roomtypeID='4')";
 	$resultCheck=mysqli_query($dbc,$queryCheck);
@@ -89,7 +89,7 @@ if($everyTwoWeeks<=$CurDate){
 //CREATION OF TICKET EVERY LAST DAY OF THE MONTH
 $lastDayThisMonth = date("Y-m-t");
 
-if($lastDayThisMonth<=$CurDate){
+if($lastDayThisMonth==$CurDate){
 	//Check if there's already a maintenance ticket created at a given time
 	$queryCheck="SELECT count(*) as 'isExist' FROM thesis.ticket t join engineer_assignment ea on t.assignmentID=ea.assignmentID where date(t.dateCreated) = '{$lastDayThisMonth}' and t.serviceType='28' and t.assigneeUserID='{$_SESSION['userID']}' and (ea.roomtypeID='1')";
 	$resultCheck=mysqli_query($dbc,$queryCheck);
@@ -154,7 +154,7 @@ while($rowSY=mysqli_fetch_array($resultSY, MYSQLI_ASSOC)){
 	}
 }
 
-if($CurDate>=$endOfTermDate){
+if($CurDate==$endOfTermDate){
 	//Check if there's already a maintenance ticket created at a given time
 	$queryCheck="SELECT count(*) as 'isExist' FROM thesis.ticket t join engineer_assignment ea on t.assignmentID=ea.assignmentID where date(t.dateCreated) = '{$lastDayThisMonth}' and t.serviceType='28' and t.assigneeUserID='{$_SESSION['userID']}' and (ea.roomtypeID='2')";
 	$resultCheck=mysqli_query($dbc,$queryCheck);

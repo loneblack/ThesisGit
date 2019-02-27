@@ -51,10 +51,14 @@
 					$resultGetAssLoc=mysqli_query($dbc,$queryGetAssLoc);
 					$rowGetAssLoc=mysqli_fetch_array($resultGetAssLoc,MYSQLI_ASSOC);
 					
-					//INSERT INTO REPLACEMENT TABLE
-					$queryInsRep = "INSERT INTO `thesis`.`replacement` (`lostAssetID`, `BuildingID`, `FloorAndRoomID`, `dateTiimeLost`) VALUES ('{$asset}', '{$rowGetAssLoc['BuildingID']}', '{$rowGetAssLoc['FloorAndRoomID']}', now());";
-					$resultInsRep = mysqli_query($dbc, $queryInsRep);
+					//SET DATE NEEDED
+					$date = new DateTime(date("Y-m-d"));
+					date_modify($date,"+1 day");
+					$finDate = date_format($date,"Y-m-d");
 					
+					//INSERT INTO REPLACEMENT TABLE
+					$queryInsRep = "INSERT INTO `thesis`.`replacement` (`lostAssetID`, `BuildingID`, `FloorAndRoomID`, `dateTiimeLost`, `userID`, `statusID`, `dateNeeded`, `stepID`, `remarks`) VALUES ('{$asset}', '{$rowGetAssLoc['BuildingID']}', '{$rowGetAssLoc['FloorAndRoomID']}', now(), '{$_SESSION['userID']}', '1', '{$finDate}', '26', '{$remarks}');";
+					$resultInsRep = mysqli_query($dbc, $queryInsRep);
 				}
 			}
 			
