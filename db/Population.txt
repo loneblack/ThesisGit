@@ -162,7 +162,8 @@
 			INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('26', 'Refurbishing');
 			INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('27', 'repair');
 			INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('28', 'Maintenance');
-			INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('29', 'Others');
+			INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('29', 'Salvage');
+			INSERT INTO `thesis`.`ref_servicetype` (`id`, `serviceType`) VALUES ('30', 'Others');
 
 			-- department
 			INSERT INTO `thesis`.`department` (`DepartmentID`, `name`) VALUES ('1', 'Accountancy');
