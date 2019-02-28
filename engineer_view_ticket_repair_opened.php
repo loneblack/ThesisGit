@@ -280,12 +280,11 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th style="width:50px"></th>
+                                                <th>Asset Status</th>
                                                 <th>Property Code</th>
                                                 <th>Asset/ Software Name</th>
                                                 <th>Building</th>
                                                 <th>Room</th>
-                                                <th>Asset Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -316,17 +315,21 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                                                 while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
 
-                                                   echo "<tr>
-                                                    <td><input type='checkbox'></td>
+                                                   echo "
+                                                    <tr>
+                                                    <td>
+                                                        <select name='assetStatus' class='form-control'>
+                                                            <option>Select Asset Status</option>
+                                                            <option value='9'>For Repair</option>
+                                                            <option value='22'>False Report</option>
+                                                            <option value='23'>Repaired</option>
+                                                        </select>
+                                                    </td>
                                                     <td>{$row['propertyCode']}</td>
                                                     <td>{$row['brand']} {$row['category']} {$row['description']}</td>
                                                     <td>{$row['building']}</td>
                                                     <td>{$row['floorroom']}</td>
-                                                    <td>
-                                                        <select name='assetStatus' class='form-control'>
-                                                            <option>Select Asset Status</option>
-                                                        </select>
-                                                    </td>
+                                                    
                                                     </tr>";
                                                 }  
 
