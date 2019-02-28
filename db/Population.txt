@@ -887,7 +887,7 @@
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('25', 'PRNT-0004', 'BxWjLqan', '1E-A2-27-A2-8F-C7', '2'); -- ID 137, Printer
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('25', 'PRNT-0005', 'GwYCPoyL', '99-76-08-20-B9-53', '2'); -- ID 138, Printer
 
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'PC-0006', 'KBnpZCh2', '77-BB-D9-A5-D0-1F', '10'); -- ID 139, PC
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0006', 'KBnpZCh2', '77-BB-D9-A5-D0-1F', '10'); -- ID 139, PC
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0011', 'pTks6Peq', '', '21'); -- ID 140, Hard Disk Drive
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0011', 'itNQVcn5', '', '21'); -- ID 141, Power Supply
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0011', 'c5zQziHe', '', '21'); -- ID 142, Processor

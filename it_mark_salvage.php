@@ -83,7 +83,7 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-				<?php
+                <?php
                     if (isset($_SESSION['submitMessage']) && $_SESSION['submitMessage']=="Form submitted!"){
 
                         echo "<div class='alert alert-success'>
@@ -100,50 +100,49 @@
 				?>
                 <div class="col-sm-12">
                     <div class="col-sm-12">
-                        
+
                         <div class="row">
 
 
                             <div class="row">
                                 <div class="col-sm-12">
                                     <section class="panel">
-									<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                                        <header class="panel-heading">
-                                            Mark Assets For Salvage
-                                            <span class="tools pull-right">
-                                                <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                            </span>
-                                        </header>
-                                        <div class="panel-body">
-                                            <div class="adv-table">
-                                                <h3>Next Disposal Date is On: <?php echo $_SESSION['dateDisposal']; ?></h3>
-                                                <table class="display table table-bordered table-striped" id="dynamic-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th></th>
-                                                            <th>Item Category</th>
-                                                            <th>Property Code</th>
-                                                            <th class="hidden-phone">Brand</th>
-                                                            <th>Model</th>
-                                                            <th class="hidden-phone">Specifications</th>
-                                                        </tr>
-                                                    </thead>    
-                                                    <tbody>
-														<?php
+                                        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                            <header class="panel-heading">
+                                                Mark Assets For Salvage
+                                                <span class="tools pull-right">
+                                                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                                </span>
+                                            </header>
+                                            <div class="panel-body">
+                                                <div class="adv-table">
+                                                    <h3>Next Disposal Date is On:
+                                                        <?php echo $_SESSION['dateDisposal']; ?>
+                                                    </h3>
+                                                    <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>Item Category</th>
+                                                                <th>Property Code</th>
+                                                                <th class="hidden-phone">Asset Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php
 															//GET For Disposed ASSET 
-															$queryAsset="SELECT a.assetID,rac.name as `assetCat`,rb.name as `brandName`,am.description as `assetModel`,ras.description as `assetStat`,a.propertyCode FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID
-																		  join ref_assetstatus ras on a.assetStatus=ras.id
-																		  join ref_brand rb on am.brand=rb.brandID
-																		   join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID where a.assetStatus='21'";
+															$queryAsset="SELECT a.assetID, rac.name, a.propertyCode, ras.description  FROM asset a 
+                                                                        JOIN assetmodel am ON a.assetmodel = am.assetmodelID 
+                                                                        JOIN ref_assetstatus ras ON a.assetStatus = ras.id
+                                                                        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID 
+                                                                        WHERE a.assetStatus = 10 AND (rac.assetCategoryID = 13 OR rac.assetCategoryID = 40 OR rac.assetCategoryID = 46);";
 															$resultAsset=mysqli_query($dbc,$queryAsset);
 															while($rowAsset=mysqli_fetch_array($resultAsset,MYSQLI_ASSOC)){
 																echo "<tr class='gradeX'>
 																	<td style='width:7px; text-align:center'><input type='checkbox' class='form-check-input' name='forDis[]' id='exampleCheck1' value='{$rowAsset['assetID']}'></td>
-																	<td>{$rowAsset['assetCat']}</td>
+																	<td>{$rowAsset['name']}</td>
 																	<td>{$rowAsset['propertyCode']}</td>
-                                                                    <td>{$rowAsset['brandName']}</td>
-																	<td>{$rowAsset['assetModel']}</td>
-																	<td><label class='label label-danger'>{$rowAsset['assetStat']}</label></td>
+																	<td><label class='label label-danger'>{$rowAsset['description']}</label></td>
 																	
 																</tr>";
 															}
@@ -153,16 +152,16 @@
 														
 														
 														?>
-                                                        
-                                                    </tbody>
-                                                </table>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div style="padding-left:10px; padding-bottom:10px">
-                                            <button type="submit" name="dispose" onclick="Confirm()" class="btn btn-info">Dispose</button>
-											<button type="button" onclick="window.history.back()" class="btn btn-secondary">Back</button>
-                                        </div>
-										</form>
+                                            <div style="padding-left:10px; padding-bottom:10px">
+                                                <button type="submit" name="dispose" onclick="Confirm()" class="btn btn-success">For Refurbish</button>
+                                                <button type="button" onclick="window.history.back()" class="btn btn-secondary">Back</button>
+                                            </div>
+                                        </form>
                                     </section>
                                 </div>
                             </div>
