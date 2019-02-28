@@ -203,10 +203,11 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                                     $count = 1;
                                                 
                                                     require_once('db/mysql_connect.php');
-                                                    $query="SELECT t.ticketID,t.summary, rst.id,rst.serviceType,t.lastUpdateDate,t.dueDate, dateCreated,rts.status 
+                                                    $query="SELECT name, t.requestedBy, t.ticketID,t.summary, rst.id,rst.serviceType,t.lastUpdateDate,t.dueDate, dateCreated,rts.status 
                                                             FROM thesis.ticket t 
                                                             JOIN thesis.ref_ticketstatus rts ON t.status=rts.ticketID
                                                             JOIN thesis.ref_servicetype rst ON t.serviceType=rst.id
+                                                            JOIN employee e ON t.requestedBy = e.UserID
                                                             ORDER BY dateCreated LIMIT 10;";
                                                     $result=mysqli_query($dbc,$query);
                                                 
@@ -238,7 +239,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                                         elseif($row['status']=='Escalated'){
                                                             echo "<td><span class='label label-default'>{$row['status']}</span></td>";
                                                         }
-														 echo "<td></td></tr>";
+														 echo "<td>{$row['name']}</td></tr>";
                                                         $count++;
                                                         
                                                     }
