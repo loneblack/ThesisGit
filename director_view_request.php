@@ -10,8 +10,23 @@
 	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 
 	if(isset($_POST['approve'])){
-		$query="UPDATE `thesis`.`request` SET `status`='2', `step`='2'  WHERE `requestID`='{$requestID}'";
+		$filetmp=$_FILES["fileToUpload"]["tmp_name"];
+		$filename=$_FILES["fileToUpload"]["name"];
+		$filetype=$_FILES["fileToUpload"]["type"];
+		
+		$filepath = "uploads/".$filename;
+		
+		move_uploaded_file($filetmp,$filepath);
+		
+		$query="UPDATE `thesis`.`request` SET `status`='2', `step`='27'  WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
+		
+		// Upload file to server
+		
+		// Insert image file name into database
+		$queryInsImage="UPDATE `thesis`.`request` SET `signature` = '".$filename."' WHERE `requestID` = '{$requestID}';";
+		$resultInsImage=mysqli_query($dbc,$queryInsImage);
+		
 		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$requestID}");
 	}
 	elseif(isset($_POST['disapprove'])){
@@ -20,18 +35,16 @@
 		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$requestID}");
 	}
 	
-    $sql="SELECT *, d.name as 'department', e.name as 'myName', b.name as 'building'
+    $sql="SELECT *, e.name as 'myName', b.name as 'building'
             FROM thesis.request r 
             JOIN employee e ON r.UserID = e.UserID 
-            JOIN department d ON e.DepartmentID = d.DepartmentID 
             JOIN building b ON r.BuildingID = b.BuildingID
             JOIN floorandroom f ON r.FloorAndRoomID = f.FloorAndRoomID
-            WHERE requestID = {$requestID};";
+            WHERE requestID = '{$requestID}';";
 
     $output=mysqli_query($dbc,$sql);
     $column=mysqli_fetch_array($output,MYSQLI_ASSOC);
 	
-    $department = $column['department'];
     $myName = $column['myName'];
     $contactNo = $column['contactNo'];
     $email = $column['email'];
@@ -65,10 +78,10 @@
     
         <?php
             $count = 1;
-            $query = "SELECT e.name AS `naame` FROM employee e JOIN user u ON e.userID = u.userID WHERE e.userID = {$userID};";
-            $result = mysqli_query($dbc, $query);
-            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-            $name = $row['naame'];
+            $queryGetUser = "SELECT e.name AS `name` FROM employee e JOIN user u ON e.userID = u.userID WHERE e.userID = '{$_SESSION['userID']}';";
+            $resultGetUser = mysqli_query($dbc, $queryGetUser);
+            $rowGetUser = mysqli_fetch_array($resultGetUser, MYSQLI_ASSOC);
+            $name = $rowGetUser['name'];
         ?>
 
     <section id="container">
@@ -98,6 +111,7 @@
 
                 <div class="row">
                     <div class="col-sm-12">
+						<form method="post" enctype="multipart/form-data">
                         <div class="col-sm-12">
                             <h2>Status:
                                 <?php 
@@ -161,9 +175,7 @@
 												<td>{$row1['reqDetDesc']}</td>
 												<td>{$row1['purpose']}</td>
 											</tr>";
-											
-											
-											
+	
 										}
 
 									?>
@@ -172,11 +184,7 @@
 
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <div class="col-lg-4">
-                                        <form action=".php" method="post" enctype="multipart/form-data">
-                                            <input type="file" name="fileToUpload" id="fileToUpload">
-                                        </form>
-                                    </div>
+                                    <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*" >
                                 </div>
                             </div>
                             
@@ -190,28 +198,26 @@
                                     <input type="text" name="reason" class="form-control">
                                 </div>
                             </div>
-                        </div>
-                        <br>
-                        <div class="row" style="padding-top:40%">
-                            <div class="col-lg-12"></div>
-                        </div>
-
-
-                        <div class="col-lg-12">
-                            <div class="row">
+							<div class="row">
+                            <br>    
+                            </div>
+							<div class="row">
                                 <div class="col-xs-4">
                                 </div>
                                 <div class="col-xs-4">
-                                    <form method="post">
-                                        <button type="submit" class="btn btn-success" name="approve" <?php if($row['statusDesc'] !='Pending' ) echo "disabled" ; ?> ><i class="fa fa-check"></i> Approve</button>
+                                    
+                                    <button type="submit" class="btn btn-success" name="approve" <?php if($row['statusDesc'] !='Pending' ) echo "disabled" ; ?> ><i class="fa fa-check"></i> Approve</button>
                                         &nbsp;&nbsp;
-                                        <button type="submit" class="btn btn-danger" name="disapprove" <?php if($row['statusDesc'] !='Pending' ) echo "disabled" ; ?> ><i class="fa fa-ban"></i> Disapprove</button>
-                                    </form>
+                                    <button type="submit" class="btn btn-danger" name="disapprove" <?php if($row['statusDesc'] !='Pending' ) echo "disabled" ; ?> ><i class="fa fa-ban"></i> Disapprove</button>
+                                    
                                 </div>
                                 <div class="col-xs-4">
                                 </div>
                             </div>
+							
                         </div>
+                        <br>
+						</form>
                     </div>
                 </div>
                 <!-- page end-->

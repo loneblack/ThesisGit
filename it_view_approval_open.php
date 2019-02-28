@@ -20,28 +20,30 @@
 	}
 	
 	if(isset($_POST['approve'])){
-		//Add data to request details
-		
-		$quantity = $_POST['quantity'];
-		$category = $_POST['category'];
-		$description = $_POST['description'];
-		$purpose = $_POST['purpose'];
-		
-		$mi = new MultipleIterator();
-		$mi->attachIterator(new ArrayIterator($quantity));
-		$mi->attachIterator(new ArrayIterator($category));
-		$mi->attachIterator(new ArrayIterator($description));
-		$mi->attachIterator(new ArrayIterator($purpose));
-		
-		//insertion to requestdetails table using the id taken earlier
-		
-		foreach($mi as $value){
-			list($quantity, $category, $description, $purpose) = $value;
-			
-			$sql = "INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `assetCategory`, `description`, `purpose`) VALUES ('{$requestID}', '{$quantity}', '{$category}', '{$description}', '{$purpose}')";
-			$result = mysqli_query($dbc, $sql);   
+		if(isset($_POST['assetDescription'])){
+			if(isset($_POST['quantity'])&&isset($_POST['category'])&&isset($_POST['description'])&&isset($_POST['purpose'])){
+				//Add data to request details
+				$quantity = $_POST['quantity'];
+				$category = $_POST['category'];
+				$description = $_POST['description'];
+				$purpose = $_POST['purpose'];
+				
+				$mi = new MultipleIterator();
+				$mi->attachIterator(new ArrayIterator($quantity));
+				$mi->attachIterator(new ArrayIterator($category));
+				$mi->attachIterator(new ArrayIterator($description));
+				$mi->attachIterator(new ArrayIterator($purpose));
+				
+				//insertion to requestdetails table using the id taken earlier
+				
+				foreach($mi as $value){
+					list($quantity, $category, $description, $purpose) = $value;
+					
+					$sql = "INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `assetCategory`, `description`, `purpose`) VALUES ('{$requestID}', '{$quantity}', '{$category}', '{$description}', '{$purpose}')";
+					$result = mysqli_query($dbc, $sql);   
+				}
+			}	
 		}
-
 		$query="UPDATE `thesis`.`request` SET `step`='23' WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
 		$_SESSION['submitMessage']="Form submitted!";
@@ -143,21 +145,21 @@
                                                     <div class="form-group ">
                                                         <label for="dateNeeded" class="control-label col-lg-3">Room</label>
                                                         <div class="col-lg-6">
-                                                            <input class="form-control" value="<?php echo $rowReq['floorRoom']; ?>" disabled />
+                                                            <input class="form-control" value="<?php echo $rowReq['floorRoom']; ?>" readonly />
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group ">
                                                         <label for="dateNeeded" class="control-label col-lg-3">Date needed</label>
                                                         <div class="col-lg-6">
-                                                            <input class="form-control" value="<?php echo $rowReq['dateNeeded']; ?>" disabled />
+                                                            <input class="form-control" value="<?php echo $rowReq['dateNeeded']; ?>" readonly />
                                                         </div>
                                                     </div>
                                                     <div class="form-group ">
                                                         <label for="building" class="control-label col-lg-3">Reason of Request</label>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <textarea class="form-control" rows="5" id="comment" name="comment" style="resize: none" disabled><?php echo $rowReq['description']; ?></textarea>
+                                                                <textarea class="form-control" rows="5" id="comment" name="comment" style="resize: none" readonly><?php echo $rowReq['description']; ?></textarea>
                                                             </div>
                                                         </div>
 
@@ -167,7 +169,7 @@
                                                         <label for="building" class="control-label col-lg-3">Asset Description</label>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <textarea class="form-control" rows="5" id="" name= "assetDescription" style="resize: none" disabled><?php if(!$rowReq['assetDescription']==null){
+                                                                <textarea class="form-control" rows="5" id="" name= "assetDescription" style="resize: none" readonly><?php if(!$rowReq['assetDescription']==null){
 																	echo $rowReq['assetDescription'];
 																} ?></textarea>
                                                             </div>
