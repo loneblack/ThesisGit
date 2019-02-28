@@ -757,6 +757,32 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `thesis`.`salvage`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`salvage` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`salvage` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `userID` INT(11) NOT NULL,
+  `statusID` INT(11) NOT NULL,
+  `dateCreated` DATE NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_salvage_user1_idx` (`userID` ASC) ,
+  INDEX `fk_salvage_ref_status1_idx` (`statusID` ASC) ,
+  CONSTRAINT `fk_salvage_user1`
+    FOREIGN KEY (`userID`)
+    REFERENCES `thesis`.`user` (`UserID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_salvage_ref_status1`
+    FOREIGN KEY (`statusID`)
+    REFERENCES `thesis`.`ref_status` (`statusID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `thesis`.`ticket`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `thesis`.`ticket` ;
@@ -781,6 +807,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
   `service_id` INT(11) NULL,
   `assignmentID` INT NULL,
   `requestedBy` INT(11) NULL,
+  `salvage_id` INT NULL,
   PRIMARY KEY (`ticketID`),
   INDEX `fk_Ticket_ref_TicketStatus1_idx` (`status` ASC) ,
   INDEX `fk_Ticket_User1_idx` (`creatorUserID` ASC) ,
@@ -790,6 +817,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
   INDEX `fk_ticket_service1_idx` (`service_id` ASC) ,
   INDEX `fk_ticket_engineer_assignment1_idx` (`assignmentID` ASC) ,
   INDEX `fk_ticket_User3_idx` (`requestedBy` ASC) ,
+  INDEX `fk_ticket_salvage1_idx` (`salvage_id` ASC) ,
   CONSTRAINT `fk_Ticket_User1`
     FOREIGN KEY (`creatorUserID`)
     REFERENCES `thesis`.`user` (`UserID`),
@@ -818,6 +846,11 @@ CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
   CONSTRAINT `fk_ticket_User3`
     FOREIGN KEY (`requestedBy`)
     REFERENCES `thesis`.`user` (`UserID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ticket_salvage1`
+    FOREIGN KEY (`salvage_id`)
+    REFERENCES `thesis`.`salvage` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -891,7 +924,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   `reasonForDisaprroval` LONGTEXT NULL,
   `assetDescription` LONGTEXT NULL,
   `specs` TINYINT NULL,
-  `signature` VARCHAR(500) NULL,
   PRIMARY KEY (`requestID`),
   INDEX `fk_Request_Employee1_idx` (`employeeID` ASC) ,
   INDEX `fk_Request_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) ,
@@ -1891,6 +1923,29 @@ CREATE TABLE IF NOT EXISTS `thesis`.`serviceUnit` (
   CONSTRAINT `fk_serviceUnit_ref_status1`
     FOREIGN KEY (`statusID`)
     REFERENCES `thesis`.`ref_status` (`statusID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`salvage_details`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`salvage_details` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`salvage_details` (
+  `salvageID` INT NOT NULL,
+  `asset_assetID` INT(11) NOT NULL,
+  INDEX `fk_salvage_details_salvage1_idx` (`salvageID` ASC) ,
+  INDEX `fk_salvage_details_asset1_idx` (`asset_assetID` ASC) ,
+  CONSTRAINT `fk_salvage_details_salvage1`
+    FOREIGN KEY (`salvageID`)
+    REFERENCES `thesis`.`salvage` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_salvage_details_asset1`
+    FOREIGN KEY (`asset_assetID`)
+    REFERENCES `thesis`.`asset` (`assetID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
