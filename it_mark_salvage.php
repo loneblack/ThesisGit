@@ -109,7 +109,7 @@
                                     <section class="panel">
 									<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                         <header class="panel-heading">
-                                            Disposal List
+                                            Mark Assets For Salvage
                                             <span class="tools pull-right">
                                                 <a href="javascript:;" class="fa fa-chevron-down"></a>
                                             </span>
@@ -121,29 +121,30 @@
                                                     <thead>
                                                         <tr>
                                                             <th></th>
-                                                            <th>Item</th>
+                                                            <th>Item Category</th>
                                                             <th>Property Code</th>
-                                                            <th>Model</th>
-                                                            <th class="hidden-phone">Comments</th>
                                                             <th class="hidden-phone">Brand</th>
+                                                            <th>Model</th>
+                                                            <th class="hidden-phone">Specifications</th>
                                                         </tr>
-                                                    </thead>
+                                                    </thead>    
                                                     <tbody>
 														<?php
 															//GET For Disposed ASSET 
 															$queryAsset="SELECT a.assetID,rac.name as `assetCat`,rb.name as `brandName`,am.description as `assetModel`,ras.description as `assetStat`,a.propertyCode FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID
 																		  join ref_assetstatus ras on a.assetStatus=ras.id
 																		  join ref_brand rb on am.brand=rb.brandID
-																		   join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID where a.assetStatus='11'";
+																		   join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID where a.assetStatus='21'";
 															$resultAsset=mysqli_query($dbc,$queryAsset);
 															while($rowAsset=mysqli_fetch_array($resultAsset,MYSQLI_ASSOC)){
 																echo "<tr class='gradeX'>
 																	<td style='width:7px; text-align:center'><input type='checkbox' class='form-check-input' name='forDis[]' id='exampleCheck1' value='{$rowAsset['assetID']}'></td>
 																	<td>{$rowAsset['assetCat']}</td>
 																	<td>{$rowAsset['propertyCode']}</td>
+                                                                    <td>{$rowAsset['brandName']}</td>
 																	<td>{$rowAsset['assetModel']}</td>
 																	<td><label class='label label-danger'>{$rowAsset['assetStat']}</label></td>
-																	<td>{$rowAsset['brandName']}</td>
+																	
 																</tr>";
 															}
 														

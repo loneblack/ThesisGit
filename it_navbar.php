@@ -80,7 +80,7 @@
                             </a>
                             <ul class="sub">
                                 <li><a href="it_view_disposal_list.php">For Diposal</a></li>
-                                <li><a href="it_mark_for_disposal.php">Mark Assets For Diposal</a></li>
+                                <li><a href="it_mark_salvage.php">Mark Assets For Salvage</a></li>
                             </ul>
                         </li>
 						
