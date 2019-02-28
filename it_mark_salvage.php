@@ -85,7 +85,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <section class="panel">
-                                        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                        <form method="post" id="formSend" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                             <header class="panel-heading">
                                                 Mark Assets For Salvage
                                                 <span class="tools pull-right">
@@ -156,6 +156,11 @@
     </section>
 
     <!-- WAG GALAWIN PLS LANG -->
+    <script>
+        function Confirm() {
+            document.getElementById("formSend").submit();
+        }
+	</script>
 
     <script src="js/jquery.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>

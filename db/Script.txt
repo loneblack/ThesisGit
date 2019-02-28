@@ -925,6 +925,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request` (
   `assetDescription` LONGTEXT NULL,
   `specs` TINYINT NULL,
   `itReasonDissaproval` VARCHAR(45) NULL,
+  `signature` VARCHAR(500) NULL,
   PRIMARY KEY (`requestID`),
   INDEX `fk_Request_Employee1_idx` (`employeeID` ASC) ,
   INDEX `fk_Request_FloorAndRoom1_idx` (`FloorAndRoomID` ASC) ,
