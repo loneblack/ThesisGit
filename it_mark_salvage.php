@@ -7,29 +7,7 @@
 	if(isset($_POST['dispose'])){
 		$CurDate = date("Y-m-d");
 		$dateTimestamp1 = strtotime($CurDate);
-		$dateTimestamp2 = strtotime($_SESSION['dateDisposal']);
 		$message = "Form submitted!";
-		
-		//if($dateTimestamp1==$dateTimestamp2){
-			if(!empty($_POST['forDis'])){
-				//Update For Disposed asset status
-				$forDisposal=$_POST['forDis'];
-				foreach($forDisposal as $forDis){
-					$queryForDisp="UPDATE `thesis`.`asset` SET `assetStatus`='7' WHERE `assetID`='{$forDis}';";
-					$resultForDisp=mysqli_query($dbc,$queryForDisp);
-				}
-							
-				$_SESSION['submitMessage'] = $message; 
-			}
-			else{
-				$message = "There are no assets selected to be disposed";
-				$_SESSION['submitMessage'] = $message;
-			}
-		//}
-		//else{
-			//$message = "It is still not on disposal date!";
-			//$_SESSION['submitMessage'] = $message;
-		//}
 	}
 
 ?>
