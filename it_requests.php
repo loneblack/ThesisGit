@@ -335,8 +335,8 @@
                                     window.location.href = "it_view_incomplete_request.php?requestID=" + ida;
                                 } else if (idDesc == "Create Purchase Order") {
                                     window.location.href = "it_view_open_po.php?requestID=" + ida;
-                                } else if (idDesc == "Conforme pending") {
-                                    window.location.href = "it_view_checklist.php";
+                                } else if (idDesc == "Signature Verification") {
+                                    window.location.href = "it_view_signature.php?requestID=" + ida;
                                 }
                             }
 							if (id == "Pending") {

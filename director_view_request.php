@@ -18,7 +18,7 @@
 		
 		move_uploaded_file($filetmp,$filepath);
 		
-		$query="UPDATE `thesis`.`request` SET `status`='2', `step`='27'  WHERE `requestID`='{$requestID}'";
+		$query="UPDATE `thesis`.`request` SET `status`='1', `step`='27'  WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
 		
 		// Upload file to server
@@ -26,7 +26,6 @@
 		// Insert image file name into database
 		$queryInsImage="UPDATE `thesis`.`request` SET `signature` = '".$filename."' WHERE `requestID` = '{$requestID}';";
 		$resultInsImage=mysqli_query($dbc,$queryInsImage);
-		
 		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$requestID}");
 	}
 	elseif(isset($_POST['disapprove'])){
@@ -201,15 +200,32 @@
 							<div class="row">
                             <br>    
                             </div>
+							<?php
+							
+							if(isset($column['itReasonDissaproval'])){
+								echo "<div class='row'>
+									<div class='col-lg-2'>
+										<label>IT Office's Reason For Disapproval</label>
+									</div>
+									<div class='col-lg-6'>
+										<input type='text' value='{$column['itReasonDissaproval']}' class='form-control' disabled>
+									</div>
+								</div>";
+							}
+							
+							
+							?>
+							
+							<div class="row">
+                            <br>    
+                            </div>
 							<div class="row">
                                 <div class="col-xs-4">
                                 </div>
-                                <div class="col-xs-4">
-                                    
-                                    <button type="submit" class="btn btn-success" name="approve" <?php if($row['statusDesc'] !='Pending' ) echo "disabled" ; ?> ><i class="fa fa-check"></i> Approve</button>
+                                <div class="col-xs-4"> 
+                                    <button type="submit" class="btn btn-success" name="approve" ><i class="fa fa-check"></i> Approve</button>
                                         &nbsp;&nbsp;
-                                    <button type="submit" class="btn btn-danger" name="disapprove" <?php if($row['statusDesc'] !='Pending' ) echo "disabled" ; ?> ><i class="fa fa-ban"></i> Disapprove</button>
-                                    
+                                    <button type="submit" class="btn btn-danger" name="disapprove" ><i class="fa fa-ban"></i> Disapprove</button> 
                                 </div>
                                 <div class="col-xs-4">
                                 </div>
