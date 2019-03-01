@@ -3,21 +3,31 @@
 	session_start();
 	require_once('db/mysql_connect.php');
 	date_default_timezone_set('Asia/Manila');
+    $userID = $_SESSION['userID'];
 	
 	if(isset($_POST['dispose'])){
 		$CurDate = date("Y-m-d");
-		$dateTimestamp1 = strtotime($CurDate);
 		$message = "Form submitted!";
-	}
-
-    if(!empty($_POST['markSalvage'])){
-		$markForDon=$_POST['markSalvage'];
-		foreach(markSalvage            as $forDon){
-			$queryForDon="UPDATE `thesis`.`asset` SET `assetStatus`='16' WHERE `assetID`='{$forDon}'";
-			$resultForDon=mysqli_query($dbc,$queryForDon);
-		}
-		$message = "Form submitted!";
-		$_SESSION['submitMessage'] = $message; 
+        if(!empty($_POST['markSalvage'])){
+            
+            $queryForDon1="INSERT INTO salvage (userID, ref_status_statusID, dateCreated) VALUES ({$userID}, 1, '{$CurDate}');";
+            $resultForDon1=mysqli_query($dbc,$queryForDon1);
+            
+            $query  = "SELECT MAX(id) AS `lastID` FROM salvage;";
+            $result = mysqli_query($dbc,$query);
+            $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+            
+            $salvagee=$_POST['markSalvage'];
+            foreach($salvagee as $salvageee){
+                $queryForDon="INSERT INTO salvage_details (salvageID, asset_assetID) VALUES ({$row['lastID']}, {$salvageee});";
+                $resultForDon=mysqli_query($dbc,$queryForDon);
+                
+                $queryForDo1n="UPDATE `thesis`.`asset` SET `assetStatus`='8' WHERE `assetID`='{$salvageee}'";
+			    $resultForDo1n=mysqli_query($dbc,$queryForDo1n);
+            }
+            $message = "Form submitted!";
+            $_SESSION['submitMessage'] = $message; 
+        }
 	}
 
 ?>
@@ -140,7 +150,7 @@
                                                 </div>
                                             </div>
                                             <div style="padding-left:10px; padding-bottom:10px">
-                                                <button type="submit" name="dispose" onclick="Confirm()" class="btn btn-success">For Refurbish</button>
+                                                <button type="submit" name="dispose" class="btn btn-success">For Refurbish</button>
                                                 <button type="button" onclick="window.history.back()" class="btn btn-secondary">Back</button>
                                             </div>
                                         </form>
@@ -160,11 +170,6 @@
     </section>
 
     <!-- WAG GALAWIN PLS LANG -->
-    <script>
-        function Confirm() {
-            document.getElementById("formSend").submit();
-        }
-	</script>
 
     <script src="js/jquery.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
