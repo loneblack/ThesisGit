@@ -57,7 +57,7 @@ if($everyTwoWeeks==$CurDate){
 		$resultEngAssMain=mysqli_query($dbc,$queryEngAssMain);
 		while ($rowEngAssMain = mysqli_fetch_array($resultEngAssMain, MYSQLI_ASSOC)){
 			//CREATE MAINTENANCE TICKET
-			$queryCreMainTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`,  `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `assignmentID`) VALUES ('2', '{$_SESSION['userID']}', '{$everyTwoWeeks}', '{$everyTwoWeeks}', '{$everyTwoWeeks}', 'High', '28', '{$rowEngAssMain['assignmentID']}')";
+			$queryCreMainTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`,  `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `assignmentID`, `requestedBy`) VALUES ('2', '{$_SESSION['userID']}', '{$everyTwoWeeks}', '{$everyTwoWeeks}', '{$everyTwoWeeks}', 'High', '28', '{$rowEngAssMain['assignmentID']}', '3')";
 			$resultCreMainTicket=mysqli_query($dbc,$queryCreMainTicket);
 			
 			//GET LATEST MAINTENANCE TICKET
@@ -108,7 +108,7 @@ if($lastDayThisMonth==$CurDate){
 		$resultEngAssMain=mysqli_query($dbc,$queryEngAssMain);
 		while ($rowEngAssMain = mysqli_fetch_array($resultEngAssMain, MYSQLI_ASSOC)){
 			//CREATE MAINTENANCE TICKET
-			$queryCreMainTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`,  `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `assignmentID`) VALUES ('2', '{$_SESSION['userID']}', '{$lastDayThisMonth}', '{$lastDayThisMonth}', '{$lastDayThisMonth}', 'High', '28', '{$rowEngAssMain['assignmentID']}')";
+			$queryCreMainTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`,  `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `assignmentID`, `requestedBy`) VALUES ('2', '{$_SESSION['userID']}', '{$lastDayThisMonth}', '{$lastDayThisMonth}', '{$lastDayThisMonth}', 'High', '28', '{$rowEngAssMain['assignmentID']}', '3')";
 			$resultCreMainTicket=mysqli_query($dbc,$queryCreMainTicket);
 			
 			//GET LATEST MAINTENANCE TICKET
@@ -173,7 +173,7 @@ if($CurDate==$endOfTermDate){
 		$resultEngAssMain=mysqli_query($dbc,$queryEngAssMain);
 		while ($rowEngAssMain = mysqli_fetch_array($resultEngAssMain, MYSQLI_ASSOC)){
 			//CREATE MAINTENANCE TICKET
-			$queryCreMainTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`,  `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `assignmentID`) VALUES ('2', '{$_SESSION['userID']}', '{$lastDayThisMonth}', '{$lastDayThisMonth}', '{$lastDayThisMonth}', 'High', '28', '{$rowEngAssMain['assignmentID']}')";
+			$queryCreMainTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`,  `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `assignmentID`, `requestedBy`) VALUES ('2', '{$_SESSION['userID']}', '{$lastDayThisMonth}', '{$lastDayThisMonth}', '{$lastDayThisMonth}', 'High', '28', '{$rowEngAssMain['assignmentID']}', '3')";
 			$resultCreMainTicket=mysqli_query($dbc,$queryCreMainTicket);
 			
 			//GET LATEST MAINTENANCE TICKET
