@@ -82,9 +82,11 @@
 												<?php 
                                                     $count = 1;
 													//GET DELIVER DATA
-													$queryDeliv="SELECT d.id as `deliveryID`,r.requestID,r.description,r.dateNeeded,rs.description as `statusDesc` FROM thesis.delivery d join procurement p on d.procurementID=p.procurementID
+													$queryDeliv="SELECT d.id as `deliveryID`,r.requestID,r.description,r.dateNeeded,rs.description as `statusDesc`,e.name as `empName` FROM thesis.delivery d join procurement p on d.procurementID=p.procurementID
 																																join request r on p.requestID=r.requestID
-																																join ref_status rs on r.status=rs.statusID
+																																join ref_status rs on r.status=rs.statusID 
+																																join user u on r.UserID=u.UserID 
+																																join employee e on u.UserID= e.UserID
 																																where d.status='Delivered'";
 													$resultDeliv=mysqli_query($dbc,$queryDeliv);
 													while($rowDeliv=mysqli_fetch_array($resultDeliv,MYSQLI_ASSOC)){
@@ -98,7 +100,7 @@
 															if($rowDeliv['statusDesc']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowDeliv['statusDesc']}</label></td>"; }
 															if($rowDeliv['statusDesc']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowDeliv['statusDesc']}</label></td>"; }
 															if($rowDeliv['statusDesc']=="Completed"){ echo "<td><label class='label label-success'>{$rowDeliv['statusDesc']}</label></td>"; }    
-															//echo"<td>{$count}</td>";
+															echo"<td>{$rowDeliv['empName']}</td>";
 															echo"</tr>";
 
                                                         $count++;

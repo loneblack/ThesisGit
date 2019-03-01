@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php
+	require_once('db/mysql_connect.php');
+	session_start();
+
+?>
 <html lang="en">
 
 <head>
@@ -23,7 +28,7 @@
 
         <?php
             $count = 1;
-            $query = "SELECT e.name AS `naame` FROM employee e JOIN user u ON e.userID = u.userID WHERE e.userID = {$userID};";
+            $query = "SELECT e.name AS `naame` FROM employee e WHERE e.UserID = {$_SESSION['userID']};";
             $result = mysqli_query($dbc, $query);
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
             $name = $row['naame'];
@@ -71,11 +76,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-													<td>11/12/2018</td>
-													<td><label class="label label-warning">Pending</td>
-													<td>Need help</td>
-													<td>Requesting guy</td>
-													<td>12/31/2018</td>
+													
                                                     <!-- <tr>
                                                         <td><a href="procurement_view_request.php">12/23/2018</a></td>
                                                         <td><span class="label label-success label-mini">Completed</span></td>
@@ -109,7 +110,7 @@
                                                     
 													<?php
 													
-														require_once('db/mysql_connect.php');
+														
 														$query="SELECT c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.recipient,r.date as `requestedDate`,rstp.name as `step` FROM thesis.canvas c 
 																   join ref_status rs on c.status=rs.statusID
                                                                    join request r on c.requestID=r.requestID
