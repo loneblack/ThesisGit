@@ -104,26 +104,6 @@
                                                         $count++;
 													}
 													
-													
-													//GET REQUEST FOR Procurement Service Material
-													//$queryReqProc="SELECT *,rs.description as `statusDesc` FROM thesis.request r join ref_status rs on r.status=rs.statusID where r.step='9'";
-													//$resultReqProc=mysqli_query($dbc,$queryReqProc);
-													//while($rowReqProc=mysqli_fetch_array($resultReqProc,MYSQLI_ASSOC)){
-														//echo "<tr class='gradeA'>
-                                                            //<td style='display: none'>{$rowReqProc['requestID']}</td>
-															//<td>{$count}</td>
-															//<td>{$rowReqProc['description']}</td>
-															//<td>Procurement of Service and Material</td>
-															//<td>{$rowReqProc['dateNeeded']}</td>";
-															//if($rowReqProc['statusDesc']=="Pending"){ echo "<td><label class='label label-warning'>{$rowReqProc['statusDesc']}</label></td>"; }
-															//if($rowReqProc['statusDesc']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowReqProc['statusDesc']}</label></td>"; }
-															//if($rowReqProc['statusDesc']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowReqProc['statusDesc']}</label></td>"; }
-															//if($rowReqProc['statusDesc']=="Completed"){ echo "<td><label class='label label-success'>{$rowReqProc['statusDesc']}</label></td>"; }
-															
-															//echo"</tr>";
-
-                                                        //$count++;
-													//}
 												?>
 												
 												<?php 
@@ -242,6 +222,44 @@
 													}
 													
 												?>	
+                                                
+                                                
+                                                <?php
+                                                    //view for salvage
+                                                    $query69 = "SELECT s.id, rs.description, e.name FROM salvage s 
+                                                                JOIN ref_status rs ON s.ref_status_statusID = rs.statusID
+                                                                JOIN user u ON s.userID = u.userID
+                                                                JOIN employee e ON u.userID = e.userID;";
+                                                                  
+                                                    $result69 = mysqli_query($dbc, $query69);
+                                                    
+                                                    while ($row = mysqli_fetch_array($result69, MYSQLI_ASSOC))
+                                                    {
+                                                      
+                                                      echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$row['id']}</td>
+                                                            <td>{$count}</td>
+                                                            <td>Salvage These Items</td>
+                                                            <td>";
+                                                        
+                                                        echo "Salvage";
+
+                                                        echo
+                                                            "</td>
+                                                            <td></td>";
+
+                                                        if($row['description']=="Pending"){ echo "<td><label class='label label-warning'>{$row['description']}</label></td>"; }
+                                                        if($row['description']=="Ongoing"){ echo "<td><label class='label label-primary'>{$row['description']}</label></td>"; }
+                                                        if($row['description']=="Incomplete"){ echo "<td><label class='label label-danger'>{$row['description']}</label></td>"; }
+                                                        if($row['description']=="Completed"){ echo "<td><label class='label label-success'>{$row['description']}</label></td>"; }
+                                                        echo "<td>{$row['name']}</td>";
+                                                        echo "</tr>";
+
+                                                          $count++;
+                                                    }
+                                                  ?>
+                                                
+                                                
                                             <tfoot>
                                                 <tr>
                                                     <th style="display: none"></th>
@@ -325,6 +343,9 @@
 						
 						if(idx == "Replacement"){
 							window.location.href = "helpdesk_view_replacement_request.php?id="+id;
+						}
+                        if(idx == "Salvage"){
+							window.location.href = "helpdesk_view_salvage_open.php?id="+id;
 						}
 					};
 				};
