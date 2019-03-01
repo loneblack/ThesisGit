@@ -2,7 +2,7 @@
 <html lang="en">
 <?php
 session_start();
-
+$_SESSION['recommAsset']=array();
 $id = $_GET['id'];//get the id of the selected service request
 $_SESSION['id'] = $_GET['id'];
 
@@ -54,11 +54,17 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 	array_push($assetCat, $row2['assetCategoryID']);
 	array_push($remarks, $row2['purpose']);
 }	
+
+	if(isset($_POST['send'])){
+		if(!empty($_POST['recommAsset'])){
+			$_SESSION['recommAsset']=$_POST['recommAsset'];
+		}
+	}
+
     if(isset($_POST['approveBtn'])){
 
 		$propCode=$_POST['propCode'];
 		$a=sizeOf($propCode);
-		
 		
 		//Update status,steps
         $query="UPDATE `thesis`.`request_borrow` SET `statusID` = '2', `steps`='13' WHERE (`borrowID` = '{$id}');";
@@ -75,6 +81,18 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             $testingID = $row['testingID'];
         }
 		
+		//Insert recommended asset
+		foreach($_POST['recommAss'] as $recommAsset){
+			//INSERT TO asset testing details
+            $queryDetails = "INSERT INTO assettesting_details (`assettesting_testingID`, `asset_assetID`) VALUES ('{$testingID}', '{$recommAsset}');";
+            $resultDetails = mysqli_query($dbc,$queryDetails);
+
+            //update asset status
+            $QAssetStatus = "UPDATE `thesis`.`asset` SET `assetStatus` = '8' WHERE (`assetID` = '{$recommAsset}');";
+            $RAssetStatus = mysqli_query($dbc,$QAssetStatus);
+		}
+		
+		/* Backup Code
 		foreach($propCode as $asset){
 			//INSERT TO asset testing details
             $queryDetails = "INSERT INTO assettesting_details (`assettesting_testingID`, `asset_assetID`) VALUES ('{$testingID}', '{$asset}');";
@@ -99,7 +117,7 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                 $RAssetStatus = mysqli_query($dbc,$QAssetStatus);
 			}
 		}
-
+		*/
 		
 		
 		$message = "Form submitted!";
@@ -198,7 +216,7 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 echo "<span class='label label-success'>Approved</span>";
                                             } ?>
                                                             </h4>
-                                                            <form class="cmxform form-horizontal " id="signupForm" method="post" action="">
+                                                            <form class="cmxform form-horizontal " id="signupForm" method="post">
                                                                 <div class="form-group ">
                                                                     <label for="serviceType" class="control-label col-lg-3">Office/Department/School Organization</label>
                                                                     <div class="col-lg-6">
@@ -290,8 +308,81 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
 
                                                                 </div>
+				
+																<div class="form-group">
+																<h4>Recommended Assets</h4>
+																<table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+																	<thead>
+																		<tr>
+																			<th>Property Code</th>
+																			<th>Brand</th>
+																			<th>Model</th>
+																			<th>Specifications</th>
+																			<th>Asset Category</th>
+																			<th>Status</th>
+																			<th></th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<?php
+																			if(isset($_SESSION['recommAsset'])){
+																				foreach($_SESSION['recommAsset'] as $recommAsset){
+																					$queryRecommAss="SELECT *,rb.name as `brandName`,am.description as `modelName`,rac.name as `assetCatName`,am.itemSpecification as `modelSpec`,ras.description as `assetStat` FROM thesis.asset a left join assetmodel am on a.assetModel=am.assetModelID
+																													 left join ref_brand rb on am.brand=rb.brandID
+																													 left join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																													 left join ref_assetstatus ras on a.assetStatus=ras.id where a.assetID='{$recommAsset}'";
+																					$resultRecommAss=mysqli_query($dbc,$queryRecommAss);
+																					while($rowRecommAss=mysqli_fetch_array($resultRecommAss,MYSQLI_ASSOC)){
+																						echo "<tr>
+																								<input type='hidden' name='recommAss[]' value='{$recommAsset}'>
+																								<td>{$rowRecommAss['propertyCode']}</td>
+																								<td>{$rowRecommAss['brandName']}</td>
+																								<td>{$rowRecommAss['modelName']}</td>
+																								<td>{$rowRecommAss['modelSpec']}</td>
+																								<td>{$rowRecommAss['assetCatName']}</td>
+																								<td>{$rowRecommAss['assetStat']}</td>
+																								<td><button id='remove' class='btn btn-warning' onClick='removeRow(this,\"{$recommAsset}\")'>Remove</button></td>
+																							</tr>";
+																					}
+																					
+																					
+																				}
+																				
+																			}
+																			
+																		?>
+
+																		</tbody>
+																	</table>
+																	<br>
+																</div>
 																
-																<!-- Modal -->
+                                                                <hr>
+                                                                
+
+                                                                <hr>
+                                                                    <div class="form-group">
+                                                                        <button id="approveBtn" name="approveBtn" class="btn btn-success" <?php if($description !='Pending' ) echo "disabled" ; ?> type="submit">Approve</button>
+                                                                        &nbsp;
+                                                                        <button id="denyBtn" name="denyBtn" class="btn btn-danger" <?php if($description !='Pending' ) echo "disabled" ; ?> type="submit" data-toggle="modal" data-target="#myModal">Deny</button>
+                                                                    </div>
+                                                                
+                                                            </form>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- page end-->
+            </section>
+        </section>
+        <!--main content end-->
+
+    </section>
+
+	<!-- Modal -->
 																<div class="modal fade" id="myModal" role="dialog">
 																	<div class="modal-dialog">
 
@@ -302,9 +393,8 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 																				<h4 class="modal-title">Search Inventory for Specifications that are exactly or close to request</h4>
 																			</div>
 
-																			<form class="form-inline" method="post" action="<?php echo $_SERVER['PHP_SELF']." ?requestID=".$requestID; ?>">
+																			<form class="form-inline" method="post" action="<?php echo $_SERVER['PHP_SELF']."?id=".$id; ?>">
 																				<div class="modal-body">
-
 
 																					<div class="adv-table" id="ctable">
 																						<table class="display table table-bordered table-striped" id="dynamic-table">
@@ -339,61 +429,7 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 																	</div>
 																</div>
 																<!-- Modal End-->
-																
-                                                                <hr>
-                                                                <div class="container-fluid">
-
-                                                                    <hr>
-                                                                    <div class="form-group">
-                                                                        <button id="approveBtn" name="approveBtn" class="btn btn-success" <?php if($description !='Pending' ) echo "disabled" ; ?> type="submit">Approve</button>
-                                                                        &nbsp;
-                                                                        <button id="denyBtn" name="denyBtn" class="btn btn-danger" <?php if($description !='Pending' ) echo "disabled" ; ?> type="submit" data-toggle="modal" data-target="#myModal">Deny</button>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- page end-->
-            </section>
-        </section>
-        <!--main content end-->
-
-    </section>
-
-
-
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Reason for Disapproval</h4>
-                </div>
-                <div class="modal-body">
-                    <form method="POST">
-                        <label>Reason for Disapproval</label>
-                        <input type="text" class="form-control" name="reason">
-                        <br><br>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Submit</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
+	
     <!-- WAG GALAWIN PLS LANG -->
 
     <!--Core js-->
@@ -411,9 +447,19 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
     <script type="text/javascript">
-        function removeRow(o) {
+        
+		function removeRow(o, recommAsset) {
             var p = o.parentNode.parentNode;
             p.parentNode.removeChild(p);
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "removeRecommAssetData_ajax.php?assetID=" + recommAsset, true);
+            xmlhttp.send();
         }
 		
 		function setAssetCatID(assetCatID) {

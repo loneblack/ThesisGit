@@ -192,7 +192,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                             <label for="status" class="control-label col-lg-3">Status</label>
                                                             <div class="col-lg-6">
                                                                 <select class="form-control m-bot15" value = "2" name="status" readonly>
-                                                                <option value = 2>Assgined</option>
+                                                                <option value = 2>Assigned</option>
                                                             	<?php
                                                                     $query2="SELECT * FROM thesis.ref_ticketstatus";
                                                                     $result2=mysqli_query($dbc,$query2);
