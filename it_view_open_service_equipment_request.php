@@ -41,6 +41,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 $category = array();
 $quantity = array();
 $assetCat = array();
+$remarks = array();
 
 $query2 =  "SELECT * FROM thesis.borrow_details d
             JOIN ref_assetcategory c ON d.assetCategoryID = c.assetCategoryID
@@ -51,7 +52,8 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     array_push($category, $row2['name']);
     array_push($quantity, $row2['quantity']);
 	array_push($assetCat, $row2['assetCategoryID']);
-}
+	array_push($remarks, $row2['purpose']);
+}	
     if(isset($_POST['approveBtn'])){
 
 		$propCode=$_POST['propCode'];
@@ -254,96 +256,88 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Equipment</th>
-                                                                                <th>Quantity</th>
-                                                                                <th>Brand</th>
-                                                                                <th>Model</th>
-                                                                                <th>Property Code</th>
+																				<th>Quantity</th>
+																				<th>Item Description/ Proposed Specs</th>
+																				<th></th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
                                                                             <?php
-                                                            $count=0;
-                                                            for ($i=0; $i < count($category); $i++){ 
-                                                            echo
-                                                            "<tr>
-																<input type='hidden' name='assetCatBor[]' value='{$assetCat[$i]}'>
-                                                                <td>
-                                                                    <select class='form-control' disabled>
-                                                                        <option>{$category[$i]}</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td><input type='number' value ='{$quantity[$i]}' class='form-control' disabled></td>
-                                                                
-                                                                <td>
-																	<select class='form-control donreq' id='brand".$count."' required onchange='getModel({$count},{$assetCat[$i]})'>
-																	<option value=''>Select Brand</option>";
-																	
-																	//GET BRAND
-																	$queryBrand = "SELECT * FROM thesis.ref_brand";
-																	$resultBrand = mysqli_query($dbc, $queryBrand);
-																	while($rowBrand=mysqli_fetch_array($resultBrand, MYSQLI_ASSOC)){
-																		echo "<option value='{$rowBrand['brandID']}'>{$rowBrand['name']}</option>";
-																	}
-																	
-																	echo "</select>
-																		</td>
-																		<td>
-																		<select class='form-control donreq' id='model".$count."' required onchange='getPropCode({$count})'>
-																			<option value=''>Select Model</option>";
-																	
-																	echo "</select>
-																		</td>
-																		<td>
-																		<select class='form-control donreq' id='propCode".$count."' name='propCode[]' required>
-																			<option value=''>Select Property Code</option>";
-																			
-																	echo "</select>
-																		</td>
-																	</tr>";
-																	$count++;
+																			$count=0;
+																			for ($i=0; $i < count($category); $i++){ 
+																			echo
+																			"<tr>
+																				<input type='hidden' name='assetCatBor[]' value='{$assetCat[$i]}'>
+																				<td>
+																					<select class='form-control' disabled>
+																						<option>{$category[$i]}</option>
+																					</select>
+																				</td>
+																				<td><input type='number' value ='{$quantity[$i]}' class='form-control' disabled></td>
+																				<td><input class='form-control' type='text' id='purpose' value='{$remarks[$i]}' disabled></td>
+																				<td>
+																					<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#myModal' onclick='setAssetCatID(\"{$assetCat[$i]}\")'><i class='fa fa-eye'></i> View Inventory</button>
+																				</td>
+																				</tr>";
 
-																	for ($j=1; $j < $quantity[$i] ; $j++) { 
-																		
-																	echo "
-																		<input type='hidden' name='assetCatBor1[]' value='{$assetCat[$i]}'>
-																		<td></td>
-																		<td></td>
-																		<td>
-																		<select class='form-control donreq' id='brand".$count."' required onchange='getModel({$count},{$assetCat[$i]})'>
-																		<option value=''>Select Brand</option>";
-																		
-																		//GET BRAND
-																		$queryBrand = "SELECT * FROM thesis.ref_brand";
-																		$resultBrand = mysqli_query($dbc, $queryBrand);
-																		while($rowBrand=mysqli_fetch_array($resultBrand, MYSQLI_ASSOC)){
-																			echo "<option value='{$rowBrand['brandID']}'>{$rowBrand['name']}</option>";
-																		}
-																		
-																		echo "</select>
-																			</td>
-																			<td>
-																			<select class='form-control donreq' id='model".$count."' required onchange='getPropCode({$count})'>
-																				<option value=''>Select Model</option>";
-																		
-																		echo "</select>
-																			</td>
-																			<td>
-																			<select class='form-control donreq' id='propCode".$count."' name='propCode1[]' required>
-																				<option value=''>Select Property Code</option>";
-																				
-																		echo "</select>
-																			</td>
-																		</tr>";
-																		$count++;
-																	}
-                                                            }
-                                                        ?>
+																			}
+																		?>
                                                                         </tbody>
                                                                     </table>
 
 
 
                                                                 </div>
+																
+																<!-- Modal -->
+																<div class="modal fade" id="myModal" role="dialog">
+																	<div class="modal-dialog">
+
+																		<!-- Modal content-->
+																		<div class="modal-content">
+																			<div class="modal-header">
+																				<button type="button" class="close" data-dismiss="modal">&times;</button>
+																				<h4 class="modal-title">Search Inventory for Specifications that are exactly or close to request</h4>
+																			</div>
+
+																			<form class="form-inline" method="post" action="<?php echo $_SERVER['PHP_SELF']." ?requestID=".$requestID; ?>">
+																				<div class="modal-body">
+
+
+																					<div class="adv-table" id="ctable">
+																						<table class="display table table-bordered table-striped" id="dynamic-table">
+																							<thead>
+																								<tr>
+																									<th></th>
+																									<th>Property Code</th>
+																									<th>Brand</th>
+																									<th>Model</th>
+																									<th>Specifications</th>
+																									<th>Asset Category</th>
+																									<th>Status</th>
+																								</tr>
+																							</thead>
+																							<tbody id='assetList'>
+
+																							</tbody>
+																						</table>
+																					</div>
+
+																				</div>
+																				<br><br>
+																				<div class="modal-footer">
+																					<button class="btn btn-primary" type="submit" name="send">Send</button>
+																					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+																				</div>
+
+																			</form>
+
+																		</div>
+
+																	</div>
+																</div>
+																<!-- Modal End-->
+																
                                                                 <hr>
                                                                 <div class="container-fluid">
 
@@ -417,7 +411,17 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             var p = o.parentNode.parentNode;
             p.parentNode.removeChild(p);
         }
-
+		
+		function setAssetCatID(assetCatID) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("assetList").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "setAssetCatIDForIt_view_approval_ajax.php?category=" + assetCatID, true);
+            xmlhttp.send();
+        }
 
         function addTest(cavasItemID) {
             var row_index = 0;
