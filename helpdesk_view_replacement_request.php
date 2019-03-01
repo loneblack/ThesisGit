@@ -38,7 +38,7 @@
 		$resultAssTest=mysqli_query($dbc,$queryAssTest);
 		
 		//Create ticket
-		$queryCreTick="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$rowLatAssTest['testingID']}', '{$category}')";
+		$queryCreTick="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `requestedBy`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$rowLatAssTest['testingID']}', '{$category}', '{$rowGetRepData['userID']}')";
 		$resultCreTick=mysqli_query($dbc,$queryCreTick);
 				
 		//Get Latest ticket
@@ -316,7 +316,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                                        <button type="submit" name="submit" class="btn btn-success" disabled>Submit</button>
                                         <button class="btn btn-danger">Back</button>
                                     </section>
 									</form>
