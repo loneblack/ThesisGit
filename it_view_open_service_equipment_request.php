@@ -132,6 +132,8 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     <link href="bs3/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-reset.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css" />
+    <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
@@ -183,8 +185,8 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     ?>
                                     <div class="panel-body">
                                         <div class="form" method="post">
-                                            <a href="it_requests.php"><button type="button" class="btn btn-link"><strong>
-                                                        < Back</strong> </button> </a> <h4 style="float: right;">Status:
+                                            <a href="it_requests.php"><button type="button" class="btn btn-danger"><strong>
+                                                         Back</strong> </button> </a> <h4 style="float: right;">Status:
                                                             <?php 
                                             if($description=='Pending'){
                                                 echo "<span class='label label-warning'>{$description}</span>";
@@ -356,7 +358,6 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                         </div>
                     </div>
                 </div>
-                </div>
                 <!-- page end-->
             </section>
         </section>
@@ -402,6 +403,9 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
+    <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+    <script src="js/dynamic_table_init.js"></script>
 
 
     <!--common script init for all pages-->

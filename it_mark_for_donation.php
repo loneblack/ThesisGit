@@ -134,21 +134,6 @@
 														
 														?>
 													
-													
-													
-													
-													
-													
-													
-                                                    <!--    <tr class="gradeX">
-                                                            <td style="width:7px; text-align:center"><input type="checkbox" class="form-check-input" id="exampleCheck1"></td>
-                                                            <td>Laptop</td>
-                                                            <td><label class="label label-danger">Broken - Not Fixable</label></td>
-                                                            <td>LPTP-0099</td>
-                                                            <td>Samsung</td>
-                                                            <td>dead</td>
-															<td>Brand</td>
-                                                        </tr> -->
                                                         
                                                     </tbody>
                                                     <tfoot>

@@ -10,6 +10,16 @@
 		$message = "Form submitted!";
 	}
 
+    if(!empty($_POST['markSalvage'])){
+		$markForDon=$_POST['markSalvage'];
+		foreach(markSalvage            as $forDon){
+			$queryForDon="UPDATE `thesis`.`asset` SET `assetStatus`='16' WHERE `assetID`='{$forDon}'";
+			$resultForDon=mysqli_query($dbc,$queryForDon);
+		}
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message; 
+	}
+
 ?>
 <html lang="en">
 
@@ -60,21 +70,15 @@
         <!--main content-->
         <section id="main-content">
             <section class="wrapper">
-                <!-- page start-->
+                
                 <?php
-                    if (isset($_SESSION['submitMessage']) && $_SESSION['submitMessage']=="Form submitted!"){
+                    if (isset($_SESSION['submitMessage'])){
 
                         echo "<div class='alert alert-success'>
                                 {$_SESSION['submitMessage']}
 							  </div>";
                         unset($_SESSION['submitMessage']);
                     }
-					elseif(isset($_SESSION['submitMessage'])){
-						 echo "<div class='alert alert-danger'>
-                                {$_SESSION['submitMessage']}
-							  </div>";
-						 unset($_SESSION['submitMessage']);
-					}
 				?>
                 <div class="col-sm-12">
                     <div class="col-sm-12">
@@ -117,7 +121,7 @@
 															$resultAsset=mysqli_query($dbc,$queryAsset);
 															while($rowAsset=mysqli_fetch_array($resultAsset,MYSQLI_ASSOC)){
 																echo "<tr class='gradeX'>
-																	<td style='width:7px; text-align:center'><input type='checkbox' class='form-check-input' name='forDis[]' id='exampleCheck1' value='{$rowAsset['assetID']}'></td>
+																	<td style='width:7px; text-align:center'><input type='checkbox' class='form-check-input' name='markSalvage[]' id='exampleCheck1' value='{$rowAsset['assetID']}'></td>
 																	<td>{$rowAsset['name']}</td>
 																	<td>{$rowAsset['propertyCode']}</td>
 																	<td><label class='label label-danger'>{$rowAsset['description']}</label></td>
