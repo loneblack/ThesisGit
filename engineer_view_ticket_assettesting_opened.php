@@ -225,7 +225,7 @@
 					$rowLatAss=mysqli_fetch_array($resultLatAss,MYSQLI_ASSOC);
 					
 					//CREATE TICKET FOR ESCALATION
-					$queryEsc="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `requestedBy`) VALUES ('5', '{$escEng}', '{$_SESSION['userID']}', now(), now(), '{$_POST['dueDate']}', '{$rowOut['priority']}', '{$rowLatAss['testingID']}', '25', '{}')";
+					$queryEsc="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `requestedBy`) VALUES ('5', '{$escEng}', '{$_SESSION['userID']}', now(), now(), '{$_POST['dueDate']}', '{$rowOut['priority']}', '{$rowLatAss['testingID']}', '25', '{$rowOut['requestedBy']}')";
 					$resultEsc=mysqli_query($dbc,$queryEsc);
 						
 					//GET LATEST TICKET
@@ -256,7 +256,7 @@
 				}
 			}
 			//Check if final asset testing details is empty
-			$queryAssTestIsEx="SELECT count(*) as `isExist` FROM thesis.assettesting_details where assettesting_testingID='{$rowLatAss['testingID']}'";
+			$queryAssTestIsEx="SELECT count(*) as `isExist` FROM thesis.assettesting_details where assettesting_testingID='{$rowTestID}'";
 			$resultAssTestIsEx=mysqli_query($dbc,$queryAssTestIsEx);
 			$rowAssTestIsEx=mysqli_fetch_array($resultAssTestIsEx,MYSQLI_ASSOC);
 				
@@ -266,7 +266,7 @@
 				$resultSetAssTestID=mysqli_query($dbc,$querySetAssTestID);
 					
 				//Delete Asset TESTING
-				$queryDelAssTest="Delete FROM thesis.assettesting where testingID='{$rowLatAss['testingID']}'";
+				$queryDelAssTest="Delete FROM thesis.assettesting where testingID='{$rowTestID}'";
 				$resultDelAssTest=mysqli_query($dbc,$queryDelAssTest);
 			}
 		}
