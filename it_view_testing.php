@@ -295,8 +295,8 @@
 				$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='3' WHERE `assetID`='{$rowPassTest['asset_assetID']}'";
 				$resultStat=mysqli_query($dbc,$queryStat);
 				
-				//GET BORROW DATA
-				$queryBorDat="SELECT * FROM thesis.borrow_details bd where bd.borrowID='{$rowTesDat['borrowID']}'";
+				//GET BORROW DETAILS DATA
+				$queryBorDat="SELECT * FROM thesis.borrow_details bd where bd.borrowID='{$rowBorID['borrowID']}'";
 				$resultBorDat=mysqli_query($dbc,$queryBorDat);
 				$rowBorDat=mysqli_fetch_array($resultBorDat,MYSQLI_ASSOC);
 
