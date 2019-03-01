@@ -65,11 +65,11 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             $counter++;
         }
 
-        //Update Comment
-        $queryComment="UPDATE `thesis`.`ticket` SET `comment` = 'aaaa' WHERE (`ticketID` = '{$id}');";
+        //Update Comment and assignee
+        $comment=$_POST['comment'];
+        $assigneeUserID = $_POST['escalateUserID'];
+        $queryComment="UPDATE `thesis`.`ticket` SET assigneeUserID` = '{$assigneeUserID}',`comment` = '{$comment}' WHERE (`ticketID` = '{$id}');";
         $resultComment=mysqli_query($dbc,$queryComment);
-        echo $queryComment;
-
 		
 		/*//For repaired assets
 		if(!empty($_POST['repAsset'])){
