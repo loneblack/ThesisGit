@@ -3,6 +3,7 @@
 <?php
 session_start();
 
+$userID = $_SESSION['userID'];
 $id = $_GET['id'];
 require_once("db/mysql_connect.php");
 
@@ -68,8 +69,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         //Update Comment and assignee
         $comment=$_POST['comment'];
         $assigneeUserID = $_POST['escalateUserID'];
-        $queryComment="UPDATE `thesis`.`ticket` SET assigneeUserID` = '{$assigneeUserID}',`comment` = '{$comment}' WHERE (`ticketID` = '{$id}');";
-        $resultComment=mysqli_query($dbc,$queryComment);
+        $queryUpdate="UPDATE `thesis`.`ticket` SET `assigneeUserID` = '{$assigneeUserID}',`comment` = '{$comment}' WHERE (`ticketID` = '{$id}');";
+        $resultUpdate=mysqli_query($dbc,$queryUpdate);
 		
 		/*//For repaired assets
 		if(!empty($_POST['repAsset'])){
@@ -424,7 +425,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 <label for="assign" class="control-label col-lg-4">Escalate To</label>
                                                 <div class="col-lg-8">
                                                     <select class="form-control m-bot15" name="escalateUserID" id='escalateUser'>
-                                                        <option value=''>None</option>
+                                                        <option value='<?php echo $userID;?>'>None</option>
                                                         <?php
                                                             $query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer';";
                                                             $result3=mysqli_query($dbc,$query3);
