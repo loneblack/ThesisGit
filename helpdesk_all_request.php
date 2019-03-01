@@ -129,7 +129,7 @@
 												<?php 
 													
 													//GET DONATION REQUEST
-													$queryDon="SELECT *,rs.description as `statusDesc` FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID where d.stepsID='9' ";
+													$queryDon="SELECT *,rs.description as `statusDesc`,e.name as `empName` FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID JOIN employee e ON d.user_UserID = e.UserID where d.stepsID='9' ";
 													$resultDon=mysqli_query($dbc,$queryDon);
 													while($rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC)){
 														echo "<tr class='gradeA'>
@@ -142,7 +142,9 @@
 															if($rowDon['statusDesc']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowDon['statusDesc']}</label></td>"; }
 															if($rowDon['statusDesc']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowDon['statusDesc']}</label></td>"; }
 															if($rowDon['statusDesc']=="Completed"){ echo "<td><label class='label label-success'>{$rowDon['statusDesc']}</label></td>"; }
-															echo "</tr>";
+															echo "
+															<td>{$rowDon['empName']}</td>
+															</tr>";
 
                                                             $count++;
 													}
