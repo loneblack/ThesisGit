@@ -76,12 +76,6 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
             $resultAssTest=mysqli_query($dbc,$queryAssTest);
             $rowAssTest=mysqli_fetch_array($resultAssTest, MYSQLI_ASSOC);
 
-            while($rowDelDetAss=mysqli_fetch_array($resultDelDetAss,MYSQLI_ASSOC)){     
-                    //Insert to assettesting_details table
-                    $queryInAssTesDet="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowAssTest['testingID']}', '{$rowDelDetAss['asset_assetID']}')";
-                    $resultInAssTesDet=mysqli_query($dbc,$queryInAssTesDet);
-                }
-
             if($assigned=='0'){
                 $querya="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`, `requestedBY`) VALUES ('{$status}', '{$_SESSION['userID']}', now(), now(), '{$startDate}', '{$priority}', '25', 'Test the selected assets for borrow', 'Test the selected assets for borrow', 'Test the selected assets for borrow', '{$personresponsibleID}')";
                 $resulta=mysqli_query($dbc,$querya);
