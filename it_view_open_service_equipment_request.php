@@ -119,11 +119,8 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 		}
 		*/
 		
-		
 		$message = "Form submitted!";
 		$_SESSION['submitMessage'] = $message; 
-		
-		
 		
         header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_view_open_service_equipment_request.php?id=".$_SESSION['id']);
     }
@@ -309,7 +306,7 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                                                                 </div>
 				
-																<div class="form-group">
+																<div class="container-fluid">
 																<h4>Recommended Assets</h4>
 																<table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
 																	<thead>
@@ -361,7 +358,7 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                                 
 
                                                                 <hr>
-                                                                    <div class="form-group">
+                                                                    <div class="container-fluid">
                                                                         <button id="approveBtn" name="approveBtn" class="btn btn-success" <?php if($description !='Pending' ) echo "disabled" ; ?> type="submit">Approve</button>
                                                                         &nbsp;
                                                                         <button id="denyBtn" name="denyBtn" class="btn btn-danger" <?php if($description !='Pending' ) echo "disabled" ; ?> type="submit" data-toggle="modal" data-target="#myModal">Deny</button>

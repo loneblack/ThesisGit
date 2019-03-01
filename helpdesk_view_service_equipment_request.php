@@ -159,6 +159,15 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				 <?php
+                    if (isset($_SESSION['submitMessage'])){
+						echo "<div style='text-align:center' class='alert alert-success'>
+                            <strong><h3>{$_SESSION['submitMessage']}</h3></strong>
+                        </div>";
+
+						unset($_SESSION['submitMessage']);
+                    }
+                ?>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
