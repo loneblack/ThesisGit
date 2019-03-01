@@ -241,7 +241,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         }
                                                         ?>
                                                     </h4>
-                                                    <h4>Repair Request</h3>
+                                                    <h4>Repair Request</h4>
                                                 </header>
                                                 <div class="panel-body ">
 
