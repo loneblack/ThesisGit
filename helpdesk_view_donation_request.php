@@ -14,77 +14,52 @@
 	
 	if(isset($_POST['submit'])){
 		$message=null;
-		if($_POST['category']=='25'){
-			
-			$category=$_POST['category'];
-			$status=$_POST['status'];
-			$priority=$_POST['priority'];
-			$assigned=$_POST['assigned'];
-			$currDate=date("Y-m-d H:i:s");
-			
-			if($rowDon['dateNeed']<$_POST['dueDate']||$currDate>$_POST['dueDate']){
-				$message="Invalid date input.";
-			}
-			else{
-				$dueDate=$_POST['dueDate'];
-			}
-			
-			if(!isset($message)){
-				//INSERT ASSET TESTING
-				if(isset($rowDon['user_UserID'])){
-					$queryt="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`, `remarks`) VALUES ('1', '{$rowDon['user_UserID']}', '25', 'Donation');";
-					$resultt=mysqli_query($dbc,$queryt);
-				}
-				else{
-					$queryt="INSERT INTO `thesis`.`assettesting` (`statusID`, `serviceType`, `remarks`) VALUES ('1', '25', 'Donation');";
-					$resultt=mysqli_query($dbc,$queryt);
-				}
-				
-				
-				//GET LATEST ASSET TEST
-				$query0="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
-				$result0=mysqli_query($dbc,$query0);
-				$row0=mysqli_fetch_array($result0,MYSQLI_ASSOC);
-				
-				//UPDATE ASSET STATUS / GET Donation data
-				$queryDonDet="SELECT *,ddi.assetID as `asset` FROM thesis.donationdetails dd join donationdetails_item ddi on dd.id=ddi.id where dd.donationID='{$donationID}'";
-				$resultDonDet=mysqli_query($dbc,$queryDonDet);
-				while($rowDonDet=mysqli_fetch_array($resultDonDet,MYSQLI_ASSOC)){
-					$queryAsset="UPDATE `thesis`.`asset` SET `assetStatus`='8' WHERE `assetID`='{$rowDonDet['asset']}'";
-					$resultAsset=mysqli_query($dbc,$queryAsset);
-					
-					//Insert to assettesting_details table
-					$queryAssTest="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$row0['testingID']}', '{$rowDonDet['assetID']}')";
-					$resultAssTest=mysqli_query($dbc,$queryAssTest);
-				}
-				
-				//Create ticket
-				$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$row0['testingID']}', '{$category}')";
-				$resulta=mysqli_query($dbc,$querya);
-				
-				//Get Latest ticket
-				$queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
-				$resultaa=mysqli_query($dbc,$queryaa);
-				$rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
-				
-				//Select Asset testingID
-				$queryaaa="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$row0['testingID']}'";
-				$resultaaa=mysqli_query($dbc,$queryaaa);
-				while($rowaaa=mysqli_fetch_array($resultaaa,MYSQLI_ASSOC)){
-					$queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$rowaaa['asset_assetID']}');";
-					$resultaaaa=mysqli_query($dbc,$queryaaaa);
-				}
-			
-				$message = "Form submitted!";
-				$_SESSION['submitMessage'] = $message;
-			}
-			else{
-				$_SESSION['submitMessage'] = $message;
-			}
-			
-			
-		}
 		
+		$category=$_POST['category'];
+		$status=$_POST['status'];
+		$priority=$_POST['priority'];
+		$assigned=$_POST['assigned'];
+		$currDate=date("Y-m-d H:i:s");
+		$dueDate=$_POST['dueDate'];
+	
+		//CREATE ASSET TEST
+		$queryt="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`, `remarks`) VALUES ('1', '{$rowDon['user_UserID']}', '25', 'Donation');";
+		$resultt=mysqli_query($dbc,$queryt);
+				
+		//GET LATEST ASSET TEST
+		$query0="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
+		$result0=mysqli_query($dbc,$query0);
+		$row0=mysqli_fetch_array($result0,MYSQLI_ASSOC);
+				
+		//UPDATE ASSET STATUS / GET Donation data
+		$queryDonDet="SELECT *,ddi.assetID as `asset` FROM thesis.donationdetails dd join donationdetails_item ddi on dd.id=ddi.id where dd.donationID='{$donationID}'";
+		$resultDonDet=mysqli_query($dbc,$queryDonDet);
+		while($rowDonDet=mysqli_fetch_array($resultDonDet,MYSQLI_ASSOC)){
+			$queryAsset="UPDATE `thesis`.`asset` SET `assetStatus`='8' WHERE `assetID`='{$rowDonDet['asset']}'";
+			$resultAsset=mysqli_query($dbc,$queryAsset);
+					
+			//Insert to assettesting_details table
+			$queryAssTest="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$row0['testingID']}', '{$rowDonDet['assetID']}')";
+			$resultAssTest=mysqli_query($dbc,$queryAssTest);
+		}
+				
+		//Create ticket
+		$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `requestedBy`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$row0['testingID']}', '{$category}', '{$rowDon['user_UserID']}')";
+		$resulta=mysqli_query($dbc,$querya);
+				
+		//Get Latest ticket
+		$queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
+		$resultaa=mysqli_query($dbc,$queryaa);
+		$rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
+				
+		//Select Asset testingID
+		$queryaaa="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$row0['testingID']}'";
+		$resultaaa=mysqli_query($dbc,$queryaaa);
+		while($rowaaa=mysqli_fetch_array($resultaaa,MYSQLI_ASSOC)){
+			$queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$rowaaa['asset_assetID']}');";
+			$resultaaaa=mysqli_query($dbc,$queryaaaa);
+		}
+
 		$message = "Form submitted!";
 		$_SESSION['submitMessage'] = $message; 
 	}
