@@ -764,18 +764,18 @@ DROP TABLE IF EXISTS `thesis`.`salvage` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`salvage` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `userID` INT(11) NOT NULL,
-  `statusID` INT(11) NOT NULL,
   `dateCreated` DATE NULL,
+  `ref_status_statusID` INT(11) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_salvage_user1_idx` (`userID` ASC) ,
-  INDEX `fk_salvage_ref_status1_idx` (`statusID` ASC) ,
+  INDEX `fk_salvage_ref_status1_idx` (`ref_status_statusID` ASC) ,
   CONSTRAINT `fk_salvage_user1`
     FOREIGN KEY (`userID`)
     REFERENCES `thesis`.`user` (`UserID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_salvage_ref_status1`
-    FOREIGN KEY (`statusID`)
+    FOREIGN KEY (`ref_status_statusID`)
     REFERENCES `thesis`.`ref_status` (`statusID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
