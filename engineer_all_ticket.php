@@ -82,7 +82,7 @@ require_once("db/mysql_connect.php");
                                                  <?php
                                                     $count = 1;
 
-                                                    $query = "SELECT t.ticketID, (convert(aes_decrypt(au.firstName, 'Fusion') using utf8)) AS 'firstName' ,(convert(aes_decrypt(au.lastName, 'Fusion')using utf8)) AS 'lastName', lastUpdateDate, dateCreated, dateClosed, dueDate, priority,summary,
+                                                    $query = "SELECT name, t.ticketID, (convert(aes_decrypt(au.firstName, 'Fusion') using utf8)) AS 'firstName' ,(convert(aes_decrypt(au.lastName, 'Fusion')using utf8)) AS 'lastName', lastUpdateDate, dateCreated, dateClosed, dueDate, priority,summary,
                                                              t.description, t.serviceType as 'serviceTypeID', st.serviceType,t.status as 'statusID', s.status
                                                             FROM thesis.ticket t
                                                             JOIN user au
@@ -91,6 +91,8 @@ require_once("db/mysql_connect.php");
                                                                 ON t.status = s.ticketID
                                                             JOIN ref_servicetype st
                                                                 ON t.serviceType = st.id
+                                                            JOIN employee e
+                                                                ON requestedBy = e.UserID
                                                             WHERE au.UserID = {$userID};";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
@@ -101,9 +103,8 @@ require_once("db/mysql_connect.php");
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['ticketID']}</td>
                                                             <td>{$count}</td>
-                                                            <td>{$row['summary']}</td>
-                                                            <td style='display: none'>{$row['serviceTypeID']}</td>
                                                             <td>{$row['serviceType']}</td>
+                                                            <td style='display: none'>{$row['serviceTypeID']}</td>
                                                             <td>{$row['lastUpdateDate']}</td>
                                                             <td>{$row['dueDate']}</td>";
 
@@ -136,8 +137,8 @@ require_once("db/mysql_connect.php");
                                                         if($row['statusID'] == "7"){
                                                             echo "<td><span class='label label-danger'>{$row['status']}</span></td>";
                                                         }
-                                                    
-                                                        echo "</tr>";
+                                                        
+                                                        echo "<td>{$row['name']}</td></tr>";
 
                                                           $count++;
                                                     }

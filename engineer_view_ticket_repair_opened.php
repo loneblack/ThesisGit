@@ -21,6 +21,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         $priority = $row['priority'];
         $others = $row['others'];
         $assigneeUserID = $row['assigneeUserID'];
+        $comment = $row['comment'];
 
 
     }
@@ -51,15 +52,33 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 		$queryServID="SELECT * FROM thesis.ticket where ticketID='{$id}'";
 		$resultServID=mysqli_query($dbc,$queryServID);
 		$rowServID=mysqli_fetch_array($resultServID,MYSQLI_ASSOC);
+
+
+        //Updating asset status
+        $counter = 0;
+        $assets=$_POST['assetID'];
+        foreach($assets as $asset){
+
+            $assetStatus = $_POST['assetStatus'.$counter];
+            $queryAssetStatus="UPDATE `thesis`.`asset` SET `assetStatus` = '{$assetStatus}' WHERE (`assetID` = '{$asset}');";
+            $resultAssetStatus=mysqli_query($dbc,$queryAssetStatus);
+            $counter++;
+        }
+
+        //Update Comment
+        $queryComment="UPDATE `thesis`.`ticket` SET `comment` = 'aaaa' WHERE (`ticketID` = '{$id}');";
+        $resultComment=mysqli_query($dbc,$queryComment);
+        echo $queryComment;
+
 		
-		//For repaired assets
+		/*//For repaired assets
 		if(!empty($_POST['repAsset'])){
 			$repAsset=$_POST['repAsset'];
 			foreach($repAsset as $value){
 				$query5="UPDATE `thesis`.`ticketedasset` SET `checked`=1 WHERE `ticketID`='{$id}' and `assetID`='{$value}'";
 				$result5=mysqli_query($dbc,$query5);
 			}
-		}
+		}*/
 		
 		//For escalation
 		if(isset($_POST['escalateUserID'])&&isset($_POST['forEscAsset'])){
@@ -291,9 +310,9 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             <?php
                                                         
                                             for ($i=0; $i < count($assets); $i++) { 
+
                                                 
-                                                
-                                                $query3 =  "SELECT a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
+                                                $query3 =  "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
                                                         FROM asset a 
                                                             JOIN assetModel m
                                                         ON assetModel = assetModelID
@@ -315,21 +334,31 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                                                 while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
 
+                                                    $forRepair = "";
+                                                    $falseReport = "";
+                                                    $repaired = "";
+
+                                                    if($row['assetStatus']==9) $forRepair = "selected";
+                                                    if($row['assetStatus']==22) $falseReport = "selected";
+                                                    if($row['assetStatus']==23) $repaired = "selected";
+
+
+
                                                    echo "
                                                     <tr>
                                                     <td>
-                                                        <select name='assetStatus' class='form-control'>
-                                                            <option>Select Asset Status</option>
-                                                            <option value='9'>For Repair</option>
-                                                            <option value='22'>False Report</option>
-                                                            <option value='23'>Repaired</option>
+                                                        <select name='assetStatus".$i."' class='form-control'>
+                                                            <option value ='{$row['assetStatus']}'>Select Asset Status</option>
+                                                            <option value='9' ".$forRepair.">For Repair</option>
+                                                            <option value='22' ".$falseReport.">False Report</option>
+                                                            <option value='23' ".$repaired.">Repaired</option>
                                                         </select>
                                                     </td>
                                                     <td>{$row['propertyCode']}</td>
                                                     <td>{$row['brand']} {$row['category']} {$row['description']}</td>
                                                     <td>{$row['building']}</td>
                                                     <td>{$row['floorroom']}</td>
-                                                    
+                                                    <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
                                                     </tr>";
                                                 }  
 
@@ -435,7 +464,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         <h4>Comments</h4>
                                     </div>
                                     <div class="view-mail">
-                                        <textarea class="form-control" style="resize:none" rows="5" name="comment"></textarea>
+                                        <textarea class="form-control" style="resize:none" rows="5" name="comment"><?php echo $comment;?></textarea>
                                     </div>
                                 </div>
                             </section>
