@@ -83,16 +83,16 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                 $qty = $_POST['quantity'.$i];
                 $specs = $_POST['specification'.$i];
 
-                $queryReqPart="INSERT INTO `thesis`.`requestparts` ( `serviceID`, `assetModelID`, `quantity`, `specifications`) VALUES ('{$serviceID}', '{$cat}' ,'{$qty}' ,'{$specs}')";
+                $queryReqPart="INSERT INTO `thesis`.`requestparts` ( `serviceID`, `assetModelID`, `quantity`, `specifications`, `received`) VALUES ('{$serviceID}', '{$cat}' ,'{$qty}' ,'{$specs}', '0')";
                 $resultReqPart=mysqli_query($dbc,$queryReqPart);
-                
+
+                $i++;
+            }
+
                 $querya="UPDATE `thesis`.`ticket` 
                 SET `status` = '6',
                 WHERE (`ticketID` = '{$id}');";
                 $resulta=mysqli_query($dbc,$querya);  
-
-                $i++;
-            }
 		}
         
 		//Check if all assets are repaired
@@ -440,6 +440,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             <th width="150">Quantity</th>
                                             <th>Category</th>
                                             <th>Specification</th>
+                                            <th>Delivery Status</th>
                                             <th>Add Remove</th>
                                         </tr>
                                     </thead>
@@ -468,6 +469,12 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             </td>
                                             <td>
                                                 <input class='form-control' name='sppecification0'>
+                                            </td>
+                                            <td>
+                                                <select class="form-control" id="deliveryStatus" name="deliveryStatus">
+                                                    <option value="0">Pending</option>
+                                                    <option value="1">Delivered</option>
+                                                </select>
                                             </td>
                                             <td style="text-align:center" width='10px'><button class="btn btn-primary" type="button" onclick="addTest(1)">Add</button></td>
                                         </tr>
@@ -546,6 +553,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 				?>'
 				+ "</select></td>" +
                 "<td><input class='form-control' name='specification"+ count +"'></td>" +
+                "<td><select class='form-control' name='deliveryStatus"+ count +"' id='deliveryStatus'><option value='0'>Pending</option><option value='1'>Delivered</option></td>" +
                 "<td style='text-align:center'><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
                 "</tr>";
             $('#addtable tbody tr').eq(rowCount).after(tr);
