@@ -293,7 +293,7 @@ require_once("db/mysql_connect.php");
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['id']}</td>
                                                             <td>{$count}</td>
-                                                            <td>Delivery Request</td>
+                                                            <td>Delivery Request for Asset Purchase</td>
                                                             <td>{$row['date']}</td>
                                                             <td>{$row['dateNeeded']}</td>
                                                             <td style='display: none'>{$row['statusID']}</td>";
@@ -335,7 +335,7 @@ require_once("db/mysql_connect.php");
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['id']}</td>
                                                             <td>{$count}</td>
-                                                            <td>Delivery Request</td>
+                                                            <td>Delivery Request for Borrow</td>
                                                             <td>{$row['dateCreated']}</td>
                                                             <td>{$row['startDate']}</td>
                                                             <td style='display: none'>{$row['statusID']}</td>";
@@ -450,12 +450,16 @@ require_once("db/mysql_connect.php");
 						}
                         
                     }
-					else if(requestType == "Delivery Request"){
+					else if(requestType == "Delivery Request for Asset Purchase"){
 						if(step == "Schedule For Delivery"){
 							window.location.href = "requestor_scheduling_request_for_procurement_service_material.php?id=" + id;
 						}
 					}
-                    
+                    else if(requestType == "Delivery Request for Borrow"){
+						if(step == "Schedule For Delivery"){
+							window.location.href = "requestor_scheduling_request_for_borrow.php?id=" + id;
+						}
+					}
                 };
             };
             currentRow.onclick = createClickHandler(currentRow);

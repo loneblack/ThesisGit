@@ -307,10 +307,6 @@
 				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `personresponsibleID`, `statusID`) VALUES ('{$rowPassTest['asset_assetID']}', '{$rowBorrowData['BuildingID']}', '{$rowBorrowData['FloorAndRoomID']}', '{$rowBorrowData['personresponsibleID']}', '2')";
 				$resultAssAss=mysqli_query($dbc,$queryAssAss);
 				
-				echo "<script>alert('{$rowGetReceiving['id']}')</script>";
-				echo "<script>alert('{$rowPassTest['asset_assetID']}')</script>";
-				
-				
 				//INSERT TO RECEIVING DETAILS
 				$queryReceivingDetails = "INSERT INTO `thesis`.`receiving_details`(`receivingID`, `assetID`, `received`) VALUES('{$rowGetReceiving['id']}', '{$rowPassTest['asset_assetID']}', false);";
 				$resultReceivingDetails = mysqli_query($dbc,$queryReceivingDetails);

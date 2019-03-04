@@ -18,7 +18,7 @@ $sql = " Select b.name AS `building`, f.floorRoom, rb.startDate, rb.endDate, rb.
             from thesis.request_borrow rb 
             join building b on rb.BuildingID = b.BuildingID 
             join floorandroom f on rb.FloorAndRoomID = f.FloorAndRoomID 
-            where rb.borrowID = '1';";
+            where rb.borrowID = '{$rowReqInfo['borrowID']}';";
 $result = mysqli_query($dbc, $sql);
 
 $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -31,16 +31,16 @@ $endDate = $row['endDate'];
         
     
 	
-	if(isset($_POST['save'])){
-		$deliverySched=$_POST['deliverySched'];
+if(isset($_POST['save'])){
+	$deliverySched=$_POST['deliverySched'];
 		
-		//UPDATE DELIVERY DATE
-		$queryUpdDelDate="UPDATE `thesis`.`requestor_receiving` SET `statusID`='2', `deliveryDate`='{$deliverySched}' WHERE `id`='{$id}'";
-		$resultUpdDelDate=mysqli_query($dbc,$queryUpdDelDate);
+	//UPDATE DELIVERY DATE
+	$queryUpdDelDate="UPDATE `thesis`.`requestor_receiving` SET `statusID`='2', `deliveryDate`='{$deliverySched}' WHERE `id`='{$id}'";
+	$resultUpdDelDate=mysqli_query($dbc,$queryUpdDelDate);
 		
-		$message = "Form submitted!";
-		$_SESSION['submitMessage'] = $message; 
-	}
+	$message = "Form submitted!";
+	$_SESSION['submitMessage'] = $message; 
+}
 ?>
 
 <head>
@@ -100,7 +100,7 @@ $endDate = $row['endDate'];
                             <div class="col-lg-12">
                                 <section class="panel">
                                     <header class="panel-heading">
-                                        Request to Purchase an Asset - Scheduling
+                                        Request to Borrow - Scheduling
                                     </header>
                                     <div class="panel-body">
                                         <div class="form" method="post">
