@@ -98,15 +98,6 @@ require_once("db/mysql_connect.php");
 															<td>{$row['lastUpdateDate']}</td>
 															<td>{$row['dueDate']}</td>";
 															
-														//if($row['action']=='Unanswered'){
-															//echo "<td><span class='label label-warning'>Unanswered</span></td>";
-														//}
-														//elseif($row['action']=='Answered'){
-															//echo "<td><span class='label label-danger'>Answered</span></td>";
-														//}	
-														//else{
-															//echo "<td><span class='label label-success'>New Ticket</span></td>";
-														//}
 
 														if($row['status']=='Open'){
 															echo "<td><span class='label label-success'>{$row['status']}</span></td>";

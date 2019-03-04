@@ -38,13 +38,6 @@
                             </a>
                         </li>
                         
-                        <li>
-                            <a href="it_maintenance.php">
-                                <i class="fa fa-wrench"></i>
-                                <span>Maintenance</span>
-                            </a>
-                        </li>
-                        
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-dropbox"></i>
@@ -57,7 +50,6 @@
                                 <li><a href="it_products.php">Products</a></li>
                                 <li><a href="it_categories.php">Categories</a></li>
                                 <li><a href="it_build_asset.php">Build Asset</a></li>
-                                <li><a href="it_bulk_checkout.php">Bulk Checkout</a></li>
                                 <li><a href="it_bulk_checkin.php">Bulk Checkin</a></li>
                             </ul>
                         </li>
@@ -79,7 +71,7 @@
                                 <span>Disposal</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="it_view_disposal_list.php">For Diposal</a></li>
+                                <li><a href="it_view_disposal_list.php">For Disposal</a></li>
                                 <li><a href="it_mark_salvage.php">Mark Assets For Salvage</a></li>
                             </ul>
                         </li>
