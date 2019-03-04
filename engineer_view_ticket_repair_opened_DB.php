@@ -1,5 +1,38 @@
 <?php
 // Insertion to ticket
+    session_start();
+    require_once("db/mysql_connect.php");
+
+    $id = $_GET['id'];
+
+    $query =  "SELECT *, t.status AS 'status', s.status AS 'statusDescription' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID  WHERE t.ticketID = {$id};";
+    $result = mysqli_query($dbc, $query);
+
+    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+            
+            $dateCreated = $row['dateCreated'];
+            $dueDate = $row['dueDate'];
+            $summary = $row['summary'];
+            $details = $row['details'];
+            $status = $row['status'];
+            $statusDescription = $row['statusDescription'];
+            $description = $row['description'];
+            $priority = $row['priority'];
+            $others = $row['others'];
+            $assigneeUserID = $row['assigneeUserID'];
+            $comment = $row['comment'];
+            $serviceID = $row['service_id'];
+
+
+        }
+    $assets = array();
+
+    $query2 =  "SELECT * FROM thesis.ticketedasset WHERE ticketID = {$id};";
+    $result2 = mysqli_query($dbc, $query2);
+
+    while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
+        array_push($assets, $row['assetID']);
+    }
     
     if(isset($_POST['submit'])){
         
@@ -45,8 +78,10 @@
                 $qty = $_POST['quantity'.$i];
                 $specs = $_POST['specification'.$i];
 
-                $queryReqPart="INSERT INTO `thesis`.`requestparts` ( `serviceID`, `assetModelID`, `quantity`, `specifications`, `received`) VALUES ('{$serviceID}', '{$cat}' ,'{$qty}' ,'{$specs}', '0')";
+                $queryReqPart="INSERT INTO `thesis`.`requestparts` ( `serviceID`, `assetCategoryID`, `quantity`, `specifications`, `received`) VALUES ('{$serviceID}', '{$cat}' ,'{$qty}' ,'{$specs}', '0');";
                 $resultReqPart=mysqli_query($dbc,$queryReqPart);
+
+                echo $queryReqPart;
 
                 $i++;
             }
@@ -84,8 +119,10 @@
         
         $message = "Ticket Updated!".$count;
         $_SESSION['submitMessage'] = $message;
+
+
         }
-        
-    //}
+
+        $header = $_SESSION['previousPage'];
     
 ?>

@@ -86,7 +86,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                 <div class="row">
                     <div class="col-sm-12">
-						<form class="cmxform form-horizontal " id="signupForm" method="post" action="">
+						<form class="cmxform form-horizontal " id="signupForm" method="post" action="engineer_view_ticket_repair_opened_DB.php?id=<?php echo $id;?>">
                         <div class="col-sm-9">
                             <section class="panel">
                                 <header style="padding-bottom:20px" class="panel-heading wht-bg">
@@ -165,6 +165,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
+                                                <th style="display: none">AssetID</th>
                                                 <th>Asset Status</th>
                                                 <th>Property Code</th>
                                                 <th>Asset/ Software Name</th>
@@ -397,8 +398,11 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                                             $delivered = ""; 
                                             $pending = "";
+                                            $readonly = "";
+                                            $specs = $row['specifications'];
                                             if($row['received'] == 1){
                                                 $delivered = "selected";
+                                                $readonly = "readonly";
                                             }
                                             else{
                                                 $pending = "selected";
@@ -412,14 +416,14 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     <select class='form-control' name = 'category' readonly>";
                                                         
 
-                                                            $sql = "SELECT * FROM thesis.ref_assetcategory WHERE assetCategoryID = '{$row['assetCategoryID']}';";
+                                                            $sqlCategory = "SELECT * FROM thesis.ref_assetcategory WHERE assetCategoryID = '{$row['assetCategoryID']}';";
 
-                                                            $result = mysqli_query($dbc, $sql);
+                                                            $resultCategory = mysqli_query($dbc, $sqlCategory);
 
-                                                            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                            while ($rowCategory = mysqli_fetch_array($resultCategory, MYSQLI_ASSOC))
                                                             {
-                                                                echo "<option value ={$row['assetCategoryID']}>";
-                                                                echo "{$row['name']}</option>";
+                                                                echo "<option value ={$rowCategory['assetCategoryID']}>";
+                                                                echo "{$rowCategory['name']}</option>";
                                                             }
 
                                                         
@@ -427,10 +431,10 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     "</select>
                                                 </td>
                                                 <td>
-                                                    <input class='form-control' name='specification' value= '{$row['specifications']}' readonly>
+                                                    <input class='form-control' name='specification' value= '".$specs."' readonly>
                                                 </td>
                                                 <td>
-                                                    <select class='form-control' id='deliveryStatus' name='deliveryStatus' readonly>
+                                                    <select class='form-control' id='deliveryStatus' name='deliveryStatus' ".$readonly.">
                                                         <option value='0'".$pending.">Pending</option>
                                                         <option value='1'".$delivered.">Delivered</option>
                                                     </select>

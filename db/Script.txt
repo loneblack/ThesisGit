@@ -1661,13 +1661,16 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `thesis`.`requestParts` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`requestParts` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `serviceID` INT(11) NULL,
+  `requestPartscol` VARCHAR(45) NULL,
   `quantity` INT(11) NULL,
   `assetCategoryID` INT(11) NULL,
   `specifications` LONGTEXT NULL,
   `received` TINYINT NULL,
   INDEX `fk_requestParts_service1_idx` (`serviceID` ASC),
   INDEX `fk_requestParts_ref_assetcategory1_idx` (`assetCategoryID` ASC),
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_requestParts_service1`
     FOREIGN KEY (`serviceID`)
     REFERENCES `thesis`.`service` (`id`)
