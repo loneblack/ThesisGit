@@ -232,7 +232,16 @@ require_once("db/mysql_connect.php");
                                 window.location.href = "engineer_view_ticket_maintenance_opened.php?id=" + id;
                             }
                         }
-                         else if(serviceTypeID == '29'){
+                        else if(serviceTypeID == '29'){
+                            //maintenance
+                            if(status == "Closed"){
+                                window.location.href = "engineer_view_ticket_salvage_closed.php?id=" + id;
+                            }
+                            else{
+                                window.location.href = "engineer_view_ticket_salvage_opened.php?id=" + id;
+                            }
+                        }
+                         else if(serviceTypeID == '30'){
                             //others
                             if(status == "Closed"){
                                 window.location.href = "engineer_view_ticket_others_closed.php?id=" + id;

@@ -22,7 +22,7 @@
 		
 		$status=$_POST['status'];
 		$message=null;
-		$category=25;
+		$category=29;
 		$priority=$_POST['priority'];
 		$assigned=$_POST['assigned'];
 		$currDate=date("Y-m-d H:i:s");
@@ -31,7 +31,7 @@
 		
 		if(!isset($message)){
 			//INSERT ASSET TESTING
-		$queryAssTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`, `remarks`) VALUES ('1', '{$rowReqID['userID']}', '25', 'Salvage');";
+		$queryAssTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`, `remarks`) VALUES ('1', '{$rowReqID['userID']}', '29', 'Salvage');";
 		$resultAssTest=mysqli_query($dbc,$queryAssTest);
 			
 		//GET LATEST ASSET TEST
