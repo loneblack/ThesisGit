@@ -80,7 +80,7 @@
 				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `personresponsibleID`, `statusID`) VALUES ('{$assPass}', '{$rowReqData['BuildingID']}', '{$rowReqData['FloorAndRoomID']}', '{$rowReqData['UserID']}', '2')";
 				$resultAssAss=mysqli_query($dbc,$queryAssAss);
 
-				$queryReceivingDetails = "INSERT INTO `thesis`.`receiving_details`(`receivingID`, `assetID`, `received`) VALUES('{$rowGetReceiving['id']}', '{$assPass}', FALSE);";
+				$queryReceivingDetails = "INSERT INTO `thesis`.`receiving_details`(`receivingID`, `assetID`, `received`) VALUES('{$rowGetReceiving['id']}', '{$assPass}', false);";
 				$resultReceivingDetails = mysqli_query($dbc,$queryReceivingDetails);
 				
 				
@@ -282,10 +282,9 @@
 			$resultReceiving=mysqli_query($dbc,$queryReceiving);
 
 			//get newly inserted receiving data
-			$queryGetReceeiving="SELECT * FROM `thesis`.`requestor_receiving` where borrowID='{$rowBorID['borrowID']}'";
+			$queryGetReceeiving="SELECT * FROM `thesis`.`requestor_receiving` where borrowID='{$rowBorID['borrowID']}' order by id desc limit 1";
 			$resultGetReceiving=mysqli_query($dbc,$queryGetReceeiving);
 			$rowGetReceiving=mysqli_fetch_array($resultGetReceiving,MYSQLI_ASSOC);
-
 
 			//GET PASSED TEST ASSET
 			$queryPassTest="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$testingID}' and `check`='1'";
@@ -300,7 +299,6 @@
 				$resultBorDat=mysqli_query($dbc,$queryBorDat);
 				$rowBorDat=mysqli_fetch_array($resultBorDat,MYSQLI_ASSOC);
 
-				
 				//INSERT TO BORROWDETAILSITEM
 				$queryInsBor="INSERT INTO `thesis`.`borrow_details_item` (`borrow_detailsID`, `assetID`) VALUES ('{$rowBorDat['borrow_detailscol']}', '{$rowPassTest['asset_assetID']}');";
 				$resultInsBor=mysqli_query($dbc,$queryInsBor);
@@ -309,6 +307,13 @@
 				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `personresponsibleID`, `statusID`) VALUES ('{$rowPassTest['asset_assetID']}', '{$rowBorrowData['BuildingID']}', '{$rowBorrowData['FloorAndRoomID']}', '{$rowBorrowData['personresponsibleID']}', '2')";
 				$resultAssAss=mysqli_query($dbc,$queryAssAss);
 				
+				echo "<script>alert('{$rowGetReceiving['id']}')</script>";
+				echo "<script>alert('{$rowPassTest['asset_assetID']}')</script>";
+				
+				
+				//INSERT TO RECEIVING DETAILS
+				$queryReceivingDetails = "INSERT INTO `thesis`.`receiving_details`(`receivingID`, `assetID`, `received`) VALUES('{$rowGetReceiving['id']}', '{$rowPassTest['asset_assetID']}', false);";
+				$resultReceivingDetails = mysqli_query($dbc,$queryReceivingDetails);
 			}
 			
 			//GET ALL ASSET TESTING PER BORROWID

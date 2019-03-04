@@ -280,9 +280,10 @@ require_once("db/mysql_connect.php");
 
                                                   ?>
 												  <?php
-													//GET ALL REQUEST SCHEDULE FOR DELIVERY
+													//GET ALL REQUEST SCHEDULE FOR DELIVERY (REQUEST TO PURCHASE AN ASSET)
 													$query = "SELECT rr.id,r.date,r.dateNeeded,s.description,rr.statusID FROM thesis.requestor_receiving rr join request r on rr.requestID=r.requestID
-																				  join ref_status s ON rr.statusID = s.statusID";
+																				  join ref_status s ON rr.statusID = s.statusID
+																				  where rr.borrowID is null";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -320,7 +321,47 @@ require_once("db/mysql_connect.php");
 												  
 												  ?>
 
-                                                
+													<?php
+													//GET ALL REQUEST SCHEDULE FOR DELIVERY (REQUEST TO BORROW)
+													$query = "SELECT rr.id,rb.dateCreated,rb.startDate,s.description,rr.statusID FROM thesis.requestor_receiving rr join request_borrow rb on rr.borrowID=rb.borrowID
+																				  join ref_status s ON rr.statusID = s.statusID 
+																				  where rr.requestID is null";
+                                                                  
+                                                    $result = mysqli_query($dbc, $query);
+                                                    
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                      
+                                                      echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$row['id']}</td>
+                                                            <td>{$count}</td>
+                                                            <td>Delivery Request</td>
+                                                            <td>{$row['dateCreated']}</td>
+                                                            <td>{$row['startDate']}</td>
+                                                            <td style='display: none'>{$row['statusID']}</td>";
+
+                                                        if($row['statusID'] == '1'){//pending
+                                                            echo "<td><span class='label label-warning'>Schedule For Delivery</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '2'){//ongoing
+                                                            echo "<td><span class='label label-info'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '3'){//completed
+                                                            echo "<td><span class='label label-success'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '4'){//disapproved
+                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
+                                                        }
+
+
+                                                        //echo "<td>{$row['name']}</td>";
+                                                        echo "</tr>";
+
+                                                          $count++;
+                                                    }
+													
+												  
+												  ?>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
