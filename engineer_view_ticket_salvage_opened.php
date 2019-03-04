@@ -15,15 +15,29 @@
 	$row66=mysqli_fetch_array($res2,MYSQLI_ASSOC);
 
 
-    
-		
-		if(!isset($message)){
+    if(isset($_POST['save'])){
+		$testStat=$_POST['testStat'];
+		$listOfTestAss=$_POST['listOfTestAss'];
+			
+		//Check the dropdown for asset status
+		for($i=0;$i<sizeOf($testStat);$i++){
+			//For functioning assets
+			if($testStat[$i]=='1'){
+				$query5="UPDATE `thesis`.`asset` SET `assetStatus`='1' WHERE assetID = {$listOfTestAss[$i]};";
+				$result5=mysqli_query($dbc,$query5);
+			}
+			//For defected assets
+			elseif($testStat[$i]=='3'){
+				$query5="UPDATE `thesis`.`asset` SET `assetStatus`='11' WHERE assetID = {$listOfTestAss[$i]};";
+				$result5=mysqli_query($dbc,$query5);	
+                
+                $query6="DELETE FROM computercomponent WHERE assetID = {$listOfTestAss[$i]};";
+				$result6=mysqli_query($dbc,$query6);	
+			}
+		}
 			$message = "Form submitted!";
 			$_SESSION['submitMessage'] = $message; 
-		}
-	
-	
-	
+    }
 ?>
 <html lang="en">
 
@@ -129,7 +143,7 @@
                                                             <table class='table table-bordered table-striped table-condensed table-hover' id='tableTest'>
                                                                 <thead>
                                                                     <tr>
-                                                                        <th></th>
+                                                                        <th>Asset Status</th>
                                                                         <th>Property Code</th>
                                                                         <th>Brand</th>
                                                                         <th>Model</th>
@@ -152,11 +166,18 @@
                                                     
                                                     while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC)){
                                                     echo"
-                                                        <td style='width:7px; text-align:center'><input type='checkbox' class='form-check-input' name='mark[]' id='exampleCheck1' value='{$row['assetID']}'></td>
+                                                        <td>
+                                                            <select id='assetStatus_".$row['assetID']."' name='testStat[]' class='form-control' onchange='checkValue(\"{$row['assetID']}\")' required>
+																		<option value=''>Select Asset Status</option>
+																		<option value='1'>Working</option>
+																		<option value='3'>Defective</option>
+												            </select>
+                                                        </td>
                                                         <td>{$row['propertyCode']}</td>
                                                         <td>{$row['brandName']}</td>
                                                         <td>{$row['assetModel']}</td>
                                                         <td>{$row['assetCat']}</td>
+                                                        <input type='hidden' name='listOfTestAss[]' value='{$row['assetID']}'>
                                                         </tr>
                                                     ";
                                                     }
