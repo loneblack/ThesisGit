@@ -10,7 +10,7 @@
 	$res1=mysqli_query($dbc,$que1);
 	$row0=mysqli_fetch_array($res1,MYSQLI_ASSOC);
 
-    $que2="SELECT t.dueDate AS dueDate FROM ticket t WHERE t.ticketID='{$ticketID}'";
+    $que2="SELECT *,t.dueDate AS dueDate FROM ticket t WHERE t.ticketID='{$ticketID}'";
 	$res2=mysqli_query($dbc,$que2);
 	$row66=mysqli_fetch_array($res2,MYSQLI_ASSOC);
 
@@ -35,8 +35,21 @@
 				$result6=mysqli_query($dbc,$query6);	
 			}
 		}
-			$message = "Form submitted!";
-			$_SESSION['submitMessage'] = $message; 
+		
+		//UPDATE ASSET TESTING STATUS TO COMPLETED
+		$query8="UPDATE `thesis`.`assettesting` SET `statusID`='3' WHERE `testingID`='{$row66['testingID']}'";
+		$result8=mysqli_query($dbc,$query8);
+		
+		//UPDATE TICKET STATUS TO CLOSED
+		$queryTicStat="UPDATE `thesis`.`ticket` SET `status`='7', `dateClosed`=now() WHERE `ticketID`='{$ticketID}'";
+		$resultTicStat=mysqli_query($dbc,$queryTicStat);
+		
+		//UPDATE SALVAGE STATUS TO COMPLETED
+		$queryUpdSalv="UPDATE `thesis`.`salvage` SET `ref_status_statusID`='3' WHERE `id`='{$row66['salvage_id']}'";
+		$resultUpdSalv=mysqli_query($dbc,$queryUpdSalv);
+		
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message; 
     }
 ?>
 <html lang="en">
