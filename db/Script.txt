@@ -1662,18 +1662,20 @@ DROP TABLE IF EXISTS `thesis`.`requestParts` ;
 
 CREATE TABLE IF NOT EXISTS `thesis`.`requestParts` (
   `serviceID` INT(11) NULL,
-  `assetModelID` INT(11) NULL,
   `quantity` INT(11) NULL,
+  `assetCategoryID` INT(11) NULL,
+  `specifications` LONGTEXT NULL,
+  `received` TINYINT NULL,
   INDEX `fk_requestParts_service1_idx` (`serviceID` ASC),
-  INDEX `fk_requestParts_assetmodel1_idx` (`assetModelID` ASC),
+  INDEX `fk_requestParts_ref_assetcategory1_idx` (`assetCategoryID` ASC),
   CONSTRAINT `fk_requestParts_service1`
     FOREIGN KEY (`serviceID`)
     REFERENCES `thesis`.`service` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_requestParts_assetmodel1`
-    FOREIGN KEY (`assetModelID`)
-    REFERENCES `thesis`.`assetmodel` (`assetModelID`)
+  CONSTRAINT `fk_requestParts_ref_assetcategory1`
+    FOREIGN KEY (`assetCategoryID`)
+    REFERENCES `thesis`.`ref_assetcategory` (`assetCategoryID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
