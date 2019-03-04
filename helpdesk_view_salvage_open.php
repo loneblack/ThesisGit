@@ -4,7 +4,7 @@
 	session_start();
 	require_once('db/mysql_connect.php');
 	$userID = $_SESSION['userID'];
-    $id = $_SESSION['id'];
+    $id = $_GET['id'];
 	//GET Due Date
 	$queryReqID="SELECT s.*, rs.description, e.name FROM salvage s 
                     JOIN ref_status rs ON s.ref_status_statusID = rs.statusID
@@ -13,8 +13,10 @@
 	$resultReqID=mysqli_query($dbc,$queryReqID);			
 	$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);	
 	
+    $statusID = $rowReqID['ref_status_statusID'];
     $dateCreated=$rowReqID['dateCreated'];
     $description=$rowReqID['description'];
+    $name=$rowReqID['name'];
 
 	if(isset($_POST['submit'])){
 		
@@ -24,102 +26,53 @@
 		$priority=$_POST['priority'];
 		$assigned=$_POST['assigned'];
 		$currDate=date("Y-m-d H:i:s");
-		$dueDate=$rowReqID['startDate'];
-		$summary=$rowReqID['purpose'];
-		$borrowID = $rowReqID['borrowID'];
-		$PersonRequestedID = $rowReqID['PersonRequestedID'];
+		$PersonRequestedID = $rowReqID['userID'];
 
 		
 		if(!isset($message)){
-			//insert to ticket
-			$queryTicket="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `summary`, `details`) 
-											VALUES ('{$status}', {$assigned}, '{$PersonRequestedID}', now(), now(), '{$dueDate}', '{$priority}', '{$testingID}', '{$category}', '{$summary}', 'Please test the following assets:')";
-			$resultTicket=mysqli_query($dbc,$queryTicket);
+			//INSERT ASSET TESTING
+		$queryAssTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`, `remarks`) VALUES ('1', '{$rowReqID['userID']}', '25', 'Salvage');";
+		$resultAssTest=mysqli_query($dbc,$queryAssTest);
+			
+		//GET LATEST ASSET TEST
+		$queryLatAssTest="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
+		$resultLatAssTest=mysqli_query($dbc,$queryLatAssTest);
+		$rowLatAssTest=mysqli_fetch_array($resultLatAssTest,MYSQLI_ASSOC);	
 		
-			//get ticket ID of recentyl inserted ticket
-			$queryTicketID="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
-			$resultTicketID=mysqli_query($dbc,$queryTicketID);
-			while($row=mysqli_fetch_array($resultTicketID,MYSQLI_ASSOC)){
-				$ticketID = $row['ticketID'];
-			}
-
-			//get assets to be ticketed
-			$queryastDetails="SELECT * FROM thesis.assettesting_details WHERE assettesting_testingID = {$testingID};";
-			$resultastDetails=mysqli_query($dbc,$queryastDetails);
-			while($row=mysqli_fetch_array($resultastDetails,MYSQLI_ASSOC)){
-				//insert to ticketed asset
-				$queryTicketed="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$ticketID}', '{$row['asset_assetID']}');";
-				$resultTicketed=mysqli_query($dbc,$queryTicketed);
-
-				//update asset status
-				$QAssetStatus = "UPDATE `thesis`.`asset` SET `assetStatus` = '12' WHERE (`assetID` = '{$row['asset_assetID']}');";
-				$RAssetStatus = mysqli_query($dbc,$QAssetStatus);
-
-				//asset audit
-				$AuditQuery = "INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$userID}', 'now()', '{$row['asset_assetID']}', '12');";
-				$AuditResult = mysqli_query($dbc,$AuditQuery);
-			}
-
-			//Change asset testing status to Ongoing
-			$updateQuery = "UPDATE `thesis`.`assettesting` SET `statusID` = '2' WHERE (`testingID` = '{$testingID}');";
-			$updateResult=mysqli_query($dbc,$updateQuery);
-
-			$message = "Form submitted!";
-			$_SESSION['submitMessage'] = $message;
+            
+        //GET ASSET IN SALVAGE TICKET
+        $ayokona = "SELECT * FROM thesis.salvage_details WHERE salvageID = {$id};";
+        $pumasok=mysqli_query($dbc,$ayokona);
+            
+        //Create ticket
+		$queryCreTick="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `requestedBy`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), DATE_ADD(NOW(), INTERVAL 14 DAY), '{$priority}', '{$rowLatAssTest['testingID']}', '{$category}', '{$PersonRequestedID}')";
+		$resultCreTick=mysqli_query($dbc,$queryCreTick);
+				
+		//Get Latest ticket
+		$queryLatTick="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
+		$resultLatTick=mysqli_query($dbc,$queryLatTick);
+		$rowLatTick=mysqli_fetch_array($resultLatTick,MYSQLI_ASSOC);
+            
+        
+        while ($row = mysqli_fetch_array($pumasok, MYSQLI_ASSOC)){
+            //UPDATE ASSET STATUS
+            $queryUpdAssStat="UPDATE `thesis`.`asset` SET `assetStatus`='8' WHERE `assetID`='{$row['asset_assetID']}'";
+            $resultUpdAssStat=mysqli_query($dbc,$queryUpdAssStat);
+            
+            //Insert to assettesting_details table
+            $queryAssTest="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowLatAssTest['testingID']}', '{$row['asset_assetID']}')";
+            $resultAssTest=mysqli_query($dbc,$queryAssTest);
+            
+            $queryInsTickAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTick['ticketID']}', '{$row['asset_assetID']}');";
+			$resultInsTickAss=mysqli_query($dbc,$queryInsTickAss);
+        } 
+		
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message;
 		}
 		
 	}
 
-?>
-<?php
-// Insertion to ticket
-    
-    if(isset($_POST['submit'])){
-        
-        $message=null;
-        $status=$_POST['status'];
-        $priority=$_POST['priority'];
-        $assigned=$_POST['assigned'];
-        $currDate=date("Y-m-d H:i:s");
-
-        if(!isset($message)){
-			//echo "<script>alert('{$status}');</script>";
-			//echo "<script>alert('{$assigned}');</script>";
-			//echo "<script>alert('{$_SESSION['userID']}');</script>";
-			//echo "<script>alert('{$priority}');</script>";
-			//echo "<script>alert('{$details}');</script>";
-			//echo "<script>alert('{$id}');</script>";
-            //if($assigned=='0'){
-              //  $querya="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`) VALUES ('{$status}', '{$_SESSION['userID']}', now(), now(), '{$dateNeed}', '{$priority}', '27', '{$summary}', '{$description}', '{$details}')";
-              //  $resulta=mysqli_query($dbc,$querya);
-            //}
-            //else{
-				$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`,`priority`, `serviceType`, `description`, `details`, `service_id`, `requestedBy`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), DATE_ADD(NOW(), INTERVAL 7 DAY),'{$priority}', '27', '{$description}', '{$details}','{$id}', '{$UserID}')";
-                $resulta=mysqli_query($dbc,$querya);
-                //$querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `priority`, `serviceType`, `details`, `service_id`) 
-                //VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$priority}', '27', '{$details}, '{$id}')";
-                //$resulta=mysqli_query($dbc,$querya);
-            //}
-            
-            $queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
-            $resultaa=mysqli_query($dbc,$queryaa);
-            $rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
-
-            for ($i=0; $i < count($assets); $i++) { 
-
-                $queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`, `checked`) VALUES ('{$rowaa['ticketID']}', '{$assets[$i]}', '0');";
-                $resultaaaa=mysqli_query($dbc,$queryaaaa);
-            }
-
-            $sql = "UPDATE `thesis`.`service` SET `status` = '2' WHERE (`id` = '{$id}');";
-            $output = mysqli_query($dbc, $sql);
-        
-            $message = "Ticket Created";
-            $_SESSION['submitMessage'] = $message;
-        }
-        
-    }
-    
 ?>
 
 <head>
@@ -175,10 +128,10 @@
 
                             <section class="panel">
                                 <header class="panel-heading">
-                                    Repair Request
+                                    Salvage Request
                                 </header>
                                 <div style="padding-top:10px; padding-left:10px; float:left">
-                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" <?php if($description !=1) echo "disabled" ; ?>>Create Ticket</button>
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" <?php if($description !=1); ?>>Create Ticket</button>
                                 </div>
                                 <!-- Modal -->
                                 <div class="modal fade" id="myModal" role="dialog">
@@ -203,11 +156,8 @@
                                                         <div class="form-group ">
                                                             <label for="priority" class="control-label col-lg-3">Priority</label>
                                                             <div class="col-lg-6">
-                                                                <select class="form-control m-bot15" name="priority" required>
+                                                                <select class="form-control m-bot15" name="priority" readonly required>
                                                                     <option value='Low'>Low</option>
-                                                                    <option value='Medium'>Medium</option>
-                                                                    <option value='High'>High</option>
-                                                                    <option value='Urgent'>Urgent</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -309,19 +259,17 @@
 
                                                 <th>Property Code</th>
                                                 <th>Category</th>
-                                                <th>Brand</th>
-                                                <th>Description</th>
-                                                <th>Building</th>
-                                                <th>Room</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                                        
-                                                        for ($i=0; $i < count($assets); $i++) { 
                                                             
                                                             
-                                                            $query3 =  ";";
+                                                            $query3 =  "SELECT a.assetID, rac.name, a.propertyCode FROM asset a 
+                                                                            JOIN assetmodel am ON a.assetmodel = am.assetmodelID
+                                                                            JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                                            JOIN salvage_details sd ON a.assetID = sd.asset_assetID
+                                                                            WHERE sd.salvageID = '{$id}';";
 
                                                             $result3 = mysqli_query($dbc, $query3);  
 
@@ -329,23 +277,16 @@
                                                             while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
 
                                                                echo "<tr>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td></td>
+                                                                <td>{$row['propertyCode']}</td>
+                                                                <td>{$row['name']}</td>
                                                                 </tr>";
-                                                            }  
-
-                                                        }
+                                                            } 
                                                         ?>
                                         </tbody>
                                     </table>
                                 </div>
                             </section>
                             <a href="helpdesk_all_request.php"><button type="button" class="btn btn-danger">Back</button></a>
-
 
                         </div>
                     </div>
