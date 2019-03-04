@@ -1138,7 +1138,11 @@
 
 			-- Service insert
 			INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`) VALUES ('Screen is busted', NOW(), '9', '27', '1', '14', '0');
-			INSERT INTO `thesis`.`servicedetails` VALUES ('1','1'); 
+			INSERT INTO `thesis`.`servicedetails` VALUES ('1','1');
+
+			INSERT INTO `thesis`.`service` (`details`, `UserID`, `dateReceived`, `status`, `steps`) VALUES ('Broken', '4', NOW(), '1', '14');
+			INSERT INTO `thesis`.`service` (`details`, `UserID`, `dateReceived`, `status`, `steps`) VALUES ('Asset not functioning', '5', NOW(), '1', '14');
+			INSERT INTO `thesis`.`service` (`details`, `UserID`, `dateReceived`, `status`, `steps`) VALUES ('Doesn\'t work', '6', NOW(), '1', '14'); 
 
 			-- Computer
 			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 14); -- TC-0001

@@ -42,6 +42,26 @@
         $id = $row['id'];
     }
 
+
+    if($serviceUnit == "on"){
+
+    	//insert to serviceUnit
+    	$sql = "INSERT INTO `thesis`.`serviceUnit` (`serviceID`, `statusID`)
+	                                VALUES ('{$id}', '1');";//status is set to 1 for pending status
+
+		$result = mysqli_query($dbc, $sql);
+    }
+
+    //get newly inserted service unit
+    $sql1 = "SELECT MAX(id) as 'serviceUnitID' FROM thesis.serviceUnit;";//status is set to 1 for pending status
+
+	$result1 = mysqli_query($dbc, $sql1);
+
+	while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC)){
+        $serviceUnitID = $row['serviceUnitID'];
+    }
+
+
     if (isset($_POST['assets'])) {
     	//insert assets to service details from select box
 		foreach ($_POST['assets'] as $assets){
@@ -53,6 +73,8 @@
 			$query2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '9' WHERE (`assetID` = '{$assets}');";
 			$resulted2 = mysqli_query($dbc, $query2);
 
+			//Insert assets to serviceUnit Details also
+			$insertServiceUnitDetails = "INSERT INTO thesis.serviceUnitDetails (serviceUnitID, assetID, received) VALUES ('{$serviceUnitID}', '{$assets}', '0' );";
 		}
     }
 

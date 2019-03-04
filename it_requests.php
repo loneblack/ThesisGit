@@ -379,6 +379,15 @@
                                 
                             }
                         }
+                        if (idx == "Service Unit") {
+                            if (id == "Ongoing" || id == "Pending") {
+								if(idDesc == "Assigning of New Replacement"){
+									window.location.href = "it_missing_form.php?id=" + ida;
+								}
+                            } else if (id == "Completed" || id == "Incomplete") {
+                                
+                            }
+                        }
                     };
                 };
                 currentRow.onclick = createClickHandler(currentRow);
