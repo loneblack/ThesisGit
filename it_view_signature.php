@@ -37,7 +37,7 @@
 		$result=mysqli_query($dbc,$query);
 
 		$_SESSION['submitMessage']="Form submitted!";
-		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_view_signature.php?requestID={$requestID}");
+		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_view_signature.php?requestID={$requestID}");
 	}
 	
 ?>
@@ -447,7 +447,8 @@
 
         });
     </script>
-
+	<!--common script init for all pages-->
+    <script src="js/scripts.js"></script>
 </body>
 
 </html>
