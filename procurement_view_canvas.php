@@ -108,7 +108,7 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
 													<?php
 														$key = "Fusion";
 														require_once('db/mysql_connect.php');
-														$query="SELECT Convert(AES_DECRYPT(firstName,'".$key."')USING utf8) as 'firstname',Convert(AES_DECRYPT(lastName,'".$key."')USING utf8) as 'lastname',c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.date as `requestedDate`,rstp.name as `step` FROM thesis.canvas c 
+														$query="SELECT Convert(AES_DECRYPT(firstName,'".$key."')USING utf8) as `firstname`,Convert(AES_DECRYPT(lastName,'".$key."')USING utf8) as `lastname`,c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.date as `requestedDate`,rstp.name as `step` FROM thesis.canvas c 
 																   join ref_status rs on c.status=rs.statusID
                                                                    join request r on c.requestID=r.requestID
 																   join ref_steps rstp on r.step=rstp.id

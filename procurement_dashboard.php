@@ -2,7 +2,7 @@
 <?php
 	require_once('db/mysql_connect.php');
 	session_start();
-
+	$key = "Fusion";
 ?>
 <html lang="en">
 
@@ -111,10 +111,11 @@
 													<?php
 													
 														
-														$query="SELECT c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.recipient,r.date as `requestedDate`,rstp.name as `step` FROM thesis.canvas c 
+														$query="SELECT c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.recipient,r.date as `requestedDate`,rstp.name as `step`,Convert(AES_DECRYPT(firstName,'".$key."')USING utf8) as 'firstname',Convert(AES_DECRYPT(lastName,'".$key."')USING utf8) as 'lastname' FROM thesis.canvas c 
 																   join ref_status rs on c.status=rs.statusID
                                                                    join request r on c.requestID=r.requestID
-																   join ref_steps rstp on r.step=rstp.id LIMIT 10";
+																   join ref_steps rstp on r.step=rstp.id
+																   join user u on r.UserID=u.UserID LIMIT 10";
 														$result=mysqli_query($dbc,$query);
 														
 														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
@@ -154,7 +155,7 @@
 															
 																
 															echo "<td>{$row['description']}</td>
-																<td>{$row['recipient']}</td>
+																<td>".$row['firstname']." ".$row['lastname']."</td>
 																<td>{$row['requestedDate']}</td>
 															</tr>";
 														}
