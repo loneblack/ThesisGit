@@ -386,7 +386,7 @@
 											<hr>
 											<section>
 												<h4>Delivered Assets</h4>
-												<table class="table-bordered" align="center" id="tblCustomers" border="1">
+												<table class="table table-bordered table-striped table-condensed table-hover" align="center" id="tableTest" border="1">
 													<thead>
 														<tr>
 															<th>Quantity</th>

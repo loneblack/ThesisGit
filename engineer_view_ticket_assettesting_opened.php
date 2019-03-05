@@ -588,12 +588,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-lg-4">Due Date</label>
                                                     <div class="col-lg-8">
-                                                        <input class="form-control form-control-inline input-medium default-date-picker" name="dueDate" size="10" type="datetime" value="<?php if(isset($rowx['dueDate'])){
-																																																	echo $rowx['dueDate'];
-																																																}
-																																																else{
-																																																	echo $rowOut['dueDate'];
-																																																}?>" readonly />
+                                                        <input class="form-control form-control-inline input-medium default-date-picker" name="dueDate" size="10" type="datetime" value="<?php echo $rowOut['dueDate']; ?>" readonly />
                                                     </div>
                                                 </div>
 
