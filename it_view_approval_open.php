@@ -633,7 +633,10 @@
 
         });
     </script>
-
+	
+	<!--common script init for all pages-->
+    <script src="js/scripts.js"></script>
+	
 </body>
 
 </html>

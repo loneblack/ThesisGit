@@ -26,12 +26,16 @@
 		// Insert image file name into database
 		$queryInsImage="UPDATE `thesis`.`request` SET `signature` = '".$filename."' WHERE `requestID` = '{$requestID}';";
 		$resultInsImage=mysqli_query($dbc,$queryInsImage);
-		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$requestID}");
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message; 
+		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$requestID}");
 	}
 	elseif(isset($_POST['disapprove'])){
 		$query="UPDATE `thesis`.`request` SET `status`='6', `step`='20' WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
-		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$requestID}");
+		$message = "Form submitted!";
+		$_SESSION['submitMessage'] = $message; 
+		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$requestID}");
 	}
 	
     $sql="SELECT *, e.name as 'myName', b.name as 'building'
@@ -106,11 +110,20 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				<?php
+                    if (isset($_SESSION['submitMessage'])){
+
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
                 <a href="director_requests.php"><button class="btn btn-danger" type="button">Back</button></a>
 
                 <div class="row">
                     <div class="col-sm-12">
-						<form method="post" enctype="multipart/form-data">
+						<form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']." ?requestid=".$requestID; ?>">
                         <div class="col-sm-12">
                             <h2>Status:
                                 <?php 
