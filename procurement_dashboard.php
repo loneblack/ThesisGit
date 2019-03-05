@@ -2,7 +2,7 @@
 <?php
 	require_once('db/mysql_connect.php');
 	session_start();
-
+	$key = "Fusion";
 ?>
 <html lang="en">
 
@@ -111,10 +111,11 @@
 													<?php
 													
 														
-														$query="SELECT c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.recipient,r.date as `requestedDate`,rstp.name as `step` FROM thesis.canvas c 
+														$query="SELECT c.canvasID,r.dateNeeded,rs.description as `status`,r.description,r.recipient,r.date as `requestedDate`,rstp.name as `step`,Convert(AES_DECRYPT(firstName,'".$key."')USING utf8) as 'firstname',Convert(AES_DECRYPT(lastName,'".$key."')USING utf8) as 'lastname' FROM thesis.canvas c 
 																   join ref_status rs on c.status=rs.statusID
                                                                    join request r on c.requestID=r.requestID
-																   join ref_steps rstp on r.step=rstp.id LIMIT 10";
+																   join ref_steps rstp on r.step=rstp.id
+																   join user u on r.UserID=u.UserID LIMIT 10";
 														$result=mysqli_query($dbc,$query);
 														
 														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
@@ -154,7 +155,7 @@
 															
 																
 															echo "<td>{$row['description']}</td>
-																<td>{$row['recipient']}</td>
+																<td>".$row['firstname']." ".$row['lastname']."</td>
 																<td>{$row['requestedDate']}</td>
 															</tr>";
 														}
@@ -194,7 +195,48 @@
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
-
+	
+	
+	<script>
+		function addRowHandlers() {
+			var table = document.getElementById("ctable");
+			var rows = table.getElementsByTagName("tr");
+			for (i = 1; i < rows.length; i++) {
+				var currentRow = table.rows[i];
+				var createClickHandler = function(row) {
+					return function() {
+						var cell = row.getElementsByTagName("td")[1];
+						var id = cell.textContent;
+						
+						if(id == "Create Purchase Order"){
+							window.location.href = "procurement_purchase_order.php?canvasID="+ row.getAttribute("id");
+						}
+                        else if(id == "Canvasing"){
+                            window.location.href = "procurement_view_request.php?canvasID="+ row.getAttribute("id");
+                        }
+						else if(id == "Completed"){
+                           window.location.href = "procurement_view_completed.php?canvasID="+ row.getAttribute("id");
+                        }
+						else if(id == "Re-Canvas"){
+							window.location.href = "procurement_recheck_canvas.php?canvasID="+ row.getAttribute("id");
+						}
+						
+						if(id == "Ready for PO"){
+							window.location.href = "procurement_purchase_order.php?canvasID="+ row.getAttribute("id");
+						}
+                        else if(id == "Pending"){
+                            window.location.href = "procurement_view_request.php?canvasID="+ row.getAttribute("id");
+                        }
+						else if(id == "Completed"){
+                            window.location.href = "procurement_view_completed.php?canvasID="+ row.getAttribute("id");
+                        }
+					};
+				};
+				currentRow.onclick = createClickHandler(currentRow);
+			}
+		}
+		window.onload = addRowHandlers();
+	</script>
 
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
