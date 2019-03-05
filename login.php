@@ -40,7 +40,6 @@
                 <input name="password" type="password" class="form-control" placeholder="Password" required><!-- added name-->
             </div>
             <button class="btn btn-lg btn-login btn-block" type="submit">Sign in</button>
-            <center>Need Assets? Click this <a href="donation_form.php">link</a> for donations.</center>
             <center>Click <a href="loginReceive.php">here</a> to log in and receive assets.</center>
         </div>
       </form>
