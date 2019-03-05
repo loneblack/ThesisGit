@@ -187,7 +187,6 @@
 														<?php
 															if($rowProcDat['statusDesc']=="Completed"){
 																echo "<label class='btn btn-success'>{$rowProcDat['statusDesc']}</label>";
-															
 															}
 															elseif($rowProcDat['statusDesc']=="Incomplete"){
 																echo "<label class='btn btn-danger'>{$rowProcDat['statusDesc']}</label>";
@@ -227,6 +226,9 @@
                                             <tbody>
 												
 												<?php
+													//GET DATE TODAY
+													$maxDate = new DateTime(date("Y-m-d"));
+													
 													
 													$query="SELECT pd.assetModelID as `assetModelID`,CONCAT(rb.name, ' ',rac.name) as `itemName`,pd.cost,pd.quantity,(pd.cost*pd.quantity) as `totalCost`,am.description as `assetModelDesc`,am.assetCategory as `assetCategory`,pd.expectedDeliveryDate FROM thesis.procurementdetails pd join assetmodel am on pd.assetModelID=am.assetModelID join ref_brand rb on am.brand=rb.brandID
 															join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID where pd.procurementID='{$procID}'";
@@ -247,9 +249,9 @@
 															<td class='text-center'>{$row['quantity']}</td>
 															<td class='text-center'>P {$row['totalCost']}</td>
 															<td class='text-center'>{$row['expectedDeliveryDate']}</td>
-															<td class='text-center'><input class='form-control' name='dateReceived[]' type='date' required></td>
+															<td class='text-center'><input class='form-control' name='dateReceived[]' type='date' value='".date_format($maxDate,"Y-m-d")."' required></td>
 															<td>
-															<input type='number' min='0' max='{$row['quantity']}' class='form-control' name='qtyReceived[]' required>
+															<input type='number' min='0' max='{$row['quantity']}' class='form-control' name='qtyReceived[]' value='{$row['quantity']}' required>
 															</td>
 															</tr>";
 													}
