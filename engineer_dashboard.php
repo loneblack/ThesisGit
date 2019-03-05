@@ -474,7 +474,7 @@ if($CurDate==$endOfTermDate){
                         var serviceTypeID = cell2.textContent;
 
                         var cell3 = row.getElementsByTagName("td")[7];
-                        var status = cell2.textContent;
+                        var status = cell3.textContent;
                                             
                         if(serviceTypeID == '25'){
                             //asset testing
