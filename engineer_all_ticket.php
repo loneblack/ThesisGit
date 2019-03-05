@@ -187,7 +187,7 @@ require_once("db/mysql_connect.php");
                         var cell2 = row.getElementsByTagName("td")[3];
                         var serviceTypeID = cell2.textContent;
 
-                        var cell3 = row.getElementsByTagName("td")[8];
+                        var cell3 = row.getElementsByTagName("td")[7];
                         var status = cell3.textContent;
 
                       				

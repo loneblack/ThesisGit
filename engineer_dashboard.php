@@ -473,7 +473,7 @@ if($CurDate==$endOfTermDate){
                         var cell2 = row.getElementsByTagName("td")[2];
                         var serviceTypeID = cell2.textContent;
 
-                        var cell3 = row.getElementsByTagName("td")[8];
+                        var cell3 = row.getElementsByTagName("td")[7];
                         var status = cell2.textContent;
                                             
                         if(serviceTypeID == '25'){

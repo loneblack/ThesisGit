@@ -165,7 +165,6 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th style="display: none">AssetID</th>
                                                 <th>Asset Status</th>
                                                 <th>Property Code</th>
                                                 <th>Asset/ Software Name</th>
@@ -347,6 +346,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     <table class="table table-bordered table table-hover" id="addtable">
                                     <thead>
                                         <tr>
+                                            <th style="display: none">AssetID</th>
                                             <th width="150">Quantity</th>
                                             <th>Category</th>
                                             <th>Specification</th>
@@ -381,9 +381,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 <input class='form-control' name='specification0'>
                                             </td>
                                             <td>
-                                                <select class="form-control" id="deliveryStatus" name="deliveryStatus">
+                                                <select class="form-control" id="delivery" name="delivery">
                                                     <option value="0">Pending</option>
-                                                    <option value="1">Delivered</option>
                                                 </select>
                                             </td>
                                             <td style="text-align:center" width='10px'><button class="btn btn-primary" type="button" onclick="addTest(1)">Add</button></td>
@@ -409,6 +408,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             }
                                             echo
                                             "<tr>
+                                                <td style='display: none'><input type='number' name='detailsID[]' value ='{$row['id']}'></td>
                                                 <td>
                                                     <input type='number' min='0' step='1' class='form-control' name='quantity' value =  '{$row['quantity']}'readonly>
                                                 </td>
@@ -434,7 +434,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     <input class='form-control' name='specification' value= '".$specs."' readonly>
                                                 </td>
                                                 <td>
-                                                    <select class='form-control' id='deliveryStatus' name='deliveryStatus' ".$readonly.">
+                                                    <select class='form-control' id='deliveryStatus' name='deliveryStatus[]' ".$readonly.">
                                                         <option value='0'".$pending.">Pending</option>
                                                         <option value='1'".$delivered.">Delivered</option>
                                                     </select>
@@ -518,7 +518,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 				?>'
 				+ "</select></td>" +
                 "<td><input class='form-control' name='specification"+ count +"'></td>" +
-                "<td><select class='form-control' name='deliveryStatus"+ count +"' id='deliveryStatus'><option value='0'>Pending</option><option value='1'>Delivered</option></td>" +
+                "<td><select class='form-control' name='deliveryStatus[]"+ count +"' id='deliveryStatus'><option value='0'>Pending</option><option value='1'>Delivered</option></td>" +
                 "<td style='text-align:center'><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
                 "</tr>";
             $('#addtable tbody tr').eq(rowCount).after(tr);

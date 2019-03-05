@@ -56,9 +56,16 @@
         $assets=$_POST['assetID'];
         foreach($assets as $asset){
 
+            //update asset status
             $assetStatus = $_POST['assetStatus'.$counter];
             $queryAssetStatus="UPDATE `thesis`.`asset` SET `assetStatus` = '{$assetStatus}' WHERE (`assetID` = '{$asset}');";
             $resultAssetStatus=mysqli_query($dbc,$queryAssetStatus);
+
+            if($assetStatus == 22 || $assetStatus == 23){
+                //set checked in ticketed asset
+                $queryTicketedAsset="UPDATE `thesis`.`ticketedasset` SET `checked` = '1' WHERE (`assetID` = '{$asset}');";
+                $resultTicketedAsset=mysqli_query($dbc,$queryTicketedAsset);
+            }
             $counter++;
         }
 
@@ -91,6 +98,17 @@
                 WHERE (`ticketID` = '{$id}');";
                 $resulta=mysqli_query($dbc,$querya);  
         }
+
+        //Updating of received assets
+        if (isset($_POST['detailsID'])) {
+            //insert assets to service details from select box
+
+            foreach (array_combine($_POST['detailsID'], $_POST['deliveryStatus']) as $detail => $status){
+
+                $sql1 = "UPDATE `thesis`.`requestParts` SET `received` = '{$status}' WHERE (`id` = '{$detail}');";
+                $result1 = mysqli_query($dbc, $sql1);
+            }
+        }
         
         //Check if all assets are repaired
         
@@ -110,14 +128,13 @@
             $resultComp=mysqli_query($dbc,$queryComp);
         }
         
-        
         //UPDATE TICKET STATUS 
         if($rowTicketed['numAssets']==$rowTicketed['repairedAssets']){
             $queryTickUp="UPDATE `thesis`.`ticket` SET `status`='7',`dateClosed` = '{$currDate}' WHERE `ticketID`='{$id}'";
             $resultTickUp=mysqli_query($dbc,$queryTickUp);
         }
         
-        $message = "Ticket Updated!".$count;
+        $message = "Ticket Updated!";
         $_SESSION['submitMessage'] = $message;
 
 
