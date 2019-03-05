@@ -195,7 +195,48 @@
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
-
+	
+	
+	<script>
+		function addRowHandlers() {
+			var table = document.getElementById("ctable");
+			var rows = table.getElementsByTagName("tr");
+			for (i = 1; i < rows.length; i++) {
+				var currentRow = table.rows[i];
+				var createClickHandler = function(row) {
+					return function() {
+						var cell = row.getElementsByTagName("td")[1];
+						var id = cell.textContent;
+						
+						if(id == "Create Purchase Order"){
+							window.location.href = "procurement_purchase_order.php?canvasID="+ row.getAttribute("id");
+						}
+                        else if(id == "Canvasing"){
+                            window.location.href = "procurement_view_request.php?canvasID="+ row.getAttribute("id");
+                        }
+						else if(id == "Completed"){
+                           window.location.href = "procurement_view_completed.php?canvasID="+ row.getAttribute("id");
+                        }
+						else if(id == "Re-Canvas"){
+							window.location.href = "procurement_recheck_canvas.php?canvasID="+ row.getAttribute("id");
+						}
+						
+						if(id == "Ready for PO"){
+							window.location.href = "procurement_purchase_order.php?canvasID="+ row.getAttribute("id");
+						}
+                        else if(id == "Pending"){
+                            window.location.href = "procurement_view_request.php?canvasID="+ row.getAttribute("id");
+                        }
+						else if(id == "Completed"){
+                            window.location.href = "procurement_view_completed.php?canvasID="+ row.getAttribute("id");
+                        }
+					};
+				};
+				currentRow.onclick = createClickHandler(currentRow);
+			}
+		}
+		window.onload = addRowHandlers();
+	</script>
 
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
