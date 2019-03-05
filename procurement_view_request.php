@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+<?php 
+	require_once('db/mysql_connect.php');
+	session_start();
+	$canvasID=$_GET['canvasID'];
+	
+	//Get Request Info
+	$queryReqInfo="SELECT * FROM thesis.canvas c join request r on c.requestID=r.requestID 
+				   where c.canvasID='{$canvasID}'";
+	$resultReqInfo=mysqli_query($dbc,$queryReqInfo);
+	$rowReqInfo=mysqli_fetch_array($resultReqInfo,MYSQLI_ASSOC);
+	
+?>
 <html lang="en">
 
 <head>
@@ -62,13 +74,16 @@
                                             </div>
                                             <div class="col-md-4 col-sm-5 pull-right">
                                                 <div class="row">
-                                                    <div class="col-md-4 col-sm-5 inv-label">Procurement #</div>
-                                                    <div class="col-md-8 col-sm-7">233426</div>
+                                                    <div class="col-md-4 col-sm-5 inv-label">Canvas #</div>
+                                                    <div class="col-md-8 col-sm-7"><?php echo $rowReqInfo['canvasID']; ?></div>
                                                 </div>
                                                 <br>
                                                 <div class="row">
                                                     <div class="col-md-4 col-sm-5 inv-label">Date Needed </div>
-                                                    <div class="col-md-8 col-sm-7">21 December 2018</div>
+                                                    <div class="col-md-8 col-sm-7"><?php 
+																						$date = new DateTime($rowReqInfo['dateNeeded']);
+																						echo date_format($date,"F j, Y"); 
+																					?></div>
                                                 </div>
                                                 <br>
 
@@ -117,8 +132,7 @@
                                             </tbody> -->
 											<tbody>
 												<?php
-													require_once('db/mysql_connect.php');
-													$canvasID=$_GET['canvasID'];
+													
 													$query="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,ci.quantity,am.itemSpecification,ci.description,am.description as `assetModel` FROM thesis.canvasitem ci 
 															join assetmodel am on ci.assetModel=am.assetModelID
 															join ref_brand rb on am.brand=rb.brandID
