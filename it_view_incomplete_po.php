@@ -46,7 +46,7 @@
 		while($rowLatDelDet=mysqli_fetch_array($resultLatDelDet,MYSQLI_ASSOC)){
 			//INSERT TO ASSET TABLE
 			for($i=0;$i<$rowLatDelDet['itemsReceived'];$i++){
-				$queryInsAss="INSERT INTO `thesis`.`asset` (`supplierID`, `assetModel`, `assetStatus`) VALUES ('{$rowProcDat['supplierID']}', '{$rowLatDelDet['assetModelID']}', '8')";
+				$queryInsAss="INSERT INTO `thesis`.`asset` (`supplierID`, `assetModel`, `dateDelivered`, `assetStatus`) VALUES ('{$rowProcDat['supplierID']}', '{$rowLatDelDet['assetModelID']}', '{$rowLatDelDet['deliveryDate']}', '8')";
 				$resultInsAss=mysqli_query($dbc,$queryInsAss);
 				
 				//SELECT LATEST ASSET	
@@ -230,8 +230,10 @@
                                             <tbody>
 												
 												<?php
+													//GET DATE TODAY
+													$maxDate = new DateTime(date("Y-m-d"));
+												
 													//GET LATEST DELIVERY 
-													
 													$query="SELECT dd.assetModelID as `assetModelID`,CONCAT(rb.name, ' ',rac.name) as `itemName`,dd.quantity,sum(dd.itemsReceived) as `totalReceived`,(dd.quantity-sum(dd.itemsReceived)) as `qtyRemaining`,am.description as `assetModelDesc`,am.assetCategory as `assetCategory` FROM thesis.deliverydetails dd join delivery d on dd.DeliveryID=d.id
 																																																																					join assetmodel am on dd.assetModelID=am.assetModelID 
 																																																																					join ref_brand rb on am.brand=rb.brandID
@@ -253,9 +255,9 @@
 															</td>
 															<td class='text-center'>{$row['quantity']}</td>
 															<td class='text-center'>{$row['totalReceived']}</td>
-															<td class='text-center'><input class='form-control' name='dateReceived[]' type='date' required></td>
+															<td class='text-center'><input class='form-control' name='dateReceived[]' type='date' value='".date_format($maxDate,"Y-m-d")."' required></td>
 															<td>
-															<input type='number' min='0' max='{$row['qtyRemaining']}' class='form-control' name='qtyReceived[]' required>
+															<input type='number' min='0' max='{$row['qtyRemaining']}' value='{$row['qtyRemaining']}' class='form-control' name='qtyReceived[]' required>
 															</td>
 															</tr>";
 														}

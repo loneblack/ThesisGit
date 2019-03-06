@@ -5,10 +5,9 @@
 	$testingID=$_GET['testingID'];
 	
 	//GET TESTING DATA
-	$queryTesDat="SELECT * FROM thesis.assettesting where testingID='{$testingID}'";
+	$queryTesDat="SELECT *,rs.description as `statusDesc` FROM thesis.assettesting at join ref_status rs on at.statusID=rs.statusID where at.testingID='{$testingID}'";
 	$resultTesDat=mysqli_query($dbc,$queryTesDat);
 	$rowTesDat=mysqli_fetch_array($resultTesDat,MYSQLI_ASSOC);
-	
 	
 	if(isset($_POST['send'])){
 		
@@ -82,7 +81,6 @@
 
 				$queryReceivingDetails = "INSERT INTO `thesis`.`receiving_details`(`receivingID`, `assetID`, `received`) VALUES('{$rowGetReceiving['id']}', '{$assPass}', false);";
 				$resultReceivingDetails = mysqli_query($dbc,$queryReceivingDetails);
-				
 				
 				//SET DATE EXPIRED
 				$dateExp = new DateTime($rowGetAssInf['dateDelivered']);
@@ -455,7 +453,14 @@
 												<div class="row invoice-to">
 													<div class="col-md-4 col-sm-4 pull-left">
 														<h4>Status:</h4>
-														<h2>Completed</h2>
+														<h2><?php 
+															if($rowTesDat['statusID']=='7'){
+																echo "<span class='label label-primary'>{$rowTesDat['statusDesc']}</span>";
+															}
+															elseif($rowTesDat['statusID']=='3'){
+																echo "<span class='label label-success'>{$rowTesDat['statusDesc']}</span>";
+															}
+															?></h2>
 													</div>
 													<div class="col-md-4 col-sm-5 pull-right">
 														<div class="row">
@@ -486,13 +491,28 @@
 												<tbody>
 													
 													<?php
-														
+														$finDate = 0;
 														$query = "SELECT rb.name as `brand`,am.description as `assetModel`,atd.asset_assetID,atd.check,atd.comment FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID 
 																												join assetmodel am on a.assetModel=am.assetModelID
 																												join ref_brand rb on am.brand=rb.brandID
 																												where assettesting_testingID='{$testingID}'";         
 														$result = mysqli_query($dbc, $query);
 														while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+															if($rowTesDat['statusID']=='3'){
+																//GET WARRANTY INFO
+																$queryGetWarInf="SELECT * FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID
+																										  join warranty w on a.assetID=w.assetID 
+																										  where atd.check='1' and atd.assettesting_testingID='{$testingID}' and atd.asset_assetID='{$row['asset_assetID']}'";
+																$resultGetWarInf=mysqli_query($dbc,$queryGetWarInf);
+																$rowGetWarInf=mysqli_fetch_array($resultGetWarInf,MYSQLI_ASSOC);
+																
+																//GET DATEDIFF
+																$date1=new DateTime($rowGetWarInf['dateAcquired']);
+																$date2=new DateTime($rowGetWarInf['dateExpired']);
+																$datediff = $date1->diff($date2);
+																$finDate = $datediff->format('%y') * 12 + $datediff->format('%m');
+															}
+															
 															echo "<tr>
 																	<td class='text-center'><input type='checkbox' ";
 																
@@ -512,15 +532,21 @@
 															echo "' disabled></td>
                                                             <td><input class='form-control' type='number' name='warranty[]' min='3' ";
 															
-															if($rowTesDat['remarks']=="Asset Request"){
+															if($rowTesDat['remarks']=="Asset Request" && $rowTesDat['statusID']=='3'){
+																echo "value='{$finDate}' ";
+															}
+															elseif($rowTesDat['remarks']=="Asset Request" && $rowTesDat['statusID']=='7'){
 																echo "value='3' ";
 															}
 															
 															if($row['check']=='0'){
-																echo "disabled ";
+																echo "readonly";
 															}
 															elseif($rowTesDat['remarks']!="Asset Request"){
-																echo "disabled ";
+																echo "readonly";
+															}
+															elseif($rowTesDat['statusID']=='3'){
+																echo "readonly";
 															}
 															
 															echo "required/></td>";
@@ -530,7 +556,9 @@
 															}
 															echo "</tr>";
 														}
-													
+														
+														
+														
 													
 													?>
                                                     
@@ -556,7 +584,7 @@
 										</section>
 									</div>
 								</section>
-								<button type="submit" name="send" class="btn btn-success" <?php if($rowTesDat['statusID']==3){
+								<button type="submit" name="send" class="btn btn-success" <?php if($rowTesDat['statusID']=='3'){
 																						echo "disabled";
 																						} ?> >Send</button>
 								<button type="button" class="btn btn-info" onclick="window.history.back();" id="back">Back</button>

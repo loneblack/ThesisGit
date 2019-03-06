@@ -69,24 +69,22 @@
                                             <thead>
                                                 <tr>
                                                     <th>Testing #</th>
-                                                    <th>Dated</th>
                                                     <th>Status</th>
                                                     <th>Description</th>
                                                     <th>Tested By</th>
-                                                    <th>Date Updated</th>
+                                                    <th>Date Finished</th>
                                                 </tr>
                                             </thead>
 												<tbody>
 												<?php
-													$query = "SELECT at.remarks,at.testingID,at.startTestDate,rs.description as `status`,e.name FROM thesis.assettesting at join ref_status rs on at.statusID=rs.statusID
+													$query = "SELECT at.remarks,at.testingID,at.endTestDate,rs.description as `status`,e.name FROM thesis.assettesting at join ref_status rs on at.statusID=rs.statusID
 																																						  join ticket t on at.testingID=t.testingID
 																																						  join user u on t.assigneeUserID=u.UserID
 																																						  join employee e on u.UserID=e.UserID";         
                                                     $result = mysqli_query($dbc, $query);
 													while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 														echo "<tr id='{$row['testingID']}'>
-															<td>{$row['testingID']}</td>
-															<td>{$row['startTestDate']}</td>";
+															<td>{$row['testingID']}</td>";
 															
 															if($row['status']=="Completed"){
 																echo "<td><span class='label label-success label-mini'>{$row['status']}</span></td>";
@@ -94,13 +92,16 @@
 															elseif($row['status']=="Incomplete"){
 																echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
 															}
+															elseif($row['status']=="Finished"){
+																echo "<td><span class='label label-primary label-mini'>{$row['status']}</span></td>";	
+															}
 															else{
 																echo "<td><span class='label label-warning label-mini'>{$row['status']}</span></td>";
 															}
 															
 															echo "<td>{$row['remarks']}</td>
 															<td>{$row['name']}</td>
-															<td></td>
+															<td>{$row['endTestDate']}</td>
 														</tr>";
 													}
 												
@@ -169,10 +170,10 @@
 				var currentRow = table.rows[i];
 				var createClickHandler = function(row) {
 					return function() {
-						var cell = row.getElementsByTagName("td")[2];
+						var cell = row.getElementsByTagName("td")[1];
 						var id = cell.textContent;
 						
-						if(id == "Ongoing" || id == "Completed"){
+						if(id == "Finished" || id == "Completed"){
 							window.location.href = "it_view_testing.php?testingID=" + row.getAttribute("id");
 						}
 						//else if(id == "Incomplete"){

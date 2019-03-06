@@ -4,8 +4,8 @@
 	require_once('db/mysql_connect.php');
 	$userid=$_SESSION['userID'];
 	$ticketID=$_GET['id'];
-
-	// PHP function to check if asset is for escalate 
+	
+	//PHP function to check if asset is for escalate 
 	function isEscalate($array){ 
 		if($array=='2') 
 			return TRUE; 
@@ -272,7 +272,7 @@
 		}
 		
 		//UPDATE ASSET TESTING STATUS
-		$query8="UPDATE `thesis`.`assettesting` SET `statusID`='2' WHERE `testingID`='{$row7['testingID']}'";
+		$query8="UPDATE `thesis`.`assettesting` SET `statusID`='7', `endTestDate`=now() WHERE `testingID`='{$row7['testingID']}'";
 		$result8=mysqli_query($dbc,$query8);
 		
 		//UPDATE TICKET STATUS TO CLOSED
