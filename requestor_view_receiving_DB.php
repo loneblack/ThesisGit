@@ -32,12 +32,12 @@
 
     //if all checked change status to done
     //check total asset entries
-   	$sqlTotal = "SELECT COUNT(*) as 'total' FROM thesis.receiving_details WHERE receivingID = 1;";
+   	$sqlTotal = "SELECT COUNT(*) as 'total' FROM thesis.receiving_details WHERE receivingID = '{$receivingID}';";
    	$resultTotal = mysqli_query($dbc, $sqlTotal);
 	$rowTotal = mysqli_fetch_array($resultTotal, MYSQLI_ASSOC);
 
 	//check received assets
-	$sqlReceived = "SELECT COUNT(*) as 'received' FROM thesis.receiving_details WHERE receivingID = 1 AND received = 1;";
+	$sqlReceived = "SELECT COUNT(*) as 'received' FROM thesis.receiving_details WHERE receivingID = '{$receivingID}' AND received = 1;";
 	$resultReceived = mysqli_query($dbc, $sqlReceived);
 	$rowReceived = mysqli_fetch_array($resultReceived, MYSQLI_ASSOC);
 
@@ -45,6 +45,10 @@
 
 		$sqlstatus = "UPDATE `thesis`.`requestor_receiving` SET `statusID` = '3' WHERE (`id` = '{$receivingID}');";
 		$resultstatus = mysqli_query($dbc, $sqlstatus);
+		
+		$sqlstatus1 = "UPDATE `thesis`.`request` SET `status` = '3', `step` = '21' WHERE (`requestID` = '1');";
+		$resultstatus1 = mysqli_query($dbc, $sqlstatus1);
+		
 	}
 	if(($rowReceived['received'] < $rowTotal['total']) && ($rowReceived['received'] != $rowTotal['total'])){//if partial delivery
 

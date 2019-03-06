@@ -283,7 +283,7 @@ require_once("db/mysql_connect.php");
 													//GET ALL REQUEST SCHEDULE FOR DELIVERY (REQUEST TO PURCHASE AN ASSET)
 													$query = "SELECT rr.id,r.date,r.dateNeeded,s.description,rr.statusID FROM thesis.requestor_receiving rr join request r on rr.requestID=r.requestID
 																				  join ref_status s ON rr.statusID = s.statusID
-																				  where rr.borrowID is null";
+																				  where rr.borrowID is null and rr.statusID!='3'";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -325,7 +325,7 @@ require_once("db/mysql_connect.php");
 													//GET ALL REQUEST SCHEDULE FOR DELIVERY (REQUEST TO BORROW)
 													$query = "SELECT rr.id,rb.dateCreated,rb.startDate,s.description,rr.statusID FROM thesis.requestor_receiving rr join request_borrow rb on rr.borrowID=rb.borrowID
 																				  join ref_status s ON rr.statusID = s.statusID 
-																				  where rr.requestID is null";
+																				  where rr.requestID is null and rr.statusID!='3'";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     

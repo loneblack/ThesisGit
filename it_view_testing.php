@@ -169,7 +169,7 @@
 			
 			if($rowReq['totalQty']==$rowPass['passedAsset'])
 			{
-				$queryComp="UPDATE `thesis`.`request` SET `step`='11' WHERE `requestID`='{$rowReqID['requestID']}'";
+				$queryComp="UPDATE `thesis`.`request` SET `step`='24' WHERE `requestID`='{$rowReqID['requestID']}'";
 				$resultComp=mysqli_query($dbc,$queryComp);
 			}	
 
@@ -313,7 +313,7 @@
 			//GET ALL ASSET TESTING PER BORROWID
 			
 			//UPDATE BORROW STEP
-			$queryComp="UPDATE `thesis`.`request_borrow` SET `steps`='11' WHERE `borrowID`='{$rowTesDat['borrowID']}'";
+			$queryComp="UPDATE `thesis`.`request_borrow` SET `steps`='24' WHERE `borrowID`='{$rowTesDat['borrowID']}'";
 			$resultComp=mysqli_query($dbc,$queryComp);
 			
 		}

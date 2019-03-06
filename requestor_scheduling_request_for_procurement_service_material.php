@@ -44,6 +44,21 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 		$queryUpdDelDate="UPDATE `thesis`.`requestor_receiving` SET `statusID`='2', `deliveryDate`='{$deliverySched}' WHERE `id`='{$id}'";
 		$resultUpdDelDate=mysqli_query($dbc,$queryUpdDelDate);
 		
+		//CHECK IF ALL DELIVERY REQUEST IS ONGOING BASED ON GIVEN REQUESTID
+		$queryCountAllDelReq="SELECT Count(*) as `numDel` FROM thesis.requestor_receiving where requestID='{$rowReqInfo['requestID']}'";
+		$resultCountAllDelReq=mysqli_query($dbc,$queryCountAllDelReq);
+		$rowCountAllDelReq = mysqli_fetch_array($resultCountAllDelReq, MYSQLI_ASSOC);
+		
+		$queryCountAllOngDel="SELECT Count(*) as `numDel` FROM thesis.requestor_receiving where requestID='{$rowReqInfo['requestID']}' and statusID='2'";
+		$resultCountAllOngDel=mysqli_query($dbc,$queryCountAllOngDel);
+		$rowCountAllOngDel = mysqli_fetch_array($resultCountAllOngDel, MYSQLI_ASSOC);
+		
+		if($rowCountAllDelReq['numDel']==$rowCountAllOngDel['numDel']){
+			//UPDATE STEP
+			$queryUpdReqStep="UPDATE `thesis`.`request` SET `step` = '25' WHERE (`requestID` = '{$rowReqInfo['requestID']}')";
+			$resultUpdReqStep=mysqli_query($dbc,$queryUpdReqStep);
+		}
+		
 		$message = "Form submitted!";
 		$_SESSION['submitMessage'] = $message; 
 	}
