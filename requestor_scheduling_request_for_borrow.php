@@ -37,6 +37,21 @@ if(isset($_POST['save'])){
 	//UPDATE DELIVERY DATE
 	$queryUpdDelDate="UPDATE `thesis`.`requestor_receiving` SET `statusID`='2', `deliveryDate`='{$deliverySched}' WHERE `id`='{$id}'";
 	$resultUpdDelDate=mysqli_query($dbc,$queryUpdDelDate);
+	
+	//CHECK IF ALL DELIVERY REQUEST IS ONGOING BASED ON GIVEN BORROWID
+	$queryCountAllDelReq="SELECT Count(*) as `numDel` FROM thesis.requestor_receiving where borrowID='{$rowReqInfo['borrowID']}'";
+	$resultCountAllDelReq=mysqli_query($dbc,$queryCountAllDelReq);
+	$rowCountAllDelReq = mysqli_fetch_array($resultCountAllDelReq, MYSQLI_ASSOC);
+		
+	$queryCountAllOngDel="SELECT Count(*) as `numDel` FROM thesis.requestor_receiving where borrowID='{$rowReqInfo['borrowID']}' and statusID='2'";
+	$resultCountAllOngDel=mysqli_query($dbc,$queryCountAllOngDel);
+	$rowCountAllOngDel = mysqli_fetch_array($resultCountAllOngDel, MYSQLI_ASSOC);
+		
+	if($rowCountAllDelReq['numDel']==$rowCountAllOngDel['numDel']){
+		//UPDATE STEP
+		$queryUpdReqStep="UPDATE `thesis`.`request_borrow` SET `step` = '25' WHERE (`borrowID` = '{$rowReqInfo['borrowID']}')";
+		$resultUpdReqStep=mysqli_query($dbc,$queryUpdReqStep);
+	}
 		
 	$message = "Form submitted!";
 	$_SESSION['submitMessage'] = $message; 

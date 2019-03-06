@@ -49,9 +49,6 @@
 		$sqlstatus = "UPDATE `thesis`.`requestor_receiving` SET `statusID` = '3' WHERE (`id` = '{$receivingID}');";
 		$resultstatus = mysqli_query($dbc, $sqlstatus);
 		
-		$sqlstatus1 = "UPDATE `thesis`.`request` SET `status` = '3', `step` = '21' WHERE (`requestID` = '1');";
-		$resultstatus1 = mysqli_query($dbc, $sqlstatus1);
-		
 	}
 	if(($rowReceived['received'] < $rowTotal['total']) && ($rowReceived['received'] != $rowTotal['total'])){//if partial delivery
 
