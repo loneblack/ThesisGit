@@ -25,7 +25,10 @@
 			
 	    	$sql = "UPDATE `thesis`.`receiving_details` SET `received` = '1' WHERE (`id` = '{$receivingDetailsID}');";
 			$result = mysqli_query($dbc, $sql);
-
+			
+			//UPDATE ASSET STATUS
+			$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='2' WHERE `assetID`='{$assets}'";
+			$resultStat=mysqli_query($dbc,$queryStat);
 
 		}
     }
