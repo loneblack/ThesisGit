@@ -53,12 +53,13 @@
     }
 
     //get newly inserted service unit
-    $sql1 = "SELECT MAX(id) as 'serviceUnitID' FROM thesis.serviceUnit;";//status is set to 1 for pending status
-
+    $sql1 = "SELECT MAX(serviceUnitID) as 'serviceUnitID' FROM thesis.serviceUnit;"; //status is set to 1 for pending status
+    echo $sql1;
 	$result1 = mysqli_query($dbc, $sql1);
 
 	while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC)){
         $serviceUnitID = $row['serviceUnitID'];
+        echo $serviceUnitID;
     }
 
 
@@ -74,7 +75,9 @@
 			$resulted2 = mysqli_query($dbc, $query2);
 
 			//Insert assets to serviceUnit Details also
-			$insertServiceUnitDetails = "INSERT INTO thesis.serviceUnitDetails (serviceUnitID, assetID, received) VALUES ('{$serviceUnitID}', '{$assets}', '0' );";
+			$insertServiceUnitDetails = "INSERT INTO serviceUnitDetails (serviceUnitID, assetID, received) VALUES ('{$serviceUnitID}', '{$assets}', '0');";
+			$resulted4 = mysqli_query($dbc, $insertServiceUnitDetails);
+			echo $insertServiceUnitDetails;
 		}
     }
 
@@ -82,5 +85,5 @@
 	$message = "Form submitted!";
 	$_SESSION['submitMessage'] = $message;
 
-	header('Location: '.$header);
+	//header('Location: '.$header);
 ?>	

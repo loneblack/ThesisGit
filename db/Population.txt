@@ -818,8 +818,7 @@
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'PC-0004', 'xu2drwxc', '9D-27-68-95-99-BC', '2'); -- ID 77, PC
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'PC-0005', 'vx9KrLM2', '29-74-5E-63-90-57', '2'); -- ID 78, PC
 
-			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 
-			'M-0006', 'r2kVYS2j', '35-33-84-ED-4F-0B', '19'); -- ID 79, memory
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0006', 'r2kVYS2j', '35-33-84-ED-4F-0B', '19'); -- ID 79, memory
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0007', 'QtVgejuU', '45-68-D9-2E-63-EA', '19'); -- ID 80, memory
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0008', 'ad8eZxJT', '5F-93-F1-A0-AB-51', '19'); -- ID 81, memory
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0009', 'PA2QowYu', '69-65-9E-BE-D1-2E', '19'); -- ID 82, memory
@@ -912,6 +911,17 @@
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0013', 'bUuZwJje', '', '21'); -- ID 158, memory
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0013', '2Pf6dX8R', '', '21'); -- ID 159, motherboard
 			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('30', 'BIOM-0001', 'NyvxTtoi', '', '2'); -- ID 160, Biometrics
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0012', 'XgrwbTsa', '', '21'); -- ID 161, monitor
+
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0007', '52fVETMe', '77-BB-D9-A5-D0-1F', '1'); -- ID 162, PC SERVICE UNIT
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0014', 'ggmZ2NuL', '', '21'); -- ID 163, Hard Disk Drive
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0014', 'quT5bgib', '', '21'); -- ID 164, Power Supply
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0014', 'mgi6XZYz', '', '21'); -- ID 165, Processor
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('17', 'KB-0012', 'MoZTepVv', '', '21'); -- ID 166, keyboard
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0014', 'XZZ3ZuRg', '', '21'); -- ID 167, memory
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0013', 'JQUJJ5mS', '', '21'); -- ID 168, monitor
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0011', 'eMqqEJHX', '', '21'); -- ID 169, motherboard
+			INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0011', 'JCFEdEKy', '', '21'); -- ID 170, mouse
 
 			-- asset audit for new items
 			INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');
@@ -1140,9 +1150,6 @@
 			INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`) VALUES ('Screen is busted', NOW(), '9', '27', '1', '14', '0');
 			INSERT INTO `thesis`.`servicedetails` VALUES ('1','1');
 
-			INSERT INTO `thesis`.`service` (`details`, `UserID`, `dateReceived`, `status`, `steps`) VALUES ('Broken', '4', NOW(), '1', '14');
-			INSERT INTO `thesis`.`service` (`details`, `UserID`, `dateReceived`, `status`, `steps`) VALUES ('Asset not functioning', '5', NOW(), '1', '14');
-			INSERT INTO `thesis`.`service` (`details`, `UserID`, `dateReceived`, `status`, `steps`) VALUES ('Doesn\'t work', '6', NOW(), '1', '14'); 
 
 			-- Computer
 			INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 14); -- TC-0001
@@ -1290,3 +1297,4 @@
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (157, 13);	-- Processor
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (158, 13);	-- Memory
 				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (159, 13);	-- Motherboard
+				INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (161, 13);	-- Monitor

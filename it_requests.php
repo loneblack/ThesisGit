@@ -68,7 +68,7 @@
                                                         <thead>
                                                             <tr>
                                                                 <th style="display: none">id</th>
-                                                                <th>#</th>
+                                                                <th id = "count">#</th>
                                                                 <th>Date Needed</th>
                                                                 <th>Status</th>
                                                                 <th>Request Type</th>
@@ -238,7 +238,45 @@
                                                                 
                                                             
                                                             }
-															
+
+                                                            //Service Unit
+                                                            $queryServiceUnit = "SELECT *, sr.id as 'serviceID' , e.name as 'requestedby', s.name as 'stepname' FROM thesis.service sr JOIN ref_status st ON sr.status = st.statusID JOIN ref_steps s ON steps = s.id JOIN employee e ON e.UserID = sr.UserID JOIN serviceunit su ON sr.id = su.serviceID;";
+                                                            
+
+                                                            $resultServiceUnit = mysqli_query($dbc, $queryServiceUnit);
+                                                            while($row=mysqli_fetch_array($resultServiceUnit,MYSQLI_ASSOC)){
+                                                            	
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$row['serviceUnitID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$row['dateNeed']}</td>";
+                                                                    
+                                                                    if($row['description']=='Pending'){
+                                                                        echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Incomplete'){
+                                                                        echo "<td><span class='label label-danger label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Completed'){
+                                                                        echo "<td><span class='label label-success label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    //elseif($row['description']=='Ongoing'){
+                                                                        //echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    //}
+                                                                    else{
+                                                                        echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                            
+                                                           		echo "
+                                                                    <td>Service Unit</td>
+                                                                    <td>{$row['stepname']}</td>
+                                                                    <td>{$row['requestedby']}</td>
+                                                                    <td>{$row['dateReceived']}</td>
+                                                                </tr>";
+                                                                
+                                                                 $count++;
+															}
+
 															//Replacement 
 															$queryGetRep="SELECT *,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `Requestor`,rs.description as `statusDesc`,rstp.name as `stepName` FROM thesis.replacement r 
 																			JOIN ref_status rs ON r.statusID = rs.statusID
@@ -381,7 +419,7 @@
                         }
                         if (idx == "Service Unit") {
                             if (id == "Ongoing" || id == "Pending") {
-								if(idDesc == "Assigning of New Replacement"){
+								if(idDesc == "Request Pending"){
 									window.location.href = "it_missing_form.php?id=" + ida;
 								}
                             } else if (id == "Completed" || id == "Incomplete") {
@@ -394,6 +432,7 @@
             }
         }
         window.onload = addRowHandlers();
+		window.onload = $('#count').click();
     </script>
 
     <!-- WAG GALAWIN PLS LANG -->
