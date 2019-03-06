@@ -123,6 +123,7 @@
 			INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('4', 'Incomplete');
 			INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('5', 'Approved');
 			INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('6', 'Disapproved');
+			INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('7', 'Finished');
 
 			-- ref_ticketstatus
 			INSERT INTO `thesis`.`ref_ticketstatus` (`ticketID`, `status`) VALUES ('1', 'Open');
