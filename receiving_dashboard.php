@@ -100,8 +100,8 @@ require_once("db/mysql_connect.php");
                                                         if($row['statusID'] == '1'){//pending
                                                             echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
                                                         }
-                                                        if($row['statusID'] == '4'){//ongoing
-                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
+                                                        if($row['statusID'] == '2'){//ongoing
+                                                            echo "<td><span class='label label-info'>{$row['description']}</span></td>";
                                                         }
 
                                                     }
@@ -132,8 +132,8 @@ require_once("db/mysql_connect.php");
                                                         if($row['statusID'] == '1'){//pending
                                                             echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
                                                         }
-                                                        if($row['statusID'] == '4'){//ongoing
-                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
+                                                        if($row['statusID'] == '2'){//ongoing
+                                                            echo "<td><span class='label label-info'>{$row['description']}</span></td>";
                                                         }
 
 
