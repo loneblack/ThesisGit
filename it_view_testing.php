@@ -533,17 +533,17 @@
                                                             <td><input class='form-control' type='number' name='warranty[]' min='3' ";
 															
 															if($rowTesDat['remarks']=="Asset Request" && $rowTesDat['statusID']=='3'){
-																echo "value='{$finDate}' readonly ";
+																echo "value='{$finDate}' disabled ";
 															}
 															elseif($rowTesDat['remarks']=="Asset Request" && $rowTesDat['statusID']=='7'){
 																echo "value='3' ";
 															}
 															
 															if($row['check']=='0'){
-																echo "readonly ";
+																echo "disabled ";
 															}
 															elseif($rowTesDat['remarks']!="Asset Request"){
-																echo "readonly ";
+																echo "disabled ";
 															}
 															
 															echo "required/></td>";
