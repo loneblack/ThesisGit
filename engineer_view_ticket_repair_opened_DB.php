@@ -4,6 +4,7 @@
     require_once("db/mysql_connect.php");
 
     $id = $_GET['id'];
+    $userID = $_SESSION['userID'];
 
     $query =  "SELECT *, t.status AS 'status', s.status AS 'statusDescription' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID  WHERE t.ticketID = {$id};";
     $result = mysqli_query($dbc, $query);
@@ -61,7 +62,7 @@
             $queryAssetStatus="UPDATE `thesis`.`asset` SET `assetStatus` = '{$assetStatus}' WHERE (`assetID` = '{$asset}');";
             $resultAssetStatus=mysqli_query($dbc,$queryAssetStatus);
 
-            if($assetStatus == 22 || $assetStatus == 23){
+            if($assetStatus == 22 || $assetStatus == 23 || $assetStatus == 4){
                 //set checked in ticketed asset
                 $queryTicketedAsset="UPDATE `thesis`.`ticketedasset` SET `checked` = '1' WHERE (`assetID` = '{$asset}');";
                 $resultTicketedAsset=mysqli_query($dbc,$queryTicketedAsset);
@@ -75,20 +76,31 @@
         $queryUpdate="UPDATE `thesis`.`ticket` SET `assigneeUserID` = '{$assigneeUserID}',`comment` = '{$comment}' WHERE (`ticketID` = '{$id}');";
         $resultUpdate=mysqli_query($dbc,$queryUpdate);
         
-        
+
+
         //Request for parts code
         if(!empty($_POST['quantity0'])){
+
+            //Insert new request parts
+            $queryReqPart="INSERT INTO `thesis`.`requestParts` ( `serviceID`, `statusID`, `date`, `UserID`) VALUES ('{$serviceID}', '1', now(), '{$userID}');";//status ID set to 1 for perding status
+            $resultReqPart=mysqli_query($dbc,$queryReqPart);
+
+            //GET newly inserted request parts id
+            $queryGetRequestID="SELECT * FROM `thesis`.`requestParts` WHERE `serviceID`='{$serviceID}'";
+            $resultGetRequestID=mysqli_query($dbc,$queryGetRequestID);
+            $rowGetRequestID=mysqli_fetch_array($resultGetRequestID,MYSQLI_ASSOC);
+
+            $requestID = $row['id'];
+
             $i = 0;
-            while($i <= $count){
+            while($i <= $count){//Insert into request parts details
 
                 $cat = $_POST['category'.$i];
                 $qty = $_POST['quantity'.$i];
                 $specs = $_POST['specification'.$i];
 
-                $queryReqPart="INSERT INTO `thesis`.`requestparts` ( `serviceID`, `assetCategoryID`, `quantity`, `specifications`, `received`) VALUES ('{$serviceID}', '{$cat}' ,'{$qty}' ,'{$specs}', '0');";
-                $resultReqPart=mysqli_query($dbc,$queryReqPart);
-
-                echo $queryReqPart;
+                $queryReqPartDetails="INSERT INTO `thesis`.`requestParts` ( `requestPartsID`, `assetCategoryID`, `quantity`, `specifications`, `received`) VALUES ('{$requestID}', '{$cat}' ,'{$qty}' ,'{$specs}', '0');";
+                $resultReqParDetailst=mysqli_query($dbc,$queryReqPartDetails);
 
                 $i++;
             }
@@ -105,7 +117,7 @@
 
             foreach (array_combine($_POST['detailsID'], $_POST['deliveryStatus']) as $detail => $status){
 
-                $sql1 = "UPDATE `thesis`.`requestParts` SET `received` = '{$status}' WHERE (`id` = '{$detail}');";
+                $sql1 = "UPDATE `thesis`.`requestparts_details` SET `received` = '{$status}' WHERE (`id` = '{$detail}');";
                 $result1 = mysqli_query($dbc, $sql1);
             }
         }

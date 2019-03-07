@@ -316,6 +316,42 @@
                                                                 
                                                             
                                                             }
+                                                            //Request for Parts
+                                                            $queryRequestforParts = "SELECT * , r.id as 'requestPartsID' FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id JOIN ref_status st ON r.statusID = st.statusID JOIN employee e ON e.UserID = r.UserID;";
+
+                                                            $resultRequestforParts = mysqli_query($dbc, $queryRequestforParts);
+                                                            while($row=mysqli_fetch_array($resultRequestforParts,MYSQLI_ASSOC)){
+                                                            	
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$row['requestPartsID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$row['date']}</td>";
+                                                                    
+                                                                    if($row['description']=='Pending'){
+                                                                        echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Incomplete'){
+                                                                        echo "<td><span class='label label-danger label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Completed'){
+                                                                        echo "<td><span class='label label-success label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    //elseif($row['description']=='Ongoing'){
+                                                                        //echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    //}
+                                                                    else{
+                                                                        echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                            
+                                                           		echo "
+                                                                    <td>Request for Parts</td>
+                                                                    <td></td>
+                                                                    <td>{$row['name']}</td>
+                                                                    <td>{$row['date']}</td>
+                                                                </tr>";
+                                                                
+                                                                 $count++;
+															}
 															
 															?>
                                                         </tbody>
@@ -421,6 +457,15 @@
                             if (id == "Ongoing" || id == "Pending") {
 								if(idDesc == "Request Pending"){
 									window.location.href = "it_missing_form.php?id=" + ida;
+								}
+                            } else if (id == "Completed" || id == "Incomplete") {
+                                
+                            }
+                        }
+                        if (idx == "Request for Parts") {
+                            if (id == "Ongoing" || id == "Pending") {
+								if(idDesc == "Request Pending"){
+									//window.location.href = "it_missing_form.php?id=" + ida;
 								}
                             } else if (id == "Completed" || id == "Incomplete") {
                                 

@@ -203,21 +203,23 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     $forRepair = "";
                                                     $falseReport = "";
                                                     $repaired = "";
+                                                    $broken = "";
 
                                                     if($row['assetStatus']==9) $forRepair = "selected";
                                                     if($row['assetStatus']==22) $falseReport = "selected";
                                                     if($row['assetStatus']==23) $repaired = "selected";
-
+                                                    if($row['assetStatus']==4) $broken = "selected";
 
 
                                                    echo "
                                                     <tr>
-                                                    <td>
+                                                    <td width = '200'>
                                                         <select name='assetStatus".$i."' class='form-control'>
                                                             <option value ='{$row['assetStatus']}'>Select Asset Status</option>
                                                             <option value='9' ".$forRepair.">For Repair</option>
                                                             <option value='22' ".$falseReport.">False Report</option>
                                                             <option value='23' ".$repaired.">Repaired</option>
+                                                            <option value='4' ".$broken.">Broken - Not Fixable</option>
                                                         </select>
                                                     </td>
                                                     <td>{$row['propertyCode']}</td>
@@ -390,7 +392,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                                         <?php 
 
-                                        $sql = "SELECT * FROM thesis.requestParts WHERE serviceID = '{$serviceID}';";
+                                        $sql = "SELECT *, rpd.id as 'detailsID' FROM thesis.requestparts_details rpd JOIN requestparts rp ON rpd.requestPartsID = rp.id WHERE serviceID = '{$serviceID}';";
                                         $result = mysqli_query($dbc, $sql);
                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                         {
@@ -408,7 +410,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             }
                                             echo
                                             "<tr>
-                                                <td style='display: none'><input type='number' name='detailsID[]' value ='{$row['id']}'></td>
+                                                <td style='display: none'><input type='number' name='detailsID[]' value ='{$row['detailsID']}'></td>
                                                 <td>
                                                     <input type='number' min='0' step='1' class='form-control' name='quantity' value =  '{$row['quantity']}'readonly>
                                                 </td>
