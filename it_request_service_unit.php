@@ -46,7 +46,7 @@ require_once("db/mysql_connect.php");
 
         </header>
         <!--header end-->
-        <?php include 'engineer_navbar.php' ?>
+        <?php include 'it_navbar.php' ?>
 
         <!--main content-->
         <section id="main-content">
