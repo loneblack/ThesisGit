@@ -216,14 +216,26 @@ require_once("db/mysql_connect.php");
                                                 <th style="display: none">AssetID</th>
                                                 <th width="150">Property Code</th>
                                                 <th>Asset Category</th>
+                                                <th>Brand</th>
+                                                <th>Model</th>
+                                                <th>Specifications</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td width="300">
+                                                <td width="220">
                                                     <select class="form-control">
                                                         <option>Select Property Code</option>
                                                     </select>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" disabled>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" disabled>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" disabled>
                                                 </td>
                                                 <td>
                                                     <input class="form-control" type="text" disabled>
