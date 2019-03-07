@@ -1151,6 +1151,10 @@ INSERT INTO `schoolyear` (`SchoolYearID`,`SchoolYear`,`Term1Start`,`Term2Start`,
 INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`) VALUES ('Screen is busted', NOW(), '9', '27', '1', '14', '0');
 INSERT INTO `thesis`.`servicedetails` VALUES ('1','1');
 
+INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`) VALUES ('They stopped working.', '2019-03-07 16:30:15', '9', '27', '1', '14', '1');SELECT MAX(serviceUnitID) as 'serviceUnitID' FROM thesis.serviceUnit;1INSERT INTO serviceUnitDetails (serviceUnitID, assetID, received) VALUES ('1', '6', '0');
+
+INSERT INTO serviceUnitDetails (serviceUnitID, assetID, received) VALUES ('1', '7', '0');INSERT INTO serviceUnitDetails (serviceUnitID, assetID, received) VALUES ('1', '8', '0');
+
 
 -- Computer
 INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 14); -- TC-0001
@@ -1299,3 +1303,4 @@ INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 154); -- PC-0007 (Gate PC
 	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (158, 13);	-- Memory
 	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (159, 13);	-- Motherboard
 	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (161, 13);	-- Monitor
+

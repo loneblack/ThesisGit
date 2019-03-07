@@ -248,7 +248,7 @@ require_once("db/mysql_connect.php");
                                 </div>
                             </section>
                             <button type="submit" name="submit" id="submit" class="btn btn-success">Send</button>
-                            <a href="engineer_all_ticket.php"><button type="button" class="btn btn-danger">Back</button></a>
+                            <button type="button" class="btn btn-danger" onclick="window.history.back();">Back</button>
                         </div>
                         
                         

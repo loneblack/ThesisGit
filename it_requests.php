@@ -456,7 +456,7 @@
                         if (idx == "Service Unit") {
                             if (id == "Ongoing" || id == "Pending") {
 								if(idDesc == "Request Pending"){
-									window.location.href = "it_missing_form.php?id=" + ida;
+									window.location.href = "it_request_service_unit.php?id=" + ida;
 								}
                             } else if (id == "Completed" || id == "Incomplete") {
                                 
