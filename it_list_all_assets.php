@@ -89,24 +89,26 @@
                                                                                 <th>Category</th>
                                                                                 <th>Status</th>
                                                                                 <th>Checked Out To</th>
-                                                                                <th>Location</th>
+                                                                                <th>Building</th>
+																				<th>Floor and Room</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
 																            <?php
 													$query="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model`, am.itemSpecification, rac.name AS `category`, ras.description, e.name AS `employee`, b.name AS `building`, fr.floorRoom FROM asset a 
-                                                    JOIN assetmodel am ON a.assetModel = am.assetModelID
-                                                    JOIN ref_brand rb ON am.brand = rb.brandID
-                                                    JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
-                                                    JOIN ref_assetstatus ras ON a.assetStatus = ras.id
-                                                    JOIN assetassignment aa ON a.assetID = aa.assetID
-                                                    JOIN employee e ON aa.personresponsibleID = e.employeeID
-                                                    JOIN building b ON aa.BuildingID = b.BuildingID
-                                                    JOIN floorandroom fr ON aa.FloorAndRoomID = fr.FloorAndRoomID;";
+                                                     JOIN assetmodel am ON a.assetModel = am.assetModelID 
+                                                     JOIN ref_brand rb ON am.brand = rb.brandID 
+                                                     JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID 
+                                                     JOIN ref_assetstatus ras ON a.assetStatus = ras.id 
+                                                     JOIN assetassignment aa ON a.assetID = aa.assetID 
+                                                     JOIN employee e ON aa.personresponsibleID = e.employeeID 
+                                                     JOIN building b ON aa.BuildingID = b.BuildingID 
+                                                     JOIN floorandroom fr ON aa.FloorAndRoomID = fr.FloorAndRoomID;";
 													$result=mysqli_query($dbc,$query);
 													
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-														echo "<tr class='hidden' id='{$row['assetID']}'>
+														echo "<tr>
+															<td class='hidden' id='{$row['assetID']}'></td>
 															<td>{$row['propertyCode']}</td>
 															<td>{$row['brand']}</td>
                                                             <td>{$row['model']}</td>
@@ -116,10 +118,7 @@
                                                             <td>{$row['employee']}</td>
                                                             <td>{$row['building']}</td>
                                                             <td>{$row['floorRoom']}</td>
-                                                            ";
-														
-														echo "	
-														</tr>";
+                                                            </tr>";
 													}
 												
 												
