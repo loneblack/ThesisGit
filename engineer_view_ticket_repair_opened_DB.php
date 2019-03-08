@@ -86,11 +86,11 @@
             $resultReqPart=mysqli_query($dbc,$queryReqPart);
 
             //GET newly inserted request parts id
-            $queryGetRequestID="SELECT * FROM `thesis`.`requestParts` WHERE `serviceID`='{$serviceID}'";
+            $queryGetRequestID="SELECT * FROM `thesis`.`requestParts` WHERE `serviceID`='{$serviceID}';";
             $resultGetRequestID=mysqli_query($dbc,$queryGetRequestID);
             $rowGetRequestID=mysqli_fetch_array($resultGetRequestID,MYSQLI_ASSOC);
 
-            $requestID = $row['id'];
+            $requestID = $rowGetRequestID['id'];
 
             $i = 0;
             while($i <= $count){//Insert into request parts details
@@ -99,7 +99,7 @@
                 $qty = $_POST['quantity'.$i];
                 $specs = $_POST['specification'.$i];
 
-                $queryReqPartDetails="INSERT INTO `thesis`.`requestParts` ( `requestPartsID`, `assetCategoryID`, `quantity`, `specifications`, `received`) VALUES ('{$requestID}', '{$cat}' ,'{$qty}' ,'{$specs}', '0');";
+                $queryReqPartDetails="INSERT INTO `thesis`.`requestParts_details` ( `requestPartsID`, `assetCategoryID`, `quantity`, `specifications`, `received`) VALUES ('{$requestID}', '{$cat}' ,'{$qty}' ,'{$specs}', '0');";
                 $resultReqParDetailst=mysqli_query($dbc,$queryReqPartDetails);
 
                 $i++;
