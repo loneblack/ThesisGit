@@ -3,7 +3,44 @@
 <?php
 session_start();
 $userID = $_SESSION['userID'];
+$id = $_GET['id'];
+$_SESSION['previousPage'] = "engineer_view_ticket_repair_opened.php?id={$id}";
 require_once("db/mysql_connect.php");
+
+$query =  "SELECT * FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id JOIN employee e ON r.UserID = e.UserID JOIN ref_status rs ON r.statusID = rs.statusID WHERE r.id = 1;";
+$result = mysqli_query($dbc, $query);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+        
+        $date = $row['date'];        
+        $name = $row['name'];
+        $serviceID = $row['serviceID'];
+
+    }
+
+$assets = array();
+
+$query2 =  "SELECT * FROM thesis.servicedetails WHERE serviceID = {$serviceID};";
+$result2 = mysqli_query($dbc, $query2);
+
+while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
+    array_push($assets, $row['asset']);
+}
+
+//get requested parts
+$assetCategoryID = array();
+$quantity = array();
+$specifications = array();
+
+$query2 =  "SELECT * FROM thesis.requestparts_details WHERE requestPartsID = {$id};";
+$result2 = mysqli_query($dbc, $query2);
+
+while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
+    array_push($assetCategoryID, $row['assetCategoryID']);
+    array_push($quantity, $row['quantity']);
+    array_push($specifications, $row['specifications']);
+}
+
 ?>
 
 <head>
@@ -55,7 +92,7 @@ require_once("db/mysql_connect.php");
 
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="col-sm-9">
+                        <div class="col-sm-12">
                             <section class="panel">
                                 <header style="padding-bottom:20px" class="panel-heading wht-bg">
                                     <?php
@@ -70,7 +107,7 @@ require_once("db/mysql_connect.php");
                                     ?>
                                     <h4 class="gen-case" style="float:right">
                                     </h4>
-                                    <h4>Request for Parts for Repair</h4>
+                                    <h4>Request for Parts (Repair)</h4>
                                 </header>
                                 <div class="panel-body ">
 
@@ -78,12 +115,12 @@ require_once("db/mysql_connect.php");
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <img src="images/chat-avatar2.jpg" alt="">
-                                                <strong>Helpdesk</strong>
+                                                <strong><?php echo $name;?></strong>
                                                 to
                                                 <strong>me</strong>
                                             </div>
                                             <div class="col-md-4">
-                                                <h5>Date Created:
+                                                <h5>Date Created: <?php echo $date;?>
                                                 </h5>
                                             </div>
                                             <div class="col-md-8">
@@ -105,7 +142,6 @@ require_once("db/mysql_connect.php");
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th>Asset Status</th>
                                                 <th>Property Code</th>
                                                 <th>Asset/ Software Name</th>
                                                 <th>Building</th>
@@ -113,6 +149,45 @@ require_once("db/mysql_connect.php");
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php
+                                                        
+                                            for ($i=0; $i < count($assets); $i++) { 
+
+                                                
+                                                $query3 =  "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            JOIN ref_assetstatus s
+                                                        ON a.assetStatus = s.id
+                                                            JOIN assetassignment aa
+                                                        ON a.assetID = aa.assetID
+                                                            JOIN building b
+                                                        ON aa.BuildingID = b.BuildingID
+                                                            JOIN floorandroom f
+                                                        ON aa.FloorAndRoomID = f.FloorAndRoomID 
+                                                            WHERE a.assetID = {$assets[$i]};";
+
+                                                $result3 = mysqli_query($dbc, $query3);  
+
+                                                while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
+
+                                                   echo "
+                                                    <tr>
+                                                    <td>{$row['propertyCode']}</td>
+                                                    <td>{$row['brand']} {$row['category']} {$row['description']}</td>
+                                                    <td>{$row['building']}</td>
+                                                    <td>{$row['floorroom']}</td>
+                                                    <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
+                                                    </tr>";
+                                                }  
+
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -121,86 +196,8 @@ require_once("db/mysql_connect.php");
                         </div>
 
 
-                        <div class="col-sm-3">
-
-                            <section class="panel">
-                                <div class="panel-body">
-                                    <ul class="nav nav-pills nav-stacked labels-info ">
-                                        <li>
-                                            <h4>Properties</h4>
-                                        </li>
-                                    </ul>
-                                    <div class="form">
-
-                                        <div class="form-group ">
-                                            <div class="form-group ">
-                                                <label for="category" class="control-label col-lg-4">Category</label>
-                                                <div class="col-lg-8">
-                                                    <select class="form-control m-bot15" disabled>
-                                                        <option selected="selected">Repair</option>
-                                                        <option>Repair</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <label for="status" class="control-label col-lg-4">Status</label>
-                                            <div class="col-lg-8">
-                                                <select class="form-control m-bot15" name="status" readonly>
-                                                    <option value='1' <?php if($status=='1' ) echo "selected" ;?> >Open</option>
-                                                    <option value='2' <?php if($status=='2' ) echo "selected" ;?> >Assigned</option>
-                                                    <option value='3' <?php if($status=='3' ) echo "selected" ;?> >In Progress</option>
-                                                    <option value='4' <?php if($status=='4' ) echo "selected" ;?> >Transferred</option>
-                                                    <option value='5' <?php if($status=='5' ) echo "selected" ;?> >Escalated</option>
-                                                    <option value='6' <?php if($status=='6' ) echo "selected" ;?> >Waiting For Parts</option>
-                                                    <option value='7' <?php if($status=='7' ) echo "selected" ;?> >Closed</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group ">
-                                            <label for="priority" class="control-label col-lg-4">Priority</label>
-                                            <div class="col-lg-8">
-                                                <select class="form-control m-bot15" name="priority" readonly>
-                                                    <option value="Low">Low</option>
-                                                    <option value="Medium">Medium</option>
-                                                    <option value="High">High</option>
-                                                    <option value="Urgent">Urgent</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group ">
-                                            <label for="assign" class="control-label col-lg-4">Escalate To</label>
-                                            <div class="col-lg-8">
-                                                <select class="form-control m-bot15" name="escalateUserID" id='escalateUser' disabled>
-                                                    <option value='<?php echo $userID;?>'>None</option>
-                                                    <?php
-                                                            $query3="SELECT u.UserID,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),', ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.user u join thesis.ref_usertype rut on u.userType=rut.id where rut.description='Engineer';";
-                                                            $result3=mysqli_query($dbc,$query3);
-                                                                    
-                                                            while($row3=mysqli_fetch_array($result3,MYSQLI_ASSOC)){
-                                                                //if($assigneeUserID == $row3['UserID']){
-                                                                    //echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
-                                                                //}
-																if($assigneeUserID != $row3['UserID']){
-                                                                   echo "<option value='{$row3['UserID']}'>{$row3['fullname']}</option>";
-                                                                }    
-                                                            }   
-                                                        ?>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="control-label col-lg-4">Due Date</label>
-                                            <div class="col-lg-8">
-                                                <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="<?php echo $dueDate;?>" disabled>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </section>
+                        
+                        
                         </div>
 
                         <div class="col-sm-12">
@@ -213,40 +210,41 @@ require_once("db/mysql_connect.php");
                                     <table class="table table-bordered table table-hover" id="addtable">
                                         <thead>
                                             <tr>
-                                                <th style="display: none">AssetID</th>
                                                 <th width="150">Quantity</th>
                                                 <th>Category</th>
                                                 <th>Specification</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            <?php
+
+                                            for ($i=0; $i < count($quantity); $i++) {
+
+                                            echo 
+                                            "<tr>
                                                 <td>
-                                                    <input type='number' min='0' step='1' class='form-control' name='quantity0' disabled>
+                                                    <input class='form-control' value = '{$quantity[$i]}' disabled>
                                                 </td>
-                                                <td width="300">
-                                                    <select class="form-control" name="category0" disabled>
-                                                        <option>Select Category</option>
-                                                        <?php 
-
-                                                        $sql = "SELECT * FROM thesis.ref_assetcategory;";
-
+                                                <td width='300'>";
+                                                       
+                                                        $sql = "SELECT * FROM thesis.ref_assetcategory WHERE assetCategoryID = '{$assetCategoryID[$i]}';";
                                                         $result = mysqli_query($dbc, $sql);
 
-                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                        {
-                                                            echo "<option value ={$row['assetCategoryID']}>";
-                                                            echo "{$row['name']}</option>";
-                                                        }
+                                                        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-                                                    ?>
-                                                    </select>
-                                                </td>
+                                                        $category = $row['name'];
+                                                    
+                                                  echo
+
+                                                  "<input class='form-control' value = '{$category}' disabled>
+                                                  </td>
                                                 <td>
-                                                    <input class='form-control' name='specification0' disabled>
+                                                    <input class='form-control' value = '{$specifications[$i]}' disabled>
                                                 </td>
-                                            </tr>
+                                            </tr>";
 
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                     <input style="display: none" type="number" id="count" name="count">
@@ -264,36 +262,96 @@ require_once("db/mysql_connect.php");
                                             <tr>
                                                 <th style="display: none">AssetID</th>
                                                 <th width="150">Property Code</th>
+                                                <th>Category</th>
                                                 <th>Brand</th>
                                                 <th>Model</th>
                                                 <th>Specification</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td width="300">
-                                                    <select class="form-control">
-                                                        <option>Select Property Code</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" disabled>
-                                                </td>
-                                                <td>
-                                                    <input class='form-control' name='specification0' disabled>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" disabled>
-                                                </td>
-                                            </tr>
+                                        <?php
 
+                                        for ($i=0; $i < count($quantity); $i++) {
+                                            for ($j=0; $j < $quantity[$i]; $j++) {
+                                            
+
+                                            echo
+                                                "<tr>
+                                                    <td width='300'>
+                                                        <select class='form-control' onchange='loadDetails(this.value)'>";
+
+                                                $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            WHERE assetCategoryID = '{$assetCategoryID[$i]}';";
+
+                                                $result = mysqli_query($dbc, $sql);
+                                                
+
+                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                {
+                                                    echo "<option value ={$row['assetID']}>";
+                                                    echo "{$row['propertyCode']}</option>";
+                                                }
+                                                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                                                           
+                                            echo 
+                                                        "</select>
+                                                    </td>";
+
+                                            $sql = "SELECT * FROM thesis.ref_assetcategory WHERE assetCategoryID = '{$assetCategoryID[$i]}';";
+                                            $result = mysqli_query($dbc, $sql);
+
+                                            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                                            $category = $row['name'];
+
+                                            $query="SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description as'modelDescription'
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            WHERE assetCategoryID = '{$assetCategoryID[$i]}';";
+                                            $result=mysqli_query($dbc,$query);
+
+                                            $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+
+                                            echo
+                                                    "<td>
+                                                        <input type='text' disabled class='form-control' value = '{$category}'>
+                                                    </td>
+                                                        <td id='brand'>
+                                                            <input class='form-control' value='{$row['brand']}'disabled>
+                                                        </td>
+                                                        <td id='description'>
+                                                            <input class='form-control' value='{$row['modelDescription']}' disabled>
+                                                        </td>
+                                                        <td id='specification'>
+                                                            <input class='form-control' value='{$row['itemSpecification']}' disabled>
+                                                        </td>
+                                                        <td id='assetID' style='display: none'>
+                                                            <input class='form-control' value='{$row['assetID']}' disabled>
+                                                        </td>
+                                                </tr>";
+                                            }
+                                        }
+
+                                        ?>
                                         </tbody>
                                     </table>
                                     <input style="display: none" type="number" id="count" name="count">
                                 </div>
                             </section>
                             <button type="submit" name="submit" id="submit" class="btn btn-success">Send</button>
-                            <a href="engineer_all_ticket.php"><button type="button" class="btn btn-danger">Back</button></a>
+                            <button onclick="window.history.back();" type="button" class="btn btn-danger">Back</button>
                         </div>
                         
                         
@@ -340,6 +398,45 @@ require_once("db/mysql_connect.php");
                 appendTableRow(row_index, canvasItemID);
             }, delayInMilliseconds);
 
+        }
+        function loadDetails(val){
+            
+            $.ajax({
+            type:"POST",
+            url:"loadDetails1.php",
+            data: 'assetID='+val,
+            success: function(data){
+                $("#brand").html(data);
+
+                }
+            });
+            $.ajax({
+            type:"POST",
+            url:"loadDetails2.php",
+            data: 'assetID='+val,
+            success: function(data){
+                $("#description").html(data);
+
+                }
+            });
+            $.ajax({
+            type:"POST",
+            url:"loadDetails3.php",
+            data: 'assetID='+val,
+            success: function(data){
+                $("#specification").html(data);
+
+                }
+            });
+            $.ajax({
+            type:"POST",
+            url:"loadDetails4.php",
+            data: 'assetID='+val,
+            success: function(data){
+                $("#assetID").html(data);
+
+                }
+            });
         }
 
     </script>

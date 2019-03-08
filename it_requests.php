@@ -345,7 +345,7 @@
                                                             
                                                            		echo "
                                                                     <td>Request for Parts</td>
-                                                                    <td></td>
+                                                                    <td>Request Pending</td>
                                                                     <td>{$row['name']}</td>
                                                                     <td>{$row['date']}</td>
                                                                 </tr>";
@@ -465,7 +465,7 @@
                         if (idx == "Request for Parts") {
                             if (id == "Ongoing" || id == "Pending") {
 								if(idDesc == "Request Pending"){
-									//window.location.href = "it_missing_form.php?id=" + ida;
+									window.location.href = "it_view_repair_request_parts.php?id=" + ida;
 								}
                             } else if (id == "Completed" || id == "Incomplete") {
                                 
