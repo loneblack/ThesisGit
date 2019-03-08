@@ -82,6 +82,7 @@
                                                                     <table class="display table table-bordered table-striped" id="dynamic-table">
                                                                         <thead>
                                                                             <tr>
+                                                                                <th class="hidden"></th>
                                                                                 <th>Property Code</th>
                                                                                 <th>Brand</th>
                                                                                 <th>Model</th>
@@ -96,14 +97,14 @@
                                                                         <tbody>
 																            <?php
 													$query="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model`, am.itemSpecification, rac.name AS `category`, ras.description, e.name AS `employee`, b.name AS `building`, fr.floorRoom FROM asset a 
-                                                     JOIN assetmodel am ON a.assetModel = am.assetModelID 
-                                                     JOIN ref_brand rb ON am.brand = rb.brandID 
-                                                     JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID 
-                                                     JOIN ref_assetstatus ras ON a.assetStatus = ras.id 
-                                                     JOIN assetassignment aa ON a.assetID = aa.assetID 
-                                                     JOIN employee e ON aa.personresponsibleID = e.employeeID 
-                                                     JOIN building b ON aa.BuildingID = b.BuildingID 
-                                                     JOIN floorandroom fr ON aa.FloorAndRoomID = fr.FloorAndRoomID;";
+                                                    LEFT JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                    LEFT JOIN ref_brand rb ON am.brand = rb.brandID
+                                                    LEFT JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                    LEFT JOIN ref_assetstatus ras ON a.assetStatus = ras.id
+                                                    LEFT JOIN assetassignment aa ON a.assetID = aa.assetID
+                                                    LEFT JOIN employee e ON aa.personresponsibleID = e.employeeID
+                                                    LEFT JOIN building b ON aa.BuildingID = b.BuildingID
+                                                    LEFT JOIN floorandroom fr ON aa.FloorAndRoomID = fr.FloorAndRoomID;";
 													$result=mysqli_query($dbc,$query);
 													
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
