@@ -93,16 +93,39 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-																            <tr>
-                                                                                <td>PC-0001</td>
-                                                                                <td>Dell</td>
-                                                                                <td>AMT 20202</td>
-                                                                                <td>GPU 8700</td>
-                                                                                <td>Desktop</td>
-                                                                                <td>On-Hand</td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                            </tr>
+																            <?php
+													$query="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model`, am.itemSpecification, rac.name AS `category`, ras.description, e.name AS `employee`, b.name AS `building`, fr.floorRoom FROM asset a 
+                                                    JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                    JOIN ref_brand rb ON am.brand = rb.brandID
+                                                    JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                    JOIN ref_assetstatus ras ON a.assetStatus = ras.id
+                                                    JOIN assetassignment aa ON a.assetID = aa.assetID
+                                                    JOIN employee e ON aa.personresponsibleID = e.employeeID
+                                                    JOIN building b ON aa.BuildingID = b.BuildingID
+                                                    JOIN floorandroom fr ON aa.FloorAndRoomID = fr.FloorAndRoomID;";
+													$result=mysqli_query($dbc,$query);
+													
+													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														echo "<tr class='hidden' id='{$row['assetID']}'>
+															<td>{$row['propertyCode']}</td>
+															<td>{$row['brand']}</td>
+                                                            <td>{$row['model']}</td>
+                                                            <td>{$row['itemSpecification']}</td>
+                                                            <td>{$row['category']}</td>
+                                                            <td>{$row['description']}</td>
+                                                            <td>{$row['employee']}</td>
+                                                            <td>{$row['building']}</td>
+                                                            <td>{$row['floorRoom']}</td>
+                                                            ";
+														
+														echo "	
+														</tr>";
+													}
+												
+												
+												
+												
+												?>
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
