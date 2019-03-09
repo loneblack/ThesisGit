@@ -90,6 +90,7 @@ INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('AV face Plate');
 INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('RCA Cable');
 INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('User Guide Poster');
 INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('Biometrics');
+INSERT INTO `thesis`.`ref_assetcategory` (`name`) VALUES ('VGA Cable');
 
 -- ref_assetstatus
 INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('1', 'Stocked');
@@ -643,6 +644,9 @@ INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `it
 
 INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('30', '58', '14', '', 'Used for scanning IDs'); -- Biometrics
 
+INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('31', '12', '59', 'Male to male, 1.8m', 'Can be lent to students and faculty');
+
+
 -- user
 -- 1
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
@@ -923,6 +927,18 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0013', 'JQUJJ5mS', '', '21'); -- ID 168, monitor
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0011', 'eMqqEJHX', '', '21'); -- ID 169, motherboard
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0011', 'JCFEdEKy', '', '21'); -- ID 170, mouse
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('18', 'PRJ-0006', 'Fxg3SFty', '', '1'); -- ID 171, projector
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('18', 'PRJ-0007', 'xXJy8Rsf', '', '1'); -- ID 172, projector
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('18', 'PRJ-0008', 'Fxg3SFty', '', '1'); -- ID 173, projector
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('18', 'PRJ-0009', 'Fxg3SFty', '', '1'); -- ID 174, projector
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('18', 'PRJ-0010', 'Fxg3SFty', '', '1'); -- ID 175, projector
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('31', 'VGA-0001', 'Fxg3SFty', '', '1'); -- ID 176, VGA Cable
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('31', 'VGA-0002', 'Fxg3SFty', '', '1'); -- ID 177, VGA Cable
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('31', 'VGA-0003', 'Fxg3SFty', '', '1'); -- ID 178, VGA Cable
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('31', 'VGA-0004', 'Fxg3SFty', '', '1'); -- ID 179, VGA Cable
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('31', 'VGA-0005', 'Fxg3SFty', '', '1'); -- ID 180, VGA Cable
+
+
 
 -- asset audit for new items
 INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');
@@ -1150,10 +1166,6 @@ INSERT INTO `schoolyear` (`SchoolYearID`,`SchoolYear`,`Term1Start`,`Term2Start`,
 -- Service insert
 INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`) VALUES ('Screen is busted', NOW(), '9', '27', '1', '14', '0');
 INSERT INTO `thesis`.`servicedetails` VALUES ('1','1');
-
-INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`) VALUES ('They stopped working.', '2019-03-07 16:30:15', '9', '27', '1', '14', '1');SELECT MAX(serviceUnitID) as 'serviceUnitID' FROM thesis.serviceUnit;1INSERT INTO serviceUnitDetails (serviceUnitID, assetID, received) VALUES ('1', '6', '0');
-
-INSERT INTO serviceUnitDetails (serviceUnitID, assetID, received) VALUES ('1', '7', '0');INSERT INTO serviceUnitDetails (serviceUnitID, assetID, received) VALUES ('1', '8', '0');
 
 
 -- Computer
