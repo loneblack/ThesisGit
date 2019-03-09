@@ -90,8 +90,6 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             <section class="wrapper">
                 <!-- page start-->
 
-                <div class="row">
-                    <div class="col-sm-12">
                         <div class="col-sm-12">
                             <section class="panel">
                                 <header style="padding-bottom:20px" class="panel-heading wht-bg">
@@ -120,6 +118,11 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 <strong>me</strong>
                                             </div>
                                             <div class="col-md-4">
+                                                <button style="float:right" class="btn btn-warning">Pending</button>
+                                                <button style="display: none; float:right" class="btn btn-success">Completed</button>
+                                                <button style="display:none; float:right" class="btn btn-info">Ongoing</button>
+                                                <br>
+                                                <br>
                                                 <h5>Date Created: <?php echo $date;?>
                                                 </h5>
                                             </div>
@@ -139,6 +142,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                             <section class="panel">
                                 <div class="panel-body">
+                                    <h4>Assets to be Repaired</h4>
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
@@ -198,7 +202,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
                         
                         
-                        </div>
+                        
 
                         <div class="col-sm-12">
                             <section class="panel">
@@ -253,11 +257,13 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                             
                             <form action="it_view_repair_request_parts_DB.php?id=<?php echo $id;?>">
                             <section class="panel">
-                                <div class="panel-body ">
+                                <div class="panel-body">
                                     <div>
                                         <h4>Parts to Be Given</h4>
                                     </div>
-                                    
+                                    <div style="padding-right:1px; padding-bottom:45px;">
+                                        <button style="float:right;" class="btn btn-info">Order parts</button>
+                                    </div>
                                     <table class="table table-bordered table table-hover" id="addtable">
                                         <thead>
                                             <tr>
@@ -356,6 +362,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                             </section>
                             <button type="submit" name="submit" id="submit" class="btn btn-success">Send</button>
                             <button onclick="window.history.back();" type="button" class="btn btn-danger">Back</button>
+                            <button class="btn btn-info" style="float:right">Give Replacement</button>
                         </div>
                         </form>
                     </div>
