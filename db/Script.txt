@@ -2077,3 +2077,78 @@ CREATE TABLE IF NOT EXISTS `thesis`.`requestParts_assets` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `thesis`.`notifications`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`notifications` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`notifications` (
+  `idnotifications` INT NOT NULL AUTO_INCREMENT,
+  `requestID` INT(11) NULL,
+  `borrowID` INT(11) NULL,
+  `steps_id` INT NULL,
+  `isRead` TINYINT(1) NULL,
+  `donationID` INT NULL,
+  `service_id` INT(11) NULL,
+  `replacementID` INT NULL,
+  `ticketID` INT(11) NULL,
+  `testingID` INT(11) NULL,
+  `salvage_id` INT NULL,
+  PRIMARY KEY (`idnotifications`),
+  INDEX `fk_notifications_request1_idx` (`requestID` ASC),
+  INDEX `fk_notifications_request_borrow1_idx` (`borrowID` ASC),
+  INDEX `fk_notifications_ref_steps1_idx` (`steps_id` ASC),
+  INDEX `fk_notifications_donation1_idx` (`donationID` ASC),
+  INDEX `fk_notifications_service1_idx` (`service_id` ASC),
+  INDEX `fk_notifications_replacement1_idx` (`replacementID` ASC),
+  INDEX `fk_notifications_ticket1_idx` (`ticketID` ASC),
+  INDEX `fk_notifications_assettesting1_idx` (`testingID` ASC),
+  INDEX `fk_notifications_salvage1_idx` (`salvage_id` ASC),
+  CONSTRAINT `fk_notifications_request1`
+    FOREIGN KEY (`requestID`)
+    REFERENCES `thesis`.`request` (`requestID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_notifications_request_borrow1`
+    FOREIGN KEY (`borrowID`)
+    REFERENCES `thesis`.`request_borrow` (`borrowID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_notifications_ref_steps1`
+    FOREIGN KEY (`steps_id`)
+    REFERENCES `thesis`.`ref_steps` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_notifications_donation1`
+    FOREIGN KEY (`donationID`)
+    REFERENCES `thesis`.`donation` (`donationID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_notifications_service1`
+    FOREIGN KEY (`service_id`)
+    REFERENCES `thesis`.`service` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_notifications_replacement1`
+    FOREIGN KEY (`replacementID`)
+    REFERENCES `thesis`.`replacement` (`replacementID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_notifications_ticket1`
+    FOREIGN KEY (`ticketID`)
+    REFERENCES `thesis`.`ticket` (`ticketID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_notifications_assettesting1`
+    FOREIGN KEY (`testingID`)
+    REFERENCES `thesis`.`assettesting` (`testingID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_notifications_salvage1`
+    FOREIGN KEY (`salvage_id`)
+    REFERENCES `thesis`.`salvage` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
