@@ -181,7 +181,7 @@ $_SESSION['previousPage2']="it_view_incomplete_request.php?requestID=".$requestI
                                         </table>
 										<div style="padding-top:10px">
 											<button type="button" class="btn btn-success" onclick="formSubmit()" name="btnSubmit">Submit</button>
-                                            <a href="it_requests.php"><button type="button" class="btn btn-danger glyphicon glyphicon-chevron-left"> Back</button></a>
+                                            <button type="button" class="btn btn-danger" onclick="window.history.back();"> Back</button>
                                         </div>
 										
 										</form>

@@ -166,7 +166,7 @@
                                                     </div>
 													
 													 <div class="form-group ">
-                                                        <label for="building" class="control-label col-lg-3">Asset Description</label>
+                                                        <label for="building" class="control-label col-lg-3">Purpose</label>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <textarea class="form-control" rows="5" id="" name= "assetDescription" style="resize: none" readonly><?php if(!$rowReq['assetDescription']==null){
@@ -187,7 +187,7 @@
                                                                 <th>Category</th>
                                                                 <th>Quantity</th>
                                                                 <th>Specifications</th>
-                                                                <th>Purpose</th>
+                                                                <th>Asset Description</th>
                                                                 <th>Inventory</th>
                                                             </tr>
                                                         </thead>

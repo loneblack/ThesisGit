@@ -217,10 +217,10 @@ $_SESSION['count'] = 0;
                                                     </div>
                                                     
                                                     <div class="form-group ">
-                                                        <label for="building" class="control-label col-lg-3">Asset Description</label>
+                                                        <label for="building" class="control-label col-lg-3">Purpose</label>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <textarea class="form-control" rows="5" id="" name= "assetDescription" style="resize: none" placeholder="If you do not know what the asset is called, kindly describe the asset that you would like us to purchase for you."></textarea>
+                                                                <textarea class="form-control" rows="5" id="" name= "assetDescription" style="resize: none" placeholder="Provide a short description for requesting."></textarea>
                                                             </div>
                                                         </div>
                                                      </div>
@@ -239,7 +239,7 @@ $_SESSION['count'] = 0;
                                                                 <th>Quantity</th>
                                                                 <th>Category</th>
                                                                 <th>Specifications</th>
-                                                                <th>Purpose</th>
+                                                                <th>Asset Description</th>
                                                                 <th>Remove</th>
                                                                 <th>Add</th>
                                                             </tr>
@@ -281,7 +281,7 @@ $_SESSION['count'] = 0;
                                                                 </td>
                                                                 <td>
                                                                     <div class="col-lg-12">
-                                                                        <input class="form-control" type="text" name="purpose0" id="purpose0" placeholder="Purpose">
+                                                                        <input class="form-control" type="text" name="purpose0" id="purpose0" placeholder="Asset Description">
                                                                     </div>
                                                                 </td>
                                                                 <td>

@@ -262,7 +262,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         <h4>Parts to Be Given</h4>
                                     </div>
                                     <div style="padding-right:1px; padding-bottom:45px;">
-                                        <button style="float:right;" class="btn btn-info">Order parts</button>
+                                        
                                     </div>
                                     <table class="table table-bordered table table-hover" id="addtable">
                                         <thead>
@@ -360,11 +360,18 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     <input style="display: none" type="number" id="count" name="count">
                                 </div>
                             </section>
-                            <button type="submit" name="submit" id="submit" class="btn btn-success">Send</button>
-                            <button onclick="window.history.back();" type="button" class="btn btn-danger">Back</button>
-                            <button class="btn btn-info" style="float:right">Give Replacement</button>
+                            
                         </div>
+                            <div>
+                            <button type="submit" name="submit" id="submit" class="btn btn-success">Send</button>
                         </form>
+                        
+                            <button onclick="window.history.back();" type="button" class="btn btn-danger">Back</button>
+                            <div style="display:inline; float:right">
+                            <button class="btn btn-info" onclick="window.location.href='it_replacement.php'">Give Replacement</button>
+                            <button onclick="window.location.href='it_order_parts.php';" class="btn btn-info">Order parts</button>
+                            </div>
+                        </div>
                     </div>
                     <!-- page end-->
             </section>
