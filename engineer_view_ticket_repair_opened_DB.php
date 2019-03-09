@@ -153,5 +153,6 @@
         }
 
         $header = $_SESSION['previousPage'];
+        header('Location: '.$header);
     
 ?>

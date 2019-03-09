@@ -4,7 +4,7 @@
 session_start();
 $userID = $_SESSION['userID'];
 $id = $_GET['id'];
-$_SESSION['previousPage'] = "engineer_view_ticket_repair_opened.php?id={$id}";
+$_SESSION['previousPage'] = "it_view_repair_request_parts.php?id={$id}";
 require_once("db/mysql_connect.php");
 
 $query =  "SELECT * FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id JOIN employee e ON r.UserID = e.UserID JOIN ref_status rs ON r.statusID = rs.statusID WHERE r.id = 1;";
@@ -251,12 +251,13 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                 </div>
                             </section>
                             
+                            <form action="it_view_repair_request_parts_DB.php?id=<?php echo $id;?>">
                             <section class="panel">
                                 <div class="panel-body ">
                                     <div>
                                         <h4>Parts to Be Given</h4>
                                     </div>
-
+                                    
                                     <table class="table table-bordered table table-hover" id="addtable">
                                         <thead>
                                             <tr>
@@ -270,7 +271,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         </thead>
                                         <tbody>
                                         <?php
-
+                                        $count = 0;
                                         for ($i=0; $i < count($quantity); $i++) {
                                             for ($j=0; $j < $quantity[$i]; $j++) {
                                             
@@ -278,7 +279,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             echo
                                                 "<tr>
                                                     <td width='300'>
-                                                        <select class='form-control' onchange='loadDetails(this.value)'>";
+                                                        <select id = '".$count."' class='form-control' onchange='loadDetails(this.value, this.id)' required>
+                                                        <option value =''>Select</option>";
 
                                                 $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                         FROM asset a 
@@ -328,19 +330,21 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     "<td>
                                                         <input type='text' disabled class='form-control' value = '{$category}'>
                                                     </td>
-                                                        <td id='brand'>
+                                                        <td id='brand".$count."'>
                                                             <input class='form-control' value='{$row['brand']}'disabled>
                                                         </td>
-                                                        <td id='description'>
+                                                        <td id='description".$count."'>
                                                             <input class='form-control' value='{$row['modelDescription']}' disabled>
                                                         </td>
-                                                        <td id='specification'>
+                                                        <td id='specification".$count."'>
                                                             <input class='form-control' value='{$row['itemSpecification']}' disabled>
                                                         </td>
-                                                        <td id='assetID' style='display: none'>
-                                                            <input class='form-control' value='{$row['assetID']}' disabled>
+                                                        <td id='assetID".$count."' style='display: none'>
+                                                            <input class='form-control' name='assets[]' value='{$row['assetID']}' disabled>
                                                         </td>
                                                 </tr>";
+
+                                                $count++;
                                             }
                                         }
 
@@ -353,9 +357,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                             <button type="submit" name="submit" id="submit" class="btn btn-success">Send</button>
                             <button onclick="window.history.back();" type="button" class="btn btn-danger">Back</button>
                         </div>
-                        
-                        
-
+                        </form>
                     </div>
                     <!-- page end-->
             </section>
@@ -399,14 +401,14 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             }, delayInMilliseconds);
 
         }
-        function loadDetails(val){
+        function loadDetails(val, id){
             
             $.ajax({
             type:"POST",
             url:"loadDetails1.php",
             data: 'assetID='+val,
             success: function(data){
-                $("#brand").html(data);
+                $("#brand"+id).html(data);
 
                 }
             });
@@ -415,7 +417,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             url:"loadDetails2.php",
             data: 'assetID='+val,
             success: function(data){
-                $("#description").html(data);
+                $("#description"+id).html(data);
 
                 }
             });
@@ -424,7 +426,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             url:"loadDetails3.php",
             data: 'assetID='+val,
             success: function(data){
-                $("#specification").html(data);
+                $("#specification"+id).html(data);
 
                 }
             });
@@ -433,7 +435,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             url:"loadDetails4.php",
             data: 'assetID='+val,
             success: function(data){
-                $("#assetID").html(data);
+                $("#assetID"+id).html(data);
 
                 }
             });

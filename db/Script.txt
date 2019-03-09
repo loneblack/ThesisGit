@@ -2031,3 +2031,49 @@ CREATE TABLE IF NOT EXISTS `thesis`.`requestParts_details` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `thesis`.`requestParts_assets`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`requestParts_assets` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`requestParts_assets` (
+  `requestPartsID` INT NOT NULL,
+  `assetID` INT(11) NOT NULL,
+  INDEX `fk_requestParts_assets_requestParts1_idx` (`requestPartsID` ASC),
+  INDEX `fk_requestParts_assets_asset1_idx` (`assetID` ASC),
+  CONSTRAINT `fk_requestParts_assets_requestParts1`
+    FOREIGN KEY (`requestPartsID`)
+    REFERENCES `thesis`.`requestParts` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_requestParts_assets_asset1`
+    FOREIGN KEY (`assetID`)
+    REFERENCES `thesis`.`asset` (`assetID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`requestParts_assets`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`requestParts_assets` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`requestParts_assets` (
+  `requestPartsID` INT NOT NULL,
+  `assetID` INT(11) NOT NULL,
+  INDEX `fk_requestParts_assets_requestParts1_idx` (`requestPartsID` ASC),
+  INDEX `fk_requestParts_assets_asset1_idx` (`assetID` ASC),
+  CONSTRAINT `fk_requestParts_assets_requestParts1`
+    FOREIGN KEY (`requestPartsID`)
+    REFERENCES `thesis`.`requestParts` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_requestParts_assets_asset1`
+    FOREIGN KEY (`assetID`)
+    REFERENCES `thesis`.`asset` (`assetID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
