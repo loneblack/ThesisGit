@@ -10,6 +10,9 @@
 	$resultProcDat=mysqli_query($dbc,$queryProcDat);
 	$rowProcDat=mysqli_fetch_array($resultProcDat,MYSQLI_ASSOC);
 	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE (`procurementID` = '{$procID}');";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
 	
 	if (isset($_POST['submit'])){
 		$overallQty=0;

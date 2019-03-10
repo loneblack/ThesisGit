@@ -10,6 +10,10 @@
 	$resultReqInfo=mysqli_query($dbc,$queryReqInfo);
 	$rowReqInfo=mysqli_fetch_array($resultReqInfo,MYSQLI_ASSOC);
 	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$rowReqInfo['requestID']}' and `steps_id`='3'";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+	
 ?>
 <html lang="en">
 

@@ -48,6 +48,10 @@
 			$resultx=mysqli_query($dbc,$queryx);
 			$rowx=mysqli_fetch_array($resultx,MYSQLI_ASSOC);
 			
+			//INSERT TO NOTIFICATIONS TABLE
+			$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `procurementID`) VALUES (false, '{$rowx['procurementID']}');";
+			$resultNotif = mysqli_query($dbc, $sqlNotif);
+			
 			//Get Canvas Items
 			$queryi="SELECT ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,am.itemSpecification,ci.description,cid.quantity,cid.price,(ci.quantity*cid.price) as `totalPrice`,ci.assetModel,ci.assetCategory,cid.expectedDate FROM thesis.canvasitemdetails cid
 				join canvasitem ci on cid.cavasItemID=ci.cavasItemID 
@@ -67,9 +71,6 @@
 		
 		$message = "Purchase Order Submitted!";
 		$_SESSION['submitMessage'] = $message;
-		
-		
-		
 		
 		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/procurement_view_completed.php?canvasID=".$canvasID);
 	}

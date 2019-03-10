@@ -22,10 +22,14 @@
 		
 	$queryd="UPDATE `thesis`.`request` SET `step`='6' WHERE `requestID`='{$rowReqID['requestID']}'";
 	$resultd=mysqli_query($dbc,$queryd);
-		
-	$message = "Form submitted!";
 	
-	$_SESSION['submitMessage'] = $message;
+	//INSERT TO NOTIFICATIONS TABLE
+	$sqlNotif = "INSERT INTO `thesis`.`notifications` (`requestID`, `steps_id`, `isRead`) VALUES ('{$rowReqID['requestID']}', '6', true);";
+	$resultNotif = mysqli_query($dbc, $sqlNotif);
+		
+	//$message = "Form submitted!";
+	
+	//$_SESSION['submitMessage'] = $message;
 		
 	//$queryb="UPDATE `thesis`.`canvas` SET `status`='6' WHERE `canvasID`='{$canvasID}'";
 	//$resultb=mysqli_query($dbc,$queryb);
@@ -37,8 +41,7 @@
 	//$queryd="UPDATE `thesis`.`request` SET `status`='6' WHERE `requestID`='{$rowc['requestID']}'";
 	//$resultd=mysqli_query($dbc,$queryd);
 	
-
-	header('Location: '.$header);
-
+	header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/procurement_purchase_order.php?canvasID={$_SESSION['canvasID']}");
+	//header('Location: '.$header);
 
 ?>

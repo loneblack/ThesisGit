@@ -28,6 +28,10 @@
 	$queryz="UPDATE `thesis`.`request` SET `step`='3' WHERE `requestID`='{$_SESSION['requestID']}'";
 	$resultz=mysqli_query($dbc,$queryz);
 	
+	//INSERT TO NOTIFICATIONS TABLE
+	$sqlNotif = "INSERT INTO `thesis`.`notifications` (`requestID`, `steps_id`, `isRead`) VALUES ('{$_SESSION['requestID']}', '3', false);";
+	$resultNotif = mysqli_query($dbc, $sqlNotif);
+	
 	$message = "Form submitted!";
 	$_SESSION['submitMessage'] = $message;
 	

@@ -7,10 +7,15 @@
 <?php
 	require_once('db/mysql_connect.php');
 	
-	//GET NUMBER OF NEW NOTIFICATIONS
-	$queryNumNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0'";
+	//GET NUMBER OF NEW NOTIFICATIONS OF REQUESTS
+	$queryNumNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and requestID is not null";
 	$resultNumNotif=mysqli_query($dbc,$queryNumNotif);
 	$rowNumNotif=mysqli_fetch_array($resultNumNotif,MYSQLI_ASSOC);
+	
+	//GET NUMBER OF NEW NOTIFICATIONS OF PURCHASE ORDERS
+	$queryNumNotifPur="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and procurementID is not null";
+	$resultNumNotifPur=mysqli_query($dbc,$queryNumNotifPur);
+	$rowNumNotifPur=mysqli_fetch_array($resultNumNotifPur,MYSQLI_ASSOC);
 ?>
 <?php  echo '<aside>
             <div id="sidebar" class="nav-collapse">
@@ -38,7 +43,11 @@
                         <li>
                             <a href="it_po_list.php">
                                 <i class="fa fa-money"></i>
-                                <span>Purchase Orders</span>
+                                <span>Purchase Orders ';
+								if($rowNumNotifPur['numOfNotif']>'0'){
+									echo '<span class="badge badge-light">'.$rowNumNotifPur['numOfNotif'].'</span>';
+								}
+								echo '</span>
                             </a>
                         </li>
                         
