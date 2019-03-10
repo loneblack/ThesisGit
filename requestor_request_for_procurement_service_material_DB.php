@@ -55,10 +55,9 @@
     //get the id of the recently inserted item to request table
     $sql1 = "SELECT * FROM `thesis`.`request` order by requestID DESC LIMIT 1;";
     $result1 = mysqli_query($dbc, $sql1);
-
-    while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC)){
-        $id = $row['requestID'];
-    }
+    $row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC);
+    $id = $row1['requestID'];
+    
 	
 	//Set Asset Description
 	
@@ -66,8 +65,11 @@
 		$sqlUpdAssDesc = "UPDATE `thesis`.`request` SET `assetDescription` = '{$assetDescription}' WHERE `requestID` = '{$id}';";
 		$resultUpdAssDesc = mysqli_query($dbc, $sqlUpdAssDesc);
 	}
+	
+	//INSERT TO NOTIFICATIONS TABLE
+	$sqlNotif = "INSERT INTO `thesis`.`notifications` (`requestID`, `steps_id`, `isRead`) VALUES ('{$row1['requestID']}', '{$row1['step']}', false);";
+    $resultNotif = mysqli_query($dbc, $sqlNotif);
     
-   
    //insertion to requestdetails table using the id taken earlier
    for ($i=0; $i < $count; $i++) { 
 

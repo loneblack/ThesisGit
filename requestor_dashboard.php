@@ -121,19 +121,11 @@ require_once("db/mysql_connect.php");
                                                             echo "<td><span class='label label-success'>{$row['statusName']}</span></td>";
                                                         }
                                                         if($row['statusID'] == '6'){//disapproved
-                                                            if($row['step'] == 'IT Approval'){
-																echo "<td><span class='label label-danger'>IT Office Disapproved Request</span></td>";
-															}
-															elseif($row['step'] == 'Receiver Approval'){
-																echo "<td><span class='label label-danger'>Receiver Disapproved Request</span></td>";
-															}
-															else{
-																echo "<td><span class='label label-danger'>{$row['step']}</span></td>";
-															}
+															echo "<td><span class='label label-danger'>{$row['step']}</span></td>";
                                                         }
 														//echo "<td>{$row['step']}</td>";
 
-                                                          $count++;
+                                                        $count++;
                                                     }
                                                   ?>
 

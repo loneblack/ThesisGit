@@ -15,6 +15,10 @@
 	$resultReq=mysqli_query($dbc,$queryReq);
 	$rowReq=mysqli_fetch_array($resultReq,MYSQLI_ASSOC);
 	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='27'";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+	
 	//Get images from the database
 	$imageURL = 'uploads/'.$rowReq["signature"];
 	
@@ -28,6 +32,10 @@
 		$query="UPDATE `thesis`.`request` SET `status`='2', `step`='2'  WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
 		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`requestID`, `steps_id`, `isRead`) VALUES ('{$requestID}', '2', true);";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
+		
 		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_view_incomplete_request.php?requestID={$requestID}");
 	}
 	
@@ -35,6 +43,10 @@
 		
 		$query="UPDATE `thesis`.`request` SET `status`='6', `step`='23', `itReasonDissaproval`='{$_POST['reasOfDisapprov']}' WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
+		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`requestID`, `steps_id`, `isRead`) VALUES ('{$requestID}', '23', false);";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
 
 		$_SESSION['submitMessage']="Form submitted!";
 		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_view_signature.php?requestID={$requestID}");

@@ -13,6 +13,11 @@
 	$resultReq=mysqli_query($dbc,$queryReq);
 	$rowReq=mysqli_fetch_array($resultReq,MYSQLI_ASSOC);
 	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='22'";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+	
+	
 	if(isset($_POST['send'])){
 		if(!empty($_POST['recommAsset'])){
 			$_SESSION['recommAsset']=$_POST['recommAsset'];
@@ -46,11 +51,16 @@
 		}
 		$query="UPDATE `thesis`.`request` SET `step`='23' WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
+		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`requestID`, `steps_id`, `isRead`) VALUES ('{$requestID}', '23', false);";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
+		
 		$_SESSION['submitMessage']="Form submitted!";
 	}
 	
 	if(isset($_POST['disapprove'])){
-		$query="UPDATE `thesis`.`request` SET `status`='6', `reasonForDisaprroval`='{$_POST['reasOfDisapprov']}' WHERE `requestID`='{$requestID}'";
+		$query="UPDATE `thesis`.`request` SET `status`='6', `step`='28', `reasonForDisaprroval`='{$_POST['reasOfDisapprov']}' WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
 		
 		//Insert recommended asset
@@ -58,6 +68,10 @@
 			$queryRecomm="INSERT INTO `thesis`.`recommended_assets` (`requestID`, `assetID`) VALUES ('{$requestID}', '{$recommAsset}')";
 			$resultRecomm=mysqli_query($dbc,$queryRecomm);
 		}
+		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`requestID`, `steps_id`, `isRead`) VALUES ('{$requestID}', '28', false);";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
 		
 		$_SESSION['submitMessage']="Form submitted!";
 	}

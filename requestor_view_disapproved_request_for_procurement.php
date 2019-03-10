@@ -10,6 +10,10 @@
 	$resultReq=mysqli_query($dbc,$queryReq);
 	$rowReq=mysqli_fetch_array($resultReq,MYSQLI_ASSOC);
 	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='28'";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+	
 	if(isset($_POST['request'])){
 		if(!empty($_POST['recommAss'])){
 			$recommAss=$_POST['recommAss'];

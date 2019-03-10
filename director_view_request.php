@@ -8,6 +8,10 @@
 										   where r.requestID='{$requestID}'";
 	$result=mysqli_query($dbc,$query);
 	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='23'";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
 
 	if(isset($_POST['approve'])){
 		$filetmp=$_FILES["fileToUpload"]["tmp_name"];
@@ -26,13 +30,23 @@
 		// Insert image file name into database
 		$queryInsImage="UPDATE `thesis`.`request` SET `signature` = '".$filename."' WHERE `requestID` = '{$requestID}';";
 		$resultInsImage=mysqli_query($dbc,$queryInsImage);
+		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`requestID`, `steps_id`, `isRead`) VALUES ('{$requestID}', '27', false);";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
+		
 		$message = "Form submitted!";
 		$_SESSION['submitMessage'] = $message; 
 		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$requestID}");
 	}
 	elseif(isset($_POST['disapprove'])){
-		$query="UPDATE `thesis`.`request` SET `status`='6', `step`='20' WHERE `requestID`='{$requestID}'";
+		$query="UPDATE `thesis`.`request` SET `status`='6', `step`='29' WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
+		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`requestID`, `steps_id`, `isRead`) VALUES ('{$requestID}', '29', false);";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
+		
 		$message = "Form submitted!";
 		$_SESSION['submitMessage'] = $message; 
 		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$requestID}");
