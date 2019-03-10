@@ -2095,6 +2095,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`notifications` (
   `ticketID` INT(11) NULL,
   `testingID` INT(11) NULL,
   `salvage_id` INT NULL,
+  `procurementID` INT(11) NULL,
   PRIMARY KEY (`idnotifications`),
   INDEX `fk_notifications_request1_idx` (`requestID` ASC),
   INDEX `fk_notifications_request_borrow1_idx` (`borrowID` ASC),
@@ -2105,6 +2106,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`notifications` (
   INDEX `fk_notifications_ticket1_idx` (`ticketID` ASC),
   INDEX `fk_notifications_assettesting1_idx` (`testingID` ASC),
   INDEX `fk_notifications_salvage1_idx` (`salvage_id` ASC),
+  INDEX `fk_notifications_procurement1_idx` (`procurementID` ASC),
   CONSTRAINT `fk_notifications_request1`
     FOREIGN KEY (`requestID`)
     REFERENCES `thesis`.`request` (`requestID`)
@@ -2149,6 +2151,10 @@ CREATE TABLE IF NOT EXISTS `thesis`.`notifications` (
     FOREIGN KEY (`salvage_id`)
     REFERENCES `thesis`.`salvage` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_notifications_procurement1`
+    FOREIGN KEY (`procurementID`)
+    REFERENCES `thesis`.`procurement` (`procurementID`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
