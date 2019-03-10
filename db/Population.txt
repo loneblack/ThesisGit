@@ -1097,7 +1097,8 @@ INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('24', 'Requestor Schedul
 INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('25', 'Requestor Receive Requested Items');
 INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('26', 'Assigning of New Replacement');
 INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('27', 'Signature Verification');
-
+INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('28', 'IT Office Disapproved Request');
+INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('29', 'Receiver Disapproved Request');
 
 
 -- supplier populate
