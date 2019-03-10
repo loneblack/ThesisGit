@@ -4,7 +4,14 @@
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
-
+<?php
+	require_once('db/mysql_connect.php');
+	
+	//GET NUMBER OF NEW NOTIFICATIONS
+	$queryNumNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0'";
+	$resultNumNotif=mysqli_query($dbc,$queryNumNotif);
+	$rowNumNotif=mysqli_fetch_array($resultNumNotif,MYSQLI_ASSOC);
+?>
 <?php  echo '<aside>
             <div id="sidebar" class="nav-collapse">
                 <!-- sidebar menu start-->
@@ -20,7 +27,11 @@
                         <li>
                             <a href="it_requests.php">
                                 <i class="fa fa-envelope-o"></i>
-                                <span>Requests <span class="badge badge-light">4</span> </span>
+                                <span>Requests '; 
+								if($rowNumNotif['numOfNotif']>'0'){
+									echo '<span class="badge badge-light">'.$rowNumNotif['numOfNotif'].'</span>';
+								}
+								echo '</span>
                             </a>
                         </li>
                         
