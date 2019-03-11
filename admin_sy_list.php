@@ -83,8 +83,27 @@
 															$query="SELECT * FROM thesis.schoolyear order by SchoolYearID;";
 															$result=mysqli_query($dbc,$query);
 															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+																
+																//Format dates
+																$stterm1 = new DateTime($row['Term1Start']);
+																$stterm2 = new DateTime($row['Term2Start']);
+																$stterm3 = new DateTime($row['Term3Start']);
+																$enterm1 = new DateTime($row['Term1End']);
+																$enterm2 = new DateTime($row['Term2End']);
+																$enterm3 = new DateTime($row['Term3End']);
+																
+																$stterm1 = date_format($stterm1,"F j, Y");
+																$stterm2 = date_format($stterm2,"F j, Y");
+																$stterm3 = date_format($stterm3,"F j, Y");
+																$enterm1 = date_format($enterm1,"F j, Y");
+																$enterm2 = date_format($enterm2,"F j, Y");
+																$enterm3 = date_format($enterm3,"F j, Y");
+																
 																echo "<tr class='SchoolYearID' id='{$row['SchoolYearID']}'>
-																	<td>{$row['name']}</td>
+																	<td>{$row['SchoolYear']}</td>
+																	<td>{$stterm1} - {$enterm1}</td>
+																	<td>{$stterm2} - {$enterm2}</td>
+																	<td>{$stterm3} - {$enterm3}</td>
 																</tr>";
 															}
 														?>
