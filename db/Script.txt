@@ -1,3 +1,9 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
 -- -----------------------------------------------------
 -- Schema thesis
 -- -----------------------------------------------------
@@ -34,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`user` (
   `username` VARBINARY(100) NOT NULL,
   `firstName` VARBINARY(100) NOT NULL,
   `lastName` VARBINARY(100) NOT NULL,
+  `id` VARCHAR(45) NULL,
   PRIMARY KEY (`UserID`),
   INDEX `fk_User_ref_userType1_idx` (`userType` ASC),
   CONSTRAINT `fk_User_ref_userType1`
@@ -345,6 +352,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`asset` (
   `swStartDate` DATE NULL DEFAULT NULL,
   `swEndDate` DATE NULL DEFAULT NULL,
   `assetStatus` INT(11) NOT NULL,
+  `isServiceUnit` TINYINT(1) NULL,
   PRIMARY KEY (`assetID`),
   INDEX `fk_asset_supplier1_idx` (`supplierID` ASC),
   INDEX `fk_asset_assetModel1_idx` (`assetModel` ASC),
@@ -2165,3 +2173,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`notifications` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

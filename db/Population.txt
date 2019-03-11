@@ -650,14 +650,14 @@ INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `it
 
 -- user
 -- 1
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '1', AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('admin', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '1', AES_ENCRYPT('admin', 'Fusion'), AES_ENCRYPT('admin', 'Fusion'), '10292485');
 -- 2
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('Receiver', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '7', AES_ENCRYPT('Allan', 'Fusion'), AES_ENCRYPT('Borja', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('Receiver', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '7', AES_ENCRYPT('Allan', 'Fusion'), AES_ENCRYPT('Borja', 'Fusion'), '11787136');
 -- 3
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('ITOffice1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Jojo', 'Fusion'), AES_ENCRYPT('Soliva', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('ITOffice1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Jojo', 'Fusion'), AES_ENCRYPT('Soliva', 'Fusion'), '11355057');
 -- 4	
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
 VALUES ( AES_ENCRYPT('ITOffice2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Giligan', 'Fusion'), AES_ENCRYPT('Crissa', 'Fusion'));
@@ -932,7 +932,7 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('30', 'BIOM-0001', 'NyvxTtoi', '', '2'); -- ID 160, Biometrics
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0012', 'XgrwbTsa', '', '21'); -- ID 161, monitor
 
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0007', '52fVETMe', '77-BB-D9-A5-D0-1F', '1'); -- ID 162, PC SERVICE UNIT
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0008', '52fVETMe', '77-BB-D9-A5-D0-1F', '1'); -- ID 162, PC SERVICE UNIT
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0014', 'ggmZ2NuL', '', '21'); -- ID 163, Hard Disk Drive
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0014', 'quT5bgib', '', '21'); -- ID 164, Power Supply
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0014', 'mgi6XZYz', '', '21'); -- ID 165, Processor
