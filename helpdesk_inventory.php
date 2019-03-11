@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php 
+	session_start();
+	require_once('db/mysql_connect.php');
+?>
 <head>
     <meta charset="utf-8">
 
@@ -40,7 +43,7 @@
 
         </header>
         <!--header end-->
-        <?php include 'it_navbar.php' ?>
+        <?php include 'helpdesk_navbar.php' ?>
 
         <!--main content-->
         <section id="main-content">
@@ -89,7 +92,7 @@
                                                     LEFT JOIN employee e ON aa.personresponsibleID = e.employeeID
                                                     LEFT JOIN building b ON aa.BuildingID = b.BuildingID
                                                     LEFT JOIN floorandroom fr ON aa.FloorAndRoomID = fr.FloorAndRoomID
-                                                    WHERE rac.name = 'laptop' OR rac.name = 'VGA Cable' OR rac.name='Projector';";
+                                                    WHERE rac.name = 'laptop' OR rac.name = 'VGA Cable' OR rac.name='Projector' OR rac.name='Cable' OR rac.name = 'HDMI';";
 													$result=mysqli_query($dbc,$query);
 													
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){

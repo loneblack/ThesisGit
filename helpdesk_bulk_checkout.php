@@ -70,39 +70,32 @@
                                 <div class="panel-body">
                                     <div class="position-center">
                                         <form class="form-horizontal" role="form">
-                                            
+
                                             <div class="form-group">
                                                 <label for="brand" class="col-lg-2 col-sm-2 control-label">Checkout To</label>
                                                 <div class="col-lg-6">
-                                                    <input list="borrower" class="form-control">
-                                                    <datalist id="borrower">
-                                                        <option class="list-group-item">(11426829) Marvin Lao</option>
-                                                        <option class="list-group-item">(11446829) Marvin Loa</option>
-                                                        <option class="list-group-item">(11426822) Darrell Tin</option>
-                                                        <option class="list-group-item">(11426822) Sukh Mih Deek</option>
-                                                        <option class="list-group-item">(11426821) Tak Sam Bong</option>
-                                                    </datalist>
-                                                </div>
-                                            </div>
+                                                    <select class="form-control">
+                                                        <?php 
+                                                                $query="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model` FROM asset a 
+                                                                LEFT JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                LEFT JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                LEFT JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                                LEFT JOIN ref_assetstatus ras ON a.assetStatus = ras.id
+                                                                WHERE rac.name = 'HDMI Cable' AND ras.id = 1;";
+                                                                $result=mysqli_query($dbc,$query);
 
-                                            <div class="form-group">
-                                                <label class="control-label col-lg-2 col-sm-2">Checkout Date</label>
-                                                <div class="col-lg-6">
-                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="" />
+                                                                while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                                    echo "<option value='{$row['assetID']}'>{$row['propertyCode']} -  {$row['brand']} {$row['model']}</option>";
+                                                                }
+                                                    ?>
+                                                    </select>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="control-label col-lg-2 col-sm-2">Expected Checkin Date</label>
                                                 <div class="col-lg-6">
-                                                    <input class="form-control form-control-inline input-medium default-date-picker" size="10" type="text" value="" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-2 col-sm-2 control-label">Notes</label>
-                                                <div class="col-lg-10">
-                                                    <textarea class="form-control" rows="5" id="notes" placeholder="Notes"></textarea>
+                                                    <input class="form-control form-control-inline" size="10" type="date" min="<?php echo date('Y-m-d'); ?>" />
                                                 </div>
                                             </div>
 
@@ -110,13 +103,94 @@
                                                 <label class="col-lg-2 col-sm-2 control-label">Select Asset</label>
                                                 <div class="col-lg-6">
                                                     <select multiple name="e9" id="e9" style="width:300px" class="populate">
-                                                        <optgroup label="Individual Assets">
-                                                            <option value="AK">(123456) - Dell VGA Adapter</option>
-                                                            <option value="HI">(324234) - Apple HMDI</option>
+
+
+                                                        <optgroup label="HDMI Cable">
+                                                            <option value="" class="hidden"></option>
+                                                            <?php 
+                                                                $query1="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model` FROM asset a 
+                                                                LEFT JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                LEFT JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                LEFT JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                                LEFT JOIN ref_assetstatus ras ON a.assetStatus = ras.id
+                                                                WHERE rac.name = 'HDMI Cable' AND ras.id = 1;";
+                                                                $result1=mysqli_query($dbc,$query1);
+
+                                                                while($rowCab=mysqli_fetch_array($result1,MYSQLI_ASSOC)){
+                                                                    echo "<option value='{$rowCab['assetID']}'>{$rowCab['propertyCode']} -  {$rowCab['brand']} {$rowCab['model']}</option>";
+                                                                }
+                                                            ?>
                                                         </optgroup>
-                                                        <optgroup label="Combined Assets">
-                                                            <option value="CA">(123324) - ROG Gaming Series</option>
-                                                            <option value="NV">(543232) - Nevada</option>
+
+
+                                                        <optgroup label="Extension">
+                                                            <option value="" class="hidden"></option>
+                                                            <?php 
+                                                                $query2="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model` FROM asset a 
+                                                                LEFT JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                LEFT JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                LEFT JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                                LEFT JOIN ref_assetstatus ras ON a.assetStatus = ras.id
+                                                                WHERE rac.name = 'Extension' AND ras.id = 1;";
+                                                                $result2=mysqli_query($dbc,$query2);
+
+                                                                while($rowExt=mysqli_fetch_array($result2,MYSQLI_ASSOC)){
+                                                                    echo "<option value='{$rowExt['assetID']}'>{$rowExt['propertyCode']} -  {$rowExt['brand']} {$rowExt['model']}</option>";
+                                                                }
+                                                            ?>
+                                                        </optgroup>
+
+
+                                                        <optgroup label="Laptop">
+                                                            <option value="" class="hidden"></option>
+                                                            <?php 
+                                                                $query3="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model` FROM asset a 
+                                                                LEFT JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                LEFT JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                LEFT JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                                LEFT JOIN ref_assetstatus ras ON a.assetStatus = ras.id
+                                                                WHERE rac.name = 'Laptop' AND ras.id = 1;";
+                                                                $result3=mysqli_query($dbc,$query3);
+
+                                                                while($rowLap=mysqli_fetch_array($result3,MYSQLI_ASSOC)){
+                                                                    echo "<option value='{$rowLap['assetID']}'>{$rowLap['propertyCode']} -  {$rowLap['brand']} {$rowLap['model']}</option>";
+                                                                }
+                                                            ?>
+                                                        </optgroup>
+
+                                                        <optgroup label="Projector">
+                                                            <option value="" class="hidden"></option>
+                                                            <?php 
+                                                                $query5="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model` FROM asset a 
+                                                                LEFT JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                LEFT JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                LEFT JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                                LEFT JOIN ref_assetstatus ras ON a.assetStatus = ras.id
+                                                                WHERE rac.name = 'Projector' AND ras.id = 1;";
+                                                                $result5=mysqli_query($dbc,$query5);
+
+                                                                while($rowPro=mysqli_fetch_array($result5,MYSQLI_ASSOC)){
+                                                                    echo "<option value='{$rowPro['assetID']}'>{$rowPro['propertyCode']} -  {$rowPro['brand']} {$rowPro['model']}</option>";
+                                                                }
+                                                            ?>
+                                                        </optgroup>
+
+
+                                                        <optgroup label="VGA">
+                                                            <option value="" class="hidden"></option>
+                                                            <?php 
+                                                                $query4="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model` FROM asset a 
+                                                                LEFT JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                LEFT JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                LEFT JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                                LEFT JOIN ref_assetstatus ras ON a.assetStatus = ras.id
+                                                                WHERE rac.name = 'VGA Cable' AND ras.id = 1;";
+                                                                $result4=mysqli_query($dbc,$query4);
+
+                                                                while($rowvga=mysqli_fetch_array($result4,MYSQLI_ASSOC)){
+                                                                    echo "<option value='{$rowvga['assetID']}'>{$rowvga['propertyCode']} -  {$rowvga['brand']} {$rowvga['model']}</option>";
+                                                                }
+                                                            ?>
                                                         </optgroup>
                                                     </select>
                                                 </div>
