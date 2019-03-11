@@ -38,6 +38,7 @@
                                 <span>Asset</span>
                             </a>
                             <ul class="sub">
+                                <li><a href="helpdesk_inventory.php">Inventory</a></li>
                                 <li><a href="helpdesk_bulk_checkin.php">Checkin</a></li>
                                 <li><a href="helpdesk_bulk_checkout.php">Checkout</a></li>
                             </ul>
