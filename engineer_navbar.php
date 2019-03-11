@@ -4,7 +4,7 @@
 	$totalNotifs=0;
 	
 	//GET NUMBER OF NEW NOTIFICATIONS OF TICKETS
-	$queryNumNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and ticketID is not null";
+	$queryNumNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications n join ticket t on n.ticketID=t.ticketID where n.isRead='0' and n.ticketID is not null and t.assigneeUserID='{$_SESSION['userID']}'";
 	$resultNumNotif=mysqli_query($dbc,$queryNumNotif);
 	$rowNumNotif=mysqli_fetch_array($resultNumNotif,MYSQLI_ASSOC);
 	
