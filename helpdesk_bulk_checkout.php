@@ -75,19 +75,31 @@
                                                 <label for="brand" class="col-lg-2 col-sm-2 control-label">Checkout To</label>
                                                 <div class="col-lg-6">
                                                     <select class="form-control">
-                                                        <?php 
-                                                                $query="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model` FROM asset a 
-                                                                LEFT JOIN assetmodel am ON a.assetModel = am.assetModelID
-                                                                LEFT JOIN ref_brand rb ON am.brand = rb.brandID
-                                                                LEFT JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
-                                                                LEFT JOIN ref_assetstatus ras ON a.assetStatus = ras.id
-                                                                WHERE rac.name = 'HDMI Cable' AND ras.id = 1;";
-                                                                $result=mysqli_query($dbc,$query);
+                                                            <optgroup label="Faculty/ Staff">
+                                                                <?php 
+                                                                        $query="SELECT u.userID, u.id AS `idnum`, e.name FROM user u 
+                                                                        JOIN employee e ON e.employeeID = u.userID
+                                                                        WHERE u.userType = 5;";
+                                                                        $result=mysqli_query($dbc,$query);
 
-                                                                while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-                                                                    echo "<option value='{$row['assetID']}'>{$row['propertyCode']} -  {$row['brand']} {$row['model']}</option>";
-                                                                }
-                                                    ?>
+                                                                        while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                                            echo "<option value='{$row['userID']}'>({$row['idnum']}) -  {$row['name']} </option>";
+                                                                        }
+                                                                ?>
+                                                            </optgroup>
+                                                        
+                                                            <optgroup label="Students">
+                                                                <?php 
+                                                                        $querya="SELECT u.userID, u.id AS `idnum`, e.name FROM user u 
+                                                                        JOIN employee e ON e.employeeID = u.userID
+                                                                        WHERE u.userType = 8;";
+                                                                        $resulta=mysqli_query($dbc,$querya);
+
+                                                                        while($rowa=mysqli_fetch_array($resulta,MYSQLI_ASSOC)){
+                                                                            echo "<option value='{$rowa['userID']}'>({$rowa['idnum']}) -  {$rowa['name']} </option>";
+                                                                        }
+                                                                ?>
+                                                            </optgroup>
                                                     </select>
                                                 </div>
                                             </div>
