@@ -81,11 +81,18 @@
         //Request for parts code
         if(!empty($_POST['quantity0'])){
 
-            //Insert new request parts
-            $queryReqPart="INSERT INTO `thesis`.`requestParts` ( `serviceID`, `statusID`, `date`, `UserID`) VALUES ('{$serviceID}', '1', now(), '{$userID}');";//status ID set to 1 for perding status
-            $resultReqPart=mysqli_query($dbc,$queryReqPart);
+            //Check if existing
+            $queryGetRequestID="SELECT * FROM `thesis`.`requestParts` WHERE `serviceID`='{$serviceID}';";
+            $resultGetRequestID=mysqli_query($dbc,$queryGetRequestID);
 
-            //GET newly inserted request parts id
+            if (mysqli_num_rows($resultGetRequestID)==0) {
+                //Insert new request parts
+                $queryReqPart="INSERT INTO `thesis`.`requestParts` ( `serviceID`, `statusID`, `date`, `UserID`) VALUES ('{$serviceID}', '1', now(), '{$userID}');";
+                //status ID set to 1 for perding status
+                $resultReqPart=mysqli_query($dbc,$queryReqPart);
+            }
+            
+            //GET request parts id
             $queryGetRequestID="SELECT * FROM `thesis`.`requestParts` WHERE `serviceID`='{$serviceID}';";
             $resultGetRequestID=mysqli_query($dbc,$queryGetRequestID);
             $rowGetRequestID=mysqli_fetch_array($resultGetRequestID,MYSQLI_ASSOC);
@@ -153,6 +160,6 @@
         }
 
         $header = $_SESSION['previousPage'];
-        header('Location: '.$header);
+        //header('Location: '.$header);
     
 ?>

@@ -7,7 +7,7 @@ $id = $_GET['id'];
 $_SESSION['previousPage'] = "it_view_repair_request_parts.php?id={$id}";
 require_once("db/mysql_connect.php");
 
-$query =  "SELECT * FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id JOIN employee e ON r.UserID = e.UserID JOIN ref_status rs ON r.statusID = rs.statusID WHERE r.id = 1;";
+$query =  "SELECT * FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id JOIN employee e ON r.UserID = e.UserID JOIN ref_status rs ON r.statusID = rs.statusID WHERE r.id = {$id};";
 $result = mysqli_query($dbc, $query);
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
