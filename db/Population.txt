@@ -726,10 +726,10 @@ INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `Use
 INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Jan Austin', 'Engineer', '0928349444', 'jan_austin@dlsu.edu.ph', '12', '15');
 INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Marvin Lao', 'Engineer', '0928559444', 'marvin.lao@dlsu.edu.ph', '13', '12');
 INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Johannes Sia', 'Student', '039444421', 'johannes_sia@dlsu.edu.ph', '14', '12');
-INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Jan Austen', 'Student', '091824441', 'jan_austen@dlsu.edu.ph', '8', '12'); -- Jan Austen, student
-INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Jane Lawrence', 'Student', '096345441', 'jane_lawrence@dlsu.edu.ph', '8', '12'); -- Jane Lawrence, student
-INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Dennis Paolo', 'Student', '091247333', 'dennis_paolo@dlsu.edu.ph', '8', '12'); -- Dennis Paolo, student
-INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Justin Time', 'Student', '091385553', 'justin_time@dlsu.edu.ph', '8', '12'); -- Justin Time, student
+INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Jan Austen', 'Student', '091824441', 'jan_austen@dlsu.edu.ph', '15', '12'); -- Jan Austen, student
+INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Jane Lawrence', 'Student', '096345441', 'jane_lawrence@dlsu.edu.ph', '16', '12'); -- Jane Lawrence, student
+INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Dennis Paolo', 'Student', '091247333', 'dennis_paolo@dlsu.edu.ph', '17', '12'); -- Dennis Paolo, student
+INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Justin Time', 'Student', '091385553', 'justin_time@dlsu.edu.ph', '18', '12'); -- Justin Time, student
 
 
 -- Insertion of Department list ----------------------------------------------------------------------------------
