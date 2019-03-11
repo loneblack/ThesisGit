@@ -28,7 +28,10 @@
 					where r.requestID='{$requestID}'";
 	$resultReq=mysqli_query($dbc,$queryReq);			
 	$rowReq=mysqli_fetch_array($resultReq,MYSQLI_ASSOC);
-
+	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE (`Delivery_id` = '{$deliveryID}');";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
 	
 	if(isset($_POST['submit'])){
 		if($_POST['category']=='25'){
@@ -76,6 +79,10 @@
 				$queryLatTick="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
 				$resultLatTick=mysqli_query($dbc,$queryLatTick);
 				$rowLatTick=mysqli_fetch_array($resultLatTick,MYSQLI_ASSOC);
+				
+				//INSERT TO NOTIFICATIONS TABLE
+				$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `ticketID`) VALUES (false, '{$rowLatTick['ticketID']}');";
+				$resultNotif = mysqli_query($dbc, $sqlNotif);
 				
 				//Select Asset testingID
 				$querySelAssTest="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$rowLatAssTest['testingID']}'";
@@ -479,11 +486,13 @@
     <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
    
     <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-
-
+	
+	<script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+	
     <script src="js/scripts.js"></script>
     <script src="js/advanced-form.js"></script>
-
+	
+	
 </body>
 
 </html>
