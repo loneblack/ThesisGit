@@ -692,6 +692,16 @@ VALUES ( AES_ENCRYPT('marvinlao', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
 VALUES ( AES_ENCRYPT('johannessia', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Johannes', 'Fusion'), AES_ENCRYPT('Sia', 'Fusion'));
 
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+VALUES ( AES_ENCRYPT('janausten', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Jan', 'Fusion'), AES_ENCRYPT('Austen', 'Fusion')); -- janausten, Student
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+VALUES ( AES_ENCRYPT('janelawrence', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Jane', 'Fusion'), AES_ENCRYPT('Lawrence', 'Fusion')); -- janelawrence, Student
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+VALUES ( AES_ENCRYPT('dennispaolo', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Dennis', 'Fusion'), AES_ENCRYPT('Paolo', 'Fusion')); -- dennispaolo, Student
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
+VALUES ( AES_ENCRYPT('justintime', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Justin', 'Fusion'), AES_ENCRYPT('Time', 'Fusion')); -- justintime, Student 
+
+
 
 -- Employee
 INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ('Test User', 'Test', '09999999999', 'test@dlsu.edu.ph', '1', '1');
@@ -708,7 +718,10 @@ INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `Use
 INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Jan Austin', 'Engineer', '0928349444', 'jan_austin@dlsu.edu.ph', '12', '15');
 INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Marvin Lao', 'Engineer', '0928559444', 'marvin.lao@dlsu.edu.ph', '13', '12');
 INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Johannes Sia', 'Student', '039444421', 'johannes_sia@dlsu.edu.ph', '14', '12');
-
+INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Jan Austen', 'Student', '091824441', 'jan_austen@dlsu.edu.ph', '8', '12'); -- Jan Austen, student
+INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Jane Lawrence', 'Student', '096345441', 'jane_lawrence@dlsu.edu.ph', '8', '12'); -- Jane Lawrence, student
+INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Dennis Paolo', 'Student', '091247333', 'dennis_paolo@dlsu.edu.ph', '8', '12'); -- Dennis Paolo, student
+INSERT INTO `thesis`.`employee` ( `name`, `position`, `contactNo`, `email`, `UserID`, `FloorAndRoomID`) VALUES ( 'Justin Time', 'Student', '091385553', 'justin_time@dlsu.edu.ph', '8', '12'); -- Justin Time, student
 
 
 -- Insertion of Department list ----------------------------------------------------------------------------------
