@@ -227,8 +227,6 @@
 																	echo "<option value='{$rowDept['DepartmentID']}'>{$rowDept['name']}</option>";
 																}
 															?>
-                                                            <!--<option value="1">Accounting</option>
-                                                            <option value="2">Computer Studies</option>-->
                                                         </optgroup>
                                                     </select>
                                                 </div>
