@@ -1,3 +1,21 @@
+<?php
+	require_once('db/mysql_connect.php');
+	$totalNotifs=0;
+	
+	//GET NOTIFICATIONS FOR REQUESTOR
+	$queryNumNotifDel="SELECT Count(*) as `numOfNotif` FROM thesis.notifications n join requestor_receiving rr on n.requestor_receiving_id=rr.id
+															join request r on rr.requestID=r.requestID 
+                                                            where n.isRead='0' and n.requestor_receiving_id is not null and r.UserID='{$_SESSION['userID']}'";
+	$resultNumNotifDel=mysqli_query($dbc,$queryNumNotifDel);
+	$rowNumNotifDel=mysqli_fetch_array($resultNumNotifDel,MYSQLI_ASSOC);
+	
+	$queryNumNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications n join request r on n.requestID=r.requestID where n.isRead='0' and r.UserID='{$_SESSION['userID']}' and n.requestID is not null and (n.steps_id='28' or n.steps_id='29')";
+	$resultNumNotif=mysqli_query($dbc,$queryNumNotif);
+	$rowNumNotif=mysqli_fetch_array($resultNumNotif,MYSQLI_ASSOC);
+	
+	$totalNotifs=$rowNumNotifDel['numOfNotif']+$rowNumNotif['numOfNotif'];
+	
+?>
 <?php  echo '<aside>
             <div id="sidebar" class="nav-collapse">
                 <!-- sidebar menu start-->
@@ -6,7 +24,11 @@
                         <li>
                             <a href="requestor_dashboard.php">
                                 <i class="fa fa-dashboard"></i>
-                                <span>Dashboard</span>
+                                <span>Dashboard ';
+								if($totalNotifs>'0'){
+									echo '<span class="badge badge-light">'.$totalNotifs.'</span>';
+								}
+								echo '</span>
                             </a>
                         </li>
                         
