@@ -28,6 +28,10 @@
 	$result7=mysqli_query($dbc,$query7);
 	$row7 = mysqli_fetch_array($result7, MYSQLI_ASSOC);
 	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE (`ticketID` = '{$ticketID}');";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+	
 	if(isset($_POST['save'])){
 		$testStat=$_POST['testStat'];
 		$listOfTestAss=$_POST['listOfTestAss'];
@@ -271,9 +275,20 @@
 			}
 		}
 		
-		//UPDATE ASSET TESTING STATUS
-		$query8="UPDATE `thesis`.`assettesting` SET `statusID`='7', `endTestDate`=now() WHERE `testingID`='{$row7['testingID']}'";
-		$result8=mysqli_query($dbc,$query8);
+		//GET NEW ASSET TESTING DATA
+		$queryNewAssTest="SELECT * FROM thesis.ticket where ticketID='{$ticketID}'";
+		$resultNewAssTest=mysqli_query($dbc,$queryNewAssTest);
+		$rowNewAssTest = mysqli_fetch_array($resultNewAssTest, MYSQLI_ASSOC);
+		
+		if(isset($rowNewAssTest['testingID'])){
+			//UPDATE ASSET TESTING STATUS
+			$query8="UPDATE `thesis`.`assettesting` SET `statusID`='7', `endTestDate`=now() WHERE `testingID`='{$rowNewAssTest['testingID']}'";
+			$result8=mysqli_query($dbc,$query8);
+		
+			//INSERT TO NOTIFICATIONS TABLE
+			$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `testingID`) VALUES (false, '{$rowNewAssTest['testingID']}');";
+			$resultNotif = mysqli_query($dbc, $sqlNotif);
+		}
 		
 		//UPDATE TICKET STATUS TO CLOSED
 		$queryTicStat="UPDATE `thesis`.`ticket` SET `status`='7', `dateClosed`=now() WHERE `ticketID`='{$ticketID}'";
