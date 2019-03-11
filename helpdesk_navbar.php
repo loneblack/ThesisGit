@@ -1,3 +1,16 @@
+<?php
+	require_once('db/mysql_connect.php');
+	
+	$totalNotifs=0;
+	
+	//GET NUMBER OF NEW NOTIFICATIONS OF PURCHASE REQUESTS
+	$queryNumNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and Delivery_id is not null";
+	$resultNumNotif=mysqli_query($dbc,$queryNumNotif);
+	$rowNumNotif=mysqli_fetch_array($resultNumNotif,MYSQLI_ASSOC);
+	
+	$totalNotifs=$rowNumNotif['numOfNotif'];
+?>
+
 <?php  echo '<aside>
             <div id="sidebar" class="nav-collapse">
                 <!-- sidebar menu start-->
@@ -21,7 +34,11 @@
                         <li class="sub-menu">
                             <a href="helpdesk_all_request.php">
                                 <i class="fa fa-question"></i>
-                                <span>Requests</span>
+                                <span>Requests ';
+								if($totalNotifs>'0'){
+									echo '<span class="badge badge-light">'.$totalNotifs.'</span>';
+								}
+								echo '</span>
                             </a>
                         </li>
                         
