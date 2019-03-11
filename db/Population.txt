@@ -659,47 +659,47 @@ VALUES ( AES_ENCRYPT('Receiver', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '7'
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
 VALUES ( AES_ENCRYPT('ITOffice1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Jojo', 'Fusion'), AES_ENCRYPT('Soliva', 'Fusion'), '11355057');
 -- 4	
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('ITOffice2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Giligan', 'Fusion'), AES_ENCRYPT('Crissa', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('ITOffice2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '2', AES_ENCRYPT('Giligan', 'Fusion'), AES_ENCRYPT('Crissa', 'Fusion'), '10849278');
 -- 5
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('Helpdesk', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '3', AES_ENCRYPT('Christina', 'Fusion'), AES_ENCRYPT('Lao', 'Fusion')); 
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('Helpdesk', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '3', AES_ENCRYPT('Christina', 'Fusion'), AES_ENCRYPT('Lao', 'Fusion'), '10644141'); 
 -- 6
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('Procurement', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '6', AES_ENCRYPT('Ezhra', 'Fusion'), AES_ENCRYPT('Bahala', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('Procurement', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '6', AES_ENCRYPT('Ezhra', 'Fusion'), AES_ENCRYPT('Bahala', 'Fusion'), '11789262');
 -- 7
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('Engineer1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Aaron', 'Fusion'), AES_ENCRYPT('Capuno', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('Engineer1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Aaron', 'Fusion'), AES_ENCRYPT('Capuno', 'Fusion'), '10945292');
 -- 8
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('Engineer2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Jane', 'Fusion'), AES_ENCRYPT('Doe', 'Fusion')); 
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('Engineer2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Jane', 'Fusion'), AES_ENCRYPT('Doe', 'Fusion'), '11585557'); 
 -- 9
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('Requestor1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Matthew', 'Fusion'), AES_ENCRYPT('Vidallon', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('Requestor1', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Matthew', 'Fusion'), AES_ENCRYPT('Vidallon', 'Fusion'), '10187275');
 -- 10
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('Requestor2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Ronald', 'Fusion'), AES_ENCRYPT('Petrola', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('Requestor2', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Ronald', 'Fusion'), AES_ENCRYPT('Petrola', 'Fusion'), '10684716');
 -- 11
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('Requestor3', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Gian', 'Fusion'), AES_ENCRYPT('Purisima', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('Requestor3', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Gian', 'Fusion'), AES_ENCRYPT('Purisima', 'Fusion'), '10501702');
 -- 12
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('Jan', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Jan', 'Fusion'), AES_ENCRYPT('Austin', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('Jan', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Jan', 'Fusion'), AES_ENCRYPT('Austin', 'Fusion'), '10241505');
 -- 13
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('marvinlao', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Marvin', 'Fusion'), AES_ENCRYPT('Lao', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('marvinlao', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '4', AES_ENCRYPT('Marvin', 'Fusion'), AES_ENCRYPT('Lao', 'Fusion'), '11188999');
 -- 14
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('johannessia', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Johannes', 'Fusion'), AES_ENCRYPT('Sia', 'Fusion'));
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('johannessia', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Johannes', 'Fusion'), AES_ENCRYPT('Sia', 'Fusion'), '10651157');
 
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('janausten', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Jan', 'Fusion'), AES_ENCRYPT('Austen', 'Fusion')); -- janausten, Student
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('janelawrence', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Jane', 'Fusion'), AES_ENCRYPT('Lawrence', 'Fusion')); -- janelawrence, Student
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('dennispaolo', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Dennis', 'Fusion'), AES_ENCRYPT('Paolo', 'Fusion')); -- dennispaolo, Student
-INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`)
-VALUES ( AES_ENCRYPT('justintime', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Justin', 'Fusion'), AES_ENCRYPT('Time', 'Fusion')); -- justintime, Student 
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('janausten', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Jan', 'Fusion'), AES_ENCRYPT('Austen', 'Fusion'), '11649867'); -- janausten, Student
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('janelawrence', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Jane', 'Fusion'), AES_ENCRYPT('Lawrence', 'Fusion'), '11888119'); -- janelawrence, Student
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('dennispaolo', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Dennis', 'Fusion'), AES_ENCRYPT('Paolo', 'Fusion'), '10222929'); -- dennispaolo, Student
+INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
+VALUES ( AES_ENCRYPT('justintime', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Justin', 'Fusion'), AES_ENCRYPT('Time', 'Fusion'), '10445528'); -- justintime, Student 
 
 
 
