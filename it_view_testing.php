@@ -9,6 +9,10 @@
 	$resultTesDat=mysqli_query($dbc,$queryTesDat);
 	$rowTesDat=mysqli_fetch_array($resultTesDat,MYSQLI_ASSOC);
 	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE (`testingID` = '{$testingID}');";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+	
 	if(isset($_POST['send'])){
 		
 		if($rowTesDat['remarks']=="Asset Request")
@@ -47,7 +51,10 @@
 			$queryGetReceiving="SELECT * FROM `thesis`.`requestor_receiving` where requestID='{$rowReqID['requestID']}' order by id desc limit 1";
 			$resultGetReceiving=mysqli_query($dbc,$queryGetReceiving);
 			$rowGetReceiving=mysqli_fetch_array($resultGetReceiving,MYSQLI_ASSOC);
-
+			
+			//INSERT TO NOTIFICATIONS TABLE
+			$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `requestor_receiving_id`) VALUES (false, '{$rowGetReceiving['id']}');";
+			$resultNotif = mysqli_query($dbc, $sqlNotif);
 			
 			//Functioning asset
 			foreach(array_combine($assetPass, $warranty) as $assPass => $war){
@@ -117,6 +124,10 @@
 				$queryProcID="SELECT * FROM thesis.procurement order by procurementID desc limit 1";
 				$resultProcID=mysqli_query($dbc,$queryProcID);
 				$rowProcID=mysqli_fetch_array($resultProcID,MYSQLI_ASSOC);
+				
+				//INSERT TO NOTIFICATIONS TABLE
+				$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `procurementID`) VALUES (false, '{$rowProcID['procurementID']}');";
+				$resultNotif = mysqli_query($dbc, $sqlNotif);
 				
 				//GET ALL DEFECT ASSETS
 				$query0="SELECT atd.asset_assetID as `assetID`, count(atd.asset_assetID) as `qty`, a.unitCost,(count(atd.asset_assetID)*a.unitCost) as `totalCost`,am.assetCategory,a.assetModel FROM thesis.assettesting_details atd 
