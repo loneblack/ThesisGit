@@ -35,6 +35,10 @@
 		$resultLatDeliv=mysqli_query($dbc,$queryLatDeliv);
 		$rowLatDeliv=mysqli_fetch_array($resultLatDeliv,MYSQLI_ASSOC);
 		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `Delivery_id`) VALUES (false, '{$rowLatDeliv['id']}');";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
+		
 		for($i=0;$i<sizeOf($assetModelIDArr);$i++){
 			//INSERT INTO DELIVERY DETAILS TABLE
 			$queryDelivDet="INSERT INTO `thesis`.`deliverydetails` (`DeliveryID`, `quantity`, `ref_assetCategoryID`, `assetModelID`, `itemsReceived`, `deliveryDate`) VALUES ('{$rowLatDeliv['id']}', '{$qtyOrdered[$i]}', '{$assetCategoryIDArr[$i]}', '{$assetModelIDArr[$i]}', '{$qtyReceived[$i]}', '{$dateReceived[$i]}')";
