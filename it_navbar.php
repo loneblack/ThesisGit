@@ -16,6 +16,11 @@
 	$queryNumNotifPur="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and procurementID is not null";
 	$resultNumNotifPur=mysqli_query($dbc,$queryNumNotifPur);
 	$rowNumNotifPur=mysqli_fetch_array($resultNumNotifPur,MYSQLI_ASSOC);
+	
+	//GET NUMBER OF NEW NOTIFICATIONS OF PURCHASE ORDERS
+	$queryNumNotifTest="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and testingID is not null";
+	$resultNumNotifTest=mysqli_query($dbc,$queryNumNotifTest);
+	$rowNumNotifTest=mysqli_fetch_array($resultNumNotifTest,MYSQLI_ASSOC);
 ?>
 <?php  echo '<aside>
             <div id="sidebar" class="nav-collapse">
@@ -54,7 +59,11 @@
                         <li>
                             <a href="it_testing_list.php">
                                 <i class="fa fa-tasks"></i>
-                                <span>Testing</span>
+                                <span>Testing ';
+								if($rowNumNotifTest['numOfNotif']>'0'){
+									echo '<span class="badge badge-light">'.$rowNumNotifTest['numOfNotif'].'</span>';
+								}
+								echo '</span>
                             </a>
                         </li>
                         
