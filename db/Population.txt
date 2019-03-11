@@ -960,7 +960,7 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('31', 'VGA-0003', 'Fxg3SFty', '', '1'); -- ID 178, VGA Cable
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('31', 'VGA-0004', 'Fxg3SFty', '', '1'); -- ID 179, VGA Cable
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('31', 'VGA-0005', 'Fxg3SFty', '', '1'); -- ID 180, VGA Cable
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('32', 'LPTP-0002', 'Xsdf4s2', '08-55-96-5D-9E-17', '1'); -- ID 181, Laptop
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('33', 'LPTP-0002', 'Xsdf4s2', '08-55-96-5D-9E-17', '1'); -- ID 181, Laptop
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('34', 'HDMI-0001', 'XAd54N3', '', '1'); -- ID 182, HDMI
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('35', 'EXTN-0001', 'AB44H64F', '', '1'); -- ID 183, Extension
 
