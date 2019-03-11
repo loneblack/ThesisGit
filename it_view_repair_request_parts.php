@@ -337,16 +337,16 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         <input type='text' disabled class='form-control' value = '{$category}'>
                                                     </td>
                                                         <td id='brand".$count."'>
-                                                            <input class='form-control' value='{$row['brand']}'disabled>
+                                                            <input class='form-control' disabled>
                                                         </td>
                                                         <td id='description".$count."'>
-                                                            <input class='form-control' value='{$row['modelDescription']}' disabled>
+                                                            <input class='form-control'  disabled>
                                                         </td>
                                                         <td id='specification".$count."'>
-                                                            <input class='form-control' value='{$row['itemSpecification']}' disabled>
+                                                            <input class='form-control'  disabled>
                                                         </td>
                                                         <td id='assetID".$count."' style='display: none'>
-                                                            <input class='form-control' name='assets[]' value='{$row['assetID']}' disabled>
+                                                            <input class='form-control' name='assets[]'  disabled>
                                                         </td>
                                                 </tr>";
 
