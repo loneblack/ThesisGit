@@ -8,6 +8,10 @@ $_SESSION['id'] = $_GET['id'];
 
 require_once("db/mysql_connect.php");
 
+//Update notifications
+$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `borrowID` = '{$id}' and `steps_id`='12'";
+$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+
 $query =  "SELECT *, o.Name AS 'office', d.name AS 'department', org.name AS 'organization', b.name AS 'building'
               FROM thesis.request_borrow r 
               LEFT JOIN department d ON r.DepartmentID = d.DepartmentID 
@@ -70,6 +74,10 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         $query="UPDATE `thesis`.`request_borrow` SET `statusID` = '2', `steps`='13' WHERE (`borrowID` = '{$id}');";
         $result=mysqli_query($dbc,$query);
 	   
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`borrowID`, `steps_id`, `isRead`) VALUES ('{$id}', '13', false);";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
+	   
         //insert to assset testing
         $queryTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `remarks`, `serviceType`, `borrowID`)
                             VALUES ('1', '{$personresponsibleID}', 'Borrow', '25', '{$id}');";
@@ -90,6 +98,10 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             //update asset status
             $QAssetStatus = "UPDATE `thesis`.`asset` SET `assetStatus` = '8' WHERE (`assetID` = '{$recommAsset}');";
             $RAssetStatus = mysqli_query($dbc,$QAssetStatus);
+			
+			//INSERT TO ASSET AUDIT
+			$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$recommAsset}', '8');";
+			$resultAssAud=mysqli_query($dbc,$queryAssAud);
 		}
 		
 		/* Backup Code
@@ -125,8 +137,13 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_view_open_service_equipment_request.php?id=".$_SESSION['id']);
     }
     elseif(isset($_POST['denyBtn'])){
-        $query="UPDATE `thesis`.`request_borrow` SET `statusID` = '2', `steps`='20' WHERE (`borrowID` = '{$id}');";
+        $query="UPDATE `thesis`.`request_borrow` SET `statusID` = '6', `steps`='20' WHERE (`borrowID` = '{$id}');";
         $result=mysqli_query($dbc,$query);
+		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`borrowID`, `steps_id`, `isRead`) VALUES ('{$id}', '20', false);";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
+		
 		$message = "Form submitted!";
 		$_SESSION['submitMessage'] = $message; 
         header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_view_open_service_equipment_request.php?id=".$_SESSION['id']);

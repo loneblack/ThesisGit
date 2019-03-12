@@ -68,7 +68,10 @@
     while ($row = mysqli_fetch_array($result5, MYSQLI_ASSOC)){
         $id = $row['borrowID'];
     }
-   
+   //INSERT TO NOTIFICATIONS TABLE
+	$sqlNotif = "INSERT INTO `thesis`.`notifications` (`borrowID`, `steps_id`, `isRead`) VALUES ('{$id}', '12', false);";
+    $resultNotif = mysqli_query($dbc, $sqlNotif);
+	
    //insertion to requestdetails table using the id taken earlier
    for ($i=0; $i < $count; $i++) { 
 

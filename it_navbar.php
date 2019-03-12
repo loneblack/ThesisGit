@@ -6,11 +6,19 @@
     <link href="css/style-responsive.css" rel="stylesheet" />
 <?php
 	require_once('db/mysql_connect.php');
+	$totalNumReq = 0;
 	
-	//GET NUMBER OF NEW NOTIFICATIONS OF REQUESTS
+	//GET NUMBER OF NEW NOTIFICATIONS OF ASSET PURCHASE REQUESTS
 	$queryNumNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and requestID is not null and steps_id!='3'";
 	$resultNumNotif=mysqli_query($dbc,$queryNumNotif);
 	$rowNumNotif=mysqli_fetch_array($resultNumNotif,MYSQLI_ASSOC);
+	
+	//GET NUMBER OF NEW NOTIFICATIONS OF BORROW REQUESTS
+	$queryNumBorNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and borrowID is not null and steps_id='12'";
+	$resultNumBorNotif=mysqli_query($dbc,$queryNumBorNotif);
+	$rowNumBorNotif=mysqli_fetch_array($resultNumBorNotif,MYSQLI_ASSOC);
+	
+	$totalNumReq=$rowNumNotif['numOfNotif']+$rowNumBorNotif['numOfNotif'];
 	
 	//GET NUMBER OF NEW NOTIFICATIONS OF PURCHASE ORDERS
 	$queryNumNotifPur="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and procurementID is not null";
@@ -38,8 +46,8 @@
                             <a href="it_requests.php">
                                 <i class="fa fa-envelope-o"></i>
                                 <span>Requests '; 
-								if($rowNumNotif['numOfNotif']>'0'){
-									echo '<span class="badge badge-light">'.$rowNumNotif['numOfNotif'].'</span>';
+								if($totalNumReq>'0'){
+									echo '<span class="badge badge-light">'.$totalNumReq.'</span>';
 								}
 								echo '</span>
                             </a>
