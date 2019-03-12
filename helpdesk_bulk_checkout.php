@@ -16,34 +16,28 @@
         $checkinDate = $_POST['checkinDate'];
 		
 		if(!isset($message)){
-			
-			//Add to user
-			$query="INSERT INTO `thesis`.`user`(`username`, `password`, `userType`, `firstName`, `lastName`) VALUES ( AES_ENCRYPT('{$username}', '{$key}'), AES_ENCRYPT('{$password}', '{$key}'), '{$usertype}', AES_ENCRYPT('{$firstname}', '{$key}'), AES_ENCRYPT('{$lastname}', '{$key}'))";
-			$result=mysqli_query($dbc,$query);
+            $queryGetDept = "SELECT DepartmentID FROM department_list WHERE employeeID = '{$user}';";
+            $resultGetDept = mysqli_query($dbc, $queryLatEmp);
+            $rowGetDept = mysqli_fetch_array($resultLatEmp, KYSQLI_ASSOC);
             
-			//Get latest user id
-            $query2="SELECT * FROM thesis.user order by UserID desc limit 1";
-            $result2=mysqli_query($dbc,$query2);
-            $row=mysqli_fetch_array($result2, MYSQLI_ASSOC);
-               
-            //Add to employee
-			
-			
-			$query3="INSERT INTO `thesis`.`employee` (`name`, `position`, `contactNo`, `email`, `UserID`) VALUES ('{$fullname}', '{$position}', '{$number}', '{$email}', '{$row['UserID']}')";
-			$result3=mysqli_query($dbc,$query3);
-		
-			
-			//Get latest employee
-			$queryLatEmp="SELECT * FROM thesis.employee order by employeeID desc limit 1";
-            $resultLatEmp=mysqli_query($dbc,$queryLatEmp);
-			$rowLatEmp=mysqli_fetch_array($resultLatEmp, MYSQLI_ASSOC);
+            $today = date('Y/m/d');
 			
 			if(isset($_POST['assets'])){
 				$assets=$_POST['assets'];
 				//INSERT INTO department list
 				foreach($assets as $asset){
-					$queryDepList="INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('{$department}', '{$rowLatEmp['employeeID']}')";
-					$resultDepList=mysqli_query($dbc,$queryDepList);
+					$queryAsset="INSERT INTO assetassignment (`assetID`, `DepartmentID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('{$asset}', '{$rowGetDept['DepartmentID']}' '{$today}', '{$checkinDate}', '{$user}')";
+					$resultAsset=mysqli_query($dbc,$queryAsset);
+                    
+                    $updateAsset = "UPDATE asset SET assetStatus = 2 WHERE assetID = {$asset};";
+                    $resultUpdateAsset = mysqli_query($dbc, $updateAsset);
+                    
+                    $getLargestAudit = "SELECT * FROM thesis.assetassignment order by AssetAssignmentID desc limit 1;";
+                    $resultLargestAudit = mysqli_query($dbc, $getLargestAudit);
+                    $rowLargestAudit = mysqli_fetch_array($resultLargestAudit, MYSQLI_ASSOC);
+                    
+                    $queryAssetAudit = "INSERT INTO assetaudit (`UserID`, `date`, `assetID`, `assetAssignmentID`, `assetStatus`)
+                    VALUES ('{$user}', '{$today}', '{$asset}', '{$rowLargestAudit['AssetAssignmentID']}', '2');";
 				}
 			}
 			

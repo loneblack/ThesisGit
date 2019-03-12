@@ -701,13 +701,13 @@ INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `la
 VALUES ( AES_ENCRYPT('johannessia', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Johannes', 'Fusion'), AES_ENCRYPT('Sia', 'Fusion'), '10651157');
 
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
-VALUES ( AES_ENCRYPT('janausten', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Jan', 'Fusion'), AES_ENCRYPT('Austen', 'Fusion'), '11649867'); -- janausten, Student
+VALUES ( AES_ENCRYPT('janausten', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '8', AES_ENCRYPT('Jan', 'Fusion'), AES_ENCRYPT('Austen', 'Fusion'), '11649867'); -- janausten, Student
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
-VALUES ( AES_ENCRYPT('janelawrence', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Jane', 'Fusion'), AES_ENCRYPT('Lawrence', 'Fusion'), '11888119'); -- janelawrence, Student
+VALUES ( AES_ENCRYPT('janelawrence', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '8', AES_ENCRYPT('Jane', 'Fusion'), AES_ENCRYPT('Lawrence', 'Fusion'), '11888119'); -- janelawrence, Student
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
-VALUES ( AES_ENCRYPT('dennispaolo', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Dennis', 'Fusion'), AES_ENCRYPT('Paolo', 'Fusion'), '10222929'); -- dennispaolo, Student
+VALUES ( AES_ENCRYPT('dennispaolo', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '8', AES_ENCRYPT('Dennis', 'Fusion'), AES_ENCRYPT('Paolo', 'Fusion'), '10222929'); -- dennispaolo, Student
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
-VALUES ( AES_ENCRYPT('justintime', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '5', AES_ENCRYPT('Justin', 'Fusion'), AES_ENCRYPT('Time', 'Fusion'), '10445528'); -- justintime, Student 
+VALUES ( AES_ENCRYPT('justintime', 'Fusion'), AES_ENCRYPT('123123', 'Fusion'), '8', AES_ENCRYPT('Justin', 'Fusion'), AES_ENCRYPT('Time', 'Fusion'), '10445528'); -- justintime, Student 
 
 
 
