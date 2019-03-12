@@ -308,6 +308,10 @@
 			$queryGetReceeiving="SELECT * FROM `thesis`.`requestor_receiving` where borrowID='{$rowBorID['borrowID']}' order by id desc limit 1";
 			$resultGetReceiving=mysqli_query($dbc,$queryGetReceeiving);
 			$rowGetReceiving=mysqli_fetch_array($resultGetReceiving,MYSQLI_ASSOC);
+			
+			//INSERT TO NOTIFICATIONS TABLE
+			$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `requestor_receiving_id`) VALUES (false, '{$rowGetReceiving['id']}');";
+			$resultNotif = mysqli_query($dbc, $sqlNotif);
 
 			//GET PASSED TEST ASSET
 			$queryPassTest="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$testingID}' and `check`='1'";
@@ -329,6 +333,15 @@
 				//INSERT Asset that passed the test to ASSETASSIGNMENT
 				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `personresponsibleID`, `statusID`) VALUES ('{$rowPassTest['asset_assetID']}', '{$rowBorrowData['BuildingID']}', '{$rowBorrowData['FloorAndRoomID']}', '{$rowBorrowData['personresponsibleID']}', '2')";
 				$resultAssAss=mysqli_query($dbc,$queryAssAss);
+				
+				//GET LATEST ASSETASSIGNMENT
+				$queryGetLatAssAss = "SELECT * FROM thesis.assetassignment order by AssetAssignmentID desc limit 1";
+				$resultGetLatAssAss = mysqli_query($dbc,$queryGetLatAssAss);
+				$rowGetLatAssAss= mysqli_fetch_array($resultGetLatAssAss,MYSQLI_ASSOC);
+				
+				//INSERT TO ASSET AUDIT
+				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetAssignmentID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowGetLatAssAss['assetID']}', '{$rowGetLatAssAss['AssetAssignmentID']}', '1');";
+				$resultAssAud=mysqli_query($dbc,$queryAssAud);
 				
 				//INSERT TO RECEIVING DETAILS
 				$queryReceivingDetails = "INSERT INTO `thesis`.`receiving_details`(`receivingID`, `assetID`, `received`) VALUES('{$rowGetReceiving['id']}', '{$rowPassTest['asset_assetID']}', false);";

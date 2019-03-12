@@ -6,6 +6,10 @@ require_once("db/mysql_connect.php");
 
 $id = $_GET['id'];
 
+//Update notifications
+$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `borrowID` = '{$id}' and `steps_id`='13'";
+$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+
 $sql = "SELECT *, o.Name AS 'office', d.name AS 'department', z.name AS 'organization', b.name AS 'building' 
         FROM thesis.request_borrow r 
         JOIN ref_status s ON r.statusID = s.statusID 
@@ -89,6 +93,10 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
             $resultaa=mysqli_query($dbc,$queryaa);
             $rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
 			
+			//INSERT TO NOTIFICATIONS TABLE
+			$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `ticketID`) VALUES (false, '{$rowaa['ticketID']}');";
+			$resultNotif = mysqli_query($dbc, $sqlNotif);
+			
 			//ADD TEST ID
 			$queryTestID="UPDATE `thesis`.`ticket` SET `testingID`='{$rowAssTest['testingID']}' WHERE `ticketID`='{$rowaa['ticketID']}'";
             $resultTestID=mysqli_query($dbc,$queryTestID);
@@ -101,6 +109,10 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
                 $queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`, `checked`) VALUES ('{$rowaa['ticketID']}', '{$rowAssTestDet['asset_assetID']}', '0');";
                 $resultaaaa=mysqli_query($dbc,$queryaaaa);
+				
+				//INSERT TO ASSET AUDIT
+				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowAssTestDet['asset_assetID']}', '{$rowaa['ticketID']}', '8');";
+				$resultAssAud=mysqli_query($dbc,$queryAssAud);
             }
 
             $sql = "UPDATE `thesis`.`service` SET `status` = '2' WHERE (`id` = '{$id}');";

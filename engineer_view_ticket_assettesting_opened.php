@@ -215,7 +215,11 @@
 							//INSERT TO TICKETEDASSET
 							$queryTicAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTic['ticketID']}', '{$forEscAss}');";
 							$resultTicAss=mysqli_query($dbc,$queryTicAss);
-								
+							
+							//INSERT TO ASSET AUDIT
+							$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$forEscAss}', '{$rowLatTic['ticketID']}', '8');";
+							$resultAssAud=mysqli_query($dbc,$queryAssAud);
+							
 							//DELETE ASSET TO TICKETEDASSET
 							$queryDelTic="DELETE FROM `thesis`.`ticketedasset` WHERE `ticketID`='{$ticketID}' and `assetID`='{$forEscAss}'";
 							$resultDelTic=mysqli_query($dbc,$queryDelTic);

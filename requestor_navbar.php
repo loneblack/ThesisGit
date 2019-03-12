@@ -2,18 +2,26 @@
 	require_once('db/mysql_connect.php');
 	$totalNotifs=0;
 	
-	//GET NOTIFICATIONS FOR REQUESTOR
+	//GET NOTIFICATIONS FOR Delivery REQUESTOR
 	$queryNumNotifDel="SELECT Count(*) as `numOfNotif` FROM thesis.notifications n join requestor_receiving rr on n.requestor_receiving_id=rr.id
 															join request r on rr.requestID=r.requestID 
                                                             where n.isRead='0' and n.requestor_receiving_id is not null and r.UserID='{$_SESSION['userID']}'";
 	$resultNumNotifDel=mysqli_query($dbc,$queryNumNotifDel);
 	$rowNumNotifDel=mysqli_fetch_array($resultNumNotifDel,MYSQLI_ASSOC);
 	
+	//GET NOTIF FOR Delivery Borrow Request
+	$queryNumNotifBorDel="SELECT Count(*) as `numOfNotif` FROM thesis.notifications n join requestor_receiving rr on n.requestor_receiving_id=rr.id
+															join request_borrow rb on rr.borrowID=rb.borrowID 
+                                                            where n.isRead='0' and n.requestor_receiving_id is not null and rb.personresponsibleID='{$_SESSION['userID']}'";
+	$resultNumNotifBorDel=mysqli_query($dbc,$queryNumNotifBorDel);
+	$rowNumNotifBorDel=mysqli_fetch_array($resultNumNotifBorDel,MYSQLI_ASSOC);
+	
+	//GET NOTIF FOR Asset Request
 	$queryNumNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications n join request r on n.requestID=r.requestID where n.isRead='0' and r.UserID='{$_SESSION['userID']}' and n.requestID is not null and (n.steps_id='28' or n.steps_id='29')";
 	$resultNumNotif=mysqli_query($dbc,$queryNumNotif);
 	$rowNumNotif=mysqli_fetch_array($resultNumNotif,MYSQLI_ASSOC);
 	
-	$totalNotifs=$rowNumNotifDel['numOfNotif']+$rowNumNotif['numOfNotif'];
+	$totalNotifs=$rowNumNotifDel['numOfNotif']+$rowNumNotif['numOfNotif']+$rowNumNotifBorDel['numOfNotif'];
 	
 ?>
 <?php  echo '<aside>
