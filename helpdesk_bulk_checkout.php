@@ -134,7 +134,7 @@
                                             <div class="form-group">
                                                 <label for="brand" class="col-lg-2 col-sm-2 control-label">Checkout To</label>
                                                 <div class="col-lg-6">
-                                                    <select class="form-control" name="user" value="<?php if (isset($_POST['user'])) && !$flag) echo $_POST['name']; ?>" required>
+                                                    <select class="form-control" name="user" value="<?php if (isset($_POST['user']) && !$flag) echo $_POST['name']; ?>" required>
                                                             <optgroup label="Faculty/ Staff">
                                                                 <?php 
                                                                         $query="SELECT u.userID, u.id AS `idnum`, e.name FROM user u 
