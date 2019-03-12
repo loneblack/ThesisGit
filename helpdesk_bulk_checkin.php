@@ -109,13 +109,13 @@
                                                                     <td>{$row['itemSpecification']}</td>
                                                                     <td>{$row['category']}</td>
                                                                     <td>
-                                                                        <select class='form-control'>
+                                                                        <select class='form-control' name='status' id='status' onChange='changetextbox();'>
                                                                             <option value='1'>Returned - Working</option>
                                                                             <option value='9'>Returned - Broken</option>
                                                                             <option value='18'>Missing</option>
                                                                         </select>
                                                                     </td>
-                                                                    <td><input type='text' class='form-control'></td>
+                                                                    <td><input type='text' class='form-control' name='comment' id='comment'></td>
                                                                     </tr>";
                                                             }
                                                         ?>
@@ -141,8 +141,18 @@
     </section>
 
     <!-- WAG GALAWIN PLS LANG -->
-    <script>
-        
+    <script type="text/javascript">
+        function changetextbox()
+        {
+            if(document.getElementById("status").value === "18"){
+                document.getElementById("comment").disable = false;
+            }
+            
+            else{
+                document.getElementById("comment").disable = true;
+            }
+            
+        }
     </script>
 
     <script src="js/jquery.js"></script>
