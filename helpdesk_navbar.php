@@ -8,7 +8,12 @@
 	$resultNumNotif=mysqli_query($dbc,$queryNumNotif);
 	$rowNumNotif=mysqli_fetch_array($resultNumNotif,MYSQLI_ASSOC);
 	
-	$totalNotifs=$rowNumNotif['numOfNotif'];
+	//GET NUMBER OF NEW NOTIFICATIONS OF BORROW REQUESTS
+	$queryNumBorNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and borrowID is not null and steps_id='13'";
+	$resultNumBorNotif=mysqli_query($dbc,$queryNumBorNotif);
+	$rowNumBorNotif=mysqli_fetch_array($resultNumBorNotif,MYSQLI_ASSOC);
+	
+	$totalNotifs=$rowNumNotif['numOfNotif']+$rowNumBorNotif['numOfNotif'];
 ?>
 
 <?php  echo '<aside>
