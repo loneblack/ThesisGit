@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php 
+    session_start();
+    require_once('db/mysql_connect.php');
+    
+?>
+    
 <head>
     <meta charset="utf-8">
 
@@ -70,36 +76,49 @@
                                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                                     <thead>
                                                         <tr>
-                                                            <th>
-                                                            </th>
+                                                            <th></th>
                                                             <th>Property Code</th>
                                                             <th>Brand</th>
                                                             <th>Model</th>
+                                                            <th>Asset Specifications</th>
                                                             <th>Asset Category</th>
                                                             <th>Status</th>
                                                             <th>Comments</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr class="gradeX">
-                                                            <td>
-                                                                <div class="checkbox ">
-                                                                    <input type="checkbox">
-                                                                </div>
-                                                            </td>
-                                                            <td>G29203219</td>
-                                                            <td>Samsung</td>
-                                                            <td>S7 Edge</td>
-                                                            <td>VGA</td>
-                                                            <td>
-                                                                <select class="form-control">
-                                                                    <option>Select Status</option>
-                                                                    <option>Broken - Fixable</option>
-                                                                </select>
-                                                            </td>
-                                                            <td><input type="text" class="form-control"></td>
-                                                        </tr>
+                                                         <?php
+                                                            $query="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model`, am.itemSpecification, rac.name AS `category`, ras.description, e.name AS `employee`, b.name AS `building`, fr.floorRoom FROM asset a 
+                                                            LEFT JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                            LEFT JOIN ref_brand rb ON am.brand = rb.brandID
+                                                            LEFT JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                            LEFT JOIN ref_assetstatus ras ON a.assetStatus = ras.id
+                                                            LEFT JOIN assetassignment aa ON a.assetID = aa.assetID
+                                                            LEFT JOIN employee e ON aa.personresponsibleID = e.employeeID
+                                                            LEFT JOIN building b ON aa.BuildingID = b.BuildingID
+                                                            LEFT JOIN floorandroom fr ON aa.FloorAndRoomID = fr.FloorAndRoomID
+                                                            WHERE (rac.name = 'laptop' OR rac.name = 'VGA Cable' OR rac.name='Projector' OR rac.name='Cable' OR rac.name = 'HDMI') AND ras.id = 2;";
+                                                            $result=mysqli_query($dbc,$query);
 
+                                                            while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                                echo "<tr>
+                                                                    <td><input type='checkbox' value='{$row['assetID']}'></td>
+                                                                    <td>{$row['propertyCode']}</td>
+                                                                    <td>{$row['brand']}</td>
+                                                                    <td>{$row['model']}</td>
+                                                                    <td>{$row['itemSpecification']}</td>
+                                                                    <td>{$row['category']}</td>
+                                                                    <td>
+                                                                        <select class='form-control'>
+                                                                            <option value='1'>Returned - Working</option>
+                                                                            <option value='9'>Returned - Broken</option>
+                                                                            <option value='18'>Missing</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td><input type='text' class='form-control'></td>
+                                                                    </tr>";
+                                                            }
+                                                        ?>
                                                     </tbody>
                                                 </table>
                                             </div>
