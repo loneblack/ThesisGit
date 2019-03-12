@@ -29,7 +29,11 @@
 			//UPDATE ASSET STATUS
 			$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='2' WHERE `assetID`='{$assets}'";
 			$resultStat=mysqli_query($dbc,$queryStat);
-
+			
+			//INSERT TO ASSET AUDIT
+			$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$assets}', '2');";
+			$resultAssAud=mysqli_query($dbc,$queryAssAss);
+			
 		}
     }
 

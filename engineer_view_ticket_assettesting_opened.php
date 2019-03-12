@@ -42,11 +42,19 @@
 			if($testStat[$i]=='1'){
 				$query5="UPDATE `thesis`.`assettesting_details` SET `check`='1' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$listOfTestAss[$i]}'";
 				$result5=mysqli_query($dbc,$query5);
+				
+				//INSERT TO ASSET AUDIT
+				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$listOfTestAss[$i]}', '{$ticketID}', '8');";
+				$resultAssAud=mysqli_query($dbc,$queryAssAss);
 			}
 			//For defected assets
 			elseif($testStat[$i]=='3'){
 				$query5="UPDATE `thesis`.`assettesting_details` SET `check`='0' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$listOfTestAss[$i]}'";
-				$result5=mysqli_query($dbc,$query5);	
+				$result5=mysqli_query($dbc,$query5);
+
+				//INSERT TO ASSET AUDIT
+				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$listOfTestAss[$i]}', '{$ticketID}', '8');";
+				$resultAssAud=mysqli_query($dbc,$queryAssAss);
 			}
 		}
 		
@@ -100,7 +108,11 @@
 							//INSERT TO TICKETEDASSET
 							$queryTicAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTic['ticketID']}', '{$forEscAss}');";
 							$resultTicAss=mysqli_query($dbc,$queryTicAss);
-								
+							
+							//INSERT TO ASSET AUDIT
+							$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$forEscAss}', '{$rowLatTic['ticketID']}', '8');";
+							$resultAssAud=mysqli_query($dbc,$queryAssAss);
+							
 							//DELETE ASSET TO TICKETEDASSET
 							$queryDelTic="DELETE FROM `thesis`.`ticketedasset` WHERE `ticketID`='{$ticketID}' and `assetID`='{$forEscAss}'";
 							$resultDelTic=mysqli_query($dbc,$queryDelTic);

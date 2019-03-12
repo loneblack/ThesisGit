@@ -85,7 +85,17 @@
 				//INSERT Asset that passed the test to ASSETASSIGNMENT
 				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `personresponsibleID`, `statusID`) VALUES ('{$assPass}', '{$rowReqData['BuildingID']}', '{$rowReqData['FloorAndRoomID']}', '{$rowReqData['UserID']}', '2')";
 				$resultAssAss=mysqli_query($dbc,$queryAssAss);
-
+				
+				//GET LATEST ASSETASSIGNMENT
+				$queryGetLatAssAss = "SELECT * FROM thesis.assetassignment order by AssetAssignmentID desc limit 1";
+				$resultGetLatAssAss = mysqli_query($dbc,$queryGetLatAssAss);
+				$rowGetLatAssAss= mysqli_fetch_array($resultGetLatAssAss,MYSQLI_ASSOC);
+				
+				//INSERT TO ASSET AUDIT
+				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetAssignmentID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowGetLatAssAss['assetID']}', '{$rowGetLatAssAss['AssetAssignmentID']}', '1');";
+				$resultAssAud=mysqli_query($dbc,$queryAssAss);
+				
+				//INSERT TO RECEIVING DETAILS
 				$queryReceivingDetails = "INSERT INTO `thesis`.`receiving_details`(`receivingID`, `assetID`, `received`) VALUES('{$rowGetReceiving['id']}', '{$assPass}', false);";
 				$resultReceivingDetails = mysqli_query($dbc,$queryReceivingDetails);
 				
