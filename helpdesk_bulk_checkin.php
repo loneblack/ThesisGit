@@ -66,8 +66,6 @@
                                             </span>
                                         </header>
                                         <div class="panel-body">
-                                            <h4>Name: Mr. Allan Peter</h4>
-                                            <h4>Assets Borrowed: 4</h4>
                                             <div class="adv-table">
                                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                                     <thead>
@@ -77,8 +75,7 @@
                                                             <th>Property Code</th>
                                                             <th>Brand</th>
                                                             <th>Model</th>
-                                                            <th>Location Building</th>
-                                                            <th>Location Room</th>
+                                                            <th>Asset Category</th>
                                                             <th>Status</th>
                                                             <th>Comments</th>
                                                         </tr>
@@ -93,8 +90,7 @@
                                                             <td>G29203219</td>
                                                             <td>Samsung</td>
                                                             <td>S7 Edge</td>
-                                                            <td>Gokongwei</td>
-                                                            <td>304B</td>
+                                                            <td>VGA</td>
                                                             <td>
                                                                 <select class="form-control">
                                                                     <option>Select Status</option>
