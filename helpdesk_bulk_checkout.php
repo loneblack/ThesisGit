@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!--COMPLETED-->
 <?php 
     session_start();
     require_once('db/mysql_connect.php');
