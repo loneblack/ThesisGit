@@ -93,7 +93,7 @@
 				
 				//INSERT TO ASSET AUDIT
 				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetAssignmentID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowGetLatAssAss['assetID']}', '{$rowGetLatAssAss['AssetAssignmentID']}', '1');";
-				$resultAssAud=mysqli_query($dbc,$queryAssAss);
+				$resultAssAud=mysqli_query($dbc,$queryAssAud);
 				
 				//INSERT TO RECEIVING DETAILS
 				$queryReceivingDetails = "INSERT INTO `thesis`.`receiving_details`(`receivingID`, `assetID`, `received`) VALUES('{$rowGetReceiving['id']}', '{$assPass}', false);";
@@ -156,6 +156,10 @@
 					//UPDATE ASSET STATUS
 					$queryProp="UPDATE `thesis`.`asset` SET `assetStatus`='7' WHERE `assetID`='{$row0['assetID']}'";
 					$resultProp=mysqli_query($dbc,$queryProp);
+					
+					//INSERT TO ASSET AUDIT
+					$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$row0['assetID']}', '7');";
+					$resultAssAud=mysqli_query($dbc,$queryAssAud);
 					
 					$totalCost=$totalCost+$row0['totalCost'];
 				}
