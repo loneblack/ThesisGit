@@ -1,6 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php 
+    session_start();
+    require_once('db/mysql_connect.php');
+    
+    if (isset($_POST['submit'])){
+		$flag=0;
+		$message=NULL;
+        
+        $user = $_POST['user'];
+        
+        $assets=null;
+       
+        $checkinDate = $_POST['checkinDate'];
+		
+		if(!isset($message)){
+			
+			//Add to user
+			$query="INSERT INTO `thesis`.`user`(`username`, `password`, `userType`, `firstName`, `lastName`) VALUES ( AES_ENCRYPT('{$username}', '{$key}'), AES_ENCRYPT('{$password}', '{$key}'), '{$usertype}', AES_ENCRYPT('{$firstname}', '{$key}'), AES_ENCRYPT('{$lastname}', '{$key}'))";
+			$result=mysqli_query($dbc,$query);
+            
+			//Get latest user id
+            $query2="SELECT * FROM thesis.user order by UserID desc limit 1";
+            $result2=mysqli_query($dbc,$query2);
+            $row=mysqli_fetch_array($result2, MYSQLI_ASSOC);
+               
+            //Add to employee
+			
+			
+			$query3="INSERT INTO `thesis`.`employee` (`name`, `position`, `contactNo`, `email`, `UserID`) VALUES ('{$fullname}', '{$position}', '{$number}', '{$email}', '{$row['UserID']}')";
+			$result3=mysqli_query($dbc,$query3);
+		
+			
+			//Get latest employee
+			$queryLatEmp="SELECT * FROM thesis.employee order by employeeID desc limit 1";
+            $resultLatEmp=mysqli_query($dbc,$queryLatEmp);
+			$rowLatEmp=mysqli_fetch_array($resultLatEmp, MYSQLI_ASSOC);
+			
+			if(isset($_POST['assets'])){
+				$assets=$_POST['assets'];
+				//INSERT INTO department list
+				foreach($assets as $asset){
+					$queryDepList="INSERT INTO `thesis`.`department_list` (`DepartmentID`, `employeeID`) VALUES ('{$department}', '{$rowLatEmp['employeeID']}')";
+					$resultDepList=mysqli_query($dbc,$queryDepList);
+				}
+			}
+			
+			$_SESSION['submitMessage'] = "Checkout of Asset Success!";
+			$flag=1;
+		}
+		
+		else{
+			$_SESSION['submitMessage'] = $message;
+		}
+		
+		
+	}
+    
+?>
+
+
 <head>
     <meta charset="utf-8">
 
@@ -69,12 +129,12 @@
                                 </header>
                                 <div class="panel-body">
                                     <div class="position-center">
-                                        <form class="form-horizontal" role="form">
+                                        <form class="form-horizontal" role="form" id="checkoutForm" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
                                             <div class="form-group">
                                                 <label for="brand" class="col-lg-2 col-sm-2 control-label">Checkout To</label>
                                                 <div class="col-lg-6">
-                                                    <select class="form-control">
+                                                    <select class="form-control" name="user" value="<?php if (isset($_POST['user'])) && !$flag) echo $_POST['name']; ?>" required>
                                                             <optgroup label="Faculty/ Staff">
                                                                 <?php 
                                                                         $query="SELECT u.userID, u.id AS `idnum`, e.name FROM user u 
@@ -107,14 +167,14 @@
                                             <div class="form-group">
                                                 <label class="control-label col-lg-2 col-sm-2">Expected Checkin Date</label>
                                                 <div class="col-lg-6">
-                                                    <input class="form-control form-control-inline" size="10" type="date" min="<?php echo date('Y-m-d'); ?>" />
+                                                    <input class="form-control form-control-inline" size="10" type="date" min="<?php echo date('Y-m-d'); ?>" name="checkinDate" value="<?php if (isset($_POST['checkinDate'])) && !$flag) echo $_POST['checkinDate']; ?>" required />
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-lg-2 col-sm-2 control-label">Select Asset</label>
                                                 <div class="col-lg-6">
-                                                    <select multiple name="e9" id="e9" style="width:300px" class="populate">
+                                                    <select multiple name="e9" id="e9" style="width:300px" class="populate" name="asset[]">
 
 
                                                         <optgroup label="HDMI Cable">
@@ -211,7 +271,7 @@
                                             <div class="form-group">
                                                 <div class="col-lg-offset-2 col-lg-10">
                                                     <button type="submit" class="btn btn-success">Checkout</button>
-                                                    <button type="submit" class="btn btn-danger">Cancel</button>
+                                                    <button class="btn btn-danger">Cancel</button>
                                                 </div>
                                             </div>
                                         </form>
