@@ -117,7 +117,16 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				<?php
+                                                    if (isset($_SESSION['submitMessage'])){
 
+                                                        echo "<div style='text-align:center' class='alert alert-success'>
+                                                                <strong><h3>{$_SESSION['submitMessage']}</h3></strong>
+                                                              </div>";
+
+                                                        unset($_SESSION['submitMessage']);
+                                                    }
+                                                ?>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
@@ -130,7 +139,7 @@
                                 <div class="panel-body">
                                     <div class="position-center">
                                         <form class="form-horizontal" role="form" id="checkoutForm" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-
+											
                                             <div class="form-group">
                                                 <label for="brand" class="col-lg-2 col-sm-2 control-label">Checkout To</label>
                                                 <div class="col-lg-6">
