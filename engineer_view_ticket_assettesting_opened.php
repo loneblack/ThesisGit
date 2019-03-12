@@ -45,7 +45,7 @@
 				
 				//INSERT TO ASSET AUDIT
 				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$listOfTestAss[$i]}', '{$ticketID}', '8');";
-				$resultAssAud=mysqli_query($dbc,$queryAssAss);
+				$resultAssAud=mysqli_query($dbc,$queryAssAud);
 			}
 			//For defected assets
 			elseif($testStat[$i]=='3'){
@@ -54,7 +54,7 @@
 
 				//INSERT TO ASSET AUDIT
 				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$listOfTestAss[$i]}', '{$ticketID}', '8');";
-				$resultAssAud=mysqli_query($dbc,$queryAssAss);
+				$resultAssAud=mysqli_query($dbc,$queryAssAud);
 			}
 		}
 		
@@ -111,7 +111,7 @@
 							
 							//INSERT TO ASSET AUDIT
 							$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$forEscAss}', '{$rowLatTic['ticketID']}', '8');";
-							$resultAssAud=mysqli_query($dbc,$queryAssAss);
+							$resultAssAud=mysqli_query($dbc,$queryAssAud);
 							
 							//DELETE ASSET TO TICKETEDASSET
 							$queryDelTic="DELETE FROM `thesis`.`ticketedasset` WHERE `ticketID`='{$ticketID}' and `assetID`='{$forEscAss}'";

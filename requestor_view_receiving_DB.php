@@ -32,7 +32,7 @@
 			
 			//INSERT TO ASSET AUDIT
 			$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$assets}', '2');";
-			$resultAssAud=mysqli_query($dbc,$queryAssAss);
+			$resultAssAud=mysqli_query($dbc,$queryAssAud);
 			
 		}
     }

@@ -60,7 +60,7 @@
 				
 				//INSERT TO ASSET AUDIT
 				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowLatAss['assetID']}', '{$rowLatAss['assetStatus']}');";
-				$resultAssAud=mysqli_query($dbc,$queryAssAss);
+				$resultAssAud=mysqli_query($dbc,$queryAssAud);
 				
 				//Insert to assetdocument table	
 				$queryasd="INSERT INTO `thesis`.`assetdocument` (`assetID`, `requestID`, `procurementID`) VALUES ('{$rowLatAss['assetID']}', '{$rowReqDat['requestID']}', '{$procID}')";
