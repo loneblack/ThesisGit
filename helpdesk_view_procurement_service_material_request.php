@@ -90,6 +90,11 @@
 				while($rowSelAssTest=mysqli_fetch_array($resultSelAssTest,MYSQLI_ASSOC)){
 					$queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTick['ticketID']}', '{$rowSelAssTest['asset_assetID']}');";
 					$resultaaaa=mysqli_query($dbc,$queryaaaa);
+					
+					//INSERT TO ASSET AUDIT
+					$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowSelAssTest['asset_assetID']}', '{$rowLatTick['ticketID']}', '8');";
+					$resultAssAud=mysqli_query($dbc,$queryAssAss);
+					
 				}
 				
 				//UPDATE DELIVERY TABLE STATUS
