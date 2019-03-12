@@ -5,7 +5,7 @@
     session_start();
     require_once('db/mysql_connect.php');
     
-    if (isset($_POST['submit'])){
+    if (isset($_POST['checkout'])){
 		$flag=0;
 		$message=NULL;
         
@@ -16,17 +16,22 @@
         $checkinDate = $_POST['checkinDate'];
 		
 		if(!isset($message)){
-            $queryGetDept = "SELECT DepartmentID FROM department_list WHERE employeeID = '{$user}';";
-            $resultGetDept = mysqli_query($dbc, $queryLatEmp);
-            $rowGetDept = mysqli_fetch_array($resultLatEmp, KYSQLI_ASSOC);
+			
+            $queryGetDept = "SELECT DepartmentID FROM department_list WHERE employeeID = '{$user}' limit 1;";
+            $resultGetDept = mysqli_query($dbc, $queryGetDept);
+            $rowGetDept = mysqli_fetch_array($resultGetDept, MYSQLI_ASSOC);
             
             $today = date('Y/m/d');
+			$x=sizeOf($_POST['asset']);
 			
-			if(isset($_POST['assets'])){
-				$assets=$_POST['assets'];
+			if(isset($_POST['asset'])){
+				$assets=$_POST['asset'];
+				
+				
 				//INSERT INTO department list
 				foreach($assets as $asset){
-					$queryAsset="INSERT INTO assetassignment (`assetID`, `DepartmentID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('{$asset}', '{$rowGetDept['DepartmentID']}' '{$today}', '{$checkinDate}', '{$user}')";
+					
+					$queryAsset="INSERT INTO `thesis`.`assetassignment` (`assetID`, `DepartmentID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('{$asset}', '{$rowGetDept['DepartmentID']}', '{$today}', '{$checkinDate}', '{$user}', '2');";
 					$resultAsset=mysqli_query($dbc,$queryAsset);
                     
                     $updateAsset = "UPDATE asset SET assetStatus = 2 WHERE assetID = {$asset};";
@@ -38,6 +43,7 @@
                     
                     $queryAssetAudit = "INSERT INTO assetaudit (`UserID`, `date`, `assetID`, `assetAssignmentID`, `assetStatus`)
                     VALUES ('{$user}', '{$today}', '{$asset}', '{$rowLargestAudit['AssetAssignmentID']}', '2');";
+					$resultAssetAudit = mysqli_query($dbc, $queryAssetAudit);
 				}
 			}
 			
@@ -168,7 +174,7 @@
                                             <div class="form-group">
                                                 <label class="col-lg-2 col-sm-2 control-label">Select Asset</label>
                                                 <div class="col-lg-6">
-                                                    <select multiple name="e9" id="e9" style="width:300px" class="populate" name="asset[]">
+                                                    <select multiple id="e9" style="width:300px" class="populate" name="asset[]">
 
 
                                                         <optgroup label="HDMI Cable">
@@ -264,7 +270,7 @@
 
                                             <div class="form-group">
                                                 <div class="col-lg-offset-2 col-lg-10">
-                                                    <button type="submit" class="btn btn-success">Checkout</button>
+                                                    <button type="submit" class="btn btn-success" name="checkout">Checkout</button>
                                                     <button class="btn btn-danger">Cancel</button>
                                                 </div>
                                             </div>
