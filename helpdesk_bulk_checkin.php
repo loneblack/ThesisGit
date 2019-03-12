@@ -101,6 +101,7 @@
                                                             $result=mysqli_query($dbc,$query);
 
                                                             while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+																
                                                                 echo "<tr>
                                                                     <td><input type='checkbox' value='{$row['assetID']}'></td>
                                                                     <td>{$row['propertyCode']}</td>
@@ -109,13 +110,13 @@
                                                                     <td>{$row['itemSpecification']}</td>
                                                                     <td>{$row['category']}</td>
                                                                     <td>
-                                                                        <select class='form-control' name='status' id='status' onChange='changetextbox();'>
+                                                                        <select class='form-control' name='status[]' id='assetStatus_".$row['assetID']."' onChange='changetextbox(\"{$row['assetID']}\");'>
                                                                             <option value='1'>Returned - Working</option>
                                                                             <option value='9'>Returned - Broken</option>
                                                                             <option value='18'>Missing</option>
                                                                         </select>
                                                                     </td>
-                                                                    <td><input type='text' class='form-control' name='comment' id='comment'></td>
+                                                                    <td><input type='text' class='form-control' name='comment[]' id='{$row['assetID']}' disabled></td>
                                                                     </tr>";
                                                             }
                                                         ?>
@@ -142,7 +143,30 @@
 
     <!-- WAG GALAWIN PLS LANG -->
     <script type="text/javascript">
-        function changetextbox()
+		function changetextbox(x) {
+			var selectID = "assetStatus_" + x;
+			
+			//Working stat
+			if(document.getElementById(selectID).value == "1"){
+				//comments
+				document.getElementById(x).disabled = true;
+				
+			}
+			//Escalate stat
+            else if(document.getElementById(selectID).value == "9"){
+				//comments
+				document.getElementById(x).disabled = false;
+				
+            }
+			else{
+				//comments
+				document.getElementById(x).disabled = true;
+				
+            }
+        }
+	
+	
+        /*function changetextbox()
         {
             if(document.getElementById("status").value === "18"){
                 document.getElementById("comment").disable = false;
@@ -152,7 +176,9 @@
                 document.getElementById("comment").disable = true;
             }
             
-        }
+        }*/
+		
+		
     </script>
 
     <script src="js/jquery.js"></script>
