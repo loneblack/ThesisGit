@@ -12,14 +12,14 @@
     //$result = mysqli_query($dbc, $sql);
 
     foreach($assets as $asset){
-    	$sql = "INSERT INTO `thesis`.`requestparts_assets` VALUES ('{$id}', '{$asset}');";
+    	$sql = "INSERT INTO `thesis`.`serviceUnitAssets` VALUES ('{$id}', '{$asset}');";
     	$result = mysqli_query($dbc, $sql);
     }
-    $sql = "UPDATE `thesis`.`requestparts` SET `statusID` = '2' WHERE (`id` = '{$id}');";
+    $sql = "UPDATE `thesis`.`serviceUnit` SET `statusID` = '2' WHERE (`id` = '{$id}');";
     $result = mysqli_query($dbc, $sql);
 	
 
-	$message = "Form submitted!";
+	$message = "Form submitted!"; 
 	$_SESSION['submitMessage'] = $message;
 	
 	//header('Location: '.$header);
