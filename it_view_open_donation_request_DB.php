@@ -14,6 +14,10 @@
 		$queryDonDat="SELECT * FROM thesis.donation where `donationID`='{$_SESSION['donationID']}' limit 1";
 		$resultDonDat=mysqli_query($dbc,$queryDonDat);
 		$rowDonDat=mysqli_fetch_array($resultDonDat, MYSQLI_ASSOC);
+		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`steps_id`, `isRead`, `donationID`) VALUES ('9', false, '{$_SESSION['donationID']}');";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
 			
 		foreach($assetsForDon as $asset){
 			//INSERT TO DONATIONDETAILS_ITEM
@@ -28,8 +32,12 @@
 	if(isset($_POST['disapprove'])){
 		$header =  $_SESSION['previousPage3'];
 		//Update status
-		$queryDisapp="UPDATE `thesis`.`donation` SET `reason`='{$_POST['reason']}', `statusID`='5' WHERE `donationID`='{$_SESSION['donationID']}'";
+		$queryDisapp="UPDATE `thesis`.`donation` SET `reason`='{$_POST['reason']}', `statusID`='5', `stepsID`='20' WHERE `donationID`='{$_SESSION['donationID']}'";
 		$resultDisapp=mysqli_query($dbc,$queryDisapp);
+		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`steps_id`, `isRead`, `donationID`) VALUES ('20', false, '{$_SESSION['donationID']}');";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
 		
 		$message = "Form submitted!";
 		$_SESSION['submitMessage'] = $message; 

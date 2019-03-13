@@ -12,6 +12,10 @@
 	$resultDon=mysqli_query($dbc,$queryDon);			
 	$rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC);
 	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `donationID` = '{$donationID}' and `steps_id`='9'";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+	
 	if(isset($_POST['submit'])){
 		$message=null;
 		
@@ -358,7 +362,7 @@
     <script src="js/jquery-1.8.3.min.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
     <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
-
+	<script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
     <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
 

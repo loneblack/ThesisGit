@@ -13,7 +13,12 @@
 	$resultNumBorNotif=mysqli_query($dbc,$queryNumBorNotif);
 	$rowNumBorNotif=mysqli_fetch_array($resultNumBorNotif,MYSQLI_ASSOC);
 	
-	$totalNotifs=$rowNumNotif['numOfNotif']+$rowNumBorNotif['numOfNotif'];
+	//GET NUMBER OF NEW NOTIFICATIONS OF DONATION REQUESTS
+	$queryNumDonNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and donationID is not null and steps_id='9'";
+	$resultNumDonNotif=mysqli_query($dbc,$queryNumDonNotif);
+	$rowNumDonNotif=mysqli_fetch_array($resultNumDonNotif,MYSQLI_ASSOC);
+	
+	$totalNotifs=$rowNumNotif['numOfNotif']+$rowNumBorNotif['numOfNotif']+$rowNumDonNotif['numOfNotif'];
 ?>
 
 <?php  echo '<aside>

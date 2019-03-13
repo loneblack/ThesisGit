@@ -9,6 +9,10 @@
 		foreach($markForDon as $forDon){
 			$queryForDon="UPDATE `thesis`.`asset` SET `assetStatus`='16' WHERE `assetID`='{$forDon}'";
 			$resultForDon=mysqli_query($dbc,$queryForDon);
+			
+			//INSERT TO ASSET AUDIT
+			$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$forDon}', '16');";
+			$resultAssAud=mysqli_query($dbc,$queryAssAud);
 		}
 		$message = "Form submitted!";
 		$_SESSION['submitMessage'] = $message; 
