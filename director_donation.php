@@ -19,11 +19,15 @@ if(isset($_POST['save'])){
     $queryDon = "INSERT INTO `thesis`.`donation` (`contactNumber`, `dateNeed`, `dateCreated`, `purpose`, `schoolName`, `contactPerson`, `statusID`, `stepsID`, `user_UserID`) VALUES ('{$contactNo}', '{$dateNeeded}', now(), '{$purpose}', '{$schoolorg}', '{$contactPerson}', '1', '1', '{$_SESSION['userID']}')";
     $resultDon = mysqli_query($dbc, $queryDon);
 
-	
 	//GET DONATION ID
     $queryDonID = "SELECT * FROM thesis.donation order by donationID desc limit 1;";
     $resultDonID = mysqli_query($dbc, $queryDonID);
     $rowDonID = mysqli_fetch_array($resultDonID, MYSQLI_ASSOC);
+	
+	//INSERT TO NOTIFICATIONS TABLE
+	$sqlNotif = "INSERT INTO `thesis`.`notifications` (`steps_id`, `isRead`, `donationID`) VALUES ('1', false, '{$rowDonID['donationID']}');";
+    $resultNotif = mysqli_query($dbc, $sqlNotif);
+	
 
     foreach (array_combine($assetCategory, $quantity) as $assetCat => $qty)
     {
