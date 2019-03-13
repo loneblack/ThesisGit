@@ -46,15 +46,15 @@
     if($serviceUnit == "on"){
 
     	//insert to serviceUnit
-    	$sql = "INSERT INTO `thesis`.`serviceUnit` (`serviceID`, `statusID`)
-	                                VALUES ('{$id}', '1');";//status is set to 1 for pending status
+    	$sql = "INSERT INTO `thesis`.`serviceUnit` (`serviceID`, `statusID`, `UserID`)
+	                                VALUES ('{$id}', '1', '{$userID}');";//status is set to 1 for pending status
 
 		$result = mysqli_query($dbc, $sql);
     }
 
     //get newly inserted service unit
     $sql1 = "SELECT MAX(serviceUnitID) as 'serviceUnitID' FROM thesis.serviceUnit;"; //status is set to 1 for pending status
-    echo $sql1;
+    
 	$result1 = mysqli_query($dbc, $sql1);
 
 	while ($row = mysqli_fetch_array($result1, MYSQLI_ASSOC)){
