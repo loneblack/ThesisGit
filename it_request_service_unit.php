@@ -4,7 +4,7 @@
 session_start();
 $userID = $_SESSION['userID'];
 $id = $_GET['id'];
-$_SESSION['previousPage'] = "it_request_serviceunit?id={$id}";
+$_SESSION['previousPage'] = "it_request_service_unit?id={$id}";
 require_once("db/mysql_connect.php");
 
 
@@ -202,6 +202,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 <th>Specification</th>
                                             </tr>
                                         </thead>
+                                        <form method ="post" action="it_request_service_unit_DB.php?=<?php echo $id;?>">
                                         <tbody>
                                         <?php
                                         $count = 0;
@@ -286,6 +287,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                 </div>
                             </section>
                             <button type="submit" name="submit" id="submit" class="btn btn-success">Send</button>
+                            </form>
                             <button type="button" class="btn btn-danger" onclick="window.history.back();">Back</button>
                         </div>
                         

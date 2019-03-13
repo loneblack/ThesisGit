@@ -8,8 +8,8 @@
 	$assets=$_POST['assets'];
 
 
-	$sql = "UPDATE `thesis`.`requestparts` SET `statusID` = '2' WHERE (`id` = '{$id}');";
-    $result = mysqli_query($dbc, $sql);
+	//$sql = "UPDATE `thesis`.`requestparts` SET `statusID` = '2' WHERE (`id` = '{$id}');";
+    //$result = mysqli_query($dbc, $sql);
 
     foreach($assets as $asset){
     	$sql = "INSERT INTO `thesis`.`requestparts_assets` VALUES ('{$id}', '{$asset}');";

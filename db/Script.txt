@@ -1908,31 +1908,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `thesis`.`serviceUnit`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `thesis`.`serviceUnit` ;
-
-CREATE TABLE IF NOT EXISTS `thesis`.`serviceUnit` (
-  `serviceUnitID` INT NOT NULL AUTO_INCREMENT,
-  `serviceID` INT(11) NOT NULL,
-  `statusID` INT(11) NOT NULL,
-  PRIMARY KEY (`serviceUnitID`),
-  INDEX `fk_serviceUnit_service2_idx` (`serviceID` ASC),
-  INDEX `fk_serviceUnit_ref_status2_idx` (`statusID` ASC),
-  CONSTRAINT `fk_serviceUnit_service2`
-    FOREIGN KEY (`serviceID`)
-    REFERENCES `thesis`.`service` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_serviceUnit_ref_status2`
-    FOREIGN KEY (`statusID`)
-    REFERENCES `thesis`.`ref_status` (`statusID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `thesis`.`salvage_details`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `thesis`.`salvage_details` ;
@@ -2171,6 +2146,32 @@ CREATE TABLE IF NOT EXISTS `thesis`.`notifications` (
   CONSTRAINT `fk_notifications_requestor_receiving1`
     FOREIGN KEY (`requestor_receiving_id`)
     REFERENCES `thesis`.`requestor_receiving` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`serviceUnitAssets`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`serviceUnitAssets` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`serviceUnitAssets` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `serviceUnitID` INT NOT NULL,
+  `assetID` INT(11) NOT NULL,
+  `received` TINYINT NULL,
+  INDEX `fk_serviceUnitDetails_serviceUnit1_idx` (`serviceUnitID` ASC),
+  INDEX `fk_serviceUnitDetails_asset1_idx` (`assetID` ASC),
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_serviceUnitDetails_serviceUnit10`
+    FOREIGN KEY (`serviceUnitID`)
+    REFERENCES `thesis`.`serviceUnit` (`serviceUnitID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_serviceUnitDetails_asset10`
+    FOREIGN KEY (`assetID`)
+    REFERENCES `thesis`.`asset` (`assetID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
