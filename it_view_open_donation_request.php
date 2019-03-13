@@ -6,6 +6,10 @@
 	$_SESSION['donationID']=$donationID;
 	$_SESSION['previousPage3']="it_view_open_donation_request.php?id=".$donationID;
 	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `donationID` = '{$donationID}' and `steps_id`='1'";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+	
 	$query="SELECT * FROM thesis.donation where donationID='{$donationID}' limit 1";
 	$result=mysqli_query($dbc,$query);
 	$row=mysqli_fetch_array($result, MYSQLI_ASSOC);
