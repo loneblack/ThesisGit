@@ -160,6 +160,6 @@
         }
 
         $header = $_SESSION['previousPage'];
-        //header('Location: '.$header);
+        header('Location: '.$header);
     
 ?>

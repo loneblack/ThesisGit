@@ -15,13 +15,10 @@
     	$sql = "INSERT INTO `thesis`.`requestparts_assets` VALUES ('{$id}', '{$asset}');";
     	$result = mysqli_query($dbc, $sql);
     }
-    $sql = "UPDATE `thesis`.`requestparts` SET `statusID` = '2' WHERE (`id` = '{$id}');";
-    $result = mysqli_query($dbc, $sql);
-	
 
 	$message = "Form submitted!";
 	$_SESSION['submitMessage'] = $message;
 	
-	//header('Location: '.$header);
+	header('Location: '.$header);
 
 ?>
