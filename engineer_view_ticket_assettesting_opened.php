@@ -163,7 +163,11 @@
 							//INSERT TO TICKETEDASSET
 							$queryTicAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTic['ticketID']}', '{$forEscAss}');";
 							$resultTicAss=mysqli_query($dbc,$queryTicAss);
-								
+							
+							//INSERT TO ASSET AUDIT
+							$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$forEscAss}', '{$rowLatTic['ticketID']}', '8');";
+							$resultAssAud=mysqli_query($dbc,$queryAssAud);
+							
 							//DELETE ASSET TO TICKETEDASSET
 							$queryDelTic="DELETE FROM `thesis`.`ticketedasset` WHERE `ticketID`='{$ticketID}' and `assetID`='{$forEscAss}'";
 							$resultDelTic=mysqli_query($dbc,$queryDelTic);
@@ -276,7 +280,7 @@
 				}
 			}
 			//Check if final asset testing details is empty
-			$queryAssTestIsEx="SELECT count(*) as `isExist` FROM thesis.assettesting_details where assettesting_testingID='{$rowTestID}'";
+			$queryAssTestIsEx="SELECT count(*) as `isExist` FROM thesis.assettesting_details where assettesting_testingID='{$rowTestID['testingID']}'";
 			$resultAssTestIsEx=mysqli_query($dbc,$queryAssTestIsEx);
 			$rowAssTestIsEx=mysqli_fetch_array($resultAssTestIsEx,MYSQLI_ASSOC);
 				
@@ -286,7 +290,7 @@
 				$resultSetAssTestID=mysqli_query($dbc,$querySetAssTestID);
 					
 				//Delete Asset TESTING
-				$queryDelAssTest="Delete FROM thesis.assettesting where testingID='{$rowTestID}'";
+				$queryDelAssTest="Delete FROM thesis.assettesting where testingID='{$rowTestID['testingID']}'";
 				$resultDelAssTest=mysqli_query($dbc,$queryDelAssTest);
 			}
 		}

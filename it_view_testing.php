@@ -214,6 +214,10 @@
 				$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='6' WHERE `assetID`='{$row1['assetID']}'";
 				$resultStat=mysqli_query($dbc,$queryStat);
 				
+				//INSERT TO ASSET AUDIT
+				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$row1['assetID']}', '6');";
+				$resultAssAud=mysqli_query($dbc,$queryAssAud);
+				
 				//GET DONATION REQUEST
 				$queryDonDet="SELECT * FROM thesis.donationdetails dd join donationdetails_item ddi on dd.id=ddi.id where ddi.assetID='{$row1['assetID']}' limit 1";
 				$resultDonDet=mysqli_query($dbc,$queryDonDet);
@@ -246,7 +250,7 @@
 				//$rowPass=mysqli_fetch_array($resultPass,MYSQLI_ASSOC);
 				
 				if($rowNumAss['numAssetTest']==$rowNumComp['numCompTest']){
-					$queryComp="UPDATE `thesis`.`donation` SET `stepsID`='21' WHERE `donationID`='{$rowDonDet['donationID']}'";
+					$queryComp="UPDATE `thesis`.`donation` SET `stepsID`='21', `statusID`='3' WHERE `donationID`='{$rowDonDet['donationID']}'";
 					$resultComp=mysqli_query($dbc,$queryComp);
 				}
 			}
@@ -277,7 +281,11 @@
 				//UPDATE ASSET STATUS
 				$queryForRep="UPDATE `thesis`.`asset` SET `assetStatus`='5' WHERE `assetID`='{$rowDefAss['assetID']}'";
 				$resultForRep=mysqli_query($dbc,$queryForRep);
-					
+				
+				//INSERT TO ASSET AUDIT
+				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowDefAss['assetID']}', '5');";
+				$resultAssAud=mysqli_query($dbc,$queryAssAud);
+				
 				//INSERT to ticketted asset
 				//$queryTickAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTick['ticketID']}', '{$rowDefAss['assetID']}')";
 				//$resultTickAss=mysqli_query($dbc,$queryTickAss);

@@ -45,6 +45,7 @@
 			//Insert to assettesting_details table
 			$queryAssTest="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$row0['testingID']}', '{$rowDonDet['assetID']}')";
 			$resultAssTest=mysqli_query($dbc,$queryAssTest);
+			
 		}
 				
 		//Create ticket
@@ -55,13 +56,21 @@
 		$queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
 		$resultaa=mysqli_query($dbc,$queryaa);
 		$rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);
-				
+		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `ticketID`) VALUES (false, '{$rowaa['ticketID']}');";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
+		
 		//Select Asset testingID
 		$queryaaa="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$row0['testingID']}'";
 		$resultaaa=mysqli_query($dbc,$queryaaa);
 		while($rowaaa=mysqli_fetch_array($resultaaa,MYSQLI_ASSOC)){
 			$queryaaaa="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowaa['ticketID']}', '{$rowaaa['asset_assetID']}');";
 			$resultaaaa=mysqli_query($dbc,$queryaaaa);
+			
+			//INSERT TO ASSET AUDIT
+			$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowaaa['asset_assetID']}', '{$rowaa['ticketID']}', '8');";
+			$resultAssAud=mysqli_query($dbc,$queryAssAud);
 		}
 
 		$message = "Form submitted!";
