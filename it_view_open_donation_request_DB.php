@@ -23,6 +23,10 @@
 			//INSERT TO DONATIONDETAILS_ITEM
 			$queryDonDetIt="INSERT INTO `thesis`.`donationdetails_item` (`id`, `assetID`) VALUES ('{$_SESSION['donationID']}', '{$asset}');";
 			$resultDonDetIt=mysqli_query($dbc,$queryDonDetIt);
+			
+			//INSERT TO ASSET AUDIT
+			$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$asset}', '16');";
+			$resultAssAud=mysqli_query($dbc,$queryAssAud);
 		}
 		
 		$message = "Form submitted!";
