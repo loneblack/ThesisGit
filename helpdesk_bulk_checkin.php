@@ -5,11 +5,32 @@
     session_start();
     require_once('db/mysql_connect.php');
     
+    $today = date('Y/m/d');
     
     if (isset($_POST['checkin'])){
         if(!empty($_POST['check'])){
+            $userID = $_POST['userID'];
+            $check = $_POST['check'];
+            $status = $_POST['status'];
             
-            foreach (array_combine($keys, $vars) as $key => $var){
+            $mi = new MultipleIterator();
+            $mi->attachIterator(new ArrayIterator($userID));
+            $mi->attachIterator(new ArrayIterator($check));
+            $mi->attachIterator(new ArrayIterator($status));
+            
+            foreach($mi as $value){
+                list($userID, $check, $status) = $value;
+                
+                
+                if($status == '1'){
+                    $queryAsset="UPDATE asset SET assetStatus = 1 WHERE assetID = {$check};";
+					$resultAsset=mysqli_query($dbc,$queryAsset);      
+                }
+                
+                elseif($status == '18'){
+                    $queryAssetLost="UPDATE asset SET assetStatus = 18 WHERE assetID = {$check};";
+					$resultAssetLost=mysqli_query($dbc,$queryAssetLost);      
+                }
             }
             
         }
@@ -85,6 +106,8 @@
                                                     <table class="display table table-bordered table-striped" id="dynamic-table">
                                                         <thead>
                                                             <tr>
+                                                                <th class="hidden"></th>
+                                                                <th class="hidden"></th>
                                                                 <th></th>
                                                                 <th>Property Code</th>
                                                                 <th>Brand</th>
@@ -98,7 +121,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <?php
-                                                            $query="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model`, am.itemSpecification, rac.name AS `category`, ras.description, e.name AS `employee`, b.name AS `building`, fr.floorRoom FROM asset a 
+                                                            $query="SELECT e.userID, a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model`, am.itemSpecification, rac.name AS `category`, ras.description, e.name AS `employee`, b.name AS `building`, fr.floorRoom FROM asset a 
                                                             LEFT JOIN assetmodel am ON a.assetModel = am.assetModelID
                                                             LEFT JOIN ref_brand rb ON am.brand = rb.brandID
                                                             LEFT JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
@@ -113,6 +136,12 @@
                                                             while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 																
                                                                 echo "<tr>
+                                                                    <td class='hidden' value='{$row['assetID']}' name='assID'></td>
+                                                                    
+                                                                    
+                                                                    <td class='hidden' name='userID[]'  id='assetStatus_".$row['userID']."'  disabled></td>
+                                                                    
+                                                                    
                                                                     <td><input type='checkbox' name='check[]' value='{$row['assetID']}' onChange='change(\"{$row['assetID']}\",this);'></td>
                                                                     <td>{$row['propertyCode']}</td>
                                                                     <td>{$row['brand']}</td>
