@@ -127,6 +127,13 @@ require_once("db/mysql_connect.php");
 
     </section>
 
+    <script>
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+   </script>
+
     <!-- WAG GALAWIN PLS LANG -->
 
     <!--Core js-->

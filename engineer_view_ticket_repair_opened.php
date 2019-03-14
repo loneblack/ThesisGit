@@ -167,7 +167,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             <tr>
                                                 <th>Asset Status</th>
                                                 <th>Property Code</th>
-                                                <th>Asset/ Software Name</th>
+                                                <th>Asset Model</th>
                                                 <th>Building</th>
                                                 <th>Room</th>
                                             </tr>
@@ -238,7 +238,6 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                             </section>
 
                         </div>
-
 
                         <div class="col-sm-3">
 
@@ -322,7 +321,96 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                             </section>
                         </div>
 
+                        <div class="col-sm-12">
 
+                            <section class="panel">
+                                <div class="panel-body">
+                                    <h5><b>Modifications done</b></h5>
+                                    <p>Select the action performed for each asset component</p>
+                                    
+                                    <table class="table table-hover" name="modifications" id="modifications">
+                                        <thead>
+                                            <tr>
+                                                <th>Source/Destination</th>
+                                                <th>Property Code</th>
+                                                <th>Asset Model</th>
+                                                <th>Action</th>
+                                                <th><button style="float:right" class="btn btn-info" onClick="addModification(1)">Add Row</button></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                        
+                                            for ($i=0; $i < count($assets); $i++) { 
+
+                                                
+                                                $query3 =  "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            JOIN ref_assetstatus s
+                                                        ON a.assetStatus = s.id
+                                                            JOIN assetassignment aa
+                                                        ON a.assetID = aa.assetID
+                                                            JOIN building b
+                                                        ON aa.BuildingID = b.BuildingID
+                                                            JOIN floorandroom f
+                                                        ON aa.FloorAndRoomID = f.FloorAndRoomID 
+                                                            WHERE a.assetID = {$assets[$i]};";
+
+                                                $result3 = mysqli_query($dbc, $query3);  
+
+                                                while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
+
+                                                    $forRepair = "";
+                                                    $falseReport = "";
+                                                    $repaired = "";
+                                                    $broken = "";
+
+                                                    if($row['assetStatus']==9) $forRepair = "selected";
+                                                    if($row['assetStatus']==22) $falseReport = "selected";
+                                                    if($row['assetStatus']==23) $repaired = "selected";
+                                                    if($row['assetStatus']==4) $broken = "selected";
+
+
+                                                   echo "
+                                                    <tr>
+                                                    <td>Source Asset</td>
+                                                    <!-- ASSET STATUS
+                                                        <td width = '200'>
+                                                            <select name='assetStatus".$i."' class='form-control'>
+                                                                <option value ='{$row['assetStatus']}'>Select Asset Status</option>
+                                                                <option value='9' ".$forRepair.">For Repair</option>
+                                                                <option value='22' ".$falseReport.">False Report</option>
+                                                                <option value='23' ".$repaired.">Repaired</option>
+                                                                <option value='4' ".$broken.">Broken - Not Fixable</option>
+                                                            </select>
+                                                        </td>
+                                                    -->
+                                                    <td>{$row['propertyCode']}</td>
+                                                    <td>{$row['brand']} {$row['category']} {$row['description']}</td>
+                                                    <!-- BUILDING AND FLOOR
+                                                        <td>{$row['building']}</td>
+                                                        <td>{$row['floorroom']}</td>
+                                                    -->
+                                                    <td><select class='form-control form-control-inline' name='actionID[]'><option>Action</option><option value='1'>Added</option><option value='0'>Removed</option></select></td>
+                                                    <td style='text-align:right'><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>
+                                                    <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
+                                                    </tr>";
+                                                }  
+
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+
+                        </div>
 
                         <div class="col-sm-12">
                             <section class="panel">
@@ -337,7 +425,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                 </div>
                             </section>
                         </div>
-
+                        <hr>
                         <div class="col-sm-12">
                             <section class="panel">
                                 <div class="panel-body ">
@@ -364,6 +452,24 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             <td width="300">
                                                 <select class="form-control" name = "category0">
                                                     <option>Select Category</option>
+                                                    <option value="2">Accessories</option>
+                                                    <option value="3">Adapter</option>
+                                                    <option value="6">Batery</option>
+                                                    <option value="16">Hard Disk Drive (External)</option>
+                                                    <option value="17">Hard Disk Drive (Internal)</option>
+                                                    <option value="18">Keyboard</option>
+                                                    <option value="19">LAN Card</option>
+                                                    <option value="22">Memory</option>
+                                                    <option value="23">Monitor</option>
+                                                    <option value="24">Motherboard</option>
+                                                    <option value="25">Mouse</option>
+                                                    <option value="28">Non-IT Equipment</option>
+                                                    <option value="29">Optical Drive (External)</option>
+                                                    <option value="30">Optical Drive (Internal)</option>
+                                                    <option value="32">Power Supply</option>
+                                                    <option value="34">Processor</option>
+                                                    <option value="49">Video Card</option>
+                                                    <!-- 
                                                     <?php 
 
                                                         $sql = "SELECT * FROM thesis.ref_assetcategory;";
@@ -377,6 +483,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         }
 
                                                     ?>
+                                                     -->
                                                 </select>
                                             </td>
                                             <td>
@@ -471,7 +578,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     <script src="bs3/js/bootstrap.min.js"></script>
     <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
 
-    <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    
         <script type="text/javascript">
         var count = 0; 
         function removeRow(o) {
@@ -497,27 +604,16 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
             }, delayInMilliseconds);
 
         }
+
+
 				
         var appendTableRow = function(rowCount, clicks) {
             count++;
             $("#count").val(count);
             var tr = "<tr>" +
                 "<td><input type='number' min='0' step='1' class='form-control' name='quantity"+ count +"'></td>" +
-                "<td><select class='form-control' name='category"+ count +"'><option>Select Category</option>" +
-				'<?php 
-					$sql = "SELECT * FROM thesis.ref_assetcategory;";
+                "<td><select class='form-control' name='category"+ count +"'><option>Select Category</option><option value='2'>Accessories</option><option value='3'>Adapter</option><option value='6'>Batery</option><option value='16'>Hard Disk Drive (External)</option><option value='17'>Hard Disk Drive (Internal)</option><option value='18'>Keyboard</option><option value='19'>LAN Card</option><option value='22'>Memory</option><option value='23'>Monitor</option><option value='24'>Motherboard</option><option value='25'>Mouse</option><option value='28'>Non-IT Equipment</option><option value='29'>Optical Drive (External)</option><option value='30'>Optical Drive (Internal)</option><option value='32'>Power Supply</option><option value='34'>Processor</option><option value='49'>Video Card</option>"
 
-                    $result = mysqli_query($dbc, $sql);
-
-                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                        {   
-                            echo "<option value ={$row['assetCategoryID']}>";
-                            echo "{$row['name']}</option>";
-                        }
-				
-				
-				
-				?>'
 				+ "</select></td>" +
                 "<td><input class='form-control' name='specification"+ count +"'></td>" +
                 "<td><select class='form-control' name='deliveryStatus[]"+ count +"' id='deliveryStatus'><option value='0'>Pending</option><option value='1'>Delivered</option></td>" +
@@ -525,8 +621,50 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                 "</tr>";
             $('#addtable tbody tr').eq(rowCount).after(tr);
 
+        } 
+    </script>
+
+    <script>
+        function addModification(modificationID) {
+            var row_index = 0;
+            var modificationID = modificationID;
+            var isRenderd = false;
+
+            $("td").click(function() {
+                row_index = $(this).parent().index();
+
+            });
+
+            var delayInMilliseconds = 0; //1 second
+
+
+            setTimeout(function() {
+
+                appendTableRow1(row_index, modificationID);
+            }, delayInMilliseconds);
+
         }
-         
+
+        var appendTableRow1 = function(rowCount, clicks) {
+
+            count++;
+
+            $("#count").val(count);
+
+            var tr = "<tr>" +
+                "<td><input type='text' class='form-control' name='sourceDestination"+ count +"'></td>"
+                +
+                "<td><input type='text' class='form-control' name='propertyCode"+ count +"'></td>" 
+                +
+                "<td><input type='text' class='form-control' name='assetModel"+ count +"'></td>"
+                +
+                "<td><select clsas='form-control' name='action"+ count +"'> <option>Action</option> <option value='1'>Added</option> <option value='0'> Removed </option> </td>"
+                +
+                "</tr>";
+
+            $('#modifications tbody tr').eq(rowCount).after(tr);
+
+        }
     </script>
 
     <script src="js/scripts.js"></script>

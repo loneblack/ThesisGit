@@ -460,6 +460,13 @@ if($CurDate==$endOfTermDate){
     <script src="js/jquery.nicescroll.js"></script>
 
     <script>
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+   </script>
+
+    <script>
        function addRowHandlers() {
             var table = document.getElementById("dynamic-table");
             var rows = table.getElementsByTagName("tr");

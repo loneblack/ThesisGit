@@ -24,6 +24,9 @@ require_once("db/mysql_connect.php");
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
+
+    <script src = "http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src = "http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 </head>
 
         <?php
@@ -459,6 +462,13 @@ require_once("db/mysql_connect.php");
     }
     window.onload = addRowHandlers();
     </script>
+
+    <script>
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+   </script>
 
     <!--Core js-->
     <script src="js/jquery.js"></script>
