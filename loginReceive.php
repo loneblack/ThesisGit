@@ -41,7 +41,7 @@
             </div>
             <button class="btn btn-lg btn-login btn-block" type="submit">Sign in</button>
       </form>
-      <a href="login.php"><button class="btn btn-lg btn-block">Back</button></a>
+      <button onclick="window.history.back()" class="btn btn-lg btn-block">Back</button>
 
         </div>
     </div>

@@ -129,8 +129,20 @@
             }
         }
         
-        //Check if all assets are repaired
+
+        //get quantity received of requested assets and total requested assets
+        $queryRequestParts="SELECT count(id) as `requested`, count(IF(received = 1, id, null)) as `received` FROM thesis.requestparts_details where id = '{$id}'";
+        $resultRequestParts=mysqli_query($dbc,$queryRequestParts);
+        $rowRequestParts=mysqli_fetch_array($resultRequestParts,MYSQLI_ASSOC);
         
+        //Update requested parts to complete if all parts are received;
+        if($rowRequestParts['requested']==$rowRequestParts['received']){
+            $queryUpdateRequestParts = "UPDATE `thesis`.`requestparts` SET `statusID` = '3' WHERE (`id` = '{$id}');";
+            $resultUpdateRequestParts=mysqli_query($dbc,$queryUpdateRequestParts);
+        }
+
+        //Check if all assets are repaired
+
         //GET QTY of Assets of a Ticket
         $queryTicketed="SELECT count(ticketID) as `numAssets`, count(IF(checked = 1, ticketID, null)) as `repairedAssets` FROM thesis.ticketedasset where ticketID='{$id}'";
         $resultTicketed=mysqli_query($dbc,$queryTicketed);
