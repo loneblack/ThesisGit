@@ -65,6 +65,10 @@ if($everyTwoWeeks==$CurDate){
 			$resultLatMainTicket=mysqli_query($dbc,$queryLatMainTicket);
 			$rowLatMainTicket= mysqli_fetch_array($resultLatMainTicket, MYSQLI_ASSOC);
 			
+			//INSERT TO NOTIFICATIONS TABLE
+			$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `ticketID`) VALUES (false, '{$rowLatMainTicket['ticketID']}');";
+			$resultNotif = mysqli_query($dbc, $sqlNotif);
+			
 			//GET ALL FLOORROOM OF A GIVEN BUILDING
 			$queryGetAllFlrRm="SELECT * FROM thesis.floorandroom where BuildingID='{$rowEngAssMain['BuildingID']}' and (roomtype='3' or roomtype='4')";
 			$resultGetAllFlrRm=mysqli_query($dbc,$queryGetAllFlrRm);
@@ -80,6 +84,10 @@ if($everyTwoWeeks==$CurDate){
 					//UPDATE ASSET STATUS TO FOR MAINTENANCE
 					$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='17' WHERE `assetID`='{$rowAssAssFlrRoom['assetID']}'";
 					$resultStat=mysqli_query($dbc,$queryStat);
+					
+					//INSERT TO ASSET AUDIT
+					$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowAssAssFlrRoom['assetID']}', '{$rowLatMainTicket['ticketID']}', '17');";
+					$resultAssAud=mysqli_query($dbc,$queryAssAud);
 				}
 			}	
 		}     
@@ -116,6 +124,10 @@ if($lastDayThisMonth==$CurDate){
 			$resultLatMainTicket=mysqli_query($dbc,$queryLatMainTicket);
 			$rowLatMainTicket= mysqli_fetch_array($resultLatMainTicket, MYSQLI_ASSOC);
 			
+			//INSERT TO NOTIFICATIONS TABLE
+			$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `ticketID`) VALUES (false, '{$rowLatMainTicket['ticketID']}');";
+			$resultNotif = mysqli_query($dbc, $sqlNotif);
+			
 			//GET ALL FLOORROOM OF A GIVEN BUILDING
 			$queryGetAllFlrRm="SELECT * FROM thesis.floorandroom where BuildingID='{$rowEngAssMain['BuildingID']}' and (roomtype='1')";
 			$resultGetAllFlrRm=mysqli_query($dbc,$queryGetAllFlrRm);
@@ -127,6 +139,14 @@ if($lastDayThisMonth==$CurDate){
 					//INSERT TO TICKETTED ASSETS
 					$queryInsTickAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`, `checked`) VALUES ('{$rowLatMainTicket['ticketID']}', '{$rowAssAssFlrRoom['assetID']}', false);";
 					$resultInsTickAss=mysqli_query($dbc,$queryInsTickAss);
+					
+					//UPDATE ASSET STATUS TO FOR MAINTENANCE
+					$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='17' WHERE `assetID`='{$rowAssAssFlrRoom['assetID']}'";
+					$resultStat=mysqli_query($dbc,$queryStat);
+					
+					//INSERT TO ASSET AUDIT
+					$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowAssAssFlrRoom['assetID']}', '{$rowLatMainTicket['ticketID']}', '17');";
+					$resultAssAud=mysqli_query($dbc,$queryAssAud);
 				}
 			}
 		}     
@@ -181,6 +201,10 @@ if($CurDate==$endOfTermDate){
 			$resultLatMainTicket=mysqli_query($dbc,$queryLatMainTicket);
 			$rowLatMainTicket= mysqli_fetch_array($resultLatMainTicket, MYSQLI_ASSOC);
 			
+			//INSERT TO NOTIFICATIONS TABLE
+			$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `ticketID`) VALUES (false, '{$rowLatMainTicket['ticketID']}');";
+			$resultNotif = mysqli_query($dbc, $sqlNotif);
+			
 			//GET ALL FLOORROOM OF A GIVEN BUILDING
 			$queryGetAllFlrRm="SELECT * FROM thesis.floorandroom where BuildingID='{$rowEngAssMain['BuildingID']}' and (roomtype='2')";
 			$resultGetAllFlrRm=mysqli_query($dbc,$queryGetAllFlrRm);
@@ -192,6 +216,14 @@ if($CurDate==$endOfTermDate){
 					//INSERT TO TICKETTED ASSETS
 					$queryInsTickAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`, `checked`) VALUES ('{$rowLatMainTicket['ticketID']}', '{$rowAssAssFlrRoom['assetID']}', false);";
 					$resultInsTickAss=mysqli_query($dbc,$queryInsTickAss);
+					
+					//UPDATE ASSET STATUS TO FOR MAINTENANCE
+					$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='17' WHERE `assetID`='{$rowAssAssFlrRoom['assetID']}'";
+					$resultStat=mysqli_query($dbc,$queryStat);
+					
+					//INSERT TO ASSET AUDIT
+					$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowAssAssFlrRoom['assetID']}', '{$rowLatMainTicket['ticketID']}', '17');";
+					$resultAssAud=mysqli_query($dbc,$queryAssAud);
 				}
 			}
 		}     
