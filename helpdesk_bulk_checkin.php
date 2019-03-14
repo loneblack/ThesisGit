@@ -5,8 +5,17 @@
     session_start();
     require_once('db/mysql_connect.php');
     
-?>
     
+    if (isset($_POST['checkin'])){
+        if(!empty($_POST['check'])){
+            
+            foreach (array_combine($keys, $vars) as $key => $var){
+            }
+            
+        }
+    }
+?>
+
 <head>
     <meta charset="utf-8">
 
@@ -55,39 +64,40 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-
-                <div class="col-sm-12">
+                <form method="POST" action="">
                     <div class="col-sm-12">
-
-                        <div class="row">
-
+                        <div class="col-sm-12">
 
                             <div class="row">
-                                <div class="col-sm-12">
-                                    <section class="panel">
-                                        <header class="panel-heading">
-                                            Asset Checkin
-                                            <span class="tools pull-right">
-                                                <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                            </span>
-                                        </header>
-                                        <div class="panel-body">
-                                            <div class="adv-table">
-                                                <table class="display table table-bordered table-striped" id="dynamic-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th></th>
-                                                            <th>Property Code</th>
-                                                            <th>Brand</th>
-                                                            <th>Model</th>
-                                                            <th>Asset Specifications</th>
-                                                            <th>Asset Category</th>
-                                                            <th>Status</th>
-                                                            <th>Comments</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                         <?php
+
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <section class="panel">
+                                            <header class="panel-heading">
+                                                Asset Checkin
+                                                <span class="tools pull-right">
+                                                    <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                                </span>
+                                            </header>
+                                            <div class="panel-body">
+                                                <div class="adv-table">
+                                                    <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>Property Code</th>
+                                                                <th>Brand</th>
+                                                                <th>Model</th>
+                                                                <th>Asset Specifications</th>
+                                                                <th>Asset Category</th>
+                                                                <th>Checked Out To</th>
+                                                                <th>Status</th>
+                                                                <th>Comments</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php
                                                             $query="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model`, am.itemSpecification, rac.name AS `category`, ras.description, e.name AS `employee`, b.name AS `building`, fr.floorRoom FROM asset a 
                                                             LEFT JOIN assetmodel am ON a.assetModel = am.assetModelID
                                                             LEFT JOIN ref_brand rb ON am.brand = rb.brandID
@@ -103,14 +113,15 @@
                                                             while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 																
                                                                 echo "<tr>
-                                                                    <td><input type='checkbox' value='{$row['assetID']}' onChange='change(\"{$row['assetID']}\",this);'></td>
+                                                                    <td><input type='checkbox' name='check[]' value='{$row['assetID']}' onChange='change(\"{$row['assetID']}\",this);'></td>
                                                                     <td>{$row['propertyCode']}</td>
                                                                     <td>{$row['brand']}</td>
                                                                     <td>{$row['model']}</td>
                                                                     <td>{$row['itemSpecification']}</td>
                                                                     <td>{$row['category']}</td>
+                                                                    <td>{$row['employee']}</td>
                                                                     <td>
-                                                                        <select class='form-control' name='status[]' id='assetStatus_".$row['assetID']."' onChange='changetextbox(\"{$row['assetID']}\");'>
+                                                                        <select class='form-control' name='status[]' id='assetStatus_".$row['assetID']."' onChange='changetextbox(\"{$row['assetID']}\");' disabled>
                                                                             <option value='1'>Returned - Working</option>
                                                                             <option value='9'>Returned - Broken</option>
                                                                             <option value='18'>Missing</option>
@@ -120,21 +131,22 @@
                                                                     </tr>";
                                                             }
                                                         ?>
-                                                    </tbody>
-                                                </table>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <button class="btn btn-success">Checkin</button>
-                                        <button class="btn btn-danger" onclick="window.history.back()">Back</button>
-                                    </section>
+                                            <button class="btn btn-success" name="checkin">Checkin</button>
+                                            <button class="btn btn-danger" onclick="window.history.back()">Back</button>
+                                        </section>
+                                    </div>
                                 </div>
+
+
                             </div>
-
-
                         </div>
                     </div>
-                </div>
-                <!-- page end-->
+                    <!-- page end-->
+                </form>
             </section>
         </section>
         <!--main content end-->
@@ -143,46 +155,43 @@
 
     <!-- WAG GALAWIN PLS LANG -->
     <script type="text/javascript">
-		function changetextbox(x) {
-			var selectID = "assetStatus_" + x;
-			
-			//Working stat
-			if(document.getElementById(selectID).value == "1"){
-				//comments
-				document.getElementById(x).disabled = true;
-				
-			}
-			//Escalate stat
-            else if(document.getElementById(selectID).value == "9"){
-				//comments
-				document.getElementById(x).disabled = false;
-				
+        function changetextbox(x) {
+            var selectID = "assetStatus_" + x;
+
+            //Working stat
+            if (document.getElementById(selectID).value == "1") {
+                //comments
+                document.getElementById(x).disabled = true;
+
             }
-			else{
-				//comments
-				document.getElementById(x).disabled = true;
-				
+            //Escalate stat
+            else if (document.getElementById(selectID).value == "9") {
+                //comments
+                document.getElementById(x).disabled = false;
+
+            } else {
+                //comments
+                document.getElementById(x).disabled = true;
+
             }
         }
-	   
-        function change(x,y) {
-			var selectID = "assetStatus_" + x;
-			
-			//Is Checked
-			if(y.checked==true){
-				//comments
-				document.getElementById(selectID).disabled = false;
-				
-			}
-			//Unchecked
-			if(y.checked==false){
-				//comments
-				document.getElementById(selectID).disabled = true;
-				
-			}
+
+        function change(x, y) {
+            var selectID = "assetStatus_" + x;
+
+            //Is Checked
+            if (y.checked == true) {
+                //comments
+                document.getElementById(selectID).disabled = false;
+
+            }
+            //Unchecked
+            if (y.checked == false) {
+                //comments
+                document.getElementById(selectID).disabled = true;
+
+            }
         }
-		
-		
     </script>
 
     <script src="js/jquery.js"></script>
