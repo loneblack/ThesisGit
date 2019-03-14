@@ -10,6 +10,10 @@
 	$resultTickDat = mysqli_query($dbc, $queryTickDat);
 	$rowTickDat=mysqli_fetch_array($resultTickDat,MYSQLI_ASSOC);
 	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE (`ticketID` = '{$id}');";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+	
 	if(isset($_POST['submit'])){
 		if(isset($_POST['asset'])&&isset($_POST['remarks'])&&isset($_POST['assetStat'])){
 			$asset=$_POST['asset'];
@@ -34,7 +38,11 @@
 				//UPDATE ASSET STATUS
 				$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='{$assetStat}' WHERE `assetID`='{$asset}'";
 				$resultStat=mysqli_query($dbc,$queryStat);
-
+				
+				//INSERT TO ASSET AUDIT
+				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$asset}', '{$id}', '{$assetStat}');";
+				$resultAssAud=mysqli_query($dbc,$queryAssAud);
+					
                 if($assetStat=='9'){
                      //Get Latest Repair Request
 					$queryGetLatRep="SELECT * FROM thesis.service where serviceType='27' order by id desc limit 1";
