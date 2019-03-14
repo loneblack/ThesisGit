@@ -194,6 +194,17 @@ if($serviceTypeID=='27'){
 
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-3 col-lg-6">
+                                                        <input type="checkbox" disabled>&nbsp;Opt for service unit
+                                                    </div>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <br>
+                                                    <div class="col-lg-offset-0 col-lg-6">
                                                         <a href="requestor_dashboard.php"><button class="btn btn-danger" type="button">Back</button></a>
                                                     </div>
                                                 </div>

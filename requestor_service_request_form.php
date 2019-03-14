@@ -195,11 +195,11 @@ $count = 0;
                                                 </div>
                                                 <div class="form-group ">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Service Unit Opt-in</label>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-7">
                                                         <table class="table">
                                                             <thead>
                                                                 <tr>
-                                                                    <th><p><input type="checkbox" name="serviceUnit"> Opt-in for service unit?</p></th>
+                                                                    <th><p><input type="checkbox" name="serviceUnit"> Opt for service unit? (Note that all assets to be repaired are replaced with a service unit)</p></th>
 
                                                                 </tr>
                                                             </thead>

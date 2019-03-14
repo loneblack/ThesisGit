@@ -42,7 +42,7 @@ require_once("db/mysql_connect.php");
 
             <div class="nav notify-row" id="top_menu">
                 <div style="text-align: right; padding-bottom: 10px; padding-right:10px">
-                    <button class="btn btn-primary" style="">
+                    <button class="btn btn-primary" onclick="window.location.href='LoginReceive.php'">
                         Logout
                     </button> 
                 </div>
@@ -203,6 +203,13 @@ require_once("db/mysql_connect.php");
     }
     window.onload = addRowHandlers();
     </script>
+
+    <script>
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+   </script>
 
     <!--Core js-->
     <script src="js/jquery.js"></script>
