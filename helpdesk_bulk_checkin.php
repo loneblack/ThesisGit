@@ -103,7 +103,7 @@
                                                             while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 																
                                                                 echo "<tr>
-                                                                    <td><input type='checkbox' value='{$row['assetID']}'></td>
+                                                                    <td><input type='checkbox' value='{$row['assetID']}' onChange='change(\"{$row['assetID']}\",this);'></td>
                                                                     <td>{$row['propertyCode']}</td>
                                                                     <td>{$row['brand']}</td>
                                                                     <td>{$row['model']}</td>
@@ -164,19 +164,23 @@
 				
             }
         }
-	
-	
-        /*function changetextbox()
-        {
-            if(document.getElementById("status").value === "18"){
-                document.getElementById("comment").disable = false;
-            }
-            
-            else{
-                document.getElementById("comment").disable = true;
-            }
-            
-        }*/
+	   
+        function change(x,y) {
+			var selectID = "assetStatus_" + x;
+			
+			//Is Checked
+			if(y.checked==true){
+				//comments
+				document.getElementById(selectID).disabled = false;
+				
+			}
+			//Unchecked
+			if(y.checked==false){
+				//comments
+				document.getElementById(selectID).disabled = true;
+				
+			}
+        }
 		
 		
     </script>
