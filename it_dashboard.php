@@ -358,6 +358,45 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                                                 
                                                             
                                                             }
+															//Replacement 
+															$queryGetRep="SELECT *,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `Requestor`,rs.description as `statusDesc`,rstp.name as `stepName` FROM thesis.replacement r 
+																			JOIN ref_status rs ON r.statusID = rs.statusID
+																			JOIN user u on r.userID=u.UserID
+																			JOIN ref_steps rstp on r.stepID=rstp.id";
+                                                            $resultGetRep=mysqli_query($dbc,$queryGetRep);
+                                                            while($rowGetRep=mysqli_fetch_array($resultGetRep,MYSQLI_ASSOC)){
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$rowGetRep['replacementID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$rowGetRep['dateNeeded']}</td>";
+																	
+																	if($row['statusDesc']=='Pending'){
+																		echo "<td><span class='label label-warning label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Incomplete'){
+																		echo "<td><span class='label label-danger label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Completed'){
+																		echo "<td><span class='label label-success label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+																	//elseif($row['statusDesc']=='Ongoing'){
+																		//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	//}
+																	else{
+																		echo "<td><span class='label label-default label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+                                                                    
+                                                                echo "
+                                                                    <td>Replacement</td>
+                                                                    <td>{$rowGetRep['stepName']}</td>
+                                                                    <td>{$rowGetRep['Requestor']}</td>
+                                                                    <td>{$rowGetRep['dateTiimeLost']}</td>
+                                                                </tr>";
+                                                                
+                                                                $count++;
+                                                                
+                                                            
+                                                            }
 															?>
                                                     </tbody>
                                                 </table>

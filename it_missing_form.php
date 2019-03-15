@@ -4,12 +4,20 @@
 	require_once('db/mysql_connect.php');
 	$replacementID=$_GET['id'];
 	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `replacementID` = '{$replacementID}' and `steps_id` = '26';";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+	
 	if(isset($_POST['submit'])){
 		$replacedAsset=$_POST['replacedAsset'];
 		
 		//Update replacement table
 		$queryUpdRepTab="UPDATE `thesis`.`replacement` SET `statusID`='2',`stepID`='9', `replacementAssetID`='{$replacedAsset}' WHERE `replacementID`='{$replacementID}'";
 		$resultUpdRepTab=mysqli_query($dbc,$queryUpdRepTab);
+		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`steps_id`, `isRead`, `replacementID`) VALUES ('9', false, '{$replacementID}');";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
 		
 		$message = "Form submitted!";
 		$_SESSION['submitMessage'] = $message; 

@@ -67,6 +67,15 @@
 					//INSERT INTO REPLACEMENT TABLE
 					$queryInsRep = "INSERT INTO `thesis`.`replacement` (`lostAssetID`, `BuildingID`, `FloorAndRoomID`, `dateTiimeLost`, `userID`, `statusID`, `dateNeeded`, `stepID`, `remarks`) VALUES ('{$asset}', '{$rowGetAssLoc['BuildingID']}', '{$rowGetAssLoc['FloorAndRoomID']}', now(), '{$_SESSION['userID']}', '1', '{$finDate}', '26', '{$remarks}');";
 					$resultInsRep = mysqli_query($dbc, $queryInsRep);
+					
+					//GET LATEST REPLACEMENT TABLE
+					$queryGetLatRepl = "SELECT * FROM thesis.replacement order by replacementID desc limit 1;";
+					$resultGetLatRepl = mysqli_query($dbc, $queryGetLatRepl);
+					$rowGetLatRepl=mysqli_fetch_array($resultGetLatRepl,MYSQLI_ASSOC);
+					
+					//INSERT TO NOTIFICATIONS TABLE
+					$sqlNotif = "INSERT INTO `thesis`.`notifications` (`steps_id`, `isRead`, `replacementID`) VALUES ('26', false, '{$rowGetLatRepl['replacementID']}');";
+					$resultNotif = mysqli_query($dbc, $sqlNotif);
 				}
 			}
 			

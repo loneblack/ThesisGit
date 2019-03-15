@@ -23,7 +23,12 @@
 	$resultNumDonNotif=mysqli_query($dbc,$queryNumDonNotif);
 	$rowNumDonNotif=mysqli_fetch_array($resultNumDonNotif,MYSQLI_ASSOC);
 	
-	$totalNumReq=$rowNumNotif['numOfNotif']+$rowNumBorNotif['numOfNotif']+$rowNumDonNotif['numOfNotif'];
+	//GET NUMBER OF NEW NOTIFICATIONS OF REPLACEMENT REQUESTS
+	$queryNumReplNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and replacementID is not null";
+	$resultNumReplNotif=mysqli_query($dbc,$queryNumReplNotif);
+	$rowNumReplNotif=mysqli_fetch_array($resultNumReplNotif,MYSQLI_ASSOC);
+	
+	$totalNumReq=$rowNumNotif['numOfNotif']+$rowNumBorNotif['numOfNotif']+$rowNumDonNotif['numOfNotif']+$rowNumReplNotif['numOfNotif'];
 	
 	//GET NUMBER OF NEW NOTIFICATIONS OF PURCHASE ORDERS
 	$queryNumNotifPur="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and procurementID is not null";
