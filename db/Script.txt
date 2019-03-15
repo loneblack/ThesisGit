@@ -1939,6 +1939,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`serviceUnit` (
   `serviceUnitID` INT NOT NULL AUTO_INCREMENT,
   `serviceID` INT(11) NOT NULL,
   `statusID` INT(11) NOT NULL,
+  `dateNeeded` DATETIME NULL,
   `startDate` DATETIME NULL,
   `endDate` DATETIME NULL,
   `UserID` INT(11) NOT NULL,
@@ -2184,4 +2185,3 @@ CREATE TABLE IF NOT EXISTS `thesis`.`serviceUnitAssets` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
