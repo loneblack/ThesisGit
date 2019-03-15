@@ -4,33 +4,65 @@
 <?php 
     session_start();
     require_once('db/mysql_connect.php');
+    $userID = $_SESSION['userID'];
     
     $today = date('Y/m/d');
     
     if (isset($_POST['checkin'])){
         if(!empty($_POST['check'])){
-            $userID = $_POST['userID'];
             $check = $_POST['check'];
             $status = $_POST['status'];
+            $comment = $_POST['comment'];
             
             $mi = new MultipleIterator();
-            $mi->attachIterator(new ArrayIterator($userID));
             $mi->attachIterator(new ArrayIterator($check));
             $mi->attachIterator(new ArrayIterator($status));
+            $mi->attachIterator(new ArrayIterator($comment));
             
             foreach($mi as $value){
-                list($userID, $check, $status) = $value;
+                list($check, $status, $comment) = $value;
+                $getUser="SELECT * FROM assetassignment WHERE assetID = {$check} AND statusID = 2;";
+                $resultGetUser=mysqli_query($dbc,$getUser); 
+                $rowGetUser = mysqli_fetch_array($resultGetUser, MYSQLI_ASSOC);
                 
                 
                 if($status == '1'){
                     $queryAsset="UPDATE asset SET assetStatus = 1 WHERE assetID = {$check};";
 					$resultAsset=mysqli_query($dbc,$queryAsset);      
+                    
+                    $queryInsertAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetAssignmentID`, `assetStatus`) VALUES ('{$rowGetUser['personresponsibleID']}', '{$today}', '{$check}', '{$rowGetUser['AssetAssignmentID']}', '1');";
+					$resultInsertAudit=mysqli_query($dbc,$queryInsertAudit);      
                 }
                 
                 elseif($status == '18'){
                     $queryAssetLost="UPDATE asset SET assetStatus = 18 WHERE assetID = {$check};";
-					$resultAssetLost=mysqli_query($dbc,$queryAssetLost);      
+					$resultAssetLost=mysqli_query($dbc,$queryAssetLost);    
+                    
+                    $queryInsertAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetAssignmentID`, `assetStatus`) VALUES ('{$rowGetUser['personresponsibleID']}', '{$today}', '{$check}', '{$rowGetUser['AssetAssignmentID']}', '18');";
+					$resultInsertAudit=mysqli_query($dbc,$queryInsertAudit);  
                 }
+                
+                else{
+                    $queryAssetBroken="INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`) VALUES ('{$comment}', '{$today}', '{$userID}', '27', '1', '14', '0');";
+					$resultAssetBroken=mysqli_query($dbc,$queryAssetBroken);
+                    
+                    $queryAssetLost="UPDATE asset SET assetStatus = 9 WHERE assetID = {$check};";
+					$resultAssetLost=mysqli_query($dbc,$queryAssetLost);    
+                    
+                    $sql1 = "SELECT MAX(id) as 'id' FROM thesis.service;";//status is set to 1 for pending status
+
+	               $result1 = mysqli_query($dbc, $sql1);
+                    $row = mysqli_fetch_array($result1, MYSQLI_ASSOC);
+                    $id = $row['id'];
+                    
+                    $query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`) VALUES ('{$id}', '{$check}');";
+	    	        $resulted = mysqli_query($dbc, $query);
+                    
+                    $queryInsertAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetAssignmentID`, `assetStatus`) VALUES ('{$rowGetUser['personresponsibleID']}', '{$today}', '{$check}', '{$rowGetUser['AssetAssignmentID']}', '9');";
+					$resultInsertAudit=mysqli_query($dbc,$queryInsertAudit);  
+                }
+                
+                
             }
             
         }
@@ -107,7 +139,6 @@
                                                         <thead>
                                                             <tr>
                                                                 <th class="hidden"></th>
-                                                                <th class="hidden"></th>
                                                                 <th></th>
                                                                 <th>Property Code</th>
                                                                 <th>Brand</th>
@@ -121,7 +152,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <?php
-                                                            $query="SELECT e.userID, a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model`, am.itemSpecification, rac.name AS `category`, ras.description, e.name AS `employee`, b.name AS `building`, fr.floorRoom FROM asset a 
+                                                            $query="SELECT e.UserID, a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model`, am.itemSpecification, rac.name AS `category`, ras.description, e.name AS `employee`, b.name AS `building`, fr.floorRoom FROM asset a 
                                                             LEFT JOIN assetmodel am ON a.assetModel = am.assetModelID
                                                             LEFT JOIN ref_brand rb ON am.brand = rb.brandID
                                                             LEFT JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
@@ -130,17 +161,16 @@
                                                             LEFT JOIN employee e ON aa.personresponsibleID = e.employeeID
                                                             LEFT JOIN building b ON aa.BuildingID = b.BuildingID
                                                             LEFT JOIN floorandroom fr ON aa.FloorAndRoomID = fr.FloorAndRoomID
-                                                            WHERE (rac.name = 'laptop' OR rac.name = 'VGA Cable' OR rac.name='Projector' OR rac.name='Cable' OR rac.name = 'HDMI') AND ras.id = 2;";
+                                                            WHERE (rac.name = 'laptop' OR rac.name = 'VGA Cable' OR rac.name='Projector' OR rac.name='Cable' OR rac.name = 'HDMI') AND ras.id = 2
+                                                            AND aa.personresponsibleID IS NOT NULL;";
                                                             $result=mysqli_query($dbc,$query);
 
                                                             while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 																
                                                                 echo "<tr>
-                                                                    <td class='hidden' value='{$row['assetID']}' name='assID'></td>
-                                                                    
-                                                                    
-                                                                    <td class='hidden' name='userID[]'  id='assetStatus_".$row['userID']."'  disabled></td>
-                                                                    
+                                                                    <td class='hidden'>
+                                                                    <input type='hidden' name='assID[]'  value='{$row['assetID']}'  disabled>
+                                                                    </td>
                                                                     
                                                                     <td><input type='checkbox' name='check[]' value='{$row['assetID']}' onChange='change(\"{$row['assetID']}\",this);'></td>
                                                                     <td>{$row['propertyCode']}</td>
@@ -190,34 +220,39 @@
             //Working stat
             if (document.getElementById(selectID).value == "1") {
                 //comments
-                document.getElementById(x).disabled = true;
+                document.getElementById(x).readOnly = true;
 
             }
             //Escalate stat
             else if (document.getElementById(selectID).value == "9") {
                 //comments
-                document.getElementById(x).disabled = false;
+                document.getElementById(x).readOnly = false;
 
             } else {
                 //comments
-                document.getElementById(x).disabled = true;
+                document.getElementById(x).readOnly = true;
 
             }
         }
 
         function change(x, y) {
             var selectID = "assetStatus_" + x;
+            var userID = "user_" + x;
 
             //Is Checked
             if (y.checked == true) {
                 //comments
                 document.getElementById(selectID).disabled = false;
+                document.getElementById(x).disabled = false;
+                document.getElementById(x).readOnly = true;
 
             }
             //Unchecked
             if (y.checked == false) {
                 //comments
                 document.getElementById(selectID).disabled = true;
+                document.getElementById(x).disabled = true;
+                document.getElementById(x).readOnly = false;
 
             }
         }
