@@ -4,6 +4,10 @@
 	require_once('db/mysql_connect.php');
 	$replacementID=$_GET['id'];
 	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `replacementID` = '{$replacementID}' and `steps_id` = '9';";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+	
 	//GET Replacement Request Data
 	$queryGetRepData="SELECT * FROM thesis.replacement r join asset a on r.lostAssetID=a.assetID
 							join assetmodel am on a.assetModel=am.assetModelID
@@ -45,7 +49,15 @@
 		$queryLatTick="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
 		$resultLatTick=mysqli_query($dbc,$queryLatTick);
 		$rowLatTick=mysqli_fetch_array($resultLatTick,MYSQLI_ASSOC);
-				
+		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `ticketID`) VALUES (false, '{$rowLatTick['ticketID']}');";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
+		
+		//INSERT TO ASSET AUDIT
+		$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowGetRepData['replacementAssetID']}', '{$rowLatTick['ticketID']}', '8');";
+		$resultAssAud=mysqli_query($dbc,$queryAssAud);
+		
 		//Select Asset testingID
 		$queryGetAssTestDet="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$rowLatAssTest['testingID']}'";
 		$resultGetAssTestDet=mysqli_query($dbc,$queryGetAssTestDet);
@@ -349,7 +361,7 @@
     <script src="js/jquery-1.8.3.min.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
     <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
-
+	<script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
     <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
 

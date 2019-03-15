@@ -89,11 +89,15 @@
 					//CREATE TICKET FOR ESCALATION
 					$queryEsc="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `requestedBy`) VALUES ('5', '{$escEng}', '{$_SESSION['userID']}', now(), now(), '{$_POST['dueDate']}', '{$rowOut['priority']}', '{$rowLatAss['testingID']}', '25', '{$rowOut['requestedBy']}')";
 					$resultEsc=mysqli_query($dbc,$queryEsc);
-						
+					
 					//GET LATEST TICKET
 					$queryLatTic="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
 					$resultLatTic=mysqli_query($dbc,$queryLatTic);
 					$rowLatTic=mysqli_fetch_array($resultLatTic,MYSQLI_ASSOC);
+					
+					//INSERT TO NOTIFICATIONS TABLE
+					$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `ticketID`) VALUES (false, '{$rowLatTic['ticketID']}');";
+					$resultNotif = mysqli_query($dbc, $sqlNotif);
 					
 					foreach (array_combine($_POST['forEscAsset'], $escEngineer) as $forEscAss => $escEngi){
 						if($escEngi==$escEng){
@@ -149,6 +153,10 @@
 					$queryLatTic="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
 					$resultLatTic=mysqli_query($dbc,$queryLatTic);
 					$rowLatTic=mysqli_fetch_array($resultLatTic,MYSQLI_ASSOC);
+					
+					//INSERT TO NOTIFICATIONS TABLE
+					$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `ticketID`) VALUES (false, '{$rowLatTic['ticketID']}');";
+					$resultNotif = mysqli_query($dbc, $sqlNotif);
 					
 					foreach (array_combine($_POST['forEscAsset'], $escEngineer) as $forEscAss => $escEngi){
 						if($escEngi==$escEng){
@@ -206,6 +214,10 @@
 					$resultLatTic=mysqli_query($dbc,$queryLatTic);
 					$rowLatTic=mysqli_fetch_array($resultLatTic,MYSQLI_ASSOC);
 					
+					//INSERT TO NOTIFICATIONS TABLE
+					$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `ticketID`) VALUES (false, '{$rowLatTic['ticketID']}');";
+					$resultNotif = mysqli_query($dbc, $sqlNotif);
+					
 					foreach (array_combine($_POST['forEscAsset'], $escEngineer) as $forEscAss => $escEngi){
 						if($escEngi==$escEng){
 							//INSERT TO ASSETTESTDETAILS
@@ -257,6 +269,10 @@
 					$resultLatTic=mysqli_query($dbc,$queryLatTic);
 					$rowLatTic=mysqli_fetch_array($resultLatTic,MYSQLI_ASSOC);
 					
+					//INSERT TO NOTIFICATIONS TABLE
+					$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `ticketID`) VALUES (false, '{$rowLatTic['ticketID']}');";
+					$resultNotif = mysqli_query($dbc, $sqlNotif);
+					
 					foreach (array_combine($_POST['forEscAsset'], $escEngineer) as $forEscAss => $escEngi){
 						if($escEngi==$escEng){
 							//INSERT TO ASSETTESTDETAILS
@@ -270,7 +286,11 @@
 							//INSERT TO TICKETEDASSET
 							$queryTicAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTic['ticketID']}', '{$forEscAss}');";
 							$resultTicAss=mysqli_query($dbc,$queryTicAss);
-								
+							
+							//INSERT TO ASSET AUDIT
+							$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$forEscAss}', '{$rowLatTic['ticketID']}', '8');";
+							$resultAssAud=mysqli_query($dbc,$queryAssAud);
+							
 							//DELETE ASSET TO TICKETEDASSET
 							$queryDelTic="DELETE FROM `thesis`.`ticketedasset` WHERE `ticketID`='{$ticketID}' and `assetID`='{$forEscAss}'";
 							$resultDelTic=mysqli_query($dbc,$queryDelTic);

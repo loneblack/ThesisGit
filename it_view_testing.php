@@ -391,6 +391,15 @@
 					$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `statusID`) VALUES ('{$rowCheckAssPass['assetID']}', '{$rowGetRepDat['BuildingID']}', '{$rowGetRepDat['FloorAndRoomID']}', '2')";
 					$resultAssAss=mysqli_query($dbc,$queryAssAss);
 					
+					//GET LATEST ASSETASSIGNMENT
+					$queryGetLatAssAss = "SELECT * FROM thesis.assetassignment order by AssetAssignmentID desc limit 1";
+					$resultGetLatAssAss = mysqli_query($dbc,$queryGetLatAssAss);
+					$rowGetLatAssAss= mysqli_fetch_array($resultGetLatAssAss,MYSQLI_ASSOC);
+					
+					//INSERT TO ASSET AUDIT
+					$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetAssignmentID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowGetLatAssAss['assetID']}', '{$rowGetLatAssAss['AssetAssignmentID']}', '2');";
+					$resultAssAud=mysqli_query($dbc,$queryAssAud);
+					
 					//CHANGE STATUS OF ASSET ASSIGNMENT OF THE MISSING ASSET
 					$queryChaStatAssAss="UPDATE `thesis`.`assetassignment` SET `statusID` = '3' WHERE `assetID` = '{$rowGetRepDat['lostAssetID']}' AND `statusID` = '2' AND `personresponsibleID` is null";
 					$resultChaStatAssAss=mysqli_query($dbc,$queryChaStatAssAss);
@@ -419,6 +428,10 @@
 					//CHANGE REPLACEMENT STEP BACK TO Assigning of New Replacement
 					$queryUpdRepStat="UPDATE `thesis`.`replacement` SET `stepID` = '26' WHERE (`replacementID` = '{$rowGetRepDat['replacementID']}');";
 					$resultUpdRepStat=mysqli_query($dbc,$queryUpdRepStat);
+					
+					//INSERT TO NOTIFICATIONS TABLE
+					$sqlNotif = "INSERT INTO `thesis`.`notifications` (`steps_id`, `isRead`, `replacementID`) VALUES ('26', false, '{$rowGetRepDat['replacementID']}');";
+					$resultNotif = mysqli_query($dbc, $sqlNotif);
 				}
 			}
 
