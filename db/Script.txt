@@ -1939,9 +1939,13 @@ CREATE TABLE IF NOT EXISTS `thesis`.`serviceUnit` (
   `serviceUnitID` INT NOT NULL AUTO_INCREMENT,
   `serviceID` INT(11) NOT NULL,
   `statusID` INT(11) NOT NULL,
+  `startDate` DATETIME NULL,
+  `endDate` DATETIME NULL,
+  `UserID` INT(11) NOT NULL,
   PRIMARY KEY (`serviceUnitID`),
   INDEX `fk_serviceUnit_service2_idx` (`serviceID` ASC),
   INDEX `fk_serviceUnit_ref_status2_idx` (`statusID` ASC),
+  INDEX `fk_serviceUnit_user1_idx` (`UserID` ASC),
   CONSTRAINT `fk_serviceUnit_service2`
     FOREIGN KEY (`serviceID`)
     REFERENCES `thesis`.`service` (`id`)
@@ -1950,6 +1954,11 @@ CREATE TABLE IF NOT EXISTS `thesis`.`serviceUnit` (
   CONSTRAINT `fk_serviceUnit_ref_status2`
     FOREIGN KEY (`statusID`)
     REFERENCES `thesis`.`ref_status` (`statusID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_serviceUnit_user1`
+    FOREIGN KEY (`UserID`)
+    REFERENCES `thesis`.`user` (`UserID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -2175,3 +2184,4 @@ CREATE TABLE IF NOT EXISTS `thesis`.`serviceUnitAssets` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+

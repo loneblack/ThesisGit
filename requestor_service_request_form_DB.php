@@ -50,6 +50,7 @@
 	                                VALUES ('{$id}', '1', '{$userID}');";//status is set to 1 for pending status
 
 		$result = mysqli_query($dbc, $sql);
+		echo $sql;
     }
 
     //get newly inserted service unit
@@ -85,5 +86,5 @@
 	$message = "Form submitted!";
 	$_SESSION['submitMessage'] = $message;
 
-	header('Location: '.$header);
+	//header('Location: '.$header);
 ?>	

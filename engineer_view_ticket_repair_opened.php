@@ -331,11 +331,11 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     <table class="table table-hover" name="modifications" id="modifications">
                                         <thead>
                                             <tr>
-                                                <th>Source/Destination</th>
+                                                <th>Source</th>
                                                 <th>Property Code</th>
                                                 <th>Asset Model</th>
                                                 <th>Action</th>
-                                                <th><button style="float:right" class="btn btn-info" onClick="addModification(1)">Add Row</button></th>
+                                                <th>Destination</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -380,25 +380,22 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                    echo "
                                                     <tr>
                                                     <td>Source Asset</td>
-                                                    <!-- ASSET STATUS
-                                                        <td width = '200'>
-                                                            <select name='assetStatus".$i."' class='form-control'>
-                                                                <option value ='{$row['assetStatus']}'>Select Asset Status</option>
-                                                                <option value='9' ".$forRepair.">For Repair</option>
-                                                                <option value='22' ".$falseReport.">False Report</option>
-                                                                <option value='23' ".$repaired.">Repaired</option>
-                                                                <option value='4' ".$broken.">Broken - Not Fixable</option>
-                                                            </select>
-                                                        </td>
-                                                    -->
                                                     <td>{$row['propertyCode']}</td>
                                                     <td>{$row['brand']} {$row['category']} {$row['description']}</td>
-                                                    <!-- BUILDING AND FLOOR
-                                                        <td>{$row['building']}</td>
-                                                        <td>{$row['floorroom']}</td>
-                                                    -->
-                                                    <td><select class='form-control form-control-inline' name='actionID[]'><option>Action</option><option value='1'>Added</option><option value='0'>Removed</option></select></td>
-                                                    <td style='text-align:right'><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>
+                                                    <td>
+                                                        <select class='form-control form-control-inline' name='actionID[]'>
+                                                            <option>Action</option>
+                                                            <option value='1'>Added</option>
+                                                            <option value='0'>Removed</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class='form-control form-control-inline' name='actionID[]'>
+                                                            <option>Action</option>
+                                                            <option value='1'>Added</option>
+                                                            <option value='0'>Removed</option>
+                                                        </select>
+                                                    </td>
                                                     <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
                                                     </tr>";
                                                 }  

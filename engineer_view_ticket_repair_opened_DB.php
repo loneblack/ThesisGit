@@ -137,8 +137,12 @@
         
         //Update requested parts to complete if all parts are received;
         if($rowRequestParts['requested']==$rowRequestParts['received']){
+
             $queryUpdateRequestParts = "UPDATE `thesis`.`requestparts` SET `statusID` = '3' WHERE (`id` = '{$id}');";
             $resultUpdateRequestParts=mysqli_query($dbc,$queryUpdateRequestParts);
+
+            //assign requested parts to User
+            
         }
 
         //Check if all assets are repaired
