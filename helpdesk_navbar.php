@@ -23,7 +23,12 @@
 	$resultNumReplNotif=mysqli_query($dbc,$queryNumReplNotif);
 	$rowNumReplNotif=mysqli_fetch_array($resultNumReplNotif,MYSQLI_ASSOC);
 	
-	$totalNotifs=$rowNumNotif['numOfNotif']+$rowNumBorNotif['numOfNotif']+$rowNumDonNotif['numOfNotif']+$rowNumReplNotif['numOfNotif'];
+	//GET NUMBER OF NEW NOTIFICATIONS OF SALVAGE REQUESTS
+	$queryNumSalNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and salvage_id is not null";
+	$resultNumSalNotif=mysqli_query($dbc,$queryNumSalNotif);
+	$rowNumSalNotif=mysqli_fetch_array($resultNumSalNotif,MYSQLI_ASSOC);
+	
+	$totalNotifs=$rowNumNotif['numOfNotif']+$rowNumBorNotif['numOfNotif']+$rowNumDonNotif['numOfNotif']+$rowNumReplNotif['numOfNotif']+$rowNumSalNotif['numOfNotif'];
 ?>
 
 <?php  echo '<aside>

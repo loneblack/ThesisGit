@@ -17,7 +17,11 @@
     $dateCreated=$rowReqID['dateCreated'];
     $description=$rowReqID['description'];
     $name=$rowReqID['name'];
-
+	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `salvage_id` = '{$id}'";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+	
 	if(isset($_POST['submit'])){
 		
 		$status=$_POST['status'];
@@ -31,44 +35,46 @@
 		
 		if(!isset($message)){
 			//INSERT ASSET TESTING
-		$queryAssTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`, `remarks`) VALUES ('1', '{$rowReqID['userID']}', '29', 'Salvage');";
-		$resultAssTest=mysqli_query($dbc,$queryAssTest);
-			
-		//GET LATEST ASSET TEST
-		$queryLatAssTest="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
-		$resultLatAssTest=mysqli_query($dbc,$queryLatAssTest);
-		$rowLatAssTest=mysqli_fetch_array($resultLatAssTest,MYSQLI_ASSOC);	
-		
-            
-        //GET ASSET IN SALVAGE TICKET
-        $ayokona = "SELECT * FROM thesis.salvage_details WHERE salvageID = {$id};";
-        $pumasok=mysqli_query($dbc,$ayokona);
-            
-        //Create ticket
-		$queryCreTick="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `requestedBy`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), DATE_ADD(NOW(), INTERVAL 14 DAY), '{$priority}', '{$rowLatAssTest['testingID']}', '{$category}', '{$PersonRequestedID}')";
-		$resultCreTick=mysqli_query($dbc,$queryCreTick);
+			$queryAssTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `serviceType`, `remarks`) VALUES ('1', '{$rowReqID['userID']}', '29', 'Salvage');";
+			$resultAssTest=mysqli_query($dbc,$queryAssTest);
 				
-		//Get Latest ticket
-		$queryLatTick="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
-		$resultLatTick=mysqli_query($dbc,$queryLatTick);
-		$rowLatTick=mysqli_fetch_array($resultLatTick,MYSQLI_ASSOC);
-            
-        
-        while ($row = mysqli_fetch_array($pumasok, MYSQLI_ASSOC)){
-            //UPDATE ASSET STATUS
-            $queryUpdAssStat="UPDATE `thesis`.`asset` SET `assetStatus`='8' WHERE `assetID`='{$row['asset_assetID']}'";
-            $resultUpdAssStat=mysqli_query($dbc,$queryUpdAssStat);
-            
-            //Insert to assettesting_details table
-            $queryAssTest="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowLatAssTest['testingID']}', '{$row['asset_assetID']}')";
-            $resultAssTest=mysqli_query($dbc,$queryAssTest);
-            
-            $queryInsTickAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTick['ticketID']}', '{$row['asset_assetID']}');";
-			$resultInsTickAss=mysqli_query($dbc,$queryInsTickAss);
-        } 
-		
-		$message = "Form submitted!";
-		$_SESSION['submitMessage'] = $message;
+			//GET LATEST ASSET TEST
+			$queryLatAssTest="SELECT * FROM `thesis`.`assettesting` order by testingID desc limit 1";
+			$resultLatAssTest=mysqli_query($dbc,$queryLatAssTest);
+			$rowLatAssTest=mysqli_fetch_array($resultLatAssTest,MYSQLI_ASSOC);	
+			
+			//GET ASSET IN SALVAGE TICKET
+			$ayokona = "SELECT * FROM thesis.salvage_details WHERE salvageID = {$id};";
+			$pumasok=mysqli_query($dbc,$ayokona);
+				
+			//Create ticket
+			$queryCreTick="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `requestedBy`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), DATE_ADD(NOW(), INTERVAL 14 DAY), '{$priority}', '{$rowLatAssTest['testingID']}', '{$category}', '{$PersonRequestedID}')";
+			$resultCreTick=mysqli_query($dbc,$queryCreTick);
+					
+			//Get Latest ticket
+			$queryLatTick="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
+			$resultLatTick=mysqli_query($dbc,$queryLatTick);
+			$rowLatTick=mysqli_fetch_array($resultLatTick,MYSQLI_ASSOC);
+				
+			//INSERT TO NOTIFICATIONS TABLE
+			$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `ticketID`) VALUES (false, '{$rowLatTick['ticketID']}');";
+			$resultNotif = mysqli_query($dbc, $sqlNotif);
+			
+			while ($row = mysqli_fetch_array($pumasok, MYSQLI_ASSOC)){
+				//UPDATE ASSET STATUS
+				$queryUpdAssStat="UPDATE `thesis`.`asset` SET `assetStatus`='8' WHERE `assetID`='{$row['asset_assetID']}'";
+				$resultUpdAssStat=mysqli_query($dbc,$queryUpdAssStat);
+				
+				//Insert to assettesting_details table
+				$queryAssTest="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowLatAssTest['testingID']}', '{$row['asset_assetID']}')";
+				$resultAssTest=mysqli_query($dbc,$queryAssTest);
+				
+				$queryInsTickAss="INSERT INTO `thesis`.`ticketedasset` (`ticketID`, `assetID`) VALUES ('{$rowLatTick['ticketID']}', '{$row['asset_assetID']}');";
+				$resultInsTickAss=mysqli_query($dbc,$queryInsTickAss);
+			} 
+			
+			$message = "Form submitted!";
+			$_SESSION['submitMessage'] = $message;
 		}
 		
 	}
@@ -318,6 +324,7 @@
     <script src="js/jquery-1.8.3.min.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
     <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+	<script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
 
     <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 

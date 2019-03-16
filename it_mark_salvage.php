@@ -16,6 +16,10 @@
             $query  = "SELECT MAX(id) AS `lastID` FROM salvage;";
             $result = mysqli_query($dbc,$query);
             $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+			
+			//INSERT TO NOTIFICATIONS TABLE
+			$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `salvage_id`) VALUES (false, '{$row['lastID']}');";
+			$resultNotif = mysqli_query($dbc, $sqlNotif);
             
             $salvagee=$_POST['markSalvage'];
             foreach($salvagee as $salvageee){
