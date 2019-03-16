@@ -254,8 +254,7 @@ $_SESSION['count'] = 0;
                                                                 </td>
                                                                 <td>
                                                                     <div class="col-lg-12">
-                                                                        <select class="form-control" name="category0" id="category0">
-                                                                            <option>Select</option>
+                                                                        <select class="form-control" name="category0" id="category0" onChange='changetextbox("0");'>
                                                                             <?php
  
                                                                                 $sql = "SELECT * FROM thesis.ref_assetcategory;";
@@ -270,6 +269,7 @@ $_SESSION['count'] = 0;
 
                                                                                 }
                                                                            ?>
+																		   <option value="0">Please Specify</option>
                                                                         </select>
                                                                     </div>
                                                                 </td>
@@ -409,6 +409,18 @@ $_SESSION['count'] = 0;
 
         }
 		
+		function changetextbox(x) {
+            var selectID = "category" + x;
+			var assetdesc = "purpose" + x;
+			
+            //Is selected please specify
+            if (document.getElementById(selectID).value == '0') {
+                document.getElementById(assetdesc).required = true;
+            }
+            else {
+                document.getElementById(assetdesc).required = false;
+            }
+        }
 		
         var appendTableRow = function(rowCount) {
 
@@ -424,9 +436,7 @@ $_SESSION['count'] = 0;
                                     "</td>" +
                                     "<td>" +
                                         "<div class='col-lg-12'>" +
-                                            "<select class='form-control' id='category"+count+"' name = 'category"+count+"'>" +
-                                                "<option>Select</option>" +
-
+                                            "<select class='form-control' id='category"+count+"' name = 'category"+count+"' onChange='changetextbox(\""+count+"\");'>" +
                                                 '<?php
 
                                                     $sql = "SELECT * FROM thesis.ref_assetcategory;";
@@ -443,7 +453,7 @@ $_SESSION['count'] = 0;
 
                                                     }
                                                 ?>'
-
+											+"<option value='0'>Please Specify</option>" +
                                             +"</select>" +
                                         "</div>" +
                                     "</td>" +
@@ -455,7 +465,7 @@ $_SESSION['count'] = 0;
 
 "<td style='padding-top:5px; padding-bottom:5px'>" +
                                         "<div class='col-lg-12'>" +
-                    "<input class='form-control' type='text' id='purpose"+count+"' name ='purpose"+count+"' placeholder='Purpose' />" +
+                    "<input class='form-control' type='text' id='purpose"+count+"' name ='purpose"+count+"' placeholder='Asset Description' />" +
                                         "</div>" +
 
                                     "<td>" +
