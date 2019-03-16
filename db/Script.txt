@@ -1366,11 +1366,13 @@ DROP TABLE IF EXISTS `thesis`.`requestdetails` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`requestdetails` (
   `requestID` INT(11) NOT NULL,
   `quantity` INT(11) NULL DEFAULT NULL,
-  `assetCategory` INT(11) NOT NULL,
+  `assetCategory` INT(11) NULL,
   `description` VARCHAR(45) NULL DEFAULT NULL,
   `purpose` VARCHAR(45) NULL,
+  `requestdetailsID` INT(11) NOT NULL AUTO_INCREMENT,
   INDEX `fk_RequestDetails_Request1_idx` (`requestID` ASC),
   INDEX `fk_requestdetails_ref_assetcategory1_idx` (`assetCategory` ASC),
+  PRIMARY KEY (`requestdetailsID`),
   CONSTRAINT `fk_RequestDetails_Request1`
     FOREIGN KEY (`requestID`)
     REFERENCES `thesis`.`request` (`requestID`),
