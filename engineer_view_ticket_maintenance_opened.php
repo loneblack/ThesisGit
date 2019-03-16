@@ -6,7 +6,7 @@
 	
 	//GET TICKET DATA
 	
-	$queryTickDat =  "SELECT *,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),' ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.ticket t join user u on t.assigneeUserID=u.UserID where t.ticketID='{$id}'";
+	$queryTickDat ="SELECT *,CONCAT(Convert(AES_DECRYPT(lastName,'Fusion')USING utf8),' ',Convert(AES_DECRYPT(firstName,'Fusion')USING utf8)) as `fullname` FROM thesis.ticket t join user u on t.assigneeUserID=u.UserID where t.ticketID='{$id}'";
 	$resultTickDat = mysqli_query($dbc, $queryTickDat);
 	$rowTickDat=mysqli_fetch_array($resultTickDat,MYSQLI_ASSOC);
 	

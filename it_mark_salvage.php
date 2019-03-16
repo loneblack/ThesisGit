@@ -28,6 +28,10 @@
                 
                 $queryForDo1n="UPDATE `thesis`.`asset` SET `assetStatus`='8' WHERE `assetID`='{$salvageee}'";
 			    $resultForDo1n=mysqli_query($dbc,$queryForDo1n);
+				
+				//INSERT TO ASSET AUDIT
+				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$salvageee}', '8');";
+				$resultAssAud=mysqli_query($dbc,$queryAssAud);
             }
             $message = "Form submitted!";
             $_SESSION['submitMessage'] = $message; 

@@ -13,7 +13,10 @@
     $que2="SELECT *,t.dueDate AS dueDate FROM ticket t WHERE t.ticketID='{$ticketID}'";
 	$res2=mysqli_query($dbc,$que2);
 	$row66=mysqli_fetch_array($res2,MYSQLI_ASSOC);
-
+	
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE (`ticketID` = '{$ticketID}');";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
 
     if(isset($_POST['save'])){
 		$testStat=$_POST['testStat'];
@@ -25,14 +28,22 @@
 			if($testStat[$i]=='1'){
 				$query5="UPDATE `thesis`.`asset` SET `assetStatus`='1' WHERE assetID = {$listOfTestAss[$i]};";
 				$result5=mysqli_query($dbc,$query5);
+				
+				//INSERT TO ASSET AUDIT
+				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$listOfTestAss[$i]}', '{$ticketID}', '1');";
+				$resultAssAud=mysqli_query($dbc,$queryAssAud);
 			}
 			//For defected assets
 			elseif($testStat[$i]=='3'){
 				$query5="UPDATE `thesis`.`asset` SET `assetStatus`='11' WHERE assetID = {$listOfTestAss[$i]};";
 				$result5=mysqli_query($dbc,$query5);	
                 
+				//INSERT TO ASSET AUDIT
+				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$listOfTestAss[$i]}', '{$ticketID}', '11');";
+				$resultAssAud=mysqli_query($dbc,$queryAssAud);
+				
                 $query6="DELETE FROM computercomponent WHERE assetID = {$listOfTestAss[$i]};";
-				$result6=mysqli_query($dbc,$query6);	
+				$result6=mysqli_query($dbc,$query6);
 			}
 		}
 		
