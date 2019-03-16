@@ -48,7 +48,7 @@
 			$pumasok=mysqli_query($dbc,$ayokona);
 				
 			//Create ticket
-			$queryCreTick="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `requestedBy`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), DATE_ADD(NOW(), INTERVAL 14 DAY), '{$priority}', '{$rowLatAssTest['testingID']}', '{$category}', '{$PersonRequestedID}')";
+			$queryCreTick="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `requestedBy`, `salvage_id`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), DATE_ADD(NOW(), INTERVAL 14 DAY), '{$priority}', '{$rowLatAssTest['testingID']}', '{$category}', '{$PersonRequestedID}', '{$id}')";
 			$resultCreTick=mysqli_query($dbc,$queryCreTick);
 					
 			//Get Latest ticket
