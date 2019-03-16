@@ -41,16 +41,16 @@
 		
     $id = 0;   
 
-	if(isset($_POST['isITTeamChooseSpecs'])){
-		$sql0 = "INSERT INTO `thesis`.`request` (`description`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`, `specs`) VALUES ('{$comment}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '22', true)";//status is set to 1 for pending status
-		$result0 = mysqli_query($dbc, $sql0);
-		echo $sql0;
-	}
-	else{
-		$sql0 = "INSERT INTO `thesis`.`request` (`description`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`, `specs`) VALUES ('{$comment}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '22', false)";//status is set to 1 for pending status
-		$result0 = mysqli_query($dbc, $sql0);
-		echo $sql0;
-	}
+	//if(isset($_POST['isITTeamChooseSpecs'])){
+	$sql0 = "INSERT INTO `thesis`.`request` (`description`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`) VALUES ('{$comment}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '22')";//status is set to 1 for pending status
+	$result0 = mysqli_query($dbc, $sql0);
+		//echo $sql0;
+	//}
+	//else{
+		//$sql0 = "INSERT INTO `thesis`.`request` (`description`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`, `specs`) VALUES ('{$comment}', '{$employeeID}', '{$date}', '{$FloorAndRoomID}', '{$buildingID}', '{$dateNeeded}', '{$userID}', '1', '22', false)";//status is set to 1 for pending status
+		//$result0 = mysqli_query($dbc, $sql0);
+		//echo $sql0;
+	//}
 	
     //get the id of the recently inserted item to request table
     $sql1 = "SELECT * FROM `thesis`.`request` order by requestID DESC LIMIT 1;";
@@ -58,13 +58,12 @@
     $row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC);
     $id = $row1['requestID'];
     
-	
 	//Set Asset Description
 	
-	if(isset($assetDescription)){
-		$sqlUpdAssDesc = "UPDATE `thesis`.`request` SET `assetDescription` = '{$assetDescription}' WHERE `requestID` = '{$id}';";
-		$resultUpdAssDesc = mysqli_query($dbc, $sqlUpdAssDesc);
-	}
+	//if(isset($assetDescription)){
+		//$sqlUpdAssDesc = "UPDATE `thesis`.`request` SET `assetDescription` = '{$assetDescription}' WHERE `requestID` = '{$id}';";
+		//$resultUpdAssDesc = mysqli_query($dbc, $sqlUpdAssDesc);
+	//}
 	
 	//INSERT TO NOTIFICATIONS TABLE
 	$sqlNotif = "INSERT INTO `thesis`.`notifications` (`requestID`, `steps_id`, `isRead`) VALUES ('{$row1['requestID']}', '{$row1['step']}', false);";
@@ -78,9 +77,15 @@
     $description = $_POST['description'.$i];
 	$purpose = $_POST['purpose'.$i];
 	
-        $sql = "INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `assetCategory`, `description`, `purpose`) VALUES ('{$id}', '{$quantity}', '{$category}', '{$description}', '{$purpose}')";
-        $result = mysqli_query($dbc, $sql);       
-
+	if($category=='0'){
+		$sql = "INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `description`, `purpose`) VALUES ('{$id}', '{$quantity}', '{$description}', '{$purpose}')";
+        $result = mysqli_query($dbc, $sql);
+	}
+	else{
+		$sql = "INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `assetCategory`, `description`, `purpose`) VALUES ('{$id}', '{$quantity}', '{$category}', '{$description}', '{$purpose}')";
+        $result = mysqli_query($dbc, $sql);
+	}
+    
    }
     $message = "Form submitted!";
     $_SESSION['submitMessage'] = $message;

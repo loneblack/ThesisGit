@@ -216,14 +216,14 @@ $_SESSION['count'] = 0;
                                                         </div>
                                                     </div>
                                                     
-                                                    <div class="form-group ">
+                                                    <!--<div class="form-group ">
                                                         <label for="building" class="control-label col-lg-3">Purpose</label>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
                                                                 <textarea class="form-control" rows="5" id="" name= "assetDescription" style="resize: none" placeholder="Provide a short description for requesting."></textarea>
                                                             </div>
                                                         </div>
-                                                     </div>
+                                                     </div> -->
                                                     
                                                 </section>
 
@@ -300,11 +300,11 @@ $_SESSION['count'] = 0;
                                                 
                                                 
                                                 
-												<section>
+												<!--<section>
                                                     <input type="checkbox" name="isITTeamChooseSpecs" value="1"> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications.
                                                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
                                                     <br><br><br>
-                                                </section>
+                                                </section> -->
 
                                                 
                                                 
