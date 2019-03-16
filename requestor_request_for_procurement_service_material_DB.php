@@ -29,7 +29,7 @@
 
     $dateNeeded = $_POST['dateNeeded'];
     $comment = $_POST['comment'];
-	$assetDescription=$_POST['assetDescription'];
+	//$assetDescription=$_POST['assetDescription'];
 
     date_default_timezone_set("Asia/Singapore");
 

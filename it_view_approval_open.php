@@ -25,29 +25,20 @@
 	}
 	
 	if(isset($_POST['approve'])){
-		if(isset($_POST['assetDescription'])){
-			if(isset($_POST['quantity'])&&isset($_POST['category'])&&isset($_POST['description'])&&isset($_POST['purpose'])){
-				//Add data to request details
-				$quantity = $_POST['quantity'];
-				$category = $_POST['category'];
-				$description = $_POST['description'];
-				$purpose = $_POST['purpose'];
-				
-				$mi = new MultipleIterator();
-				$mi->attachIterator(new ArrayIterator($quantity));
-				$mi->attachIterator(new ArrayIterator($category));
-				$mi->attachIterator(new ArrayIterator($description));
-				$mi->attachIterator(new ArrayIterator($purpose));
-				
-				//insertion to requestdetails table using the id taken earlier
-				
-				foreach($mi as $value){
-					list($quantity, $category, $description, $purpose) = $value;
-					
-					$sql = "INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `assetCategory`, `description`, `purpose`) VALUES ('{$requestID}', '{$quantity}', '{$category}', '{$description}', '{$purpose}')";
-					$result = mysqli_query($dbc, $sql);   
-				}
-			}	
+		if(isset($_POST['requestDetailsID'])){
+			//UPDATE REQUEST DETAILS DATA 
+			$requestDetailsID = $_POST['requestDetailsID'];
+			$category = $_POST['category'];
+			
+			$mi = new MultipleIterator();
+			$mi->attachIterator(new ArrayIterator($requestDetailsID));
+			$mi->attachIterator(new ArrayIterator($category));
+			
+			foreach($mi as $value){
+				list($requestDetailsID, $category) = $value;
+				$sql = "UPDATE `thesis`.`requestdetails` SET `assetCategory` = '{$category}' WHERE (`requestdetailsID` = '{$requestDetailsID}');";
+				$result = mysqli_query($dbc, $sql);   
+			}
 		}
 		$query="UPDATE `thesis`.`request` SET `step`='23' WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
@@ -179,7 +170,7 @@
 
                                                     </div>
 													
-													 <div class="form-group ">
+													 <!-- <div class="form-group ">
                                                         <label for="building" class="control-label col-lg-3">Purpose</label>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
@@ -188,7 +179,7 @@
 																} ?></textarea>
                                                             </div>
                                                         </div>
-                                                     </div>
+                                                     </div> -->
 
                                                 </section>
 
@@ -209,29 +200,29 @@
                                                             <?php
 																//Get Request Details data
 																$queryReqDet="SELECT *,rac.name as `assetCatName` FROM thesis.requestdetails rd
-																				join ref_assetcategory rac on rd.assetCategory=rac.assetCategoryID where rd.requestID='{$requestID}'";
+																				left join ref_assetcategory rac on rd.assetCategory=rac.assetCategoryID where rd.requestID='{$requestID}'";
 																$resultReqDet=mysqli_query($dbc,$queryReqDet);
 																while($rowReqDet=mysqli_fetch_array($resultReqDet,MYSQLI_ASSOC)){
 																	echo "<tr>
 																	<td>
 																		<div class='col-lg-12'>
-																			<input class='form-control' type='text' name='category[]' value='{$rowReqDet['assetCatName']}' id='purpose0' disabled>
+																			<input class='form-control' type='text' value='{$rowReqDet['assetCatName']}' id='purpose0' disabled>
 																		</div>
 																	</td>
 																	<td>
 																		<div class='col-lg-12'>
-																			<input class='form-control' type='text' name='qty[]' value='{$rowReqDet['quantity']}' id='purpose0' disabled>
+																			<input class='form-control' type='text' value='{$rowReqDet['quantity']}' id='purpose0' disabled>
 																		</div>
 																	</td>
 
 																	<td style='padding-top:5px; padding-bottom:5px'>
 																		<div class='col-lg-12'>
-																			<input class='form-control' type='text' name='specs[]' value='{$rowReqDet['description']}' id='purpose0' disabled>
+																			<input class='form-control' type='text' value='{$rowReqDet['description']}' id='purpose0' disabled>
 																		</div>
 																	</td>
 																	<td>
 																		<div class='col-lg-12'>
-																			<input class='form-control' type='text' name='purpose[]' value='{$rowReqDet['purpose']}' id='purpose0' disabled>
+																			<input class='form-control' type='text' value='{$rowReqDet['purpose']}' id='purpose0' disabled>
 																		</div>
 																	</td>
 																	<td>
@@ -250,81 +241,73 @@
                                                     <br>
                                                 </section>
 
-                                                <section>
-                                                    <input type="checkbox" name="check" disabled <?php if($rowReq['specs']==1){ echo "checked" ; } ?>> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
+                                                <!-- <section>
+                                                    <input type="checkbox" name="check" disabled> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
                                                     <br><br><br>
-                                                </section>
+                                                </section> -->
                                                 
 
                                                     <section>
 
-                                                        <h4>Fill up requested assets based from its described asset description.</h4>
+                                                        <h4>Fill up empty requested asset category based from its described asset description.</h4>
                                                         <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Quantity</th>
                                                                     <th>Category</th>
                                                                     <th>Specifications</th>
-                                                                    <th>Purpose</th>
-                                                                    <th>Remove</th>
-                                                                    <th>Add</th>
+                                                                    <th>Asset Description</th>
+																	<th>Inventory</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <td>
-                                                                        <div class="col-lg-12">
-                                                                            <input class="form-control" type="number" name="quantity[]" id="quantity0" min="1" step="1" placeholder="Quantity" <?php if($rowReq['assetDescription']==null){
-																				echo "disabled";
-																			} ?> />
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="col-lg-12">
-                                                                            <select class="form-control" name="category[]" id="category0" <?php if($rowReq['assetDescription']==null){
-																					echo "disabled";
-																				} ?>>
-                                                                                <option>Select</option>
-                                                                                <?php
- 
-                                                                                $sql = "SELECT * FROM thesis.ref_assetcategory;";
-
-                                                                                $result = mysqli_query($dbc, $sql);
-
-                                                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                                                {
-                                                                                    
-                                                                                    echo "<option value ={$row['assetCategoryID']}>";
-                                                                                    echo "{$row['name']}</option>";
-
-                                                                                }
-                                                                           ?>
-                                                                            </select>
-                                                                        </div>
-                                                                    </td>
-
-                                                                    <td>
-                                                                        <div class="col-lg-12">
-                                                                            <input class="form-control" type="text" name="description[]" id="description0" placeholder="Item specifications" <?php if($rowReq['assetDescription']==null){
-																					echo "disabled";
-																				} ?> />
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="col-lg-12">
-                                                                            <input class="form-control" type="text" name="purpose[]" id="purpose0" placeholder="Purpose" <?php if($rowReq['assetDescription']==null){
-																					echo "disabled";
-																				} ?>>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                    </td>
-                                                                    <td>
-                                                                        <button type='button' class='btn btn-primary' onclick='addTest();' <?php if($rowReq['assetDescription']==null){
-																					echo "disabled";
-																				} ?>> Add </button>
-                                                                    </td>
-                                                                </tr>
+																<?php
+																	//GET ALL REQUEST DETAILS OF A REQUEST THAT HAVE EMPTY ASSET CATEGORIES
+																	$queryReqDet2="SELECT *,rac.name as `assetCatName` FROM thesis.requestdetails rd
+																					left join ref_assetcategory rac on rd.assetCategory=rac.assetCategoryID where rd.requestID='{$requestID}'";
+																	$resultReqDet2=mysqli_query($dbc,$queryReqDet2);
+																	while($rowReqDet2=mysqli_fetch_array($resultReqDet2,MYSQLI_ASSOC)){
+																		echo "<tr>
+																				<input type='hidden' name='requestDetailsID[]' value='{$rowReqDet2['requestdetailsID']}'>
+																				<td>
+																					<div class='col-lg-12'>
+																						<input class='form-control' type='number' name='quantity[]' id='quantity0' min='1' step='1' placeholder='Quantity' value='{$rowReqDet2['quantity']}' readonly />
+																					</div>
+																				</td>
+																				<td>
+																				<div class='col-lg-12'>
+																					<select class='form-control' name='category[]' id='category_".$rowReqDet2['requestdetailsID']."'>
+																					<option>Select</option>";
+																					
+																					$sql = "SELECT * FROM thesis.ref_assetcategory;";
+																					$result = mysqli_query($dbc, $sql);
+																					while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+																					{	
+																						echo "<option value ={$row['assetCategoryID']}>";
+																						echo "{$row['name']}</option>";
+																					}
+																			   
+																				echo "</select>
+																			</div>
+																		</td>
+																		<td>
+																			<div class='col-lg-12'>
+																				<input class='form-control' type='text' name='description[]' id='description0' placeholder='Item specifications' value='{$rowReqDet2['description']}' readonly />
+																			</div>
+																		</td>
+																		<td>
+																			<div class='col-lg-12'>
+																				<input class='form-control' type='text' name='purpose[]' id='purpose0' placeholder='Asset Description' value='{$rowReqDet2['purpose']}' readonly >
+																			</div>
+																		</td>
+																		<td>
+																		<div class='col-lg-12'>
+																			<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#myModal' onclick='setAssetCatID2(\"{$rowReqDet2['requestdetailsID']}\")'><i class='fa fa-eye'></i> View Inventory</button>
+																		</div>
+																	</td>
+																	</tr>";
+																	}
+																?>
                                                             </tbody>
                                                         </table>
 
@@ -613,7 +596,20 @@
             xmlhttp.open("GET", "setAssetCatIDForIt_view_approval_ajax.php?category=" + assetCatID, true);
             xmlhttp.send();
         }
-
+		
+		function setAssetCatID2(requestdetailsID) {
+			var selectID = "category_" + requestdetailsID;
+			var assetCatID = document.getElementById(selectID).value;
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("assetList").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "setAssetCatIDForIt_view_approval_ajax.php?category=" + assetCatID, true);
+            xmlhttp.send();
+        }
+		
         $.ajax({
             type: "POST",
             url: "count.php",

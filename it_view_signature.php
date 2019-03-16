@@ -176,7 +176,7 @@
 
                                                     </div>
 													
-													 <div class="form-group ">
+													 <!--<div class="form-group ">
                                                         <label for="building" class="control-label col-lg-3">Asset Description</label>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
@@ -185,7 +185,7 @@
 																} ?></textarea>
                                                             </div>
                                                         </div>
-                                                     </div>
+                                                     </div>-->
 
                                                 </section>
 
@@ -198,7 +198,7 @@
                                                                 <th>Category</th>
                                                                 <th>Quantity</th>
                                                                 <th>Specifications</th>
-                                                                <th>Purpose</th>
+                                                                <th>Asset Description</th>
                                                                 
                                                             </tr>
                                                         </thead>
@@ -243,10 +243,10 @@
                                                     <br>
                                                 </section>
 
-                                                <section>
-                                                    <input type="checkbox" name="check" disabled <?php if($rowReq['specs']==1){ echo "checked" ; } ?>> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
+                                                <!--<section>
+                                                    <input type="checkbox" name="check" disabled> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
                                                     <br><br><br>
-                                                </section>
+                                                </section>-->
                                                 
 												<section>
                                                     <h4>Comment if the receiver uploaded an invalid image or image lacks signatures</h4>

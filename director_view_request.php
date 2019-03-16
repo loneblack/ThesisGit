@@ -182,8 +182,8 @@
                                     <tr>
                                         <th>Quantity</th>
                                         <th>Hardware/ Software Requirements</th>
-                                        <th>Description</th>
-										<th>Purpose</th>
+                                        <th>Item Specifications</th>
+										<th>Asset Description</th>
                                     </tr>
                                 </thead>
                                 <tbody>
