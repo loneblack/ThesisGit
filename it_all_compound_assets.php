@@ -78,6 +78,8 @@
                                                 <div class="col-sm-12">
                                                     <section class="panel">
                                                         <div class="panel-body">
+                                                            <button class="btn btn-primary" onClick="window.location.href = 'it_build_pc.php'">Create New Desktop/ Thin Client</button>
+                                                            <button class="btn btn-success" onClick="window.location.href = 'it_build_server.php'">Create New Server</button>
                                                                 <div class="adv-table">
                                                                     <table class="display table table-bordered table-striped" id="dynamic-table">
                                                                         <thead>
@@ -104,7 +106,8 @@
                                                     LEFT JOIN assetassignment aa ON a.assetID = aa.assetID
                                                     LEFT JOIN employee e ON aa.personresponsibleID = e.employeeID
                                                     LEFT JOIN building b ON aa.BuildingID = b.BuildingID
-                                                    LEFT JOIN floorandroom fr ON aa.FloorAndRoomID = fr.FloorAndRoomID;";
+                                                    LEFT JOIN floorandroom fr ON aa.FloorAndRoomID = fr.FloorAndRoomID
+                                                    WHERE rac.name = 'laptop' OR rac.name = 'VGA Cable' OR rac.name='Desktop' OR rac.name='Server' OR rac.name = 'Thin Client';";
 													$result=mysqli_query($dbc,$query);
 													
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
