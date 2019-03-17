@@ -211,7 +211,7 @@ require_once("db/mysql_connect.php");
                                                         if($row['statusID'] == '3'){//completed
                                                             echo "<td><span class='label label-success'>{$row['description']}</span></td>";
                                                         }
-                                                        if($row['statusID'] == '4'){//disapproved
+                                                        if($row['statusID'] == '6'){//disapproved
                                                             echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
                                                         }
 
