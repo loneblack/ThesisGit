@@ -223,7 +223,11 @@ if(isset($_POST['save'])){
                                                 <section>
                                                     <div class="col-lg-3">
                                                         <h4>Delivery Scheduling</h4>
-                                                        <input class="form-control" type="datetime-local" name="deliverySched" required>
+                                                        <input class="form-control" type="datetime-local" name="deliverySched" value="<?php 
+																																		echo date('Y-m-d\TH:i:s');
+																																		?>" min="<?php 
+																																					echo date('Y-m-d\TH:i:s');
+																																					?>" required>
                                                     </div>
                                                 </section>
                                                 <br>

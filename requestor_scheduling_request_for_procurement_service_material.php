@@ -219,12 +219,16 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
                                                     <br>
                                                 </section>
-
+												
                                                 <hr>
                                                 <section>
                                                     <div class="col-lg-3">
                                                         <h4>Delivery Scheduling</h4>
-                                                        <input class="form-control" type="datetime-local" name="deliverySched" required>
+                                                        <input class="form-control" type="datetime-local" value="<?php 
+																													echo date('Y-m-d\TH:i:s');
+																													?>" min="<?php 
+																																echo date('Y-m-d\TH:i:s');
+																																?>" name="deliverySched" required>
                                                     </div>
                                                 </section>
                                                 <br>
