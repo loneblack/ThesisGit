@@ -551,6 +551,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`request_borrow` (
   `purpose` VARCHAR(45) NULL,
   `statusID` INT(11) NOT NULL,
   `steps` INT NULL,
+  `reasForDisapprov` VARCHAR(100) NULL,
   PRIMARY KEY (`borrowID`),
   INDEX `fk_AssetAssignment_FloorAndRoom1_idx` (`FloorAndRoomID` ASC),
   INDEX `fk_assetassignment_persondirectly1_idx` (`persondirectlyID` ASC),
