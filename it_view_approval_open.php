@@ -206,7 +206,14 @@
 																	echo "<tr>
 																	<td>
 																		<div class='col-lg-12'>
-																			<input class='form-control' type='text' value='{$rowReqDet['assetCatName']}' id='purpose0' disabled>
+																			<input class='form-control' type='text' value='";
+																			if(isset($rowReqDet['assetCatName'])){
+																				echo $rowReqDet['assetCatName'];
+																			}
+																			else{
+																				echo "Please Specify";
+																			}
+																			echo "' id='purpose0' disabled>
 																		</div>
 																	</td>
 																	<td>
@@ -249,7 +256,7 @@
 
                                                     <section>
 
-                                                        <h4>Fill up empty requested asset category based from its described asset description.</h4>
+                                                        <h4>Fill up unknown requested asset category based from its described asset description.</h4>
                                                         <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                             <thead>
                                                                 <tr>
@@ -264,7 +271,7 @@
 																<?php
 																	//GET ALL REQUEST DETAILS OF A REQUEST THAT HAVE EMPTY ASSET CATEGORIES
 																	$queryReqDet2="SELECT *,rac.name as `assetCatName` FROM thesis.requestdetails rd
-																					left join ref_assetcategory rac on rd.assetCategory=rac.assetCategoryID where rd.requestID='{$requestID}'";
+																					left join ref_assetcategory rac on rd.assetCategory=rac.assetCategoryID where rd.requestID='{$requestID}' and assetCategory is null";
 																	$resultReqDet2=mysqli_query($dbc,$queryReqDet2);
 																	while($rowReqDet2=mysqli_fetch_array($resultReqDet2,MYSQLI_ASSOC)){
 																		echo "<tr>

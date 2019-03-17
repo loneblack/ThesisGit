@@ -183,7 +183,7 @@
 													<tbody>";
 													
 													
-													$querya="SELECT cid.expectedDate,ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,am.itemSpecification,ci.description,cid.quantity,cid.price,(ci.quantity*cid.price) as `totalPrice` FROM thesis.canvasitemdetails cid
+													$querya="SELECT cid.expectedDate,ci.cavasItemID,CONCAT(rb.name, ' ',rac.name) as `itemName`,am.itemSpecification,am.description,cid.quantity,cid.price,(ci.quantity*cid.price) as `totalPrice` FROM thesis.canvasitemdetails cid
 																join canvasitem ci on cid.cavasItemID=ci.cavasItemID 
 																join assetModel am on ci.assetModel=am.assetModelID
 																join ref_brand rb on am.brand=rb.brandID
