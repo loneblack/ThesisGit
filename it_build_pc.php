@@ -53,27 +53,19 @@
 
                         <section class="panel">
                             <header class="panel-heading">
-                                Build An Asset
+                                Build A Desktop or Thin Client
                             </header>
                             <div class="panel-body">
                                 <div class="position-center">
-                                    <form class="form-horizontal" role="form">
+                                    <form class="form-horizontal" role="form" method="POST" action="">
 
                                         <div class="form-group">
-                                            <label for="assetName" class="col-lg-2 col-sm-2 control-label">Asset Name</label>
-                                            <div class="col-lg-10">
-                                                <input type="text" class="form-control" id="assetName" placeholder="Asset Name">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-lg-2 col-sm-2 control-label">Category</label>
+                                            <label class="col-lg-2 col-sm-2 control-label">Asset Category</label>
                                             <div class="col-lg-10">
                                                 <select class="form-control m-bot15">
-                                                    <option>Select Category</option>
-                                                    <option>Laptop</option>
-                                                    <option>PC</option>
-                                                    <option>Router</option>
+                                                    <option name="assetCat" id="assetCat">Select Asset Category</option>
+                                                    <option value="13">Desktop</option>
+                                                    <option value="46">Thin Client</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -85,34 +77,95 @@
                                         <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                             <thead>
                                                 <tr>
-                                                    <th>Quantity</th>
+                                                    <th>Property Code</th>
+                                                    <th>Asset Category</th>
                                                     <th>Brand</th>
                                                     <th>Model</th>
+                                                    <th>Specifications</th>
                                                     <th>Delete</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><input type="number" class="form-control" min="0.00" required></td>
-                                                    <td>
-                                                        <select class="form-control" id="exampleFormControlSelect1" required>
-                                                            <option>Select Brand</option>
-                                                            <option>Apple</option>
-                                                            <option>Samsung</option>
-                                                            <option>LG</option>
-                                                        </select>
-                                                    </td>
-                                                    <td><select class="form-control" id="exampleFormControlSelect1" required>
-                                                            <option>Select Model</option>
-                                                            <option>S9 Edge</option>
-                                                            <option>Iphone X</option>
-                                                            <option>Nova 2</option>
-                                                        </select></td>
-                                                    <td>
-                                                        <button class="btn btn-danger" onclick="deleteTest(this)"> Delete </button>
-                                                    </td>
+                                                    <td></td>
+                                                    <td>Monitor</td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td></td>
                                                 </tr>
 
+                                                <tr>
+                                                    <td></td>
+                                                    <td>Keyboard</td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td></td>
+                                                    <td>Mouse</td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td></td>
+                                                    <td>RAM</td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td></td>
+                                                    <td>HDD</td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td></td>
+                                                    <td>Graphics Card</td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td></td>
+                                                    <td>Processor</td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td></td>
+                                                    <td>Motherboard</td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td></td>
+                                                    <td>Power Supply</td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <td></td>
+                                                </tr>
                                             </tbody>
                                         </table>
 
@@ -122,6 +175,11 @@
                                             <div class="btn-group">
                                                 <button class="btn btn-success">
                                                     <i class="fa fa-check"></i> Submit
+                                                </button>
+                                            </div>
+                                            <div class="btn-group">
+                                                <button class="btn btn-danger" onClick="window.location.href = 'it_all_compound_assets.php'">
+                                                    Back
                                                 </button>
                                             </div>
                                         </div>
