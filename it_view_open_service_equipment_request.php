@@ -137,7 +137,7 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_view_open_service_equipment_request.php?id=".$_SESSION['id']);
     }
     elseif(isset($_POST['denyBtn'])){
-        $query="UPDATE `thesis`.`request_borrow` SET `statusID` = '6', `steps`='20' WHERE (`borrowID` = '{$id}');";
+        $query="UPDATE `thesis`.`request_borrow` SET `statusID` = '6', `steps`='20', `reasForDisapprov`='{$_POST['reasOfDisapprov']}' WHERE (`borrowID` = '{$id}');";
         $result=mysqli_query($dbc,$query);
 		
 		//INSERT TO NOTIFICATIONS TABLE
@@ -373,12 +373,16 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 																
                                                                 <hr>
                                                                 
-
+																<div class="container-fluid">
+																	<h4>Reason for Disapproval</h4>
+                                                                    <textarea class="form-control" rows="5" id="reasOfDisapprov" name="reasOfDisapprov" style="resize: none"></textarea>
+                                                                </div>
+																
                                                                 <hr>
                                                                     <div class="container-fluid">
                                                                         <button id="approveBtn" name="approveBtn" class="btn btn-success" <?php if($description !='Pending' ) echo "disabled" ; ?> type="submit">Approve</button>
                                                                         &nbsp;
-                                                                        <button id="denyBtn" name="denyBtn" class="btn btn-danger" <?php if($description !='Pending' ) echo "disabled" ; ?> type="submit" data-toggle="modal" data-target="#myModal">Deny</button>
+                                                                        <button id="denyBtn" name="denyBtn" class="btn btn-danger" <?php if($description !='Pending' ) echo "disabled" ; ?> type="submit">Deny</button>
                                                                     </div>
                                                                 
                                                             </form>
