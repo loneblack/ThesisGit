@@ -40,12 +40,14 @@ $count = 0;
 
 $requestedQuantity = array();
 $requestedCategory = array();
+$itemSpecs = array();
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
         array_push($requestedQuantity, $row['quantity']);
         array_push($requestedCategory, $row['name']);
-
+		array_push($itemSpecs, $row['purpose']);
+		
         $count++;
 
     }
@@ -105,10 +107,10 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                     <div class="panel-body">
                                         <div class="form" method="post">
                                             <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_equipment_request_DB.php">
-                                                <div class="form-group ">
+                                                <!--<div class="form-group ">
                                                     <h5 class="control-label col-lg-3">Office/ Department/ School Organization</h5>
-                                                    <h5 class="control-label col-lg-2"><?php echo $office.$department.$organization; ?></h5>
-                                                </div>
+                                                    <h5 class="control-label col-lg-2"><?php //echo $office.$department.$organization; ?></h5>
+                                                </div>-->
                                                 <div class="form-group ">
                                                     <h5 class="control-label col-lg-3">Date & Time Needed</h5>
                                                     <h5 class="control-label col-lg-2"><?php echo $startDate; ?></h5>
@@ -118,7 +120,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                     <h5 class="control-label col-lg-2"><?php echo$endDate ; ?></h5>
                                                 </div>
                                                 <div class="form-group ">
-                                                    <h5 class="control-label col-lg-3">Purpose</h5>
+                                                    <h5 class="control-label col-lg-3">Reason For Borrowing</h5>
                                                     <h5 class="control-label col-lg-2"><?php echo $purpose; ?></h5>
                                                 </div>
                                                 <div class="form-group ">
@@ -138,6 +140,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                             <tr>
                                                                 <th>Equipment</th>
                                                                 <th>Quantity</th>
+																<th>Item Description/ Proposed Specs</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -156,7 +159,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                                         <option>{$requestedQuantity[$i]}</option>
                                                                     </select>
                                                                 </td>
-                                                               
+                                                               <td><input class='form-control' type='text' name='purpose0' id='purpose0' value='{$itemSpecs[$i]}' disabled></td>
                                                             </tr>";
                                                          }
 
@@ -164,6 +167,22 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                         </tbody>
                                                     </table>
                                                 </div>
+												<hr>
+												<?php
+													//If status is disapproved
+													$queryGetStatus="SELECT * FROM thesis.request_borrow where borrowID='{$id}'";
+													$resultGetStatus = mysqli_query($dbc, $queryGetStatus);
+													$rowGetStatus=mysqli_fetch_array($resultGetStatus, MYSQLI_ASSOC);
+													
+													if($rowGetStatus['statusID']=='6'){
+														echo "<div class='container-fluid'>
+																<h4>Reason For Disapproval</h4>
+																<textarea class='form-control' rows='5' id='reasOfDisapprov' name='reasOfDisapprov' style='resize: none' disabled>{$rowGetStatus['reasForDisapprov']}</textarea>
+															</div>";
+													}
+
+												?>
+												<hr>
                                                 <!--
                                                 <hr>
                                                 <div class="container-fluid">
