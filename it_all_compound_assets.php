@@ -124,10 +124,7 @@
                                                             <td>{$row['floorRoom']}</td>
                                                             </tr>";
 													}
-												
-												
-												
-												
+												 
 												?>
                                                                         </tbody>
                                                                     </table>
