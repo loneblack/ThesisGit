@@ -63,7 +63,7 @@
                                             <button class="btn btn-primary" onclick="addTest(5)"> Add </button>
                                         </div>
 
-                                        <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
+                                        <table class="table table-bordered table-striped table-condensed table-hover" id="addTable">
                                             <thead>
                                                 <tr>
                                                     <th>Property Code</th>
@@ -76,56 +76,372 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td></td>
+                                                    <td width='220'>
+                                                    <?php
+                                                        echo"<select id= '1' class='form-control' onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
+
+                                                        $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
+                                                                FROM asset a 
+                                                                    JOIN assetModel m
+                                                                ON assetModel = assetModelID
+                                                                    JOIN ref_brand br
+                                                                ON brand = brandID
+                                                                    JOIN ref_assetcategory c
+                                                                ON assetCategory = assetCategoryID
+                                                                    WHERE assetCategoryID = '22' AND a.assetStatus = 1;";
+
+                                                        $result = mysqli_query($dbc, $sql);
+
+
+                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                        {
+                                                            echo "<option value ={$row['assetID']}>";
+                                                            echo "{$row['propertyCode']}</option>";
+                                                        }
+                                                        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);                                                            
+                                                      
+                                                        echo"</select>"
+                                                    ?>
+                                                    </td>
                                                     <td>RAM</td>
-                                                    <td><input type="text" class="form-control" readonly></td>
-                                                    <td><input type="text" class="form-control" readonly></td>
-                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    
+                                                    <?php
+                                                        
+                                                        $count = 1;
+                                                        $query="SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description as'modelDescription'
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            WHERE assetCategoryID = '1';";
+                                                        $result=mysqli_query($dbc,$query);
+
+                                                        $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+        
+        
+                                                        echo
+                                                            "<td id='brand".$count."'>
+                                                                    <input class='form-control' disabled>
+                                                                </td>
+                                                                <td id='description".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>
+                                                                <td id='specification".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>";
+
+                                                    ?>
                                                     <td></td>
                                                 </tr>
                                                 
                                                 <tr>
-                                                    <td></td>
+                                                    <td width='220'>
+                                                    <?php
+                                                        echo"<select id= '2' class='form-control' onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
+
+                                                        $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
+                                                                FROM asset a 
+                                                                    JOIN assetModel m
+                                                                ON assetModel = assetModelID
+                                                                    JOIN ref_brand br
+                                                                ON brand = brandID
+                                                                    JOIN ref_assetcategory c
+                                                                ON assetCategory = assetCategoryID
+                                                                    WHERE assetCategoryID = '17' AND a.assetStatus = 1;";
+
+                                                        $result = mysqli_query($dbc, $sql);
+
+
+                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                        {
+                                                            echo "<option value ={$row['assetID']}>";
+                                                            echo "{$row['propertyCode']}</option>";
+                                                        }
+                                                        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);                                                            
+                                                      
+                                                        echo"</select>"
+                                                    ?>
+                                                    </td>
                                                     <td>HDD</td>
-                                                    <td><input type="text" class="form-control" readonly></td>
-                                                    <td><input type="text" class="form-control" readonly></td>
-                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <?php
+                                                        
+                                                        $count = 2;
+                                                        $query="SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description as'modelDescription'
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            WHERE assetCategoryID = '1';";
+                                                        $result=mysqli_query($dbc,$query);
+
+                                                        $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+        
+        
+                                                        echo
+                                                            "<td id='brand".$count."'>
+                                                                    <input class='form-control' disabled>
+                                                                </td>
+                                                                <td id='description".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>
+                                                                <td id='specification".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>";
+
+                                                    ?>
                                                     <td></td>
                                                 </tr>
                                                 
+                                                
+                                                
+                                                
                                                 <tr>
-                                                    <td></td>
+                                                    <td width='220'>
+                                                    <?php
+                                                        echo"<select id= '3' class='form-control' onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
+
+                                                        $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
+                                                                FROM asset a 
+                                                                    JOIN assetModel m
+                                                                ON assetModel = assetModelID
+                                                                    JOIN ref_brand br
+                                                                ON brand = brandID
+                                                                    JOIN ref_assetcategory c
+                                                                ON assetCategory = assetCategoryID
+                                                                    WHERE assetCategoryID = '49' AND a.assetStatus = 1;";
+
+                                                        $result = mysqli_query($dbc, $sql);
+
+
+                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                        {
+                                                            echo "<option value ={$row['assetID']}>";
+                                                            echo "{$row['propertyCode']}</option>";
+                                                        }
+                                                        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);                                                            
+                                                      
+                                                        echo"</select>"
+                                                    ?>
+                                                    </td>
                                                     <td>Graphics Card</td>
-                                                    <td><input type="text" class="form-control" readonly></td>
-                                                    <td><input type="text" class="form-control" readonly></td>
-                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <?php
+                                                        
+                                                        $count = 3;
+                                                        $query="SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description as'modelDescription'
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            WHERE assetCategoryID = '1';";
+                                                        $result=mysqli_query($dbc,$query);
+
+                                                        $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+        
+        
+                                                        echo
+                                                            "<td id='brand".$count."'>
+                                                                    <input class='form-control' disabled>
+                                                                </td>
+                                                                <td id='description".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>
+                                                                <td id='specification".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>";
+
+                                                    ?>
                                                     <td></td>
                                                 </tr>
                                                 
                                                 <tr>
-                                                    <td></td>
+                                                    <td width='220'>
+                                                    <?php
+                                                        echo"<select id= '4' class='form-control' onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
+
+                                                        $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
+                                                                FROM asset a 
+                                                                    JOIN assetModel m
+                                                                ON assetModel = assetModelID
+                                                                    JOIN ref_brand br
+                                                                ON brand = brandID
+                                                                    JOIN ref_assetcategory c
+                                                                ON assetCategory = assetCategoryID
+                                                                    WHERE assetCategoryID = '34' AND a.assetStatus = 1;";
+
+                                                        $result = mysqli_query($dbc, $sql);
+
+
+                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                        {
+                                                            echo "<option value ={$row['assetID']}>";
+                                                            echo "{$row['propertyCode']}</option>";
+                                                        }
+                                                        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);                                                            
+                                                      
+                                                        echo"</select>"
+                                                    ?>
+                                                    </td>
                                                     <td>Processor</td>
-                                                    <td><input type="text" class="form-control" readonly></td>
-                                                    <td><input type="text" class="form-control" readonly></td>
-                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <?php
+                                                        
+                                                        $count = 4;
+                                                        $query="SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description as'modelDescription'
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            WHERE assetCategoryID = '1';";
+                                                        $result=mysqli_query($dbc,$query);
+
+                                                        $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+        
+        
+                                                        echo
+                                                            "<td id='brand".$count."'>
+                                                                    <input class='form-control' disabled>
+                                                                </td>
+                                                                <td id='description".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>
+                                                                <td id='specification".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>";
+
+                                                    ?>
                                                     <td></td>
                                                 </tr>
                                                 
                                                 <tr>
-                                                    <td></td>
+                                                    <td width='220'>
+                                                    <?php
+                                                        echo"<select id= '5' class='form-control' onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
+
+                                                        $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
+                                                                FROM asset a 
+                                                                    JOIN assetModel m
+                                                                ON assetModel = assetModelID
+                                                                    JOIN ref_brand br
+                                                                ON brand = brandID
+                                                                    JOIN ref_assetcategory c
+                                                                ON assetCategory = assetCategoryID
+                                                                    WHERE assetCategoryID = '24' AND a.assetStatus = 1;";
+
+                                                        $result = mysqli_query($dbc, $sql);
+
+
+                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                        {
+                                                            echo "<option value ={$row['assetID']}>";
+                                                            echo "{$row['propertyCode']}</option>";
+                                                        }
+                                                        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);                                                            
+                                                      
+                                                        echo"</select>"
+                                                    ?>
+                                                    </td>
                                                     <td>Motherboard</td>
-                                                    <td><input type="text" class="form-control" readonly></td>
-                                                    <td><input type="text" class="form-control" readonly></td>
-                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <?php
+                                                        
+                                                        $count = 5;
+                                                        $query="SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description as'modelDescription'
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            WHERE assetCategoryID = '1';";
+                                                        $result=mysqli_query($dbc,$query);
+
+                                                        $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+        
+        
+                                                        echo
+                                                            "<td id='brand".$count."'>
+                                                                    <input class='form-control' disabled>
+                                                                </td>
+                                                                <td id='description".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>
+                                                                <td id='specification".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>";
+
+                                                    ?>
                                                     <td></td>
                                                 </tr>
                                                 
                                                 <tr>
-                                                    <td></td>
+                                                    <td width='220'>
+                                                    <?php
+                                                        echo"<select id= '6' class='form-control' onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
+
+                                                        $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
+                                                                FROM asset a 
+                                                                    JOIN assetModel m
+                                                                ON assetModel = assetModelID
+                                                                    JOIN ref_brand br
+                                                                ON brand = brandID
+                                                                    JOIN ref_assetcategory c
+                                                                ON assetCategory = assetCategoryID
+                                                                    WHERE assetCategoryID = '32' AND a.assetStatus = 1;";
+
+                                                        $result = mysqli_query($dbc, $sql);
+
+
+                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                        {
+                                                            echo "<option value ={$row['assetID']}>";
+                                                            echo "{$row['propertyCode']}</option>";
+                                                        }
+                                                        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);                                                            
+                                                      
+                                                        echo"</select>"
+                                                    ?>
+                                                    </td>
                                                     <td>Power Supply</td>
-                                                    <td><input type="text" class="form-control" readonly></td>
-                                                    <td><input type="text" class="form-control" readonly></td>
-                                                    <td><input type="text" class="form-control" readonly></td>
+                                                    <?php
+                                                        
+                                                        $count = 6;
+                                                        $query="SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description as'modelDescription'
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            WHERE assetCategoryID = '1';";
+                                                        $result=mysqli_query($dbc,$query);
+
+                                                        $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+        
+        
+                                                        echo
+                                                            "<td id='brand".$count."'>
+                                                                    <input class='form-control' disabled>
+                                                                </td>
+                                                                <td id='description".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>
+                                                                <td id='specification".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>";
+
+                                                    ?>
                                                     <td></td>
                                                 </tr>
                                             </tbody>
@@ -244,6 +560,46 @@
         function deleteTest(r) {
             var i = r.parentNode.parentNode.rowIndex;
             document.getElementById("tableTest").deleteRow(i);
+        }
+        
+        function loadDetails(val, id){
+            
+            $.ajax({
+            type:"POST",
+            url:"loadDetails1.php",
+            data: 'assetID='+val,
+            success: function(data){
+                $("#brand"+id).html(data);
+
+                }
+            });
+            $.ajax({
+            type:"POST",
+            url:"loadDetails2.php",
+            data: 'assetID='+val,
+            success: function(data){
+                $("#description"+id).html(data);
+
+                }
+            });
+            $.ajax({
+            type:"POST",
+            url:"loadDetails3.php",
+            data: 'assetID='+val,
+            success: function(data){
+                $("#specification"+id).html(data);
+
+                }
+            });
+            $.ajax({
+            type:"POST",
+            url:"loadDetails4.php",
+            data: 'assetID='+val,
+            success: function(data){
+                $("#assetID"+id).html(data);
+
+                }
+            });
         }
     </script>
 
