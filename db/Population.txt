@@ -1,4 +1,4 @@
-﻿-- -----------------------------------------------------
+-- -----------------------------------------------------
 -- POPUPLATION
 -- -----------------------------------------------------
 
@@ -613,48 +613,48 @@ INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `it
 INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('11', '1', '1', 'accesspoint', 'version1');
 
 	-- assetmodels for Thin clients in classrooms
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('12', '22', '1', '4 GB', 'Standard RAM for thin client'); -- RAM
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('13', '53', '1', 'Standard', 'Deployed for classroom use'); -- THIN CLIENT
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('14', '23', '1', '10 inches', 'Used for thin clients'); -- MONITOR
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('15', '24', '1', '', ''); -- MOTHERBOARD
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('16', '25', '3', '', ''); -- MOUSE
-	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('17', '18', '1', '', ''); -- KEYBOARD
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('12', '22', '1', '4 GB', 'Ballistix Sport LT'); -- RAM
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('13', '53', '1', 'Standard', ''); -- THIN CLIENT
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('14', '23', '1', '10 inches', 'SB220Q bi'); -- MONITOR
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('15', '24', '1', '', 'Prime Z390-A'); -- MOTHERBOARD
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('16', '25', '3', '', 'MM057 2.4G'); -- MOUSE
+	INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('17', '18', '1', '', 'HB030B'); -- KEYBOARD
 
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('18', '35', '2', '', 'Projector used for classrooms'); -- Projector
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('18', '35', '2', '', 'Leisure 510'); -- Projector
 
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('19', '37', '2', '', 'Projector screen'); -- Projector Screen
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('19', '37', '2', '', 'MW535A'); -- Projector Screen
 
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('20', '54', '2', '', 'Table top'); -- Table Top
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('20', '54', '2', '', ''); -- Table Top
 
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('21', '43', '6', '', 'Used for classrooms'); -- Speaker
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('21', '43', '6', '', 'T15'); -- Speaker
 
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('22', '56', '1', '', 'RCA cable for classrooms'); -- RCA Cable
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('22', '56', '1', '', 'JSAUX'); -- RCA Cable
 
 INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('23', '57', '14', '', ''); -- User Guide Poster
 
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('24', '13', '14', '4 GB RAM', 'Used by faculty members in office.'); -- Computer
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('24', '13', '14', '4 GB RAM', ''); -- Computer
 
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('25', '33', '4', 'Laser', 'Used by faculty members in office.'); -- Printer
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('25', '33', '4', 'Laser', 'OfficeJet Pro 9015'); -- Printer
 
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('26', '32', '2', '', 'Power Supply for thin clients'); -- power supply
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('26', '32', '2', '', 'RAPTOR500W'); -- power supply
 
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('27', '34', '2', 'i5 8th gen', 'Processor for thin client'); -- processor
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('27', '34', '2', 'i5 8th gen', 'i7'); -- processor
 
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('28', '17', '8', '1 TB', 'Hard disk drive'); -- Hard disk drive
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('28', '17', '8', '1 TB', 'Canvio Basics'); -- Hard disk drive
 
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('29', '40', '6', '', 'Hosting a system'); -- Server
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('29', '40', '6', '', 'T330'); -- Server
 
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('30', '58', '14', '', 'Used for scanning IDs'); -- Biometrics
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('30', '58', '14', '', 'Bio-IDiom'); -- Biometrics
 
-INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('31', '12', '59', 'Male to male, 1.8m', 'Can be lent to students and faculty');
+INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('31', '12', '59', 'Male to male, 1.8m', 'HL-007347');
 
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('32', '1', '1', 'accesspoint', 'version2');
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('32', '1', '1', 'accesspoint', 'EAP225');
 
-INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('33', '1', '20', '4 GB RAM, i5', 'Laptop for lending'); -- Laptop
+INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('33', '1', '20', '4 GB RAM, i5', 'VivoBook F510UA'); -- Laptop
 
-INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('34', '4', '60', 'HDMI', 'HDMI Cable'); -- HDMI Cable
+INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('34', '4', '60', 'HDMI', 'Aurum Ultra'); -- HDMI Cable
 
-INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('35', '13', '61', 'Extension', 'Extension'); -- Extension
+INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('35', '13', '61', 'Extension', 'BE112230-08'); -- Extension
 
 -- user
 -- 1
@@ -843,11 +843,11 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'UGP-0004', 'nMw8U8Ex', '9D-27-68-95-99-BC', '2'); -- ID 72, User Guide Poster
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'UGP-0005', 'CXya4UaU', '29-74-5E-63-90-57', '2'); -- ID 73, User Guide Poster
 
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'PC-0001', 'EKtRzQ2J', '83-8A-E3-3B-32-95', '2'); -- ID 74, PC
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'PC-0002', 'nGECcFAV', 'F1-20-56-43-B4-4C', '2'); -- ID 75, PC
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'PC-0003', 'MxP4JZsN', '24-FE-19-33-CF-53', '2'); -- ID 76, PC
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'PC-0004', 'xu2drwxc', '9D-27-68-95-99-BC', '2'); -- ID 77, PC
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'PC-0005', 'vx9KrLM2', '29-74-5E-63-90-57', '2'); -- ID 78, PC
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0001', 'EKtRzQ2J', '83-8A-E3-3B-32-95', '2'); -- ID 74, PC
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0002', 'nGECcFAV', 'F1-20-56-43-B4-4C', '2'); -- ID 75, PC
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0003', 'MxP4JZsN', '24-FE-19-33-CF-53', '2'); -- ID 76, PC
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0004', 'xu2drwxc', '9D-27-68-95-99-BC', '2'); -- ID 77, PC
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0005', 'vx9KrLM2', '29-74-5E-63-90-57', '2'); -- ID 78, PC
 
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0006', 'r2kVYS2j', '35-33-84-ED-4F-0B', '19'); -- ID 79, memory
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0007', 'QtVgejuU', '45-68-D9-2E-63-EA', '19'); -- ID 80, memory
@@ -935,7 +935,7 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0012', '8aRwQrtF', '', '21'); -- ID 152, memory
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0012', 'nicEezrN', '', '21'); -- ID 153, motherboard
 
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('29', 'PC-0007', 'zQydMxz6', '49-6F-3F-18-FF-2B', '2'); -- ID 154, PC (Gate)
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0007', 'zQydMxz6', '49-6F-3F-18-FF-2B', '2'); -- ID 154, PC (Gate)
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0013', 'sCxHNZVd', '', '21'); -- ID 155, Hard Disk Drive
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0013', 'KkeyiSiL', '', '21'); -- ID 156, Power Supply
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0013', 'BSWwk25n', '', '21'); -- ID 157, Processor
