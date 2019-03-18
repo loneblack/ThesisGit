@@ -399,7 +399,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
     <script src="js/jquery-1.8.3.min.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
     <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
-   
+	<script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
     <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
 

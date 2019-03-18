@@ -144,9 +144,22 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                         <div class="col-lg-12">
                             <div class="col-lg-12">
                                 <section class="panel">
-                                    <header class="panel-heading">
-                                        Request To Purchase An Asset
-                                    </header>
+									<?php
+										if($borrowID > 0)//have borrow
+										{
+											echo "<header class='panel-heading'>
+														Request To Borrow An Asset
+													</header>";
+										}
+										if($requestID > 0)//have request
+										{
+											echo "<header class='panel-heading'>
+														Request To Purchase An Asset
+													</header>";
+										}									
+									
+									?>
+                                   
                                     <div class="panel-body">
                                         <div class="form" method="post">
                                             <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_view_receiving_DB.php?id=<?php echo $id;?>">
