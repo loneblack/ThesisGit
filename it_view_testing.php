@@ -335,8 +335,8 @@
 				$rowBorDat=mysqli_fetch_array($resultBorDat,MYSQLI_ASSOC);
 
 				//INSERT TO BORROWDETAILSITEM
-				$queryInsBor="INSERT INTO `thesis`.`borrow_details_item` (`borrow_detailsID`, `assetID`) VALUES ('{$rowBorDat['borrow_detailscol']}', '{$rowPassTest['asset_assetID']}');";
-				$resultInsBor=mysqli_query($dbc,$queryInsBor);
+				//$queryInsBor="INSERT INTO `thesis`.`borrow_details_item` (`borrow_detailsID`, `assetID`) VALUES ('{$rowBorDat['borrow_detailscol']}', '{$rowPassTest['asset_assetID']}');";
+				//$resultInsBor=mysqli_query($dbc,$queryInsBor);
 
 				//INSERT Asset that passed the test to ASSETASSIGNMENT
 				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `personresponsibleID`, `statusID`) VALUES ('{$rowPassTest['asset_assetID']}', '{$rowBorrowData['BuildingID']}', '{$rowBorrowData['FloorAndRoomID']}', '{$rowBorrowData['personresponsibleID']}', '2')";

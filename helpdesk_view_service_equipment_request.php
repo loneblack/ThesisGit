@@ -326,30 +326,31 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 											<table style="width:670px" class="table table-bordered table-striped table-condensed table-hover" id="tblCustomers" align="center" cellpadding="0" cellspacing="0" border="1">
 												<thead>
 													<tr>
-														<th style="width:500px">Equipment</th>
-														<th style="width:150px">Quantity</th>
+														<th style="width:500px">Property Code</th>
+														<th style="width:500px">Asset Category</th>
+														<th style="width:500px">Asset Brand</th>
+														<th style="width:500px">Asset Model</th>
 													</tr>
 												</thead>
 												<tbody>
 													<?php
-                                                        for ($i=0; $i < $count; $i++) { 
-
-                                                            echo 
+														//GET BORROW DETAILS DATA
+														$queryBorDetData="SELECT a.propertyCode,am.description as `modelName`,rac.name as `assetCat`,rb.name as `brandName`  FROM thesis.borrow_details bd join borrow_details_item bdi on bd.borrow_detailscol=bdi.borrow_detailsID
+																												  join asset a on bdi.assetID=a.assetID
+																												  join assetmodel am on a.assetModel=am.assetModelID 
+																												  join ref_brand rb on am.brand=rb.brandID
+																												  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																												 where bd.borrowID='{$id}'";
+														$resultBorDetData=mysqli_query($dbc,$queryBorDetData);
+														while($rowBorDetData = mysqli_fetch_array($resultBorDetData, MYSQLI_ASSOC)){
+															echo 
                                                             "<tr>
-                                                                <td>
-                                                                    <select class='form-control' disabled >
-                                                                        <option>{$requestedCategory[$i]}</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td>
-                                                                    <select class='form-control m-bot15' disabled required>              
-                                                                        <option>{$requestedQuantity[$i]}</option>
-                                                                    </select>
-                                                                </td>
-                                                               
+                                                                <td><input class='form-control' type='text' id='purpose' value='{$rowBorDetData['propertyCode']}' disabled></td>
+                                                                <td><input class='form-control' type='text' id='purpose' value='{$rowBorDetData['assetCat']}' disabled></td>
+																<td><input class='form-control' type='text' id='purpose' value='{$rowBorDetData['brandName']}' disabled></td>
+																<td><input class='form-control' type='text' id='purpose' value='{$rowBorDetData['modelName']}' disabled></td>        
                                                             </tr>";
-                                                        }
-
+														}
                                                     ?>
 												</tbody>
 											</table>

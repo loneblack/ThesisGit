@@ -91,6 +91,21 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 		
 		//Insert recommended asset
 		foreach($_POST['recommAss'] as $recommAsset){
+			
+			//GET ASSET INFO
+			$queryGetAssInf="SELECT * FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID where a.assetID='{$recommAsset}'";
+			$resultGetAssInf=mysqli_query($dbc,$queryGetAssInf);
+			$rowGetAssInf = mysqli_fetch_array($resultGetAssInf, MYSQLI_ASSOC);
+			
+			//GET BORROWDETTAILSID
+			$queryBorDat="SELECT * FROM thesis.borrow_details bd where bd.borrowID='{$id}' and bd.assetCategoryID='{$rowGetAssInf['assetCategory']}'";
+			$resultBorDat=mysqli_query($dbc,$queryBorDat);
+			$rowBorDat=mysqli_fetch_array($resultBorDat,MYSQLI_ASSOC);
+			
+			//INSERT TO BORROWDETAILSITEM
+			$queryInsBor="INSERT INTO `thesis`.`borrow_details_item` (`borrow_detailsID`, `assetID`) VALUES ('{$rowBorDat['borrow_detailscol']}', '{$recommAsset}');";
+			$resultInsBor=mysqli_query($dbc,$queryInsBor);
+			
 			//INSERT TO asset testing details
             $queryDetails = "INSERT INTO assettesting_details (`assettesting_testingID`, `asset_assetID`) VALUES ('{$testingID}', '{$recommAsset}');";
             $resultDetails = mysqli_query($dbc,$queryDetails);
