@@ -638,7 +638,7 @@ INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `it
 
 INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('26', '32', '2', '', 'RAPTOR500W'); -- power supply
 
-INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('27', '34', '2', 'i5 8th gen', 'i7'); -- processor
+INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('27', '34', '2', '3.1 GHz', 'i5'); -- processor
 
 INSERT INTO `thesis`.`assetModel` (`assetModelID`, `assetCategory`, `brand`, `itemSpecification`, `description`) VALUES ('28', '17', '8', '1 TB', 'Canvio Basics'); -- Hard disk drive
 
@@ -655,6 +655,8 @@ INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `it
 INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('34', '4', '60', 'HDMI', 'Aurum Ultra'); -- HDMI Cable
 
 INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('35', '13', '61', 'Extension', 'BE112230-08'); -- Extension
+
+INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('36', '4', '49', '8 Gbps', 'GTX 1060'); -- Video Card Graphics Card
 
 -- user
 -- 1
@@ -952,7 +954,7 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0014', 'XZZ3ZuRg', '', '21'); -- ID 167, memory
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0013', 'JQUJJ5mS', '', '21'); -- ID 168, monitor
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0011', 'eMqqEJHX', '', '21'); -- ID 169, motherboard
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0011', 'JCFEdEKy', '', '21'); -- ID 170, mouse
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0012', 'JCFEdEKy', '', '21'); -- ID 170, mouse
 
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('18', 'PRJ-0006', 'Fxg3SFty', '', '1'); -- ID 171, projector
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('18', 'PRJ-0007', 'xXJy8Rsf', '', '1'); -- ID 172, projector
@@ -968,6 +970,33 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('34', 'HDMI-0001', 'XAd54N3', '', '1'); -- ID 182, HDMI
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('35', 'EXTN-0001', 'AB44H64F', '', '1'); -- ID 183, Extension
 
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0014', 'B543NN2', '', '1'); -- ID 184, Monitor
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0015', 'A14GUN2', '', '1'); -- ID 185, Monitor
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0016', 'V255DG4', '', '1'); -- ID 186, Monitor
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('17', 'KB-0013', 'XCXCKK2', '', '1'); -- ID 187, Keyboard
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('17', 'KB-0014', 'XCXCKK3', '', '1'); -- ID 188, Keyboard
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('17', 'KB-0015', 'XCXCKK4', '', '1'); -- ID 189, Keyboard
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0013', 'XCXCKK5', '', '1'); -- ID 190, Mouse
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0014', 'XCXCKK6', '', '1'); -- ID 191, Mouse
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0015', 'XCXCKK7', '', '1'); -- ID 192, Mouse
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0015', 'XCXCKK8', '', '1'); -- ID 193, memory
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0016', 'XCXCKK9', '', '1'); -- ID 194, memory
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0017', 'XCXCKK0', '', '1'); -- ID 195, memory
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0015', 'XCXCKA1', '', '1'); -- ID 196, Hard disk drive internal
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0016', 'XCXCKA2', '', '1'); -- ID 197, Hard disk drive internal
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0017', 'XCXCKA3', '', '1'); -- ID 198, Hard disk drive internal
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('36', 'VDCRD-0001', 'XCXCKA4', '', '1'); -- ID 199, Video Card Graphics Card
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('36', 'VDCRD-0001', 'XCXCKA5', '', '1'); -- ID 200, Video Card Graphics Card
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('36', 'VDCRD-0001', 'XCXCKA6', '', '1'); -- ID 201, Video Card Graphics Card
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0015', 'XCXCKA7', '', '1'); -- ID 202, processor
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0016', 'XCXCKA8', '', '1'); -- ID 203, processor
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0017', 'XCXCKA9', '', '1'); -- ID 204, processor
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0014', 'XCXCKA0', '', '1'); -- ID 205, motherboard
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0015', 'XCXCKB1', '', '1'); -- ID 206, motherboard
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0016', 'XCXCKB2', '', '1'); -- ID 207, motherboard
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0015', 'XCXCKB3', '', '1'); -- ID 208, power supply
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0016', 'XCXCKB4', '', '1'); -- ID 209, power supply
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0017', 'XCXCKB5', '', '1'); -- ID 210, power supply
 
 -- asset audit for new items
 INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');
