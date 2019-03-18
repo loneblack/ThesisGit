@@ -8,7 +8,7 @@ $id = $_GET['id'];//get the id of the selected service request
 
 require_once("db/mysql_connect.php");
 
-$query =  " SELECT details, dateNeed, endDate, dateReceived, s.serviceType AS 'serviceTypeID', t.serviceType, statusID, description AS 'status', others, steps
+$query =  " SELECT replacementUnit, details, dateNeed, endDate, dateReceived, s.serviceType AS 'serviceTypeID', t.serviceType, statusID, description AS 'status', others, steps
             FROM thesis.service s
                 JOIN ref_servicetype t
             ON s.serviceType = t.id
@@ -29,6 +29,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         $status = $row['status'];
         $others = $row['others'];
         $steps = $row['steps'];
+        $replacementUnit = $row['replacementUnit'];
 
     }
 $assets = array();
@@ -191,10 +192,17 @@ if($serviceTypeID=='27'){
                                             <!-- END NG BUTAS NG PWET KO -->
                                         <?php } ?>
 
-
+                                                <?php
+                                                    if($replacementUnit == 1){
+                                                        $serviceUnit = "checked";
+                                                    } 
+                                                    else{
+                                                        $serviceUnit = "";
+                                                    }
+                                                ?>
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-3 col-lg-6">
-                                                        <input type="checkbox" disabled>&nbsp;Opt for service unit
+                                                        <input type="checkbox" disabled <?php echo $serviceUnit;?>>&nbsp;Opt for service unit
                                                     </div>
                                                     <br>
                                                     <br>

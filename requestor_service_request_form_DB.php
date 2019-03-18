@@ -33,7 +33,7 @@
 	}
 	echo $sql;
 
-	//get the id of previously inserted service
+	//get the id of previously inserted service  
 	$sql1 = "SELECT MAX(id) as 'id' FROM thesis.service;";//status is set to 1 for pending status
 
 	$result1 = mysqli_query($dbc, $sql1);
@@ -46,8 +46,8 @@
     if($serviceUnit == "on"){
 
     	//insert to serviceUnit
-    	$sql = "INSERT INTO `thesis`.`serviceUnit` (`serviceID`, `statusID`, `UserID`)
-	                                VALUES ('{$id}', '1', '{$userID}');";//status is set to 1 for pending status
+    	$sql = "INSERT INTO `thesis`.`serviceUnit` (`serviceID`, `statusID`, `UserID`, `dateNeeded`)
+	                                VALUES ('{$id}', '1', '{$userID}', DATE_ADD(NOW(), INTERVAL 3 DAY));";//status is set to 1 for pending status
 
 		$result = mysqli_query($dbc, $sql);
 		echo $sql;
@@ -86,5 +86,5 @@
 	$message = "Form submitted!";
 	$_SESSION['submitMessage'] = $message;
 
-	//header('Location: '.$header);
+	header('Location: '.$header);
 ?>	
