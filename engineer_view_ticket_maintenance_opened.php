@@ -14,6 +14,10 @@
 	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE (`ticketID` = '{$id}');";
 	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
 	
+	//UPDATE TICKET STATUS TO ONGOING
+	$queryUpdOngStat="UPDATE `thesis`.`ticket` SET `status` = '3' WHERE (`ticketID` = '{$id}');";
+	$resultUpdOngStat=mysqli_query($dbc,$queryUpdOngStat);
+	
 	if(isset($_POST['submit'])){
 		if(isset($_POST['asset'])&&isset($_POST['remarks'])&&isset($_POST['assetStat'])){
 			$asset=$_POST['asset'];
@@ -77,15 +81,26 @@
 					$sqlNotif = "INSERT INTO `thesis`.`notifications` (`steps_id`, `isRead`, `replacementID`) VALUES ('26', false, '{$rowGetLatRepl['replacementID']}');";
 					$resultNotif = mysqli_query($dbc, $sqlNotif);
 				}
+				
+				//UPDATE TINYINT OF ASSETS THAT ARE DONE AT TESTING
+				$queryTickAssChk="UPDATE `thesis`.`ticketedasset` SET `checked`=true WHERE `ticketID`='{$id}' and `assetID`='{$asset}'";
+				$resultTickAssChk=mysqli_query($dbc,$queryTickAssChk);
 			}
 			
 			//UPDATE SERVICE STATUS (STILL NEEDS TO BE FIXED)
 			//$queryComp="UPDATE `thesis`.`service` SET `status`='3' WHERE `id`='{$id}'";
 			//$resultComp=mysqli_query($dbc,$queryComp);
 			
-			//UPDATE TICKET
-			$queryTickUp="UPDATE `thesis`.`ticket` SET `status`='7', `dateClosed`=now() WHERE `ticketID`='{$id}'";
-			$resultTickUp=mysqli_query($dbc,$queryTickUp);
+			//CHECK IF ALL THE ASSETS ARE CHECKED 
+			$queryCheckTickAss="SELECT count(assetID) as `numTickAsset`,count(IF(checked = 1, assetID, null)) as `numCheckedAsset` FROM thesis.ticketedasset where ticketID='{$id}'";
+			$resultCheckTickAss=mysqli_query($dbc,$queryCheckTickAss);
+			$rowCheckTickAss=mysqli_fetch_array($resultCheckTickAss,MYSQLI_ASSOC);
+			
+			if($rowCheckTickAss['numTickAsset']==$rowCheckTickAss['numCheckedAsset']){
+				//UPDATE TICKET
+				$queryTickUp="UPDATE `thesis`.`ticket` SET `status`='7', `dateClosed`=now() WHERE `ticketID`='{$id}'";
+				$resultTickUp=mysqli_query($dbc,$queryTickUp);
+			}
 			
 			$message = "Form submitted";
 			$_SESSION['submitMessage'] = $message;
@@ -260,6 +275,7 @@
                                     <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                         <thead>
                                             <tr>
+												<th></th>
                                                 <th>Category</th>
                                                 <th>Property Code</th>
                                                 <th>Location</th>
@@ -275,17 +291,17 @@
 															  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
 															  join assetassignment aa on a.assetID=aa.assetID
 															  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
-															  where ticketID='{$id}'";
+															  where ta.ticketID='{$id}' and ta.checked='0'";
 												$resultAssDat=mysqli_query($dbc,$queryAssDat);
 												while($rowAssDat=mysqli_fetch_array($resultAssDat,MYSQLI_ASSOC)){
 													echo "<tr>
-														<input type='hidden' name='asset[]' value='{$rowAssDat['assetID']}'>
+														<td><input type='checkbox' name='asset[]' value='{$rowAssDat['assetID']}' onChange='change(\"{$rowAssDat['assetID']}\",this);'></td>
 														<td>{$rowAssDat['categoryName']}</td>
 														<td>{$rowAssDat['propertyCode']}</td>
 														<td>{$rowAssDat['floorRoom']}</td>
-														<td><input type='text' class='form-control' placeholder='Remarks' name='remarks[]'></td>
+														<td><input type='text' class='form-control' placeholder='Remarks' name='remarks[]' id='remarks_".$rowAssDat['assetID']."' disabled></td>
 														<td>
-														<select class='form-control' name='assetStat[]'>";
+														<select class='form-control' name='assetStat[]' disabled id='assetStat_".$rowAssDat['assetID']."'>";
 															
 														//GET ASSET Status
 														
@@ -341,7 +357,30 @@
     </section>
 
     <!-- WAG GALAWIN PLS LANG -->
+	
+	<script>
+	function change(x, y) {
+        var remarks = "remarks_" + x;
+        var assetStat = "assetStat_" + x;
 
+        //Is Checked
+            if (y.checked == true) {
+                //comments
+                document.getElementById(remarks).disabled = false;
+                document.getElementById(assetStat).disabled = false;
+                
+
+            }
+            //Unchecked
+            if (y.checked == false) {
+                //comments
+                document.getElementById(remarks).disabled = true;
+                document.getElementById(assetStat).disabled = true;
+
+        }
+    }
+	</script>
+	
     <!--Core js-->
     <script src="js/jquery.js"></script>
     <script src="js/jquery-1.8.3.min.js"></script>
