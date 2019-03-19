@@ -249,7 +249,7 @@
                                                                 echo "<tr> 
                                                                     <td style='display: none'>{$row['serviceUnitID']}</td>
                                                                     <td>{$count}</td>
-                                                                    <td>{$row['dateNeed']}</td>";
+                                                                    <td>{$row['dateNeeded']}</td>";
                                                                     
                                                                     if($row['description']=='Pending'){
                                                                         echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";

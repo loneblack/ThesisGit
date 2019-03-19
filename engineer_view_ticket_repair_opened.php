@@ -343,38 +343,28 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         
                                             for ($i=0; $i < count($assets); $i++) { 
 
-                                                
+                                                //display the components
                                                 $query3 =  "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
-                                                        FROM asset a 
-                                                            JOIN assetModel m
-                                                        ON assetModel = assetModelID
-                                                            JOIN ref_brand br
-                                                        ON brand = brandID
-                                                            JOIN ref_assetcategory c
-                                                        ON assetCategory = assetCategoryID
-                                                            JOIN ref_assetstatus s
-                                                        ON a.assetStatus = s.id
-                                                            JOIN assetassignment aa
-                                                        ON a.assetID = aa.assetID
-                                                            JOIN building b
-                                                        ON aa.BuildingID = b.BuildingID
-                                                            JOIN floorandroom f
-                                                        ON aa.FloorAndRoomID = f.FloorAndRoomID 
-                                                            WHERE a.assetID = {$assets[$i]};";
+                                                    FROM asset a 
+                                                        JOIN assetModel m
+                                                    ON assetModel = assetModelID
+                                                        JOIN ref_brand br
+                                                    ON brand = brandID
+                                                        JOIN ref_assetcategory c
+                                                    ON assetCategory = assetCategoryID
+                                                        JOIN ref_assetstatus s
+                                                    ON a.assetStatus = s.id
+                                                        JOIN assetassignment aa
+                                                    ON a.assetID = aa.assetID
+                                                        JOIN building b
+                                                    ON aa.BuildingID = b.BuildingID
+                                                        JOIN floorandroom f
+                                                    ON aa.FloorAndRoomID = f.FloorAndRoomID 
+                                                        WHERE a.assetID = {$assets[$i]};";
 
                                                 $result3 = mysqli_query($dbc, $query3);  
-
+                                                
                                                 while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
-
-                                                    $forRepair = "";
-                                                    $falseReport = "";
-                                                    $repaired = "";
-                                                    $broken = "";
-
-                                                    if($row['assetStatus']==9) $forRepair = "selected";
-                                                    if($row['assetStatus']==22) $falseReport = "selected";
-                                                    if($row['assetStatus']==23) $repaired = "selected";
-                                                    if($row['assetStatus']==4) $broken = "selected";
 
 
                                                    echo "
@@ -384,23 +374,128 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     <td>{$row['brand']} {$row['category']} {$row['description']}</td>
                                                     <td>
                                                         <select class='form-control form-control-inline' name='actionID[]'>
-                                                            <option>Action</option>
+                                                            <option value='0'>None</option>
                                                             <option value='1'>Added</option>
-                                                            <option value='0'>Removed</option>
+                                                            <option value='2'>Removed</option>
                                                         </select>
                                                     </td>
                                                     <td>
                                                         <select class='form-control form-control-inline' name='actionID[]'>
-                                                            <option>Action</option>
-                                                            <option value='1'>Added</option>
-                                                            <option value='0'>Removed</option>
-                                                        </select>
+                                                            <option value='0'>Action</option>";
+
+                                                    for ($j=0; $j < count($assets); $j++) { 
+                                                        $queryCompound =  "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
+                                                            FROM asset a 
+                                                                JOIN assetModel m
+                                                            ON assetModel = assetModelID
+                                                                JOIN ref_brand br
+                                                            ON brand = brandID
+                                                                JOIN ref_assetcategory c
+                                                            ON assetCategory = assetCategoryID
+                                                                JOIN ref_assetstatus s
+                                                            ON a.assetStatus = s.id
+                                                                JOIN assetassignment aa
+                                                            ON a.assetID = aa.assetID
+                                                                JOIN building b
+                                                            ON aa.BuildingID = b.BuildingID
+                                                                JOIN floorandroom f
+                                                            ON aa.FloorAndRoomID = f.FloorAndRoomID 
+                                                                WHERE a.assetID = {$assets[$j]}
+                                                            AND (assetCategory = 13 OR assetCategory = 46 OR assetCategory = 40);";
+
+                                                        $resultCompound = mysqli_query($dbc, $queryCompound); 
+                                                                
+                                                        while ($rowCompound = mysqli_fetch_array($resultCompound, MYSQLI_ASSOC)){
+
+                                                            echo "<option value='{$rowCompound['assetID']}'>{$rowCompound['propertyCode']}</option>";
+                                                        }
+                                                    }
+
+                                                    echo
+                                                        "</select>
                                                     </td>
                                                     <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
                                                     </tr>";
                                                 }  
 
                                             }
+                                            ?>
+                                            <?php
+                                                        
+                                                //display requested parts
+                                                $query3 =  "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, m.description
+                                                    FROM requestparts_assets ra
+                                                        JOIN asset a 
+                                                    ON ra.assetID = a.assetID
+                                                        JOIN assetModel m
+                                                    ON assetModel = assetModelID
+                                                        JOIN ref_brand br
+                                                    ON brand = brandID
+                                                        JOIN ref_assetcategory c
+                                                    ON assetCategory = assetCategoryID
+                                                        JOIN requestparts rp
+                                                    ON ra.requestPartsID = rp.id
+                                                        WHERE rp.serviceID = {$serviceID};";
+                                                
+                                                $result3 = mysqli_query($dbc, $query3);  
+
+                                                if (mysqli_num_rows($result3)>0)
+                                                {
+                                                    while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC))
+                                                    {
+
+
+                                                   echo "
+                                                    <tr>
+                                                    <td>Source Asset</td>
+                                                    <td>{$row['propertyCode']}</td>
+                                                    <td>{$row['brand']} {$row['category']} {$row['description']}</td>
+                                                    <td>
+                                                        <select class='form-control form-control-inline' name='actionID[]'>
+                                                            <option value='0'>None</option>
+                                                            <option value='1'>Added</option>
+                                                            <option value='2'>Removed</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select class='form-control form-control-inline' name='actionID[]'>
+                                                            <option value='0'>Action</option>";
+
+                                                    for ($j=0; $j < count($assets); $j++) { 
+                                                        $queryCompound =  "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
+                                                            FROM asset a 
+                                                                JOIN assetModel m
+                                                            ON assetModel = assetModelID
+                                                                JOIN ref_brand br
+                                                            ON brand = brandID
+                                                                JOIN ref_assetcategory c
+                                                            ON assetCategory = assetCategoryID
+                                                                JOIN ref_assetstatus s
+                                                            ON a.assetStatus = s.id
+                                                                JOIN assetassignment aa
+                                                            ON a.assetID = aa.assetID
+                                                                JOIN building b
+                                                            ON aa.BuildingID = b.BuildingID
+                                                                JOIN floorandroom f
+                                                            ON aa.FloorAndRoomID = f.FloorAndRoomID 
+                                                                WHERE a.assetID = {$assets[$j]}
+                                                            AND (assetCategory = 13 OR assetCategory = 46 OR assetCategory = 40);";
+
+                                                        $resultCompound = mysqli_query($dbc, $queryCompound); 
+                                                                
+                                                        while ($rowCompound = mysqli_fetch_array($resultCompound, MYSQLI_ASSOC)){
+
+                                                            echo "<option value='{$rowCompound['assetID']}'>{$rowCompound['propertyCode']}</option>";
+                                                        }
+                                                    }
+
+                                                    echo
+                                                        "</select>
+                                                    </td>
+                                                    <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
+                                                    </tr>";
+                                                    }  
+                                                }
                                             ?>
                                         </tbody>
                                     </table>

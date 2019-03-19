@@ -223,7 +223,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         ON brand = brandID
                                                             JOIN ref_assetcategory c
                                                         ON assetCategory = assetCategoryID
-                                                            WHERE assetCategoryID = '{$assetCategoryID[$i]}';";
+                                                            WHERE assetCategoryID = '{$assetCategoryID[$i]}'
+                                                        AND isServiceUnit = '1';";
 
                                                 $result = mysqli_query($dbc, $sql);
                                                 
@@ -255,7 +256,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         ON assetCategory = assetCategoryID
                                                             WHERE assetCategoryID = '{$assetCategoryID[$i]}';";
                                             $result=mysqli_query($dbc,$query);
-
+                                            
                                             $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 
 
