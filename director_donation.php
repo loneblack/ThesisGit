@@ -107,28 +107,34 @@ if(isset($_POST['save'])){
                         <div class="row">
                             <div class="col-sm-12">
                                 <section class="panel">
-
-
                                     <div class="panel-body">
                                         <div class="container">
                                             <form id="contact" action="" method="post" class="col-lg-18">
                                                 <h3>Request For Donation</h3>
                                                 <fieldset>
+													<label for="building" class="control-label col-lg-6">School / Organization</label>
                                                     <input id="schoolorg" name="schoolorg" class="form-control" placeholder="School / Organization" type="text" onkeyup="lettersOnly(this)" required>
-                                                </fieldset><br>
+                                                </fieldset>			
+												<br>
                                                 <fieldset>
+													<label for="building" class="control-label col-lg-6">Contact Person</label>
                                                     <input id="contactPerson" name="contactPerson" class="form-control" placeholder="Contact Person" type="text" onkeyup="lettersOnly(this)" required>
-                                                </fieldset><br>
+                                                </fieldset>
+												<br>
                                                 <fieldset>
+													<label for="building" class="control-label col-lg-6">Contact No.</label>
                                                     <input id="contactNo" name="contactNo" class="form-control" placeholder="Contact No." type="text" required>
                                                 </fieldset><br>
                                                 <fieldset>
+													<label for="building" class="control-label col-lg-6">Date and Time Needed</label>
                                                     <input id="dateNeeded" name="dateNeeded" class="form-control" type="datetime-local" placeholder="Date and Time Needed" required />
                                                 </fieldset><br>
                                                 <fieldset>
+													<label for="building" class="control-label col-lg-6">Purpose</label>
                                                     <input id="purpose" name="purpose" class="form-control" placeholder="Purpose" type="text" onkeyup="lettersOnly(this)" required>
                                                 </fieldset><br>
                                                 <fieldset>
+													<label for="building" class="control-label col-lg-6">Assets to be Donated</label>
                                                     <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest" align="center" cellpadding="0" cellspacing="0" border="1" required>
                                                         <thead>
                                                             <tr>
@@ -165,14 +171,9 @@ if(isset($_POST['save'])){
                                                 <fieldset>
                                                     <button id="save" name="save" class="btn btn-success" type="submit">Submit</button>
                                                 </fieldset>
-
                                             </form>
                                         </div>
-
                                     </div>
-
-
-
                                 </section>
                             </div>
                         </div>
