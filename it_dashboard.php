@@ -43,10 +43,10 @@
 	$_SESSION['assetStat'] = array();
 	$_SESSION['dateChecked'] = array();
 	
-	$_SESSION['roomType'];
-	$_SESSION['yr'];
-	$_SESSION['mnt'];
-	$_SESSION['bldg'];
+	$_SESSION['roomType']='0';
+	$_SESSION['yr']='0';
+	$_SESSION['mnt']='0';
+	$_SESSION['bldg']='0';
 	
 	$queryGetAllMainData="SELECT far.floorRoom,a.propertyCode,rac.name as `assetCat`,ras.description as `assetStat`,au.date FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
 																																																							  join asset a on au.assetID=a.assetID
