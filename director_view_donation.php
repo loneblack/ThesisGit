@@ -5,40 +5,13 @@
 <?php
 session_start();
 require_once("db/mysql_connect.php");
-  
-if(isset($_POST['save'])){
-	$schoolorg=$_POST['schoolorg'];
-	$contactPerson=$_POST['contactPerson'];
-	$contactNo=$_POST['contactNo'];
-	$dateNeeded=$_POST['dateNeeded'];
-    $purpose = $_POST['purpose'];
-    $assetCategory=$_POST['assetCategory'];
-	$quantity=$_POST['qty'];
-    
-    //INSERT TO DONATION TABLE
-    $queryDon = "INSERT INTO `thesis`.`donation` (`contactNumber`, `dateNeed`, `dateCreated`, `purpose`, `schoolName`, `contactPerson`, `statusID`, `stepsID`, `user_UserID`) VALUES ('{$contactNo}', '{$dateNeeded}', now(), '{$purpose}', '{$schoolorg}', '{$contactPerson}', '1', '1', '{$_SESSION['userID']}')";
-    $resultDon = mysqli_query($dbc, $queryDon);
+$donationID=$_GET['donationid'];
 
-	//GET DONATION ID
-    $queryDonID = "SELECT * FROM thesis.donation order by donationID desc limit 1;";
-    $resultDonID = mysqli_query($dbc, $queryDonID);
-    $rowDonID = mysqli_fetch_array($resultDonID, MYSQLI_ASSOC);
-	
-	//INSERT TO NOTIFICATIONS TABLE
-	$sqlNotif = "INSERT INTO `thesis`.`notifications` (`steps_id`, `isRead`, `donationID`) VALUES ('1', false, '{$rowDonID['donationID']}');";
-    $resultNotif = mysqli_query($dbc, $sqlNotif);
-	
+//GET ALL DONATION DATA
+$queryDon="SELECT * FROM thesis.donation where donationID='{$donationID}';";
+$resultDon=mysqli_query($dbc,$queryDon);
+$rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC);
 
-    foreach (array_combine($assetCategory, $quantity) as $assetCat => $qty)
-    {
-        //INSERT TO DONATIONDETAILS TABLE
-        $queryDonDet = "INSERT INTO `thesis`.`donationdetails` (`donationID`, `assetCategoryID`, `quantity`) VALUES ('{$rowDonID['donationID']}', '{$assetCat}', '{$qty}');";
-        $resultDonDet = mysqli_query($dbc, $queryDonDet);
-
-        
-    }
-	echo "<script>alert('Success');</script>";
-}
 ?>        
 
 <head>
@@ -113,25 +86,28 @@ if(isset($_POST['save'])){
                                                 <h3>Request For Donation</h3>
                                                 <fieldset>
 													<label for="building" class="control-label col-lg-6">School / Organization</label>
-                                                    <input id="schoolorg" name="schoolorg" class="form-control" placeholder="School / Organization" type="text" onkeyup="lettersOnly(this)" required>
+                                                    <input id="schoolorg" name="schoolorg" class="form-control" placeholder="School / Organization" type="text" onkeyup="lettersOnly(this)" disabled value='<?php echo $rowDon['schoolName']; ?>'>
                                                 </fieldset>			
 												<br>
                                                 <fieldset>
 													<label for="building" class="control-label col-lg-6">Contact Person</label>
-                                                    <input id="contactPerson" name="contactPerson" class="form-control" placeholder="Contact Person" type="text" onkeyup="lettersOnly(this)" required>
+                                                    <input id="contactPerson" name="contactPerson" class="form-control" placeholder="Contact Person" type="text" onkeyup="lettersOnly(this)" disabled value='<?php echo $rowDon['contactPerson']; ?>'>
                                                 </fieldset>
 												<br>
                                                 <fieldset>
 													<label for="building" class="control-label col-lg-6">Contact No.</label>
-                                                    <input id="contactNo" name="contactNo" class="form-control" placeholder="Contact No." type="text" required>
+                                                    <input id="contactNo" name="contactNo" class="form-control" placeholder="Contact No." type="text" disabled value='<?php echo $rowDon['contactNumber']; ?>'>
                                                 </fieldset><br>
                                                 <fieldset>
 													<label for="building" class="control-label col-lg-6">Date and Time Needed</label>
-                                                    <input id="dateNeeded" name="dateNeeded" class="form-control" type="datetime-local" placeholder="Date and Time Needed" required />
+                                                    <input id="dateNeeded" name="dateNeeded" class="form-control" type="datetime-local" placeholder="Date and Time Needed" disabled value='<?php 
+														$date = new DateTime($rowDon['dateNeed']);
+														echo date_format($date,"Y-m-d\TH:i:s");
+													 ?>' />
                                                 </fieldset><br>
                                                 <fieldset>
 													<label for="building" class="control-label col-lg-6">Purpose</label>
-                                                    <input id="purpose" name="purpose" class="form-control" placeholder="Purpose" type="text" onkeyup="lettersOnly(this)" required>
+                                                    <input id="purpose" name="purpose" class="form-control" placeholder="Purpose" type="text" onkeyup="lettersOnly(this)" disabled value='<?php echo $rowDon['purpose']; ?>' >
                                                 </fieldset><br>
                                                 <fieldset>
 													<label for="building" class="control-label col-lg-6">Assets to be Donated</label>
@@ -140,37 +116,30 @@ if(isset($_POST['save'])){
                                                             <tr>
                                                                 <th style="width:500px">Equipment</th>
                                                                 <th style="width:150px">Quantity</th>
-                                                                <th>Add More Items</th>
+                                                                
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <select class="form-control" id="txtName" name="assetCategory[]" required>
-                                                                        <option value="">Select</option>
-                                                                        <?php
-																		
-																		$sql = "SELECT * FROM thesis.ref_assetcategory;";
-
-                                                                        $result = mysqli_query($dbc, $sql);
-
-                                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                                        {   
-                                                                            echo "<option value ={$row['assetCategoryID']}>";
-                                                                            echo "{$row['name']}</option>";
-                                                                        }
-																	?>
-                                                                    </select>
-                                                                </td>
-                                                                <td><input class="form-control" type="number" min="1" id="txtCountry" name="qty[]" required /></td>
-                                                                <td style="text-align:center"><input class="btn btn-primary" type="button" onclick="Add()" value="Add" /></td>
-                                                            </tr>
+															<?php
+																//GET ALL DONATION DETAILS DATA
+																$queryDonDet="SELECT dd.quantity,rac.name as `assetCat` FROM thesis.donationdetails dd join ref_assetcategory rac on dd.assetCategoryID=rac.assetCategoryID where dd.donationID='{$donationID}'";
+																$resultDonDet=mysqli_query($dbc,$queryDonDet);
+																while($rowDonDet=mysqli_fetch_array($resultDonDet,MYSQLI_ASSOC)){
+																	echo "<tr>
+																			<td>
+																				<select class='form-control' id='txtName' disabled>
+																				<option selected>{$rowDonDet['assetCat']}</option>
+																				</select>
+																			</td>
+																			<td><input class='form-control' type='number' id='txtCountry' value='{$rowDonDet['quantity']}' disabled /></td>
+																			</tr>";
+																}
+															?>
+                                                            
                                                         </tbody>
                                                     </table>
                                                 </fieldset>
-                                                <fieldset>
-                                                    <button id="save" name="save" class="btn btn-success" type="submit">Submit</button>
-                                                </fieldset>
+                                               
                                             </form>
                                         </div>
                                     </div>

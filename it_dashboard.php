@@ -36,7 +36,34 @@
 		}
 	}
 	$_SESSION['dateMaintenance']=$dateNeeded;
+	//FOR MAINTENANCE REPORTS PAGE
+	$_SESSION['room'] = array();
+	$_SESSION['propertyCode'] = array();
+	$_SESSION['assetCat'] = array();
+	$_SESSION['assetStat'] = array();
+	$_SESSION['dateChecked'] = array();
 	
+	$_SESSION['roomType']='0';
+	$_SESSION['yr']='0';
+	$_SESSION['mnt']='0';
+	$_SESSION['bldg']='0';
+	
+	$queryGetAllMainData="SELECT far.floorRoom,a.propertyCode,rac.name as `assetCat`,ras.description as `assetStat`,au.date FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
+																																																							  join asset a on au.assetID=a.assetID
+																																																							  join assetmodel am on a.assetModel=am.assetModelID
+																																																							  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																																																							  join ref_assetstatus ras on au.assetStatus=ras.id 
+																																																							  join assetassignment aa on a.assetID=aa.assetID 
+																																																							  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
+																																																where t.serviceType='28' and au.assetStatus!='17'";
+	$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
+	while($rowGetAllMainData=mysqli_fetch_array($resultGetAllMainData,MYSQLI_ASSOC)){
+		array_push($_SESSION['room'],$rowGetAllMainData['floorRoom']);	
+		array_push($_SESSION['propertyCode'],$rowGetAllMainData['propertyCode']);	
+		array_push($_SESSION['assetCat'],$rowGetAllMainData['assetCat']);	
+		array_push($_SESSION['assetStat'],$rowGetAllMainData['assetStat']);	
+		array_push($_SESSION['dateChecked'],$rowGetAllMainData['date']);	
+	}
 ?>
 
 <?php
@@ -123,10 +150,10 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                             <strong>Hello!
                                 <?php echo $_SESSION['dateDisposal']; ?> is the next Disposal Day! </strong> Please Click this <a href="it_view_disposal_list.php" class="alert-link">link</a> to input the assets for collection for disposal.
                         </div>
-						<div class="alert alert-info">
-                            <strong>Hello!
-                                <?php echo $_SESSION['dateMaintenance']; ?> is the next Maintenance Day! </strong> Please Click this <a href="it_set_maintenance.php" class="alert-link">link</a> to assign engineers to maintain buildings.
-                        </div>
+						 <!--<div class="alert alert-info">
+                           <strong>Hello!
+                                <?php //echo $_SESSION['dateMaintenance']; ?> is the next Maintenance Day! </strong> Please Click this <a href="it_set_maintenance.php" class="alert-link">link</a> to assign engineers to maintain buildings.
+                        </div>-->
                         <div class="row">
 
                             <a href="it_inventory.php">
