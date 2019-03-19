@@ -150,10 +150,10 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                             <strong>Hello!
                                 <?php echo $_SESSION['dateDisposal']; ?> is the next Disposal Day! </strong> Please Click this <a href="it_view_disposal_list.php" class="alert-link">link</a> to input the assets for collection for disposal.
                         </div>
-						<div class="alert alert-info">
-                            <strong>Hello!
-                                <?php echo $_SESSION['dateMaintenance']; ?> is the next Maintenance Day! </strong> Please Click this <a href="it_set_maintenance.php" class="alert-link">link</a> to assign engineers to maintain buildings.
-                        </div>
+						 <!--<div class="alert alert-info">
+                           <strong>Hello!
+                                <?php //echo $_SESSION['dateMaintenance']; ?> is the next Maintenance Day! </strong> Please Click this <a href="it_set_maintenance.php" class="alert-link">link</a> to assign engineers to maintain buildings.
+                        </div>-->
                         <div class="row">
 
                             <a href="it_inventory.php">

@@ -69,6 +69,9 @@
                                                     <section class="panel">
 														<form>
                                                             <div class="form-group">
+																<div align="right">
+																	<button class="btn btn-primary" onclick="print()"><i class="fa fa-print"></i>  Print</button>
+																</div>
 																<div class="row">
 																	<div class="col-lg-6">
 																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">Select Roomtype</label>
@@ -191,7 +194,6 @@
 																		//GET ALL DATA
 																		$mi = new MultipleIterator();
 																		
-																		
 																		$mi->attachIterator(new ArrayIterator($_SESSION['room']));
 																		$mi->attachIterator(new ArrayIterator($_SESSION['propertyCode']));
 																		$mi->attachIterator(new ArrayIterator($_SESSION['assetCat']));
@@ -236,6 +238,10 @@
     <!-- WAG GALAWIN PLS LANG -->
     
     <script>
+		function myFunction() {
+			window.print();
+        }
+	
 		function getAllMainData(){
 			var getYear = document.getElementById("year").value;
 			var getMonth = document.getElementById("month").value;
