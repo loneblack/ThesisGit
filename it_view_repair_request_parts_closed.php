@@ -118,9 +118,9 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 <strong>me</strong>
                                             </div>
                                             <div class="col-md-4">
-                                                <button style="float:right" class="btn btn-warning">Pending</button>
-                                                <button style="display: none; float:right" class="btn btn-success">Completed</button>
-                                                <button style="display:none; float:right" class="btn btn-info">Ongoing</button>
+                                                <button style="display: none; float:right" class="btn btn-warning">Pending</button>
+                                                <button style=" float:right" class="btn btn-success">Completed</button>
+                                                <button style="display: none; float:right" class="btn btn-info">Ongoing</button>
                                                 <br>
                                                 <br>
                                                 <h5>Date Created: <?php echo $date;?>
@@ -259,7 +259,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                             <section class="panel">
                                 <div class="panel-body">
                                     <div>
-                                        <h4>Parts to Be Given.</h4>
+                                        <h4>Parts Given</h4>
                                     </div>
                                     
                                     <h5>Only available assets may be given</h5>
@@ -284,7 +284,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             echo
                                                 "<tr>
                                                     <td width='300'>
-                                                        <select id = '".$count."' class='form-control' onchange='loadDetails(this.value, this.id)' required>
+                                                        <select id = '".$count."' class='form-control' onchange='loadDetails(this.value, this.id)' disabled>
                                                         <option value =''>Select</option>";
 
                                                 $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
@@ -363,13 +363,13 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                             
                         </div>
                             <div>
-                            <button type="submit" name="submit" id="submit" class="btn btn-success">Send</button>
+                            <button type="submit" name="submit" id="submit" class="btn btn-success" disabled>Send</button>
                         </form>
                         
                             <button onclick="window.history.back();" type="button" class="btn btn-danger">Back</button>
                             <div style="display:inline; float:right">
-                            <button class="btn btn-info" onclick="window.location.href='it_replacement.php'">Give Replacement</button>
-                            <button onclick="window.location.href='it_order_parts.php';" class="btn btn-info">Order parts</button>
+                            <button class="btn btn-info" onclick="window.location.href='it_replacement.php'" disabled>Give Replacement</button>
+                            <button onclick="window.location.href='it_order_parts.php';" class="btn btn-info" disabled>Order parts</button>
                             </div>
                         </div>
                     </div>

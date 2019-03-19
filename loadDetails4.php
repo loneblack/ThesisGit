@@ -15,5 +15,5 @@ $result=mysqli_query($dbc,$query);
 
 $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 echo 
-	"<input class='form-control' value='{$row['assetID']}' disabled>";
+	"<input class='form-control' value='{$row['assetID']}' name ='assets[]'>";
 ?>

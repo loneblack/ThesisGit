@@ -14,6 +14,9 @@
     foreach($assets as $asset){
     	$sql = "INSERT INTO `thesis`.`requestparts_assets` VALUES ('{$id}', '{$asset}');";
     	$result = mysqli_query($dbc, $sql);
+
+    	$sql = "UPDATE `thesis`.`asset` SET `assetStatus` = '3' WHERE (`assetID` = '{$asset}');";
+    	$result = mysqli_query($dbc, $sql);
     }
 
 	$message = "Form submitted!";
