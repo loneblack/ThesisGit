@@ -921,40 +921,40 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('25', 'PRNT-0005', 'GwYCPoyL', '99-76-08-20-B9-53', '2'); -- ID 138, Printer
 
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0006', 'KBnpZCh2', '77-BB-D9-A5-D0-1F', '10'); -- ID 139, PC
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0011', 'pTks6Peq', '', '21'); -- ID 140, Hard Disk Drive
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0011', 'itNQVcn5', '', '21'); -- ID 141, Power Supply
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0011', 'c5zQziHe', '', '21'); -- ID 142, Processor
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('17', 'KB-0011', 'Hbpj8NX3', '', '21'); -- ID 143, keyboard
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0011', 'Rx5CzCGx', '', '21'); -- ID 144, memory
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0011', 'fVduLYDP', '', '21'); -- ID 145, monitor
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0011', 'qxMunck3', '', '21'); -- ID 146, motherboard
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0011', 'CdbFtDrY', '', '21'); -- ID 147, mouse
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0011', 'pTks6Peq', '', '21'); -- ID 140, Hard Disk Drive
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0011', 'itNQVcn5', '', '21'); -- ID 141, Power Supply
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0011', 'c5zQziHe', '', '21'); -- ID 142, Processor
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('17', 'KB-0011', 'Hbpj8NX3', '', '21'); -- ID 143, keyboard
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0011', 'Rx5CzCGx', '', '21'); -- ID 144, memory
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0011', 'fVduLYDP', '', '21'); -- ID 145, monitor
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0011', 'qxMunck3', '', '21'); -- ID 146, motherboard
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0011', 'CdbFtDrY', '', '21'); -- ID 147, mouse
 
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('29', 'SRVR-0001', 'RZktVh37', '77-BB-D9-A5-D0-1F', '10'); -- ID 148, Server
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0012', 'wBZRdaNd', '', '21'); -- ID 149, Hard Disk Drive
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0012', 'etWPM4cV', '', '21'); -- ID 150, Power Supply
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0012', 'hBA7eWCn', '', '21'); -- ID 151, Processor
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0012', '8aRwQrtF', '', '21'); -- ID 152, memory
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0012', 'nicEezrN', '', '21'); -- ID 153, motherboard
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0012', 'wBZRdaNd', '', '21'); -- ID 149, Hard Disk Drive
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0012', 'etWPM4cV', '', '21'); -- ID 150, Power Supply
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0012', 'hBA7eWCn', '', '21'); -- ID 151, Processor
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0012', '8aRwQrtF', '', '21'); -- ID 152, memory
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0012', 'nicEezrN', '', '21'); -- ID 153, motherboard
 
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0007', 'zQydMxz6', '49-6F-3F-18-FF-2B', '2'); -- ID 154, PC (Gate)
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0013', 'sCxHNZVd', '', '21'); -- ID 155, Hard Disk Drive
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0013', 'KkeyiSiL', '', '21'); -- ID 156, Power Supply
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0013', 'BSWwk25n', '', '21'); -- ID 157, Processor
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0013', 'bUuZwJje', '', '21'); -- ID 158, memory
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0013', '2Pf6dX8R', '', '21'); -- ID 159, motherboard
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('30', 'BIOM-0001', 'NyvxTtoi', '', '2'); -- ID 160, Biometrics
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0012', 'XgrwbTsa', '', '21'); -- ID 161, monitor
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0013', 'sCxHNZVd', '', '21'); -- ID 155, Hard Disk Drive
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0013', 'KkeyiSiL', '', '21'); -- ID 156, Power Supply
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0013', 'BSWwk25n', '', '21'); -- ID 157, Processor
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0013', 'bUuZwJje', '', '21'); -- ID 158, memory
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0013', '2Pf6dX8R', '', '21'); -- ID 159, motherboard
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('30', 'BIOM-0001', 'NyvxTtoi', '', '2'); -- ID 160, Biometrics
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0012', 'XgrwbTsa', '', '21'); -- ID 161, monitor
 
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0008', '52fVETMe', '77-BB-D9-A5-D0-1F', '1'); -- ID 162, PC SERVICE UNIT
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0014', 'ggmZ2NuL', '', '21'); -- ID 163, Hard Disk Drive
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0014', 'quT5bgib', '', '21'); -- ID 164, Power Supply
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0014', 'mgi6XZYz', '', '21'); -- ID 165, Processor
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('17', 'KB-0012', 'MoZTepVv', '', '21'); -- ID 166, keyboard
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0014', 'XZZ3ZuRg', '', '21'); -- ID 167, memory
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0013', 'JQUJJ5mS', '', '21'); -- ID 168, monitor
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0011', 'eMqqEJHX', '', '21'); -- ID 169, motherboard
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0012', 'JCFEdEKy', '', '21'); -- ID 170, mouse
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0014', 'ggmZ2NuL', '', '21'); -- ID 163, Hard Disk Drive
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0014', 'quT5bgib', '', '21'); -- ID 164, Power Supply
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0014', 'mgi6XZYz', '', '21'); -- ID 165, Processor
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('17', 'KB-0012', 'MoZTepVv', '', '21'); -- ID 166, keyboard
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0014', 'XZZ3ZuRg', '', '21'); -- ID 167, memory
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0013', 'JQUJJ5mS', '', '21'); -- ID 168, monitor
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0011', 'eMqqEJHX', '', '21'); -- ID 169, motherboard
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0012', 'JCFEdEKy', '', '21'); -- ID 170, mouse
 
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('18', 'PRJ-0006', 'Fxg3SFty', '', '1'); -- ID 171, projector
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('18', 'PRJ-0007', 'xXJy8Rsf', '', '1'); -- ID 172, projector
@@ -986,8 +986,8 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0016', 'XCXCKA2', '', '1'); -- ID 197, Hard disk drive internal
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0017', 'XCXCKA3', '', '1'); -- ID 198, Hard disk drive internal
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('36', 'VDCRD-0001', 'XCXCKA4', '', '1'); -- ID 199, Video Card Graphics Card
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('36', 'VDCRD-0001', 'XCXCKA5', '', '1'); -- ID 200, Video Card Graphics Card
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('36', 'VDCRD-0001', 'XCXCKA6', '', '1'); -- ID 201, Video Card Graphics Card
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('36', 'VDCRD-0002', 'XCXCKA5', '', '1'); -- ID 200, Video Card Graphics Card
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('36', 'VDCRD-0003', 'XCXCKA6', '', '1'); -- ID 201, Video Card Graphics Card
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0015', 'XCXCKA7', '', '1'); -- ID 202, processor
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0016', 'XCXCKA8', '', '1'); -- ID 203, processor
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0017', 'XCXCKA9', '', '1'); -- ID 204, processor
@@ -997,6 +997,18 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0015', 'XCXCKB3', '', '1'); -- ID 208, power supply
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0016', 'XCXCKB4', '', '1'); -- ID 209, power supply
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0017', 'XCXCKB5', '', '1'); -- ID 210, power supply
+
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0009', 'AW6fqiSR', '8A-82-8B-CE-76-A7', '2'); -- ID 211, PC 
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0018', 'gmZNug2L', '', '19'); -- ID 212, Hard Disk Drive
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0018', 'quT5bgib', '', '19'); -- ID 213, Power Supply
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0018', 'YBRgMbjN', '', '19'); -- ID 214, Processor
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('17', 'KB-0016', 'MoZTepVv', '', '19'); -- ID 215, keyboard
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0018', 'XZZ3ZuRg', '', '19'); -- ID 216, memory
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0017', 'JQUJJ5mS', '', '19'); -- ID 217, monitor
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0017', 'eMqqEJHX', '', '19'); -- ID 218, motherboard
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0016', 'JCFEdEKy', '', '19'); -- ID 219, mouse
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('36', 'VDCRD-0004', 'XXKKXXS', '', '19'); -- ID 220, Video Card Graphics Card
+
 
 -- asset audit for new items
 INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');
@@ -1025,77 +1037,79 @@ INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) V
 
 
 -- Asset Assignment
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('1', '3', '1', '2019-01-08', '2019-02-25', '1', '2');
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('2', '8', '56', '2019-07-24', '2019-12-25', '9', '2');
-	INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('3', '17', '114', '2019-07-24', '2019-07-25', '9', '2');
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('4', '17', '114', '2019-02-12', '2019-02-25', '9', '2');
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('5', '17', '115', '2019-02-17', '2019-04-21', '9', '2');
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('6', '17', '117', '2019-02-17', '2019-04-21', '9', '2');
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('7', '17', '116', '2019-02-19', '2019-04-21', '9', '2');
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('8', '17', '120', '2019-02-18', '2019-04-21', '9', '2');
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('9', '17', '114', '2019-02-20', '2019-04-21', '9', '2');
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('10', '17', '118', '2019-02-21', '2019-04-21', '9', '2');
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('11', '17', '115', '2019-02-26', '2019-04-22', '9', '2');
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('12', '17', '118', '2019-02-26', '2019-04-22', '9', '2');
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('1', '3', '1', '2019-01-08', '2019-02-25', '1', '2'); -- ID 1
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('2', '8', '56', '2019-07-24', '2019-12-25', '9', '2'); -- ID 2
+	INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('3', '17', '114', '2019-07-24', '2019-07-25', '9', '2'); -- ID 3
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('4', '17', '114', '2019-02-12', '2019-02-25', '9', '2'); -- ID 4
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('5', '17', '115', '2019-02-17', '2019-04-21', '9', '2'); -- ID 5
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('6', '17', '117', '2019-02-17', '2019-04-21', '9', '2'); -- ID 6
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('7', '17', '116', '2019-02-19', '2019-04-21', '9', '2'); -- ID 7
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('8', '17', '120', '2019-02-18', '2019-04-21', '9', '2'); -- ID 8
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('9', '17', '114', '2019-02-20', '2019-04-21', '9', '2'); -- ID 9
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('10', '17', '118', '2019-02-21', '2019-04-21', '9', '2'); -- ID 10
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('11', '17', '115', '2019-02-26', '2019-04-22', '9', '2'); -- ID 11
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('12', '17', '118', '2019-02-26', '2019-04-22', '9', '2'); -- ID 12
 
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('14', '8', '57', '2019-02-26', '2019-04-21', '2');
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('15', '8', '58', '2019-02-26', '2019-04-21', '2');
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('16', '8', '59', '2019-02-26', '2019-04-21', '2');
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('17', '8', '60', '2019-02-26', '2019-04-21', '2');
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('18', '8', '61', '2019-02-26', '2019-04-21', '2');
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('14', '8', '57', '2019-02-26', '2019-04-21', '2'); -- ID 13
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('15', '8', '58', '2019-02-26', '2019-04-21', '2'); -- ID 14
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('16', '8', '59', '2019-02-26', '2019-04-21', '2'); -- ID 15
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('17', '8', '60', '2019-02-26', '2019-04-21', '2'); -- ID 16
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('18', '8', '61', '2019-02-26', '2019-04-21', '2'); -- ID 17
 
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('44', '8', '57', '2019-02-26', '2019-04-21', '2'); -- Assign projector
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('45', '8', '58', '2019-02-26', '2019-04-21', '2'); -- Assign projector
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('46', '8', '59', '2019-02-26', '2019-04-21', '2'); -- Assign projector
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('47', '8', '60', '2019-02-26', '2019-04-21', '2'); -- Assign projector
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('48', '8', '61', '2019-02-26', '2019-04-21', '2'); -- Assign projector
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('44', '8', '57', '2019-02-26', '2019-04-21', '2'); -- Assign projector, ID 18
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('45', '8', '58', '2019-02-26', '2019-04-21', '2'); -- Assign projector, ID 19
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('46', '8', '59', '2019-02-26', '2019-04-21', '2'); -- Assign projector, ID 20
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('47', '8', '60', '2019-02-26', '2019-04-21', '2'); -- Assign projector, ID 21
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('48', '8', '61', '2019-02-26', '2019-04-21', '2'); -- Assign projector, ID 22
 
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('49', '8', '57', '2019-02-26', '2019-04-21', '2'); -- Assign projector screen
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('50', '8', '58', '2019-02-26', '2019-04-21', '2'); -- Assign projector screen
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('51', '8', '59', '2019-02-26', '2019-04-21', '2'); -- Assign projector screen
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('52', '8', '60', '2019-02-26', '2019-04-21', '2'); -- Assign projector screen
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('53', '8', '61', '2019-02-26', '2019-04-21', '2'); -- Assign projector screen
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('49', '8', '57', '2019-02-26', '2019-04-21', '2'); -- Assign projector screen, ID 23
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('50', '8', '58', '2019-02-26', '2019-04-21', '2'); -- Assign projector screen, ID 24
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('51', '8', '59', '2019-02-26', '2019-04-21', '2'); -- Assign projector screen, ID 25
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('52', '8', '60', '2019-02-26', '2019-04-21', '2'); -- Assign projector screen, ID 26
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('53', '8', '61', '2019-02-26', '2019-04-21', '2'); -- Assign projector screen, ID 27
 
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('54', '8', '57', '2019-02-26', '2019-04-21', '2'); -- Assign Table top
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('55', '8', '58', '2019-02-26', '2019-04-21', '2'); -- Assign Table top
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('56', '8', '59', '2019-02-26', '2019-04-21', '2'); -- Assign Table top
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('57', '8', '60', '2019-02-26', '2019-04-21', '2'); -- Assign Table top
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('58', '8', '61', '2019-02-26', '2019-04-21', '2'); -- Assign Table top
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('54', '8', '57', '2019-02-26', '2019-04-21', '2'); -- Assign Table top, ID 28
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('55', '8', '58', '2019-02-26', '2019-04-21', '2'); -- Assign Table top, ID 29
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('56', '8', '59', '2019-02-26', '2019-04-21', '2'); -- Assign Table top, ID 30
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('57', '8', '60', '2019-02-26', '2019-04-21', '2'); -- Assign Table top, ID 31
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('58', '8', '61', '2019-02-26', '2019-04-21', '2'); -- Assign Table top, ID 32
 
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('59', '8', '57', '2019-02-26', '2019-04-21', '2'); -- Assign Speaker
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('60', '8', '58', '2019-02-26', '2019-04-21', '2'); -- Assign Speaker
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('61', '8', '59', '2019-02-26', '2019-04-21', '2'); -- Assign Speaker
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('62', '8', '60', '2019-02-26', '2019-04-21', '2'); -- Assign Speaker
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('63', '8', '61', '2019-02-26', '2019-04-21', '2'); -- Assign Speaker
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('59', '8', '57', '2019-02-26', '2019-04-21', '2'); -- Assign Speaker, ID 33
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('60', '8', '58', '2019-02-26', '2019-04-21', '2'); -- Assign Speaker, ID 34
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('61', '8', '59', '2019-02-26', '2019-04-21', '2'); -- Assign Speaker, ID 35
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('62', '8', '60', '2019-02-26', '2019-04-21', '2'); -- Assign Speaker, ID 36
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('63', '8', '61', '2019-02-26', '2019-04-21', '2'); -- Assign Speaker, ID 37
 
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('64', '8', '57', '2019-02-26', '2019-04-21', '2'); -- Assign RCA
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('65', '8', '58', '2019-02-26', '2019-04-21', '2'); -- Assign RCA
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('66', '8', '59', '2019-02-26', '2019-04-21', '2'); -- Assign RCA
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('67', '8', '60', '2019-02-26', '2019-04-21', '2'); -- Assign RCA
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('68', '8', '61', '2019-02-26', '2019-04-21', '2'); -- Assign RCA
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('64', '8', '57', '2019-02-26', '2019-04-21', '2'); -- Assign RCA, ID 38
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('65', '8', '58', '2019-02-26', '2019-04-21', '2'); -- Assign RCA, ID 39
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('66', '8', '59', '2019-02-26', '2019-04-21', '2'); -- Assign RCA, ID 40
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('67', '8', '60', '2019-02-26', '2019-04-21', '2'); -- Assign RCA, ID 41
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('68', '8', '61', '2019-02-26', '2019-04-21', '2'); -- Assign RCA, ID 42
 
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('69', '8', '57', '2019-02-26', '2019-04-21', '2'); -- Assign User Guide Poster
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('70', '8', '58', '2019-02-26', '2019-04-21', '2'); -- Assign User Guide Poster
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('71', '8', '59', '2019-02-26', '2019-04-21', '2'); -- Assign User Guide Poster
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('72', '8', '60', '2019-02-26', '2019-04-21', '2'); -- Assign User Guide Poster
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('73', '8', '61', '2019-02-26', '2019-04-21', '2'); -- Assign User Guide Poster
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('69', '8', '57', '2019-02-26', '2019-04-21', '2'); -- Assign User Guide Poster, ID 43
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('70', '8', '58', '2019-02-26', '2019-04-21', '2'); -- Assign User Guide Poster, ID 44
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('71', '8', '59', '2019-02-26', '2019-04-21', '2'); -- Assign User Guide Poster, ID 45
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('72', '8', '60', '2019-02-26', '2019-04-21', '2'); -- Assign User Guide Poster, ID 46
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('73', '8', '61', '2019-02-26', '2019-04-21', '2'); -- Assign User Guide Poster, ID 47
 
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('74', '6', '36', '2019-02-26', '2019-04-21', '2'); -- PC ASSIGNMENT
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('75', '6', '37', '2019-02-26', '2019-04-21', '2'); -- PC ASSIGNMENT
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('76', '6', '38', '2019-02-26', '2019-04-21', '2'); -- PC ASSIGNMENT
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('77', '6', '39', '2019-02-26', '2019-04-21', '2'); -- PC ASSIGNMENT
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('78', '6', '40', '2019-02-26', '2019-04-21', '2'); -- PC ASSIGNMENT
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('74', '6', '36', '2019-02-26', '2019-04-21', '2'); -- PC ASSIGNMENT, ID 48
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('75', '6', '37', '2019-02-26', '2019-04-21', '2'); -- PC ASSIGNMENT, ID 49
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('76', '6', '38', '2019-02-26', '2019-04-21', '2'); -- PC ASSIGNMENT, ID 50
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('77', '6', '39', '2019-02-26', '2019-04-21', '2'); -- PC ASSIGNMENT, ID 51
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('78', '6', '40', '2019-02-26', '2019-04-21', '2'); -- PC ASSIGNMENT, ID 52
 
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('134', '6', '36', '2019-02-26', '2019-04-21', '2'); -- PRINTER ASSIGNMENT
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('135', '6', '37', '2019-02-26', '2019-04-21', '2'); -- PRINTER ASSIGNMENT
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('136', '6', '38', '2019-02-26', '2019-04-21', '2'); -- PRINTER ASSIGNMENT
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('137', '6', '39', '2019-02-26', '2019-04-21', '2'); -- PRINTER ASSIGNMENT
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('138', '6', '40', '2019-02-26', '2019-04-21', '2'); -- PRINTER ASSIGNMENT
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('134', '6', '36', '2019-02-26', '2019-04-21', '2'); -- PRINTER ASSIGNMENT, ID 53
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('135', '6', '37', '2019-02-26', '2019-04-21', '2'); -- PRINTER ASSIGNMENT, ID 54
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('136', '6', '38', '2019-02-26', '2019-04-21', '2'); -- PRINTER ASSIGNMENT, ID 55
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('137', '6', '39', '2019-02-26', '2019-04-21', '2'); -- PRINTER ASSIGNMENT, ID 56
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('138', '6', '40', '2019-02-26', '2019-04-21', '2'); -- PRINTER ASSIGNMENT, ID 57
 
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('154', '1', '11', '2019-02-26', '2019-04-21', '2'); -- GATE PC ASSIGNMENT
-INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('160', '1', '11', '2019-02-26', '2019-04-21', '2'); -- GATE BIOMETRICS ASSIGNMENT
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('154', '1', '11', '2019-02-26', '2019-04-21', '2'); -- GATE PC ASSIGNMENT, ID 58
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `statusID`) VALUES ('160', '1', '11', '2019-02-26', '2019-04-21', '2'); -- GATE BIOMETRICS ASSIGNMENT, ID 59
 
--- asseet audit for asset assignment
+INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`) VALUES ('211', '1', '6', '2019-02-21', '2019-04-21', '9', '2'); -- PC ASSIGNMENT, ID 60
+
+-- asset audit for asset assignment
 INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '1', '1');
 INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '2', '2');
 INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '3', '3');
@@ -1108,6 +1122,7 @@ INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `
 INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '1', '2018-08-02', '10', '10');
 INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '11', '11');
 INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-08-02', '12', '12');
+INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`, `assetAssignmentID`) VALUES ('2', '9', '2018-02-21', '211', '60');
 
 
 -- change asset status to deployed
@@ -1241,22 +1256,24 @@ INSERT INTO `thesis`.`servicedetails` VALUES ('1','1');
 
 
 -- Computer
-INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 14); -- TC-0001
-INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 15); -- TC-0002
-INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 16); -- TC-0003
-INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 17); -- TC-0004
-INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 18); -- TC-0005
+INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (2, 14, 1); -- TC-0001 - ID 1
+INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (2, 15, 1); -- TC-0002 - ID 2
+INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (2, 16, 1); -- TC-0003 - ID 3
+INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (2, 17, 1); -- TC-0004 - ID 4
+INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (2, 18, 1); -- TC-0005 - ID 5
 
-INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 74);	-- PC-0001
-INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 75); -- PC-0002
-INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 76); -- PC-0003
-INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 77);	-- PC-0004
-INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 78);	-- PC-0005
+INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (2, 74, 1);	-- PC-0001 - ID 6
+INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (2, 75, 1); -- PC-0002 - ID 7
+INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (2, 76, 1); -- PC-0003 - ID 8
+INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (2, 77, 1);	-- PC-0004 - ID 9
+INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (2, 78, 1);	-- PC-0005 - ID 10
 
-INSERT INTO COMPUTER (assetStatus, assetID) VALUES (1, 139); -- PC-0006
-INSERT INTO COMPUTER (assetStatus, assetID) VALUES (1, 148); -- SRVR-0001
+INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (1, 139, 1); -- PC-0006	- ID 11
+INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (1, 148, 1); -- SRVR-0001 - ID 12
 
-INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 154); -- PC-0007 (Gate PC)
+INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (2, 154, 1); -- PC-0007 (Gate PC) - ID 13	
+
+INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (2, 211, 1); -- PC-0009 - ID 14
 
 -- Computer Component
 	-- Thin client 1 
@@ -1388,3 +1405,13 @@ INSERT INTO COMPUTER (assetStatus, assetID) VALUES (2, 154); -- PC-0007 (Gate PC
 	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (159, 13);	-- Motherboard
 	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (161, 13);	-- Monitor
 
+	-- Requestor1 PC
+	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (212, 14);	-- Hard disk drive
+	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (213, 14);	-- Power supply
+	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (214, 14);	-- Processor
+	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (215, 14);	-- Keyboard
+	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (216, 14);	-- Memory
+	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (217, 14);	-- Monitor
+	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (218, 14);	-- Motherboard
+	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (219, 14);	-- Mouse
+	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (220, 14);	-- Video Card Graphics Card
