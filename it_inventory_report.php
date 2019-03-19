@@ -1,6 +1,45 @@
 <!DOCTYPE html>
 <?php
 	require_once('db/mysql_connect.php');
+
+    $sDate = $_POST['startDate'];
+    $eDate = $_POST['endDate'];
+    
+
+    $_SESSION[];
+    if(isset($_POST['endDate'])){
+        $query="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
+        am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
+        JOIN ref_assetStatus ras ON aa.assetStatus = ras.id
+        JOIN asset a ON aa.assetID = a.assetID
+        JOIN assetmodel am ON a.assetModel = am.assetModelID
+        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+        JOIN ref_brand rb ON am.brand = rb.brandID
+        JOIN assetassignment assass ON a.assetID = assass.assetID
+        JOIN building b ON assass.BuildingID = b.BuildingID
+        JOIN floorandroom far ON assass.FloorAndRoomID = far.FloorAndRoomID
+        LEFT JOIN department d ON assass.DepartmentID = d.DepartmentID
+        JOIN employee e ON assass.personresponsibleID = e.UserID WHERE aa.date BETWEEN '{$sDate}' AND '{$eDate}';";
+        
+        $result=mysqli_query($dbc,$query);
+    }
+
+    else{
+        $query="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
+        am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
+        JOIN ref_assetStatus ras ON aa.assetStatus = ras.id
+        JOIN asset a ON aa.assetID = a.assetID
+        JOIN assetmodel am ON a.assetModel = am.assetModelID
+        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+        JOIN ref_brand rb ON am.brand = rb.brandID
+        JOIN assetassignment assass ON a.assetID = assass.assetID
+        JOIN building b ON assass.BuildingID = b.BuildingID
+        JOIN floorandroom far ON assass.FloorAndRoomID = far.FloorAndRoomID
+        LEFT JOIN department d ON assass.DepartmentID = d.DepartmentID
+        JOIN employee e ON assass.personresponsibleID = e.UserID WHERE aa.date BETWEEN '{$sDate}' AND '3000-1-1';";
+        
+        $result=mysqli_query($dbc,$query);
+    }
 	
 ?>
 <html lang="en">
@@ -67,21 +106,29 @@
                                             </span>
                                         </header>
                                         <div align="right">
-                                            <button class="btn btn-primary" onclick="print()"><i class="fa fa-print"></i>  Print</button>
+                                            <button class="btn btn-primary" onclick="print()"><i class="fa fa-print"></i> Print</button>
                                         </div>
-                                        
+
+                                        <form method="POST" action="">
+                                            <div class="form-inline">
+                                                Start Date: <input type="date" name="startDate" class="form-control" required>
+                                                End Date: <input type="date" name="endDate" class="form-control">
+                                                <button class="btn btn-success" name="submit">Submit</button>
+                                            </div>
+                                        </form>
                                         <div align="center">
                                             <h3>Information and Technology Services Office</h3>
                                             <h3>Inventory Report</h3>
-                                            <h4><?php 
+                                            <h4>
+                                                <?php 
                                                 date_default_timezone_set('Asia/Manila');
                                                 $timestamp = time();
                                                 echo "\n"; 
                                                 echo(date("F d, Y h:i:s A", $timestamp)); 
-                                                ?> 
+                                                ?>
                                             </h4>
                                         </div>
-                                        
+
                                         <div class="panel-body">
                                             <section id="unseen">
                                                 <div class="adv-table">
@@ -102,7 +149,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-															<?php
+                                                            <?php
 																//Get Dept
 																$queryDept="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
                                                                 am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
@@ -161,7 +208,7 @@
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
-	
+
     <!--dynamic table-->
     <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
@@ -183,11 +230,10 @@
                 window.location.href = "it_edit_brand.php?brandID=" + a;
             })
         })
-        
+
         function myFunction() {
-          window.print();
+            window.print();
         }
-        
     </script>
 
 </body>
