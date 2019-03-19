@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<?php
+	require_once('db/mysql_connect.php');
+	session_start();
+	
+	
+?>
 <html lang="en">
 
 <head>
@@ -61,45 +67,152 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <section class="panel">
+														<form>
+                                                            <div class="form-group">
+																<div class="row">
+																	<div class="col-lg-6">
+																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">Select Roomtype</label>
+																		<select class="form-control input-sm m-bot15" id="roomtype" onChange='getAllMainData();'>
+																			<option value='0'>Select Roomtype</option>
+																			<?php
+																				//GET Roomtype
+																				$queryRmType="SELECT * FROM thesis.ref_roomtype";
+																				$resultRmType=mysqli_query($dbc,$queryRmType);
+																				while($rowRmType=mysqli_fetch_array($resultRmType,MYSQLI_ASSOC)){
+																					if($rowRmType['id']==$_SESSION['roomType']){
+																						echo "<option selected value='{$rowRmType['id']}'>{$rowRmType['roomtype']}</option>";
+																					}
+																					else{
+																						echo "<option value='{$rowRmType['id']}'>{$rowRmType['roomtype']}</option>";
+																					}
+																				}
+																			
+																			
+																			
+																			?>
+																		</select>
+																	</div>
+																	<div class="col-lg-6">
+																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">Select Building</label>
+																		<select class="form-control input-sm m-bot15" id="building" onChange='getAllMainData();'>
+																		<option value="">Select Building</option>
+																		<?php
+																				//GET Building
+																				$queryBuilding="SELECT * FROM thesis.building";
+																				$resultBuilding=mysqli_query($dbc,$queryBuilding);
+																				while($rowBuilding=mysqli_fetch_array($resultBuilding,MYSQLI_ASSOC)){
+																					if($rowBuilding['BuildingID']==$_SESSION['bldg']){
+																						echo "<option selected value='{$rowBuilding['BuildingID']}'>{$rowBuilding['name']}</option>";
+																					}
+																					else{
+																						echo "<option value='{$rowBuilding['BuildingID']}'>{$rowBuilding['name']}</option>";
+																					}
+																					
+																				}
+																			
+																			
+																			
+																		?>	
+																		</select>
+																	</div>
+																</div>
+																<div class="row">
+																	<div class="col-lg-6">
+																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">Select Year</label>
+																		<select class="form-control input-sm m-bot15" id="year" onChange='getAllMainData();'>
+																			<option value='0'>Select Year</option>
+																			<?php
+																				//GET ALL EXISTING YEAR OF A GIVEN MAINTENANCE
+																				$queryYear="SELECT distinct year(au.date) as `year` FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
+																																	  where t.serviceType='28'";
+																				$resultYear=mysqli_query($dbc,$queryYear);
+																				while($rowYear=mysqli_fetch_array($resultYear,MYSQLI_ASSOC)){
+																					if($rowYear['year']==$_SESSION['yr']){
+																						echo "<option selected value='{$rowYear['year']}'>{$rowYear['year']}</option>";
+																					}
+																					else{
+																						echo "<option value='{$rowYear['year']}'>{$rowYear['year']}</option>";
+																					}
+																					
+																				}
+																			
+																			
+																			
+																			?>
+																			
+																		</select>
+																	</div>
+																	<div class="col-lg-6">
+																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">Select Month</label>
+																		<select class="form-control input-sm m-bot15" id="month" onChange='getAllMainData();'>
+																			<option value='0'>Select Month</option>
+																			<option value='1'>January</option>
+																			<option value='2'>February</option>
+																			<option value='3'>March</option>
+																			<option value='4'>April</option>
+																			<option value='5'>May</option>
+																			<option value='6'>June</option>
+																			<option value='7'>July</option>
+																			<option value='8'>August</option>
+																			<option value='9'>September</option>
+																			<option value='10'>October</option>
+																			<option value='11'>November</option>
+																			<option value='12'>December</option>
+																		</select>
+																	</div>
+																</div>
+                                                            </div>
+                                                        </form>
+													
                                                         <div class="panel-body">
                                                             <center><h3>Information Technology Services Office</h3></center>
-                                                            <center><h3>Preventive Maintenance Report</h3></center>
-                                                            <center><h5>1/21/2019 12:00:00 AM</h5></center>
-                                                            <center><h5>Andrew Gonzales</h5></center>
-                                                            <center><h5>Checked By: Marvin Lao</h5></center>
-                                                            <h5><b>W-Working/ Maintained   N-Not Working/Defective  R-Repaired/Replaced  N-None/NA  M-Missing</b></h5>
-                                                            <div class="adv-table">
-                                                                <table class="table table-hover general-table">
+                                                            <center><h3>Preventive Maintenance Report <?php echo $_SESSION['rmType']; ?></h3></center>
+                                                            <center><h5><?php 
+																		date_default_timezone_set('Asia/Manila');
+																		$timestamp = time();
+																		echo "\n"; 
+																		echo(date("F d, Y h:i:s A", $timestamp)); 
+																		?> </h5></center>
+                                                            <!--<center><h5>Checked By: Marvin Lao</h5></center>-->
+                                                           <!-- <h5><b>W-Working/ Maintained   N-Not Working/Defective  R-Repaired/Replaced  N-None/NA  M-Missing</b></h5> -->
+                                                            <div class="adv-table" id="adv-table">
+                                                                <table class='display table table-bordered table-striped' id='dynamic-table'>
                                                                     <thead>
                                                                         <tr>
                                                                             <th>Room #</th>
-                                                                            <th>Projector</th>
-                                                                            <th>Projection Screen</th>
-                                                                            <th>Thin Client/ Nettop</th>
-                                                                            <th>LCD Monitor</th>
-                                                                            <th>Table Top/ Cabinet Tray</th>
-                                                                            <th>Keyboard</th>
-                                                                            <th>Mouse</th>
-                                                                            <th>Speaker</th>
-                                                                            <th>AV Face Plate/ VGA RCA Terminals</th>
-                                                                            <th>RCA Cable</th>
-                                                                            <th>User Guide Poster</th>
+                                                                            <th>Property Code</th>
+                                                                            <th>Asset Category</th>
+                                                                            <th>Asset Status</th>
                                                                             <th>Date Checked</th>
                                                                         </tr>
                                                                     </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>1</td>
-                                                                            <td>PC-0001</td>
-                                                                            <td>Samsung</td>
-                                                                            <td>GT-000XS</td>
-                                                                            <td>Brother Andrew Gonzales</td>
-                                                                            <td>A1001</td>
-                                                                            <td>College of Computer Studies</td>
-                                                                            <td>Marvin Lao</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
+                                                                    <tbody id='maintenance'>
+																		<?php
+																		//GET ALL DATA
+																		$mi = new MultipleIterator();
+																		
+																		
+																		$mi->attachIterator(new ArrayIterator($_SESSION['room']));
+																		$mi->attachIterator(new ArrayIterator($_SESSION['propertyCode']));
+																		$mi->attachIterator(new ArrayIterator($_SESSION['assetCat']));
+																		$mi->attachIterator(new ArrayIterator($_SESSION['assetStat']));
+																		$mi->attachIterator(new ArrayIterator($_SESSION['dateChecked']));
+																		
+																		foreach($mi as $value){
+																			list($room, $propertyCode, $assetCat, $assetStat, $dateChecked) = $value;
+																			echo "<tr>
+																					<td>{$room}</td>
+																					<td>{$propertyCode}</td>
+																					<td>{$assetCat}</td>
+																					<td>{$assetStat}</td>
+																					<td>{$dateChecked}</td>
+																			</tr>";	
+																		}
+																		
+																		
+																		?>
+																	</tbody>
+                                                                </table>    
                                                             </div>
                                                         </div>
                                                     </section>
@@ -123,6 +236,121 @@
     <!-- WAG GALAWIN PLS LANG -->
     
     <script>
+		function getAllMainData(){
+			var getYear = document.getElementById("year").value;
+			var getMonth = document.getElementById("month").value;
+			var getRoomType = document.getElementById("roomtype").value;
+			var getBuilding = document.getElementById("building").value;
+			
+			var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("maintenance").innerHTML = this.responseText;
+					location.reload();
+                }
+            };
+			
+			
+			if(getYear){
+				if(getMonth){
+					if(getRoomType){
+						if(getBuilding){
+							//YEAR,MONTH,ROOMTYPE,BUILDING
+							xmlhttp.open("GET", "getMaintenanceData.php?year=" + getYear + "&month=" + getMonth + "&roomtype=" + getRoomType + "&building=" + getBuilding, true);
+							xmlhttp.send();
+						}
+						else{
+							//YEAR,MONTH,ROOMTYPE
+							xmlhttp.open("GET", "getMaintenanceData.php?year=" + getYear + "&month=" + getMonth + "&roomtype=" + getRoomType, true);
+							xmlhttp.send();
+						}
+					}
+					else if(getBuilding){
+						//YEAR,MONTH,BUILDING
+						xmlhttp.open("GET", "getMaintenanceData.php?year=" + getYear + "&month=" + getMonth + "&building=" + getBuilding, true);
+						xmlhttp.send();
+					}
+					else{
+						//YEAR,MONTH
+						xmlhttp.open("GET", "getMaintenanceData.php?year=" + getYear + "&month=" + getMonth, true);
+						xmlhttp.send();
+					}
+				}
+				else if(getRoomType){
+					if(getBuilding){
+						//YEAR,ROOMTYPE,BUILDING
+						xmlhttp.open("GET", "getMaintenanceData.php?year=" + getYear + "&roomtype=" + getRoomType + "&building=" + getBuilding, true);
+						xmlhttp.send();
+					}
+					else{
+						//YEAR,ROOMTYPE
+						xmlhttp.open("GET", "getMaintenanceData.php?year=" + getYear + "&roomtype=" + getRoomType, true);
+						xmlhttp.send();
+					}
+				}
+				else if(getBuilding){
+					//YEAR,BUILDING
+					xmlhttp.open("GET", "getMaintenanceData.php?year=" + getYear + "&building=" + getBuilding, true);
+					xmlhttp.send();
+					
+				}
+				else{
+					//YEAR
+					xmlhttp.open("GET", "getMaintenanceData.php?year=" + getYear, true);
+					xmlhttp.send();
+				}
+			}
+			else if(getMonth){
+				if(getRoomType){
+					if(getBuilding){
+						//MONTH,ROOMTYPE,BUILDING
+						xmlhttp.open("GET", "getMaintenanceData.php?month=" + getMonth + "&roomtype=" + getRoomType + "&building=" + getBuilding, true);
+						xmlhttp.send();
+						
+					}
+					else{
+						//MONTH,ROOMTYPE
+						xmlhttp.open("GET", "getMaintenanceData.php?month=" + getMonth + "&roomtype=" + getRoomType, true);
+						xmlhttp.send();
+					}
+				}
+				else if(getBuilding){
+					//MONTH,BUILDING
+					xmlhttp.open("GET", "getMaintenanceData.php?month=" + getMonth + "&building=" + getBuilding, true);
+					xmlhttp.send();
+				}
+				else{
+					//MONTH
+					xmlhttp.open("GET", "getMaintenanceData.php?month=" + getMonth, true);
+					xmlhttp.send();
+				}
+			}
+			else if(getRoomType){
+				if(getBuilding){
+					//ROOMTYPE,BUILDING
+					xmlhttp.open("GET", "getMaintenanceData.php?roomtype=" + getRoomType + "&building=" + getBuilding, true);
+					xmlhttp.send();
+				}
+				else{
+					//ROOMTYPE
+					console.log(""+getRoomType);
+					xmlhttp.open("GET", "getMaintenanceData.php?roomtype=" + getRoomType, true);
+					xmlhttp.send();
+				}
+			}
+			else if(getBuilding){
+				//BUILDING
+				xmlhttp.open("GET", "getMaintenanceData.php?building=" + getBuilding, true);
+				xmlhttp.send();
+			
+			}
+			else{
+				//DEFAULT
+				xmlhttp.open("GET", "getMaintenanceData.php", true);
+				xmlhttp.send();
+			}
+
+		}
 		function addRowHandlers() {
 			var table = document.getElementById("dynamic-table");
 			var rows = table.getElementsByTagName("tr");

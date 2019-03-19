@@ -36,7 +36,34 @@
 		}
 	}
 	$_SESSION['dateMaintenance']=$dateNeeded;
+	//FOR MAINTENANCE REPORTS PAGE
+	$_SESSION['room'] = array();
+	$_SESSION['propertyCode'] = array();
+	$_SESSION['assetCat'] = array();
+	$_SESSION['assetStat'] = array();
+	$_SESSION['dateChecked'] = array();
 	
+	$_SESSION['roomType'];
+	$_SESSION['yr'];
+	$_SESSION['mnt'];
+	$_SESSION['bldg'];
+	
+	$queryGetAllMainData="SELECT far.floorRoom,a.propertyCode,rac.name as `assetCat`,ras.description as `assetStat`,au.date FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
+																																																							  join asset a on au.assetID=a.assetID
+																																																							  join assetmodel am on a.assetModel=am.assetModelID
+																																																							  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																																																							  join ref_assetstatus ras on au.assetStatus=ras.id 
+																																																							  join assetassignment aa on a.assetID=aa.assetID 
+																																																							  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
+																																																where t.serviceType='28' and au.assetStatus!='17'";
+	$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
+	while($rowGetAllMainData=mysqli_fetch_array($resultGetAllMainData,MYSQLI_ASSOC)){
+		array_push($_SESSION['room'],$rowGetAllMainData['floorRoom']);	
+		array_push($_SESSION['propertyCode'],$rowGetAllMainData['propertyCode']);	
+		array_push($_SESSION['assetCat'],$rowGetAllMainData['assetCat']);	
+		array_push($_SESSION['assetStat'],$rowGetAllMainData['assetStat']);	
+		array_push($_SESSION['dateChecked'],$rowGetAllMainData['date']);	
+	}
 ?>
 
 <?php
