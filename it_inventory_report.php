@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php
+	require_once('db/mysql_connect.php');
+	
+?>
 <html lang="en">
 
 <head>
@@ -14,8 +18,11 @@
     <link href="bs3/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-reset.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css" />
+    <link rel="stylesheet" href="js/morris-chart/morris.css">
+    <!--dynamic table-->
+    <link href="js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
     <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css" />
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
@@ -55,48 +62,82 @@
                                     <section class="panel">
                                         <header class="panel-heading">
                                             Inventory Report
-
+                                            <span class="tools pull-right">
+                                                <a class="fa fa-plus" href="admin_add_department.php"></a>
+                                            </span>
                                         </header>
+                                        <div align="right">
+                                            <button class="btn btn-primary" onclick="print()"><i class="fa fa-print"></i>  Print</button>
+                                        </div>
+                                        
+                                        <div align="center">
+                                            <h3>Information and Technology Services Office</h3>
+                                            <h3>Inventory Report</h3>
+                                            <h4><?php 
+                                                date_default_timezone_set('Asia/Manila');
+                                                $timestamp = time();
+                                                echo "\n"; 
+                                                echo(date("F d, Y h:i:s A", $timestamp)); 
+                                                ?> 
+                                            </h4>
+                                        </div>
+                                        
                                         <div class="panel-body">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <section class="panel">
-                                                        <div class="panel-body">
-                                                            <center><h3>Information Technology Services Office</h3></center>
-                                                            <center><h3>Inventory Report</h3></center>
-                                                            <center><h5>1/21/2019 12:00:00 AM</h5></center>
-                                                            <div class="adv-table">
-                                                                <table class="table table-hover general-table">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>#</th>
-                                                                            <th>Property Code</th>
-                                                                            <th>Brand</th>
-                                                                            <th>Model</th>
-                                                                            <th>Building</th>
-                                                                            <th>Room No.</th>
-                                                                            <th>Office/ Department</th>
-                                                                            <th>User's Name</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>1</td>
-                                                                            <td>PC-0001</td>
-                                                                            <td>Samsung</td>
-                                                                            <td>GT-000XS</td>
-                                                                            <td>Brother Andrew Gonzales</td>
-                                                                            <td>A1001</td>
-                                                                            <td>College of Computer Studies</td>
-                                                                            <td>Marvin Lao</td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </section>
+                                            <section id="unseen">
+                                                <div class="adv-table">
+                                                    <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="hidden"></th>
+                                                                <th>Action</th>
+                                                                <th>Date</th>
+                                                                <th>Asset Category</th>
+                                                                <th>Property Code</th>
+                                                                <th>Brand</th>
+                                                                <th>Model</th>
+                                                                <th>Building</th>
+                                                                <th>Room Number</th>
+                                                                <th>Office/ Department</th>
+                                                                <th>User's Name</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+															<?php
+																//Get Dept
+																$queryDept="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
+                                                                am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
+                                                                JOIN ref_assetStatus ras ON aa.assetStatus = ras.id
+                                                                JOIN asset a ON aa.assetID = a.assetID
+                                                                JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                JOIN assetassignment assass ON a.assetID = assass.assetID
+                                                                JOIN building b ON assass.BuildingID = b.BuildingID
+                                                                JOIN floorandroom far ON assass.FloorAndRoomID = far.FloorAndRoomID
+                                                                LEFT JOIN department d ON assass.DepartmentID = d.DepartmentID
+                                                                JOIN employee e ON assass.personresponsibleID = e.UserID;";
+                                                            
+																$resultDept=mysqli_query($dbc,$queryDept);
+																while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
+																	echo "<tr>
+																		<td class='hidden'>{$rowDept['assetID']}</td>
+																		<td>{$rowDept['assetStatus']}</td>
+                                                                        <td>{$rowDept['date']}</td>
+                                                                        <td>{$rowDept['assetCategory']}</td>
+                                                                        <td>{$rowDept['propertyCode']}</td>
+                                                                        <td>{$rowDept['brand']}</td>
+                                                                        <td>{$rowDept['model']}</td>
+                                                                        <td>{$rowDept['building']}</td>
+                                                                        <td>{$rowDept['floorRoom']}</td>
+                                                                        <td>{$rowDept['department']}</td>
+                                                                        <td>{$rowDept['employee']}</td>
+                                                                        </tr>";
+																}
+															?>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
-                                            </div>
+                                            </section>
                                         </div>
                                     </section>
                                 </div>
@@ -110,31 +151,9 @@
         <!--main content end-->
 
     </section>
-    
 
     <!-- WAG GALAWIN PLS LANG -->
-    
-    <script>
-		function addRowHandlers() {
-			var table = document.getElementById("dynamic-table");
-			var rows = table.getElementsByTagName("tr");
-			for (i = 1; i < rows.length; i++) {
-				var currentRow = table.rows[i];
-				var createClickHandler = function(row) {
-					return function() {
-						var cell = row.getElementsByTagName("td")[0];
-						var idx = cell.textContent;
-						
-                        window.location.href = "it_inventory_specific.php?=";
-						
-					};
-				};
-				currentRow.onclick = createClickHandler(currentRow);
-			}
-		}
-		window.onload = addRowHandlers();
-	</script>
-    
+
     <!--Core js-->
     <script src="js/jquery.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
@@ -142,14 +161,34 @@
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
+	
+    <!--dynamic table-->
     <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
-    <script src="js/dynamic_table_init.js"></script>
-
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
-    
-    
+
+    <script src="js/morris-chart/morris.js"></script>
+    <script src="js/morris-chart/raphael-min.js"></script>
+    <script src="js/morris.init.js"></script>
+
+    <!--dynamic table initialization -->
+    <script src="js/dynamic_table_init.js"></script>
+
+
+    <script>
+        $('#dynamic-table').on('click', function() {
+            $('.brandID').on('click', function() {
+                var a = this.getAttribute("id");
+                window.location.href = "it_edit_brand.php?brandID=" + a;
+            })
+        })
+        
+        function myFunction() {
+          window.print();
+        }
+        
+    </script>
 
 </body>
 
