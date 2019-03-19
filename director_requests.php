@@ -64,6 +64,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Title of Request</th>
+														<th>Type of Request</th>
                                                         <th id = "sortme">Status</th>
                                                         <th>Requestor</th>
                                                         <th class="hidden-phone">Date Needed</th>
@@ -82,7 +83,9 @@
 														while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 															
 															echo "<tr class='gradeA' id='{$row['requestID']}' >
-																	<td>{$row['reqDesc']}</td>";
+																	<td style='display: none'>{$row['requestID']}</td>
+																	<td>{$row['reqDesc']}</td>
+																	<td>Asset Request</td>";
 									
 																if($row['statusDesc']=='Disapproved'){
 																	echo "<td><span class='badge bg-important'>{$row['statusDesc']}</span></td>";
@@ -91,7 +94,6 @@
 																	echo "<td><span class='badge bg-warning'>{$row['statusDesc']}</span></td>";
 																}
 																else{
-																	
 																	echo "<td><span class='badge bg-success'>Approved</span></td>";
 																}
 															
@@ -105,10 +107,43 @@
 													
 													
 													?>
+													
+													<?php
+														//GET ALL DONATION REQUESTS 
+														$queryDon="SELECT * , rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`,rstp.name as `step`,d.dateCreated FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID
+																																		join ref_steps rstp on d.stepsID=rstp.id
+																																		join user u on d.user_UserID=u.UserID";
+														$resultDon=mysqli_query($dbc,$queryDon);
+															
+														while($rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC)){
+															echo "<tr class='gradeA' id='{$rowDon['donationID']}' >
+																	<td style='display: none'>{$rowDon['donationID']}</td>
+																	<td>{$rowDon['purpose']}</td>
+																	<td>Donation</td>";
+									
+																if($rowDon['statusDesc']=='Disapproved'){
+																	echo "<td><span class='badge bg-important'>{$rowDon['statusDesc']}</span></td>";
+																}
+																elseif($rowDon['statusDesc']=='Pending'){
+																	echo "<td><span class='badge bg-warning'>{$rowDon['statusDesc']}</span></td>";
+																}
+																else{
+																	echo "<td><span class='badge bg-success'>Approved</span></td>";
+																}
+															
+															echo"
+																<td>{$rowDon['requestor']}</td>
+																<td>{$rowDon['dateNeed']}</td>
+																</tr>";
+														}
+													
+													
+													?>
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <th>Title of Request</th>
+														<th>Type of Request</th>
                                                         <th>Status</th>
                                                         <th>Requestor</th>
                                                         <th class="hidden-phone">Date Needed</th>
@@ -142,12 +177,43 @@
     <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
     <script src="js/dynamic_table_init.js"></script>
     <script>
-        $('#ctable').on('click', function() {
-			$('.gradeA').on('click', function() {
-				var a = this.getAttribute("id");
-				window.location.href = "director_view_request.php?requestid=" + a;
-			})
-        })	
+		function addRowHandlers() {
+            var table = document.getElementById("dynamic-table");
+            var rows = table.getElementsByTagName("tr");
+            for (i = 1; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function(row) {
+                    return function() {
+                        var cell = row.getElementsByTagName("td")[0];
+                        var ida = cell.textContent; //id
+                        var cell = row.getElementsByTagName("td")[2];
+                        var idx = cell.textContent; //Request type
+                        
+                        if (idx == "Asset Request") {
+                            var a = this.getAttribute("id");
+							window.location.href = "director_view_request.php?requestid=" + ida;
+                                
+                        }
+                       
+                        if (idx == "Donation") {
+                            var a = this.getAttribute("id");
+							window.location.href = "director_view_donation.php?donationid=" + ida;
+                        }
+                        
+                    };
+                };
+                currentRow.onclick = createClickHandler(currentRow);
+            }
+        }
+		window.onload = addRowHandlers();
+		window.onload = $('#count').click();
+	
+        //$('#ctable').on('click', function() {
+			//$('.gradeA').on('click', function() {
+				//var a = this.getAttribute("id");
+				//window.location.href = "director_view_request.php?requestid=" + a;
+			//})
+        //})	
 
         $(window).load(function(){
 
