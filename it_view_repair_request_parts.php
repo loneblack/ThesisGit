@@ -368,7 +368,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                         
                             <button onclick="window.history.back();" type="button" class="btn btn-danger">Back</button>
                             <div style="display:inline; float:right">
-                            <button class="btn btn-info" onclick="window.location.href='it_replacement.php'">Give Replacement</button>
+                            <button class="btn btn-info" onclick="window.location.href='it_replacement.php?id=<?php echo $id;?>'">Give Replacement</button>
                             <button onclick="window.location.href='it_order_parts.php';" class="btn btn-info">Order parts</button>
                             </div>
                         </div>
