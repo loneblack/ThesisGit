@@ -57,11 +57,10 @@
                             </header>
                             <div class="panel-body">
                                 <div class="position-center">
+                                    <div class="btn-group">
+                                        <button class="btn btn-primary" onclick="addTest(5)"> Add </button>
+                                    </div>
                                     <form class="form-horizontal" role="form">
-
-                                        <div class="btn-group">
-                                            <button class="btn btn-primary" onclick="addTest(5)"> Add </button>
-                                        </div>
 
                                         <table class="table table-bordered table-striped table-condensed table-hover" id="addTable">
                                             <thead>
