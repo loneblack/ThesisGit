@@ -62,13 +62,13 @@
                     $pasok1 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraRAM']}', '{$rowCountMaxPC['comMax']}');";
                     $resultPasok1 = mysqli_query($dbc,$pasok1);
                     
-                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$_POST['extraRAM']}');";
                     $resultUpdateAsset1 = mysqli_query($dbc, $updateAsset1);
                     
                     $pasok2 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraHDD']}', '{$rowCountMaxPC['comMax']}');";
                     $resultPasok2 = mysqli_query($dbc,$pasok2);
                     
-                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$_POST['extraHDD']}');";
                     $resultUpdateAsset2 = mysqli_query($dbc, $updateAsset2);
 
                 }
@@ -77,7 +77,7 @@
                     $pasok2 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraHDD']}', '{$rowCountMaxPC['comMax']}');";
                     $resultPasok2 = mysqli_query($dbc,$pasok2);
                     
-                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$_POST['extraHDD']}');";
                     $resultUpdateAsset2 = mysqli_query($dbc, $updateAsset2);
 
                 }
@@ -87,7 +87,7 @@
                     $pasok1 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraRAM']}', '{$rowCountMaxPC['comMax']}');";
                     $resultPasok1 = mysqli_query($dbc,$pasok1);
                     
-                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$_POST['extraRAM']}');";
                     $resultUpdateAsset1 = mysqli_query($dbc, $updateAsset1);
 
                 }
@@ -145,13 +145,13 @@
                     $pasok1 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraRAM']}', '{$rowCountMaxPC['comMax']}');";
                     $resultPasok1 = mysqli_query($dbc,$pasok1);
                     
-                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$_POST['extraRAM']}');";
                     $resultUpdateAsset1 = mysqli_query($dbc, $updateAsset1);
                     
                     $pasok2 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraHDD']}', '{$rowCountMaxPC['comMax']}');";
                     $resultPasok2 = mysqli_query($dbc,$pasok2);
                     
-                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$_POST['extraHDD']}');";
                     $resultUpdateAsset2 = mysqli_query($dbc, $updateAsset2);
 
                 }
@@ -160,7 +160,7 @@
                     $pasok2 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraHDD']}', '{$rowCountMaxPC['comMax']}');";
                     $resultPasok2 = mysqli_query($dbc,$pasok2);
                     
-                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$_POST['extraHDD']}');";
                     $resultUpdateAsset2 = mysqli_query($dbc, $updateAsset2);
 
                 }
@@ -170,7 +170,7 @@
                     $pasok1 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraRAM']}', '{$rowCountMaxPC['comMax']}');";
                     $resultPasok1 = mysqli_query($dbc,$pasok1);
                     
-                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$_POST['extraRAM']}');";
                     $resultUpdateAsset1 = mysqli_query($dbc, $updateAsset1);
 
                 }

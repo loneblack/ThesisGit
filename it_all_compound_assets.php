@@ -85,6 +85,8 @@
                                                                         <thead>
                                                                             <tr>
                                                                                 <th class="hidden"></th>
+                                                                                <th class="hidden"></th>
+                                                                                <th class="hidden"></th>
                                                                                 <th>Property Code</th>
                                                                                 <th>Brand</th>
                                                                                 <th>Model</th>
@@ -98,7 +100,7 @@
                                                                         </thead>
                                                                         <tbody>
 																            <?php
-													$query="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model`, am.itemSpecification, rac.name AS `category`, ras.description, e.name AS `employee`, b.name AS `building`, fr.floorRoom FROM asset a 
+													$query="SELECT a.assetID, ras.id AS `assetStatus`, rac.assetCategoryID AS assCatID, a.propertyCode, rb.name AS `brand`, am.description AS `model`, am.itemSpecification, rac.name AS `category`, ras.description, e.name AS `employee`, b.name AS `building`, fr.floorRoom FROM asset a 
                                                     LEFT JOIN assetmodel am ON a.assetModel = am.assetModelID
                                                     LEFT JOIN ref_brand rb ON am.brand = rb.brandID
                                                     LEFT JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
@@ -107,12 +109,14 @@
                                                     LEFT JOIN employee e ON aa.personresponsibleID = e.employeeID
                                                     LEFT JOIN building b ON aa.BuildingID = b.BuildingID
                                                     LEFT JOIN floorandroom fr ON aa.FloorAndRoomID = fr.FloorAndRoomID
-                                                    WHERE rac.name = 'laptop' OR rac.name = 'VGA Cable' OR rac.name='Desktop' OR rac.name='Server' OR rac.name = 'Thin Client';";
+                                                    WHERE (rac.name='Desktop' OR rac.name='Server' OR rac.name = 'Thin Client');";
 													$result=mysqli_query($dbc,$query);
 													
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 														echo "<tr>
-															<td class='hidden' id='{$row['assetID']}'></td>
+															<td style='display:none'>{$row['assetID']}</td>
+                                                            <td style='display:none'>{$row['assetStatus']}</td>
+                                                            <td style='display:none'>{$row['assCatID']}</td>
 															<td>{$row['propertyCode']}</td>
 															<td>{$row['brand']}</td>
                                                             <td>{$row['model']}</td>
@@ -157,7 +161,20 @@
                     return function() {
                         var cell = row.getElementsByTagName("td")[0];
                         var idx = cell.textContent;
-                        window.location.href = ".php?id=" + idx;
+                        
+                        var cell1 = row.getElementsByTagName("td")[1];
+                        var idx1 = cell1.textContent;
+                        
+                        var cell2 = row.getElementsByTagName("td")[2];
+                        var idx2 = cell2.textContent;
+                        
+                        if(idx2 == '40'){
+                            window.location.href = "it_view_components_server.php?id=" + idx + "&assetStatus=" + idx1;
+                        }
+                        
+                        else{
+                            window.location.href = "it_view_components.php?id=" + idx + "&assetStatus=" + idx1;
+                        }
 
                     };
                 };
