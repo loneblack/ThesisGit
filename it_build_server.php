@@ -19,7 +19,7 @@
 				$propertyCode=sprintf('%03d', 40)."-".sprintf('%06d', $rowCount['assetPosition']);
 				
                 //INSERT TO Asset Model
-                $queryProp="INSERT INTO `thesis`.`assetmodel` (`assetCategory`, `description`) VALUES ('40', 'Server');'";
+                $queryProp="INSERT INTO `thesis`.`assetmodel` (`assetCategory`, `description`) VALUES ('40', 'Server');";
 				$resultProp=mysqli_query($dbc,$queryProp);
         
                 //get latest asset model
@@ -28,7 +28,7 @@
                 $rowCountMaxAssetModel=mysqli_fetch_array($resultMaxAssetModel,MYSQLI_ASSOC);
         
 				//INSERT Property Code
-				$queryProp="INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `dateDelivered`, `assetStatus`) VALUES ('{$rowCountMaxAssetModel['maxID']}', '{$propertyCode}', NOW(), '1');'";
+				$queryProp="INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `dateDelivered`, `assetStatus`) VALUES ('{$rowCountMaxAssetModel['maxID']}', '{$propertyCode}', NOW(), '1');";
 				$resultProp=mysqli_query($dbc,$queryProp);
             
                 //get latest asset created
@@ -89,13 +89,15 @@
 
                 }
         
+            $_SESSION['submitMessage'] = "Success! A new Server has been Created.";
+        
     }
 
 ?>
-    
-    
-    
-    
+
+
+
+
 <head>
     <meta charset="utf-8">
 
@@ -142,6 +144,16 @@
             <section class="wrapper">
                 <!-- page start-->
 
+                <?php
+                   if (isset($_SESSION['submitMessage'])){
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+                
+                ?>
+
                 <div class="row">
                     <div class="col-sm-12">
 
@@ -168,7 +180,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
+                                                        <?php
                                                         echo"<select id= '1' class='form-control' name='component[]' onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
@@ -195,7 +207,7 @@
                                                     ?>
                                                     </td>
                                                     <td>RAM</td>
-                                                    
+
                                                     <?php
                                                         
                                                         $count = 1;
@@ -227,10 +239,10 @@
                                                     ?>
                                                     <td></td>
                                                 </tr>
-                                                
+
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
+                                                        <?php
                                                         echo"<select id= '2' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
@@ -288,13 +300,13 @@
                                                     ?>
                                                     <td></td>
                                                 </tr>
-                                                
-                                                
-                                                
-                                                
+
+
+
+
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
+                                                        <?php
                                                         echo"<select id= '3' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
@@ -352,10 +364,10 @@
                                                     ?>
                                                     <td></td>
                                                 </tr>
-                                                
+
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
+                                                        <?php
                                                         echo"<select id= '4' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
@@ -413,10 +425,10 @@
                                                     ?>
                                                     <td></td>
                                                 </tr>
-                                                
+
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
+                                                        <?php
                                                         echo"<select id= '5' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
@@ -474,10 +486,10 @@
                                                     ?>
                                                     <td></td>
                                                 </tr>
-                                                
+
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
+                                                        <?php
                                                         echo"<select id= '6' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
@@ -535,12 +547,12 @@
                                                     ?>
                                                     <td></td>
                                                 </tr>
-                                                
-                                                
-                                                
+
+
+
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
+                                                        <?php
                                                         echo"<select id= '7' class='form-control' onchange='loadDetails(this.value, this.id)' name='extraRAM'><option value=''>Select Property Code</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
@@ -567,7 +579,7 @@
                                                     ?>
                                                     </td>
                                                     <td>Additional RAM</td>
-                                                    
+
                                                     <?php
                                                         
                                                         $count = 7;
@@ -599,10 +611,10 @@
                                                     ?>
                                                     <td></td>
                                                 </tr>
-                                                
+
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
+                                                        <?php
                                                         echo"<select id= '8' class='form-control' onchange='loadDetails(this.value, this.id)' name='extraHDD'><option value=''>Select Property Code</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
@@ -660,10 +672,10 @@
                                                     ?>
                                                     <td></td>
                                                 </tr>
-                                                
-                                                
-                                                
-                                                
+
+
+
+
                                             </tbody>
                                         </table>
 
@@ -676,9 +688,9 @@
                                                 </button>
                                             </div>
                                             <div class="btn-group">
-                                                    <button class="btn btn-danger" onClick="window.location.href = 'it_all_compound_assets.php'">
-                                                        Back
-                                                    </button>
+                                                <button class="btn btn-danger" onClick="window.location.href = 'it_all_compound_assets.php'">
+                                                    Back
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
@@ -724,42 +736,41 @@
     </script>
 
     <script type="text/javascript">
-        
-        function loadDetails(val, id){
-            
+        function loadDetails(val, id) {
+
             $.ajax({
-            type:"POST",
-            url:"loadDetails1.php",
-            data: 'assetID='+val,
-            success: function(data){
-                $("#brand"+id).html(data);
+                type: "POST",
+                url: "loadDetails1.php",
+                data: 'assetID=' + val,
+                success: function(data) {
+                    $("#brand" + id).html(data);
 
                 }
             });
             $.ajax({
-            type:"POST",
-            url:"loadDetails2.php",
-            data: 'assetID='+val,
-            success: function(data){
-                $("#description"+id).html(data);
+                type: "POST",
+                url: "loadDetails2.php",
+                data: 'assetID=' + val,
+                success: function(data) {
+                    $("#description" + id).html(data);
 
                 }
             });
             $.ajax({
-            type:"POST",
-            url:"loadDetails3.php",
-            data: 'assetID='+val,
-            success: function(data){
-                $("#specification"+id).html(data);
+                type: "POST",
+                url: "loadDetails3.php",
+                data: 'assetID=' + val,
+                success: function(data) {
+                    $("#specification" + id).html(data);
 
                 }
             });
             $.ajax({
-            type:"POST",
-            url:"loadDetails4.php",
-            data: 'assetID='+val,
-            success: function(data){
-                $("#assetID"+id).html(data);
+                type: "POST",
+                url: "loadDetails4.php",
+                data: 'assetID=' + val,
+                success: function(data) {
+                    $("#assetID" + id).html(data);
 
                 }
             });
