@@ -96,7 +96,7 @@ require_once("db/mysql_connect.php");
                                                     // view for purchase request
                                                     $count = 1;
 
-                                                    $query = "SELECT *, s.description as `statusName`,rs.name as `step`
+                                                    $query = "SELECT *, r.description as 'details', s.description as `statusName`,rs.name as `step`
                                                               FROM thesis.request r
                                                               JOIN ref_status s ON r.status = s.statusID
 														      JOIN ref_steps rs on r.step=rs.id
@@ -127,7 +127,7 @@ require_once("db/mysql_connect.php");
                                                         if($row['statusID'] == '6'){//disapproved
 															echo "<td><span class='label label-danger'>{$row['step']}</span></td>";
                                                         }
-														//echo "<td>{$row['step']}</td>";
+														echo "<td>{$row['details']}</td>";
 
                                                         $count++;
                                                     }
@@ -168,7 +168,7 @@ require_once("db/mysql_connect.php");
                                                             echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
                                                         }
 
-                                                        //echo "<td>{$row['name']}</td>";
+                                                        echo "<td>{$row['details']}</td>";
                                                         echo "</tr>";
 
                                                           $count++;
@@ -217,7 +217,7 @@ require_once("db/mysql_connect.php");
                                                         }
 
 
-                                                        //echo "<td>{$row['name']}</td>";
+                                                        echo "<td>{$row['purpose']}</td>";
                                                         echo "</tr>";
 
                                                         $count++;

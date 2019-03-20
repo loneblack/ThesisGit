@@ -120,7 +120,7 @@
 
             if (mysqli_num_rows($resultGetRequestID)==0) {
                 //Insert new request parts
-                $queryReqPart="INSERT INTO `thesis`.`requestParts` ( `serviceID`, `statusID`, `date`, `UserID`) VALUES ('{$serviceID}', '1', now(), '{$userID}');";
+                $queryReqPart="INSERT INTO `thesis`.`requestParts` ( `serviceID`, `statusID`, `date`, `UserID`) VALUES ('{$serviceID}', '1', DATE_ADD(NOW(), INTERVAL 1 DAY), '{$userID}');";
                 //status ID set to 1 for perding status
                 $resultReqPart=mysqli_query($dbc,$queryReqPart);
             }

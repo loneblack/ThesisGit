@@ -74,7 +74,7 @@
                                                                 <th>Request Type</th>
                                                                 <th>Description</th>
                                                                 <th>Requestor</th>
-                                                                <th>Requested Date</th>
+                                                                <th>Request Date</th>
                                                                 <th>Details</th>
                                                             </tr>
                                                         </thead>
@@ -86,7 +86,7 @@
 															require_once('db/mysql_connect.php');
 
                                                             //Request Purchase
-															$query="SELECT *,r.requestID,rstp.name as `step`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`
+															$query="SELECT *,r.description as 'details', r.requestID,rstp.name as `step`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`
                                                                                 FROM thesis.request r 
                                                                                 join ref_status rs on r.status=rs.statusID
                                                                                 join ref_steps rstp on r.step=rstp.id
@@ -120,6 +120,7 @@
 																	<td>{$row['step']}</td>
 																	<td>{$row['requestor']}</td>
 																	<td>{$row['requestedDate']}</td>
+                                                                    <td>{$row['details']}</td>
 																</tr>";
 																
 																$count++;
@@ -233,6 +234,7 @@
                                                                     <td>{$row['stepName']}</td>
                                                                     <td>{$row['Requestor']}</td>
                                                                     <td>{$row['dateCreated']}</td>
+                                                                    <td>{$row['purpose']}</td>
                                                                 </tr>";
                                                                 
                                                                 $count++;
@@ -273,6 +275,7 @@
                                                                     <td>{$row['stepname']}</td>
                                                                     <td>{$row['requestedby']}</td>
                                                                     <td>{$row['dateReceived']}</td>
+                                                                    <td>{$row['details']}</td>
                                                                 </tr>";
                                                                 
                                                                  $count++;
@@ -318,7 +321,7 @@
                                                             
                                                             }
                                                             //Request for Parts
-                                                            $queryRequestforParts = "SELECT * , r.id as 'requestPartsID' FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id JOIN ref_status st ON r.statusID = st.statusID JOIN employee e ON e.UserID = r.UserID;";
+                                                            $queryRequestforParts = "SELECT * , r.id as 'requestPartsID' FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id JOIN ref_status st ON r.statusID = st.statusID JOIN employee e ON e.UserID = r.UserID JOIN ticket t on s.id = t.service_id;";
 
                                                             $resultRequestforParts = mysqli_query($dbc, $queryRequestforParts);
                                                             while($row=mysqli_fetch_array($resultRequestforParts,MYSQLI_ASSOC)){
@@ -349,6 +352,7 @@
                                                                     <td>Request Pending</td>
                                                                     <td>{$row['name']}</td>
                                                                     <td>{$row['date']}</td>
+                                                                    <td>{$row['comment']}</td>
                                                                 </tr>";
                                                                 
                                                                  $count++;
