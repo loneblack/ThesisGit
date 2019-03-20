@@ -7,21 +7,23 @@
 	$id = $_GET['id'];
 	$assets=$_POST['assets'];
 
-    $sql = "UPDATE `thesis`.`serviceUnit` SET `statusID` = '2' WHERE (`id` = '{$id}');";
+    $sql = "UPDATE `thesis`.`serviceUnit` SET `statusID` = '2' WHERE (`serviceUnitID` = '{$id}');";
     $result = mysqli_query($dbc, $sql);
 
+
     foreach($assets as $asset){
-    	$sql = "INSERT INTO `thesis`.`serviceUnitAssets` VALUES ('{$id}', '{$asset}');";
+    	$sql = "INSERT INTO `thesis`.`serviceunitassets` (`serviceUnitID`, `assetID`, `received`) VALUES ('{$id}', '{$asset}', '0');";
     	$result = mysqli_query($dbc, $sql);
 
     	$sql = "UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '{$asset}');";
     	$result = mysqli_query($dbc, $sql);
+
     }
 	
 
 	$message = "Form submitted!"; 
 	$_SESSION['submitMessage'] = $message;
 	
-	header('Location: '.$header);
+	//header('Location: '.$header);
 
 ?>

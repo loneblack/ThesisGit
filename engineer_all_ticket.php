@@ -83,7 +83,7 @@ require_once("db/mysql_connect.php");
                                                  <?php
                                                     $count = 1;
 
-                                                    $query = "SELECT name, t.ticketID, (convert(aes_decrypt(au.firstName, 'Fusion') using utf8)) AS 'firstName' ,(convert(aes_decrypt(au.lastName, 'Fusion')using utf8)) AS 'lastName', lastUpdateDate, dateCreated, dateClosed, dueDate, priority,summary,
+                                                    $query = "SELECT details, name, t.ticketID, (convert(aes_decrypt(au.firstName, 'Fusion') using utf8)) AS 'firstName' ,(convert(aes_decrypt(au.lastName, 'Fusion')using utf8)) AS 'lastName', lastUpdateDate, dateCreated, dateClosed, dueDate, priority,summary,
                                                              t.description, t.serviceType as 'serviceTypeID', st.serviceType,t.status as 'statusID', s.status
                                                             FROM thesis.ticket t
                                                             JOIN user au
@@ -139,8 +139,8 @@ require_once("db/mysql_connect.php");
                                                             echo "<td><span class='label label-danger'>{$row['status']}</span></td>";
                                                         }
                                                         
-                                                        echo "<td>{$row['name']}</td></tr>";
-
+                                                        echo "<td>{$row['name']}</td>";
+                                                        echo "<td>{$row['details']}</td></tr>";
                                                           $count++;
                                                     }
                                                   ?>

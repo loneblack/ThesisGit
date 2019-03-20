@@ -4,7 +4,7 @@
 session_start();
 $userID = $_SESSION['userID'];
 $id = $_GET['id'];
-$_SESSION['previousPage'] = "it_request_service_unit?id={$id}";
+$_SESSION['previousPage'] = "it_request_service_unit.php?id={$id}";
 require_once("db/mysql_connect.php");
 
 
@@ -191,6 +191,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         <h4>Service Unit to Be Given</h4>
                                     </div>
 
+                                        <form method='post' action="it_request_service_unit_DB.php?id=<?php echo $id;?>">
                                     <table class="table table-bordered table table-hover" id="addtable">
                                         <thead>
                                             <tr>
@@ -202,7 +203,6 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 <th>Specification</th>
                                             </tr>
                                         </thead>
-                                        <form method ="post" action="it_request_service_unit_DB.php?=<?php echo $id;?>">
                                         <tbody>
                                         <?php
                                         $count = 0;
@@ -274,7 +274,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                             <input class='form-control'  disabled>
                                                         </td>
                                                         <td id='assetID".$count."' style='display: none'>
-                                                            <input class='form-control' name='assets[]'  disabled>
+                                                            <input class='form-control' name='assets[]'>
                                                         </td>
                                                 </tr>";
 

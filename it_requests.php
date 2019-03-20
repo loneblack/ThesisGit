@@ -243,7 +243,16 @@
                                                             }
 
                                                             //Service Unit
-                                                            $queryServiceUnit = "SELECT *, sr.id as 'serviceID' , e.name as 'requestedby', s.name as 'stepname' FROM thesis.service sr JOIN ref_status st ON sr.status = st.statusID JOIN ref_steps s ON steps = s.id JOIN employee e ON e.UserID = sr.UserID JOIN serviceunit su ON sr.id = su.serviceID;";
+                                                            $queryServiceUnit = "SELECT *, e.name as 'requestedby', s.name as 'stepname' 
+                                                                                    FROM thesis.serviceunit su
+                                                                                JOIN service sr
+                                                                                    ON sr.id = su.serviceID
+                                                                                JOIN ref_status st 
+                                                                                    ON su.statusID = st.statusID
+                                                                                JOIN ref_steps s 
+                                                                                    ON steps = s.id
+                                                                                JOIN employee e 
+                                                                                    ON e.UserID = su.UserID;";
                                                             
 
                                                             $resultServiceUnit = mysqli_query($dbc, $queryServiceUnit);
