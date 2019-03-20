@@ -3,7 +3,6 @@
 	require_once('db/mysql_connect.php');
 	session_start();
 	
-	
 ?>
 <html lang="en">
 
@@ -67,7 +66,7 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <section class="panel">
-														<form onsubmit="getAllMainData();">
+														<form method="POST" action="">
                                                             <div class="form-group">
 																<div align="right">
 																	<button class="btn btn-primary" onclick="print()"><i class="fa fa-print"></i>  Print</button>
@@ -91,16 +90,16 @@
 																<div class="row">
 																	<div class="col-lg-6">
 																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">Start Date</label>
-																		<input type="date" name="startDate" id="startDate" class="form-control input-sm m-bot15" required>
+																		<input type="date" name="startDate" id="startDate" class="form-control input-sm m-bot15">
 																	</div>
 																	<div class="col-lg-6">
 																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">End Date</label>
-																		<input type="date" name="endDate" id="endDate" class="form-control input-sm m-bot15" required>
+																		<input type="date" name="endDate" id="endDate" class="form-control input-sm m-bot15">
 																	</div>
 																</div>
 																<div class="row" align="center">
 																	<div class="col-lg-12">
-																		<button type="submit" class="btn btn-primary">Filter</button>
+																		<button type="submit" name="submit" class="btn btn-primary">Filter</button>
 																	</div>	
 																</div>
 															</div>
@@ -130,27 +129,73 @@
                                                                     </thead>
                                                                     <tbody id='maintenance'>
 																		<?php
-																		//GET ALL DATA
-																		$mi = new MultipleIterator();
-																		
-																		$mi->attachIterator(new ArrayIterator($_SESSION['room']));
-																		$mi->attachIterator(new ArrayIterator($_SESSION['propertyCode']));
-																		$mi->attachIterator(new ArrayIterator($_SESSION['assetCat']));
-																		$mi->attachIterator(new ArrayIterator($_SESSION['assetStat']));
-																		$mi->attachIterator(new ArrayIterator($_SESSION['dateChecked']));
-																		
-																		foreach($mi as $value){
-																			list($room, $propertyCode, $assetCat, $assetStat, $dateChecked) = $value;
-																			echo "<tr>
-																					<td>{$room}</td>
-																					<td>{$propertyCode}</td>
-																					<td>{$assetCat}</td>
-																					<td>{$assetStat}</td>
-																					<td>{$dateChecked}</td>
-																			</tr>";	
-																		}
-																		
-																		
+																			if(isset($_POST['submit'])){
+																				if(!empty($_POST['startDate'])){
+																					if(!empty($_POST['endDate'])){
+																						$startDate=$_POST['startDate'];
+																						$endDate=$_POST['endDate'];
+																						
+																						//GET ALL DATE FROM START DATE TO END DATE
+																						$queryGetAllMainData="SELECT far.floorRoom,a.propertyCode,rac.name as `assetCat`,ras.description as `assetStat`,au.date FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
+																																																																											  join asset a on au.assetID=a.assetID
+																																																																											  join assetmodel am on a.assetModel=am.assetModelID
+																																																																											  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																																																																											  join ref_assetstatus ras on au.assetStatus=ras.id 
+																																																																											  join assetassignment aa on a.assetID=aa.assetID 
+																																																																											  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
+																																																																				where t.serviceType='28' and au.assetStatus!='17' and au.date BETWEEN '{$startDate}' AND '{$endDate}'";
+																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
+																						echo "<script>alert('{$startDate}');</script>";
+																					}
+																					else{
+																						$startDate=$_POST['startDate'];
+																						
+																						//GET ALL DATE FROM START DATE TO END DATE
+																						$queryGetAllMainData="SELECT far.floorRoom,a.propertyCode,rac.name as `assetCat`,ras.description as `assetStat`,au.date FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
+																																																																												  join asset a on au.assetID=a.assetID
+																																																																												  join assetmodel am on a.assetModel=am.assetModelID
+																																																																												  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																																																																												  join ref_assetstatus ras on au.assetStatus=ras.id 
+																																																																												  join assetassignment aa on a.assetID=aa.assetID 
+																																																																												  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
+																																																																					where t.serviceType='28' and au.assetStatus!='17' and au.date >= '{$startDate}'";
+																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
+																					}
+																				}
+																				elseif(!empty($_POST['endDate'])){
+																					$endDate=$_POST['endDate'];
+																					//GET ALL DATE FROM START DATE TO END DATE
+																					$queryGetAllMainData="SELECT far.floorRoom,a.propertyCode,rac.name as `assetCat`,ras.description as `assetStat`,au.date FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
+																																																																												  join asset a on au.assetID=a.assetID
+																																																																												  join assetmodel am on a.assetModel=am.assetModelID
+																																																																												  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																																																																												  join ref_assetstatus ras on au.assetStatus=ras.id 
+																																																																												  join assetassignment aa on a.assetID=aa.assetID 
+																																																																												  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
+																																																																					where t.serviceType='28' and au.assetStatus!='17' and au.date <= '{$endDate}'";
+																					$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
+																				}
+																				else{
+																					$queryGetAllMainData="SELECT far.floorRoom,a.propertyCode,rac.name as `assetCat`,ras.description as `assetStat`,au.date FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
+																																																																										  join asset a on au.assetID=a.assetID
+																																																																										  join assetmodel am on a.assetModel=am.assetModelID
+																																																																										  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																																																																										  join ref_assetstatus ras on au.assetStatus=ras.id 
+																																																																										  join assetassignment aa on a.assetID=aa.assetID 
+																																																																										  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
+																																																																			where t.serviceType='28' and au.assetStatus!='17'";
+																					$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
+																				}
+																				while($rowGetAllMainData=mysqli_fetch_array($resultGetAllMainData,MYSQLI_ASSOC)){
+																					echo "<tr>
+																						<td>{$rowGetAllMainData['floorRoom']}</td>
+																						<td>{$rowGetAllMainData['propertyCode']}</td>
+																						<td>{$rowGetAllMainData['assetCat']}</td>
+																						<td>{$rowGetAllMainData['assetStat']}</td>
+																						<td>{$rowGetAllMainData['date']}</td>
+																					</tr>";
+																				}
+																			}
 																		?>
 																	</tbody>
                                                                 </table>    
@@ -187,7 +232,7 @@
 			var getRoomType = document.getElementById("roomtype").value;
 			var getBuilding = document.getElementById("building").value;*/
 			
-			var startDate = document.getElementById("startDate").value;
+			/*var startDate = document.getElementById("startDate").value;
 			var endDate = document.getElementById("endDate").value;
 			
 			var xmlhttp = new XMLHttpRequest();
@@ -198,9 +243,25 @@
                 }
             };
 			
-			xmlhttp.open("GET", "getMaintenanceData.php?startDate=" + startDate + "&endDate=" + endDate, true);
-			xmlhttp.send();
-			
+			if(startDate){
+				if(endDate){
+					xmlhttp.open("GET", "getMaintenanceData.php?startDate=" + startDate + "&endDate=" + endDate, true);
+					xmlhttp.send();
+				}
+				else{
+					xmlhttp.open("GET", "getMaintenanceData.php?startDate=" + startDate + "&endDate=", true);
+					xmlhttp.send();
+				}
+			}
+			else if(endDate){
+				xmlhttp.open("GET", "getMaintenanceData.php?startDate=" +  + "&endDate=" + endDate, true);
+				xmlhttp.send();
+			}
+			else{
+				xmlhttp.open("GET", "getMaintenanceData.php?startDate=" +  + "&endDate=" + , true);
+				xmlhttp.send();
+			}
+			*/
 			/*if(getYear){
 				if(getMonth){
 					if(getRoomType){

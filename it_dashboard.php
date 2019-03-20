@@ -37,7 +37,7 @@
 	}
 	$_SESSION['dateMaintenance']=$dateNeeded;
 	//FOR MAINTENANCE REPORTS PAGE
-	$_SESSION['room'] = array();
+	/*$_SESSION['room'] = array();
 	$_SESSION['propertyCode'] = array();
 	$_SESSION['assetCat'] = array();
 	$_SESSION['assetStat'] = array();
@@ -63,7 +63,7 @@
 		array_push($_SESSION['assetCat'],$rowGetAllMainData['assetCat']);	
 		array_push($_SESSION['assetStat'],$rowGetAllMainData['assetStat']);	
 		array_push($_SESSION['dateChecked'],$rowGetAllMainData['date']);	
-	}
+	}*/
 ?>
 
 <?php
