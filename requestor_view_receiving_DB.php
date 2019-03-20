@@ -69,6 +69,7 @@
 
 	        $borrowID = $row['borrowID'];
 	        $requestID = $row['requestID'];
+	        $serviceUnitID = $row['serviceUnitID'];
 	    }
 
 	if($borrowID > 0)//have borrow
@@ -81,6 +82,12 @@
 	{
 
 	    $sql = "UPDATE `thesis`.`request` SET `status` = '3', `step` = '21' WHERE (`requestID` = '{$requestID}');";
+	    $result = mysqli_query($dbc, $sql);
+	}
+	if($serviceUnitID > 0)//have service unit
+	{
+
+	    $sql = "UPDATE `thesis`.`serviceUnit` SET `status` = '3' WHERE (`serviceUnitID` = '{$serviceUnitID}');";
 	    $result = mysqli_query($dbc, $sql);
 	}
 
