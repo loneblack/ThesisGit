@@ -163,6 +163,7 @@ $_SESSION['previousDash'] = "it_requests.php";
 																	<td>{$rowDon['step']}</td>
 																	<td>{$rowDon['requestor']}</td>
 																	<td>{$rowDon['dateCreated']}</td>
+                                                                    <td>{$rowDon['purpose']}</td>
 																</tr>";
 																$count++;
 															}
@@ -327,6 +328,7 @@ $_SESSION['previousDash'] = "it_requests.php";
                                                                     <td>{$rowGetRep['stepName']}</td>
                                                                     <td>{$rowGetRep['Requestor']}</td>
                                                                     <td>{$rowGetRep['dateTiimeLost']}</td>
+                                                                    <td>{$rowGetRep['description']}</td>
                                                                 </tr>";
                                                                 
                                                                 $count++;

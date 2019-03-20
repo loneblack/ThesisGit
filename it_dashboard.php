@@ -232,6 +232,7 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                                             <th>Description</th>
                                                             <th>Requestor</th>
                                                             <th>Requested Date</th>
+                                                            <th>Details</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -276,6 +277,7 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
 																	<td>{$row['step']}</td>
 																	<td>{$row['requestor']}</td>
 																	<td>{$row['requestedDate']}</td>
+                                                                    <td>{$row['description']}</td>
 																</tr>";
 																
 																$count++;
@@ -311,6 +313,7 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
 																	<td>{$rowDon['step']}</td>
 																	<td>{$rowDon['requestor']}</td>
 																	<td>{$rowDon['dateCreated']}</td>
+                                                                    <td>{$rowDon['purpose']}</td>
 																</tr>";
 																$count++;
 															}
@@ -380,6 +383,7 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                                                     <td>{$row['name']}</td>
                                                                     <td>{$row['requestor']}</td>
                                                                     <td>{$row['dateCreated']}</td>
+                                                                    <td>{$row['purpose']}</td>
                                                                 </tr>";
                                                                 
                                                                 $count++;
@@ -419,13 +423,101 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                                                     <td>{$rowGetRep['stepName']}</td>
                                                                     <td>{$rowGetRep['Requestor']}</td>
                                                                     <td>{$rowGetRep['dateTiimeLost']}</td>
+                                                                    <td>{$rowGetRep['description']}</td>
                                                                 </tr>";
                                                                 
                                                                 $count++;
                                                                 
                                                             
                                                             }
+
+                                                            //Service Unit
+                                                            $queryServiceUnit = "SELECT *, e.name as 'requestedby', s.name as 'stepname' 
+                                                                                    FROM thesis.serviceunit su
+                                                                                JOIN service sr
+                                                                                    ON sr.id = su.serviceID
+                                                                                JOIN ref_status st 
+                                                                                    ON su.statusID = st.statusID
+                                                                                JOIN ref_steps s 
+                                                                                    ON steps = s.id
+                                                                                JOIN employee e 
+                                                                                    ON e.UserID = su.UserID;";
+                                                            
+
+                                                            $resultServiceUnit = mysqli_query($dbc, $queryServiceUnit);
+                                                            while($row=mysqli_fetch_array($resultServiceUnit,MYSQLI_ASSOC)){
+                                                                
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$row['serviceUnitID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$row['dateNeeded']}</td>";
+                                                                    
+                                                                    if($row['description']=='Pending'){
+                                                                        echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Incomplete'){
+                                                                        echo "<td><span class='label label-danger label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Completed'){
+                                                                        echo "<td><span class='label label-success label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    //elseif($row['description']=='Ongoing'){
+                                                                        //echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    //}
+                                                                    else{
+                                                                        echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                            
+                                                                echo "
+                                                                    <td>Service Unit</td>
+                                                                    <td>{$row['stepname']}</td>
+                                                                    <td>{$row['requestedby']}</td>
+                                                                    <td>{$row['dateReceived']}</td>
+                                                                    <td>{$row['details']}</td>
+                                                                </tr>";
+                                                                
+                                                                 $count++;
+                                                            }
+
+                                                            //Request for Parts
+                                                            $queryRequestforParts = "SELECT * , r.id as 'requestPartsID' FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id JOIN ref_status st ON r.statusID = st.statusID JOIN employee e ON e.UserID = r.UserID JOIN ticket t on s.id = t.service_id;";
+
+                                                            $resultRequestforParts = mysqli_query($dbc, $queryRequestforParts);
+                                                            while($row=mysqli_fetch_array($resultRequestforParts,MYSQLI_ASSOC)){
+                                                                
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$row['requestPartsID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$row['date']}</td>";
+                                                                    
+                                                                    if($row['description']=='Pending'){
+                                                                        echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Incomplete'){
+                                                                        echo "<td><span class='label label-danger label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Completed'){
+                                                                        echo "<td><span class='label label-success label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    //elseif($row['description']=='Ongoing'){
+                                                                        //echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    //}
+                                                                    else{
+                                                                        echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                            
+                                                                echo "
+                                                                    <td>Request for Parts</td>
+                                                                    <td>Request Pending</td>
+                                                                    <td>{$row['name']}</td>
+                                                                    <td>{$row['date']}</td>
+                                                                    <td>{$row['comment']}</td>
+                                                                </tr>";
+                                                                
+                                                                 $count++;
+                                                            }
 															?>
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -460,6 +552,111 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
             history.go(1);
         };
    </script>
+
+   <script>
+        function addRowHandlers() {
+            var table = document.getElementById("dynamic-table");
+            var rows = table.getElementsByTagName("tr");
+            for (i = 1; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function(row) {
+                    return function() {
+                        var cell = row.getElementsByTagName("td")[0];
+                        var ida = cell.textContent; //id
+                        var cell = row.getElementsByTagName("td")[3];
+                        var id = cell.textContent; //Status
+                        var cell = row.getElementsByTagName("td")[4];
+                        var idx = cell.textContent; //Request type
+                        var cell = row.getElementsByTagName("td")[5];
+                        var idDesc = cell.textContent; //Description
+
+                        if (idx == "Repair") {
+                            if (id == "Completed" || id == "Incomplete") {
+                                window.location.href ="it_view_completed_incomplete_repair.php?requestID=" + ida;
+                            }
+                            if (id == "Ongoing" || id == "Pending") {
+                                window.location.href = "it_view_ongoing_pending_repair.php?requestID=" + ida;
+                            }
+                        }
+                        if (idx == "Asset Request") {
+                            if (id == "Ongoing" || id == "Pending") {
+                                if (idDesc == "Checking Canvas") {
+                                    window.location.href = "it_view_canvas_completed.php?requestID=" + ida;
+                                } else if (idDesc == "IT Create Specs") {
+                                    window.location.href = "it_view_incomplete_request.php?requestID=" + ida;
+                                } else if (idDesc == "Create Purchase Order") {
+                                    window.location.href = "it_view_open_po.php?requestID=" + ida;
+                                } else if (idDesc == "Signature Verification") {
+                                    window.location.href = "it_view_signature.php?requestID=" + ida;
+                                }
+                            }
+                            if (id == "Pending") {
+                                if (idDesc == "IT Approval") {
+                                    window.location.href = "it_view_approval_open.php?requestID=" + ida;
+                                }
+                            }
+                            if (id == "Completed" || id == "Incomplete") {
+                                window.location.href = "it_view_checklist.php";
+                            }
+                        }
+                        if (idx == "Testing") {
+                            if (id == "Ongoing" || id == "Pending") {
+                                window.location.href = "it_view_incomplete_testing.php";
+                            } else if (id == "Completed" || id == "Incomplete") {
+                                window.location.href = "it_view_testing.php";
+                            }
+                        }
+                        if (idx == "Donation") {
+                            if (id == "Ongoing" || id == "Pending") {
+                                window.location.href = "it_view_open_donation_request.php?id=" + ida;
+                            }
+                            if (id == "Completed" || id == "Incomplete") {
+                                window.location.href = "it_view_closed_donation_request.php?id=" + ida;
+                            }
+                        }
+                        if (idx == "Borrow") {
+                            if (id == "Ongoing" || id == "Pending") {
+                                window.location.href = "it_view_open_service_equipment_request.php?id=" + ida;
+                            } else if (id == "Completed" || id == "Incomplete") {
+                                window.location.href = "it_view_closed_service_equipment_request.php?id=" + ida;
+                            }
+                        }
+                        if (idx == "Replacement") {
+                            if (id == "Ongoing" || id == "Pending") {
+                                if(idDesc == "Assigning of New Replacement"){
+                                    window.location.href = "it_missing_form.php?id=" + ida;
+                                }
+                            } else if (id == "Completed" || id == "Incomplete") {
+                                
+                            }
+                        }
+                        if (idx == "Service Unit") {
+                            if (id == "Pending") {
+                                window.location.href = "it_request_service_unit.php?id=" + ida;
+                            } else if (id == "Ongoing") {
+                                window.location.href = "it_request_service_unit_ongoing.php?id=" + ida;
+                            } else if (id == "Closed") {
+                                window.location.href = "it_request_service_unit_closed.php?id=" + ida;
+                            }
+                        }
+                        if (idx == "Request for Parts") {
+                            if (id == "Pending") {
+                                window.location.href = "it_view_repair_request_parts.php?id=" + ida;
+                            } else if (id == "Ongoing") {
+                                window.location.href = "it_view_repair_request_parts_ongoing.php?id=" + ida;
+                            } else if (id == "Closed") {
+                                window.location.href = "it_view_repair_request_parts_closed.php?id=" + ida;
+                            }
+                        }
+
+                    };
+                };
+                currentRow.onclick = createClickHandler(currentRow);
+            }
+        }
+        window.onload = addRowHandlers();
+        window.onload = $('#count').click();
+    </script>
 
     <!--dynamic table-->
     <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
