@@ -946,7 +946,7 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('30', 'BIOM-0001', 'NyvxTtoi', '', '2'); -- ID 160, Biometrics
 	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0012', 'XgrwbTsa', '', '21'); -- ID 161, monitor
 
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0008', '52fVETMe', '77-BB-D9-A5-D0-1F', '1'); -- ID 162, PC SERVICE UNIT
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`, `isServiceUnit`) VALUES ('24', 'PC-0008', '52fVETMe', '77-BB-D9-A5-D0-1F', '1', '1'); -- ID 162, PC SERVICE UNIT
 	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0014', 'ggmZ2NuL', '', '21'); -- ID 163, Hard Disk Drive
 	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0014', 'quT5bgib', '', '21'); -- ID 164, Power Supply
 	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0014', 'mgi6XZYz', '', '21'); -- ID 165, Processor
