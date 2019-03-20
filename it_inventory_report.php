@@ -1,49 +1,9 @@
 <!DOCTYPE html>
-<?php
-	require_once('db/mysql_connect.php');
-
-    $sDate = $_POST['startDate'];
-    $eDate = $_POST['endDate'];
-    
-
-    $_SESSION[];
-    if(isset($_POST['endDate'])){
-        $query="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
-        am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
-        JOIN ref_assetStatus ras ON aa.assetStatus = ras.id
-        JOIN asset a ON aa.assetID = a.assetID
-        JOIN assetmodel am ON a.assetModel = am.assetModelID
-        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
-        JOIN ref_brand rb ON am.brand = rb.brandID
-        JOIN assetassignment assass ON a.assetID = assass.assetID
-        JOIN building b ON assass.BuildingID = b.BuildingID
-        JOIN floorandroom far ON assass.FloorAndRoomID = far.FloorAndRoomID
-        LEFT JOIN department d ON assass.DepartmentID = d.DepartmentID
-        JOIN employee e ON assass.personresponsibleID = e.UserID WHERE aa.date BETWEEN '{$sDate}' AND '{$eDate}';";
-        
-        $result=mysqli_query($dbc,$query);
-    }
-
-    else{
-        $query="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
-        am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
-        JOIN ref_assetStatus ras ON aa.assetStatus = ras.id
-        JOIN asset a ON aa.assetID = a.assetID
-        JOIN assetmodel am ON a.assetModel = am.assetModelID
-        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
-        JOIN ref_brand rb ON am.brand = rb.brandID
-        JOIN assetassignment assass ON a.assetID = assass.assetID
-        JOIN building b ON assass.BuildingID = b.BuildingID
-        JOIN floorandroom far ON assass.FloorAndRoomID = far.FloorAndRoomID
-        LEFT JOIN department d ON assass.DepartmentID = d.DepartmentID
-        JOIN employee e ON assass.personresponsibleID = e.UserID WHERE aa.date BETWEEN '{$sDate}' AND '3000-1-1';";
-        
-        $result=mysqli_query($dbc,$query);
-    }
-	
-?>
 <html lang="en">
-
+<?php
+    session_start();
+	require_once("db/mysql_connect.php");
+?>
 <head>
     <meta charset="utf-8">
 
@@ -101,21 +61,11 @@
                                     <section class="panel">
                                         <header class="panel-heading">
                                             Inventory Report
-                                            <span class="tools pull-right">
-                                                <a class="fa fa-plus" href="admin_add_department.php"></a>
-                                            </span>
                                         </header>
                                         <div align="right">
                                             <button class="btn btn-primary" onclick="print()"><i class="fa fa-print"></i> Print</button>
                                         </div>
 
-                                        <form method="POST" action="">
-                                            <div class="form-inline">
-                                                Start Date: <input type="date" name="startDate" class="form-control" required>
-                                                End Date: <input type="date" name="endDate" class="form-control">
-                                                <button class="btn btn-success" name="submit">Submit</button>
-                                            </div>
-                                        </form>
                                         <div align="center">
                                             <h3>Information and Technology Services Office</h3>
                                             <h3>Inventory Report</h3>
@@ -150,36 +100,151 @@
                                                         </thead>
                                                         <tbody>
                                                             <?php
-																//Get Dept
-																$queryDept="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
-                                                                am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
-                                                                JOIN ref_assetStatus ras ON aa.assetStatus = ras.id
-                                                                JOIN asset a ON aa.assetID = a.assetID
-                                                                JOIN assetmodel am ON a.assetModel = am.assetModelID
-                                                                JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
-                                                                JOIN ref_brand rb ON am.brand = rb.brandID
-                                                                JOIN assetassignment assass ON a.assetID = assass.assetID
-                                                                JOIN building b ON assass.BuildingID = b.BuildingID
-                                                                JOIN floorandroom far ON assass.FloorAndRoomID = far.FloorAndRoomID
-                                                                LEFT JOIN department d ON assass.DepartmentID = d.DepartmentID
-                                                                JOIN employee e ON assass.personresponsibleID = e.UserID;";
                                                             
-																$resultDept=mysqli_query($dbc,$queryDept);
-																while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
-																	echo "<tr>
-																		<td class='hidden'>{$rowDept['assetID']}</td>
-																		<td>{$rowDept['assetStatus']}</td>
-                                                                        <td>{$rowDept['date']}</td>
-                                                                        <td>{$rowDept['assetCategory']}</td>
-                                                                        <td>{$rowDept['propertyCode']}</td>
-                                                                        <td>{$rowDept['brand']}</td>
-                                                                        <td>{$rowDept['model']}</td>
-                                                                        <td>{$rowDept['building']}</td>
-                                                                        <td>{$rowDept['floorRoom']}</td>
-                                                                        <td>{$rowDept['department']}</td>
-                                                                        <td>{$rowDept['employee']}</td>
-                                                                        </tr>";
-																}
+                                                                if(isset($_POST['startDate']) && isset($_POST['endDate'])){
+                                                                    if($_POST['startDate'] > $_POST['endDate']){
+                                                                        $message = "The End Date Must be Bigger than the Start Date";
+                                                                        echo "<script type='text/javascript'>alert('$message');</script>";
+                                                                    }
+                                                                    
+                                                                    else{
+                                                                        $sDate = $_POST['startDate'];
+                                                                        $eDate = $_POST['endDate'];
+                                                                        
+                                                                        $queryDept="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
+                                                                        am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
+                                                                        JOIN ref_assetStatus ras ON aa.assetStatus = ras.id
+                                                                        JOIN asset a ON aa.assetID = a.assetID
+                                                                        JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                                        JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                        JOIN assetassignment assass ON a.assetID = assass.assetID
+                                                                        JOIN building b ON assass.BuildingID = b.BuildingID
+                                                                        JOIN floorandroom far ON assass.FloorAndRoomID = far.FloorAndRoomID
+                                                                        LEFT JOIN department d ON assass.DepartmentID = d.DepartmentID
+                                                                        JOIN employee e ON assass.personresponsibleID = e.UserID WHERE aa.date BETWEEN '{$sDate}' AND '{$eDate}';";
+
+                                                                        $resultDept=mysqli_query($dbc,$queryDept);
+                                                                        while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
+                                                                            echo "<tr>
+                                                                                <td class='hidden'>{$rowDept['assetID']}</td>
+                                                                                <td>{$rowDept['assetStatus']}</td>
+                                                                                <td>{$rowDept['date']}</td>
+                                                                                <td>{$rowDept['assetCategory']}</td>
+                                                                                <td>{$rowDept['propertyCode']}</td>
+                                                                                <td>{$rowDept['brand']}</td>
+                                                                                <td>{$rowDept['model']}</td>
+                                                                                <td>{$rowDept['building']}</td>
+                                                                                <td>{$rowDept['floorRoom']}</td>
+                                                                                <td>{$rowDept['department']}</td>
+                                                                                <td>{$rowDept['employee']}</td>
+                                                                                </tr>";
+                                                                        }
+                                                                    }
+                                                                }
+                                                            
+                                                                if(empty($_POST['startDate']) && empty($_POST['endDate'])){
+                                                                    $queryDept="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
+                                                                        am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
+                                                                        JOIN ref_assetStatus ras ON aa.assetStatus = ras.id
+                                                                        JOIN asset a ON aa.assetID = a.assetID
+                                                                        JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                                        JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                        JOIN assetassignment assass ON a.assetID = assass.assetID
+                                                                        JOIN building b ON assass.BuildingID = b.BuildingID
+                                                                        JOIN floorandroom far ON assass.FloorAndRoomID = far.FloorAndRoomID
+                                                                        LEFT JOIN department d ON assass.DepartmentID = d.DepartmentID
+                                                                        JOIN employee e ON assass.personresponsibleID = e.UserID;";
+
+                                                                        $resultDept=mysqli_query($dbc,$queryDept);
+                                                                        while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
+                                                                            echo "<tr>
+                                                                                <td class='hidden'>{$rowDept['assetID']}</td>
+                                                                                <td>{$rowDept['assetStatus']}</td>
+                                                                                <td>{$rowDept['date']}</td>
+                                                                                <td>{$rowDept['assetCategory']}</td>
+                                                                                <td>{$rowDept['propertyCode']}</td>
+                                                                                <td>{$rowDept['brand']}</td>
+                                                                                <td>{$rowDept['model']}</td>
+                                                                                <td>{$rowDept['building']}</td>
+                                                                                <td>{$rowDept['floorRoom']}</td>
+                                                                                <td>{$rowDept['department']}</td>
+                                                                                <td>{$rowDept['employee']}</td>
+                                                                                </tr>";
+                                                                        }
+                                                                }
+                                                                
+                                                            
+                                                                if(isset($_POST['startDate']) && empty($_POST['endDate'])){
+                                                                    
+                                                                        $sDate = $_POST['startDate'];
+                                                                        
+                                                                        $queryDept="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
+                                                                        am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
+                                                                        JOIN ref_assetStatus ras ON aa.assetStatus = ras.id
+                                                                        JOIN asset a ON aa.assetID = a.assetID
+                                                                        JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                                        JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                        JOIN assetassignment assass ON a.assetID = assass.assetID
+                                                                        JOIN building b ON assass.BuildingID = b.BuildingID
+                                                                        JOIN floorandroom far ON assass.FloorAndRoomID = far.FloorAndRoomID
+                                                                        LEFT JOIN department d ON assass.DepartmentID = d.DepartmentID
+                                                                        JOIN employee e ON assass.personresponsibleID = e.UserID WHERE aa.date BETWEEN '{$sDate}' AND '3000-1-1';";
+
+                                                                        $resultDept=mysqli_query($dbc,$queryDept);
+                                                                        while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
+                                                                            echo "<tr>
+                                                                                <td class='hidden'>{$rowDept['assetID']}</td>
+                                                                                <td>{$rowDept['assetStatus']}</td>
+                                                                                <td>{$rowDept['date']}</td>
+                                                                                <td>{$rowDept['assetCategory']}</td>
+                                                                                <td>{$rowDept['propertyCode']}</td>
+                                                                                <td>{$rowDept['brand']}</td>
+                                                                                <td>{$rowDept['model']}</td>
+                                                                                <td>{$rowDept['building']}</td>
+                                                                                <td>{$rowDept['floorRoom']}</td>
+                                                                                <td>{$rowDept['department']}</td>
+                                                                                <td>{$rowDept['employee']}</td>
+                                                                                </tr>";
+                                                                    }
+                                                                }
+                                                            
+                                                                if(empty($_POST['startDate']) && isset($_POST['endDate'])){
+                                                                    
+                                                                        $eDate = $_POST['endDate'];
+                                                                        
+                                                                        $queryDept="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
+                                                                        am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
+                                                                        JOIN ref_assetStatus ras ON aa.assetStatus = ras.id
+                                                                        JOIN asset a ON aa.assetID = a.assetID
+                                                                        JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                                        JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                        JOIN assetassignment assass ON a.assetID = assass.assetID
+                                                                        JOIN building b ON assass.BuildingID = b.BuildingID
+                                                                        JOIN floorandroom far ON assass.FloorAndRoomID = far.FloorAndRoomID
+                                                                        LEFT JOIN department d ON assass.DepartmentID = d.DepartmentID
+                                                                        JOIN employee e ON assass.personresponsibleID = e.UserID WHERE aa.date BETWEEN '1000-1-1' AND '{$eDate}';";
+
+                                                                        $resultDept=mysqli_query($dbc,$queryDept);
+                                                                        while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
+                                                                            echo "<tr>
+                                                                                <td class='hidden'>{$rowDept['assetID']}</td>
+                                                                                <td>{$rowDept['assetStatus']}</td>
+                                                                                <td>{$rowDept['date']}</td>
+                                                                                <td>{$rowDept['assetCategory']}</td>
+                                                                                <td>{$rowDept['propertyCode']}</td>
+                                                                                <td>{$rowDept['brand']}</td>
+                                                                                <td>{$rowDept['model']}</td>
+                                                                                <td>{$rowDept['building']}</td>
+                                                                                <td>{$rowDept['floorRoom']}</td>
+                                                                                <td>{$rowDept['department']}</td>
+                                                                                <td>{$rowDept['employee']}</td>
+                                                                                </tr>";
+                                                                    }
+                                                                }
 															?>
                                                         </tbody>
                                                     </table>
