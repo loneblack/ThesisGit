@@ -1,6 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+    
+    session_start();
+	require_once("db/mysql_connect.php");
+    
+    if(isset($_POST['submit'])){	
+//                $message = "Tangina MO";
+//                echo "<script type='text/javascript'>alert('$message');</script>";
+				//Count Curr Assets based on assetCategory
+				$queryCount="SELECT Count(assetID) as `assetPosition` FROM thesis.asset a 
+                            join assetmodel am on a.assetModel=am.assetModelID where am.assetCategory='40';";
+				$resultCount=mysqli_query($dbc,$queryCount);
+				$rowCount=mysqli_fetch_array($resultCount,MYSQLI_ASSOC);
+				
+				//$propertyCode="0".$row1['assetCategory']."-".sprintf('%06d', $rowCount['assetPosition']);
+				$propertyCode=sprintf('%03d', 40)."-".sprintf('%06d', $rowCount['assetPosition']);
+				
+                //INSERT TO Asset Model
+                $queryProp="INSERT INTO `thesis`.`assetmodel` (`assetCategory`, `description`) VALUES ('40', 'Server');'";
+				$resultProp=mysqli_query($dbc,$queryProp);
+        
+                //get latest asset model
+                $maxAssetModel = "SELECT MAX(assetmodelID) AS maxID FROM assetmodel;";
+                $resultMaxAssetModel=mysqli_query($dbc,$maxAssetModel);
+                $rowCountMaxAssetModel=mysqli_fetch_array($resultMaxAssetModel,MYSQLI_ASSOC);
+        
+				//INSERT Property Code
+				$queryProp="INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `dateDelivered`, `assetStatus`) VALUES ('{$rowCountMaxAssetModel['maxID']}', '{$propertyCode}', NOW(), '1');'";
+				$resultProp=mysqli_query($dbc,$queryProp);
+            
+                //get latest asset created
+                $maxAsset = "SELECT MAX(assetID) AS assetmaxID FROM asset;";
+                $resultMaxAsset=mysqli_query($dbc,$maxAsset);
+                $rowCountMaxAsset=mysqli_fetch_array($resultMaxAsset,MYSQLI_ASSOC);
+        
+                //INSERT TO COMPUTER
+                $insertPC = "INSERT INTO `thesis`.`computer` (`assetStatus`, `assetID`, `isComplete`) VALUES ('1', '{$rowCountMaxAsset['assetmaxID']}', True);";
+                $resultInsertPC = mysqli_query($dbc,$insertPC);
+                
+                //get max pc
+                $maxPC = "SELECT MAX(computerID) AS comMax FROM computer;";
+                $resultMaxPC=mysqli_query($dbc,$maxPC);
+                $rowCountMaxPC=mysqli_fetch_array($resultMaxPC,MYSQLI_ASSOC);
+        
+                foreach($_POST['component'] as $cumponent){
+                    //insert to computer cum ponent tamod
+                    $pasok = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$cumponent}', '{$rowCountMaxPC['comMax']}');";
+                    $resultPasok = mysqli_query($dbc,$pasok);
+                    
+                    $updateAsset = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $resultUpdateAsset = mysqli_query($dbc, $updateAsset);
+                }
+        
+                if(isset($_POST['extraRAM']) && isset($_POST['extraHDD'])){
+                    //insert to computer cum ponent tamod
+                    $pasok1 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraRAM']}', '{$rowCountMaxPC['comMax']}');";
+                    $resultPasok1 = mysqli_query($dbc,$pasok1);
+                    
+                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $resultUpdateAsset1 = mysqli_query($dbc, $updateAsset1);
+                    
+                    $pasok2 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraHDD']}', '{$rowCountMaxPC['comMax']}');";
+                    $resultPasok2 = mysqli_query($dbc,$pasok2);
+                    
+                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $resultUpdateAsset2 = mysqli_query($dbc, $updateAsset2);
+
+                }
+        
+                elseif(isset($_POST['extraHDD'])){
+                    $pasok2 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraHDD']}', '{$rowCountMaxPC['comMax']}');";
+                    $resultPasok2 = mysqli_query($dbc,$pasok2);
+                    
+                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $resultUpdateAsset2 = mysqli_query($dbc, $updateAsset2);
+
+                }
+        
+                elseif(isset($_POST['extraRAM'])){
+                    //insert to computer cum ponent tamod
+                    $pasok1 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraRAM']}', '{$rowCountMaxPC['comMax']}');";
+                    $resultPasok1 = mysqli_query($dbc,$pasok1);
+                    
+                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $resultUpdateAsset1 = mysqli_query($dbc, $updateAsset1);
+
+                }
+        
+    }
+
+?>
+    
+    
+    
+    
 <head>
     <meta charset="utf-8">
 
@@ -53,14 +148,11 @@
 
                         <section class="panel">
                             <header class="panel-heading">
-                                Build A Desktop or Thin Client
+                                Build A New Server
                             </header>
                             <div class="panel-body">
                                 <div class="position-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-primary" onclick="addTest(5)"> Add </button>
-                                    </div>
-                                    <form class="form-horizontal" role="form">
+                                    <form class="form-horizontal" method="POST" action="" role="form">
 
                                         <table class="table table-bordered table-striped table-condensed table-hover" id="addTable">
                                             <thead>
@@ -77,7 +169,7 @@
                                                 <tr>
                                                     <td width='220'>
                                                     <?php
-                                                        echo"<select id= '1' class='form-control' onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
+                                                        echo"<select id= '1' class='form-control' name='component[]' onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -139,7 +231,7 @@
                                                 <tr>
                                                     <td width='220'>
                                                     <?php
-                                                        echo"<select id= '2' class='form-control' onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
+                                                        echo"<select id= '2' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -203,7 +295,7 @@
                                                 <tr>
                                                     <td width='220'>
                                                     <?php
-                                                        echo"<select id= '3' class='form-control' onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
+                                                        echo"<select id= '3' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -264,7 +356,7 @@
                                                 <tr>
                                                     <td width='220'>
                                                     <?php
-                                                        echo"<select id= '4' class='form-control' onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
+                                                        echo"<select id= '4' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -325,7 +417,7 @@
                                                 <tr>
                                                     <td width='220'>
                                                     <?php
-                                                        echo"<select id= '5' class='form-control' onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
+                                                        echo"<select id= '5' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -386,7 +478,7 @@
                                                 <tr>
                                                     <td width='220'>
                                                     <?php
-                                                        echo"<select id= '6' class='form-control' onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
+                                                        echo"<select id= '6' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id)' required><option value=''>Select Property Code</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -443,6 +535,135 @@
                                                     ?>
                                                     <td></td>
                                                 </tr>
+                                                
+                                                
+                                                
+                                                <tr>
+                                                    <td width='220'>
+                                                    <?php
+                                                        echo"<select id= '7' class='form-control' onchange='loadDetails(this.value, this.id)' name='extraRAM'><option value=''>Select Property Code</option>";
+
+                                                        $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
+                                                                FROM asset a 
+                                                                    JOIN assetModel m
+                                                                ON assetModel = assetModelID
+                                                                    JOIN ref_brand br
+                                                                ON brand = brandID
+                                                                    JOIN ref_assetcategory c
+                                                                ON assetCategory = assetCategoryID
+                                                                    WHERE assetCategoryID = '22' AND a.assetStatus = 1;";
+
+                                                        $result = mysqli_query($dbc, $sql);
+
+
+                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                        {
+                                                            echo "<option value ={$row['assetID']}>";
+                                                            echo "{$row['propertyCode']}</option>";
+                                                        }
+                                                        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);                                                            
+                                                      
+                                                        echo"</select>"
+                                                    ?>
+                                                    </td>
+                                                    <td>Additional RAM</td>
+                                                    
+                                                    <?php
+                                                        
+                                                        $count = 7;
+                                                        $query="SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description as'modelDescription'
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            WHERE assetCategoryID = '1';";
+                                                        $result=mysqli_query($dbc,$query);
+
+                                                        $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+        
+        
+                                                        echo
+                                                            "<td id='brand".$count."'>
+                                                                    <input class='form-control' disabled>
+                                                                </td>
+                                                                <td id='description".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>
+                                                                <td id='specification".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>";
+
+                                                    ?>
+                                                    <td></td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                    <td width='220'>
+                                                    <?php
+                                                        echo"<select id= '8' class='form-control' onchange='loadDetails(this.value, this.id)' name='extraHDD'><option value=''>Select Property Code</option>";
+
+                                                        $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
+                                                                FROM asset a 
+                                                                    JOIN assetModel m
+                                                                ON assetModel = assetModelID
+                                                                    JOIN ref_brand br
+                                                                ON brand = brandID
+                                                                    JOIN ref_assetcategory c
+                                                                ON assetCategory = assetCategoryID
+                                                                    WHERE assetCategoryID = '17' AND a.assetStatus = 1;";
+
+                                                        $result = mysqli_query($dbc, $sql);
+
+
+                                                        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                        {
+                                                            echo "<option value ={$row['assetID']}>";
+                                                            echo "{$row['propertyCode']}</option>";
+                                                        }
+                                                        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);                                                            
+                                                      
+                                                        echo"</select>"
+                                                    ?>
+                                                    </td>
+                                                    <td>Additional HDD</td>
+                                                    <?php
+                                                        
+                                                        $count = 8;
+                                                        $query="SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description as'modelDescription'
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            WHERE assetCategoryID = '1';";
+                                                        $result=mysqli_query($dbc,$query);
+
+                                                        $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+        
+        
+                                                        echo
+                                                            "<td id='brand".$count."'>
+                                                                    <input class='form-control' disabled>
+                                                                </td>
+                                                                <td id='description".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>
+                                                                <td id='specification".$count."'>
+                                                                    <input class='form-control'  disabled>
+                                                                </td>";
+
+                                                    ?>
+                                                    <td></td>
+                                                </tr>
+                                                
+                                                
+                                                
+                                                
                                             </tbody>
                                         </table>
 
@@ -450,7 +671,7 @@
 
                                         <div class="clearfix">
                                             <div class="btn-group">
-                                                <button class="btn btn-success">
+                                                <button class="btn btn-success" type="submit" name="submit">
                                                     <i class="fa fa-check"></i> Submit
                                                 </button>
                                             </div>
@@ -503,63 +724,6 @@
     </script>
 
     <script type="text/javascript">
-        // Shorthand for $( document ).ready()
-        $(function() {
-
-        });
-
-
-
-
-        function addTest() {
-            var row_index = 0;
-            var isRenderd = false;
-
-            $("td").click(function() {
-                row_index = $(this).parent().index();
-
-            });
-
-            var delayInMilliseconds = 300; //1 second
-
-            setTimeout(function() {
-
-                appendTableRow(row_index);
-            }, delayInMilliseconds);
-
-
-
-        }
-
-        var appendTableRow = function(rowCount) {
-            var cnt = 0
-            var tr = "<tr>" +
-                "<td><input type='number' class='form-control' min='0.00' required></td>" +
-                "<td>" +
-                "<select class='form-control' id='exampleFormControlSelect1' required>" +
-                " <option>Select Brand</option>" +
-                "<option>Samsung</option>" +
-                "<option>Huawei" +
-                "<option>LG</option>" +
-                "</select>" +
-                "</td>" +
-                "<td>" +
-                "<select class='form-control' id='exampleFormControlSelect1' required>" +
-                " <option>Select Model</option>" +
-                "<option>S9</option>" +
-                "<option>Iphone X" +
-                "<option>Nova 2</option>" +
-                "</select>" +
-                "</td>" +
-                "<td><button class='btn btn-danger' onclick='deleteTest(this)'> Delete </button></td>" +
-                "</tr>";
-            $('#tableTest tbody tr').eq(rowCount).after(tr);
-        }
-
-        function deleteTest(r) {
-            var i = r.parentNode.parentNode.rowIndex;
-            document.getElementById("tableTest").deleteRow(i);
-        }
         
         function loadDetails(val, id){
             
