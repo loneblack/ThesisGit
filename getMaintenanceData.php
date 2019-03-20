@@ -14,7 +14,7 @@
 	$_SESSION['assetStat'] = array();
 	$_SESSION['dateChecked'] = array();
 	
-	if($_REQUEST["month"]=='0'){
+	/*if($_REQUEST["month"]=='0'){
 		$month=null;
 		$_SESSION['mnt']='0';
 	}
@@ -49,8 +49,24 @@
 		$building=$_REQUEST["building"];
 		$_SESSION['bldg']=$building;
 	}
+	*/
 	
-	if(isset($year)){
+	$_SESSION['startDate']=$_REQUEST["startDate"];
+	$_SESSION['endDate']=$_REQUEST["endDate"];
+	
+	//GET ALL DATE FROM START DATE TO END DATE
+	$queryGetAllMainData="SELECT far.floorRoom,a.propertyCode,rac.name as `assetCat`,ras.description as `assetStat`,au.date FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
+																																																							  join asset a on au.assetID=a.assetID
+																																																							  join assetmodel am on a.assetModel=am.assetModelID
+																																																							  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																																																							  join ref_assetstatus ras on au.assetStatus=ras.id 
+																																																							  join assetassignment aa on a.assetID=aa.assetID 
+																																																							  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
+																																																where t.serviceType='28' and au.assetStatus!='17' and au.date BETWEEN '{$_SESSION['startDate']}' AND '{$_SESSION['endDate']}'";
+	$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
+	
+	
+	/*if(isset($year)){
 		
 		if(isset($month)){
 			
@@ -270,7 +286,7 @@
 																																																							  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
 																																																where t.serviceType='28' and au.assetStatus!='17'";
 		$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
-	}
+	}*/
 	
 	while($rowGetAllMainData=mysqli_fetch_array($resultGetAllMainData,MYSQLI_ASSOC)){
 		array_push($_SESSION['room'],$rowGetAllMainData['floorRoom']);	

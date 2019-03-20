@@ -67,104 +67,43 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <section class="panel">
-														<form>
+														<form onsubmit="getAllMainData();">
                                                             <div class="form-group">
 																<div align="right">
 																	<button class="btn btn-primary" onclick="print()"><i class="fa fa-print"></i>  Print</button>
 																</div>
-																<div class="row">
+																<!--<div class="row">
 																	<div class="col-lg-6">
 																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">Select Roomtype</label>
 																		<select class="form-control input-sm m-bot15" id="roomtype" onChange='getAllMainData();'>
 																			<option value='0'>Select Roomtype</option>
-																			<?php
-																				//GET Roomtype
-																				$queryRmType="SELECT * FROM thesis.ref_roomtype";
-																				$resultRmType=mysqli_query($dbc,$queryRmType);
-																				while($rowRmType=mysqli_fetch_array($resultRmType,MYSQLI_ASSOC)){
-																					if($rowRmType['id']==$_SESSION['roomType']){
-																						echo "<option selected value='{$rowRmType['id']}'>{$rowRmType['roomtype']}</option>";
-																					}
-																					else{
-																						echo "<option value='{$rowRmType['id']}'>{$rowRmType['roomtype']}</option>";
-																					}
-																				}
 																			
-																			
-																			
-																			?>
 																		</select>
 																	</div>
 																	<div class="col-lg-6">
 																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">Select Building</label>
 																		<select class="form-control input-sm m-bot15" id="building" onChange='getAllMainData();'>
 																		<option value="">Select Building</option>
-																		<?php
-																				//GET Building
-																				$queryBuilding="SELECT * FROM thesis.building";
-																				$resultBuilding=mysqli_query($dbc,$queryBuilding);
-																				while($rowBuilding=mysqli_fetch_array($resultBuilding,MYSQLI_ASSOC)){
-																					if($rowBuilding['BuildingID']==$_SESSION['bldg']){
-																						echo "<option selected value='{$rowBuilding['BuildingID']}'>{$rowBuilding['name']}</option>";
-																					}
-																					else{
-																						echo "<option value='{$rowBuilding['BuildingID']}'>{$rowBuilding['name']}</option>";
-																					}
-																					
-																				}
-																			
-																			
-																			
-																		?>	
+																		
 																		</select>
 																	</div>
-																</div>
+																</div>-->
 																<div class="row">
 																	<div class="col-lg-6">
-																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">Select Year</label>
-																		<select class="form-control input-sm m-bot15" id="year" onChange='getAllMainData();'>
-																			<option value='0'>Select Year</option>
-																			<?php
-																				//GET ALL EXISTING YEAR OF A GIVEN MAINTENANCE
-																				$queryYear="SELECT distinct year(au.date) as `year` FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
-																																	  where t.serviceType='28'";
-																				$resultYear=mysqli_query($dbc,$queryYear);
-																				while($rowYear=mysqli_fetch_array($resultYear,MYSQLI_ASSOC)){
-																					if($rowYear['year']==$_SESSION['yr']){
-																						echo "<option selected value='{$rowYear['year']}'>{$rowYear['year']}</option>";
-																					}
-																					else{
-																						echo "<option value='{$rowYear['year']}'>{$rowYear['year']}</option>";
-																					}
-																					
-																				}
-																			
-																			
-																			
-																			?>
-																			
-																		</select>
+																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">Start Date</label>
+																		<input type="date" name="startDate" id="startDate" class="form-control input-sm m-bot15" required>
 																	</div>
 																	<div class="col-lg-6">
-																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">Select Month</label>
-																		<select class="form-control input-sm m-bot15" id="month" onChange='getAllMainData();'>
-																			<option value='0' <?php if($_SESSION['mnt']=='0') echo "selected"; ?>>Select Month</option>
-																			<option value='1' <?php if($_SESSION['mnt']=='1') echo "selected"; ?>>January</option>
-																			<option value='2' <?php if($_SESSION['mnt']=='2') echo "selected"; ?>>February</option>
-																			<option value='3' <?php if($_SESSION['mnt']=='3') echo "selected"; ?>>March</option>
-																			<option value='4' <?php if($_SESSION['mnt']=='4') echo "selected"; ?>>April</option>
-																			<option value='5' <?php if($_SESSION['mnt']=='5') echo "selected"; ?>>May</option>
-																			<option value='6' <?php if($_SESSION['mnt']=='6') echo "selected"; ?>>June</option>
-																			<option value='7' <?php if($_SESSION['mnt']=='7') echo "selected"; ?>>July</option>
-																			<option value='8' <?php if($_SESSION['mnt']=='8') echo "selected"; ?>>August</option>
-																			<option value='9' <?php if($_SESSION['mnt']=='9') echo "selected"; ?>>September</option>
-																			<option value='10' <?php if($_SESSION['mnt']=='10') echo "selected"; ?>>October</option>
-																			<option value='11' <?php if($_SESSION['mnt']=='11') echo "selected"; ?>>November</option>
-																			<option value='12' <?php if($_SESSION['mnt']=='12') echo "selected"; ?>>December</option>
-																		</select>
+																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">End Date</label>
+																		<input type="date" name="endDate" id="endDate" class="form-control input-sm m-bot15" required>
 																	</div>
 																</div>
-                                                            </div>
+																<div class="row" align="center">
+																	<div class="col-lg-12">
+																		<button type="submit" class="btn btn-primary">Filter</button>
+																	</div>	
+																</div>
+															</div>
                                                         </form>
 													
                                                         <div class="panel-body">
@@ -243,10 +182,13 @@
         }
 	
 		function getAllMainData(){
-			var getYear = document.getElementById("year").value;
+			/*var getYear = document.getElementById("year").value;
 			var getMonth = document.getElementById("month").value;
 			var getRoomType = document.getElementById("roomtype").value;
-			var getBuilding = document.getElementById("building").value;
+			var getBuilding = document.getElementById("building").value;*/
+			
+			var startDate = document.getElementById("startDate").value;
+			var endDate = document.getElementById("endDate").value;
 			
 			var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
@@ -256,8 +198,10 @@
                 }
             };
 			
+			xmlhttp.open("GET", "getMaintenanceData.php?startDate=" + startDate + "&endDate=" + endDate, true);
+			xmlhttp.send();
 			
-			if(getYear){
+			/*if(getYear){
 				if(getMonth){
 					if(getRoomType){
 						if(getBuilding){
@@ -354,7 +298,7 @@
 				//DEFAULT
 				xmlhttp.open("GET", "getMaintenanceData.php", true);
 				xmlhttp.send();
-			}
+			}*/
 
 		}
 		function addRowHandlers() {
