@@ -71,7 +71,7 @@
 				
 				//Count Curr Assets based on assetCategory
 				$queryCount="SELECT Count(assetID) as `assetPosition` FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID
-																						  where a.assetID<='{$assPass}' and am.assetCategory='{$rowGetAssInf['assetCategory']}' and a.assetStatus='1' or a.assetStatus='2'";
+																						  where am.assetCategory='{$rowGetAssInf['assetCategory']}'";
 				$resultCount=mysqli_query($dbc,$queryCount);
 				$rowCount=$rowg=mysqli_fetch_array($resultCount,MYSQLI_ASSOC);
 				
