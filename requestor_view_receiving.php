@@ -15,6 +15,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
         $borrowID = $row['borrowID'];
         $requestID = $row['requestID'];
+        $serviceUnitID = $row['serviceUnitID'];
     }
 
 if($borrowID > 0)//have borrow
@@ -46,6 +47,27 @@ if($requestID > 0)//have request
             JOIN request t ON r.requestID = t.requestID 
             JOIN building b ON t.BuildingID = b.BuildingID 
             JOIN floorandroom f ON t.FloorAndRoomID = f.FloorAndRoomID 
+            WHERE r.id = '{$id}';";
+    $result = mysqli_query($dbc, $sql);
+
+    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+        $building = $row['name'];
+        $floorRoom = $row['floorRoom'];
+        $dateNeeded = $row['dateNeeded'];;
+
+    }
+
+}
+if($serviceUnitID > 0)//have service unit
+{
+
+    $sql = "SELECT *, r.id as 'receivingID' 
+            FROM thesis.requestor_receiving r 
+            JOIN serviceunit su ON r.serviceUnitID = su.serviceUnitID
+            JOIN employee e ON r.UserID = e.UserID
+            JOIN floorandroom f ON e.FloorAndRoomID = f.FloorAndRoomID
+            JOIN building b ON f.BuildingID = b.BuildingID 
             WHERE r.id = '{$id}';";
     $result = mysqli_query($dbc, $sql);
 

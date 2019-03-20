@@ -82,6 +82,7 @@ require_once("db/mysql_connect.php");
                                             <tbody>
   
                                                  <?php
+                                                    $count = 1;
                                                     // view for purchase request
 
                                                     $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN request b ON r.requestID = b.requestID JOIN ref_status s ON r.statusID = s.statusID WHERE r.statusID != 3;";
@@ -93,7 +94,8 @@ require_once("db/mysql_connect.php");
                                                       
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['requestID']}</td>
-                                                            <td>{$row['receivingID']}</td>
+                                                            <td style='display: none'>>{$row['receivingID']}</td>
+                                                            <td>{$count}</td>
                                                             <td>Asset Request</td>
                                                             <td style='display: none'>{$row['statusID']}</td>";
 
@@ -106,7 +108,7 @@ require_once("db/mysql_connect.php");
 														if($row['statusID'] == '4'){
 															echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
 														}
-
+                                                        $count++;
                                                     }
                                                   ?>
                                                    <?php
@@ -128,7 +130,8 @@ require_once("db/mysql_connect.php");
                                                       
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['borrowID']}</td>
-                                                            <td>{$row['receivingID']}</td>
+                                                            <td style='display: none'>{$row['receivingID']}</td>
+                                                            <td>{$count}</td>
                                                             <td>Borrow</td>
                                                             <td style='display: none'>{$row['statusID']}</td>";
 
@@ -145,6 +148,51 @@ require_once("db/mysql_connect.php");
 
                                                         //echo "<td>{$row['name']}</td>";
                                                         echo "</tr>";
+
+                                                        $count++;
+                                                    }
+
+                                                    
+                                                  ?>
+                                                  <?php
+                                                    // view for service unit
+                                                    $sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = {$userID};";//get the employeeID using userID
+                                                    $result = mysqli_query($dbc, $sql);
+
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                                                        $employeeID = $row['employeeID'];
+                                                        
+                                                    }
+
+                                                    $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN serviceunit su ON r.serviceUnitID = su.serviceUnitID JOIN ref_status s ON r.statusID = s.statusID WHERE r.statusID != 3;";
+                                                                  
+                                                    $result = mysqli_query($dbc, $query);
+                                                    
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                      
+                                                      echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$row['serviceUnitID']}</td>
+                                                            <td style='display: none'>{$row['receivingID']}</td>
+                                                            <td>{$count}</td>
+                                                            <td>Borrow</td>
+                                                            <td style='display: none'>{$row['statusID']}</td>";
+
+                                                        if($row['statusID'] == '1'){//pending
+                                                            echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '2'){//ongoing
+                                                            echo "<td><span class='label label-info'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '4'){
+                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
+                                                        }
+
+
+                                                        //echo "<td>{$row['name']}</td>";
+                                                        echo "</tr>";
+
+                                                        $count++;
                                                     }
 
                                                     
