@@ -73,7 +73,7 @@
 				$queryCount="SELECT Count(assetID) as `assetPosition` FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID
 																						  where am.assetCategory='{$rowGetAssInf['assetCategory']}'";
 				$resultCount=mysqli_query($dbc,$queryCount);
-				$rowCount=$rowg=mysqli_fetch_array($resultCount,MYSQLI_ASSOC);
+				$rowCount=mysqli_fetch_array($resultCount,MYSQLI_ASSOC);
 				
 				//$propertyCode="0".$row1['assetCategory']."-".sprintf('%06d', $rowCount['assetPosition']);
 				$propertyCode=sprintf('%03d', $rowGetAssInf['assetCategory'])."-".sprintf('%06d', $rowCount['assetPosition']);
