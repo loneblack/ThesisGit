@@ -146,7 +146,10 @@ $count = 0;
                                                     ?>
                                                     </div>
                                                 </div>
-                                                <h4>Instructions: Write down a summary of the issue with the asset that seems to be broken and on the table check the asset that needs to be repaired</h4>
+                                                <h5>Kindly provide a description of the problem and select the assets to be repaired using the checkbox. Select the assets you would need a service unit for on the rightmost column.
+                                                <br>
+                                                <br>
+                                                Due to unavailability of assets, some requests may not be catered to.</h5>
                                                 <hr>
                                                 <div class="form-group">
                                                     <label for="details" class="control-label col-lg-3">Description of the Problem</label>
@@ -166,6 +169,7 @@ $count = 0;
                                                                     <th>Brand</th>
                                                                     <th>Category</th>
                                                                     <th>Specification</th>
+                                                                    <th>Service unit</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -176,14 +180,16 @@ $count = 0;
                                                                         $count ++;
                                                                         echo "<tr>";
                                                                         echo "<td style='display:none'>{$count}</td>";
-                                                                        echo "<td><input type='checkbox' name='assets[]'' value='{$row['assetID']}'></td>";
+                                                                        echo "<td><input type='checkbox' id='chk1[]'' name='assets[]'' value='{$row['assetID']}' onclick='checkBoxEnable();' ></td>";
                                                                         echo "<td>{$row['propertyCode']}</td>";
                                                                         echo "<td>{$row['brand']}</td>";
                                                                         echo "<td>{$row['category']}</td>";
                                                                         echo "<td>{$row['itemSpecification']}</td>";
+                                                                        echo "<td style='text-align:center'><input id='chk2[]'' type='checkbox' name='serviceUnit[]'' disabled></td>";
                                                                         echo "</tr>";
 
                                                                     }
+                                                                    
 
                                                                 ?>
                                                             </tbody>
@@ -192,23 +198,6 @@ $count = 0;
                                                         
                                                     </div>
 
-                                                </div>
-                                                <div class="form-group ">
-                                                    <label for="dateNeeded" class="control-label col-lg-3">Service Unit Opt-in</label>
-                                                    <div class="col-lg-7">
-                                                        <table class="table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th><p><input type="checkbox" name="serviceUnit"> Opt for service unit? (Note that all assets to be repaired are replaced with a service unit)</p></th>
-
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            </tbody>
-                                                        </table>
-                                                        
-                                                        
-                                                    </div>
                                                 </div>
 
                                                 <div class="form-group">
@@ -242,6 +231,18 @@ $count = 0;
             document.getElementsByName("dateNeeded")[0].setAttribute('min', today);
 
 
+        }
+
+        function checkBoxEnable(){
+            var chk1 = document.getElementById('chk1[]');
+            var chk2 = document.getElementById('chk2[]');
+
+            if (chk1.checked)
+                chk2.disabled = false;
+            if(chk1.checked == false){
+                chk2.disabled = true;
+                chk2.checked = false;
+            }
         }
     </script>
 
