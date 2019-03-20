@@ -282,6 +282,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         }
 
                                         ?>
+
                                         </tbody>
                                     </table>
                                     <input style="display: none" type="number" id="count" name="count">
@@ -289,7 +290,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                             </section>
                             <button type="submit" name="submit" id="submit" class="btn btn-success">Send</button>
                             </form>
-                            <button type="button" class="btn btn-danger" onclick="window.history.back();">Back</button>
+                            <a href="<?php echo $_SESSION['previousDash'];?>"><button type="button" class="btn btn-danger">Back</button></a>
                         </div>
                         
                         
@@ -379,6 +380,18 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
     </script>
 
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="bs3/js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
+    <script src="js/jquery.nicescroll.js"></script>
+    <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+    <script src="js/dynamic_table_init.js"></script>
     <script src="js/scripts.js"></script>
     <script src="js/advanced-form.js"></script>
 

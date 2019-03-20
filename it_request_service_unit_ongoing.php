@@ -205,82 +205,31 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         <form method ="post" action="it_request_service_unit_DB.php?=<?php echo $id;?>">
                                         <tbody>
                                         <?php
-                                        $count = 0;
-                                        for ($i=0; $i < count($assets); $i++) {
-                                            
 
-                                            echo
-                                                "<tr>
-                                                    <td width='300'>
-                                                        <select id = '".$count."' class='form-control' onchange='loadDetails(this.value, this.id)' disabled>
-                                                        <option value =''>Select</option>";
+                                            $query3 = " SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification,  m.description 
+                                                            FROM thesis.serviceunitassets sa
+                                                        JOIN asset a 
+                                                            ON a.assetID = sa.assetID
+                                                        JOIN assetModel m
+                                                            ON assetModel = assetModelID
+                                                        JOIN ref_brand br
+                                                            ON brand = brandID
+                                                        JOIN ref_assetcategory c
+                                                            ON assetCategory = assetCategoryID
+                                                        WHERE id = {$id};";
+                                            $result3 = mysqli_query($dbc, $query3);  
 
-                                                $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
-                                                        FROM asset a 
-                                                            JOIN assetModel m
-                                                        ON assetModel = assetModelID
-                                                            JOIN ref_brand br
-                                                        ON brand = brandID
-                                                            JOIN ref_assetcategory c
-                                                        ON assetCategory = assetCategoryID
-                                                            WHERE assetCategoryID = '{$assetCategoryID[$i]}'
-                                                        AND isServiceUnit = '1';";
+                                            while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
 
-                                                $result = mysqli_query($dbc, $sql);
-                                                
-
-                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                {
-                                                    echo "<option value ={$row['assetID']} disabled>";
-                                                    echo "{$row['propertyCode']}</option>";
-                                                }
-                                                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-                                                           
-                                            echo 
-                                                        "</select>
-                                                    </td>";
-
-                                            $sql = "SELECT * FROM thesis.ref_assetcategory WHERE assetCategoryID = '{$assetCategoryID[$i]}';";
-                                            $result = mysqli_query($dbc, $sql);
-
-                                            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-                                            $category = $row['name'];
-
-                                            $query="SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description as'modelDescription'
-                                                        FROM asset a 
-                                                            JOIN assetModel m
-                                                        ON assetModel = assetModelID
-                                                            JOIN ref_brand br
-                                                        ON brand = brandID
-                                                            JOIN ref_assetcategory c
-                                                        ON assetCategory = assetCategoryID
-                                                            WHERE assetCategoryID = '{$assetCategoryID[$i]}';";
-                                            $result=mysqli_query($dbc,$query);
-                                            
-                                            $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
-
-
-                                            echo
-                                                    "<td>
-                                                        <input type='text' disabled class='form-control' value = '{$category}'>
-                                                    </td>
-                                                        <td id='brand".$count."'>
-                                                            <input class='form-control' disabled>
-                                                        </td>
-                                                        <td id='description".$count."'>
-                                                            <input class='form-control'  disabled>
-                                                        </td>
-                                                        <td id='specification".$count."'>
-                                                            <input class='form-control'  disabled>
-                                                        </td>
-                                                        <td id='assetID".$count."' style='display: none'>
-                                                            <input class='form-control' name='assets[]'  disabled>
-                                                        </td>
+                                               echo "
+                                                <tr>
+                                                <td>{$row['propertyCode']}</td>
+                                                <td>{$row['category']}</td>
+                                                <td>{$row['brand']}</td>
+                                                <td>{$row['description']}</td>
+                                                <td>{$row['itemSpecification']}</td>
                                                 </tr>";
-
-                                                $count++;
-                                        }
-
+                                            }  
                                         ?>
                                         </tbody>
                                     </table>
@@ -309,76 +258,14 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     <script src="js/jquery-1.8.3.min.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
     <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
-
     <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript">
-        var count = 0;
-
-        function removeRow(o) {
-            var p = o.parentNode.parentNode;
-            p.parentNode.removeChild(p);
-        }
-
-        function addTest(cavasItemID) {
-            var row_index = 0;
-            var canvasItemID = cavasItemID;
-            var isRenderd = false;
-
-            $("td").click(function() {
-                row_index = $(this).parent().index();
-
-            });
-
-            var delayInMilliseconds = 0; //1 second
-
-            setTimeout(function() {
-
-                appendTableRow(row_index, canvasItemID);
-            }, delayInMilliseconds);
-
-        }
-         function loadDetails(val, id){
-            
-            $.ajax({
-            type:"POST",
-            url:"loadDetails1.php",
-            data: 'assetID='+val,
-            success: function(data){
-                $("#brand"+id).html(data);
-
-                }
-            });
-            $.ajax({
-            type:"POST",
-            url:"loadDetails2.php",
-            data: 'assetID='+val,
-            success: function(data){
-                $("#description"+id).html(data);
-
-                }
-            });
-            $.ajax({
-            type:"POST",
-            url:"loadDetails3.php",
-            data: 'assetID='+val,
-            success: function(data){
-                $("#specification"+id).html(data);
-
-                }
-            });
-            $.ajax({
-            type:"POST",
-            url:"loadDetails4.php",
-            data: 'assetID='+val,
-            success: function(data){
-                $("#assetID"+id).html(data);
-
-                }
-            });
-        }   
-
-    </script>
-
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
+    <script src="js/jquery.nicescroll.js"></script>
+    <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+    <script src="js/dynamic_table_init.js"></script>
     <script src="js/scripts.js"></script>
     <script src="js/advanced-form.js"></script>
 

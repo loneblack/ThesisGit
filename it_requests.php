@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php
+session_start();
+$_SESSION['previousDash'] = "it_requests.php";
+?>
 <head>
     <meta charset="utf-8">
 
@@ -80,6 +83,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <?php
+
 															
                                                             $count = 1;
 															$key = "Fusion";

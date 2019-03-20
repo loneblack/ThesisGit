@@ -205,82 +205,31 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         <form method ="post" action="it_request_service_unit_DB.php?=<?php echo $id;?>">
                                         <tbody>
                                         <?php
-                                        $count = 0;
-                                        for ($i=0; $i < count($assets); $i++) {
-                                            
 
-                                            echo
-                                                "<tr>
-                                                    <td width='300'>
-                                                        <select id = '".$count."' class='form-control' onchange='loadDetails(this.value, this.id)' disabled>
-                                                        <option value =''>Select</option>";
+                                            $query3 = " SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification,  m.description 
+                                                            FROM thesis.serviceunitassets sa
+                                                        JOIN asset a 
+                                                            ON a.assetID = sa.assetID
+                                                        JOIN assetModel m
+                                                            ON assetModel = assetModelID
+                                                        JOIN ref_brand br
+                                                            ON brand = brandID
+                                                        JOIN ref_assetcategory c
+                                                            ON assetCategory = assetCategoryID
+                                                        WHERE id = {$id};";
+                                            $result3 = mysqli_query($dbc, $query3);  
 
-                                                $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
-                                                        FROM asset a 
-                                                            JOIN assetModel m
-                                                        ON assetModel = assetModelID
-                                                            JOIN ref_brand br
-                                                        ON brand = brandID
-                                                            JOIN ref_assetcategory c
-                                                        ON assetCategory = assetCategoryID
-                                                            WHERE assetCategoryID = '{$assetCategoryID[$i]}'
-                                                        AND isServiceUnit = '1';";
+                                            while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
 
-                                                $result = mysqli_query($dbc, $sql);
-                                                
-
-                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
-                                                {
-                                                    echo "<option value ={$row['assetID']}>";
-                                                    echo "{$row['propertyCode']}</option>";
-                                                }
-                                                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-                                                           
-                                            echo 
-                                                        "</select>
-                                                    </td>";
-
-                                            $sql = "SELECT * FROM thesis.ref_assetcategory WHERE assetCategoryID = '{$assetCategoryID[$i]}';";
-                                            $result = mysqli_query($dbc, $sql);
-
-                                            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-                                            $category = $row['name'];
-
-                                            $query="SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description as'modelDescription'
-                                                        FROM asset a 
-                                                            JOIN assetModel m
-                                                        ON assetModel = assetModelID
-                                                            JOIN ref_brand br
-                                                        ON brand = brandID
-                                                            JOIN ref_assetcategory c
-                                                        ON assetCategory = assetCategoryID
-                                                            WHERE assetCategoryID = '{$assetCategoryID[$i]}';";
-                                            $result=mysqli_query($dbc,$query);
-                                            
-                                            $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
-
-
-                                            echo
-                                                    "<td>
-                                                        <input type='text' disabled class='form-control' value = '{$category}'>
-                                                    </td>
-                                                        <td id='brand".$count."'>
-                                                            <input class='form-control' disabled>
-                                                        </td>
-                                                        <td id='description".$count."'>
-                                                            <input class='form-control'  disabled>
-                                                        </td>
-                                                        <td id='specification".$count."'>
-                                                            <input class='form-control'  disabled>
-                                                        </td>
-                                                        <td id='assetID".$count."' style='display: none'>
-                                                            <input class='form-control' name='assets[]'  disabled>
-                                                        </td>
+                                               echo "
+                                                <tr>
+                                                <td>{$row['propertyCode']}</td>
+                                                <td>{$row['category']}</td>
+                                                <td>{$row['brand']}</td>
+                                                <td>{$row['description']}</td>
+                                                <td>{$row['itemSpecification']}</td>
                                                 </tr>";
-
-                                                $count++;
-                                        }
-
+                                            }  
                                         ?>
                                         </tbody>
                                     </table>

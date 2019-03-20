@@ -2,6 +2,7 @@
 <?php
 	session_start();
     $userID = $_SESSION['userID'];
+    $_SESSION['previousDash'] = "it_dashboard.php";
 	require_once('db/mysql_connect.php');
 	$StartDate = strtotime('2018-1-3'); //Start date from which we begin count
 	$CurDate = date("Y-m-d"); //Current date.
