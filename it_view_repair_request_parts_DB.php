@@ -17,6 +17,8 @@
 
     	$sql = "UPDATE `thesis`.`asset` SET `assetStatus` = '3' WHERE (`assetID` = '{$asset}');";
     	$result = mysqli_query($dbc, $sql);
+
+    	echo $sql;
     }
 
 	$message = "Form submitted!";

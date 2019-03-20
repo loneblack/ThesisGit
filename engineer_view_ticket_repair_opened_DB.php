@@ -5,7 +5,7 @@
 
     $id = $_GET['id'];
     $userID = $_SESSION['userID'];
-
+        /*
     $query =  "SELECT *, t.status AS 'status', s.status AS 'statusDescription' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID  WHERE t.ticketID = {$id};";
     $result = mysqli_query($dbc, $query);
 
@@ -68,8 +68,42 @@
                 $resultTicketedAsset=mysqli_query($dbc,$queryTicketedAsset);
             }
             $counter++;
-        }
+        }*/
 
+        $destinations=$_POST['destinationID'];
+        $actions=$_POST['actionID'];        
+        $assets=$_POST['assets'];
+        $sources=$_POST['sourceID'];
+        $size = count($assets);
+
+        for ($i=0; $i < $size; $i++) { 
+            //0 for none
+            if($actions[$i] == 1){//added
+                echo $assets[$i].' ';
+                echo $actions[$i].' ';
+                echo $destinations[$i].' ';
+                echo $sources[$i].' ';
+                echo "added asset: {$assets[$i]} to {$destinations[$i]}";
+                echo '<br>';
+            }
+            else if($actions[$i] == 2){//remmoved
+                echo $assets[$i].' ';
+                echo $actions[$i].' ';
+                echo $destinations[$i].' ';
+                echo $sources[$i].' ';
+                echo "removed asset: {$assets[$i]} from {$sources[$i]}";
+                echo '<br>';
+            }
+            else{
+                echo $assets[$i].' ';
+                echo $actions[$i].' ';
+                echo $destinations[$i].' ';
+                echo $sources[$i].' ';
+                echo "no action";
+                echo '<br>';
+            }
+        }
+            /*
         //Update Comment and assignee
         $comment=$_POST['comment'];
         $assigneeUserID = $_POST['escalateUserID'];
@@ -177,5 +211,5 @@
 
         $header = $_SESSION['previousPage'];
         header('Location: '.$header);
-    
+    */
 ?>

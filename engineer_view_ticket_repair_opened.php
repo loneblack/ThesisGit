@@ -394,13 +394,14 @@ while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <select class='form-control form-control-inline' name='actionID[]'>
+                                                        <select class='form-control form-control-inline' name='destinationID[]'>
                                                             <option value='0'>None</option>";
 
                                                     echo
                                                         "</select>
                                                     </td>
-                                                    <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
+                                                    <td style = 'display: none'><input type='number' name='assets[]' value ='{$row['assetID']}'></td>
+                                                    <td style = 'display: none'><input type='number' name='sourceID[]' value ='{$source[$i]}'></td>
                                                     </tr>";
                                                 }  
 
@@ -421,7 +422,8 @@ while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
                                                     ON assetCategory = assetCategoryID
                                                         JOIN requestparts rp
                                                     ON ra.requestPartsID = rp.id
-                                                        WHERE rp.serviceID = {$serviceID};";
+                                                        WHERE rp.serviceID = {$serviceID}
+                                                    AND rp.statusID = 3;"; // only show delivered items
                                                 
                                                 $result3 = mysqli_query($dbc, $query3);  
 
@@ -433,18 +435,17 @@ while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
 
                                                    echo "
                                                     <tr>
-                                                    <td>Source Asset</td>
+                                                    <td>Requested Part</td>
                                                     <td>{$row['propertyCode']}</td>
                                                     <td>{$row['brand']} {$row['category']} {$row['description']}</td>
                                                     <td>
                                                         <select class='form-control form-control-inline' name='actionID[]'>
                                                             <option value='0'>None</option>
                                                             <option value='1'>Added</option>
-                                                            <option value='2'>Removed</option>
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <select class='form-control form-control-inline' name='actionID[]'>
+                                                        <select class='form-control form-control-inline' name='destinationID[]'>
                                                             <option value='0'>Action</option>";
 
                                                     for ($j=0; $j < count($assets); $j++) { 
@@ -478,7 +479,8 @@ while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
                                                     echo
                                                         "</select>
                                                     </td>
-                                                    <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
+                                                    <td style = 'display: none'><input type='number' name='assets[]' value ='{$row['assetID']}'></td>
+                                                    <td style = 'display: none'><input type='number' name='sourceID[]' value ='0'></td>
                                                     </tr>";
                                                     }  
                                                 }
