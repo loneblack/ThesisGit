@@ -90,7 +90,7 @@
 																<div class="row">
 																	<div class="col-lg-6">
 																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">Start Date</label>
-																		<input type="date" name="startDate" id="startDate" class="form-control input-sm m-bot15">
+																		<input type="date" name="startDate" id="startDate" class="form-control input-sm m-bot15" onChange="checkDate();">
 																	</div>
 																	<div class="col-lg-6">
 																		<label class="col-sm-6 control-label col-lg-6" for="inputSuccess">End Date</label>
@@ -225,7 +225,11 @@
 		function myFunction() {
 			window.print();
         }
-	
+		function checkDate() {
+			var startDate = document.getElementById("startDate").value;
+			var endDate = document.getElementById("endDate");
+			endDate.setAttribute("min", startDate);
+        }
 		function getAllMainData(){
 			/*var getYear = document.getElementById("year").value;
 			var getMonth = document.getElementById("month").value;
