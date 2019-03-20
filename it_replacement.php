@@ -4,8 +4,18 @@
 session_start();
 $userID = $_SESSION['userID'];
 require_once("db/mysql_connect.php");
-?>
 
+$id = $_GET['id'];   
+
+$query =  "SELECT * FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id  WHERE r.id = {$id};";
+$result = mysqli_query($dbc, $query);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+        
+        $replacementUnit = $row['replacementUnit'];        
+
+    }
+?>
 <head>
     <meta charset="utf-8">
 
@@ -85,6 +95,14 @@ require_once("db/mysql_connect.php");
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        <?php
+                                            if($replacementUnit == 1){// if opt for service unit, service units are  the ones that will be replaced.
+
+                                            }
+                                            else{//if no service unit show assets that are being repaired
+
+                                            }
+                                        ?>
                                         </tbody>
                                     </table>
                                 </div>
