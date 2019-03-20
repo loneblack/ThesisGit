@@ -154,13 +154,12 @@ while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
                                                 </h5>
                                             </div>
                                             <div class="col-md-8">
-                                                <h5>Summary:
-                                                    <?php echo $summary;?>
-                                                </h5>
+                                                
                                             </div>
                                             <div class="cp;-col-md-4"></div>
                                         </div>
                                     </div>
+                                    <br>
                                     <div class="view-mail">
                                         <p>Details:
                                             <?php echo $details;?>
@@ -570,7 +569,7 @@ while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
                                                 <input class='form-control' name='specification0'>
                                             </td>
                                             <td>
-                                                <select class="form-control" id="delivery" name="delivery">
+                                                <select class="form-control" id="delivery" name="delivery" readonly>
                                                     <option value="0">Pending</option>
                                                 </select>
                                             </td>

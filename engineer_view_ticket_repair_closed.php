@@ -144,13 +144,11 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 </h5>
                                             </div>
                                             <div class="col-md-8">
-                                                <h5>Summary:
-                                                    <?php echo $summary;?>
-                                                </h5>
                                             </div>
                                             <div class="cp;-col-md-4"></div>
                                         </div>
                                     </div>
+                                    <br>
                                     <div class="view-mail">
                                         <p>Details:
                                             <?php echo $details;?>

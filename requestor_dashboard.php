@@ -83,6 +83,7 @@ require_once("db/mysql_connect.php");
                                                     <th>Date Needed</th>
                                                     <td style='display: none'>StatusID</td>
                                                     <th>Status</th>
+                                                    <th>Details</th>
                                                     <!-- <th>Description</th> -->
                                                 </tr>
                                             </thead>
@@ -367,6 +368,7 @@ require_once("db/mysql_connect.php");
                                                     <th>Date Needed</th>
                                                     <td style='display: none'>StatusID</td>
                                                     <th>Status</th>
+                                                    <th>Details</th>
                                                     <!-- <th>Description</th> -->
                                                 </tr>
                                             </tfoot>

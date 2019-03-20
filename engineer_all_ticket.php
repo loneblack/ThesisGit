@@ -75,6 +75,7 @@ require_once("db/mysql_connect.php");
                                                     <th>Priority</th>
                                                     <th>Status</th>
                                                     <th>Requested By</th>
+                                                    <th>Details</th>
                                                 </tr>
                                             </thead>
 
@@ -156,6 +157,7 @@ require_once("db/mysql_connect.php");
                                                     <th>Priority</th>
                                                     <th>Status</th>
                                                     <th>Requested By</th>
+                                                    <th>Details</th>
                                                 </tr>
                                             </tfoot>
                                         </table>

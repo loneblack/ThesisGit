@@ -75,6 +75,7 @@
                                                                 <th>Description</th>
                                                                 <th>Requestor</th>
                                                                 <th>Requested Date</th>
+                                                                <th>Details</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -454,23 +455,24 @@
                             }
                         }
                         if (idx == "Service Unit") {
-                            if (id == "Ongoing" || id == "Pending") {
-								if(idDesc == "Request Pending"){
-									window.location.href = "it_request_service_unit.php?id=" + ida;
-								}
-                            } else if (id == "Completed" || id == "Incomplete") {
-                                
+                            if (id == "Pending") {
+								window.location.href = "it_request_service_unit.php?id=" + ida;
+                            } else if (id == "Ongoing") {
+                                window.location.href = "it_request_service_unit_ongoing.php?id=" + ida;
+                            } else if (id == "Closed") {
+                                window.location.href = "it_request_service_unit_closed.php?id=" + ida;
                             }
                         }
                         if (idx == "Request for Parts") {
-                            if (id == "Ongoing" || id == "Pending") {
-								if(idDesc == "Request Pending"){
-									window.location.href = "it_view_repair_request_parts.php?id=" + ida;
-								}
-                            } else if (id == "Completed" || id == "Incomplete") {
-                                
+                            if (id == "Pending") {
+								window.location.href = "it_view_repair_request_parts.php?id=" + ida;
+                            } else if (id == "Ongoing") {
+                                window.location.href = "it_view_repair_request_parts_ongoing.php?id=" + ida;
+                            } else if (id == "Closed") {
+                                window.location.href = "it_view_repair_request_parts_closed.php?id=" + ida;
                             }
                         }
+
                     };
                 };
                 currentRow.onclick = createClickHandler(currentRow);
