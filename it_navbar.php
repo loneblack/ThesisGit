@@ -134,16 +134,6 @@
                             </ul>
                         </li>
                         
-                        <li class="sub-menu">
-                            <a href="javascript:;">
-                                <i class="fa fa-group"></i>
-                                <span>Supplier</span>
-                            </a>
-                            <ul class="sub">
-                                <li><a href="it_all_supplier.php">All Suppliers</a></li>
-                                <li><a href="it_add_supplier.php">Add Supplier</a></li>
-                            </ul>
-                        </li>
                         
                         <li class="sub-menu">
                             <a href="javascript:;">
