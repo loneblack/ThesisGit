@@ -6,6 +6,11 @@
 
 	$id = $_GET['id'];
 	$assets=$_POST['assets'];
+    $toBeReplaced = $_POST['assetID'];
+
+    //check if replacement unit or not
+
+    //remove assignment of assets being repaired
     /*
     //update service unit status
     $sql = "UPDATE `thesis`.`serviceUnit` SET `statusID` = '2' WHERE (`serviceUnitID` = '{$id}');";

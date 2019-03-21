@@ -75,6 +75,7 @@ $assetCategories = array();
             <section class="wrapper">
                 <!-- page start-->
 
+                <form method='post' action="it_replacement_DB.php?id=<?phph echo $id;?>">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
@@ -198,7 +199,6 @@ $assetCategories = array();
                         </div>
 
                         <div class="col-sm-12">
-                            <form method='post' action="it_replacement_DB.php?id=<?phph echo $id;?>">
                             <section class="panel">
                                 <div class="panel-body ">
                                     <div>
@@ -223,8 +223,8 @@ $assetCategories = array();
                                             echo
                                                 "<tr>
                                                     <td width='300'>
-                                                        <select id = '".$count."' class='form-control' onchange='loadDetails(this.value, this.id)' required>
-                                                        <option value =''>Select</option>";
+                                                        <select id = '".$count."' class='form-control' onchange='loadDetails(this.value, this.id)'>
+                                                        <option value ='0'>None</option>";
 
                                                 $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                         FROM asset a 

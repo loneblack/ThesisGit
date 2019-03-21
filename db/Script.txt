@@ -1535,6 +1535,7 @@ DROP TABLE IF EXISTS `thesis`.`servicedetails` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`servicedetails` (
   `serviceID` INT(11) NOT NULL,
   `asset` INT(11) NOT NULL,
+  `replaced` TINYINT NULL,
   INDEX `fk_table1_service1_idx` (`serviceID` ASC),
   INDEX `fk_table1_asset1_idx` (`asset` ASC),
   CONSTRAINT `fk_table1_service1`
