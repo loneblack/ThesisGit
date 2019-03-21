@@ -180,7 +180,7 @@ $count = 0;
                                                                         $count ++;
                                                                         echo "<tr>";
                                                                         echo "<td style='display:none'>{$count}</td>";
-                                                                        echo "<td><input type='checkbox' id='chk1[]'' name='assets[]'' value='{$row['assetID']}' onclick='checkBoxEnable();' ></td>";
+                                                                        echo "<td><input type='checkbox' id='chk1[]'' name='assets[]'' value='{$row['assetID']}' onclick='checkBoxEnable(this);' ></td>";
                                                                         echo "<td>{$row['propertyCode']}</td>";
                                                                         echo "<td>{$row['brand']}</td>";
                                                                         echo "<td>{$row['category']}</td>";
@@ -229,13 +229,14 @@ $count = 0;
         function checkDate(){
             var today = new Date().toISOString().split('T')[0];
             document.getElementsByName("dateNeeded")[0].setAttribute('min', today);
-
-
         }
 
-        function checkBoxEnable(){
-            var chk1 = document.getElementById('chk1[]');
-            var chk2 = document.getElementById('chk2[]');
+        function checkBoxEnable(data){
+            var chk1 = data;
+            var cell = data.parentNode;
+            var row = cell.parentNode;
+            var cells = row.getElementsByTagName("td");
+            var chk2 = cells[6].getElementsByTagName("input")[0]; 
 
             if (chk1.checked)
                 chk2.disabled = false;
