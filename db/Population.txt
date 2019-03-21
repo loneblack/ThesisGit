@@ -1252,7 +1252,7 @@ INSERT INTO `schoolyear` (`SchoolYearID`,`SchoolYear`,`Term1Start`,`Term2Start`,
 
 -- Service insert
 INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`) VALUES ('Screen is busted', NOW(), '9', '27', '1', '14', '0');
-INSERT INTO `thesis`.`servicedetails` VALUES ('1','1');
+INSERT INTO `thesis`.`servicedetails` VALUES ('1','1', '0');
 
 
 -- Computer
