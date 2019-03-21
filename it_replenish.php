@@ -32,7 +32,7 @@
 			}
 		}
 		
-		$queryReq = "INSERT INTO `thesis`.`request` (`description`, `recipient`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`) VALUES ('For Replenish', 'IT Office', '{$employeeID}', now(), '4', '11', '{$dateNeeded}', '{$_SESSION['userID']}', '2', '3');";//status is set to 1 for pending status
+		$queryReq = "INSERT INTO `thesis`.`request` (`description`, `recipient`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`) VALUES ('For Replenish', 'IT Office', '{$employeeID}', now(), '4', '11', '{$dateNeeded}', '{$_SESSION['userID']}', '1', '23');";//status is set to 1 for pending status
 		
 		//$queryReq="INSERT INTO `thesis`.`request` (`date`, `UserID`, `status`, `step`) VALUES (now(), '{$_SESSION['userID']}', '2', '3')";
 		$resultReq=mysqli_query($dbc,$queryReq);
@@ -43,38 +43,47 @@
 		$rowLatReq=mysqli_fetch_array($resultLatReq, MYSQLI_ASSOC);
 		
 		//CREATE CANVAS
-		$queryCan="INSERT INTO `thesis`.`canvas` (`requestID`, `status`) VALUES ('{$rowLatReq['requestID']}', '1')";
-		$resultCan=mysqli_query($dbc,$queryCan);
+		//$queryCan="INSERT INTO `thesis`.`canvas` (`requestID`, `status`) VALUES ('{$rowLatReq['requestID']}', '1')";
+		//$resultCan=mysqli_query($dbc,$queryCan);
 		
 		//GET LATEST CANVAS
-		$queryLatCan="SELECT * FROM thesis.canvas order by canvasID desc limit 1";
-		$resultLatCan=mysqli_query($dbc,$queryLatCan);
-		$rowLatCan=mysqli_fetch_array($resultLatCan, MYSQLI_ASSOC);
+		//$queryLatCan="SELECT * FROM thesis.canvas order by canvasID desc limit 1";
+		//$resultLatCan=mysqli_query($dbc,$queryLatCan);
+		//$rowLatCan=mysqli_fetch_array($resultLatCan, MYSQLI_ASSOC);
 		
 		//INSERT to CANVASITEM
 		$assetCat=$_POST['assetCat'];
 		$quantity=$_POST['quantity'];
-		$model=$_POST['model'];
+		$itemSpecs=$_POST['itemSpecs'];
+		//$model=$_POST['model'];
 		
 		$mi = new MultipleIterator();
 		$mi->attachIterator(new ArrayIterator($assetCat));
 		$mi->attachIterator(new ArrayIterator($quantity));
-		$mi->attachIterator(new ArrayIterator($model));
+		$mi->attachIterator(new ArrayIterator($itemSpecs));
+		//$mi->attachIterator(new ArrayIterator($model));
 		
 		foreach ( $mi as $value ) {
-			list($assetCat, $quantity, $model) = $value;
-			$queryCanItem="INSERT INTO `thesis`.`canvasitem` (`canvasID`, `quantity`, `assetCategory`, `assetModel`) VALUES ('{$rowLatCan['canvasID']}', '{$quantity}', '{$assetCat}', '{$model}')";
-			$resultCanItem=mysqli_query($dbc,$queryCanItem);
+			list($assetCat, $quantity, $itemSpecs) = $value;
+			
+			$queryReqDet="INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `assetCategory`, `description`) VALUES ('{$rowLatReq['requestID']}', '{$quantity}', '{$assetCat}', '{$itemSpecs}')";
+			$resultReqDet=mysqli_query($dbc,$queryReqDet);
+			
+			//$queryCanItem="INSERT INTO `thesis`.`canvasitem` (`canvasID`, `quantity`, `assetCategory`, `assetModel`) VALUES ('{$rowLatCan['canvasID']}', '{$quantity}', '{$assetCat}', '{$model}')";
+			//$resultCanItem=mysqli_query($dbc,$queryCanItem);
 		}
 		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`requestID`, `steps_id`, `isRead`) VALUES ('{$rowLatReq['requestID']}', '23', false);";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
+		
 		//GET SUM OF QTY ORDERED
-		$queryLatQty="SELECT assetCategory, SUM(quantity) as `totalQty` FROM thesis.canvasitem where canvasID='{$rowLatCan['canvasID']}' group by assetCategory";
-		$resultLatQty=mysqli_query($dbc,$queryLatQty);
-		while($rowLatQty=mysqli_fetch_array($resultLatQty, MYSQLI_ASSOC)){
+		//$queryLatQty="SELECT assetCategory, SUM(quantity) as `totalQty` FROM thesis.canvasitem where canvasID='{$rowLatCan['canvasID']}' group by assetCategory";
+		//$resultLatQty=mysqli_query($dbc,$queryLatQty);
+		//while($rowLatQty=mysqli_fetch_array($resultLatQty, MYSQLI_ASSOC)){
 			//INSERT TO REQUESTDETAILS
-			$queryReqDet="INSERT INTO `thesis`.`requestdetails` (`requestID`, `quantity`, `assetCategory`) VALUES ('{$rowLatReq['requestID']}', '{$rowLatQty['totalQty']}', '{$rowLatQty['assetCategory']}')";
-			$resultReqDet=mysqli_query($dbc,$queryReqDet);
-		}
+			
+		//}
 		
 		
 		$message = "Form submitted!";
@@ -165,9 +174,10 @@
                                                                                 <th>Ceiling</th>
                                                                                 <th>Total Quantity</th>
                                                                                 <th>To Buy</th>
-                                                                                <th>Brand</th>
+																				<th>Item Specifications</th>
+                                                                                <!--<th>Brand</th>
                                                                                 <th>Model</th>
-                                                                                <th>Add</th>
+                                                                                <th>Add</th>-->
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -176,9 +186,9 @@
 																				$count=0;
 																				foreach($forReplenish as $forRep){
 																					$code="0".$count;
-																					$queryForRep = "SELECT i.assetCategoryID,rac.name as `assetCat`,i.floorLevel,i.ceilingLevel, count(IF(a.assetStatus = 1, a.assetID, null)) as `stockOnHand`,count(IF(a.assetStatus = 2, a.assetID, null)) as `borrowed`, count(IF(a.assetStatus = 2 or a.assetStatus = 1, a.assetID, null)) as `totalQty` FROM thesis.inventory i join ref_assetcategory rac on i.assetCategoryID=rac.assetCategoryID
-																							 join assetmodel am on i.assetCategoryID=am.assetCategory
-																							 join asset a on am.assetModelID=a.assetModel
+																					$queryForRep = "SELECT i.assetCategoryID,rac.name as `assetCat`,i.floorLevel,i.ceilingLevel, count(IF(a.assetStatus = 1, a.assetID, null)) as `stockOnHand`,count(IF(a.assetStatus = 2, a.assetID, null)) as `borrowed`, count(IF(a.assetStatus = 2 or a.assetStatus = 1, a.assetID, null)) as `totalQty` FROM thesis.inventory i left join ref_assetcategory rac on i.assetCategoryID=rac.assetCategoryID
+																							 left join assetmodel am on i.assetCategoryID=am.assetCategory
+																							 left join asset a on am.assetModelID=a.assetModel
 																							 where i.assetCategoryID='{$forRep}'
 																							 group by i.assetCategoryID";
 																					$resultForRep = mysqli_query($dbc, $queryForRep);
@@ -191,7 +201,11 @@
 																						<td>{$rowForRep['ceilingLevel']}</td>
 																						<td>{$rowForRep['totalQty']}</td>
 																						<td><input type='number' class='form-control' name='quantity[]'></td>
-																						<td>
+																						<td style='padding-top:5px; padding-bottom:5px'>
+																						<input class='form-control' type='text' name='itemSpecs[]' id='description0' placeholder='Item specifications' />
+																						</td>
+																						</tr>";
+																						/*<td>
 																							<select class='form-control' name='brand[]' id='exampleFormControlSelect2".$code."' required onchange='getModel(\"{$code}\")'>
 																							<option value=''>Select Brand</option>";
 																							
@@ -210,16 +224,10 @@
 																							</select>
 																						</td>
 																						<td><button type='button' class='btn btn-primary' onclick='Add({$forRep})'> Add </button></td>
-																					</tr>";
+																					</tr>";*/
 																					$count++;
 																				}
-																				
-																			
-																			
-																			
-																			
-																			
-																			
+
 																			?>
                                                                             <!-- <tr>
                                                                                 <td style="text-align:center"><input type="checkbox" checked disabled></td>
