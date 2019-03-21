@@ -67,7 +67,7 @@
 
                 }
         
-            $_SESSION['submitMessage'] = "Success! A new Server has been Created.";
+            $_SESSION['submitMessage'] = "Success! Server has been Updated.";
         
     }
 
