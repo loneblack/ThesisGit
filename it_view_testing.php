@@ -23,7 +23,6 @@
 			$resultReqID=mysqli_query($dbc,$queryReqID);
 			$rowReqID=mysqli_fetch_array($resultReqID,MYSQLI_ASSOC);
 			
-			
 			//UPDATE ASSET TESTING STATUS
 			$queryTestStat="UPDATE `thesis`.`assettesting` SET `statusID`='3' WHERE `testingID`='{$testingID}'";
 			$resultTestStat=mysqli_query($dbc,$queryTestStat);
@@ -42,20 +41,26 @@
 			$resultReqData=mysqli_query($dbc,$queryReqData);
 			$rowReqData=mysqli_fetch_array($resultReqData,MYSQLI_ASSOC);
 
-
-			//receiving - make receiving table
-			$queryReceiving="INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `requestID`, `statusID`) VALUES ('{$rowReqData['UserID']}', '{$rowReqID['requestID']}', '1');";
-			$resultReceiving=mysqli_query($dbc,$queryReceiving);
-
-			//get newly inserted receiving data
-			$queryGetReceiving="SELECT * FROM `thesis`.`requestor_receiving` where requestID='{$rowReqID['requestID']}' order by id desc limit 1";
-			$resultGetReceiving=mysqli_query($dbc,$queryGetReceiving);
-			$rowGetReceiving=mysqli_fetch_array($resultGetReceiving,MYSQLI_ASSOC);
+			//GET USERTYPE
+			$queryGetUserType="SELECT * FROM thesis.user where UserID='{$rowReqData['UserID']}'";
+			$resultGetUserType=mysqli_query($dbc,$queryGetUserType);
+			$rowGetUserType=mysqli_fetch_array($resultGetUserType,MYSQLI_ASSOC);
 			
-			//INSERT TO NOTIFICATIONS TABLE
-			$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `requestor_receiving_id`) VALUES (false, '{$rowGetReceiving['id']}');";
-			$resultNotif = mysqli_query($dbc, $sqlNotif);
-			
+			if($rowGetUserType['userType']!='2'){
+				//receiving - make receiving table
+				$queryReceiving="INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `requestID`, `statusID`) VALUES ('{$rowReqData['UserID']}', '{$rowReqID['requestID']}', '1');";
+				$resultReceiving=mysqli_query($dbc,$queryReceiving);
+
+				//get newly inserted receiving data
+				$queryGetReceiving="SELECT * FROM `thesis`.`requestor_receiving` where requestID='{$rowReqID['requestID']}' order by id desc limit 1";
+				$resultGetReceiving=mysqli_query($dbc,$queryGetReceiving);
+				$rowGetReceiving=mysqli_fetch_array($resultGetReceiving,MYSQLI_ASSOC);
+				
+				//INSERT TO NOTIFICATIONS TABLE
+				$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `requestor_receiving_id`) VALUES (false, '{$rowGetReceiving['id']}');";
+				$resultNotif = mysqli_query($dbc, $sqlNotif);
+			}
+
 			//Functioning asset
 			foreach(array_combine($assetPass, $warranty) as $assPass => $war){
 				//GENERATE PROPERTY CODE
@@ -71,7 +76,7 @@
 				
 				//Count Curr Assets based on assetCategory
 				$queryCount="SELECT Count(assetID) as `assetPosition` FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID
-																						  where am.assetCategory='{$rowGetAssInf['assetCategory']}'";
+																						  where a.assetID<='{$assPass}' and am.assetCategory='{$rowGetAssInf['assetCategory']}'";
 				$resultCount=mysqli_query($dbc,$queryCount);
 				$rowCount=mysqli_fetch_array($resultCount,MYSQLI_ASSOC);
 				
@@ -82,22 +87,30 @@
 				$queryProp="UPDATE `thesis`.`asset` SET `propertyCode`='{$propertyCode}' WHERE `assetID`='{$assPass}'";
 				$resultProp=mysqli_query($dbc,$queryProp);
 				
-				//INSERT Asset that passed the test to ASSETASSIGNMENT
-				$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `personresponsibleID`, `statusID`) VALUES ('{$assPass}', '{$rowReqData['BuildingID']}', '{$rowReqData['FloorAndRoomID']}', '{$rowReqData['UserID']}', '2')";
-				$resultAssAss=mysqli_query($dbc,$queryAssAss);
+				if($rowGetUserType['userType']!='2'){
+					//INSERT Asset that passed the test to ASSETASSIGNMENT
+					$queryAssAss="INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `personresponsibleID`, `statusID`) VALUES ('{$assPass}', '{$rowReqData['BuildingID']}', '{$rowReqData['FloorAndRoomID']}', '{$rowReqData['UserID']}', '2')";
+					$resultAssAss=mysqli_query($dbc,$queryAssAss);
+					
+					//GET LATEST ASSETASSIGNMENT
+					$queryGetLatAssAss = "SELECT * FROM thesis.assetassignment order by AssetAssignmentID desc limit 1";
+					$resultGetLatAssAss = mysqli_query($dbc,$queryGetLatAssAss);
+					$rowGetLatAssAss= mysqli_fetch_array($resultGetLatAssAss,MYSQLI_ASSOC);
+					
+					//INSERT TO ASSET AUDIT
+					$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetAssignmentID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowGetLatAssAss['assetID']}', '{$rowGetLatAssAss['AssetAssignmentID']}', '1');";
+					$resultAssAud=mysqli_query($dbc,$queryAssAud);
+					
+					//INSERT TO RECEIVING DETAILS
+					$queryReceivingDetails = "INSERT INTO `thesis`.`receiving_details`(`receivingID`, `assetID`, `received`) VALUES('{$rowGetReceiving['id']}', '{$assPass}', false);";
+					$resultReceivingDetails = mysqli_query($dbc,$queryReceivingDetails);
+				}
+				else{
+					//INSERT TO ASSET AUDIT
+					$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$assPass}', '1');";
+					$resultAssAud=mysqli_query($dbc,$queryAssAud);
+				}
 				
-				//GET LATEST ASSETASSIGNMENT
-				$queryGetLatAssAss = "SELECT * FROM thesis.assetassignment order by AssetAssignmentID desc limit 1";
-				$resultGetLatAssAss = mysqli_query($dbc,$queryGetLatAssAss);
-				$rowGetLatAssAss= mysqli_fetch_array($resultGetLatAssAss,MYSQLI_ASSOC);
-				
-				//INSERT TO ASSET AUDIT
-				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetAssignmentID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$rowGetLatAssAss['assetID']}', '{$rowGetLatAssAss['AssetAssignmentID']}', '1');";
-				$resultAssAud=mysqli_query($dbc,$queryAssAud);
-				
-				//INSERT TO RECEIVING DETAILS
-				$queryReceivingDetails = "INSERT INTO `thesis`.`receiving_details`(`receivingID`, `assetID`, `received`) VALUES('{$rowGetReceiving['id']}', '{$assPass}', false);";
-				$resultReceivingDetails = mysqli_query($dbc,$queryReceivingDetails);
 				
 				//SET DATE EXPIRED
 				$dateExp = new DateTime($rowGetAssInf['dateDelivered']);
@@ -178,8 +191,7 @@
 			//$resulta=mysqli_query($dbc,$querya);
 			
 			//UPDATE REQUEST STATUS
-			
-			
+
 			//GET QTY of Assets requested IN REQUESTDETAILS
 			$queryReq="SELECT sum(quantity) as `totalQty` FROM thesis.requestdetails where requestID='{$rowReqID['requestID']}'";
 			$resultReq=mysqli_query($dbc,$queryReq);
@@ -189,13 +201,18 @@
 			$queryPass="SELECT count(ad.assetID) as `passedAsset` FROM thesis.assetdocument ad join asset a on ad.assetID=a.assetID where ad.requestID='{$rowReqID['requestID']}' and a.assetStatus='1'";
 			$resultPass=mysqli_query($dbc,$queryPass);
 			$rowPass=mysqli_fetch_array($resultPass,MYSQLI_ASSOC);
-			
-			
-			
+
 			if($rowReq['totalQty']==$rowPass['passedAsset'])
 			{
-				$queryComp="UPDATE `thesis`.`request` SET `step`='24' WHERE `requestID`='{$rowReqID['requestID']}'";
-				$resultComp=mysqli_query($dbc,$queryComp);
+				if($rowGetUserType['userType']!='2'){
+					$queryComp="UPDATE `thesis`.`request` SET `step`='24' WHERE `requestID`='{$rowReqID['requestID']}'";
+					$resultComp=mysqli_query($dbc,$queryComp);
+				}
+				else{
+					$queryComp="UPDATE `thesis`.`request` SET `step`='21', `status`='3' WHERE `requestID`='{$rowReqID['requestID']}'";
+					$resultComp=mysqli_query($dbc,$queryComp);
+				}
+				
 			}	
 
 		}
