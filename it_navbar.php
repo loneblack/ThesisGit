@@ -92,7 +92,6 @@
                             </a>
                             <ul class="sub">
                                 <li><a href="it_list_all_assets.php">List All Assets</a></li>
-                                <li><a href="it_inventory.php">Assets</a></li>
                                 <li><a href="it_brands.php">Brands</a></li>
                                 <li><a href="it_products.php">Products</a></li>
                                 <li><a href="it_categories.php">Categories</a></li>

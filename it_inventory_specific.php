@@ -8,6 +8,21 @@
 	$queryAssetCat="SELECT * FROM thesis.ref_assetcategory where assetCategoryID='{$id}' limit 1";
 	$resultAssetCat=mysqli_query($dbc, $queryAssetCat);
 	$rowAssetCat=mysqli_fetch_array($resultAssetCat, MYSQLI_ASSOC);
+
+
+    if(isset($_POST['submit'])){	
+        
+        if($_POST['fLevel'] < $_POST['cLevel']){
+            $queryProp="UPDATE `thesis`.`inventory` SET `floorLevel` = '{$_POST['fLevel']}', `ceilingLevel` = '{$_POST['cLevel']}' WHERE (`InventoryID` = '{$id}');";
+            $resultProp=mysqli_query($dbc,$queryProp);
+            
+            $_SESSION['submitMessage'] = "Success! Floor Level and Ceiling Level Updated.";
+        }
+        
+        else{
+            $_SESSION['submitMessage'] = "Failed! Floor Level Should be Less than Ceiling Level.";
+        }
+    }
 	
 	
 ?>
@@ -58,6 +73,16 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+                
+                <?php
+                   if (isset($_SESSION['submitMessage'])){
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+                
+                ?>
 
                 <div class="row">
                     <div class="col-sm-12">
@@ -77,87 +102,81 @@
                                                 <div class="col-sm-12">
                                                     <section class="panel">
                                                         <div class="panel-body">
+                                                            <?php 
+                                                                $queryCount="SELECT floorLevel, ceilingLevel FROM Inventory WHERE assetCategoryID = {$id};";
+                                                                $resultCount=mysqli_query($dbc,$queryCount);
+                                                                $rowCount=mysqli_fetch_array($resultCount,MYSQLI_ASSOC);
+                                                            
+                                                            ?>
+
+                                                            <form class="form-group" method="POST" action="">
+
+                                                                <div class="form-group">
+                                                                    <label>Floor Level</label>
+                                                                    <input type="number" class="form-control" id="fLevel" name= "fLevel" placeholder="Enter Floor Level" value="<?php echo "{$rowCount['floorLevel']}" ?>" step="0" required>
+                                                                </div>
+                                                                
+                                                                <div class="form-group">
+                                                                    <label>Ceiling Level</label>
+                                                                    <input type="number" class="form-control" id="cLevel" name= "cLevel" placeholder="Enter Ceiling Level" value="<?php echo "{$rowCount['ceilingLevel']}" ?>" step="0" required>
+                                                                </div>
+                                                                
+                                                                <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                                                                <a href="it_inventory.php"><button type="button" class="btn btn-danger">Back</button></a>
+
+
+                                                            </form>
+
+
+
                                                             <div class="adv-table">
                                                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                                                     <thead>
                                                                         <tr>
+                                                                            <th class="hidden"></th>
                                                                             <th>Property Code</th>
                                                                             <th>Brand</th>
                                                                             <th>Model</th>
+                                                                            <th>Specifications</th>
+                                                                            <th>Category</th>
                                                                             <th>Status</th>
-                                                                            <th>Last Updated</th>
-                                                                            <th>Location</th>
-                                                                            <th>Borrower</th>
-                                                                            <th>Checkout/ Checkin</th>
+                                                                            <th>Checked Out To</th>
+                                                                            <th>Building</th>
+                                                                            <th>Floor and Room</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-																		<?php
-																			$queryInvDet="SELECT a.assetID, a.propertyCode,rb.name as `brandName`,am.description as `modelName`,ras.description as `assetStat`,CONCAT(bldg.name,' ',far.floorRoom) AS `location`,e.name as `borrower` FROM thesis.asset a left join assetmodel am on a.assetModel=am.assetModelID
-																							 left join ref_brand rb on am.brand=rb.brandID
-																							 left join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
-																							 left join borrow_details_item bdi on a.assetID=bdi.assetID
-																							 left join borrow_details bd on bdi.borrow_detailsID=bd.borrow_detailscol
-																							 left join request_borrow rbw on bd.borrowID=rbw.borrowID
-																							 left join floorandroom far on rbw.FloorAndRoomID=far.FloorAndRoomID
-																							 left join building bldg on far.BuildingID=bldg.BuildingID
-																							 left join employee e on rbw.personresponsibleID=e.employeeID
-																							 left join ref_assetstatus ras on a.assetStatus=ras.id
-																							 where am.assetCategory='{$id}'";
-																			$resultInvDet=mysqli_query($dbc, $queryInvDet);
-																			while($rowInvDet=mysqli_fetch_array($resultInvDet, MYSQLI_ASSOC)){
-																				echo "<tr>
-																					<td>{$rowInvDet['propertyCode']}</td>
-																					<td>{$rowInvDet['brandName']}</td>
-																					<td>{$rowInvDet['modelName']}</td>
-																					<td>{$rowInvDet['assetStat']}</td>
-																					<td></td>
-																					<td>{$rowInvDet['location']}</td>
-																					<td>{$rowInvDet['borrower']}</td>
-																					<td class='text-center'><a href='it_checkin.php?id={$rowInvDet['assetID']}'><button class='btn btn-info'>Checkin</button></a></td>
-																				</tr>";
-																			}
-																		?>
-                                                                        <!-- <tr>
-                                                                            <td>99994447327</td>
-                                                                            <td>Samsung</td>
-                                                                            <td>S7 Edge</td>
-                                                                            <td>Checked Out</td>
-                                                                            <td>12-23-2018 9:00:00 AM</td>
-                                                                            <td>Gokongwei 403B</td>
-                                                                            <td>Marvin Lao</td>
-                                                                            <td class="text-center"><a href="it_checkin.php"><button class="btn btn-info">Checkin</button></a></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>12445447327</td>
-                                                                            <td>Samsung</td>
-                                                                            <td>S7 Edge</td>
-                                                                            <td>In Repair</td>
-                                                                            <td>12-23-2018 9:00:00 AM</td>
-                                                                            <td>Default</td>
-                                                                            <td></td>
-                                                                            <td class="text-center"><a href="it_checkout.php"><button class="btn btn-warning" disabled>Checkout</button></a></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>39382707327</td>
-                                                                            <td>Huawei</td>
-                                                                            <td>Flare S2</td>
-                                                                            <td>Checked Out</td>
-                                                                            <td>12-23-2018 9:00:00 AM</td>
-                                                                            <td>Gokongwei 403B</td>
-                                                                            <td>Marvin Lao</td>
-                                                                            <td class="text-center"><a href="it_checkin.php"><button class="btn btn-info">Checkin</button></a></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>12394447327</td>
-                                                                            <td>Dell</td>
-                                                                            <td>RTX-1480</td>
-                                                                            <td>Stocked</td>
-                                                                            <td>12-23-2018 9:00:00 AM</td>
-                                                                            <td>Default</td>
-                                                                            <td></td>
-                                                                            <td class="text-center"><a href="it_checkout.php"><button class="btn btn-warning">Checkout</button></a></td>
-                                                                        </tr> -->
+                                                                        <?php
+													$query="SELECT a.assetID, a.propertyCode, rb.name AS `brand`, am.description AS `model`, am.itemSpecification, rac.name AS `category`, ras.description, e.name AS `employee`, b.name AS `building`, fr.floorRoom FROM asset a 
+                                                    LEFT JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                    LEFT JOIN ref_brand rb ON am.brand = rb.brandID
+                                                    LEFT JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
+                                                    LEFT JOIN ref_assetstatus ras ON a.assetStatus = ras.id
+                                                    LEFT JOIN assetassignment aa ON a.assetID = aa.assetID
+                                                    LEFT JOIN employee e ON aa.personresponsibleID = e.employeeID
+                                                    LEFT JOIN building b ON aa.BuildingID = b.BuildingID
+                                                    LEFT JOIN floorandroom fr ON aa.FloorAndRoomID = fr.FloorAndRoomID WHERE rac.assetCategoryID = {$id};";
+													$result=mysqli_query($dbc,$query);
+													
+													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														echo "<tr>
+															<td class='hidden' id='{$row['assetID']}'></td>
+															<td>{$row['propertyCode']}</td>
+															<td>{$row['brand']}</td>
+                                                            <td>{$row['model']}</td>
+                                                            <td>{$row['itemSpecification']}</td>
+                                                            <td>{$row['category']}</td>
+                                                            <td>{$row['description']}</td>
+                                                            <td>{$row['employee']}</td>
+                                                            <td>{$row['building']}</td>
+                                                            <td>{$row['floorRoom']}</td>
+                                                            </tr>";
+													}
+												
+												
+												
+												
+												?>
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -178,27 +197,27 @@
         <!--main content end-->
 
     </section>
-    
+
     <script>
-		function addRowHandlers() {
-			var table = document.getElementById("dynamic-table");
-			var rows = table.getElementsByTagName("tr");
-			for (i = 1; i < rows.length; i++) {
-				var currentRow = table.rows[i];
-				var createClickHandler = function(row) {
-					return function() {
-						var cell = row.getElementsByTagName("td")[0];
-						var idx = cell.textContent;
-						
+        function addRowHandlers() {
+            var table = document.getElementById("dynamic-table");
+            var rows = table.getElementsByTagName("tr");
+            for (i = 1; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function(row) {
+                    return function() {
+                        var cell = row.getElementsByTagName("td")[0];
+                        var idx = cell.textContent;
+
                         window.location.href = "it_asset_audit.php?=";
-						
-					};
-				};
-				currentRow.ondblclick = createClickHandler(currentRow);
-			}
-		}
-		window.onload = addRowHandlers();
-	</script>
+
+                    };
+                };
+                currentRow.ondblclick = createClickHandler(currentRow);
+            }
+        }
+        window.onload = addRowHandlers();
+    </script>
 
     <!-- WAG GALAWIN PLS LANG -->
 
@@ -215,8 +234,8 @@
 
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
-    
-    
+
+
 
 </body>
 
