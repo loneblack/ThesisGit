@@ -7,14 +7,26 @@ require_once("db/mysql_connect.php");
 
 $id = $_GET['id'];   
 
-$query =  "SELECT * FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id  WHERE r.id = {$id};";
+$query =  "SELECT *, s.userID as 'usr' FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id WHERE r.id = {$id};";
 $result = mysqli_query($dbc, $query);
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         
-        $replacementUnit = $row['replacementUnit'];        
+        $replacementUnit = $row['replacementUnit'];
+        $serviceID = $row['serviceID'];    
+        $userID = $row['usr'];
+        
+    }
+$query =  "SELECT *, b.name as 'building' FROM thesis.employee e JOIN floorandroom f ON e.FloorAndRoomID = f.FloorAndRoomID JOIN building b ON f.BuildingID = b.BuildingID WHERE e.UserID = '{$userID}';";
+$result = mysqli_query($dbc, $query);
+
+while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+        
+        $building = $row['building'];
+        $floorroom = $row['floorRoom'];   
 
     }
+
 ?>
 <head>
     <meta charset="utf-8">
@@ -31,7 +43,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="js/bootstrap-datepicker/css/datepicker.css" />
 
-    <link rel="stylesheet" type="text/css" href="js/select2/select2.css" />
+    <link rel="stylesheet" type="text/css" href="js/select2/select2.css" /> 
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
@@ -66,6 +78,9 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
+                            <button type="button" class="btn btn-default" onclick="window.history.back();"><span class="glyphicon glyphicon-chevron-left"> Back</span></button>
+                            <br>
+                            <br>
                             <section class="panel">
                                 <header style="padding-bottom:20px" class="panel-heading wht-bg">
                                     <?php
@@ -78,8 +93,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                             unset($_SESSION['submitMessage']);
                                         }
                                     ?>
-                                    <h4 class="gen-case" style="float:right">
-                                    </h4>
+                                    
                                     <h4>Provide Replacement</h4>
                                 </header>
                                 <div class="panel-body">
@@ -92,15 +106,74 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                 <th>Asset</th>
                                                 <th>Building</th>
                                                 <th>Room</th>
+                                                <th>ServiceUnit</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php
                                             if($replacementUnit == 1){// if opt for service unit, service units are  the ones that will be replaced.
+                                                $sql = "SELECT * FROM thesis.serviceunit su JOIN serviceunitassets sa ON su.serviceunitID = sa.serviceUnitID WHERE serviceID = '{$serviceID}';";
+                                                $result = mysqli_query($dbc, $sql);
+                                                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                                                
+                                                $assetID = $row['assetID'];
 
+                                                $query = "SELECT s.description, a.assetID, propertyCode, b.name AS 'brand', c.name as 'category', itemSpecification, s.id
+                                                    FROM asset a 
+                                                        JOIN assetModel m
+                                                    ON assetModel = assetModelID
+                                                        JOIN ref_brand b
+                                                    ON brand = brandID
+                                                        JOIN ref_assetcategory c
+                                                    ON assetCategory = assetCategoryID
+                                                        JOIN ref_assetstatus s
+                                                    ON a.assetStatus = s.id
+                                                        WHERE assetID = '{$assetID}';";
+                                                $result = mysqli_query($dbc, $query);
+                                                
+                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                                                    
+                                                    echo "<tr>
+                                                    <td>{$row['description']}</td>
+                                                    <td>{$row['propertyCode']}</td>
+                                                    <td>{$row['brand']} {$row['category']} {$row['itemSpecification']}</td>
+                                                    <td>{$building}</td>
+                                                    <td>{$floorroom}</td>
+                                                    <td><span class='glyphicon glyphicon-ok'></span></td>
+                                                    <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
+                                                    </tr>";      
+
+                                                }
                                             }
                                             else{//if no service unit show assets that are being repaired
+                                                echo "lul;";
+                                                $sql = "SELECT * FROM thesis.servicedetails sd 
+                                                            JOIN asset a 
+                                                        ON sd.asset = a.assetID
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand b
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            JOIN ref_assetstatus s
+                                                        ON a.assetStatus = s.id
+                                                            WHERE serviceID = '{$serviceID}';";
 
+                                                $result = mysqli_query($dbc, $sql);
+                                                echo $sql;
+                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+                                                echo "<tr>
+                                                    <td>{$row['description']}</td>
+                                                    <td>{$row['propertyCode']}</td>
+                                                    <td>{$row['brand']} {$row['category']} {$row['itemSpecification']}</td>
+                                                    <td>{$building}</td>
+                                                    <td>{$floorroom}</td>
+                                                    <td><span class='glyphicon glyphicon-remove'></span></td>
+                                                    <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
+                                                    </tr>";
+                                                }
                                             }
                                         ?>
                                         </tbody>
