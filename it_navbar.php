@@ -98,6 +98,7 @@
                                 <li><a href="it_categories.php">Categories</a></li>
                                 <li><a href="it_all_compound_assets.php">Compound Assets</a></li>
                                 <li><a href="it_bulk_checkin.php">Bulk Checkin</a></li>
+                                <li><a href="it_inventory.php">Replenish</a></li>
                             </ul>
                         </li>
 
