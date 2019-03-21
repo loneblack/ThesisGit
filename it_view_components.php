@@ -2,58 +2,28 @@
 <html lang="en">
 
 <?php
+    session_start();
+	require_once("db/mysql_connect.php");
     
     $assID = $_GET['id'];
     $assStat = $_GET['assetStatus'];
     
-    session_start();
-	require_once("db/mysql_connect.php");
+    $pcID = "SELECT computerID AS `pcID` FROM thesis.computer WHERE assetID = '{$assID}';";
+    $resultpcID = mysqli_query($dbc, $pcID);
+    $rowpcID=mysqli_fetch_array($resultpcID,MYSQLI_ASSOC);
     
-    if(isset($_POST['submit'])){	
-//                $message = "Tangina MO";
-//                echo "<script type='text/javascript'>alert('$message');</script>";
-				//Count Curr Assets based on assetCategory
-            //desktop
-            if($_POST['assetCat'] == 13){
-                
-                $queryCount="SELECT Count(assetID) as `assetPosition` FROM thesis.asset a 
-                            join assetmodel am on a.assetModel=am.assetModelID where am.assetCategory='13';";
-				$resultCount=mysqli_query($dbc,$queryCount);
-				$rowCount=mysqli_fetch_array($resultCount,MYSQLI_ASSOC);
-				
-				//$propertyCode="0".$row1['assetCategory']."-".sprintf('%06d', $rowCount['assetPosition']);
-				$propertyCode=sprintf('%03d', 13)."-".sprintf('%06d', $rowCount['assetPosition']);
-				
-                //INSERT TO Asset Model
-                $queryProp="INSERT INTO `thesis`.`assetmodel` (`assetCategory`, `description`) VALUES ('13', 'Desktop');";
-				$resultProp=mysqli_query($dbc,$queryProp);
+    if(isset($_POST['submit'])){
+            foreach($_POST['toStock'] as $stockTamod){
+                    $updateAsset = "UPDATE `thesis`.`asset` SET `assetStatus` = '1' WHERE (`assetID` = '{$stockTamod}');";
+                    $resultUpdateAsset = mysqli_query($dbc, $updateAsset);
+                }
         
-                //get latest asset model
-                $maxAssetModel = "SELECT MAX(assetmodelID) AS maxID FROM assetmodel;";
-                $resultMaxAssetModel=mysqli_query($dbc,$maxAssetModel);
-                $rowCountMaxAssetModel=mysqli_fetch_array($resultMaxAssetModel,MYSQLI_ASSOC);
-        
-				//INSERT Property Code
-				$queryProp="INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `dateDelivered`, `assetStatus`) VALUES ('{$rowCountMaxAssetModel['maxID']}', '{$propertyCode}', NOW(), '1');";
-				$resultProp=mysqli_query($dbc,$queryProp);
-            
-                //get latest asset created
-                $maxAsset = "SELECT MAX(assetID) AS assetmaxID FROM asset;";
-                $resultMaxAsset=mysqli_query($dbc,$maxAsset);
-                $rowCountMaxAsset=mysqli_fetch_array($resultMaxAsset,MYSQLI_ASSOC);
-        
-                //INSERT TO COMPUTER
-                $insertPC = "INSERT INTO `thesis`.`computer` (`assetStatus`, `assetID`, `isComplete`) VALUES ('1', '{$rowCountMaxAsset['assetmaxID']}', True);";
-                $resultInsertPC = mysqli_query($dbc,$insertPC);
-                
-                //get max pc
-                $maxPC = "SELECT MAX(computerID) AS comMax FROM computer;";
-                $resultMaxPC=mysqli_query($dbc,$maxPC);
-                $rowCountMaxPC=mysqli_fetch_array($resultMaxPC,MYSQLI_ASSOC);
+                $delPC = "DELETE FROM computercomponent WHERE computerID = {$rowpcID['pcID']};";
+                $resultdelPC = mysqli_query($dbc, $delPC);
         
                 foreach($_POST['component'] as $cumponent){
                     //insert to computer cum ponent tamod
-                    $pasok = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$cumponent}', '{$rowCountMaxPC['comMax']}');";
+                    $pasok = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$cumponent}', '{$rowpcID['pcID']}');";
                     $resultPasok = mysqli_query($dbc,$pasok);
                     
                     $updateAsset = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
@@ -62,139 +32,48 @@
         
                 if(isset($_POST['extraRAM']) && isset($_POST['extraHDD'])){
                     //insert to computer cum ponent tamod
-                    $pasok1 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraRAM']}', '{$rowCountMaxPC['comMax']}');";
+                    $pasok1 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraRAM']}', '{$rowpcID['pcID']}');";
                     $resultPasok1 = mysqli_query($dbc,$pasok1);
                     
-                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$_POST['extraRAM']}');";
                     $resultUpdateAsset1 = mysqli_query($dbc, $updateAsset1);
                     
-                    $pasok2 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraHDD']}', '{$rowCountMaxPC['comMax']}');";
+                    $pasok2 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraHDD']}', '{$rowpcID['pcID']}');";
                     $resultPasok2 = mysqli_query($dbc,$pasok2);
                     
-                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$_POST['extraHDD']}');";
                     $resultUpdateAsset2 = mysqli_query($dbc, $updateAsset2);
 
                 }
         
                 elseif(isset($_POST['extraHDD'])){
-                    $pasok2 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraHDD']}', '{$rowCountMaxPC['comMax']}');";
+                    $pasok2 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraHDD']}', '{$rowpcID['pcID']}');";
                     $resultPasok2 = mysqli_query($dbc,$pasok2);
                     
-                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$_POST['extraHDD']}');";
                     $resultUpdateAsset2 = mysqli_query($dbc, $updateAsset2);
 
                 }
         
                 elseif(isset($_POST['extraRAM'])){
                     //insert to computer cum ponent tamod
-                    $pasok1 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraRAM']}', '{$rowCountMaxPC['comMax']}');";
+                    $pasok1 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraRAM']}', '{$rowpcID['pcID']}');";
                     $resultPasok1 = mysqli_query($dbc,$pasok1);
                     
-                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
+                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$_POST['extraRAM']}');";
                     $resultUpdateAsset1 = mysqli_query($dbc, $updateAsset1);
 
                 }
-            }
-                
-                
-            if($_POST['assetCat'] == 46){
-                
-                $queryCount="SELECT Count(assetID) as `assetPosition` FROM thesis.asset a 
-                            join assetmodel am on a.assetModel=am.assetModelID where am.assetCategory='46';";
-				$resultCount=mysqli_query($dbc,$queryCount);
-				$rowCount=mysqli_fetch_array($resultCount,MYSQLI_ASSOC);
-				
-				//$propertyCode="0".$row1['assetCategory']."-".sprintf('%06d', $rowCount['assetPosition']);
-				$propertyCode=sprintf('%03d', 46)."-".sprintf('%06d', $rowCount['assetPosition']);
-				
-                //INSERT TO Asset Model
-                $queryProp="INSERT INTO `thesis`.`assetmodel` (`assetCategory`, `description`) VALUES ('46', 'Server');";
-				$resultProp=mysqli_query($dbc,$queryProp);
         
-                //get latest asset model
-                $maxAssetModel = "SELECT MAX(assetmodelID) AS maxID FROM assetmodel;";
-                $resultMaxAssetModel=mysqli_query($dbc,$maxAssetModel);
-                $rowCountMaxAssetModel=mysqli_fetch_array($resultMaxAssetModel,MYSQLI_ASSOC);
-        
-				//INSERT Property Code
-				$queryProp="INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `dateDelivered`, `assetStatus`) VALUES ('{$rowCountMaxAssetModel['maxID']}', '{$propertyCode}', NOW(), '1');";
-				$resultProp=mysqli_query($dbc,$queryProp);
-            
-                //get latest asset created
-                $maxAsset = "SELECT MAX(assetID) AS assetmaxID FROM asset;";
-                $resultMaxAsset=mysqli_query($dbc,$maxAsset);
-                $rowCountMaxAsset=mysqli_fetch_array($resultMaxAsset,MYSQLI_ASSOC);
-        
-                //INSERT TO COMPUTER
-                $insertPC = "INSERT INTO `thesis`.`computer` (`assetStatus`, `assetID`, `isComplete`) VALUES ('1', '{$rowCountMaxAsset['assetmaxID']}', True);";
-                $resultInsertPC = mysqli_query($dbc,$insertPC);
-                
-                //get max pc
-                $maxPC = "SELECT MAX(computerID) AS comMax FROM computer;";
-                $resultMaxPC=mysqli_query($dbc,$maxPC);
-                $rowCountMaxPC=mysqli_fetch_array($resultMaxPC,MYSQLI_ASSOC);
-        
-                foreach($_POST['component'] as $cumponent){
-                    //insert to computer cum ponent tamod
-                    $pasok = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$cumponent}', '{$rowCountMaxPC['comMax']}');";
-                    $resultPasok = mysqli_query($dbc,$pasok);
-                    
-                    $updateAsset = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
-                    $resultUpdateAsset = mysqli_query($dbc, $updateAsset);
-                }
-        
-                if(isset($_POST['extraRAM']) && isset($_POST['extraHDD'])){
-                    //insert to computer cum ponent tamod
-                    $pasok1 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraRAM']}', '{$rowCountMaxPC['comMax']}');";
-                    $resultPasok1 = mysqli_query($dbc,$pasok1);
-                    
-                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
-                    $resultUpdateAsset1 = mysqli_query($dbc, $updateAsset1);
-                    
-                    $pasok2 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraHDD']}', '{$rowCountMaxPC['comMax']}');";
-                    $resultPasok2 = mysqli_query($dbc,$pasok2);
-                    
-                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
-                    $resultUpdateAsset2 = mysqli_query($dbc, $updateAsset2);
-
-                }
-        
-                elseif(isset($_POST['extraHDD'])){
-                    $pasok2 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraHDD']}', '{$rowCountMaxPC['comMax']}');";
-                    $resultPasok2 = mysqli_query($dbc,$pasok2);
-                    
-                    $updateAsset2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
-                    $resultUpdateAsset2 = mysqli_query($dbc, $updateAsset2);
-
-                }
-        
-                elseif(isset($_POST['extraRAM'])){
-                    //insert to computer cum ponent tamod
-                    $pasok1 = "INSERT INTO computercomponent (`assetID`, `computerID`) VALUES ('{$_POST['extraRAM']}', '{$rowCountMaxPC['comMax']}');";
-                    $resultPasok1 = mysqli_query($dbc,$pasok1);
-                    
-                    $updateAsset1 = "UPDATE `thesis`.`asset` SET `assetStatus` = '20' WHERE (`assetID` = '{$cumponent}');";
-                    $resultUpdateAsset1 = mysqli_query($dbc, $updateAsset1);
-
-                }
-            }   
-                
-                
-                
-                
-                
-                
-                
-        
-            $_SESSION['submitMessage'] = "Success! A new PC has been Created.";
+            $_SESSION['submitMessage'] = "Success! The PC/ Thin Client Has been updated.";
         
     }
 
 ?>
-    
-    
-    
-    
+
+
+
+
 <head>
     <meta charset="utf-8">
 
@@ -286,14 +165,31 @@
                                                     <th>Brand</th>
                                                     <th>Model</th>
                                                     <th>Specifications</th>
-                                                    <th>Delete</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
-                                                        echo"<select id= '1' class='form-control' onchange='loadDetails(this.value, this.id)' name='component[]' required><option value=''>Select Property Code</option>";
+                                                        <?php
+    
+                                                        $getMon = "SELECT aa.assetID, aa.propertyCode, am.assetCategory, rb.name AS `brand`,  am.description AS `model`, am.itemSpecification AS `specs` FROM asset a
+                                                                JOIN computer c ON a.assetID = c.assetID
+                                                                JOIN computercomponent cc ON c.computerID = cc.computerID
+                                                                JOIN asset aa ON aa.assetID = cc.assetID
+                                                                JOIN assetmodel am ON aa.assetmodel = am.assetModelID 
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                    WHERE a.assetID = {$assID} AND am.assetCategory = 23 LIMIT 1;";
+                                                        $resultMon=mysqli_query($dbc,$getMon);
+				                                        $rowCountMon=mysqli_fetch_array($resultMon,MYSQLI_ASSOC);
+    
+                
+                                                        echo "<input type='hidden' id='inRAM' name='toStock[]' value='{$rowCountMon['assetID']}' disabled> <select id= '1' class='form-control' name='component[]' onchange='loadDetails(this.value, this.id); updateRAM({$rowCountMon['assetID']});' ";
+                                                       
+                                                       if($assStat != 1){
+                                                           echo "disabled";
+                                                       }
+                                                           
+                                                       echo " required><option value='{$rowCountMon['assetID']}'>{$rowCountMon['propertyCode']}</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -338,23 +234,40 @@
         
                                                         echo
                                                             "<td id='brand".$count."'>
-                                                                    <input class='form-control' disabled>
+                                                                    <input class='form-control' value='{$rowCountMon['brand']}' disabled>
                                                                 </td>
                                                                 <td id='description".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountMon['model']}'  disabled>
                                                                 </td>
                                                                 <td id='specification".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountMon['specs']}'  disabled>
                                                                 </td>";
 
                                                     ?>
-                                                    <td></td>
                                                 </tr>
 
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
-                                                        echo"<select id= '2' class='form-control' onchange='loadDetails(this.value, this.id)' name='component[]' required><option value=''>Select Property Code</option>";
+                                                        <?php
+    
+                                                        $getK = "SELECT aa.assetID, aa.propertyCode, am.assetCategory, rb.name AS `brand`,  am.description AS `model`, am.itemSpecification AS `specs` FROM asset a
+                                                                JOIN computer c ON a.assetID = c.assetID
+                                                                JOIN computercomponent cc ON c.computerID = cc.computerID
+                                                                JOIN asset aa ON aa.assetID = cc.assetID
+                                                                JOIN assetmodel am ON aa.assetmodel = am.assetModelID 
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                    WHERE a.assetID = {$assID} AND am.assetCategory = 18 LIMIT 1;";
+                                                        $resultK=mysqli_query($dbc,$getK);
+				                                        $rowCountK=mysqli_fetch_array($resultK,MYSQLI_ASSOC);
+    
+                
+                                                        echo "<input type='hidden' id='inRAM' name='toStock[]' value='{$rowCountK['assetID']}' disabled> <select id= '2' class='form-control' name='component[]' onchange='loadDetails(this.value, this.id); updateRAM({$rowCountK['assetID']});' ";
+                                                       
+                                                       if($assStat != 1){
+                                                           echo "disabled";
+                                                       }
+                                                           
+                                                       echo " required><option value='{$rowCountK['assetID']}'>{$rowCountK['propertyCode']}</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -399,23 +312,38 @@
         
                                                         echo
                                                             "<td id='brand".$count."'>
-                                                                    <input class='form-control' disabled>
+                                                                    <input class='form-control' value='{$rowCountK['brand']}' disabled>
                                                                 </td>
                                                                 <td id='description".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountK['model']}'  disabled>
                                                                 </td>
                                                                 <td id='specification".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountK['specs']}'  disabled>
                                                                 </td>";
 
                                                     ?>
-                                                    <td></td>
                                                 </tr>
 
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
-                                                        echo"<select id= '3' class='form-control' onchange='loadDetails(this.value, this.id)' name='component[]' required><option value=''>Select Property Code</option>";
+                                                        <?php
+                                                        $getMo = "SELECT aa.assetID, aa.propertyCode, am.assetCategory, rb.name AS `brand`,  am.description AS `model`, am.itemSpecification AS `specs` FROM asset a
+                                                                JOIN computer c ON a.assetID = c.assetID
+                                                                JOIN computercomponent cc ON c.computerID = cc.computerID
+                                                                JOIN asset aa ON aa.assetID = cc.assetID
+                                                                JOIN assetmodel am ON aa.assetmodel = am.assetModelID 
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                    WHERE a.assetID = {$assID} AND am.assetCategory = 25 LIMIT 1;";
+                                                        $resultMo=mysqli_query($dbc,$getMo);
+				                                        $rowCountMo=mysqli_fetch_array($resultMo,MYSQLI_ASSOC);
+                                                        
+                                                        echo"<input type='hidden' id='inHDD' name='toStock[]' value='{$rowCountMo['assetID']}' disabled> <select id= '3' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id); updateHDD({$rowCountMo['assetID']});'";
+                                                       
+                                                       if($assStat != 1){
+                                                           echo "disabled";
+                                                       }
+                                                           
+                                                       echo "  required><option value='{$rowCountMo['assetID']}'>{$rowCountMo['propertyCode']}</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -460,23 +388,41 @@
         
                                                         echo
                                                             "<td id='brand".$count."'>
-                                                                    <input class='form-control' disabled>
+                                                                    <input class='form-control' value='{$rowCountMo['brand']}' disabled>
                                                                 </td>
                                                                 <td id='description".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountMo['model']}'  disabled>
                                                                 </td>
                                                                 <td id='specification".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountMo['specs']}'  disabled>
                                                                 </td>";
 
                                                     ?>
-                                                    <td></td>
+                                                    
                                                 </tr>
 
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
-                                                        echo"<select id= '4' class='form-control' onchange='loadDetails(this.value, this.id)' name='component[]' required><option value=''>Select Property Code</option>";
+                                                        <?php
+    
+                                                        $getRAM = "SELECT aa.assetID, aa.propertyCode, am.assetCategory, rb.name AS `brand`,  am.description AS `model`, am.itemSpecification AS `specs` FROM asset a
+                                                                JOIN computer c ON a.assetID = c.assetID
+                                                                JOIN computercomponent cc ON c.computerID = cc.computerID
+                                                                JOIN asset aa ON aa.assetID = cc.assetID
+                                                                JOIN assetmodel am ON aa.assetmodel = am.assetModelID 
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                    WHERE a.assetID = {$assID} AND am.assetCategory = 22 LIMIT 1;";
+                                                        $resultRAM=mysqli_query($dbc,$getRAM);
+				                                        $rowCountRAM=mysqli_fetch_array($resultRAM,MYSQLI_ASSOC);
+    
+                
+                                                        echo "<input type='hidden' id='inRAM' name='toStock[]' value='{$rowCountRAM['assetID']}' disabled> <select id= '4' class='form-control' name='component[]' onchange='loadDetails(this.value, this.id); updateRAM({$rowCountRAM['assetID']});' ";
+                                                       
+                                                       if($assStat != 1){
+                                                           echo "disabled";
+                                                       }
+                                                           
+                                                       echo " required><option value='{$rowCountRAM['assetID']}'>{$rowCountRAM['propertyCode']}</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -502,7 +448,7 @@
                                                     ?>
                                                     </td>
                                                     <td>RAM</td>
-                                                    
+
                                                     <?php
                                                         
                                                         $count = 4;
@@ -522,23 +468,39 @@
         
                                                         echo
                                                             "<td id='brand".$count."'>
-                                                                    <input class='form-control' disabled>
+                                                                    <input class='form-control' value='{$rowCountRAM['brand']}' disabled>
                                                                 </td>
                                                                 <td id='description".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountRAM['model']}'  disabled>
                                                                 </td>
                                                                 <td id='specification".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountRAM['specs']}'  disabled>
                                                                 </td>";
 
                                                     ?>
-                                                    <td></td>
                                                 </tr>
-                                                
+
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
-                                                        echo"<select id= '5' class='form-control' onchange='loadDetails(this.value, this.id)' name='component[]' required><option value=''>Select Property Code</option>";
+                                                        <?php
+                                                        
+                                                        $getHDD = "SELECT aa.assetID, aa.propertyCode, am.assetCategory, rb.name AS `brand`,  am.description AS `model`, am.itemSpecification AS `specs` FROM asset a
+                                                                JOIN computer c ON a.assetID = c.assetID
+                                                                JOIN computercomponent cc ON c.computerID = cc.computerID
+                                                                JOIN asset aa ON aa.assetID = cc.assetID
+                                                                JOIN assetmodel am ON aa.assetmodel = am.assetModelID 
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                    WHERE a.assetID = {$assID} AND am.assetCategory = 17 LIMIT 1;";
+                                                        $resultHDD=mysqli_query($dbc,$getHDD);
+				                                        $rowCountHDD=mysqli_fetch_array($resultHDD,MYSQLI_ASSOC);
+                                                        
+                                                        echo"<input type='hidden' id='inHDD' name='toStock[]' value='{$rowCountHDD['assetID']}' disabled> <select id= '5' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id); updateHDD({$rowCountHDD['assetID']});'";
+                                                       
+                                                       if($assStat != 1){
+                                                           echo "disabled";
+                                                       }
+                                                           
+                                                       echo "  required><option value='{$rowCountHDD['assetID']}'>{$rowCountHDD['propertyCode']}</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -583,26 +545,42 @@
         
                                                         echo
                                                             "<td id='brand".$count."'>
-                                                                    <input class='form-control' disabled>
+                                                                    <input class='form-control' value='{$rowCountHDD['brand']}' disabled>
                                                                 </td>
                                                                 <td id='description".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountHDD['model']}'  disabled>
                                                                 </td>
                                                                 <td id='specification".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountHDD['specs']}'  disabled>
                                                                 </td>";
 
                                                     ?>
-                                                    <td></td>
                                                 </tr>
-                                                
-                                                
-                                                
-                                                
+
+
+
+
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
-                                                        echo"<select id= '6' class='form-control' onchange='loadDetails(this.value, this.id)' name='component[]' required><option value=''>Select Property Code</option>";
+                                                        <?php
+                                                        $getGC = "SELECT aa.assetID, aa.propertyCode, am.assetCategory, rb.name AS `brand`,  am.description AS `model`, am.itemSpecification AS `specs` FROM asset a
+                                                                JOIN computer c ON a.assetID = c.assetID
+                                                                JOIN computercomponent cc ON c.computerID = cc.computerID
+                                                                JOIN asset aa ON aa.assetID = cc.assetID
+                                                                JOIN assetmodel am ON aa.assetmodel = am.assetModelID 
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                    WHERE a.assetID = {$assID} AND am.assetCategory = 49 LIMIT 1;";
+                                                        
+                                                        $resultGC=mysqli_query($dbc,$getGC);
+				                                        $rowCountGC=mysqli_fetch_array($resultGC,MYSQLI_ASSOC);
+                                                        
+                                                        echo"<input type='hidden' id='inGC' name='toStock[]' value='{$rowCountGC['assetID']}' disabled> <select id= '6' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id); updateGC({$rowCountGC['assetID']});'";
+                                                       
+                                                       if($assStat != 1){
+                                                           echo "disabled";
+                                                       }
+                                                           
+                                                       echo "  required><option value='{$rowCountGC['assetID']}'>{$rowCountGC['propertyCode']}</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -647,23 +625,39 @@
         
                                                         echo
                                                             "<td id='brand".$count."'>
-                                                                    <input class='form-control' disabled>
+                                                                    <input class='form-control' value='{$rowCountGC['brand']}' disabled>
                                                                 </td>
                                                                 <td id='description".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountGC['model']}'  disabled>
                                                                 </td>
                                                                 <td id='specification".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountGC['specs']}'  disabled>
                                                                 </td>";
 
                                                     ?>
-                                                    <td></td>
                                                 </tr>
-                                                
+
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
-                                                        echo"<select id= '7' class='form-control' onchange='loadDetails(this.value, this.id)' name='component[]' required><option value=''>Select Property Code</option>";
+                                                        <?php
+                                                        $getP = "SELECT aa.assetID, aa.propertyCode, am.assetCategory, rb.name AS `brand`,  am.description AS `model`, am.itemSpecification AS `specs` FROM asset a
+                                                                JOIN computer c ON a.assetID = c.assetID
+                                                                JOIN computercomponent cc ON c.computerID = cc.computerID
+                                                                JOIN asset aa ON aa.assetID = cc.assetID
+                                                                JOIN assetmodel am ON aa.assetmodel = am.assetModelID 
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                    WHERE a.assetID = {$assID} AND am.assetCategory = 34 LIMIT 1;";
+                                                        
+                                                        $resultP=mysqli_query($dbc,$getP);
+				                                        $rowCountP=mysqli_fetch_array($resultP,MYSQLI_ASSOC);
+                                                        
+                                                        echo"<input type='hidden' id='inP' name='toStock[]' value='{$rowCountP['assetID']}' disabled> <select id= '7' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id); updateP({$rowCountP['assetID']});'";
+                                                       
+                                                       if($assStat != 1){
+                                                           echo "disabled";
+                                                       }
+                                                           
+                                                       echo "  required><option value='{$rowCountP['assetID']}'>{$rowCountP['propertyCode']}</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -708,23 +702,40 @@
         
                                                         echo
                                                             "<td id='brand".$count."'>
-                                                                    <input class='form-control' disabled>
+                                                                    <input class='form-control' value='{$rowCountP['brand']}' disabled>
                                                                 </td>
                                                                 <td id='description".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountP['model']}' disabled>
                                                                 </td>
                                                                 <td id='specification".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountP['specs']}' disabled>
                                                                 </td>";
 
                                                     ?>
-                                                    <td></td>
                                                 </tr>
-                                                
+
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
-                                                        echo"<select id= '8' class='form-control' onchange='loadDetails(this.value, this.id)' name='component[]' required><option value=''>Select Property Code</option>";
+                                                        <?php
+                                                        $getM = "SELECT aa.assetID, aa.propertyCode, am.assetCategory, rb.name AS `brand`,  am.description AS `model`, am.itemSpecification AS `specs` FROM asset a
+                                                                JOIN computer c ON a.assetID = c.assetID
+                                                                JOIN computercomponent cc ON c.computerID = cc.computerID
+                                                                JOIN asset aa ON aa.assetID = cc.assetID
+                                                                JOIN assetmodel am ON aa.assetmodel = am.assetModelID 
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                    WHERE a.assetID = {$assID} AND am.assetCategory = 24 LIMIT 1;";
+                                                        
+                                                        $resultM=mysqli_query($dbc,$getM);
+				                                        $rowCountM=mysqli_fetch_array($resultM,MYSQLI_ASSOC);
+                                                        
+                                                        
+                                                        echo"<input type='hidden' id='inM' name='toStock[]' value='{$rowCountM['assetID']}' disabled> <select id= '8' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id); updateM({$rowCountM['assetID']});' ";
+                                                       
+                                                       if($assStat != 1){
+                                                           echo "disabled";
+                                                       }
+                                                           
+                                                       echo "  required><option value='{$rowCountM['assetID']}'>{$rowCountM['propertyCode']}</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -769,23 +780,40 @@
         
                                                         echo
                                                             "<td id='brand".$count."'>
-                                                                    <input class='form-control' disabled>
+                                                                    <input class='form-control' value='{$rowCountM['brand']}' disabled>
                                                                 </td>
                                                                 <td id='description".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountM['model']}'  disabled>
                                                                 </td>
                                                                 <td id='specification".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control'  value='{$rowCountM['specs']}' disabled>
                                                                 </td>";
 
                                                     ?>
-                                                    <td></td>
                                                 </tr>
-                                                
+
                                                 <tr>
                                                     <td width='220'>
-                                                    <?php
-                                                        echo"<select id= '9' class='form-control' onchange='loadDetails(this.value, this.id)' name='component[]' required><option value=''>Select Property Code</option>";
+                                                        <?php
+                                                        $getPS = "SELECT aa.assetID, aa.propertyCode, am.assetCategory, rb.name AS `brand`,  am.description AS `model`, am.itemSpecification AS `specs` FROM asset a
+                                                                JOIN computer c ON a.assetID = c.assetID
+                                                                JOIN computercomponent cc ON c.computerID = cc.computerID
+                                                                JOIN asset aa ON aa.assetID = cc.assetID
+                                                                JOIN assetmodel am ON aa.assetmodel = am.assetModelID 
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                    WHERE a.assetID = {$assID} AND am.assetCategory = 32 LIMIT 1;";
+                                                        
+                                                        $resultPS=mysqli_query($dbc,$getPS);
+				                                        $rowCountPS=mysqli_fetch_array($resultPS,MYSQLI_ASSOC);
+                                                        
+                                                        
+                                                        echo"<input type='hidden' id='inPS' name='toStock[]' value='{$rowCountPS['assetID']}' disabled> <select id= '9' class='form-control' name='component[]'  onchange='loadDetails(this.value, this.id); updatePS({$rowCountPS['assetID']});' ";
+                                                       
+                                                       if($assStat != 1){
+                                                           echo "disabled";
+                                                       }
+                                                           
+                                                       echo "  required><option value='{$rowCountPS['assetID']}'>{$rowCountPS['propertyCode']}</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -812,7 +840,18 @@
                                                     </td>
                                                     <td>Power Supply</td>
                                                     <?php
+                                                        $getPS = "SELECT aa.assetID, aa.propertyCode, am.assetCategory, rb.name AS `brand`,  am.description AS `model`, am.itemSpecification AS `specs` FROM asset a
+                                                                JOIN computer c ON a.assetID = c.assetID
+                                                                JOIN computercomponent cc ON c.computerID = cc.computerID
+                                                                JOIN asset aa ON aa.assetID = cc.assetID
+                                                                JOIN assetmodel am ON aa.assetmodel = am.assetModelID 
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                    WHERE a.assetID = {$assID} AND am.assetCategory = 32 LIMIT 1;";
                                                         
+                                                        $resultPS=mysqli_query($dbc,$getPS);
+				                                        $rowCountPS=mysqli_fetch_array($resultPS,MYSQLI_ASSOC);
+                                                            
+                                                            
                                                         $count = 9;
                                                         $query="SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description as'modelDescription'
                                                         FROM asset a 
@@ -830,24 +869,42 @@
         
                                                         echo
                                                             "<td id='brand".$count."'>
-                                                                    <input class='form-control' disabled>
+                                                                    <input class='form-control' value='{$rowCountPS['brand']}' disabled>
                                                                 </td>
                                                                 <td id='description".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control'  value='{$rowCountPS['model']}' disabled>
                                                                 </td>
                                                                 <td id='specification".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountPS['specs']}' disabled>
                                                                 </td>";
 
                                                     ?>
-                                                    <td></td>
                                                 </tr>
-                                                
-                                                
+
+
+
                                                 <tr>
                                                     <td width='220'>
                                                         <?php
-                                                        echo"<select id= '10' class='form-control' onchange='loadDetails(this.value, this.id)' name='extraRAM'><option value=''>Select Property Code</option>";
+                                                        $getARAM = "SELECT aa.assetID, aa.propertyCode, am.assetCategory, rb.name AS `brand`,  am.description AS `model`, am.itemSpecification AS `specs` FROM asset a
+                                                                JOIN computer c ON a.assetID = c.assetID
+                                                                JOIN computercomponent cc ON c.computerID = cc.computerID
+                                                                JOIN asset aa ON aa.assetID = cc.assetID
+                                                                JOIN assetmodel am ON aa.assetmodel = am.assetModelID 
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                    WHERE a.assetID = {$assID} AND aa.assetID != {$rowCountRAM['assetID']} AND am.assetCategory = 22 LIMIT 1;";
+                                                        
+                                                        $resultARAM=mysqli_query($dbc,$getARAM);
+				                                        $rowCountARAM=mysqli_fetch_array($resultARAM,MYSQLI_ASSOC);
+                                                        
+                                                        
+                                                        echo"<input type='hidden' id='inERAM' name='toStock[]' value='{$rowCountARAM['assetID']}' disabled> <select id= '10' class='form-control' onchange='loadDetails(this.value, this.id); updateARAM({$rowCountARAM['assetID']});' name='extraRAM' ";
+                                                       
+                                                       if($assStat != 1){
+                                                           echo "disabled";
+                                                       }
+                                                           
+                                                       echo " ><option value='{$rowCountARAM['assetID']}'>{$rowCountARAM['propertyCode']}</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -861,7 +918,7 @@
 
                                                         $result = mysqli_query($dbc, $sql);
 
-
+                                                        echo "<option value=''>Select Asset</option>";
                                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                         {
                                                             echo "<option value ={$row['assetID']}>";
@@ -893,23 +950,39 @@
         
                                                         echo
                                                             "<td id='brand".$count."'>
-                                                                    <input class='form-control' disabled>
+                                                                    <input class='form-control' value='{$rowCountARAM['brand']}' disabled>
                                                                 </td>
                                                                 <td id='description".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountARAM['model']}' disabled>
                                                                 </td>
                                                                 <td id='specification".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountARAM['specs']}' disabled>
                                                                 </td>";
 
                                                     ?>
-                                                    <td></td>
                                                 </tr>
 
                                                 <tr>
                                                     <td width='220'>
                                                         <?php
-                                                        echo"<select id= '11' class='form-control' onchange='loadDetails(this.value, this.id)' name='extraHDD'><option value=''>Select Property Code</option>";
+                                                        $getAHDD = "SELECT aa.assetID, aa.propertyCode, am.assetCategory, rb.name AS `brand`,  am.description AS `model`, am.itemSpecification AS `specs` FROM asset a
+                                                                JOIN computer c ON a.assetID = c.assetID
+                                                                JOIN computercomponent cc ON c.computerID = cc.computerID
+                                                                JOIN asset aa ON aa.assetID = cc.assetID
+                                                                JOIN assetmodel am ON aa.assetmodel = am.assetModelID 
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                    WHERE a.assetID = {$assID} AND aa.assetID != {$rowCountHDD['assetID']} AND am.assetCategory = 17 LIMIT 1;";
+                                                        
+                                                        $resultAHDD=mysqli_query($dbc,$getAHDD);
+				                                        $rowCountAHDD=mysqli_fetch_array($resultAHDD,MYSQLI_ASSOC);
+                                                        
+                                                        echo"<input type='hidden' id='inEHDD' name='toStock[]' value='{$rowCountAHDD['assetID']}' disabled> <select id= '11' class='form-control' onchange='loadDetails(this.value, this.id); updateAHDD({$rowCountAHDD['assetID']});' name='extraHDD' ";
+                                                       
+                                                       if($assStat != 1){
+                                                           echo "disabled";
+                                                       }
+                                                           
+                                                       echo " ><option value='{$rowCountAHDD['assetID']}'>{$rowCountAHDD['propertyCode']}</option>";
 
                                                         $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
                                                                 FROM asset a 
@@ -923,7 +996,7 @@
 
                                                         $result = mysqli_query($dbc, $sql);
 
-
+                                                        echo "<option value=''>Select Asset</option>";
                                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                         {
                                                             echo "<option value ={$row['assetID']}>";
@@ -954,28 +1027,27 @@
         
                                                         echo
                                                             "<td id='brand".$count."'>
-                                                                    <input class='form-control' disabled>
+                                                                    <input class='form-control' value='{$rowCountAHDD['brand']}' disabled>
                                                                 </td>
                                                                 <td id='description".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountAHDD['model']}' disabled>
                                                                 </td>
                                                                 <td id='specification".$count."'>
-                                                                    <input class='form-control'  disabled>
+                                                                    <input class='form-control' value='{$rowCountAHDD['specs']}' disabled>
                                                                 </td>";
 
                                                     ?>
-                                                    <td></td>
                                                 </tr>
-                                                
-                                                
+
+
                                             </tbody>
                                         </table>
 
-
-
                                         <div class="clearfix">
                                             <div class="btn-group">
-                                                <button class="btn btn-success" type="submit" name="submit">
+                                                <button class="btn btn-success" type="submit" name="submit" <?php if($assStat != 1){
+                                                           echo "disabled";
+                                                       } ?>>
                                                     <i class="fa fa-save"></i> Save
                                                 </button>
                                             </div>
@@ -1028,44 +1100,156 @@
     </script>
 
     <script type="text/javascript">
-        function loadDetails(val, id){
-            
+        function loadDetails(val, id) {
+
             $.ajax({
-            type:"POST",
-            url:"loadDetails1.php",
-            data: 'assetID='+val,
-            success: function(data){
-                $("#brand"+id).html(data);
+                type: "POST",
+                url: "loadDetails1.php",
+                data: 'assetID=' + val,
+                success: function(data) {
+                    $("#brand" + id).html(data);
 
                 }
             });
             $.ajax({
-            type:"POST",
-            url:"loadDetails2.php",
-            data: 'assetID='+val,
-            success: function(data){
-                $("#description"+id).html(data);
+                type: "POST",
+                url: "loadDetails2.php",
+                data: 'assetID=' + val,
+                success: function(data) {
+                    $("#description" + id).html(data);
 
                 }
             });
             $.ajax({
-            type:"POST",
-            url:"loadDetails3.php",
-            data: 'assetID='+val,
-            success: function(data){
-                $("#specification"+id).html(data);
+                type: "POST",
+                url: "loadDetails3.php",
+                data: 'assetID=' + val,
+                success: function(data) {
+                    $("#specification" + id).html(data);
 
                 }
             });
             $.ajax({
-            type:"POST",
-            url:"loadDetails4.php",
-            data: 'assetID='+val,
-            success: function(data){
-                $("#assetID"+id).html(data);
+                type: "POST",
+                url: "loadDetails4.php",
+                data: 'assetID=' + val,
+                success: function(data) {
+                    $("#assetID" + id).html(data);
 
                 }
             });
+        }
+        
+        function updateMon(assID) {
+            var pwet = document.getElementById("1").value;
+
+            if (assID != pwet) {
+                document.getElementById("inMon").disabled = false;
+            } else {
+                document.getElementById("inMon").disabled = true;
+            }
+        }
+        
+        function updateK(assID) {
+            var pwet = document.getElementById("2").value;
+
+            if (assID != pwet) {
+                document.getElementById("inK").disabled = false;
+            } else {
+                document.getElementById("inK").disabled = true;
+            }
+        }
+        
+        function updateMo(assID) {
+            var pwet = document.getElementById("3").value;
+
+            if (assID != pwet) {
+                document.getElementById("inMo").disabled = false;
+            } else {
+                document.getElementById("inMo").disabled = true;
+            }
+        }
+        
+
+        function updateRAM(assID) {
+            var pwet = document.getElementById("4").value;
+
+            if (assID != pwet) {
+                document.getElementById("inRAM").disabled = false;
+            } else {
+                document.getElementById("inRAM").disabled = true;
+            }
+        }
+
+
+        function updateHDD(assID) {
+            var pwet = document.getElementById("5").value;
+
+            if (assID != pwet) {
+                document.getElementById("inHDD").disabled = false;
+            } else {
+                document.getElementById("inHDD").disabled = true;
+            }
+        }
+
+        function updateGC(assID) {
+            var pwet = document.getElementById("6").value;
+
+            if (assID != pwet) {
+                document.getElementById("inGC").disabled = false;
+            } else {
+                document.getElementById("inGC").disabled = true;
+            }
+        }
+
+        function updateP(assID) {
+            var pwet = document.getElementById("7").value;
+
+            if (assID != pwet) {
+                document.getElementById("inP").disabled = false;
+            } else {
+                document.getElementById("inP").disabled = true;
+            }
+        }
+
+        function updateM(assID) {
+            var pwet = document.getElementById("8").value;
+
+            if (assID != pwet) {
+                document.getElementById("inM").disabled = false;
+            } else {
+                document.getElementById("inM").disabled = true;
+            }
+        }
+
+        function updatePS(assID) {
+            var pwet = document.getElementById("9").value;
+
+            if (assID != pwet) {
+                document.getElementById("inPS").disabled = false;
+            } else {
+                document.getElementById("inPS").disabled = true;
+            }
+        }
+
+        function updateARAM(assID) {
+            var pwet = document.getElementById("10").value;
+
+            if (assID != pwet) {
+                document.getElementById("inERAM").disabled = false;
+            } else {
+                document.getElementById("inERAM").disabled = true;
+            }
+        }
+
+        function updateAHDD(assID) {
+            var pwet = document.getElementById("11").value;
+
+            if (assID != pwet) {
+                document.getElementById("inEHDD").disabled = false;
+            } else {
+                document.getElementById("inEHDD").disabled = true;
+            }
         }
     </script>
 
