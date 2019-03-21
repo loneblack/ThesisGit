@@ -175,7 +175,7 @@ require_once("db/mysql_connect.php");
                                                             <td style='display: none'>{$row['serviceUnitID']}</td>
                                                             <td style='display: none'>{$row['receivingID']}</td>
                                                             <td>{$count}</td>
-                                                            <td>Borrow</td>
+                                                            <td>Service Unit</td>
                                                             <td style='display: none'>{$row['statusID']}</td>";
 
                                                         if($row['statusID'] == '1'){//pending

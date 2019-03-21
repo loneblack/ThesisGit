@@ -26,7 +26,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         $floorroom = $row['floorRoom'];   
 
     }
-
+$assetCategories = array();
 ?>
 <head>
     <meta charset="utf-8">
@@ -112,13 +112,16 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                         <tbody>
                                         <?php
                                             if($replacementUnit == 1){// if opt for service unit, service units are  the ones that will be replaced.
+                                               
+
+
                                                 $sql = "SELECT * FROM thesis.serviceunit su JOIN serviceunitassets sa ON su.serviceunitID = sa.serviceUnitID WHERE serviceID = '{$serviceID}';";
                                                 $result = mysqli_query($dbc, $sql);
                                                 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                                                 
                                                 $assetID = $row['assetID'];
 
-                                                $query = "SELECT s.description, a.assetID, propertyCode, b.name AS 'brand', c.name as 'category', itemSpecification, s.id
+                                                $query = "SELECT assetCategory, s.description, a.assetID, propertyCode, b.name AS 'brand', c.name as 'category', itemSpecification, s.id
                                                     FROM asset a 
                                                         JOIN assetModel m
                                                     ON assetModel = assetModelID
@@ -141,13 +144,16 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                     <td>{$floorroom}</td>
                                                     <td><span class='glyphicon glyphicon-ok'></span></td>
                                                     <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
-                                                    </tr>";      
+                                                    </tr>";     
 
+                                                    array_push($assetCategories, $row['assetCategory']); 
+                                                    
                                                 }
                                             }
                                             else{//if no service unit show assets that are being repaired
-                                                echo "lul;";
-                                                $sql = "SELECT * FROM thesis.servicedetails sd 
+                                               
+                                                
+                                                $sql = "SELECT *, c.name as'category', b.name as'brand' FROM thesis.servicedetails sd 
                                                             JOIN asset a 
                                                         ON sd.asset = a.assetID
                                                             JOIN assetModel m
@@ -161,7 +167,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                             WHERE serviceID = '{$serviceID}';";
 
                                                 $result = mysqli_query($dbc, $sql);
-                                                echo $sql;
+                                                
                                                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
                                                 echo "<tr>
@@ -173,6 +179,8 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                     <td><span class='glyphicon glyphicon-remove'></span></td>
                                                     <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
                                                     </tr>";
+
+                                                array_push($assetCategories, $row['assetCategory']);
                                                 }
                                             }
                                         ?>
@@ -190,6 +198,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                         </div>
 
                         <div class="col-sm-12">
+                            <form method='post' action="it_replacement_DB.php?id=<?phph echo $id;?>">
                             <section class="panel">
                                 <div class="panel-body ">
                                     <div>
@@ -208,26 +217,81 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td width="220">
-                                                    <select class="form-control">
-                                                        <option>Select Property Code</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" type="text" disabled>
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" type="text" disabled>
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" type="text" disabled>
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" type="text" disabled>
-                                                </td>
-                                            </tr>
+                                        <?php
+                                        $count = 0;
+                                        foreach ($assetCategories as $category) {
+                                            echo
+                                                "<tr>
+                                                    <td width='300'>
+                                                        <select id = '".$count."' class='form-control' onchange='loadDetails(this.value, this.id)' required>
+                                                        <option value =''>Select</option>";
 
+                                                $sql = "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            WHERE assetCategoryID = '{$category}'
+                                                        AND assetStatus = 1;"; //1 for stocked status
+                                               
+                                                $result = mysqli_query($dbc, $sql);
+                                                
+
+                                                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                {
+                                                    echo "<option value ={$row['assetID']}>";
+                                                    echo "{$row['propertyCode']}</option>";
+                                                }
+                                                $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                                                           
+                                            echo 
+                                                        "</select>
+                                                    </td>";
+
+                                            $sql = "SELECT * FROM thesis.ref_assetcategory WHERE assetCategoryID = '{$category}';";
+                                            $result = mysqli_query($dbc, $sql);
+
+                                            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+                                            $category = $row['name'];
+
+                                            $query="SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', itemSpecification, m.description as'modelDescription'
+                                                        FROM asset a 
+                                                            JOIN assetModel m
+                                                        ON assetModel = assetModelID
+                                                            JOIN ref_brand br
+                                                        ON brand = brandID
+                                                            JOIN ref_assetcategory c
+                                                        ON assetCategory = assetCategoryID
+                                                            WHERE assetCategoryID = '{$category}';";
+                                            $result=mysqli_query($dbc,$query);
+
+                                            $row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+
+                                            echo
+                                                    "<td>
+                                                        <input type='text' disabled class='form-control' value = '{$category}'>
+                                                    </td>
+                                                        <td id='brand".$count."'>
+                                                            <input class='form-control' disabled>
+                                                        </td>
+                                                        <td id='description".$count."'>
+                                                            <input class='form-control'  disabled>
+                                                        </td>
+                                                        <td id='specification".$count."'>
+                                                            <input class='form-control'  disabled>
+                                                        </td>
+                                                        <td id='assetID".$count."' style='display: none'>
+                                                            <input class='form-control' name='assets[]'>
+                                                        </td>
+                                                </tr>";
+
+                                                $count++;
+                                        }
+                                        ?>
                                         </tbody>
                                     </table>
                                     <input style="display: none" type="number" id="count" name="count">
@@ -282,7 +346,45 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
             }, delayInMilliseconds);
 
         }
+        function loadDetails(val, id){
+            
+            $.ajax({
+            type:"POST",
+            url:"loadDetails1.php",
+            data: 'assetID='+val,
+            success: function(data){
+                $("#brand"+id).html(data);
 
+                }
+            });
+            $.ajax({
+            type:"POST",
+            url:"loadDetails2.php",
+            data: 'assetID='+val,
+            success: function(data){
+                $("#description"+id).html(data);
+
+                }
+            });
+            $.ajax({
+            type:"POST",
+            url:"loadDetails3.php",
+            data: 'assetID='+val,
+            success: function(data){
+                $("#specification"+id).html(data);
+
+                }
+            });
+            $.ajax({
+            type:"POST",
+            url:"loadDetails4.php",
+            data: 'assetID='+val,
+            success: function(data){
+                $("#assetID"+id).html(data);
+
+                }
+            });
+        }
     </script>
 
     <script src="js/scripts.js"></script>

@@ -39,7 +39,11 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 $components = array();
 $source = array();
 
-$queryComponents = "SELECT *, cc.assetID as'componentID', c.assetID as 'sourceID' FROM thesis.ticketedasset t JOIN computer c ON c.assetID = t.assetID JOIN computercomponent cc ON c.computerID = cc.computerID;";
+$queryComponents = "SELECT *, cc.assetID as'componentID', c.assetID as 'sourceID' 
+                        FROM thesis.ticketedasset t 
+                    JOIN computer c ON c.assetID = t.assetID
+                    JOIN computercomponent cc ON c.computerID = cc.computerID
+                    WHERE ticketID = '{$id}';";
 $resultComponents = mysqli_query($dbc, $queryComponents);
 
 while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
@@ -524,6 +528,12 @@ while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php 
+                                            $checkExistingReqeust = "SELECT * FROM thesis.requestparts WHERE serviceID = '{$serviceID}';";
+                                            $resultExistingRequest = mysqli_query($dbc, $checkExistingReqeust); 
+
+                                        if(mysqli_num_rows($resultExistingRequest) == 0) {
+                                        ?>
                                         <tr>
                                             <td>
                                                 <input type='number' min='0' step='1' class='form-control' name='quantity0'>
@@ -575,7 +585,7 @@ while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
                                             </td>
                                             <td style="text-align:center" width='10px'><button class="btn btn-primary" type="button" onclick="addTest(1)">Add</button></td>
                                         </tr>
-
+                                        <?php } ?>
                                         <?php 
 
                                         $sql = "SELECT *, rpd.id as 'detailsID' FROM thesis.requestparts_details rpd JOIN requestparts rp ON rpd.requestPartsID = rp.id WHERE serviceID = '{$serviceID}';";
