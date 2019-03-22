@@ -39,7 +39,7 @@
 
 		foreach ($noServiceUnitAssets as $assets){
 				
-			$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`) VALUES ('{$id}', '{$assets}');";
+			$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`) VALUES ('{$id}', '{$assets}', '0');";
 			$resulted = mysqli_query($dbc, $query);
 
 			//set asset status to for repair(9)
@@ -75,7 +75,7 @@
 	    $serviceUnitID = $row['serviceUnitID'];
 	    
 	    //insert to service details
-    	$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`) VALUES ('{$id}', '{$assets}');";
+    	$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`) VALUES ('{$id}', '{$assets}', '0');";
     	$resulted = mysqli_query($dbc, $query);
 
     	//set asset status to for repair(9)

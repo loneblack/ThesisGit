@@ -87,7 +87,7 @@
 	if($serviceUnitID > 0)//have service unit
 	{
 
-	    $sql = "UPDATE `thesis`.`serviceUnit` SET `status` = '3' WHERE (`serviceUnitID` = '{$serviceUnitID}');";
+	    $sql = "UPDATE `thesis`.`serviceUnit` SET `status` = '3', `startDate` = now() WHERE (`serviceUnitID` = '{$serviceUnitID}');";
 	    $result = mysqli_query($dbc, $sql);
 	}
 

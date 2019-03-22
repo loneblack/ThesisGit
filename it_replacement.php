@@ -75,7 +75,7 @@ $assetCategories = array();
             <section class="wrapper">
                 <!-- page start-->
 
-                <form method='post' action="it_replacement_DB.php?id=<?phph echo $id;?>">
+                <form method='post' action="it_replacement_DB.php?id=<?phph echo $serviceID;?>">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
@@ -114,9 +114,13 @@ $assetCategories = array();
                                         <?php
                                             if($replacementUnit == 1){// if opt for service unit, service units are  the ones that will be replaced.
                                                
+                                                $_SESSION['isServiceUnit'] = 1;
 
-
-                                                $sql = "SELECT * FROM thesis.serviceunit su JOIN serviceunitassets sa ON su.serviceunitID = sa.serviceUnitID WHERE serviceID = '{$serviceID}';";
+                                                $sql = "SELECT * FROM thesis.serviceunit su 
+                                                        JOIN serviceunitassets sa ON su.serviceunitID = sa.serviceUnitID 
+                                                        JOIN servicedetails s ON su.serviceID = s.serviceID
+                                                        WHERE su.serviceID = {$serviceID}
+                                                        AND replaced != 1";
                                                 $result = mysqli_query($dbc, $sql);
                                                 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                                                 
@@ -152,7 +156,7 @@ $assetCategories = array();
                                                 }
                                             }
                                             else{//if no service unit show assets that are being repaired
-                                               
+                                                $_SESSION['isServiceUnit'] = 0;
                                                 
                                                 $sql = "SELECT *, c.name as'category', b.name as'brand' FROM thesis.servicedetails sd 
                                                             JOIN asset a 
@@ -165,7 +169,8 @@ $assetCategories = array();
                                                         ON assetCategory = assetCategoryID
                                                             JOIN ref_assetstatus s
                                                         ON a.assetStatus = s.id
-                                                            WHERE serviceID = '{$serviceID}';";
+                                                            WHERE serviceID = '{$serviceID}'
+                                                        AND replaced != 1;";
 
                                                 $result = mysqli_query($dbc, $sql);
                                                 
