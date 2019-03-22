@@ -431,6 +431,8 @@ $_SESSION['previousDash'] = "it_requests.php";
                                     window.location.href = "it_view_open_po.php?requestID=" + ida;
                                 } else if (idDesc == "Signature Verification") {
                                     window.location.href = "it_view_signature.php?requestID=" + ida;
+                                } else if (idDesc == "Requestor Receive Requested Items") {
+                                    window.location.href = "it_view_delivery_details.php?requestID=" + ida;
                                 }
                             }
 							if (id == "Pending") {

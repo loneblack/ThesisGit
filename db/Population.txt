@@ -118,6 +118,7 @@ INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('20', 'Stoc
 INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('21', 'For Refurbish - Component');
 INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('22', 'False Report');
 INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('23', 'Repaired');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('24', 'For Replacement - Supplier');
 
 -- ref_status
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('1', 'Pending');
