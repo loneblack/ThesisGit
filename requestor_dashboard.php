@@ -268,7 +268,7 @@ require_once("db/mysql_connect.php");
                                                         }
 
 
-                                                        //echo "<td>{$row['name']}</td>";
+                                                        echo "<td></td>";
                                                         echo "</tr>";
 
                                                           $count++;
@@ -307,7 +307,7 @@ require_once("db/mysql_connect.php");
                                                             echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
                                                         }
 
-
+														echo "<td></td>";
                                                         //echo "<td>{$row['name']}</td>";
                                                         echo "</tr>";
 
@@ -349,7 +349,7 @@ require_once("db/mysql_connect.php");
                                                             echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
                                                         }
 
-
+														echo "<td></td>";
                                                         //echo "<td>{$row['name']}</td>";
                                                         echo "</tr>";
 

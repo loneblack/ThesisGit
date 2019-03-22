@@ -60,7 +60,7 @@
                                         <table class="display table table-bordered table-striped" id="dynamic-table">
                                             <thead>
                                                 <tr>
-                                                    <th>Request ID</th>
+                                                    <th>#</th>
                                                     <th>Delivered To</th>
                                                     <th>Department</th>
 													<th>Building</th>

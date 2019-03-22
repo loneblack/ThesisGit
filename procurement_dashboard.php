@@ -135,10 +135,7 @@
 																//echo "<td><span class='label label-primary label-mini'>{$row['status']}</span></td>";
 															//}
 															
-															if($row['status']=='Completed'){
-																echo "<td><span class='label label-success label-mini'>{$row['status']}</span></td>";
-															}
-															elseif($row['status']=='Incomplete'){
+															if($row['status']=='Incomplete'){
 																echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
 															}
 															elseif($row['step']=='Canvasing'){
@@ -150,7 +147,9 @@
 															elseif($row['step']=='Re-Canvas'){
 																echo "<td><span class='label label-danger label-mini'>Re-Canvas</span></td>";
 															}
-																
+															else{
+																echo "<td><span class='label label-success label-mini'>Completed</span></td>";
+															}	
 															
 															
 																
