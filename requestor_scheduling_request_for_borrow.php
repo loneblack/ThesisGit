@@ -42,7 +42,7 @@ if(isset($_POST['save'])){
 	$resultUpdDelDate=mysqli_query($dbc,$queryUpdDelDate);
 	
 	//INSERT TO NOTIFICATIONS TABLE
-	$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `requestor_receiving_id`) VALUES (false, '{$id}}');";
+	$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `requestor_receiving_id`) VALUES (false, '{$id}');";
 	$resultNotif = mysqli_query($dbc, $sqlNotif);
 	
 	//CHECK IF ALL DELIVERY REQUEST IS ONGOING BASED ON GIVEN BORROWID
