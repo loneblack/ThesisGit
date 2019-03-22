@@ -165,11 +165,11 @@
             }
         }
     }
-    /*
+    
 
 	$message = "Form submitted!"; 
 	$_SESSION['submitMessage'] = $message;
 	
 	header('Location: '.$header);
-*/
+
 ?>
