@@ -62,7 +62,7 @@
             $queryAssetStatus="UPDATE `thesis`.`asset` SET `assetStatus` = '{$assetStatus}' WHERE (`assetID` = '{$asset}');";
             $resultAssetStatus=mysqli_query($dbc,$queryAssetStatus);
 
-            if($assetStatus == 22 || $assetStatus == 23 || $assetStatus == 4){
+            if($assetStatus == 22 || $assetStatus == 23 || $assetStatus == 4 || $assetStatus == 24){
                 //set checked in ticketed asset
                 $queryTicketedAsset="UPDATE `thesis`.`ticketedasset` SET `checked` = '1' WHERE (`assetID` = '{$asset}');";
                 $resultTicketedAsset=mysqli_query($dbc,$queryTicketedAsset);

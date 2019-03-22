@@ -111,11 +111,12 @@ require_once("db/mysql_connect.php");
 													}
 													
 													//BORROW REQUEST SIDE
-													$queryDelReq1 = "SELECT rr.id as `reqRecID`,e.name as `deliveredTo`,b.name as `building`,far.floorRoom,rr.deliveryDate FROM thesis.requestor_receiving rr join user u on rr.UserID=u.UserID
+													$queryDelReq1 = "SELECT rr.statusID,rr.id as `reqRecID`,e.name as `deliveredTo`,b.name as `building`,far.floorRoom,rr.deliveryDate,rs.description as `statusDesc` FROM thesis.requestor_receiving rr join user u on rr.UserID=u.UserID
 																												join employee e on u.UserID=e.UserID 
 																												join request_borrow rb on rr.borrowID=rb.borrowID
                                                                                                                 join building b on rb.BuildingID=b.BuildingID
-                                                                                                                join floorandroom far on rb.FloorAndRoomID=far.FloorAndRoomID
+                                                                                                                join floorandroom far on rb.FloorAndRoomID=far.FloorAndRoomID 
+																												join ref_status rs on rr.statusID=rs.statusID
 																												where rr.statusID!='1'";         
 													$resultDelReq1 = mysqli_query($dbc, $queryDelReq1);
 													while($rowDelReq1 = mysqli_fetch_array($resultDelReq1, MYSQLI_ASSOC)){
@@ -126,14 +127,14 @@ require_once("db/mysql_connect.php");
 															<td>{$rowDelReq1['building']}</td>
 															<td>{$rowDelReq1['floorRoom']}</td>
 															<td>{$rowDelReq1['deliveryDate']}</td>";
-															if($rowDelReq['statusID'] == '2'){//ongoing
-																echo "<td><span class='label label-info'>{$rowDelReq['statusDesc']}</span></td>";
+															if($rowDelReq1['statusID'] == '2'){//ongoing
+																echo "<td><span class='label label-info'>{$rowDelReq1['statusDesc']}</span></td>";
 															}
-															if($rowDelReq['statusID'] == '3'){//completed
-																echo "<td><span class='label label-success'>{$rowDelReq['statusDesc']}</span></td>";
+															if($rowDelReq1['statusID'] == '3'){//completed
+																echo "<td><span class='label label-success'>{$rowDelReq1['statusDesc']}</span></td>";
 															}
-															if($rowDelReq['statusID'] == '4'){//incompleted
-																echo "<td><span class='label label-danger'>{$rowDelReq['statusDesc']}</span></td>";
+															if($rowDelReq1['statusID'] == '4'){//incompleted
+																echo "<td><span class='label label-danger'>{$rowDelReq1['statusDesc']}</span></td>";
 															}
 															echo "<td style='display: none'></td>
 														</tr>";
