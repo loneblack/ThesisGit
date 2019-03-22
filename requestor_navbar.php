@@ -5,7 +5,7 @@
 	//GET NOTIFICATIONS FOR Delivery REQUESTOR
 	$queryNumNotifDel="SELECT Count(*) as `numOfNotif` FROM thesis.notifications n join requestor_receiving rr on n.requestor_receiving_id=rr.id
 															join request r on rr.requestID=r.requestID 
-															join requestor_receiving rr on n.requestor_receiving_id=rr.id 
+															
                                                             where n.isRead='0' and n.requestor_receiving_id is not null and r.UserID='{$_SESSION['userID']}' and rr.statusID='1'";
 	$resultNumNotifDel=mysqli_query($dbc,$queryNumNotifDel);
 	$rowNumNotifDel=mysqli_fetch_array($resultNumNotifDel,MYSQLI_ASSOC);
@@ -13,6 +13,7 @@
 	//GET NOTIF FOR Delivery Borrow Request
 	$queryNumNotifBorDel="SELECT Count(*) as `numOfNotif` FROM thesis.notifications n join requestor_receiving rr on n.requestor_receiving_id=rr.id
 															join request_borrow rb on rr.borrowID=rb.borrowID 
+															
                                                             where n.isRead='0' and n.requestor_receiving_id is not null and rb.personresponsibleID='{$_SESSION['userID']}' and rr.statusID='1'";
 	$resultNumNotifBorDel=mysqli_query($dbc,$queryNumNotifBorDel);
 	$rowNumNotifBorDel=mysqli_fetch_array($resultNumNotifBorDel,MYSQLI_ASSOC);
