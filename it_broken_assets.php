@@ -70,7 +70,7 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Stock List
+                                            Broken Assets With Valid Warranty
 
                                         </header>
                                         <div class="panel-body">
@@ -84,13 +84,13 @@
                                                                         <thead>
                                                                             <tr>
 																				<th style='display: none'></th>
-                                                                                <th>Check to Replenish</th>
+                                                                                <th></th>
+                                                                                <th>Property Code</th>
                                                                                 <th>Asset Category</th>
-                                                                                <th>Floor</th>
-                                                                                <th>Ceiling</th>
-                                                                                <th>Stock On Hand</th>
-                                                                                <th>Borrowed</th>
-                                                                                <th>Total Quantity</th>
+                                                                                <th>Brand</th>
+                                                                                <th>Model</th>
+                                                                                <th>Expiration Date</th>
+                                                                                <th>Supplier</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -150,7 +150,7 @@
                                                                 </div>
                                                            
                                                         </div>
-                                                        <button type="submit" name="replenish" class="btn btn-success">Replenish</button>
+                                                        <button type="submit" name="replenish" class="btn btn-success">Send</button>
 														</form>
                                                     </section>
                                                 </div>
