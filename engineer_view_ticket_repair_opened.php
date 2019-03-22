@@ -233,6 +233,7 @@ while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
                                                             <option value='22' ".$falseReport.">False Report</option>
                                                             <option value='23' ".$repaired.">Repaired</option>
                                                             <option value='4' ".$broken.">Broken - Not Fixable</option>
+                                                             <option value='24' ".$broken.">For Replacement - Supplier</option>
                                                         </select>
                                                     </td>
                                                     <td>{$row['propertyCode']}</td>
