@@ -70,6 +70,7 @@
 	        $borrowID = $row['borrowID'];
 	        $requestID = $row['requestID'];
 	        $serviceUnitID = $row['serviceUnitID'];
+	        $replacementID = $row['replacementID'];
 	    }
 
 	if($borrowID > 0)//have borrow
@@ -89,6 +90,12 @@
 
 	    $sql = "UPDATE `thesis`.`serviceUnit` SET `status` = '3', `startDate` = now() WHERE (`serviceUnitID` = '{$serviceUnitID}');";
 	    $result = mysqli_query($dbc, $sql);
+	}
+	if($replacementID > 0)//have replement
+	{
+
+	   $sql = "UPDATE `thesis`.`replacement` SET `status` = '3', `setpID` = 21 WHERE (`replacementID` = '{$replacementID}');";
+	   $result = mysqli_query($dbc, $sql);
 	}
 
     $header = "requestor_view_receiving.php?id=".$receivingID;
