@@ -3,8 +3,10 @@
 <?php
 session_start();
 require_once("db/mysql_connect.php");
-/*
 $id = $_GET['id'];
+
+/*
+
 
 $sql = "SELECT *, o.Name AS 'office', d.name AS 'department', z.name AS 'organization', b.name AS 'building' 
         FROM thesis.request_borrow r 
@@ -107,6 +109,14 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         
     }
     */
+	
+	
+	//GET DELIVERY DATA
+	$queryDelReq = "SELECT * FROM thesis.requestor_receiving where id='{$id}'";         
+	$resultDelReq = mysqli_query($dbc, $queryDelReq);
+	$rowDelReq = mysqli_fetch_array($resultDelReq, MYSQLI_ASSOC);
+	
+	
 ?>
 <head>
     <meta charset="utf-8">
@@ -169,7 +179,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 										<div class="form-group ">
 											<label for="deliveryDate" class="control-label col-lg-3"> Date Needed</label>
 											<div class="col-lg-6">
-												<input type="date" name="deliveryDate" class="form-control m-bot15" disabled>
+												<input type="text" name="deliveryDate" class="form-control m-bot15" value='<?php echo $rowDelReq['deliveryDate']; ?>' disabled>
 											</div>
 										</div>
 										<hr>
@@ -179,32 +189,56 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 											<table style="width:670px" class="table table-bordered table-striped table-condensed table-hover" id="tblCustomers" align="center" cellpadding="0" cellspacing="0" border="1">
 												<thead>
 													<tr>
-                                                        <th style="width:50px"></th>
+                                                        
                                                         <th style="width:140px">Property Code</th>
 														<th style="width:150px">Item</th>
 														<th style="width:150px">Model</th>
                                                         <th style="width:130px">Brand</th>
                                                         <th style="width:150px">Status</th>
-                                                        <th style="width:130px">Date Delivered</th>
+                                                        
 													</tr>
 												</thead>
 												<tbody>
-                                                    <tr>
-                                                        <td style="text-align:center"><input type="checkbox"></td>
-                                                        <td>CP-001</td>
-                                                        <td>Cellphone</td>
-                                                        <td>Galaxy J7 Pro</td>
-                                                        <td>Samsung</td>
-                                                        <td><span class="label label-danger">Not Yet Delivered</span>
-                                                        <th>N/A</th>
-                                                    </tr>
+													<?php
+														//GET DELIVERY ITEMS
+														$queryDeliItems="SELECT a.propertyCode,rac.name as `assetCat`,am.description as `modelDesc`,rb.name as `brandName`,rd.received as `isDelivered` FROM thesis.receiving_details rd join asset a on rd.assetID=a.assetID
+																			  join assetmodel am on a.assetModel=am.assetModelID
+																			  join ref_brand rb on am.brand=rb.brandID 
+																			  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
+																			  where rd.receivingID='{$id}'";
+														$resultDeliItems=mysqli_query($dbc,$queryDeliItems);
+														while ($rowDeliItems = mysqli_fetch_array($resultDeliItems, MYSQLI_ASSOC)){
+															echo "<tr>
+																<td>{$rowDeliItems['propertyCode']}</td>
+																<td>{$rowDeliItems['assetCat']}</td>
+																<td>{$rowDeliItems['modelDesc']}</td>
+																<td>{$rowDeliItems['brandName']}</td>";
+																
+																if($rowDeliItems['isDelivered']=='1'){
+																	echo "<td><span class='label label-success'>Delivered</span>";
+																}
+																else{
+																	echo "<td><span class='label label-danger'>Not Yet Delivered</span>";
+																}
+																
+									
+															echo "</tr>";
+															
+														}
+
+														
+														
+														
+													
+													?>
+                                                   
 												</tbody>
 											</table>
 										</div>
 									</form>
 								</div>
-                                <div style="padding-left:10px; padding-bottom:10px">
-                                    <button type="submit" name="submit" id="submit" class="btn btn-success" data-dismiss="modal">Deliver</button> 
+                               <div style="padding-left:10px; padding-bottom:10px">
+                                    <!-- <button type="submit" name="submit" id="submit" class="btn btn-success" data-dismiss="modal">Deliver</button> -->
                                     <a ><button onclick="window.history.back()" type="button" class="btn btn-default" data-dismiss="modal">Back</button></a>
                                 </div>
                             </section>
@@ -228,7 +262,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
     <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
    
     <script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-
+	<script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
 
     <script src="js/scripts.js"></script>
     <script src="js/advanced-form.js"></script>

@@ -62,49 +62,88 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Delivered To</th>
-                                                    <th>Department</th>
 													<th>Building</th>
 													<th>Floor</th>
-                                                    <th>Type of Delivery</th>
 													<th>Delivery Date</th>
+													<th>Delivery Status</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
-												<tr class='gradeA'>
-													<td style='display: none'>1</td>
-													<td>1</td>
-													<td>John Doe</td>
-													<td>Biology</td>
-													<td>BGC-Rufino Campus</td>
-													<td>201</td>
-													<td><span class="label label-success">Complete</span></td>
-													<td>11-02-2019</td>
-													<td style='display: none'></td>
-												</tr>
-
-                                                <tr class='gradeA'>
-                                                    <td style='display: none'>1</td>
-                                                    <td>2</td>
-                                                    <td>ASDSFD</td>
-                                                    <td>Philosophy</td>
-                                                    <td>St. La Salle Hall (LS)</td>
-                                                    <td>305</td>
-                                                    <td><span class="label label-warning">Partial</span></td>
-                                                    <td>11-03-2019</td>
-                                                    <td style='display: none'></td>
-                                                </tr>
-                                                
+												<?php
+													//GET ALL ONGOING DELIVERY Request
+													
+													//ASSET REQUEST SIDE
+													$queryDelReq = "SELECT rr.statusID,rr.id as `reqRecID`,e.name as `deliveredTo`,b.name as `building`,far.floorRoom,rr.deliveryDate,rs.description as `statusDesc` FROM thesis.requestor_receiving rr join user u on rr.UserID=u.UserID
+																												join employee e on u.UserID=e.UserID 
+																												join request r on rr.requestID=r.requestID
+                                                                                                                join building b on r.BuildingID=b.BuildingID
+                                                                                                                join floorandroom far on r.FloorAndRoomID=far.FloorAndRoomID
+																												join ref_status rs on rr.statusID=rs.statusID
+																												where rr.statusID!='1'";         
+													$resultDelReq = mysqli_query($dbc, $queryDelReq);
+													while($rowDelReq = mysqli_fetch_array($resultDelReq, MYSQLI_ASSOC)){
+														echo "<tr class='gradeA'>
+															<td style='display: none'>{$rowDelReq['reqRecID']}</td>
+															<td>{$rowDelReq['reqRecID']}</td>
+															<td>{$rowDelReq['deliveredTo']}</td>
+															<td>{$rowDelReq['building']}</td>
+															<td>{$rowDelReq['floorRoom']}</td>
+															<td>{$rowDelReq['deliveryDate']}</td>";
+															
+															if($rowDelReq['statusID'] == '2'){//ongoing
+																echo "<td><span class='label label-info'>{$rowDelReq['statusDesc']}</span></td>";
+															}
+															if($rowDelReq['statusID'] == '3'){//completed
+																echo "<td><span class='label label-success'>{$rowDelReq['statusDesc']}</span></td>";
+															}
+															if($rowDelReq['statusID'] == '4'){//incompleted
+																echo "<td><span class='label label-danger'>{$rowDelReq['statusDesc']}</span></td>";
+															}
+															echo "<td style='display: none'></td>
+														</tr>";
+													}
+													
+													//BORROW REQUEST SIDE
+													$queryDelReq1 = "SELECT rr.id as `reqRecID`,e.name as `deliveredTo`,b.name as `building`,far.floorRoom,rr.deliveryDate FROM thesis.requestor_receiving rr join user u on rr.UserID=u.UserID
+																												join employee e on u.UserID=e.UserID 
+																												join request_borrow rb on rr.borrowID=rb.borrowID
+                                                                                                                join building b on rb.BuildingID=b.BuildingID
+                                                                                                                join floorandroom far on rb.FloorAndRoomID=far.FloorAndRoomID
+																												where rr.statusID!='1'";         
+													$resultDelReq1 = mysqli_query($dbc, $queryDelReq1);
+													while($rowDelReq1 = mysqli_fetch_array($resultDelReq1, MYSQLI_ASSOC)){
+														echo "<tr class='gradeA'>
+															<td style='display: none'>{$rowDelReq1['reqRecID']}</td>
+															<td>{$rowDelReq1['reqRecID']}</td>
+															<td>{$rowDelReq1['deliveredTo']}</td>
+															<td>{$rowDelReq1['building']}</td>
+															<td>{$rowDelReq1['floorRoom']}</td>
+															<td>{$rowDelReq1['deliveryDate']}</td>";
+															if($rowDelReq['statusID'] == '2'){//ongoing
+																echo "<td><span class='label label-info'>{$rowDelReq['statusDesc']}</span></td>";
+															}
+															if($rowDelReq['statusID'] == '3'){//completed
+																echo "<td><span class='label label-success'>{$rowDelReq['statusDesc']}</span></td>";
+															}
+															if($rowDelReq['statusID'] == '4'){//incompleted
+																echo "<td><span class='label label-danger'>{$rowDelReq['statusDesc']}</span></td>";
+															}
+															echo "<td style='display: none'></td>
+														</tr>";
+													}
+												?>
+												
+                  
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Request ID</th>
+                                                    <th>#</th>
                                                     <th>Delivered To</th>
-                                                    <th>Department</th>
                                                     <th>Building</th>
                                                     <th>Floor</th>
-                                                    <th>Type of Delivery</th>
                                                     <th>Delivery Date</th>
+													<th>Delivery Status</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -136,7 +175,7 @@
                     var cell = row.getElementsByTagName("td")[0];
                     var id = cell.textContent;
 
-                    window.location.href = "it_view_delivery_details.php";
+                    window.location.href = "it_view_delivery_details.php?id="+id;
 
                 };
             };
@@ -153,13 +192,20 @@
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
+
+
+    <!--dynamic table-->
     <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
-    <script src="js/dynamic_table_init.js"></script>
-
-
     <!--common script init for all pages-->
     <script src="js/scripts.js"></script>
+
+    <script src="js/morris-chart/morris.js"></script>
+    <script src="js/morris-chart/raphael-min.js"></script>
+    <script src="js/morris.init.js"></script>
+
+    <!--dynamic table initialization -->
+    <script src="js/dynamic_table_init.js"></script>
 
 </body>
 
