@@ -44,6 +44,8 @@
 	$queryNumNotifDel="SELECT Count(*) as `numOfNotif` FROM thesis.notifications n join requestor_receiving rr on n.requestor_receiving_id=rr.id where n.isRead='0' and rr.statusID='2'";
 	$resultNumNotifDel=mysqli_query($dbc,$queryNumNotifDel);
 	$rowNumNotifDel=mysqli_fetch_array($resultNumNotifDel,MYSQLI_ASSOC);
+	
+	
 ?>
 <?php  echo '<aside>
             <div id="sidebar" class="nav-collapse">

@@ -71,10 +71,6 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
         if(!isset($message)){
 
-            //INSERT ASSET TESTING
-            $queryInsAss="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`, `remarks`, `borrowID`) VALUES ('1', '{$personresponsibleID}', '{$floorRoom}', '25', 'Borrow', '{$id}');";
-            $resultInsAss=mysqli_query($dbc,$queryInsAss);
-                
             //GET ASSET TEST DATA
             $queryAssTest="SELECT * FROM thesis.assettesting where borrowID='{$id}'";
             $resultAssTest=mysqli_query($dbc,$queryAssTest);
