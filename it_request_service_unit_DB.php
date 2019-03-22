@@ -34,7 +34,6 @@
     	$sql = "INSERT INTO `thesis`.`serviceunitassets` (`serviceUnitID`, `assetID`, `received`) VALUES ('{$id}', '{$asset}', '0');";
     	$result = mysqli_query($dbc, $sql);
 
-        //insert to delivery details
 
     	$sql = "INSERT INTO `thesis`.`receiving_details` (`receivingID`, `assetID`, `received`) VALUES ('{$receivingID}', '{$asset}', '0');";
     	$result = mysqli_query($dbc, $sql);

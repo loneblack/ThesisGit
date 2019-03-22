@@ -70,14 +70,8 @@
 
         $replacementID = $row['replacementID'];
 
-        //add to delivery table
-        //$sql = "INSERT INTO `thesis`.`replacement` (`lostAssetID`, `replacementAssetID`, `BuildingID`, `FloorAndRoomID`, `userID`, `statusID`, `stepID`, `remarks`) 
-          //      VALUES ('{$toBeReplaced[$i]}', '{$replacement[$i]}', '{$BuildingID}', '{$FloorAndRoomID}', '{$personresponsibleID}', '2', '26', 'replacement');";
-        //$result = mysqli_query($dbc, $sql);
-
-
         //insert to receiving
-        $sql = "INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `statusID`) VALUES ('{$personresponsibleID}', '2');";
+        $sql = "INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `statusID`) VALUES ('{$personresponsibleID}', '1');";
         $result = mysqli_query($dbc, $sql);
 
         //insert to receiving details
@@ -142,17 +136,12 @@
 
                 $replacementID = $row['replacementID'];
 
-                //add to delivery table
-                //$sql = "INSERT INTO `thesis`.`replacement` (`lostAssetID`, `replacementAssetID`, `BuildingID`, `FloorAndRoomID`, `userID`, `statusID`, `stepID`, `remarks`) 
-                  //      VALUES ('{$toBeReplaced[$i]}', '{$replacement[$i]}', '{$BuildingID}', '{$FloorAndRoomID}', '{$personresponsibleID}', '2', '26', 'replacement');";
-                //$result = mysqli_query($dbc, $sql);
-
                 //add to receiving table if does not exist
                 $sql = " SELECT * FROM thesis.requestor_receiving WHERE UserID = '{$personresponsibleID}' AND replacementID = '{$replacementID}' AND statusID != 3;";
                 $result = mysqli_query($dbc, $sql);
 
                 if(mysqli_num_rows($result) == 0){
-                    $sql = "INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `statusID`) VALUES ('{$personresponsibleID}', '2');";
+                    $sql = "INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `statusID`) VALUES ('{$personresponsibleID}', '1');";
                     $result = mysqli_query($dbc, $sql);
 
                     $sql = " SELECT * FROM thesis.requestor_receiving WHERE UserID = '{$personresponsibleID}' AND replacementID = '{$replacementID}' AND statusID != 3;";
