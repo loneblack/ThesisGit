@@ -60,7 +60,7 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Inventory Report
+                                            Asset Audit Report
                                         </header>
                                         <div align="right">
                                             <button class="btn btn-primary" onclick="print()"><i class="fa fa-print"></i> Print</button>
@@ -68,7 +68,7 @@
 
                                         <div align="center">
                                             <h3>Information and Technology Services Office</h3>
-                                            <h3>Inventory Report</h3>
+                                            <h3>Asset Audit Report</h3>
                                             <h4>
                                                 <?php 
                                                 date_default_timezone_set('Asia/Manila');

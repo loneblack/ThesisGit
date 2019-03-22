@@ -57,7 +57,7 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Inventory Report
+                                            Asst Audit Report Form
                                         </header>
 
                                         <form method="POST" action="it_inventory_report.php">
