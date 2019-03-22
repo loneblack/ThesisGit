@@ -47,6 +47,10 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 		$queryUpdDelDate="UPDATE `thesis`.`requestor_receiving` SET `statusID`='2', `deliveryDate`='{$deliverySched}' WHERE `id`='{$id}'";
 		$resultUpdDelDate=mysqli_query($dbc,$queryUpdDelDate);
 		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `requestor_receiving_id`) VALUES (false, '{$id}}');";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
+		
 		//CHECK IF ALL DELIVERY REQUEST IS ONGOING BASED ON GIVEN REQUESTID
 		$queryCountAllDelReq="SELECT Count(*) as `numDel` FROM thesis.requestor_receiving where requestID='{$rowReqInfo['requestID']}'";
 		$resultCountAllDelReq=mysqli_query($dbc,$queryCountAllDelReq);

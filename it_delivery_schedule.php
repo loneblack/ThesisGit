@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<?php
+
+session_start();
+require_once("db/mysql_connect.php");
+
+?>
 <html lang="en">
 
 <head>

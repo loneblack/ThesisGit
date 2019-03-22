@@ -17,7 +17,9 @@
 	$rowNumNotifBorDel=mysqli_fetch_array($resultNumNotifBorDel,MYSQLI_ASSOC);
 	
 	//GET NOTIF FOR Asset Request
-	$queryNumNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications n join request r on n.requestID=r.requestID where n.isRead='0' and r.UserID='{$_SESSION['userID']}' and n.requestID is not null and (n.steps_id='28' or n.steps_id='29')";
+	$queryNumNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications n join request r on n.requestID=r.requestID 
+																				join requestor_receiving rr on n.requestor_receiving_id=rr.id 
+																				where n.isRead='0' and rr.statusID='1' and r.UserID='{$_SESSION['userID']}' and n.requestID is not null and (n.steps_id='28' or n.steps_id='29')";
 	$resultNumNotif=mysqli_query($dbc,$queryNumNotif);
 	$rowNumNotif=mysqli_fetch_array($resultNumNotif,MYSQLI_ASSOC);
 	

@@ -5,6 +5,14 @@ session_start();
 require_once("db/mysql_connect.php");
 $id = $_GET['id'];
 
+
+//GET REQUEST RECEIVING ID
+$id = $_GET['id'];
+
+//Update notifications
+$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` =true WHERE `requestor_receiving_id` = '{$id}'";
+$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+
 /*
 
 

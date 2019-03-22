@@ -39,6 +39,11 @@
 	$queryNumNotifTest="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and testingID is not null";
 	$resultNumNotifTest=mysqli_query($dbc,$queryNumNotifTest);
 	$rowNumNotifTest=mysqli_fetch_array($resultNumNotifTest,MYSQLI_ASSOC);
+	
+	//GET NUMBER OF NEW DELIVERY NOTIFICATIONS OF PURCHASE ORDERS
+	$queryNumNotifDel="SELECT Count(*) as `numOfNotif` FROM thesis.notifications n join requestor_receiving rr on n.requestor_receiving_id=rr.id where n.isRead='0' and rr.statusID='2'";
+	$resultNumNotifDel=mysqli_query($dbc,$queryNumNotifDel);
+	$rowNumNotifDel=mysqli_fetch_array($resultNumNotifDel,MYSQLI_ASSOC);
 ?>
 <?php  echo '<aside>
             <div id="sidebar" class="nav-collapse">
@@ -104,7 +109,11 @@
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="glyphicon glyphicon-chevron-right"></i>
-                                <span>Delivery</span>
+                                <span>Delivery ';
+								if($rowNumNotifDel['numOfNotif']>'0'){
+									echo '<span class="badge badge-light">'.$rowNumNotifDel['numOfNotif'].'</span>';
+								}
+								echo '</span>
                             </a>
                             <ul class="sub">
                                 <li><a href="it_delivery_schedule.php">Delivery Schedule</a></li>
