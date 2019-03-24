@@ -81,7 +81,7 @@ if($serviceUnitID > 0)//have service unit
 
 }
 
-$sql = "SELECT a.assetID, rb.name as 'brand', rac.name as 'category', description, received
+$sql = "SELECT a.assetID, propertyCode, rb.name as 'brand', rac.name as 'category', itemSpecification, description, received
         FROM thesis.receiving_details r
         JOIN asset a ON r.assetID = a.assetID 
         JOIN assetmodel am on a.assetModel = am.assetModelID
@@ -93,7 +93,9 @@ $result = mysqli_query($dbc, $sql);
 $count = 0;
 
 $requestedID = array();
+$requestedPropertyCode = array();
 $requestedCategory = array();
+$requestedItemSpecification = array();
 $requestedBrand = array();
 $requestedDescription = array();
 $requestedBrand = array();
@@ -105,6 +107,8 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         array_push($requestedCategory, $row['category']);
         array_push($requestedBrand, $row['brand']);
         array_push($requestedDescription, $row['description']);
+        array_push($requestedPropertyCode, $row['propertyCode']);
+        array_push($requestedItemSpecification, $row['itemSpecification']);
 
         if($row['received'] == 1){
             array_push($requestedCheck, "checked disabled");
@@ -217,9 +221,10 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                         <thead>
                                                             <tr>
                                                                 <th></th>
+                                                                <th>PropertyCode</th>
                                                                 <th>Category</th>
                                                                 <th>Brand</th>
-                                                                <th>Model</th>
+                                                                <th>Model and Specifications</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -234,6 +239,11 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
                                                                         <td style="width:1%">
 
+                                                                            '.$requestedPropertyCode[$i].'                                                                       
+                                                                        </td>
+
+                                                                        <td style="width:1%">
+
                                                                             '.$requestedCategory[$i].'                                                                       
                                                                         </td>
 
@@ -244,7 +254,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                                         </td>
 
                                                                         <td style="padding-top:5px; padding-bottom:5px">
-                                                                              '.$requestedDescription[$i].'
+                                                                              '.$requestedDescription[$i].' '.$requestedItemSpecification[$i].'
                                                                         </td>
                                                                     </tr>';
                                                             }
