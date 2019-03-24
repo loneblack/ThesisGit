@@ -470,7 +470,7 @@ require_once("db/mysql_connect.php");
                             window.location.href = "requestor_view_service_unit_request.php?id=" + id +"&requestType=" + requestType;
                         }
                         else if(step == "Request Pending"){
-                            window.location.href = "requestor_view_service_unit_request.php?id=" + id;
+                            window.location.href = "requestor_view_service_unit_ongoing.php?id=" + id;
                         }
                     }
 
