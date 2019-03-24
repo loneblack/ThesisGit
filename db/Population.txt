@@ -1010,6 +1010,10 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0016', 'JCFEdEKy', '', '19'); -- ID 219, mouse
 	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('36', 'VDCRD-0004', 'XXKKXXS', '', '19'); -- ID 220, Video Card Graphics Card
 
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('3', 'KB-0017', 'ABC123EH', '', '16'); -- ID 221, Keyboard
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0018', 'A3EH1BC2', '', '16'); -- ID 222, Monitor
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('32', 'AP-0004', 'BBAS5344', '', '16'); -- ID 223, Access Point
+
 
 -- asset audit for new items
 INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');
