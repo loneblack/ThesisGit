@@ -7,7 +7,7 @@
 		$assetsForDon=$_POST['assetsForDon'];
 		
 		//Update status
-		$queryApp="UPDATE `thesis`.`donation` SET `statusID`='2',`stepsID`='9' WHERE `donationID`='{$_SESSION['donationID']}'";
+		$queryApp="UPDATE `thesis`.`donation` SET `statusID`='5',`stepsID`='9' WHERE `donationID`='{$_SESSION['donationID']}'";
 		$resultApp=mysqli_query($dbc,$queryApp);
 		
 		//Get donation data
@@ -36,7 +36,7 @@
 	if(isset($_POST['disapprove'])){
 		$header =  $_SESSION['previousPage3'];
 		//Update status
-		$queryDisapp="UPDATE `thesis`.`donation` SET `reason`='{$_POST['reason']}', `statusID`='5', `stepsID`='20' WHERE `donationID`='{$_SESSION['donationID']}'";
+		$queryDisapp="UPDATE `thesis`.`donation` SET `reason`='{$_POST['reason']}', `statusID`='6', `stepsID`='20' WHERE `donationID`='{$_SESSION['donationID']}'";
 		$resultDisapp=mysqli_query($dbc,$queryDisapp);
 		
 		//INSERT TO NOTIFICATIONS TABLE
