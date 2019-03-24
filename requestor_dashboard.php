@@ -174,7 +174,52 @@ require_once("db/mysql_connect.php");
                                                           $count++;
                                                     }
                                                   ?>
+                                                  <?php
+                                                    //view for service unit
+                                                    $query = "SELECT *, s.name as 'stepname' 
+                                                                FROM thesis.serviceunit su
+                                                            JOIN service sr
+                                                                ON sr.id = su.serviceID
+                                                            JOIN ref_status st 
+                                                                ON su.statusID = st.statusID
+                                                            JOIN ref_steps s 
+                                                                ON steps = s.id
+                                                            WHERE su.UserID = '{$userID}';";
+                                                                  
+                                                    $result = mysqli_query($dbc, $query);
+                                                    
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                      
+                                                        echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$row['serviceID']}</td>
+                                                            <td>{$count}</td>";
+                                                            
+                                                        echo "<td>Service Unit</td>";
+                                                        echo "<td>{$row['dateReceived']}</td>
+                                                            <td>{$row['dateNeeded']}</td>
+                                                            <td style='display: none'>{$row['statusID']}</td>";
 
+                                                        if($row['statusID'] == '1'){//pending
+                                                            echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '2'){//ongoing
+                                                            echo "<td><span class='label label-info'>{$row['name']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '3'){//completed
+                                                            echo "<td><span class='label label-success'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '4'){//disapproved
+                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
+                                                        }
+
+                                                        echo "<td>{$row['details']}</td>";
+                                                        echo "</tr>";
+
+                                                          $count++;
+                                                    }
+
+                                                  ?>   
                                                   <?php
                                                     // view for borrow
                                                     $sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = {$userID};";//get the employeeID using userID
