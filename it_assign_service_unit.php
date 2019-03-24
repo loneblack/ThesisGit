@@ -158,7 +158,7 @@
                                                 </div>
                                             </div>
                                             <div style="padding-left:10px; padding-bottom:10px">
-                                                <button type="submit" name="dispose" class="btn btn-success">For Refurbish</button>
+                                                <button type="submit" name="dispose" class="btn btn-success">Submit</button>
                                                 <button type="button" onclick="window.history.back()" class="btn btn-secondary">Back</button>
                                             </div>
                                         </form>

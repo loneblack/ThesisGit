@@ -420,6 +420,15 @@ require_once("db/mysql_connect.php");
 						}
                     }
 
+                    if(requestType == 'Service Unit'){
+                        if(step == "placeholder"){
+                            window.location.href = "requestor_view_service_unit_request.php?id=" + id +"&requestType=" + requestType;
+                        }
+                        else if(step == "Ongoing"){
+                            window.location.href = "requestor_view_service_unit_request.php?id=" + id;
+                        }
+                    }
+
                     else if(requestType == "Borrow"){
 						if(step == "Conforme Pending"){
 							window.location.href = "requestor_service_request_form_conforme.php?id=" + id +"&requestType=" + requestType;

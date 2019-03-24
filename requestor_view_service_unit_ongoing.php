@@ -67,7 +67,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
         </header>
         <!--header end-->
-        <?php include 'it_navbar.php' ?>
+        <?php include 'requestor_navbar.php' ?>
 
         <!--main content-->
         <section id="main-content">
@@ -128,63 +128,6 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                 </div>
                             </section>
 
-                            <section class="panel">
-                                <div class="panel-body">
-                                    <h4>Assets to be Repaired</h4>
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Property Code</th>
-                                                <th>Asset/ Software Name</th>
-                                                <th>Building</th>
-                                                <th>Room</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                                    
-                                        for ($i=0; $i < count($assets); $i++) { 
-
-                                            
-                                            $query3 =  "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
-                                                    FROM asset a 
-                                                        JOIN assetModel m
-                                                    ON assetModel = assetModelID
-                                                        JOIN ref_brand br
-                                                    ON brand = brandID
-                                                        JOIN ref_assetcategory c
-                                                    ON assetCategory = assetCategoryID
-                                                        JOIN ref_assetstatus s
-                                                    ON a.assetStatus = s.id
-                                                        JOIN assetassignment aa
-                                                    ON a.assetID = aa.assetID
-                                                        JOIN building b
-                                                    ON aa.BuildingID = b.BuildingID
-                                                        JOIN floorandroom f
-                                                    ON aa.FloorAndRoomID = f.FloorAndRoomID 
-                                                        WHERE a.assetID = {$assets[$i]};";
-
-                                            $result3 = mysqli_query($dbc, $query3);  
-
-                                            while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
-
-                                               echo "
-                                                <tr>
-                                                <td>{$row['propertyCode']}</td>
-                                                <td>{$row['brand']} {$row['category']} {$row['description']}</td>
-                                                <td>{$row['building']}</td>
-                                                <td>{$row['floorroom']}</td>
-                                                <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
-                                                </tr>";
-                                            }  
-
-                                        }
-                                        ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </section>
-
                         </div>
 
                         <div class="col-sm-12">
@@ -239,8 +182,6 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     <input style="display: none" type="number" id="count" name="count">
                                 </div>
                             </section>
-                            <button type="submit" name="submit" id="submit" class="btn btn-success">Approve</button>
-                            <button type="button" class="btn btn-danger">Disapprove</button>
                             </form>
                         </div>
                         
