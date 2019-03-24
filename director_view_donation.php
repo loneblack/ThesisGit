@@ -97,7 +97,8 @@ $rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC);
                                                 <fieldset>
 													<label for="building" class="control-label col-lg-6">Contact No.</label>
                                                     <input id="contactNo" name="contactNo" class="form-control" placeholder="Contact No." type="text" disabled value='<?php echo $rowDon['contactNumber']; ?>'>
-                                                </fieldset><br>
+                                                </fieldset>
+												<br>
                                                 <fieldset>
 													<label for="building" class="control-label col-lg-6">Date and Time Needed</label>
                                                     <input id="dateNeeded" name="dateNeeded" class="form-control" type="datetime-local" placeholder="Date and Time Needed" disabled value='<?php 
@@ -139,7 +140,21 @@ $rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC);
                                                         </tbody>
                                                     </table>
                                                 </fieldset>
-                                               
+                                               <br>
+											   <?php
+													if($rowDon['statusID']=='6'){
+														echo "<fieldset>
+															<label for='reasForDisapprov' class='control-label col-lg-6'>Reason For Disapproval</label>
+															<textarea class='form-control' rows='5' id='comment' name='reason' style='resize:none' disabled>{$rowDon['reason']}</textarea>
+															
+														</fieldset>
+														<br>";
+													}
+											   
+											   
+											   
+											   ?>
+                                                
                                             </form>
                                         </div>
                                     </div>
