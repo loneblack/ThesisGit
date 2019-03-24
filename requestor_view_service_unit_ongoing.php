@@ -4,7 +4,7 @@
 session_start();
 $userID = $_SESSION['userID'];
 $id = $_GET['id'];
-$_SESSION['previousPage'] = "it_request_service_unit?id={$id}";
+
 require_once("db/mysql_connect.php");
 
 
@@ -25,6 +25,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     array_push($assets, $row['IDasset']);
     array_push($assetCategoryID, $row['assetCategory']);
 }
+
 ?>
 
 <head>
@@ -82,16 +83,6 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                             <br>
                             <section class="panel">
                                 <header style="padding-bottom:20px" class="panel-heading wht-bg">
-                                    <?php
-                                        if (isset($_SESSION['submitMessage'])){
-
-                                            echo "<div style='text-align:center' class='alert alert-success'><h5><strong>
-                                                    {$_SESSION['submitMessage']}
-                                                  </strong></h5></div>";
-
-                                            unset($_SESSION['submitMessage']);
-                                        }
-                                    ?>
                                     <h4 class="gen-case" style="float:right">
                                     </h4>
                                     <h4>Request For Service Unit</h4>
@@ -102,9 +93,9 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <img src="images/chat-avatar2.jpg" alt="">
-                                                <strong>Helpdesk</strong>
+                                                <strong>Me</strong>
                                                 to
-                                                <strong>me</strong>
+                                                <strong>IT Office</strong>
                                             </div>
                                             <div class="col-md-4">
                                                 <button style="float:right" class="btn btn-info">Ongoing</button>

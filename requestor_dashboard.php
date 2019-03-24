@@ -192,7 +192,7 @@ require_once("db/mysql_connect.php");
                                                     {
                                                       
                                                         echo "<tr class='gradeA'>
-                                                            <td style='display: none'>{$row['serviceID']}</td>
+                                                            <td style='display: none'>{$row['serviceUnitID']}</td>
                                                             <td>{$count}</td>";
                                                             
                                                         echo "<td>Service Unit</td>";
