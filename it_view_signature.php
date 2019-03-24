@@ -9,7 +9,7 @@
 	$_SESSION['recommAsset']=array();
 	
 	//Get Request Data
-	$queryReq="SELECT *,rs.description as `statusDesc` FROM thesis.request r join floorandroom far on r.FloorAndRoomID=far.FloorAndRoomID
+	$queryReq="SELECT *,rs.description as `statusDesc`,r.description as `reasOfReq` FROM thesis.request r join floorandroom far on r.FloorAndRoomID=far.FloorAndRoomID
                         join ref_status rs on r.status=rs.statusID	
 						where r.requestID='{$requestID}'";
 	$resultReq=mysqli_query($dbc,$queryReq);
@@ -170,7 +170,7 @@
                                                         <label for="building" class="control-label col-lg-3">Reason of Request</label>
                                                         <div class="col-lg-6">
                                                             <div class="form-group">
-                                                                <textarea class="form-control" rows="5" id="comment" name="comment" style="resize: none" readonly><?php echo $rowReq['description']; ?></textarea>
+                                                                <textarea class="form-control" rows="5" id="comment" name="comment" style="resize: none" readonly><?php echo $rowReq['reasOfReq']; ?></textarea>
                                                             </div>
                                                         </div>
 

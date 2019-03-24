@@ -127,6 +127,9 @@
 																elseif($rowDon['statusDesc']=='Pending'){
 																	echo "<td><span class='badge bg-warning'>{$rowDon['statusDesc']}</span></td>";
 																}
+																elseif($rowDon['statusDesc']=='Completed'){
+																	echo "<td><span class='badge bg-success'>{$rowDon['statusDesc']}</span></td>";
+																}
 																else{
 																	echo "<td><span class='badge bg-success'>Approved</span></td>";
 																}
