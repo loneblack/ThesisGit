@@ -79,9 +79,6 @@ $assetCategories = array();
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
-                            <button type="button" class="btn btn-default" onclick="window.history.back();"><span class="glyphicon glyphicon-chevron-left"> Back</span></button>
-                            <br>
-                            <br>
                             <section class="panel">
                                 <header style="padding-bottom:20px" class="panel-heading wht-bg">
                                     <?php
