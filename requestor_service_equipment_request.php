@@ -97,13 +97,31 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                 <div class="form-group">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Date & time needed</label>
                                                     <div class="col-lg-6">
-                                                        <input class="form-control" id="dateNeeded" name="dateNeeded" type="date" value="<?php echo date('Y-m-d'); ?>" />
+                                                        <input class="form-control" id="dateNeeded" name="dateNeeded" type="date" value="<?php 
+															
+																																				$date0 = new DateTime(date("Y-m-d"));
+																																				date_modify($date0,"+1 day");
+																																				echo date_format($date0,"Y-m-d");
+																																			
+																																			?>" min="<?php 
+																																						
+																																						$date = new DateTime(date("Y-m-d"));
+																																						date_modify($date,"+1 day");
+																																						echo date_format($date,"Y-m-d");
+																																						
+																																					?>" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="endDate" class="control-label col-lg-3">Asset Return date & time</label>
                                                     <div class="col-lg-6">
-                                                        <input class=" form-control" id="endDate" name="endDate" type="date" min="<?php echo date('Y-m-d'); ?>" value="<?php echo date('Y-m-d'); ?>" />
+                                                        <input class=" form-control" id="endDate" name="endDate" type="date" min="<?php 
+																																						
+																																						$date = new DateTime(date("Y-m-d"));
+																																						date_modify($date,"+1 day");
+																																						echo date_format($date,"Y-m-d");
+																																						
+																																					?>" />
                                                     </div>
                                                 </div>
 
