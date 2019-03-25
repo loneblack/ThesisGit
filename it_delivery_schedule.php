@@ -139,6 +139,36 @@ require_once("db/mysql_connect.php");
 															echo "<td style='display: none'></td>
 														</tr>";
 													}
+
+                                                    //SERVICE REPAIR REQUEST SIDE
+                                                    $queryDelReq1 = "SELECT *,rr.id as `reqRecID`,e.name as `deliveredTo`,b.name as `building`, f.floorRoom
+                                                                    FROM thesis.requestor_receiving rr 
+                                                                    join employee e on rr.UserID=e.UserID
+                                                                    join floorandroom f on e.FloorAndRoomID = f.FloorAndRoomID
+                                                                    join building b on f.BuildingID = b.BuildingID
+                                                                    join ref_status rs on rr.statusID=rs.statusID
+                                                                    where rr.statusID!='1';";         
+                                                    $resultDelReq1 = mysqli_query($dbc, $queryDelReq1);
+                                                    while($rowDelReq1 = mysqli_fetch_array($resultDelReq1, MYSQLI_ASSOC)){
+                                                        echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$rowDelReq1['reqRecID']}</td>
+                                                            <td>{$rowDelReq1['reqRecID']}</td>
+                                                            <td>{$rowDelReq1['deliveredTo']}</td>
+                                                            <td>{$rowDelReq1['building']}</td>
+                                                            <td>{$rowDelReq1['floorRoom']}</td>
+                                                            <td>{$rowDelReq1['deliveryDate']}</td>";
+                                                            if($rowDelReq1['statusID'] == '2'){//ongoing
+                                                                echo "<td><span class='label label-info'>{$rowDelReq1['description']}</span></td>";
+                                                            }
+                                                            if($rowDelReq1['statusID'] == '3'){//completed
+                                                                echo "<td><span class='label label-success'>{$rowDelReq1['description']}</span></td>";
+                                                            }
+                                                            if($rowDelReq1['statusID'] == '4'){//incompleted
+                                                                echo "<td><span class='label label-danger'>{$rowDelReq1['description']}</span></td>";
+                                                            }
+                                                            echo "<td style='display: none'></td>
+                                                        </tr>";
+                                                    }
 												?>
 												
                   

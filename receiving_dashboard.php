@@ -156,15 +156,42 @@ require_once("db/mysql_connect.php");
                                                   ?>
                                                   <?php
                                                     // view for service unit
-                                                    $sql = "SELECT * FROM `thesis`.`employee` WHERE UserID = {$userID};";//get the employeeID using userID
-                                                    $result = mysqli_query($dbc, $sql);
+                                                    $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN serviceunit su ON r.serviceUnitID = su.serviceUnitID JOIN ref_status s ON r.statusID = s.statusID WHERE r.statusID != 3;";
+                                                                  
+                                                    $result = mysqli_query($dbc, $query);
+                                                    
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                      
+                                                      echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$row['serviceUnitID']}</td>
+                                                            <td style='display: none'>{$row['receivingID']}</td>
+                                                            <td>{$count}</td>
+                                                            <td>Service Unit</td>
+                                                            <td style='display: none'>{$row['statusID']}</td>";
 
-                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-                                                        $employeeID = $row['employeeID'];
-                                                        
+                                                        if($row['statusID'] == '1'){//pending
+                                                            echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '2'){//ongoing
+                                                            echo "<td><span class='label label-info'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '4'){
+                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
+                                                        }
+
+
+                                                        //echo "<td>{$row['name']}</td>";
+                                                        echo "</tr>";
+
+                                                        $count++;
                                                     }
 
-                                                    $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN serviceunit su ON r.serviceUnitID = su.serviceUnitID JOIN ref_status s ON r.statusID = s.statusID WHERE r.statusID != 3;";
+                                                    
+                                                  ?>
+                                                  <?php
+                                                    // view for repair
+                                                    $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN service s ON r.serviceID = s.id JOIN ref_status rs ON r.statusID = rs.statusID WHERE r.statusID != 3;";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
