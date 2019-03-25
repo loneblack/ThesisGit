@@ -235,7 +235,7 @@ require_once("db/mysql_connect.php");
                             }
                         }
                         else if(serviceTypeID == '29'){
-                            //maintenance
+                            //salvage
                             if(status == "Closed"){
                                 window.location.href = "engineer_view_ticket_salvage_closed.php?id=" + id;
                             }
