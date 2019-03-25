@@ -419,7 +419,7 @@ $_SESSION['previousDash'] = "it_requests.php";
                                                                 echo "<tr> 
                                                                     <td style='display: none'>{$row['serviceID']}</td>
                                                                     <td>{$count}</td>
-                                                                    <td>{$row['dateNeeded']}</td>";
+                                                                    <td>{$row['dateNeed']}</td>";
                                                                     
                                                                     if($row['description']=='Pending'){
                                                                         echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
@@ -442,7 +442,7 @@ $_SESSION['previousDash'] = "it_requests.php";
                                                                     <td>Asset Replacement</td>
                                                                     <td>{$row['name']}</td>
                                                                     <td>{$row['dateReceived']}</td>
-                                                                    <td>{$row['comment']}</td>
+                                                                    <td>{$row['details']}</td>
                                                                 </tr>";
                                                                 
                                                                  $count++;
@@ -456,7 +456,7 @@ $_SESSION['previousDash'] = "it_requests.php";
                                                                 echo "<tr> 
                                                                     <td style='display: none'>{$row['serviceID']}</td>
                                                                     <td>{$count}</td>
-                                                                    <td>{$row['dateNeeded']}</td>";
+                                                                    <td>{$row['dateNeed']}</td>";
                                                                     
                                                                     if($row['description']=='Pending'){
                                                                         echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
@@ -479,7 +479,7 @@ $_SESSION['previousDash'] = "it_requests.php";
                                                                     <td>Partial Delivery</td>
                                                                     <td>{$row['name']}</td>
                                                                     <td>{$row['dateReceived']}</td>
-                                                                    <td>{$row['comment']}</td>
+                                                                    <td>{$row['details']}</td>
                                                                 </tr>";
                                                                 
                                                                  $count++;

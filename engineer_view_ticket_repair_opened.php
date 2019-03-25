@@ -28,12 +28,14 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
     }
 $assets = array();
+$replaced = array();
 
-$query2 =  "SELECT * FROM thesis.ticketedasset WHERE ticketID = {$id};";
+$query2 =  "SELECT * FROM thesis.ticketedasset t JOIN servicedetails s ON t.assetID = s.asset WHERE ticketID = '{$id}';";
 $result2 = mysqli_query($dbc, $query2);
 
 while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     array_push($assets, $row['assetID']);
+    array_push($replaced, $row['replaced']);
 }
 
 $components = array();
@@ -256,6 +258,7 @@ while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
                                                     <td>{$row['building']}</td>
                                                     <td>{$row['floorroom']}</td>
                                                     <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
+                                                    <td style = 'display: none'><input type='number' name='replaced[]' value ='{$replaced[$i]}'></td>
                                                     </tr>";
                                                 }  
 

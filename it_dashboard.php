@@ -562,7 +562,7 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                                                 echo "<tr> 
                                                                     <td style='display: none'>{$row['serviceID']}</td>
                                                                     <td>{$count}</td>
-                                                                    <td>{$row['dateNeeded']}</td>";
+                                                                    <td>{$row['dateNeed']}</td>";
                                                                     
                                                                     if($row['description']=='Pending'){
                                                                         echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
@@ -585,7 +585,7 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                                                     <td>Asset Replacement</td>
                                                                     <td>{$row['name']}</td>
                                                                     <td>{$row['dateReceived']}</td>
-                                                                    <td>{$row['comment']}</td>
+                                                                    <td>{$row['details']}</td>
                                                                 </tr>";
                                                                 
                                                                  $count++;
@@ -599,7 +599,7 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                                                 echo "<tr> 
                                                                     <td style='display: none'>{$row['serviceID']}</td>
                                                                     <td>{$count}</td>
-                                                                    <td>{$row['dateNeeded']}</td>";
+                                                                    <td>{$row['dateNeed']}</td>";
                                                                     
                                                                     if($row['description']=='Pending'){
                                                                         echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
@@ -622,7 +622,7 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                                                     <td>Partial Delivery</td>
                                                                     <td>{$row['name']}</td>
                                                                     <td>{$row['dateReceived']}</td>
-                                                                    <td>{$row['comment']}</td>
+                                                                    <td>{$row['details']}</td>
                                                                 </tr>";
                                                                 
                                                                  $count++;

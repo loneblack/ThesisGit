@@ -62,6 +62,9 @@
             $queryAssetStatus="UPDATE `thesis`.`asset` SET `assetStatus` = '{$assetStatus}' WHERE (`assetID` = '{$asset}');";
             $resultAssetStatus=mysqli_query($dbc,$queryAssetStatus);
 
+            $queryAssetAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$userID}', now(), '{$assets}', '{$id}', '{$assetStatus}');";
+            $resultAssetAudit=mysqli_query($dbc,$queryAssetAudit);
+
             if($assetStatus == 22 || $assetStatus == 23 || $assetStatus == 4 || $assetStatus == 24){
                 //set checked in ticketed asset
                 $queryTicketedAsset="UPDATE `thesis`.`ticketedasset` SET `checked` = '1' WHERE (`assetID` = '{$asset}');";
@@ -191,53 +194,66 @@
                         , count(IF(checked = 1 AND assetStatus = 22, ta.ticketID, null)) as `false`
                         , count(IF(checked = 1 AND assetStatus = 23, ta.ticketID, null)) as `repaired`
                         , count(IF(checked = 1 AND assetStatus = 24, ta.ticketID, null)) as `replacement`
-                FROM thesis.ticketedasset ta JOIN asset a ON ta.assetID = a.assetID where ticketID='4';";
+                FROM thesis.ticketedasset ta JOIN asset a ON ta.assetID = a.assetID where ticketID='{$id}';";
         $resultService=mysqli_query($dbc,$queryService);
         $rowService=mysqli_fetch_array($resultService,MYSQLI_ASSOC);
         
         //UPDATE TICKET STATUS 
+        
         if($rowTicketed['numAssets']==$rowTicketed['checkedAssets']){
+
             $queryTickUp="UPDATE `thesis`.`ticket` SET `status`='7',`dateClosed` = '{$currDate}' WHERE `ticketID`='{$id}'";
             $resultTickUp=mysqli_query($dbc,$queryTickUp);
 
             //if all assets are repaired
             if($rowService['numAssets']==$rowService['repaired']){
-            $queryComp="UPDATE `thesis`.`service` SET `steps`='30' WHERE `id`='{$rowServID['service_id']}'";
-            $resultComp=mysqli_query($dbc,$queryComp);
+                 
+                $queryComp="UPDATE `thesis`.`service` SET `steps`='30' WHERE `id`='{$rowServID['service_id']}'";
+                $resultComp=mysqli_query($dbc,$queryComp);
 
-            //receiving - make receiving table
-            $queryReceiving="INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `serviceID`, `statusID`) VALUES ('{$requestedBY}', '{$serviceID}', '1');";
-            $resultReceiving=mysqli_query($dbc,$queryReceiving);
+                //receiving - make receiving table
+                $queryReceiving="INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `serviceID`, `statusID`) VALUES ('{$requestedBY}', '{$serviceID}', '1');";
+                $resultReceiving=mysqli_query($dbc,$queryReceiving);
 
-            //get newly inserted receiving data
-            $queryGetReceiving="SELECT * FROM `thesis`.`requestor_receiving` where serviceID='{$serviceID}' order by id desc limit 1";
-            $resultGetReceiving=mysqli_query($dbc,$queryGetReceiving);
-            $rowGetReceiving=mysqli_fetch_array($resultGetReceiving,MYSQLI_ASSOC);
+                //get newly inserted receiving data
+                $queryGetReceiving="SELECT * FROM `thesis`.`requestor_receiving` where serviceID='{$serviceID}' order by id desc limit 1";
+                $resultGetReceiving=mysqli_query($dbc,$queryGetReceiving);
+                $rowGetReceiving=mysqli_fetch_array($resultGetReceiving,MYSQLI_ASSOC);
 
-            $assets=$_POST['assetID'];
-            foreach ($assets as $asset) {
-            //receiving - make receiving details table
-            $queryReceiving="INSERT INTO `thesis`.`receiving_details` (`receivingID`, `assetID`, `received`) VALUES ('{$rowGetReceiving['id']}', '{$asset}', '0');";
-            $resultReceiving=mysqli_query($dbc,$queryReceiving);
+                $assets=$_POST['assetID'];
+                foreach ($assets as $asset) {
+                    //receiving - make receiving details table
+                    $queryReceiving="INSERT INTO `thesis`.`receiving_details` (`receivingID`, `assetID`, `received`) VALUES ('{$rowGetReceiving['id']}', '{$asset}', '0');";
+                    $resultReceiving=mysqli_query($dbc,$queryReceiving);
 
-            echo $queryReceiving;
+                }
+               
+                //INSERT TO NOTIFICATIONS TABLE
+                $sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `service_id`) VALUES (false, '{$serviceID}');";
+                $resultNotif = mysqli_query($dbc, $sqlNotif);
             }
-           
-            //INSERT TO NOTIFICATIONS TABLE
-            $sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `service_id`) VALUES (false, '{$serviceID}');";
-            $resultNotif = mysqli_query($dbc, $sqlNotif);
-            }
-
             //all assets for replacement
             elseif($rowService['numAssets']==($rowService['replacement'] + $rowService['broken'])){
-            $queryComp="UPDATE `thesis`.`service` SET `steps`='32' WHERE `id`='{$rowServID['service_id']}'";
-            $resultComp=mysqli_query($dbc,$queryComp);
+                $queryComp="UPDATE `thesis`.`service` SET `steps`='32', `dateNeed` = DATE_ADD(NOW(), INTERVAL 3 DAY) WHERE `id`='{$rowServID['service_id']}'";
+                $resultComp=mysqli_query($dbc,$queryComp);
+
+                echo $queryComp;
             }
 
             //if all false report
             elseif($rowService['numAssets']==$rowService['false']){ //go to evaluation 
-            $queryComp="UPDATE `thesis`.`service` SET `steps`='11' WHERE `id`='{$rowServID['service_id']}'";
-            $resultComp=mysqli_query($dbc,$queryComp);
+                
+                $queryComp="UPDATE `thesis`.`service` SET `endDate` = now(), `status` = '3' WHERE (`id` = '{$rowServID['service_id']}');";
+                $resultComp=mysqli_query($dbc,$queryComp);
+
+                $assets=$_POST['assetID'];
+                foreach ($assets as $asset) {
+                    $queryComp="UPDATE `thesis`.`asset` SET `assetStatus` = '2' WHERE (`assetID` = '{$asset}');";
+                    $resultComp=mysqli_query($dbc,$queryComp);
+
+                    $queryAssetAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$userID}', now(), '{$asset}', '{$id}', '{$assetStatus}');";
+                    $resultAssetAudit=mysqli_query($dbc,$queryAssetAudit);
+                }
             }
 
             else{

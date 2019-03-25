@@ -409,7 +409,7 @@ require_once("db/mysql_connect.php");
                                                                 FROM thesis.requestor_receiving rr 
                                                                 JOIN service s ON rr.serviceID = s.id 
                                                                 JOIN ref_status rs ON s.status = rs.statusID
-                                                                where rr.statusID!='3' and rr.UserID='9';";
+                                                                where rr.statusID!='3' and rr.UserID='{$userID}';";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
