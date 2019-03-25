@@ -592,7 +592,7 @@ INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('4', 'Google');
 INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('5', 'Apple');
 INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('6', 'Microsoft');
 INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('7', 'IBM');
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('8', 'Samsung');
+INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('8', 'Huawei');
 INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('9', 'Baidu');
 INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('10', 'Oracle');
 INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('11', 'Kingmax');
@@ -1013,7 +1013,7 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('3', 'KB-0017', 'ABC123EH', '', '16'); -- ID 221, Keyboard
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0018', 'A3EH1BC2', '', '16'); -- ID 222, Monitor
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('32', 'AP-0004', 'BBAS5344', '', '16'); -- ID 223, Access Point
-
+INSERT INTO `thesis`.`asset` (`assetModel`,`propertyCode`,`serialNo`,`dateDelivered`,`assetStatus`) VALUES (32,'AP-0005','BBAS6344','2010-03-25 11:06:14',1); -- ID 224, Access Point
 
 -- asset audit for new items
 INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');

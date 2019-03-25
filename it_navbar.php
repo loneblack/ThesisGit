@@ -45,7 +45,20 @@
 	$resultNumNotifDel=mysqli_query($dbc,$queryNumNotifDel);
 	$rowNumNotifDel=mysqli_fetch_array($resultNumNotifDel,MYSQLI_ASSOC);
 	
+	//GET NUMBER OF ASSETS FOR Replenish
+	$numReplenish=0;
+	$queryNumReplenish="SELECT i.assetCategoryID,rac.name as `assetCat`,i.floorLevel,i.ceilingLevel, count(IF(a.assetStatus = 1, a.assetID, null)) as `stockOnHand` FROM thesis.inventory i left join ref_assetcategory rac on i.assetCategoryID=rac.assetCategoryID
+																							 left join assetmodel am on i.assetCategoryID=am.assetCategory
+																							 left join asset a on am.assetModelID=a.assetModel 
+                                                                                             group by i.assetCategoryID
+                                                                                             having count(IF(a.assetStatus = 1, a.assetID, null))<=i.floorLevel";
+	$resultNumReplenish=mysqli_query($dbc,$queryNumReplenish);
+	while($rowNumReplenish=mysqli_fetch_array($resultNumReplenish,MYSQLI_ASSOC)){
+		$numReplenish++;
+	}
 	
+		
+		
 ?>
 <?php  echo '<aside>
             <div id="sidebar" class="nav-collapse">
@@ -95,16 +108,23 @@
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-dropbox"></i>
-                                <span>Inventory</span>
+                                <span>Inventory ';
+								if($numReplenish>'0'){
+									echo '<span class="badge badge-light">'.$numReplenish.'</span>';
+								}
+								echo '</span>
                             </a>
                             <ul class="sub">
                                 <li><a href="it_list_all_assets.php">List All Assets</a></li>
                                 <li><a href="it_brands.php">Brands</a></li>
                                 <li><a href="it_products.php">Products</a></li>
-                                <li><a href="it_categories.php">Categories</a></li>
                                 <li><a href="it_all_compound_assets.php">Compound Assets</a></li>
                                 <li><a href="it_bulk_checkin.php">Bulk Checkin</a></li>
-                                <li><a href="it_inventory.php">Replenish</a></li>
+                                <li><a href="it_inventory.php">Replenish ';
+								if($numReplenish>'0'){
+									echo '<span class="badge badge-light">'.$numReplenish.'</span>';
+								}
+								echo '</a></li>
                             </ul>
                         </li>
 

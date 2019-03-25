@@ -23,7 +23,7 @@
             $assigneeUserID = $row['assigneeUserID'];
             $comment = $row['comment'];
             $serviceID = $row['service_id'];
-
+            $requestedBY = $row['requestedBy'];
 
         }
     $assets = array();
@@ -204,9 +204,31 @@
             if($rowService['numAssets']==$rowService['repaired']){
             $queryComp="UPDATE `thesis`.`service` SET `steps`='30' WHERE `id`='{$rowServID['service_id']}'";
             $resultComp=mysqli_query($dbc,$queryComp);
+
+            //receiving - make receiving table
+            $queryReceiving="INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `serviceID`, `statusID`) VALUES ('{$requestedBY}', '{$serviceID}', '1');";
+            $resultReceiving=mysqli_query($dbc,$queryReceiving);
+
+            //get newly inserted receiving data
+            $queryGetReceiving="SELECT * FROM `thesis`.`requestor_receiving` where serviceID='{$serviceID}' order by id desc limit 1";
+            $resultGetReceiving=mysqli_query($dbc,$queryGetReceiving);
+            $rowGetReceiving=mysqli_fetch_array($resultGetReceiving,MYSQLI_ASSOC);
+
+            $assets=$_POST['assetID'];
+            foreach ($assets as $asset) {
+            //receiving - make receiving details table
+            $queryReceiving="INSERT INTO `thesis`.`receiving_details` (`receivingID`, `assetID`, `received`) VALUES ('{$rowGetReceiving['id']}', '{$asset}', '0');";
+            $resultReceiving=mysqli_query($dbc,$queryReceiving);
+
+            echo $queryReceiving;
+            }
+           
+            //INSERT TO NOTIFICATIONS TABLE
+            $sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `service_id`) VALUES (false, '{$serviceID}');";
+            $resultNotif = mysqli_query($dbc, $sqlNotif);
             }
 
-            //if all assets are repaired
+            //all assets for replacement
             elseif($rowService['numAssets']==($rowService['replacement'] + $rowService['broken'])){
             $queryComp="UPDATE `thesis`.`service` SET `steps`='32' WHERE `id`='{$rowServID['service_id']}'";
             $resultComp=mysqli_query($dbc,$queryComp);
@@ -233,6 +255,6 @@
         }
 
         $header = $_SESSION['previousPage'];
-        header('Location: '.$header);
+        //header('Location: '.$header);
     
 ?>

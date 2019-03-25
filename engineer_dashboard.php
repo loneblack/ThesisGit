@@ -556,13 +556,13 @@ if($CurDate==$endOfTermDate){
                                 window.location.href = "engineer_view_ticket_maintenance_opened.php?id=" + id;
                             }
                         }
-                         else if(serviceTypeID == '29'){
-                            //others
+                        else if(serviceTypeID == '29'){
+                            //salvage
                             if(status == "Closed"){
-                                window.location.href = "engineer_view_ticket_others_closed.php?id=" + id;
+                                window.location.href = "engineer_view_ticket_salvage_closed.php?id=" + id;
                             }
                             else{
-                                window.location.href = "engineer_view_ticket_others_opened.php?id=" + id;
+                                window.location.href = "engineer_view_ticket_salvage_opened.php?id=" + id;
                             }
                         }
                          else{

@@ -1872,6 +1872,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`requestor_receiving` (
   `borrowID` INT(11) NULL,
   `serviceUnitID` INT NULL,
   `replacementID` INT NULL,
+  `serviceID` INT(11) NULL,
   `deliveryDate` DATETIME NULL,
   `statusID` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -1881,6 +1882,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`requestor_receiving` (
   INDEX `fk_requestor_receiving_ref_status1_idx` (`statusID` ASC),
   INDEX `fk_requestor_receiving_serviceUnit1_idx` (`serviceUnitID` ASC),
   INDEX `fk_requestor_receiving_replacement1_idx` (`replacementID` ASC),
+  INDEX `fk_requestor_receiving_service1_idx` (`serviceID` ASC),
   CONSTRAINT `fk_requestor_receiving_user1`
     FOREIGN KEY (`UserID`)
     REFERENCES `thesis`.`user` (`UserID`)
@@ -1909,6 +1911,11 @@ CREATE TABLE IF NOT EXISTS `thesis`.`requestor_receiving` (
   CONSTRAINT `fk_requestor_receiving_replacement1`
     FOREIGN KEY (`replacementID`)
     REFERENCES `thesis`.`replacement` (`replacementID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_requestor_receiving_service1`
+    FOREIGN KEY (`serviceID`)
+    REFERENCES `thesis`.`service` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -2204,3 +2211,4 @@ CREATE TABLE IF NOT EXISTS `thesis`.`serviceUnitAssets` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+

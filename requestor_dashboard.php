@@ -403,6 +403,49 @@ require_once("db/mysql_connect.php");
 													
 												  
 												  ?>
+                                                   <?php
+                                                    //GET after repair SCHEDULE FOR DELIVERY (after repair is done)
+                                                    $query = "SELECT *, rr.id as 'receivingID', rr.statusID as 'receivingStatus' 
+                                                                FROM thesis.requestor_receiving rr 
+                                                                JOIN service s ON rr.serviceID = s.id 
+                                                                JOIN ref_status rs ON s.status = rs.statusID
+                                                                where rr.statusID!='3' and rr.UserID='9';";
+                                                                  
+                                                    $result = mysqli_query($dbc, $query);
+                                                    
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                      
+                                                      echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$row['receivingID']}</td>
+                                                            <td>{$count}</td>
+                                                            <td>Delivery Request for Asset Repair</td>
+                                                            <td>{$row['dateReceived']}</td>
+                                                            <td>{$row['dateNeed']}</td>
+                                                            <td style='display: none'>{$row['receivingStatus']}</td>";
+
+                                                        if($row['receivingStatus'] == '1'){//pending
+                                                            echo "<td><span class='label label-warning'>Schedule For Delivery</span></td>";
+                                                        }
+                                                        if($row['receivingStatus'] == '2'){//ongoing
+                                                            echo "<td><span class='label label-info'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['receivingStatus'] == '3'){//completed
+                                                            echo "<td><span class='label label-success'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['receivingStatus'] == '4'){//disapproved
+                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
+                                                        }
+
+                                                        echo "<td></td>";
+                                                        //echo "<td>{$row['name']}</td>";
+                                                        echo "</tr>";
+
+                                                          $count++;
+                                                    }
+                                                    
+                                                  
+                                                  ?>
                                             </tbody>
                                             <tfoot>
                                                 <tr>
@@ -511,6 +554,11 @@ require_once("db/mysql_connect.php");
 							window.location.href = "requestor_scheduling_request_for_borrow.php?id=" + id;
 						}
 					}
+                    else if(requestType == "Delivery Request for Asset Repair"){
+                        if(step == "Schedule For Delivery"){
+                            window.location.href = "requestor_scheduling_request_for_repair.php?id=" + id;
+                        }
+                    }
                 };
             };
             currentRow.onclick = createClickHandler(currentRow);

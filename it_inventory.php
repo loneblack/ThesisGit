@@ -89,7 +89,7 @@
                                                                                 <th>Floor</th>
                                                                                 <th>Ceiling</th>
                                                                                 <th>Stock On Hand</th>
-                                                                                <th>Borrowed</th>
+                                                                                <th>Deployed</th>
                                                                                 <th>Total Quantity</th>
                                                                             </tr>
                                                                         </thead>
@@ -106,9 +106,14 @@
 																						<td style='text-align:center'><input type='checkbox' name='forReplenish[]' value='{$rowInv['assetCategoryID']}' ></td>
 																						<td>{$rowInv['assetCat']}</td>
 																						<td>{$rowInv['floorLevel']}</td>
-																						<td>{$rowInv['ceilingLevel']}</td>
-																						<td>{$rowInv['stockOnHand']}</td>
-																						<td>{$rowInv['borrowed']}</td>
+																						<td>{$rowInv['ceilingLevel']}</td>";
+																						if($rowInv['stockOnHand']<=$rowInv['floorLevel']){
+																							echo "<td class='text-danger'>{$rowInv['stockOnHand']}</td>";
+																						}
+																						else{
+																							echo "<td>{$rowInv['stockOnHand']}</td>";
+																						}
+																					echo "<td>{$rowInv['borrowed']}</td>
 																						<td>{$rowInv['totalQty']}</td>
 																					</tr>";
 																				}
