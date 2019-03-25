@@ -532,7 +532,8 @@ while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
                             <section class="panel">
                                 <div class="panel-body ">
                                     <div>
-                                        <h4><h4>Request For Parts (if needed)</h4></h4>
+                                        <h4>Request For Parts (if needed)</h4>
+                                        <p>Note that you may only request for parts once. </p>
                                     </div>
 
                                     <table class="table table-bordered table table-hover" id="addtable">

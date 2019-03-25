@@ -4,8 +4,8 @@
 session_start();
 $userID = $_SESSION['userID'];
 require_once("db/mysql_connect.php");
-
 $id = $_GET['id'];   
+$_SESSION['previousPage'] = "it_view_service_replacement.php?id=".$id;
 
 $query =  "SELECT *, s.userID as 'usr' FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id WHERE r.id = {$id};";
 $result = mysqli_query($dbc, $query);
