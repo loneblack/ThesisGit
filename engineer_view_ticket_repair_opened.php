@@ -217,23 +217,38 @@ while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
                                                     $falseReport = "";
                                                     $repaired = "";
                                                     $broken = "";
+                                                    $replacement = "";
+                                                    $checked = "";
 
-                                                    if($row['assetStatus']==9) $forRepair = "selected";
-                                                    if($row['assetStatus']==22) $falseReport = "selected";
-                                                    if($row['assetStatus']==23) $repaired = "selected";
-                                                    if($row['assetStatus']==4) $broken = "selected";
+                                                    if($row['assetStatus']==9){
+                                                        $forRepair = "selected";
+                                                    }
+                                                    elseif($row['assetStatus']==22) $falseReport = "selected";
+                                                    elseif($row['assetStatus']==23){
+                                                        $repaired = "selected";
+                                                        $checked = "style = 'display: none;'";
+                                                    }
+                                                    elseif($row['assetStatus']==4){ 
+                                                        $broken = "selected"; 
+                                                        $checked = "style = 'display: none;'";
+                                                    }
+                                                    elseif($row['assetStatus']==24){ 
+                                                        $replacement = "selected";
+                                                        $checked = "style = 'display: none;'";
+
+                                                    }
+
 
 
                                                    echo "
                                                     <tr>
                                                     <td width = '200'>
                                                         <select name='assetStatus".$i."' class='form-control'>
-                                                            <option value ='{$row['assetStatus']}'>Select Asset Status</option>
                                                             <option value='9' ".$forRepair.">For Repair</option>
-                                                            <option value='22' ".$falseReport.">False Report</option>
+                                                            <option value='22' ".$checked.$falseReport.">False Report</option>
                                                             <option value='23' ".$repaired.">Repaired</option>
                                                             <option value='4' ".$broken.">Broken - Not Fixable</option>
-                                                             <option value='24' ".$broken.">For Replacement - Supplier</option>
+                                                             <option value='24' ".$replacement.">For Replacement - Supplier</option>
                                                         </select>
                                                     </td>
                                                     <td>{$row['propertyCode']}</td>

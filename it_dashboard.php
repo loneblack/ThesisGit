@@ -516,6 +516,117 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                                                 
                                                                  $count++;
                                                             }
+                                                            //Service repair completed
+                                                            $queryRequestforParts = "SELECT *, s.id as 'serviceID' FROM thesis.service s JOIN ref_status st ON s.status = st.statusID JOIN employee e ON e.UserID = s.UserID JOIN ref_steps rs ON s.steps = rs.id WHERE (steps = 30);";
+
+                                                            $resultRequestforParts = mysqli_query($dbc, $queryRequestforParts);
+                                                            while($row=mysqli_fetch_array($resultRequestforParts,MYSQLI_ASSOC)){
+                                                                
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$row['serviceID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$row['dateNeeded']}</td>";
+                                                                    
+                                                                    if($row['description']=='Pending'){
+                                                                        echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Incomplete'){
+                                                                        echo "<td><span class='label label-danger label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Completed'){
+                                                                        echo "<td><span class='label label-success label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    //elseif($row['description']=='Ongoing'){
+                                                                        //echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    //}
+                                                                    else{
+                                                                        echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                            
+                                                                echo "
+                                                                    <td>Service</td>
+                                                                    <td>Asset Delivery</td>
+                                                                    <td>{$row['name']}</td>
+                                                                    <td>{$row['dateReceived']}</td>
+                                                                    <td>{$row['comment']}</td>
+                                                                </tr>";
+                                                                
+                                                                 $count++;
+                                                            }
+                                                            //Service replacement
+                                                            $queryRequestforParts = "SELECT *, s.id as 'serviceID' FROM thesis.service s JOIN ref_status st ON s.status = st.statusID JOIN employee e ON e.UserID = s.UserID JOIN ref_steps rs ON s.steps = rs.id WHERE (steps = 32);";
+
+                                                            $resultRequestforParts = mysqli_query($dbc, $queryRequestforParts);
+                                                            while($row=mysqli_fetch_array($resultRequestforParts,MYSQLI_ASSOC)){
+                                                                
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$row['serviceID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$row['dateNeeded']}</td>";
+                                                                    
+                                                                    if($row['description']=='Pending'){
+                                                                        echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Incomplete'){
+                                                                        echo "<td><span class='label label-danger label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Completed'){
+                                                                        echo "<td><span class='label label-success label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    //elseif($row['description']=='Ongoing'){
+                                                                        //echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    //}
+                                                                    else{
+                                                                        echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                            
+                                                                echo "
+                                                                    <td>Service</td>
+                                                                    <td>Asset Replacement</td>
+                                                                    <td>{$row['name']}</td>
+                                                                    <td>{$row['dateReceived']}</td>
+                                                                    <td>{$row['comment']}</td>
+                                                                </tr>";
+                                                                
+                                                                 $count++;
+                                                            }
+                                                            //Service partial delivery
+                                                            $queryRequestforParts = "SELECT *, s.id as 'serviceID' FROM thesis.service s JOIN ref_status st ON s.status = st.statusID JOIN employee e ON e.UserID = s.UserID JOIN ref_steps rs ON s.steps = rs.id WHERE (steps = 31);";
+
+                                                            $resultRequestforParts = mysqli_query($dbc, $queryRequestforParts);
+                                                            while($row=mysqli_fetch_array($resultRequestforParts,MYSQLI_ASSOC)){
+                                                                
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$row['serviceID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$row['dateNeeded']}</td>";
+                                                                    
+                                                                    if($row['description']=='Pending'){
+                                                                        echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Incomplete'){
+                                                                        echo "<td><span class='label label-danger label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Completed'){
+                                                                        echo "<td><span class='label label-success label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    //elseif($row['description']=='Ongoing'){
+                                                                        //echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    //}
+                                                                    else{
+                                                                        echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                            
+                                                                echo "
+                                                                    <td>Service</td>
+                                                                    <td>Partial Delivery</td>
+                                                                    <td>{$row['name']}</td>
+                                                                    <td>{$row['dateReceived']}</td>
+                                                                    <td>{$row['comment']}</td>
+                                                                </tr>";
+                                                                
+                                                                 $count++;
+                                                            }
 															?>
 
                                                     </tbody>

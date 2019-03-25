@@ -181,25 +181,49 @@
         //Check if all assets are repaired
 
         //GET QTY of Assets of a Ticket
-        $queryTicketed="SELECT count(ticketID) as `numAssets`, count(IF(checked = 1, ticketID, null)) as `repairedAssets` FROM thesis.ticketedasset where ticketID='{$id}'";
+        $queryTicketed="SELECT count(ticketID) as `numAssets`, count(IF(checked = 1, ticketID, null)) as `checkedAssets` FROM thesis.ticketedasset where ticketID='{$id}'";
         $resultTicketed=mysqli_query($dbc,$queryTicketed);
         $rowTicketed=mysqli_fetch_array($resultTicketed,MYSQLI_ASSOC);
         
         //GET QTY of Assets of a SERVICE
-        $queryService="SELECT count(ta.ticketID) as `numAssets`, count(IF(checked = 1, ta.ticketID, null)) as `repairedAssets` FROM thesis.ticketedasset ta join ticket t on ta.ticketID=t.ticketID where t.service_id='{$rowServID['service_id']}'";
+        $queryService="SELECT  count(ticketID) as `numAssets`
+                        , count(IF(checked = 1 AND assetStatus = 4, ta.ticketID, null)) as `broken`
+                        , count(IF(checked = 1 AND assetStatus = 22, ta.ticketID, null)) as `false`
+                        , count(IF(checked = 1 AND assetStatus = 23, ta.ticketID, null)) as `repaired`
+                        , count(IF(checked = 1 AND assetStatus = 24, ta.ticketID, null)) as `replacement`
+                FROM thesis.ticketedasset ta JOIN asset a ON ta.assetID = a.assetID where ticketID='4';";
         $resultService=mysqli_query($dbc,$queryService);
         $rowService=mysqli_fetch_array($resultService,MYSQLI_ASSOC);
         
-        //UPDATE SERVICE STATUS (STILL NEEDS TO BE FIXED)
-        if($rowService['numAssets']==$rowService['repairedAssets']){
-            $queryComp="UPDATE `thesis`.`service` SET `steps`='11' WHERE `id`='{$rowServID['service_id']}'";
-            $resultComp=mysqli_query($dbc,$queryComp);
-        }
-        
         //UPDATE TICKET STATUS 
-        if($rowTicketed['numAssets']==$rowTicketed['repairedAssets']){
+        if($rowTicketed['numAssets']==$rowTicketed['checkedAssets']){
             $queryTickUp="UPDATE `thesis`.`ticket` SET `status`='7',`dateClosed` = '{$currDate}' WHERE `ticketID`='{$id}'";
             $resultTickUp=mysqli_query($dbc,$queryTickUp);
+
+            //if all assets are repaired
+            if($rowService['numAssets']==$rowService['repaired']){
+            $queryComp="UPDATE `thesis`.`service` SET `steps`='30' WHERE `id`='{$rowServID['service_id']}'";
+            $resultComp=mysqli_query($dbc,$queryComp);
+            }
+
+            //if all assets are repaired
+            elseif($rowService['numAssets']==($rowService['replacement'] + $rowService['broken'])){
+            $queryComp="UPDATE `thesis`.`service` SET `steps`='32' WHERE `id`='{$rowServID['service_id']}'";
+            $resultComp=mysqli_query($dbc,$queryComp);
+            }
+
+            //if all false report
+            elseif($rowService['numAssets']==$rowService['false']){ //go to evaluation 
+            $queryComp="UPDATE `thesis`.`service` SET `steps`='11' WHERE `id`='{$rowServID['service_id']}'";
+            $resultComp=mysqli_query($dbc,$queryComp);
+            }
+
+            else{
+            $queryComp="UPDATE `thesis`.`service` SET `steps`='31' WHERE `id`='{$rowServID['service_id']}'";
+            $resultComp=mysqli_query($dbc,$queryComp);
+            }
+
+
         }
         
         $message = "Ticket Updated!";
