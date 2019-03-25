@@ -606,6 +606,16 @@ $_SESSION['previousDash'] = "it_requests.php";
                             }
                         }
 
+                        if (idx == "Service") {
+                            if (id == "Ongoing") {
+                                window.location.href = "it_view_service_replacement.php?id=" + ida;
+                            } else if (id == "Pending") {
+                                window.location.href = "it_view_repair_request_parts_ongoing.php?id=" + ida;
+                            } else if (id == "Closed") {
+                                window.location.href = "it_view_repair_request_parts_closed.php?id=" + ida;
+                            }
+                        }
+
                     };
                 };
                 currentRow.onclick = createClickHandler(currentRow);
