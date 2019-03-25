@@ -592,7 +592,7 @@ INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('4', 'Google');
 INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('5', 'Apple');
 INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('6', 'Microsoft');
 INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('7', 'IBM');
-INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('8', 'Samsung');
+INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('8', 'Huawei');
 INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('9', 'Baidu');
 INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('10', 'Oracle');
 INSERT INTO `thesis`.`ref_brand` (`brandID`, `name`) VALUES ('11', 'Kingmax');

@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php 
+	session_start();
+	require_once('db/mysql_connect.php');
 
+?>
 <head>
     <meta charset="utf-8">
 
@@ -74,11 +78,19 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>Samsung</td>
-                                                                <td>L120 17" TV</td>
-                                                                <td>LCD</td>
-                                                            </tr>
+                                                            <?php
+																				$queryInv="SELECT rb.name AS `brand`, description, rac.name FROM assetmodel am
+                                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                                JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID;";
+																				$resultInv=mysqli_query($dbc, $queryInv);
+																				while($rowInv=mysqli_fetch_array($resultInv, MYSQLI_ASSOC)){
+																					echo "<tr>
+																						<td>{$rowInv['brand']}</td>
+																						<td>{$rowInv['description']}</td>
+																						<td>{$rowInv['name']}</td>
+																					    </tr>";
+																				}
+																			?>
                                                         </tbody>
                                                     </table>
                                                 </div>
