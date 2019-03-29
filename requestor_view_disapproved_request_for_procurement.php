@@ -24,17 +24,44 @@
 			$rowEmpID = mysqli_fetch_array($resultEmpID, MYSQLI_ASSOC);
 			
 			if(isset($_POST['endDate'])){
-				//insertion to request table
 				$endDate=$_POST['endDate'];
 				
-				$sql2 = "INSERT INTO `thesis`.`request_borrow` (`BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `dateCreated`, `statusID`, `steps`) VALUES ('{$rowReq['BuildingID']}', '{$rowReq['FloorAndRoomID']}', '{$rowReq['dateNeeded']}', '{$endDate}', '{$rowEmpID['employeeID']}', now(), '2', '13');";//status is set to 1 for pending status
+				//insertion to request table
+				$sql2 = "INSERT INTO `thesis`.`request_borrow` (`BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `dateCreated`, `purpose`, `statusID`, `steps`) VALUES ('{$rowReq['BuildingID']}', '{$rowReq['FloorAndRoomID']}', '{$rowReq['dateNeeded']}', '{$endDate}', '{$rowEmpID['employeeID']}', now(), '{$rowReq['description']}', '2', '13');";//status is set to 1 for pending status
 				$result2 = mysqli_query($dbc, $sql2);
+				
+				//GET LATEST BORROW
+				$queryGetLatBor = "SELECT * FROM thesis.request_borrow order by borrowID desc limit 1";
+				$resultGetLatBor = mysqli_query($dbc, $queryGetLatBor);
+				$rowGetLatBor = mysqli_fetch_array($resultGetLatBor, MYSQLI_ASSOC);
+				
+				//insert to assset testing
+				$queryTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `remarks`, `serviceType`, `borrowID`)
+									VALUES ('1', '{$_SESSION['userID']}', 'Borrow', '25', '{$rowGetLatBor['borrowID']}');";
+				$resultTest=mysqli_query($dbc,$queryTest);
+
 			}
 			else{
 				//insertion to request table
-				$sql2 = "INSERT INTO `thesis`.`request_borrow` (`BuildingID`, `FloorAndRoomID`, `startDate`, `personresponsibleID`, `dateCreated`, `statusID`, `steps`) VALUES ('{$rowReq['BuildingID']}', '{$rowReq['FloorAndRoomID']}', '{$rowReq['dateNeeded']}', '{$rowEmpID['employeeID']}', now(), '2', '13');";//status is set to 1 for pending status
+				$sql2 = "INSERT INTO `thesis`.`request_borrow` (`BuildingID`, `FloorAndRoomID`, `startDate`, `personresponsibleID`, `dateCreated`, `purpose`, `statusID`, `steps`) VALUES ('{$rowReq['BuildingID']}', '{$rowReq['FloorAndRoomID']}', '{$rowReq['dateNeeded']}', '{$rowEmpID['employeeID']}', now(), '{$rowReq['description']}', '2', '13');";//status is set to 1 for pending status
 				$result2 = mysqli_query($dbc, $sql2);
+				
+				//GET LATEST BORROW
+				$queryGetLatBor = "SELECT * FROM thesis.request_borrow order by borrowID desc limit 1";
+				$resultGetLatBor = mysqli_query($dbc, $queryGetLatBor);
+				$rowGetLatBor = mysqli_fetch_array($resultGetLatBor, MYSQLI_ASSOC);
+				
+				//insert to assset testing
+				$queryTest="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `remarks`, `serviceType`, `borrowID`)
+									VALUES ('1', '{$_SESSION['userID']}', 'Borrow', '25', '{$rowGetLatBor['borrowID']}');";
+				$resultTest=mysqli_query($dbc,$queryTest);
+
 			}
+			
+			//GET LATEST ASSET TESTING
+			$selectQuery = "SELECT * FROM thesis.assettesting ORDER BY testingID DESC LIMIT 1;";
+			$resultQuery = mysqli_query($dbc,$selectQuery);
+			$rowQuery = mysqli_fetch_array($resultQuery, MYSQLI_ASSOC);
 			
 			//GET LATEST BORROW
 			$queryGetLatBor = "SELECT * FROM thesis.request_borrow order by borrowID desc limit 1";
@@ -44,6 +71,11 @@
 			
 			//Insert into borrow details table part
 			foreach($recommAss as $assetBorrow){
+				
+				//INSERT TO asset testing details
+				$queryDetails = "INSERT INTO assettesting_details (`assettesting_testingID`, `asset_assetID`) VALUES ('{$rowQuery['testingID']}', '{$assetBorrow}');";
+				$resultDetails = mysqli_query($dbc,$queryDetails);
+				
 				//GET ASSET CATEGORY
 				$queryGetAssCat = "SELECT am.assetCategory FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID where a.assetID='{$assetBorrow}'";
 				$resultGetAssCat= mysqli_query($dbc, $queryGetAssCat);
@@ -125,6 +157,8 @@
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
+	
+	 
 </head>
 
 <body>
@@ -263,12 +297,12 @@
 
 
 
-                                                <section>
-                                                    <input type="checkbox" name="check" disabled <?php if($rowReq['specs']==1){
-														echo "checked";
-													} ?>> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
+                                                <!--<section>
+                                                    <input type="checkbox" name="check" disabled <?php //if($rowReq['specs']==1){
+														//echo "checked";
+													//} ?>> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
                                                     <br><br><br>
-                                                </section>
+                                                </section>-->
                                             </form>
                                             <form class="cmxform form-horizontal" method="post" action="<?php echo $_SERVER['PHP_SELF']." ?id=".$requestID; ?>">
                                                 <div class="form-group ">
@@ -355,7 +389,10 @@
     <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
     <script src="js/dynamic_table_init.js"></script>
-
+	
+	<!--common script init for all pages-->
+    <script src="js/scripts.js"></script>
+	
     <script type="text/javascript">
         var count = 1;
         // Shorthand for $( document ).ready()

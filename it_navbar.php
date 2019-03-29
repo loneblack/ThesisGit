@@ -9,7 +9,7 @@
 	$totalNumReq = 0;
 	
 	//GET NUMBER OF NEW NOTIFICATIONS OF ASSET PURCHASE REQUESTS
-	$queryNumNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and requestID is not null and steps_id!='3' and steps_id!='23'";
+	$queryNumNotif="SELECT Count(*) as `numOfNotif` FROM thesis.notifications where isRead='0' and requestID is not null and steps_id!='3' and steps_id!='23' and steps_id!='28'";
 	$resultNumNotif=mysqli_query($dbc,$queryNumNotif);
 	$rowNumNotif=mysqli_fetch_array($resultNumNotif,MYSQLI_ASSOC);
 	
