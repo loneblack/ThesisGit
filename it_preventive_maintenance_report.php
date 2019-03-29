@@ -107,7 +107,7 @@
 													
                                                         <div class="panel-body">
                                                             <center><h3>Information Technology Services Office</h3></center>
-                                                            <center><h3>Preventive Maintenance Report <?php echo $_SESSION['rmType']; ?></h3></center>
+                                                            <center><h3>Preventive Maintenance Report</h3></center>
                                                             <center><h5><?php 
 																		date_default_timezone_set('Asia/Manila');
 																		$timestamp = time();
