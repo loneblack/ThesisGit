@@ -846,6 +846,7 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'UGP-0003', 'J7TdKh2F', '24-FE-19-33-CF-53', '2'); -- ID 71, User Guide Poster
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'UGP-0004', 'nMw8U8Ex', '9D-27-68-95-99-BC', '2'); -- ID 72, User Guide Poster
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('23', 'UGP-0005', 'CXya4UaU', '29-74-5E-63-90-57', '2'); -- ID 73, User Guide Poster
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `assetStatus`) VALUES ('23', 'UGP-0006', 'CXya4UaZ', '1');
 
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0001', 'EKtRzQ2J', '83-8A-E3-3B-32-95', '2'); -- ID 74, PC
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0002', 'nGECcFAV', 'F1-20-56-43-B4-4C', '2'); -- ID 75, PC
