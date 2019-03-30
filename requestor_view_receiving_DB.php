@@ -101,8 +101,9 @@
 	if($receivingID > 0)//have replement
 	{
 
-	   $sql = "UPDATE `thesis`.`service` SET `status` = '3', `setps` = 21 WHERE (`id` = '{$serviceID}');";
+	   $sql = "UPDATE `thesis`.`service` SET `status` = '3', `steps` = 21 WHERE (`id` = '{$serviceID}');";
 	   $result = mysqli_query($dbc, $sql);
+	   echo $sql;
 	}
 
     $header = "requestor_view_receiving.php?id=".$receivingID;
