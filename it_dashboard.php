@@ -525,7 +525,7 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                                                 echo "<tr> 
                                                                     <td style='display: none'>{$row['serviceID']}</td>
                                                                     <td>{$count}</td>
-                                                                    <td>{$row['dateNeeded']}</td>";
+                                                                    <td>{$row['dateNeed']}</td>";
                                                                     
                                                                     if($row['description']=='Pending'){
                                                                         echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
@@ -545,10 +545,10 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                                             
                                                                 echo "
                                                                     <td>Service</td>
-                                                                    <td>Asset Delivery</td>
+                                                                    <td>Waiting for Requestor Delivery Schedule</td>
                                                                     <td>{$row['name']}</td>
                                                                     <td>{$row['dateReceived']}</td>
-                                                                    <td>{$row['comment']}</td>
+                                                                    <td>{$row['details']}</td>
                                                                 </tr>";
                                                                 
                                                                  $count++;
@@ -761,7 +761,10 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                         }
 
                         if (idx == "Service") {
-                            if (id == "Ongoing") {
+                            if (idDesc == "Waiting for Requestor Delivery Schedule") {
+                                window.location.href = "it_view_service_schedule.php?id=" + ida;
+                            }
+                            else if (id == "Ongoing") {
                                 window.location.href = "it_view_service_replacement.php?id=" + ida;
                             } else if (id == "Pending") {
                                 window.location.href = "it_view_repair_request_parts_ongoing.php?id=" + ida;
