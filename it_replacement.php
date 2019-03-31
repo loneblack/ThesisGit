@@ -75,7 +75,7 @@ $assetCategories = array();
             <section class="wrapper">
                 <!-- page start-->
 
-                <form method='post' action="it_replacement_DB.php?id=<?phph echo $serviceID;?>">
+                <form method='post' action="it_replacement_DB.php?id=<?php echo $serviceID;?>">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">

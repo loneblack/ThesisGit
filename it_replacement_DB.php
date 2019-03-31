@@ -37,7 +37,7 @@
         $BuildingID = $row['BuildingID'];
         $FloorAndRoomID = $row['FloorAndRoomID'];
         $endDate = $row['endDate'];
-        $personresponsibleID = $row['$personresponsibleID'];
+        $personresponsibleID = $row['personresponsibleID'];
 
         //remove assignment of to be replaced
         $sql = "UPDATE `thesis`.`assetassignment` SET `statusID` = '3' WHERE (`AssetAssignmentID` = '{$assetassignmentID}');";//set status to completed
@@ -71,8 +71,14 @@
         $replacementID = $row['replacementID'];
 
         //insert to receiving
-        $sql = "INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `statusID`) VALUES ('{$personresponsibleID}', '1');";
+        $sql = "INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `statusID`, `replacementID`) VALUES ('{$personresponsibleID}', '1', '{$replacementID}');";
         $result = mysqli_query($dbc, $sql);
+
+        //get newly inserted data
+        $sql = " SELECT * FROM thesis.requestor_receiving WHERE UserID = '{$personresponsibleID}' AND replacementID = '{$replacementID}' AND statusID != 3;";
+        $result = mysqli_query($dbc, $sql);
+        $row=mysqli_fetch_array($result, MYSQLI_ASSOC);
+        $receivingID = $row['id'];
 
         //insert to receiving details
         $sql = "INSERT INTO `thesis`.`receiving_details` (`receivingID`, `assetID`, `received`) VALUES ('{$receivingID}', '{$replacement[0]}', '0');";
@@ -93,22 +99,23 @@
                 $sql = "SELECT * FROM thesis.assetassignment WHERE assetID = '{$toBeReplaced[$i]}' AND statusID = '2';";
                 $result = mysqli_query($dbc, $sql);
                 $row=mysqli_fetch_array($result, MYSQLI_ASSOC);
-
+                echo $sql;
                 $assetassignmentID = $row['AssetAssignmentID'];
                 $BuildingID = $row['BuildingID'];
                 $FloorAndRoomID = $row['FloorAndRoomID'];
                 $endDate = $row['endDate'];
-                $personresponsibleID = $row['$personresponsibleID'];
-
+                $personresponsibleID = $row['personresponsibleID'];
+                
                 //remove assignment of to be replaced
                 $sql = "UPDATE `thesis`.`assetassignment` SET `statusID` = '3' WHERE (`AssetAssignmentID` = '{$assetassignmentID}');";//set status to completed
                 $result = mysqli_query($dbc, $sql);
-
+                echo $sql."<br>";
                 //insert new assignment of replacement 
                 $sql = "INSERT INTO `thesis`.`assetassignment` (`assetID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `statusID`)
                         VALUES ('{$replacement[$i]}', '{$BuildingID}', '{$FloorAndRoomID}', now(), '{$endDate}', '{$personresponsibleID}', '2');";//set status to deployed
                 $result = mysqli_query($dbc, $sql);
-
+                echo $sql."<br>";
+                
                 //get id of new assignment
                 $sql = "SELECT * FROM thesis.assetassignment WHERE assetID = '{$replacement[$i]}' AND statusID = '2';";
                 $result = mysqli_query($dbc, $sql);
@@ -119,16 +126,16 @@
                 //set replaced to 1 in service details
                 $sql = "UPDATE thesis.servicedetails SET replaced = 1 WHERE (serviceID = '{$id}') AND (asset = '{$replacement[$i]}');";//set status to completed
                 $result = mysqli_query($dbc, $sql);
-
+                echo $sql."<br>";
                 //insert to asset audit
                 $sql = "UPDATE `thesis`.`assetassignment` SET `statusID` = '3' WHERE (`AssetAssignmentID` = '{$assetassignmentID}');";
                 $result = mysqli_query($dbc, $sql);
-
+                echo $sql."<br>";
                 // add to replacement table
                 $sql = "INSERT INTO `thesis`.`replacement` (`lostAssetID`, `replacementAssetID`, `BuildingID`, `FloorAndRoomID`, `userID`, `statusID`, `stepID`, `remarks`) 
                         VALUES ('{$toBeReplaced[$i]}', '{$replacement[$i]}', '{$BuildingID}', '{$FloorAndRoomID}', '{$personresponsibleID}', '2', '26', 'replacement');";
                 $result = mysqli_query($dbc, $sql);
-
+                echo $sql."<br>";
                 //get id of newly inserted replacement
                 $sql = "SELECT MAX(replacementID) as 'replacementID' FROM `thesis`.`replacement`;";
                 $result = mysqli_query($dbc, $sql);
@@ -139,15 +146,15 @@
                 //add to receiving table if does not exist
                 $sql = " SELECT * FROM thesis.requestor_receiving WHERE UserID = '{$personresponsibleID}' AND replacementID = '{$replacementID}' AND statusID != 3;";
                 $result = mysqli_query($dbc, $sql);
-
+                echo $sql."<br>";
                 if(mysqli_num_rows($result) == 0){
-                    $sql = "INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `statusID`) VALUES ('{$personresponsibleID}', '1');";
+                    $sql = "INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `statusID`, `replacementID`) VALUES ('{$personresponsibleID}', '1', '{$replacementID}');";
                     $result = mysqli_query($dbc, $sql);
-
+                    echo $sql."<br>";
                     $sql = " SELECT * FROM thesis.requestor_receiving WHERE UserID = '{$personresponsibleID}' AND replacementID = '{$replacementID}' AND statusID != 3;";
                     $result = mysqli_query($dbc, $sql);
                     $row=mysqli_fetch_array($result, MYSQLI_ASSOC);
-
+                    echo $sql."<br>";
                     $receivingID = $row['id'];
                 }
                 else{
@@ -158,10 +165,11 @@
                 //insert to receiving details
                 $sql = "INSERT INTO `thesis`.`receiving_details` (`receivingID`, `assetID`, `received`) VALUES ('{$receivingID}', '{$replacement[$i]}', '0');";
                 $result = mysqli_query($dbc, $sql);
-
+                echo $sql."<br>";
                 //set replacement asset status to moving
                 $sql = "UPDATE `thesis`.`asset` SET `assetStatus` = '3' WHERE (`assetID` = '{$replacement[$i]}');";
                 $result = mysqli_query($dbc, $sql);
+                echo $sql."<br>";
             }
         }
     }
@@ -170,6 +178,6 @@
 	$message = "Form submitted!"; 
 	$_SESSION['submitMessage'] = $message;
 	
-	header('Location: '.$header);
+	//header('Location: '.$header);
 
 ?>
