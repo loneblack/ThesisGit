@@ -772,7 +772,7 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('10', 'TABLET-0001', 'VQVc7xL6', '82-41-46-5F-40-1C', '1');
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('11', 'AP-0001', 'XDvTnSkL', 'A8-4E-13-2B-49-11', '1');
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('11', 'AP-0002', 'GSHxbiWd', '3F-CB-94-0F-D9-1F', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('11', 'AP-0003', '8X5ta9Ek', 'DD-60-BA-BB-EA-AE', '1');
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`, `isServiceUnit`) VALUES ('11', 'AP-0003', '8X5ta9Ek', 'DD-60-BA-BB-EA-AE', '1', '1');
 
 INSERT INTO asset (assetModel, propertyCode, serialNo, macAddress, assetStatus) VALUES ('13', 'TC-0001', 'CXnkufyX', '14-19-C6-D6-7A-0B', '2'); -- ID 14, thin client
 INSERT INTO asset (assetModel, propertyCode, serialNo, macAddress, assetStatus) VALUES ('13', 'TC-0002', 'gMrfc3YU', 'DC-69-F5-64-9D-68', '2'); -- ID 15, thin client

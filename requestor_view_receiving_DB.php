@@ -80,25 +80,26 @@
 	    $sql = "UPDATE `thesis`.`request_borrow` SET `statusID` = '3', `steps` = '21' WHERE (`borrowID` = '{$borrowID}');";
 	    $result = mysqli_query($dbc, $sql);
 	}
-	if($requestID > 0)//have request
+	else if($requestID > 0)//have request
 	{
 
 	    $sql = "UPDATE `thesis`.`request` SET `status` = '3', `step` = '21' WHERE (`requestID` = '{$requestID}');";
 	    $result = mysqli_query($dbc, $sql);
 	}
-	if($serviceUnitID > 0)//have service unit
+	else if($serviceUnitID > 0)//have service unit
 	{
 
-	    $sql = "UPDATE `thesis`.`serviceUnit` SET `status` = '3', `startDate` = now() WHERE (`serviceUnitID` = '{$serviceUnitID}');";
+	    $sql = "UPDATE `thesis`.`serviceUnit` SET `statusID` = '3', `startDate` = now() WHERE (`serviceUnitID` = '{$serviceUnitID}');";
 	    $result = mysqli_query($dbc, $sql);
+	    echo $sql;
 	}
-	if($replacementID > 0)//have replement
+	else if($replacementID > 0)//have replement
 	{
 
 	   $sql = "UPDATE `thesis`.`replacement` SET `status` = '3', `setpID` = 21 WHERE (`replacementID` = '{$replacementID}');";
 	   $result = mysqli_query($dbc, $sql);
 	}
-	if($receivingID > 0)//have replement
+	else if($receivingID > 0)//have replement
 	{
 
 	   $sql = "UPDATE `thesis`.`service` SET `status` = '3', `steps` = 21 WHERE (`id` = '{$serviceID}');";

@@ -77,7 +77,6 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
-                            <button class="btn btn-default" style="font-size:12px" onclick="window.history.back();"><span class="glyphicon glyphicon-arrow-left"> Back</span></button>
                             <br>
                             <br>
                             <section class="panel">
@@ -239,9 +238,8 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                     <input style="display: none" type="number" id="count" name="count">
                                 </div>
                             </section>
-                            <button type="submit" name="submit" id="submit" class="btn btn-success">Approve</button>
-                            <button type="button" class="btn btn-danger">Disapprove</button>
                             </form>
+                            <button onclick="window.history.back()" type="button" class="btn btn-danger">Back</button>
                         </div>
                         
                         
