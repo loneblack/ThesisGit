@@ -70,7 +70,7 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            All Asset List
+                                            All Compound Asset List
 
                                         </header>
                                         <div class="panel-body">
