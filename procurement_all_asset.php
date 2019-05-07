@@ -14,6 +14,8 @@
     <link href="bs3/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-reset.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css" />
+    <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
@@ -55,24 +57,42 @@
                                     </header>
                                     <div class="panel-body">
                                         <section id="unseen">
-                                            <table class="table table-bordered table-striped table-condensed table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Asset Name</th>
-                                                        <th>Description</th>
-                                                        <th>Status</th>
-                                                        <th>Edit</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Samsung 17" TV</td>
-                                                        <td>Color Blue</td>
-                                                        <td>Active</td>
-                                                        <td><a href="procurement_edit_asset.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Edit</button></a></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <div class="adv-table" id="ctable">
+                                                <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Asset Category</th>
+                                                            <th>Brand</th>
+                                                            <th>Model</th>
+                                                            <th>Specifications</th>
+                                                            <th>Edit</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+												
+													require_once('db/mysql_connect.php');
+													$query="SELECT ac.name AS ass, b.name AS brand, am.description, am.itemSpecification, am.assetModelID FROM assetmodel am
+                                                    JOIN ref_assetcategory ac ON am.assetCategory = ac.assetCategoryID
+                                                    JOIN ref_brand b ON am.brand = b.brandID;";
+													$result=mysqli_query($dbc,$query);
+													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														echo "<tr>
+															<td>{$row['ass']}</td>
+															<td>{$row['brand']}</td>
+															<td>{$row['description']}</td>
+															<td>{$row['itemSpecification']}</td>
+															<td><a href='procurement_edit_asset.php?supplierid={$row['assetModelID']}'><button type='button' class='btn btn-primary'><i class='glyphicon glyphicon-pencil'></i> Edit</button></a></td>
+														</tr>";
+														
+														
+														
+													}
+												
+													?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </section>
                                     </div>
                                 </section>
@@ -96,6 +116,9 @@
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
+    <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+    <script src="js/dynamic_table_init.js"></script>
 
 
     <!--common script init for all pages-->

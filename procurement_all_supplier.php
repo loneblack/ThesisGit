@@ -14,6 +14,8 @@
     <link href="bs3/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-reset.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css" />
+    <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
 
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
@@ -55,20 +57,21 @@
                                     </header>
                                     <div class="panel-body">
                                         <section id="unseen">
-                                            <table class="table table-bordered table-striped table-condensed table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Company Name</th>
-                                                        <th>Contact Person</th>
-                                                        <th>Email</th>
-                                                        <th>Contact Number</th>
-                                                        <th>Address</th>
-                                                        <th>Edit</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-													
-													<?php
+                                            <div class="adv-table" id="ctable">
+                                                <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Company Name</th>
+                                                            <th>Contact Person</th>
+                                                            <th>Email</th>
+                                                            <th>Contact Number</th>
+                                                            <th>Address</th>
+                                                            <th>Edit</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <?php
 												
 													require_once('db/mysql_connect.php');
 													$query="SELECT * FROM thesis.supplier";
@@ -88,33 +91,9 @@
 													}
 												
 													?>
-													
-                                                    <tr>
-                                                        <td>Marvin and Sons Company</td>
-                                                        <td>Marvin Lao</td>
-                                                        <td>marvin_lao@dlsu.edu.ph</td>
-                                                        <td>09178328851</td>
-                                                        <td>1222 Taft Avenue, Manila City</td>
-                                                        <td><a href="procurement_edit_supplier.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Edit</button></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Marvin and Sons Company</td>
-                                                        <td>Marvin Lao</td>
-                                                        <td>marvin_lao@dlsu.edu.ph</td>
-                                                        <td>09178328851</td>
-                                                        <td>1222 Taft Avenue, Manila City</td>
-                                                        <td><a href="procurement_edit_supplier.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Edit</button></a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Marvin and Sons Company</td>
-                                                        <td>Marvin Lao</td>
-                                                        <td>marvin_lao@dlsu.edu.ph</td>
-                                                        <td>09178328851</td>
-                                                        <td>1222 Taft Avenue, Manila City</td>
-                                                        <td><a href="procurement_edit_supplier.php"><button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Edit</button></a></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </section>
                                     </div>
                                 </section>
@@ -138,6 +117,9 @@
     <script src="js/jquery.scrollTo.min.js"></script>
     <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
     <script src="js/jquery.nicescroll.js"></script>
+    <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+    <script src="js/dynamic_table_init.js"></script>
 
 
     <!--common script init for all pages-->
