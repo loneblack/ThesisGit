@@ -146,20 +146,6 @@ require_once("db/mysql_connect.php");
                                                   ?>
                                         
                                             </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td style='display: none'>{$row['ticketID']}</td>
-                                                    <th>#</th>
-                                                    <td style='display: none'>{$row['ticketID']}</td>
-                                                    <th>Category</th>
-                                                    <th>Updated</th>
-                                                    <th>Date Needed</th>
-                                                    <th>Priority</th>
-                                                    <th>Status</th>
-                                                    <th>Requested By</th>
-                                                    <th>Details</th>
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
