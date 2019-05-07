@@ -90,7 +90,8 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                     unset($_SESSION['submitMessage']);
                                                 }
                                             ?>
-                                             <h4>Instructions: Place the item that you would like to borrow on the equipment then select the quantity that you would like to borrow. To add multiple items, press the add button on the right hand side of the table.</h4>
+                                             <h5>Instructions: Place the item that you would like to borrow on the equipment then select the quantity that you would like to borrow. To add multiple items, press the add button on the right hand side of the table. Kindly fill up the date and time needed, floor and room, and reason for borrowing. If the asset would be borrowed for a long time use, kindly leave the asset return date as blank</h5>
+                                            <hr>
                                             
                                             <form class="cmxform form-horizontal " id="signupForm" method="post" action="requestor_service_equipment_request_DB.php">
 
@@ -172,8 +173,8 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                     <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                         <thead>
                                                             <tr>
-                                                                <th>Equipment</th>
-                                                                <th>Quantity</th>
+                                                                <th>Asset to Be Borrowed</th>
+                                                                <th>Quantity Available</th>
                                                                 <th>Item Description/ Proposed Specs</th>
                                                                 <th>Add/ Remove</th>
                                                             </tr>
@@ -200,7 +201,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input style="display: none" type="number" id="count" value=<?php echo $_SESSION['count'];?>/>
+                                                                    <input style="display: none" type="number" id="count" value="<?php echo $_SESSION['count'];?>" />
                                                                     <select name='quantity0' id='quantity0' class='form-control m-bot15' required>              
                                                                         <option value=''>0</option>
                                                                     </select>
