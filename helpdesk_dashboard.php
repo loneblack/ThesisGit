@@ -247,18 +247,6 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                                 ?>
 
                                             </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td style='display: none'>ticketID</td>
-                                                    <th>#</th>
-                                                    <td style='display: none'>ServiceTypeID</td>
-                                                    <th>Category</th>
-                                                    <th>Updated</th>
-                                                    <th>Date Needed</th>
-                                                    <th class="hidden-phone">Status</th>
-                                                    <th>Requested By</th>
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </section>
                                 </div>

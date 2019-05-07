@@ -261,18 +261,6 @@
                                                     }
                                                   ?>
                                                 
-                                                
-                                            <tfoot>
-                                                <tr>
-                                                    <th style="display: none"></th>
-                                                    <th>#</th>
-                                                    <th>Description</th>
-                                                    <th>Type of Request</th>
-                                                    <th>Date Needed</th>
-                                                    <th>Status</th>
-                                                    <th>Requested By</th>
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>

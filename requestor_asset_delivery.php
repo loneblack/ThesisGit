@@ -73,7 +73,7 @@
                                                     <table class="display table table-bordered table-striped" id="dynamic-table">
                                                         <thead>
                                                             <tr>
-                                                                <th>#</th>
+                                                                <th>Delivery Number</th>
                                                                 <th>Delivery Date</th>
                                                                 <th>Status</th>
                                                             </tr>
