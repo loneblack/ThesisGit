@@ -215,20 +215,11 @@ $_SESSION['count'] = 0;
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    
-                                                    <!--<div class="form-group ">
-                                                        <label for="building" class="control-label col-lg-3">Purpose</label>
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <textarea class="form-control" rows="5" id="" name= "assetDescription" style="resize: none" placeholder="Provide a short description for requesting."></textarea>
-                                                            </div>
-                                                        </div>
-                                                     </div> -->
-                                                    
+                                                                                                        
                                                 </section>
 
                                                 <hr>
-                                                 <h5>Instructions: Fill up all the fields in the table. If you wish to request for more assets, add another entry to the table. The start of the date needed is 1 week after the request and the latest you could order is 1 week before the end of the term.</h5>
+                                                 <h5>Instructions: Fill up the Reason of Request, Date needed, Room, and the Asset to be requested. If you do not know the specifications of the asset kindly leave the specifications blank and fill up the description (where the asset would be used) The minimum date needed is 1 week from the date today to make sure that your requested asset is provided on an excellent quality. After requesting the asset kindly wait for the IT team to provide a response for your request.</h5>
                                                  <hr>
 
                                                 <section>
@@ -248,7 +239,7 @@ $_SESSION['count'] = 0;
                                                             <tr>
                                                                 <td>
                                                                     <div class="col-lg-12">
-                                                                        <input style="display: none" type="number" id="count" value=<?php echo $_SESSION['count'];?>/>
+                                                                        <input style="display: none" type="number" id="count" value="<?php echo $_SESSION['count'];?>" />
                                                                         <input class="form-control" type="number"  name="quantity0" id="quantity0" min="1" step="1" placeholder="Quantity" />
                                                                     </div>
                                                                 </td>
@@ -296,18 +287,6 @@ $_SESSION['count'] = 0;
 
                                                     <br>
                                                 </section>
-                                                
-                                                
-                                                
-                                                
-												<!--<section>
-                                                    <input type="checkbox" name="isITTeamChooseSpecs" value="1"> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications.
-                                                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
-                                                    <br><br><br>
-                                                </section> -->
-
-                                                
-                                                
                                                 
                                                 
                                                 
