@@ -151,12 +151,14 @@ $count = 0;
                                                 <br>
                                                 Due to unavailability of service units, some requests may not be catered to. Additionally, each request for service unit will be listed as separate requests.</h5>
                                                 <hr>
+<!--
                                                 <div class="form-group">
                                                     <label for="details" class="control-label col-lg-3">Description of the Problem</label>
                                                     <div class="col-lg-6">
                                                         <textarea class="form-control" rows="5" name="details" style="resize:none" required></textarea>
                                                     </div>
                                                 </div>
+-->
 
                                                 <div class="form-group ">
                                                     <label for="dateNeeded" class="control-label col-lg-3">Item details</label>
@@ -169,6 +171,7 @@ $count = 0;
                                                                     <th>Brand</th>
                                                                     <th>Category</th>
                                                                     <th>Specification</th>
+                                                                    <th>Describe the Problem of the Asset</th>
                                                                     <th>Service unit</th>
                                                                 </tr>
                                                             </thead>
@@ -185,6 +188,7 @@ $count = 0;
                                                                         echo "<td>{$row['brand']}</td>";
                                                                         echo "<td>{$row['category']}</td>";
                                                                         echo "<td>{$row['itemSpecification']}</td>";
+                                                                        echo "<td><input type='text' id='' class='form-control'></td>";
                                                                         echo "<td style='text-align:center'>
                                                                                 <input id='chk2[]' value='{$row['assetID']}' type='checkbox' name='serviceUnit[]' disabled>
                                                                               </td>";

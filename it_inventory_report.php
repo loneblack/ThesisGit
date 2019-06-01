@@ -4,6 +4,7 @@
     session_start();
 	require_once("db/mysql_connect.php");
 ?>
+
 <head>
     <meta charset="utf-8">
 
@@ -63,43 +64,44 @@
                                             Asset Audit Report
                                         </header>
                                         <div align="right">
-                                            <button class="btn btn-primary" onclick="print()"><i class="fa fa-print"></i> Print</button>
+                                            <button class="btn btn-primary" onclick="printContent('report')"><i class="fa fa-print"></i> Print</button>
                                         </div>
 
-                                        <div align="center">
-                                            <h3>Information and Technology Services Office</h3>
-                                            <h3>Asset Audit Report</h3>
-                                            <h4>
-                                                <?php 
+                                        <div id="report">
+                                            <div align="center">
+                                                <h3>Information and Technology Services Office</h3>
+                                                <h3>Asset Audit Report</h3>
+                                                <h4>
+                                                    <?php 
                                                 date_default_timezone_set('Asia/Manila');
                                                 $timestamp = time();
                                                 echo "\n"; 
                                                 echo(date("F d, Y h:i:s A", $timestamp)); 
                                                 ?>
-                                            </h4>
-                                        </div>
+                                                </h4>
+                                            </div>
 
-                                        <div class="panel-body">
-                                            <section id="unseen">
-                                                <div class="adv-table">
-                                                    <table class="display table table-bordered table-striped" id="dynamic-table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="hidden"></th>
-                                                                <th>Action</th>
-                                                                <th>Date</th>
-                                                                <th>Asset Category</th>
-                                                                <th>Property Code</th>
-                                                                <th>Brand</th>
-                                                                <th>Model</th>
-                                                                <th>Building</th>
-                                                                <th>Room Number</th>
-                                                                <th>Office/ Department</th>
-                                                                <th>User's Name</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php
+                                            <div class="panel-body">
+                                                <section id="unseen">
+                                                    <div class="adv-table">
+                                                        <table class="display table table-bordered table-striped" id="">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="hidden"></th>
+                                                                    <th>Action</th>
+                                                                    <th>Date</th>
+                                                                    <th>Asset Category</th>
+                                                                    <th>Property Code</th>
+                                                                    <th>Brand</th>
+                                                                    <th>Model</th>
+                                                                    <th>Building</th>
+                                                                    <th>Room Number</th>
+                                                                    <th>Office/ Department</th>
+                                                                    <th>User's Name</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <?php
                                                             
                                                                 if(isset($_POST['startDate']) && isset($_POST['endDate'])){
                                                                     if($_POST['startDate'] > $_POST['endDate']){
@@ -246,10 +248,11 @@
                                                                     }
                                                                 }
 															?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </section>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </section>
+                                            </div>
                                         </div>
                                     </section>
                                 </div>
@@ -298,6 +301,14 @@
 
         function myFunction() {
             window.print();
+        }
+        
+        function printContent(el){
+            var restorepage = document.body.innerHTML;
+            var printcontent = document.getElementById(el).innerHTML;
+            document.body.innerHTML = printcontent;
+            window.print();
+            document.body.innerHTML = restorepage;
         }
     </script>
 
