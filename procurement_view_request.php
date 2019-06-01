@@ -278,7 +278,7 @@
                                             
                                             
                                             
-                                            <a href="procurement_view_canvas.php" class="btn btn-danger btn-lg"><i class="fa fa-times"></i> Cancel </a>
+                                            <a href="procurement_view_canvas.php" class="btn btn-danger btn-lg"><i class="fa fa-times"></i> Back </a>
                                         </div>
                                     </section>
                                 </div>

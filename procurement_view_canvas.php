@@ -168,7 +168,7 @@ INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('9', 'For 
     <script src="js/jquery.nicescroll.js"></script>
     <script>
         function addRowHandlers() {
-            var table = document.getElementById("ctable");
+            var table = document.getElementById("dynamic-table");
             var rows = table.getElementsByTagName("tr");
             for (i = 1; i < rows.length; i++) {
                 var currentRow = table.rows[i];

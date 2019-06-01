@@ -68,7 +68,7 @@
                     </header>
                     <div class="panel-body">
                         <section id="unseen">
-                            <div class="adv-table" id="ctable">
+                            <div class="adv-table" id="ctab;e">
                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                     <thead>
                                         <tr>
@@ -177,7 +177,7 @@
 
     <script>
         function addRowHandlers() {
-            var table = document.getElementById("ctable");
+            var table = document.getElementById("dynamic-table");
             var rows = table.getElementsByTagName("tr");
             for (i = 1; i < rows.length; i++) {
                 var currentRow = table.rows[i];
