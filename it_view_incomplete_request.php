@@ -145,8 +145,8 @@ $_SESSION['previousPage2']="it_view_incomplete_request.php?requestID=".$requestI
                                                     <th>Brand</th>
                                                     <th>Model</th>
                                                     <th>Specification</th>
-                                                    <th>Remove</th>
-                                                    <th>Add</th>
+                                                    <th>Remove Row</th>
+                                                    <th>Add New Brand</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -173,7 +173,7 @@ $_SESSION['previousPage2']="it_view_incomplete_request.php?requestID=".$requestI
 														<td></td>
 														<td></td>
 														<td></td>
-														<td><button type='button' class='btn btn-primary' onclick='addTest(\"{$reqCode}\")'> Add </button></td>
+														<td><button type='button' class='btn btn-primary' onclick='addTest(\"{$reqCode}\")'> Add New Brand</button></td>
 													</tr>";	
 												}
 											?>
@@ -230,7 +230,7 @@ $_SESSION['previousPage2']="it_view_incomplete_request.php?requestID=".$requestI
                             cell.innerHTML = "<td class='text-center'><input class='form-control' type='text'></td>";
                             //Add button.
                             cell = row.insertCell();
-                            cell.innerHTML = "<td class='text-center'><button class='btn btn-warning' onclick='removeRow(this)'>Remove</button></td>";
+                            cell.innerHTML = "<td class='text-center'><button class='btn btn-warning' onclick='removeRow(this)'>Remove Row</button></td>";
                         }
                     </script>
 

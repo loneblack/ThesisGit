@@ -140,7 +140,7 @@
                                                         <div class="form-group ">
 															
 															<div class="col-lg-6">
-																<img src="<?php echo $imageURL; ?>" alt="" />
+																<img src="<?php echo $imageURL; ?>" alt="" width="1200" height="500" />
 															</div>
 														</div>
                                                         <br>
@@ -148,9 +148,6 @@
                                                 <section>
                                                     
                                                     <br>
-
-                                                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye"></i> View Inventory</button> -->
-
 
                                                     <h4>Request Details</h4>
                                                     <div class="form-group ">
