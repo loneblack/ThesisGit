@@ -178,13 +178,36 @@
 																					$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
 																				}
 																				while($rowGetAllMainData=mysqli_fetch_array($resultGetAllMainData,MYSQLI_ASSOC)){
-																					echo "<tr>
-																						<td>{$rowGetAllMainData['floorRoom']}</td>
-																						<td>{$rowGetAllMainData['propertyCode']}</td>
-																						<td>{$rowGetAllMainData['assetCat']}</td>
-																						<td>{$rowGetAllMainData['assetStat']}</td>
-																						<td>{$rowGetAllMainData['date']}</td>
-																					</tr>";
+                                                                                    
+                                                                                    if($rowGetAllMainData['assetStat'] == 'Missing'){
+                                                                                        echo "<tr>
+																						<td><font color='red'>{$rowGetAllMainData['floorRoom']}</font></td>
+																						<td><font color='red'>{$rowGetAllMainData['propertyCode']}</font></td>
+																						<td><font color='red'>{$rowGetAllMainData['assetCat']}</font></td>
+																						<td><font color='red'>{$rowGetAllMainData['assetStat']}</font></td>
+																						<td><font color='red'>{$rowGetAllMainData['date']}</font></td>
+																					   </tr>";
+                                                                                    }
+                                                                                    
+                                                                                    if($rowGetAllMainData['assetStat'] == 'Deployed'){
+                                                                                        echo "<tr>
+																						<td><font color='black'>{$rowGetAllMainData['floorRoom']}</font></td>
+																						<td><font color='black'>{$rowGetAllMainData['propertyCode']}</font></td>
+																						<td><font color='black'>{$rowGetAllMainData['assetCat']}</font></td>
+																						<td><font color='black'>{$rowGetAllMainData['assetStat']}</font></td>
+																						<td><font color='black'>{$rowGetAllMainData['date']}</font></td>
+																					   </tr>";
+                                                                                    }
+                                                                                    
+                                                                                    if($rowGetAllMainData['assetStat'] == 'For Repair'){
+                                                                                        echo "<tr>
+																						<td><font color='green'>{$rowGetAllMainData['floorRoom']}</font></td>
+																						<td><font color='green'>{$rowGetAllMainData['propertyCode']}</font></td>
+																						<td><font color='green'>{$rowGetAllMainData['assetCat']}</font></td>
+																						<td><font color='green'>{$rowGetAllMainData['assetStat']}</font></td>
+																						<td><font color='green'>{$rowGetAllMainData['date']}</font></td>
+																					   </tr>";
+                                                                                    }
 																				}
 																			}
 																		?>
