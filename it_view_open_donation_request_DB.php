@@ -3,6 +3,10 @@
 	require_once("db/mysql_connect.php");
 	
 	if(isset($_POST['approve'])){
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `donationID` = '{$_SESSION['donationID']}' and `steps_id`='1'";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+		
 		$header =  $_SESSION['previousPage3'];
 		$assetsForDon=$_POST['assetsForDon'];
 		
@@ -34,6 +38,10 @@
 		header('Location: '.$header);	
 	}
 	if(isset($_POST['disapprove'])){
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `donationID` = '{$_SESSION['donationID']}' and `steps_id`='1'";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+		
 		$header =  $_SESSION['previousPage3'];
 		//Update status
 		$queryDisapp="UPDATE `thesis`.`donation` SET `reason`='{$_POST['reason']}', `statusID`='6', `stepsID`='20' WHERE `donationID`='{$_SESSION['donationID']}'";

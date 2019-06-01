@@ -12,11 +12,10 @@
 	$resultDon=mysqli_query($dbc,$queryDon);			
 	$rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC);
 	
-	//Update notifications
-	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `donationID` = '{$donationID}' and `steps_id`='9'";
-	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
-	
 	if(isset($_POST['submit'])){
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `donationID` = '{$donationID}' and `steps_id`='9'";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
 		$message=null;
 		
 		$category=$_POST['category'];
