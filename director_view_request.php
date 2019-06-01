@@ -9,11 +9,11 @@
 	$result=mysqli_query($dbc,$query);
 	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 	
-	//Update notifications
-	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='23'";
-	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
-
 	if(isset($_POST['approve'])){
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='23'";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+		
 		$filetmp=$_FILES["fileToUpload"]["tmp_name"];
 		$filename=$_FILES["fileToUpload"]["name"];
 		$filetype=$_FILES["fileToUpload"]["type"];
@@ -40,6 +40,10 @@
 		//header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/director_view_request.php?requestid={$requestID}");
 	}
 	elseif(isset($_POST['disapprove'])){
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='23'";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+		
 		$query="UPDATE `thesis`.`request` SET `status`='6', `step`='29' WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
 		
