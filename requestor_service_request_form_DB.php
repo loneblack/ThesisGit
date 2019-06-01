@@ -30,6 +30,7 @@
 
 		$result = mysqli_query($dbc, $sql);
 
+		echo $sql1;
 		//get the id of previously inserted service  
 		$sql1 = "SELECT MAX(id) as 'id' FROM thesis.service;";//status is set to 1 for pending status
 		$result1 = mysqli_query($dbc, $sql1);
@@ -90,5 +91,5 @@
 	$message = "Form submitted!";
 	$_SESSION['submitMessage'] = $message;
 
-	header('Location: '.$header);
+	//header('Location: '.$header);
 ?>	
