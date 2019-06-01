@@ -9,15 +9,15 @@ $query1="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s
 $result1=mysqli_query($dbc,$query1);
 while ($row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC)){ $Unresolved = $row1['count']; }
 
-$query2="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE (t.dueDate < now());";
+$query2="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE (DATE(t.dueDate) < DATE(now())) and t.status!='7';";
 $result2=mysqli_query($dbc,$query2);
 while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){ $Overdue = $row2['count']; }   
 
-$query3="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE (DATE(t.dueDate) = DATE(now()));";
+$query3="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE (DATE(t.dueDate) = DATE(now())) and t.status!='7'";
 $result3=mysqli_query($dbc,$query3);
 while ($row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC)){ $DueToday = $row3['count']; }   
 
-$query4="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.status = 1;";
+$query4="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.status = 3;";
 $result4=mysqli_query($dbc,$query4);
 while ($row4 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $Open = $row4['count']; }   
 
@@ -88,11 +88,12 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
 
 
                             <div class="row">
+							
                                 <a href="#">
                                     <div class="col-md-2">
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon orange"><i class="fa fa-gavel"></i></span>
-                                            <div class="mini-stat-info"><br>
+                                            <div class="mini-stat-info">
                                                 <span><?php echo $Unresolved;?></span>
                                                 Unresolved
                                             </div>
@@ -100,7 +101,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                     </div>
                                 </a>
 
-                                <a href="#">
+                                <a onClick='showOverdueTickets()'>
                                     <div class="col-md-2">
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon orange"><i class="fa fa-clock-o"></i></span>
@@ -112,7 +113,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                     </div>
                                 </a>
 
-                                <a href="#">
+                                <a onClick='showDueTodayTickets()'>
                                     <div class="col-md-2">
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon pink"><i class="fa fa-clock-o"></i></span>
@@ -130,7 +131,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                             <span class="mini-stat-icon green"><i class="fa fa-eye"></i></span>
                                             <div class="mini-stat-info">
                                                 <span><?php echo $Open;?></span>
-                                                Open
+                                                Ongoing
                                             </div>
                                         </div>
                                     </div>
@@ -150,7 +151,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                 </a>
 
 
-                                <a href="#">
+                                <a onClick='showUrgentTickets()'>
                                     <div class="col-md-2">
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon orange"><i class="fa fa-exclamation"></i></span>
@@ -197,7 +198,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                                     <th>Requested By</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id='ticketList'>
                                             
                                                 <?php
                                                     $count = 1;
@@ -279,6 +280,39 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
    </script>
 
      <script>
+		function showUrgentTickets(){
+			var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("ticketList").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "showUrgentTickets.php", true);
+            xmlhttp.send();
+		}
+		
+		function showDueTodayTickets(){
+			var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("ticketList").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "showDueTodayTickets.php", true);
+            xmlhttp.send();
+		}
+		
+		function showOverdueTickets(){
+			var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("ticketList").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "showOverdueTickets.php", true);
+            xmlhttp.send();
+		}
+		
         function addRowHandlers() {
             var table = document.getElementById("dynamic-table");
             var rows = table.getElementsByTagName("tr");
