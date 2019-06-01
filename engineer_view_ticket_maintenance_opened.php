@@ -275,7 +275,7 @@
                                     <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                         <thead>
                                             <tr>
-												<th></th>
+												<th><input type='checkbox' name='select-all' id='select-all' onChange='selectAll(this);'></th>
                                                 <th>Category</th>
                                                 <th>Property Code</th>
                                                 <th>Location</th>
@@ -295,7 +295,7 @@
 												$resultAssDat=mysqli_query($dbc,$queryAssDat);
 												while($rowAssDat=mysqli_fetch_array($resultAssDat,MYSQLI_ASSOC)){
 													echo "<tr>
-														<td><input type='checkbox' name='asset[]' value='{$rowAssDat['assetID']}' onChange='change(\"{$rowAssDat['assetID']}\",this);'></td>
+														<td><input type='checkbox' name='asset[]' value='{$rowAssDat['assetID']}' class='maintCheck' onChange='change(\"{$rowAssDat['assetID']}\",this);'></td>
 														<td>{$rowAssDat['categoryName']}</td>
 														<td>{$rowAssDat['propertyCode']}</td>
 														<td>{$rowAssDat['floorRoom']}</td>
@@ -355,7 +355,7 @@
         //Is Checked
             if (y.checked == true) {
                 //comments
-                document.getElementById(remarks).required = false;
+                document.getElementById(remarks).required = true;
                 document.getElementById(assetStat).disabled = false;
                 
 
@@ -363,9 +363,23 @@
             //Unchecked
             if (y.checked == false) {
                 //comments
-                document.getElementById(remarks).required = true;
+                document.getElementById(remarks).required = false;
                 document.getElementById(assetStat).disabled = true;
 
+        }
+    }
+	function selectAll(y) {
+		//Is Checked
+        if (y.checked == true) {
+			for(var i=0;i<document.getElementsByClassName("maintCheck").length;i++){
+				document.getElementsByClassName("maintCheck")[i].checked=true;
+			}
+        }
+        //Unchecked
+        if (y.checked == false) {
+			for(var i=0;i<document.getElementsByClassName("maintCheck").length;i++){
+				document.getElementsByClassName("maintCheck")[i].checked=false;
+			}
         }
     }
 	</script>
