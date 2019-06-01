@@ -490,19 +490,6 @@ require_once("db/mysql_connect.php");
                                                   */
                                                   ?>
                                             </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td style='display: none'>ID</td>
-                                                    <th>#</th>
-                                                    <th>Type of Request</th>
-                                                    <th>Date Made</th>
-                                                    <th>Date Needed</th>
-                                                    <td style='display: none'>StatusID</td>
-                                                    <th>Status</th>
-                                                    <th>Details</th>
-                                                    <!-- <th>Description</th> -->
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
