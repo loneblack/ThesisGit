@@ -13,11 +13,6 @@
 	$resultReq=mysqli_query($dbc,$queryReq);
 	$rowReq=mysqli_fetch_array($resultReq,MYSQLI_ASSOC);
 	
-	//Update notifications
-	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='22'";
-	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
-	
-	
 	if(isset($_POST['send'])){
 		if(!empty($_POST['recommAsset'])){
 			$_SESSION['recommAsset']=$_POST['recommAsset'];
@@ -25,6 +20,11 @@
 	}
 	
 	if(isset($_POST['approve'])){
+		
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='22'";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+		
 		if(isset($_POST['requestDetailsID'])){
 			//UPDATE REQUEST DETAILS DATA 
 			$requestDetailsID = $_POST['requestDetailsID'];
@@ -48,9 +48,15 @@
 		$resultNotif = mysqli_query($dbc, $sqlNotif);
 		
 		$_SESSION['submitMessage']="Form submitted!";
+		
 	}
 	
 	if(isset($_POST['disapprove'])){
+		
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='22'";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+		
 		$query="UPDATE `thesis`.`request` SET `status`='6', `step`='28', `reasonForDisaprroval`='{$_POST['reasOfDisapprov']}' WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
 		
