@@ -116,8 +116,8 @@ if($serviceTypeID=='27'){
                                                         }
                                                             ?>
                                                     </div>
-                                                    <label for="serviceType" class="control-label col-lg-3">Type of Service Requested</label>
-                                                    <div class="col-lg-6">
+                                                    <label for="serviceType" class="control-label col-lg-3 col-xs-pull-1" style="padding-left: 300px; text-align: left;">Type of Service Requested</label>
+                                                    <div class="col-lg-8 col-xs-pull-1">
                                                         <select name="serviceType" onchange='checkvalue(this.value)' class="form-control m-bot15" disabled>
                                                             <option><?php echo $serviceType;?></option>
                                                         </select>
@@ -130,26 +130,20 @@ if($serviceTypeID=='27'){
                                                             ?>
                                                         />
                                                     </div>
-                                                </div>
-												
-                                                <div class="form-group ">
-                                                    <label for="details" class="control-label col-lg-3">Details</label>
-                                                    <div class="col-lg-6">
-                                                        <textarea class="form-control" rows="5" name="details" style="resize:none"  disabled><?php echo $details;?></textarea>
-                                                    </div>
-                                                </div><br><br>
+                                                </div>  
 
                                                 <?php if($serviceTypeID=='27'){ ?>
                                                 <!-- BUTAS NG PWET KO-->
                                                 <h4 class="col-lg-3">Assets For Repair</h4><br><br>
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-9 col-xs-pull-2" >
                                                 <table class="table table-hover">
                                                     <thead>
                                                       <tr>
                                                         <th>Property Code</th>
                                                         <th>Category</th>
-                                                        <th>Brand</th>
+                                                        <th>Brand</th>  
                                                         <th>Model</th>
+                                                        <th>Description</th>
                                                       </tr>
                                                     </thead>
                                                     <tbody>
@@ -181,6 +175,7 @@ if($serviceTypeID=='27'){
                                                                 <td>{$row['category']}</td>
                                                                 <td>{$row['brand']}</td>
                                                                 <td>{$row['description']}</td>
+                                                                <td>{$row['']}</td>
                                                                 </tr>";
                                                             }  
 
@@ -201,7 +196,7 @@ if($serviceTypeID=='27'){
                                                     }
                                                 ?>
                                                 <div class="form-group">
-                                                    <div class="col-lg-offset-3 col-lg-6">
+                                                    <div class="col-lg-offset-3 col-lg-6 col-xs-pull-2" style="padding-left: 30px">
                                                         <input type="checkbox" disabled <?php echo $serviceUnit;?>>&nbsp;Opt for service unit
                                                     </div>
                                                     <br>
