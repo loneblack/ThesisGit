@@ -28,11 +28,11 @@
 	$result7=mysqli_query($dbc,$query7);
 	$row7 = mysqli_fetch_array($result7, MYSQLI_ASSOC);
 	
-	//Update notifications
-	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE (`ticketID` = '{$ticketID}');";
-	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
-	
 	if(isset($_POST['save'])){
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE (`ticketID` = '{$ticketID}');";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+	
 		$testStat=$_POST['testStat'];
 		$listOfTestAss=$_POST['listOfTestAss'];
 			
