@@ -126,9 +126,9 @@ if(isset($_POST['save'])){
                                                     <input id="contactNo" name="contactNo" class="form-control" placeholder="Contact No." type="text" required>
                                                 </fieldset><br>
                                                 <fieldset>
-													<label for="building" class="control-label col-lg-6">Date and Time Needed</label>
-                                                    <input id="dateNeeded" name="dateNeeded" class="form-control" type="datetime-local" placeholder="Date and Time Needed" min="<?php 
-																																echo date('Y-m-d\TH:i');
+													<label for="building" class="control-label col-lg-6">Date Needed</label>
+                                                    <input id="dateNeeded" name="dateNeeded" class="form-control" type="date" min="<?php 
+																																echo date('Y-m-d');
 																																?>" required />
                                                 </fieldset><br>
                                                 <fieldset>
