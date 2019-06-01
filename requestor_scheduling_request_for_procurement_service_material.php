@@ -13,9 +13,6 @@ $queryReqInfo="SELECT * FROM thesis.requestor_receiving rr join request r on rr.
 $resultReqInfo=mysqli_query($dbc,$queryReqInfo);
 $rowReqInfo=mysqli_fetch_array($resultReqInfo,MYSQLI_ASSOC);
 
-//Update notifications
-$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestor_receiving_id` = '{$id}'";
-$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
 
 $sql = "SELECT  b.name AS 'building', floorRoom, recipient, dateneeded, r.description
             FROM thesis.request r 
@@ -41,6 +38,10 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
     }
 	
 	if(isset($_POST['save'])){
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestor_receiving_id` = '{$id}'";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+		
 		$deliverySched=$_POST['deliverySched'];
 		
 		//UPDATE DELIVERY DATE
