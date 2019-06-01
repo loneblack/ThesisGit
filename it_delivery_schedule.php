@@ -173,16 +173,6 @@ require_once("db/mysql_connect.php");
 												
                   
                                             </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Delivered To</th>
-                                                    <th>Building</th>
-                                                    <th>Floor</th>
-                                                    <th>Delivery Date</th>
-													<th>Delivery Status</th>
-                                                </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>

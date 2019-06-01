@@ -232,7 +232,7 @@ $_SESSION['count'] = 0;
                                                                 <th>Specifications</th>
                                                                 <th>Asset Description</th>
                                                                 <th>Remove</th>
-                                                                <th>Add</th>
+                                                                <th>Add Another Asset</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -278,7 +278,7 @@ $_SESSION['count'] = 0;
                                                                 <td>
                                                                 </td>
                                                                 <td>
-                                                                <button type='button' class='btn btn-primary' onclick='addTest();'> Add </button>
+                                                                <button type='button' class='btn btn-primary' onclick='addTest();'> Add Another</button>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -448,7 +448,7 @@ $_SESSION['count'] = 0;
                                         "</div>" +
 
                                     "<td>" +
-        "<button id='remove' class='btn btn-danger' type='button' onClick='removeRow(this)'>Remove</button>" +
+        "<button id='remove' class='btn btn-danger' type='button' onClick='removeRow(this)'>Remove Row Item</button>" +
                                     "</td>" +
                                     "<td>" +
                                     "</td>" +
