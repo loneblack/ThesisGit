@@ -123,6 +123,71 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 	$queryDelReq = "SELECT * FROM thesis.requestor_receiving where id='{$id}'";         
 	$resultDelReq = mysqli_query($dbc, $queryDelReq);
 	$rowDelReq = mysqli_fetch_array($resultDelReq, MYSQLI_ASSOC);
+    
+    
+    $id = $_GET['id'];
+    $startDate = "";
+    $dateNeeded = "";
+
+    $sql = "SELECT * FROM thesis.requestor_receiving WHERE id = {$id};";
+    $result = mysqli_query($dbc, $sql);
+
+    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+            $borrowID = $row['borrowID'];
+            $requestID = $row['requestID'];
+            $serviceUnitID = $row['serviceUnitID'];
+            $serviceID = $row['serviceID'];
+
+        }
+
+    if($borrowID > 0)//have borrow
+    {
+
+        $sql = "SELECT *, r.id, e.name as 'receivingID' 
+                FROM thesis.requestor_receiving r 
+                JOIN request_borrow b ON r.borrowID = b.borrowID 
+                JOIN building g ON b.BuildingID = g.BuildingID 
+                JOIN floorandroom f ON b.FloorAndRoomID = f.FloorAndRoomID 
+                JOIN user u ON r.UserID = u.UserID
+                JOIN employee e ON u.userID = e.UserID
+                WHERE r.id = '{$id}';";
+        $result = mysqli_query($dbc, $sql);
+
+        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+            $startDate = $row['startDate'];
+            $building = $row['name'];
+            $floorRoom = $row['floorRoom'];
+            $requestor = $row['name'];
+
+        }
+
+
+    }
+    if($requestID > 0)//have request
+    {
+
+        $sql = "SELECT *, r.id, e.name as 'receivingID' 
+                FROM thesis.requestor_receiving r 
+                JOIN request_borrow b ON r.borrowID = b.borrowID 
+                JOIN building g ON b.BuildingID = g.BuildingID 
+                JOIN floorandroom f ON b.FloorAndRoomID = f.FloorAndRoomID 
+                JOIN user u ON r.UserID = u.UserID
+                JOIN employee e ON u.userID = e.UserID
+                WHERE r.id = '{$id}';";
+        $result = mysqli_query($dbc, $sql);
+
+        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+            $building = $row['name'];
+            $floorRoom = $row['floorRoom'];
+            $dateNeeded = $row['dateNeeded'];;
+            $requestor = $row['name'];
+
+        }
+
+    }
 	
 	
 ?>
@@ -184,6 +249,20 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                 
                                 <div style="padding-top:55px" class="form" method="post">
 									<form class="cmxform form-horizontal " id="signupForm" method="get" action="">
+                                        <div class="form-group ">
+											<label for="deliveryDate" class="control-label col-lg-3"> Requestor</label>
+											<div class="col-lg-6">
+												<input type="text" name="deliveryDate" class="form-control m-bot15" value='<?php echo $requestor; ?>' disabled>
+											</div>
+										</div>
+                                        
+                                        <div class="form-group ">
+											<label for="deliveryDate" class="control-label col-lg-3"> Building/ Floor/ Room Details</label>
+											<div class="col-lg-6">
+												<input type="text" name="deliveryDate" class="form-control m-bot15" value='<?php echo $floorRoom; ?>' disabled>
+											</div>
+										</div>
+                                        
 										<div class="form-group ">
 											<label for="deliveryDate" class="control-label col-lg-3"> Date Needed</label>
 											<div class="col-lg-6">

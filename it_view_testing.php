@@ -458,6 +458,15 @@
 		
 	}
 ?>
+<?php
+$id = $_GET['testingID'];
+
+
+$getDate="SELECT lastUpdateDate FROM ticket WHERE ticketID = '{$id}'";
+$dddate=mysqli_query($dbc,$getDate);
+$rowDate=mysqli_fetch_array($dddate,MYSQLI_ASSOC);
+
+?>
 <html lang="en">
 
 <head>
@@ -540,12 +549,12 @@
 													<div class="col-md-4 col-sm-5 pull-right">
 														<div class="row">
 															<div class="col-md-4 col-sm-5 inv-label">Testing #</div>
-															<div class="col-md-8 col-sm-7">233426</div>
+															<div class="col-md-8 col-sm-7"><?php echo $id;?></div>
 														</div>
 														<br>
 														<div class="row">
 															<div class="col-md-4 col-sm-5 inv-label">Date Updated </div>
-															<div class="col-md-8 col-sm-7">21 December 2018</div>
+															<div class="col-md-8 col-sm-7"><?php echo $rowDate['lastUpdateDate'];?></div>
 														</div>
 														<br>
 
@@ -636,22 +645,6 @@
                                                     
                                                     
 												</tbody> 
-												<!-- <tbody>
-													<tr>
-														<td class="text-center"><input type="checkbox" disabled></td>
-														<td>1019212</td>
-														<td class="text-center">Samsung</td>
-														<td>S8 Edge</td>
-														<td class="text-center"><input type="text" class="form-control" disabled></td>
-													</tr>
-													<tr>
-														<td class="text-center"><input type="checkbox" disabled></td>
-														<td>1019212</td>
-														<td class="text-center">Samsung</td>
-														<td>S8 Edge</td>
-														<td class="text-center"><input type="text" class="form-control" disabled></td>
-													</tr>
-												</tbody> -->
 											</table>
 										</section>
 									</div>

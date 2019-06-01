@@ -137,6 +137,7 @@
 					<div class='text-center invoice-btn'>
 						
 							<button type="submit" class="btn btn-success btn-lg" name="submit"><i class='fa fa-check'></i> Send </button>
+                            <button class="btn btn-primary btn-lg" onclick="printContent('poform')"><i class="fa fa-print"></i> Print</button>
 						
 					</div>
 					<?php
@@ -157,7 +158,9 @@
 											Purchase Order
 										</header>
 										<div class='panel-body'>
+                                            <h3>Instructions: Print the Purchase Order and let the Approver Sign it.</h3>
 											<section id='unseen'>
+                                                <div id='poform'>
 												<div class='row invoice-to'>
 													<div class='col-md-4 col-sm-4 pull-left'>
 														<h4>Purchase Order To:</h4>
@@ -206,6 +209,7 @@
 													
 													echo "</tbody>
 												</table>
+                                                </div>
 											</section>
 										</div>
 									</section>
@@ -218,173 +222,6 @@
 					
 					?>
 					</form>
-                    <!-- 
-						<div class="row">
-                        <div class="col-sm-12">
-                            <div class="col-sm-12">
-                                <section class="panel">
-                                    <header class="panel-heading">
-                                        Purchase Order
-                                    </header>
-                                    <div class="panel-body">
-                                        <div class="text-center invoice-btn">
-
-                                            <a href="#" class="btn btn-success btn-lg"><i class="fa fa-check"></i> Send </a>
-                                        </div>
-                                        <section id="unseen">
-                                            <div class="row invoice-to">
-                                                <div class="col-md-4 col-sm-4 pull-left">
-                                                    <h4>Purchase Order To:</h4>
-                                                    <h2>CDR Kingina Company</h2>
-                                                    <h5>Address: 554 Dimaunahan Street, Quezon City</h5>
-                                                </div>
-                                                <div class="col-md-4 col-sm-5 pull-right">
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-sm-5 inv-label">Purchase Order #</div>
-                                                        <div class="col-md-8 col-sm-7">233426</div>
-                                                    </div>
-                                                    <br>
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-sm-5 inv-label">Date </div>
-                                                        <div class="col-md-8 col-sm-7">21 December 2018</div>
-                                                    </div>
-                                                    <br>
-
-
-                                                </div>
-                                            </div>
-                                            <table class="table table-invoice">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Item Description</th>
-                                                        <th class="text-center">Unit Cost</th>
-                                                        <th class="text-center">Quantity</th>
-                                                        <th class="text-center">Total</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>
-                                                            <h4>Windows 10</h4>
-                                                            <p>Product Key is 11111111</p>
-                                                        </td>
-                                                        <td class="text-center">1</td>
-                                                        <td class="text-center">4</td>
-                                                        <td class="text-center">P 1300.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>
-                                                            <h4>MAC LAPTOP</h4>
-                                                            <p>Green Laptop with 4Gb Ram</p>
-                                                        </td>
-                                                        <td class="text-center">2</td>
-                                                        <td class="text-center">5</td>
-                                                        <td class="text-center">P 1300.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>
-                                                            <h4>VGA</h4>
-                                                            <p>Blue ang ulo</p>
-                                                        </td>
-                                                        <td class="text-center">1</td>
-                                                        <td class="text-center">9</td>
-                                                        <td class="text-center">P 1300.00</td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </section>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="col-sm-12">
-                                <section class="panel">
-                                    <header class="panel-heading">
-                                        Purchase Order
-                                    </header>
-                                    <div class="panel-body">
-                                        <section id="unseen">
-                                            <div class="row invoice-to">
-                                                <div class="col-md-4 col-sm-4 pull-left">
-                                                    <h4>Purchase Order To:</h4>
-                                                    <h2>ABC Company</h2>
-                                                    <h5>Address: 554 Dimaunahan Street, Quezon City</h5>
-                                                </div>
-                                                <div class="col-md-4 col-sm-5 pull-right">
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-sm-5 inv-label">Purchase Order #</div>
-                                                        <div class="col-md-8 col-sm-7">233426</div>
-                                                    </div>
-                                                    <br>
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-sm-5 inv-label">Date </div>
-                                                        <div class="col-md-8 col-sm-7">21 December 2018</div>
-                                                    </div>
-                                                    <br>
-
-
-                                                </div>
-                                            </div>
-                                            <table class="table table-invoice">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Item Description</th>
-                                                        <th class="text-center">Unit Cost</th>
-                                                        <th class="text-center">Quantity</th>
-                                                        <th class="text-center">Total</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>
-                                                            <h4>Windows 10</h4>
-                                                            <p>Product Key is 11111111</p>
-                                                        </td>
-                                                        <td class="text-center">1</td>
-                                                        <td class="text-center">4</td>
-                                                        <td class="text-center">P 1300.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>
-                                                            <h4>MAC LAPTOP</h4>
-                                                            <p>Green Laptop with 4Gb Ram</p>
-                                                        </td>
-                                                        <td class="text-center">2</td>
-                                                        <td class="text-center">5</td>
-                                                        <td class="text-center">P 1300.00</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>
-                                                            <h4>VGA</h4>
-                                                            <p>Blue ang ulo</p>
-                                                        </td>
-                                                        <td class="text-center">1</td>
-                                                        <td class="text-center">9</td>
-                                                        <td class="text-center">P 1300.00</td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-
-                                        </section>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
                 <!-- page end-->
             </section>
@@ -414,6 +251,14 @@
             }
 
         });
+        
+        function printContent(el){
+            var restorepage = document.body.innerHTML;
+            var printcontent = document.getElementById(el).innerHTML;
+            document.body.innerHTML = printcontent;
+            window.print();
+            document.body.innerHTML = restorepage;
+        }
     </script>
 </body>
 

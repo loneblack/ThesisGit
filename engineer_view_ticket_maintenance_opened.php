@@ -299,7 +299,7 @@
 														<td>{$rowAssDat['categoryName']}</td>
 														<td>{$rowAssDat['propertyCode']}</td>
 														<td>{$rowAssDat['floorRoom']}</td>
-														<td><input type='text' class='form-control' placeholder='Remarks' name='remarks[]' id='remarks_".$rowAssDat['assetID']."' disabled></td>
+														<td><input type='text' class='form-control' placeholder='Remarks' name='remarks[]' id='remarks_".$rowAssDat['assetID']."' required></td>
 														<td>
 														<select class='form-control' name='assetStat[]' disabled id='assetStat_".$rowAssDat['assetID']."'>";
 															
@@ -317,17 +317,6 @@
 												}
 											
 											?>
-                                            <!-- <tr>
-                                                <td>Computer</td>
-                                                <td>PAJDN12344</td>
-                                                <td>G403</td>
-                                                <td><input type="text" class="form-control" placeholder="Remarks"></td>
-                                                <td>
-                                                    <select class="form-control">
-                                                        <option>Broken-Fixable</option>
-                                                    </select>
-                                                </td>
-                                            </tr> -->
                                             
                                         </tbody>
                                     </table>

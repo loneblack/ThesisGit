@@ -75,6 +75,7 @@ require_once("db/mysql_connect.php");
                                                     <th>Date Needed</th>
                                                     <th>Status</th>
                                                     <th>Requested By</th>
+                                                    <th>Assigned Engineer</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -82,11 +83,13 @@ require_once("db/mysql_connect.php");
 												<?php
                                                     $count = 1;
 
-													$query="SELECT name,t.requestedBy, t.ticketID,t.summary, rst.id,rst.serviceType,t.lastUpdateDate,t.dueDate,rts.status
+													$query="SELECT e.name,t.requestedBy, t.ticketID,t.summary, rst.id,rst.serviceType,t.lastUpdateDate,t.dueDate,rts.status, ee.name AS `assigned`
                                                                                         FROM thesis.ticket t 
                                                                                         join thesis.ref_ticketstatus rts on t.status=rts.ticketID
                                                                                         join thesis.ref_servicetype rst on t.serviceType=rst.id
-                                                                                        join employee e on t.requestedBy = e.UserID;";
+                                                                                        join employee e on t.requestedBy = e.UserID
+                                                                                        join user u on t.assigneeUserID = u.UserID
+                                                                                        join employee ee on u.userID = ee.userID;";
 													$result=mysqli_query($dbc,$query);
 												
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
@@ -120,6 +123,7 @@ require_once("db/mysql_connect.php");
 														}
 
                                                         echo "<td>{$row['name']}</td>";
+                                                        echo "<td>{$row['assigned']}</td>";
 
                                                         $count++;
 														
