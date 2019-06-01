@@ -299,9 +299,9 @@
 														<td>{$rowAssDat['categoryName']}</td>
 														<td>{$rowAssDat['propertyCode']}</td>
 														<td>{$rowAssDat['floorRoom']}</td>
-														<td><input type='text' class='form-control' placeholder='Remarks' name='remarks[]' id='remarks_".$rowAssDat['assetID']."'></td>
+														<td><input type='text' class='form-control remarks' placeholder='Remarks' name='remarks[]' id='remarks_".$rowAssDat['assetID']."'></td>
 														<td>
-														<select class='form-control' name='assetStat[]' disabled id='assetStat_".$rowAssDat['assetID']."'>";
+														<select class='form-control assetStat' name='assetStat[]' disabled id='assetStat_".$rowAssDat['assetID']."'>";
 															
 														//GET ASSET Status
 														
@@ -373,12 +373,16 @@
         if (y.checked == true) {
 			for(var i=0;i<document.getElementsByClassName("maintCheck").length;i++){
 				document.getElementsByClassName("maintCheck")[i].checked=true;
+				document.getElementsByClassName("remarks")[i].required = true;
+				document.getElementsByClassName("assetStat")[i].disabled = false;
 			}
         }
         //Unchecked
         if (y.checked == false) {
 			for(var i=0;i<document.getElementsByClassName("maintCheck").length;i++){
 				document.getElementsByClassName("maintCheck")[i].checked=false;
+				document.getElementsByClassName("remarks")[i].required = false;
+				document.getElementsByClassName("assetStat")[i].disabled = true;
 			}
         }
     }
