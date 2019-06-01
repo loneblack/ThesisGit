@@ -114,26 +114,6 @@
 												?>
                                                 
                                             </tbody>
-											
-											
-                                            <!-- <tbody>
-                                                <tr>
-                                                    <td>232323232</td>
-                                                    <td>1/1/2018</td>
-                                                    <td><span class="label label-success label-mini">Finished</span></td>
-                                                    <td>Acquired Item</td>
-                                                    <td>Marvin Lao</td>
-                                                    <td>1/1/2018</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>232323232</td>
-                                                    <td>1/1/2018</td>
-                                                    <td><span class="label label-danger label-mini">Unfinished</span></td>
-                                                    <td>Disposal</td>
-                                                    <td>Marvin Lao</td>
-                                                    <td>1/1/2018</td>
-                                                </tr>
-                                            </tbody> -->
                                         </table>
                                         </div>
                                     </section>
@@ -173,12 +153,12 @@
 						var cell = row.getElementsByTagName("td")[1];
 						var id = cell.textContent;
 						
-						if(id == "Finished" || id == "Completed"){
+						if(id == "Finished"){
 							window.location.href = "it_view_testing.php?testingID=" + row.getAttribute("id");
 						}
-						//else if(id == "Incomplete"){
-                            //window.location.href = "it_view_incomplete_testing.php?testingID=" + row.getAttribute("id");
-                        //}
+						if(id == "Completed"){
+							window.location.href = "it_view_testing_completed.php?testingID=" + row.getAttribute("id");
+						}
 					};
 				};
 				currentRow.onclick = createClickHandler(currentRow);
