@@ -30,6 +30,7 @@ $result6=mysqli_query($dbc,$query6);
 while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['count']; }                           
 
 ?>
+
 <head>
     <meta charset="utf-8">
 
@@ -48,14 +49,14 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
     <link href="css/style-responsive.css" rel="stylesheet" />
 </head>
 
-        <?php
+<?php
             $count = 1;
             $query = "SELECT e.name AS `naame` FROM employee e JOIN user u ON e.userID = u.userID WHERE e.userID = {$userID};";
             $result = mysqli_query($dbc, $query);
             $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
             $name = $row['naame'];
-        ?>    
-    
+        ?>
+
 <body>
 
     <section id="container">
@@ -70,7 +71,9 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
             </div>
 
             <div class="nav notify-row" id="top_menu">
-                <h4>Welcome! <?php echo $name; ?></h4>
+                <h4>Welcome!
+                    <?php echo $name; ?>
+                </h4>
             </div>
 
         </header>
@@ -88,13 +91,14 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
 
 
                             <div class="row">
-							
+
                                 <a onClick='showUnresolvedTickets()'>
                                     <div class="col-md-2">
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon orange"><i class="fa fa-gavel"></i></span>
                                             <div class="mini-stat-info">
-                                                <span><?php echo $Unresolved;?></span>
+                                                <span>
+                                                    <?php echo $Unresolved;?></span>
                                                 Unresolved
                                             </div>
                                         </div>
@@ -106,7 +110,8 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon orange"><i class="fa fa-clock-o"></i></span>
                                             <div class="mini-stat-info">
-                                                <span><?php echo $Overdue;?></span>
+                                                <span>
+                                                    <?php echo $Overdue;?></span>
                                                 Overdue
                                             </div>
                                         </div>
@@ -118,7 +123,8 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon pink"><i class="fa fa-clock-o"></i></span>
                                             <div class="mini-stat-info">
-                                                <span><?php echo $DueToday;?></span>
+                                                <span>
+                                                    <?php echo $DueToday;?></span>
                                                 Due Today
                                             </div>
                                         </div>
@@ -130,7 +136,8 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon green"><i class="fa fa-eye"></i></span>
                                             <div class="mini-stat-info">
-                                                <span><?php echo $Open;?></span>
+                                                <span>
+                                                    <?php echo $Open;?></span>
                                                 Ongoing
                                             </div>
                                         </div>
@@ -156,8 +163,22 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon orange"><i class="fa fa-exclamation"></i></span>
                                             <div class="mini-stat-info">
-                                                <span><?php echo $Urgent;?></span>
+                                                <span>
+                                                    <?php echo $Urgent;?></span>
                                                 Urgent
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <a onClick='window.location = "helpdesk_dashboard.php"'>
+                                    <div class="col-md-2">
+                                        <div class="mini-stat clearfix">
+                                            <span class="mini-stat-icon tar"><i class="fa fa-arrows-alt"></i></span>
+                                            <div class="mini-stat-info">
+                                                <span>
+                                                    --</span>
+                                                Default View
                                             </div>
                                         </div>
                                     </div>
@@ -199,7 +220,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                                 </tr>
                                             </thead>
                                             <tbody id='ticketList'>
-                                            
+
                                                 <?php
                                                     $count = 1;
                                                 
@@ -274,14 +295,14 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
 
     <script>
         history.pushState(null, null, location.href);
-        window.onpopstate = function () {
+        window.onpopstate = function() {
             history.go(1);
         };
-   </script>
+    </script>
 
-     <script>
-		function showUrgentTickets(){
-			var xmlhttp = new XMLHttpRequest();
+    <script>
+        function showUrgentTickets() {
+            var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
@@ -289,10 +310,10 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
             };
             xmlhttp.open("GET", "showUrgentTickets.php", true);
             xmlhttp.send();
-		}
-		
-		function showOngoingTickets(){
-			var xmlhttp = new XMLHttpRequest();
+        }
+
+        function showOngoingTickets() {
+            var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
@@ -300,10 +321,10 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
             };
             xmlhttp.open("GET", "showOngoingTickets.php", true);
             xmlhttp.send();
-		}
-		
-		function showDueTodayTickets(){
-			var xmlhttp = new XMLHttpRequest();
+        }
+
+        function showDueTodayTickets() {
+            var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
@@ -311,10 +332,10 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
             };
             xmlhttp.open("GET", "showDueTodayTickets.php", true);
             xmlhttp.send();
-		}
-		
-		function showOverdueTickets(){
-			var xmlhttp = new XMLHttpRequest();
+        }
+
+        function showOverdueTickets() {
+            var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
@@ -322,9 +343,10 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
             };
             xmlhttp.open("GET", "showOverdueTickets.php", true);
             xmlhttp.send();
-		}
-		function showUnresolvedTickets(){
-			var xmlhttp = new XMLHttpRequest();
+        }
+
+        function showUnresolvedTickets() {
+            var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
@@ -332,8 +354,8 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
             };
             xmlhttp.open("GET", "showUnresolvedTickets.php", true);
             xmlhttp.send();
-		}
-		
+        }
+
         function addRowHandlers() {
             var table = document.getElementById("dynamic-table");
             var rows = table.getElementsByTagName("tr");
@@ -350,67 +372,52 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                         var cell3 = row.getElementsByTagName("td")[7];
                         var status = cell3.textContent;
 
-                                            
-                        if(serviceTypeID == '25'){
+
+                        if (serviceTypeID == '25') {
                             //asset testing
-                            if(status == "Closed"){
-                                window.location.href ="helpdesk_view_ticket_assettesting_closed.php?id=" + id;
-                            }
-                                
-                            else{
+                            if (status == "Closed") {
+                                window.location.href = "helpdesk_view_ticket_assettesting_closed.php?id=" + id;
+                            } else {
                                 window.location.href = "helpdesk_view_ticket_assettesting_opened.php?id=" + id;
                             }
-                        }
-                        
-                        else if(serviceTypeID == '26'){
+                        } else if (serviceTypeID == '26') {
                             //refurbishing
-                            if(status == "Closed"){
+                            if (status == "Closed") {
                                 window.location.href = "helpdesk_view_ticket_refurbishing_closed.php?id=" + id;
-                            }
-
-                            else{
+                            } else {
                                 window.location.href = "helpdesk_view_ticket_refurbishing_opened.php?id=" + id;
                             }
-                            
-                        }
-                        
-                        else if(serviceTypeID == '27'){//dpone
+
+                        } else if (serviceTypeID == '27') { //dpone
                             //repair
-                            if(status == "Closed"){
+                            if (status == "Closed") {
                                 window.location.href = "helpdesk_view_ticket_repair_closed.php?id=" + id;
-                            }
-                            else{
+                            } else {
                                 window.location.href = "helpdesk_view_ticket_repair_opened.php?id=" + id;
                             }
-                        }
-                        else if(serviceTypeID == '28'){
+                        } else if (serviceTypeID == '28') {
                             //maintenance
-                            if(status == "Closed"){
+                            if (status == "Closed") {
                                 window.location.href = "helpdesk_view_ticket_maintenance_closed.php?id=" + id;
-                            }
-                            else{
+                            } else {
                                 window.location.href = "helpdesk_view_ticket_maintenance_opened.php?id=" + id;
                             }
-                        }
-                         else if(serviceTypeID == '29'){
+                        } else if (serviceTypeID == '29') {
                             //others
-                            if(status == "Closed"){
+                            if (status == "Closed") {
                                 window.location.href = "helpdesk_view_ticket_others_closed.php?id=" + id;
-                            }
-                            else{
+                            } else {
                                 window.location.href = "helpdesk_view_ticket_others_opened.php?id=" + id;
                             }
-                        }
-                         else{
+                        } else {
                             //service
-                            if(status == "Closed"){
+                            if (status == "Closed") {
                                 window.location.href = "helpdesk_view_ticket_service_closed.php?id=" + id;
-                            }
-                            else{
+                            } else {
                                 window.location.href = "helpdesk_view_ticket_service_opened.php?id=" + id;
                             }
                         }
-                        
+
                     };
                 };
                 currentRow.onclick = createClickHandler(currentRow);
