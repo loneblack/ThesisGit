@@ -291,7 +291,7 @@
 															  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
 															  join assetassignment aa on a.assetID=aa.assetID
 															  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
-															  where ta.ticketID='7' and ta.checked='0'and rac.name != 'User Guide Poster';";
+															  where ta.ticketID='{$id}' and ta.checked='0'and rac.name != 'User Guide Poster';";
 												$resultAssDat=mysqli_query($dbc,$queryAssDat);
 												while($rowAssDat=mysqli_fetch_array($resultAssDat,MYSQLI_ASSOC)){
 													echo "<tr>
@@ -299,7 +299,7 @@
 														<td>{$rowAssDat['categoryName']}</td>
 														<td>{$rowAssDat['propertyCode']}</td>
 														<td>{$rowAssDat['floorRoom']}</td>
-														<td><input type='text' class='form-control' placeholder='Remarks' name='remarks[]' id='remarks_".$rowAssDat['assetID']."' required></td>
+														<td><input type='text' class='form-control' placeholder='Remarks' name='remarks[]' id='remarks_".$rowAssDat['assetID']."'></td>
 														<td>
 														<select class='form-control' name='assetStat[]' disabled id='assetStat_".$rowAssDat['assetID']."'>";
 															
@@ -355,7 +355,7 @@
         //Is Checked
             if (y.checked == true) {
                 //comments
-                document.getElementById(remarks).disabled = false;
+                document.getElementById(remarks).required = false;
                 document.getElementById(assetStat).disabled = false;
                 
 
@@ -363,7 +363,7 @@
             //Unchecked
             if (y.checked == false) {
                 //comments
-                document.getElementById(remarks).disabled = true;
+                document.getElementById(remarks).required = true;
                 document.getElementById(assetStat).disabled = true;
 
         }
