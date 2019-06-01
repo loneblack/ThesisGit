@@ -32,6 +32,11 @@
 				$queryUpEnAss = "UPDATE `thesis`.`engineer_assignment` SET `employeeID`='{$engineer}' WHERE `BuildingID`='{$building}' and `roomtypeID`='{$roomtype}';";
 				$resultUpEnAss  = mysqli_query($dbc, $queryUpEnAss);
 			}
+			elseif($rowIsEnAssEx['isExist']=='1' && $engineer=='0'){
+				//DELETE TO ENGINEER ASSIGNMENT
+				$queryDelEnAss = "DELETE FROM `thesis`.`engineer_assignment` WHERE `BuildingID`='{$building}' and `roomtypeID`='{$roomtype}';";
+				$resultDelEnAss  = mysqli_query($dbc, $queryDelEnAss);
+			}
 		}
 		$_SESSION['submitMessage'] = "Success! The maintenance team list has been updated.";
 	}

@@ -29,6 +29,24 @@
 	$rowNumSalNotif=mysqli_fetch_array($resultNumSalNotif,MYSQLI_ASSOC);
 	
 	$totalNotifs=$rowNumNotif['numOfNotif']+$rowNumBorNotif['numOfNotif']+$rowNumDonNotif['numOfNotif']+$rowNumReplNotif['numOfNotif']+$rowNumSalNotif['numOfNotif'];
+	
+	//GET NUMBER OF BUILDING ROOMTYPE FOR MAINTENANCE
+	$numBldgRmType=0;
+	$queryNumBldgRmType="SELECT b.BuildingID, b.name, r.id, r.roomtype FROM building b JOIN floorandroom f ON b.BuildingID = f.BuildingID
+																																					   JOIN ref_roomtype r ON f.roomtype = r.id
+																																					   group by f.roomtype,b.BuildingID 
+																																					   order by b.BuildingID asc";
+	$resultNumBldgRmType=mysqli_query($dbc,$queryNumBldgRmType);
+	while($rowNumBldgRmType=mysqli_fetch_array($resultNumBldgRmType,MYSQLI_ASSOC)){
+		$numBldgRmType++;
+	}
+	
+	//GET NUMBER OF ASSIGNED BUILDING ROOMTYPE FOR MAINTENANCE
+	$queryAssigBldgRm="SELECT count(*) as `numAssigned` FROM thesis.engineer_assignment";
+	$resultAssigBldgRm=mysqli_query($dbc,$queryAssigBldgRm);
+	$rowAssigBldgRm=mysqli_fetch_array($resultAssigBldgRm,MYSQLI_ASSOC);
+	
+	$numUnassigBldgRm=$numBldgRmType-$rowAssigBldgRm['numAssigned'];
 ?>
 
 <?php  echo '<aside>
@@ -65,7 +83,11 @@
                         <li class="sub-menu">
                             <a href="helpdesk_maintenance.php">
                                 <i class="fa fa-wrench"></i>
-                                <span>Maintenance Teams</span>
+                                <span>Maintenance Teams ';
+								if($numUnassigBldgRm>'0'){
+									echo '<span class="badge badge-light">'.$numUnassigBldgRm.'</span>';
+								}
+								echo '</span>
                             </a>
                         </li>
                         
