@@ -57,8 +57,14 @@
 		$numReplenish++;
 	}
 	
-		
-		
+	//GET NUMBER OF ASSETS THAT CAN BE MARKED FOR DONATION
+	$queryNumNotifMFD="SELECT Count(*) as `numMarkForDon` FROM thesis.asset a join assetmodel am on a.assetModel=am.assetModelID
+																		  join ref_assetstatus ras on a.assetStatus=ras.id
+																		  join ref_brand rb on am.brand=rb.brandID
+																		  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID where a.assetStatus='1' and DATEDIFF(now(),a.dateDelivered) >= '1825'";
+	$resultNumNotifMFD=mysqli_query($dbc,$queryNumNotifMFD);
+	$rowNumNotifMFD=mysqli_fetch_array($resultNumNotifMFD,MYSQLI_ASSOC);
+	
 ?>
 <?php  echo '<aside>
             <div id="sidebar" class="nav-collapse">
@@ -157,10 +163,18 @@
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="glyphicon glyphicon-plus"></i>
-                                <span>Donation</span>
+                                <span>Donation ';
+								if($rowNumNotifMFD['numMarkForDon']>'0'){
+									echo '<span class="badge badge-light">'.$rowNumNotifMFD['numMarkForDon'].'</span>';
+								}
+								echo '</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="it_mark_for_donation.php">Mark Assets for Donation</a></li>
+                                <li><a href="it_mark_for_donation.php">Mark Assets for Donation ';
+								if($rowNumNotifMFD['numMarkForDon']>'0'){
+									echo '<span class="badge badge-light">'.$rowNumNotifMFD['numMarkForDon'].'</span>';
+								}
+								echo '</a></li>
                                 <li><a href="it_donation_list.php">Donation List</a></li>
                             </ul>
                         </li>
