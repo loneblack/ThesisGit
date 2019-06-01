@@ -8,10 +8,6 @@ $_SESSION['id'] = $_GET['id'];
 
 require_once("db/mysql_connect.php");
 
-//Update notifications
-$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `borrowID` = '{$id}' and `steps_id`='12'";
-$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
-
 $query =  "SELECT *, o.Name AS 'office', d.name AS 'department', org.name AS 'organization', b.name AS 'building'
               FROM thesis.request_borrow r 
               LEFT JOIN department d ON r.DepartmentID = d.DepartmentID 
@@ -66,7 +62,10 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 	}
 
     if(isset($_POST['approveBtn'])){
-
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `borrowID` = '{$id}' and `steps_id`='12'";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+		
 		$propCode=$_POST['propCode'];
 		$a=sizeOf($propCode);
 		
@@ -152,6 +151,10 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_view_open_service_equipment_request.php?id=".$_SESSION['id']);
     }
     elseif(isset($_POST['denyBtn'])){
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `borrowID` = '{$id}' and `steps_id`='12'";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+		
         $query="UPDATE `thesis`.`request_borrow` SET `statusID` = '6', `steps`='20', `reasForDisapprov`='{$_POST['reasOfDisapprov']}' WHERE (`borrowID` = '{$id}');";
         $result=mysqli_query($dbc,$query);
 		

@@ -13,10 +13,6 @@ $queryReqInfo="SELECT * FROM thesis.requestor_receiving rr join request_borrow r
 $resultReqInfo=mysqli_query($dbc,$queryReqInfo);
 $rowReqInfo=mysqli_fetch_array($resultReqInfo,MYSQLI_ASSOC);
 
-//Update notifications
-$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestor_receiving_id` = '{$id}'";
-$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
-
 $sql = " Select b.name AS `building`, f.floorRoom, rb.startDate, rb.endDate, rb.purpose
             from thesis.request_borrow rb 
             join building b on rb.BuildingID = b.BuildingID 
@@ -31,10 +27,11 @@ $building = $row['building'];
 $floorRoom = $row['floorRoom'];
 $startDate = $row['startDate'];
 $endDate = $row['endDate'];
-        
-    
 	
 if(isset($_POST['save'])){
+	//Update notifications
+	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestor_receiving_id` = '{$id}'";
+	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
 	$deliverySched=$_POST['deliverySched'];
 		
 	//UPDATE DELIVERY DATE

@@ -6,10 +6,6 @@ require_once("db/mysql_connect.php");
 
 $id = $_GET['id'];
 
-//Update notifications
-$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `borrowID` = '{$id}' and `steps_id`='13'";
-$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
-
 $sql = "SELECT *, o.Name AS 'office', d.name AS 'department', z.name AS 'organization', b.name AS 'building' 
         FROM thesis.request_borrow r 
         JOIN ref_status s ON r.statusID = s.statusID 
@@ -70,7 +66,10 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         $currDate=date("Y-m-d H:i:s");
 
         if(!isset($message)){
-
+			//Update notifications
+			$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `borrowID` = '{$id}' and `steps_id`='13'";
+			$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+			
             //GET ASSET TEST DATA
             $queryAssTest="SELECT * FROM thesis.assettesting where borrowID='{$id}'";
             $resultAssTest=mysqli_query($dbc,$queryAssTest);
