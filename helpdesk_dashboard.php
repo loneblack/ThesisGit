@@ -125,7 +125,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                                     </div>
                                 </a>
 
-                                <a href="#">
+                                <a onClick='showOngoingTickets()'>
                                     <div class="col-md-2">
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon green"><i class="fa fa-eye"></i></span>
@@ -288,6 +288,17 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
                 }
             };
             xmlhttp.open("GET", "showUrgentTickets.php", true);
+            xmlhttp.send();
+		}
+		
+		function showOngoingTickets(){
+			var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("ticketList").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "showOngoingTickets.php", true);
             xmlhttp.send();
 		}
 		
