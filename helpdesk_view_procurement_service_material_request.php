@@ -29,10 +29,6 @@
 	$resultReq=mysqli_query($dbc,$queryReq);			
 	$rowReq=mysqli_fetch_array($resultReq,MYSQLI_ASSOC);
 	
-	//Update notifications
-	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE (`Delivery_id` = '{$deliveryID}');";
-	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
-	
 	if(isset($_POST['submit'])){
 		if($_POST['category']=='25'){
 			
@@ -51,6 +47,10 @@
 			}
 			
 			if(!isset($message)){
+				//Update notifications
+				$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE (`Delivery_id` = '{$deliveryID}');";
+				$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+				
 				//INSERT ASSET TESTING
 				$queryInsAss="INSERT INTO `thesis`.`assettesting` (`statusID`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`, `remarks`) VALUES ('1', '{$rowReq['UserID']}', '{$rowReq['FloorAndRoomID']}', '25', 'Asset Request');";
 				$resultInsAss=mysqli_query($dbc,$queryInsAss);

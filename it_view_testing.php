@@ -9,11 +9,10 @@
 	$resultTesDat=mysqli_query($dbc,$queryTesDat);
 	$rowTesDat=mysqli_fetch_array($resultTesDat,MYSQLI_ASSOC);
 	
-	//Update notifications
-	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE (`testingID` = '{$testingID}');";
-	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
-	
 	if(isset($_POST['send'])){
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE (`testingID` = '{$testingID}');";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
 		
 		if($rowTesDat['remarks']=="Asset Request")
 		{
