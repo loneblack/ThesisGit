@@ -15,9 +15,6 @@
 	$resultReq=mysqli_query($dbc,$queryReq);
 	$rowReq=mysqli_fetch_array($resultReq,MYSQLI_ASSOC);
 	
-	//Update notifications
-	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='27'";
-	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
 	
 	//Get images from the database
 	$imageURL = 'uploads/'.$rowReq["signature"];
@@ -29,6 +26,10 @@
 	}
 	
 	if(isset($_POST['approve'])){
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='27'";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+		
 		$query="UPDATE `thesis`.`request` SET `status`='2', `step`='2'  WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
 		
@@ -40,6 +41,9 @@
 	}
 	
 	if(isset($_POST['disapprove'])){
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='27'";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
 		
 		$query="UPDATE `thesis`.`request` SET `status`='6', `step`='23', `itReasonDissaproval`='{$_POST['reasOfDisapprov']}' WHERE `requestID`='{$requestID}'";
 		$result=mysqli_query($dbc,$query);
