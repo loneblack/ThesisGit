@@ -242,7 +242,7 @@ $count = 0;
             var cell = data.parentNode;
             var row = cell.parentNode;
             var cells = row.getElementsByTagName("td");
-            var chk2 = cells[6].getElementsByTagName("input")[0]; 
+            var chk2 = cells[7].getElementsByTagName("input")[0]; 
 
             if (chk1.checked)
                 chk2.disabled = false;
