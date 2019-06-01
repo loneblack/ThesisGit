@@ -4,10 +4,6 @@
 	require_once('db/mysql_connect.php');
 	$replacementID=$_GET['id'];
 	
-	//Update notifications
-	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `replacementID` = '{$replacementID}' and `steps_id` = '9';";
-	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
-	
 	//GET Replacement Request Data
 	$queryGetRepData="SELECT * FROM thesis.replacement r join asset a on r.lostAssetID=a.assetID
 							join assetmodel am on a.assetModel=am.assetModelID
@@ -16,6 +12,10 @@
 	$rowGetRepData=mysqli_fetch_array($resultGetRepData,MYSQLI_ASSOC);
 	
 	if(isset($_POST['submit'])){
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `replacementID` = '{$replacementID}' and `steps_id` = '9';";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+		
 		$message=null;
 		
 		$category=$_POST['category'];

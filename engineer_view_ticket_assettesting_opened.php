@@ -440,6 +440,7 @@
                                                         <tr>
                                                             <th style="text-align:center">Brand</th>
                                                             <th style="text-align:center">Model</th>
+															<th style="text-align:center">Category</th>
                                                             <th>Asset Status</th>
                                                             <th>Escalated To</th>
 															<th style="text-align:center">Comments</th>
@@ -447,10 +448,11 @@
                                                     </thead>
                                                     <tbody>
                                                         <?php
-														$query = "SELECT atd.asset_assetID as `assetID`,rb.name as `brand`, am.description as `model` FROM thesis.assettesting_details atd join assettesting at on atd.assettesting_testingID=at.testingID 
+														$query = "SELECT rac.name as `assetCatName`,atd.asset_assetID as `assetID`,rb.name as `brand`, am.description as `model` FROM thesis.assettesting_details atd join assettesting at on atd.assettesting_testingID=at.testingID 
 																	  join ticket t on at.testingID=t.testingID
 																	  join asset a on atd.asset_assetID=a.assetID
-																	  join assetmodel am on a.assetModel=am.assetModelID
+																	  join assetmodel am on a.assetModel=am.assetModelID 
+																	  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
 																	  join ref_brand rb on am.brand=rb.brandID
 																	  where t.ticketID='{$ticketID}'";
                                                                   
@@ -464,6 +466,7 @@
 															echo "<tr>
 																<td style='text-align:center'>{$row['brand']}</td>
 																<td style='text-align:center'>{$row['model']}</td>
+																<td style='text-align:center'>{$row['assetCatName']}</td>
 																<td>
 																	<select id='assetStatus_".$row['assetID']."' name='testStat[]' class='form-control' onchange='checkValue(\"{$row['assetID']}\")' required>
 																		<option value=''>Select Asset Status</option>

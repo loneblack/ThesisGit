@@ -4,11 +4,11 @@
 	require_once('db/mysql_connect.php');
 	$replacementID=$_GET['id'];
 	
-	//Update notifications
-	$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `replacementID` = '{$replacementID}' and `steps_id` = '26';";
-	$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
-	
 	if(isset($_POST['submit'])){
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `replacementID` = '{$replacementID}' and `steps_id` = '26';";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+		
 		$replacedAsset=$_POST['replacedAsset'];
 		
 		//Update replacement table
@@ -98,6 +98,7 @@
                                                         <th>Property Code</th>
                                                         <th>Brand</th>
                                                         <th>Model</th>
+														<th>Category</th>
                                                         <th>Specifications</th>
                                                         <th>Location</th>
                                                         <th>Comments</th>
@@ -119,6 +120,7 @@
 																	  <td>{$rowGetItMis['propertyCode']}</td>
 																	  <td>{$rowGetItMis['brandName']}</td>
 																	  <td>{$rowGetItMis['modelName']}</td>
+																	  <td>{$rowGetItMis['assetCatName']}</td>
 																	  <td>{$rowGetItMis['itemSpecification']}</td>
 																	  <td>".$rowGetItMis['buildingName']." ".$rowGetItMis['floorRoom']."</td>
 																	  <td>{$rowGetItMis['remarks']}</td>
@@ -138,6 +140,7 @@
                                                         <th>Property Code</th>
                                                         <th>Brand</th>
                                                         <th>Model</th>
+														<th>Category</th>
                                                         <th>Specifications</th>
                                                         
                                                     </tr>
@@ -165,6 +168,7 @@
 																	<td>{$rowGetAllAss['propertyCode']}</td>
 																	<td>{$rowGetAllAss['brandName']}</td>
 																	<td>{$rowGetAllAss['modelName']}</td>
+																	<td>{$rowGetAllAss['assetCatName']}</td>
 																	<td>{$rowGetAllAss['itemSpecification']}</td>
 																  </tr>";
 														}	
