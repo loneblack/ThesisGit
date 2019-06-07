@@ -172,7 +172,7 @@
                             <section class="panel">
                                 <header style="padding-bottom:20px" class="panel-heading wht-bg">
                                     <h4 class="gen-case" style="float:right"> <a class="btn btn-success">Open</a></h4>
-                                    <h4>Service Request</h3>
+                                    <h4>Service Request</h4>
                                 </header>
                                 <div class="panel-body ">
 
@@ -291,7 +291,7 @@
 															  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
 															  join assetassignment aa on a.assetID=aa.assetID
 															  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
-															  where ta.ticketID='{$id}' and ta.checked='0'";
+															  where ta.ticketID='7' and ta.checked='0'and rac.name != 'User Guide Poster';";
 												$resultAssDat=mysqli_query($dbc,$queryAssDat);
 												while($rowAssDat=mysqli_fetch_array($resultAssDat,MYSQLI_ASSOC)){
 													echo "<tr>
@@ -330,7 +330,7 @@
                         
                         <div class="col-sm-12">
                             <a href=""><button class="btn btn-success" type="submit" name="submit">Submit</button></a>
-                            <a href="engineer_all_ticket.php"><button class="btn btn-danger">Back</button></a>
+                            <button class="btn btn-danger" onclick="window.history.back()">Back</button>
                         </div>
                         
                         </form>

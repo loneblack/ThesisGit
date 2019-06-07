@@ -54,7 +54,7 @@
                             <section class="panel">
                                 <header style="padding-bottom:20px" class="panel-heading wht-bg">
                                     <h4 class="gen-case" style="float:right"> <a class="btn btn-danger">Closed</a></h4>
-                                    <h4>Service Request</h3>
+                                    <h4>Service Request</h4>
                                 </header>
                                 <div class="panel-body ">
 
