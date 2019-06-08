@@ -68,9 +68,8 @@
                                                 <tr>
                                                     <th>Purchase Order #</th>
                                                     <th>Supplier</th>
-                                                    <!--<th>Expected Delivery Date</th>
-                                                    <th>Actual Delivery Date</th>-->
                                                     <th>Status</th>
+                                                    <th>Nearest Expected Arrival Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -104,21 +103,6 @@
 												
 												
 												?>
-												
-                                                <!-- <tr>
-                                                    <td>232323232</td>
-                                                    <td>1/1/2018</td>
-                                                    <td><span class="label label-success label-mini">Open</span></td>
-                                                    <td>Marvin Lao</td>
-                                                    <td>1/1/2018</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>232323232</td>
-                                                    <td>1/1/2018</td>
-                                                    <td><span class="label label-danger label-mini">Closed</span></td>
-                                                    <td>Marvin Lao</td>
-                                                    <td>1/1/2018</td>
-                                                </tr> -->
                                             </tbody>
                                         </table>
                                     </section>
