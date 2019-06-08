@@ -248,6 +248,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                                 <th>Category</th>
                                                                 <th>Brand</th>
                                                                 <th>Model and Specifications</th>
+                                                                <th>Comments</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -278,6 +279,10 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
                                                                         <td style="padding-top:5px; padding-bottom:5px">
                                                                               '.$requestedDescription[$i].' '.$requestedItemSpecification[$i].'
+                                                                        </td>
+
+                                                                        <td style="padding-top:5px; padding-bottom:5px">
+                                                                             <input type="text" class="form-control" name="comments" id="comments">
                                                                         </td>
                                                                     </tr>';
                                                             }

@@ -1932,6 +1932,7 @@ CREATE TABLE IF NOT EXISTS `thesis`.`receiving_details` (
   `receivingID` INT NOT NULL,
   `assetID` INT(11) NOT NULL,
   `received` TINYINT NULL,
+  `comments` LONGTEXT NULL,
   INDEX `fk_receiving_details_asset1_idx` (`assetID` ASC),
   INDEX `fk_receiving_details_requestor_receiving1_idx` (`receivingID` ASC),
   PRIMARY KEY (`id`),

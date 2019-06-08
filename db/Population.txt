@@ -1194,6 +1194,7 @@ INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('30', 'Repaired');
 INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('31', 'Partially Repaired');
 INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('32', 'Repaired');
 INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('33', 'Disapproved');
+INSERT INTO `thesis`.`ref_steps` (`id`, `name`) VALUES ('34', 'Asset/s nor received by requestor');
 
 
 -- supplier populate
