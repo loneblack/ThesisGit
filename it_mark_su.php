@@ -79,7 +79,47 @@
                                             </span>
                                         </header>
                                         <div class="panel-body">
+                                            <div class="adv-table">
+                                                    <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>Item Category</th>
+                                                                <th>Property Code</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php
+                                                            //GET For Disposed ASSET 
+                                                            $queryAsset="SELECT a.assetID, rac.name, a.propertyCode, ras.description  FROM asset a 
+                                                                        JOIN assetmodel am ON a.assetmodel = am.assetmodelID 
+                                                                        JOIN ref_assetstatus ras ON a.assetStatus = ras.id
+                                                                        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID 
+                                                                        WHERE a.assetStatus = 10 AND (rac.assetCategoryID = 13 OR rac.assetCategoryID = 40 OR rac.assetCategoryID = 46);";
+                                                            $resultAsset=mysqli_query($dbc,$queryAsset);
+                                                            while($rowAsset=mysqli_fetch_array($resultAsset,MYSQLI_ASSOC)){
+                                                                echo "<tr class='gradeX'>
+                                                                    <td style='width:7px; text-align:center'><input type='checkbox' class='form-check-input' name='markSalvage[]' id='exampleCheck1' value='{$rowAsset['assetID']}'></td>
+                                                                    <td>{$rowAsset['name']}</td>
+                                                                    <td>{$rowAsset['propertyCode']}</td>
+                                                                    
+                                                                </tr>";
+                                                            }
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        ?>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                         </div>
+                                            <div style="padding-left:10px; padding-bottom:10px">
+                                                <button type="submit" name="submit" class="btn btn-success">Submit</button>
+                                                <button type="button" onclick="window.history.back()" class="btn btn-secondary">Back</button>
+                                            </div>
 										</form>
                                     </section>
                                 </div>
