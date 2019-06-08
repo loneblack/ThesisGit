@@ -86,6 +86,7 @@
                                                                 <th></th>
                                                                 <th>Item Category</th>
                                                                 <th>Property Code</th>
+                                                                <th>Description</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
