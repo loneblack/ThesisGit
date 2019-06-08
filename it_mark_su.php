@@ -71,7 +71,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <section class="panel">
-										<form method="post" id="formSend" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+										<form method="post" id="formSend" action="it_mark_su_DB.php">
                                         <header class="panel-heading">
                                             Mark Assets for Service Units
                                             <span class="tools pull-right">
@@ -92,18 +92,22 @@
                                                         <tbody>
                                                             <?php
                                                             //GET For Disposed ASSET 
-                                                            $queryAsset="SELECT a.assetID, rac.name, a.propertyCode, ras.description  FROM asset a 
-                                                                        JOIN assetmodel am ON a.assetmodel = am.assetmodelID 
-                                                                        JOIN ref_assetstatus ras ON a.assetStatus = ras.id
-                                                                        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID 
-                                                                        WHERE a.assetStatus = 10 AND (rac.assetCategoryID = 13 OR rac.assetCategoryID = 40 OR rac.assetCategoryID = 46);";
+                                                            $queryAsset="SELECT *, b.name as 'brand', ac.name as 'assetCategory' FROM thesis.asset a
+                                                                            JOIN assetmodel m
+                                                                        ON a.assetModel = m.assetModelID
+                                                                            JOIN ref_brand b
+                                                                        ON m.brand = b.brandID
+                                                                            JOIN ref_assetcategory ac
+                                                                        ON m.assetCategory = ac.assetCategoryID
+                                                                            WHERE assetStatus = 1
+                                                                            AND isServiceUnit != 1;";
                                                             $resultAsset=mysqli_query($dbc,$queryAsset);
                                                             while($rowAsset=mysqli_fetch_array($resultAsset,MYSQLI_ASSOC)){
                                                                 echo "<tr class='gradeX'>
-                                                                    <td style='width:7px; text-align:center'><input type='checkbox' class='form-check-input' name='markSalvage[]' id='exampleCheck1' value='{$rowAsset['assetID']}'></td>
+                                                                    <td style='width:7px; text-align:center'><input type='checkbox' class='form-check-input' name='mark[]' id='exampleCheck1' value='{$rowAsset['assetID']}'></td>
                                                                     <td>{$rowAsset['name']}</td>
                                                                     <td>{$rowAsset['propertyCode']}</td>
-                                                                    
+                                                                    <td>{$rowAsset['brand']} {$rowAsset['itemSpecification']}</td>
                                                                 </tr>";
                                                             }
                                                         

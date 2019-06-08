@@ -50,7 +50,7 @@
 		while($rowLatDelDet=mysqli_fetch_array($resultLatDelDet,MYSQLI_ASSOC)){
 			//INSERT TO ASSET TABLE
 			for($i=0;$i<$rowLatDelDet['itemsReceived'];$i++){
-				$queryInsAss="INSERT INTO `thesis`.`asset` (`supplierID`, `assetModel`, `dateDelivered`, `assetStatus`) VALUES ('{$rowProcDat['supplierID']}', '{$rowLatDelDet['assetModelID']}', '{$rowLatDelDet['deliveryDate']}', '8')";
+				$queryInsAss="INSERT INTO `thesis`.`asset` (`supplierID`, `assetModel`, `dateDelivered`, `assetStatus`, `isServiceUnit`) VALUES ('{$rowProcDat['supplierID']}', '{$rowLatDelDet['assetModelID']}', '{$rowLatDelDet['deliveryDate']}', '8', '0')";
 				$resultInsAss=mysqli_query($dbc,$queryInsAss);
 				
 				//SELECT LATEST ASSET	
