@@ -152,8 +152,10 @@ if($serviceTypeID=='27'){
                                                         for ($i=0; $i < count($assets); $i++) { 
                                                             
 
-                                                            $query3 =  "SELECT a.assetID, propertyCode, b.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description
-                                                                    FROM asset a 
+                                                            $query3 =  "SELECT a.assetID, propertyCode, b.name AS 'brand', c.name as 'category', itemSpecification, m.description, s.id, problem
+                                                                    FROM servicedetails sd
+                                                                        JOIN asset a 
+                                                                    ON sd.asset = a.assetID 
                                                                         JOIN assetModel m
                                                                     ON assetModel = assetModelID
                                                                         JOIN ref_brand b
@@ -175,7 +177,7 @@ if($serviceTypeID=='27'){
                                                                 <td>{$row['category']}</td>
                                                                 <td>{$row['brand']}</td>
                                                                 <td>{$row['description']}</td>
-                                                                <td>{$row['']}</td>
+                                                                <td>{$row['problem']}</td>
                                                                 </tr>";
                                                             }  
 

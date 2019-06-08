@@ -183,14 +183,20 @@ $count = 0;
                                                                         $count ++;
                                                                         echo "<tr>";
                                                                         echo "<td style='display:none'>{$count}</td>";
-                                                                        echo "<td><input type='checkbox' id='chk1[]' name='assets[]'' value='{$row['assetID']}' onclick='checkBoxEnable(this);' ></td>";
+                                                                        echo "<td>
+                                                                                <input type='checkbox' id='chk1[]' name='assets[]'' value='{$row['assetID']}' onclick='checkBoxEnable(this);' >
+                                                                                <input type='hidden' id='hiddenchk1[]'name='assets[]' value='0' >
+                                                                             </td>";
                                                                         echo "<td>{$row['propertyCode']}</td>";
                                                                         echo "<td>{$row['brand']}</td>";
                                                                         echo "<td>{$row['category']}</td>";
                                                                         echo "<td>{$row['itemSpecification']}</td>";
-                                                                        echo "<td><input type='text' id='' class='form-control'></td>";
+                                                                        echo "<td>
+                                                                                <input type='text' class='form-control' id='{$row['assetID']}' name='problem[]'>
+                                                                                </td>";
                                                                         echo "<td style='text-align:center'>
                                                                                 <input id='chk2[]' value='{$row['assetID']}' type='checkbox' name='serviceUnit[]' disabled>
+                                                                                <input value='0' id='hiddenchk2[]' type='hidden' name='serviceUnit[]'>
                                                                               </td>";
                                                                         echo "</tr>";
 
@@ -241,9 +247,10 @@ $count = 0;
             var chk1 = data;
             var cell = data.parentNode;
             var row = cell.parentNode;
-            var cells = row.getElementsByTagName("td");
-            var chk2 = cells[7].getElementsByTagName("input")[0]; 
+            var cell2 = row.getElementsByTagName("td");
+            var chk2 = cell2[7].getElementsByTagName("input")[0]; 
 
+            
             if (chk1.checked)
                 chk2.disabled = false;
             if(chk1.checked == false){
@@ -251,6 +258,7 @@ $count = 0;
                 chk2.checked = false;
             }
         }
+
     </script>
 
     <!-- WAG GALAWIN PLS LANG -->

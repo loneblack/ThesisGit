@@ -4,8 +4,6 @@
 
 	$userID = $_SESSION['userID'];
 
-	$details = $_POST['details'];
-
 	$header =  $_SESSION['previousPage'];
 
 	date_default_timezone_set("Asia/Singapore");
@@ -16,21 +14,35 @@
 
     $assets = $_POST['assets'];
     $serviceUnitAssets = $_POST['serviceUnit'];
-    if (count($serviceUnitAssets) != 0){
-    	$noServiceUnitAssets = array_diff($assets,$serviceUnitAssets);
-	}else{
-		$noServiceUnitAssets = $assets;
-	}
+    $problem = $_POST['problem'];
+
+    for ($i=0; $i < sizeof($assets); $i++) { 
+    	if($assets[$i] != 0){
+    		array_splice($assets, ($i+1), 1);
+    	}
+    }
+    for ($i=0; $i < sizeof($serviceUnitAssets); $i++) { 
+    	if($serviceUnitAssets[$i] != 0){
+    		array_splice($serviceUnitAssets, ($i+1), 1);
+    	}
+    }
+    for ($i=0; $i < sizeof($serviceUnitAssets); $i++) { 
+
+    	$noServiceUnitAssets = 0;
+
+    	if($serviceUnitAssets[$i] == 0){
+    		$noServiceUnitAssets = 1;
+    	}
+    }
 
 
-    if(count($noServiceUnitAssets) > 0){//insertion of assets without service unit
+    if($noServiceUnitAssets == 1){//insertion of assets without service unit
 	    //insertion to service table
 		$sql = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`)
 			                                VALUES ('{$details}', '{$date}', '{$userID}', '27', '1', '14', '0');";//status is set to 1 for pending status
 
 		$result = mysqli_query($dbc, $sql);
 
-		echo $sql1;
 		//get the id of previously inserted service  
 		$sql1 = "SELECT MAX(id) as 'id' FROM thesis.service;";//status is set to 1 for pending status
 		$result1 = mysqli_query($dbc, $sql1);
@@ -38,17 +50,24 @@
 	    
 	    $id = $row['id'];
 
-		foreach ($noServiceUnitAssets as $assets){
-				
-			$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`) VALUES ('{$id}', '{$assets}', '0');";
-			$resulted = mysqli_query($dbc, $query);
+    for ($i=0; $i < sizeof($assets); $i++) {
 
-			//set asset status to for repair(9)
-			$query2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '9' WHERE (`assetID` = '{$assets}');";
-			$resulted2 = mysqli_query($dbc, $query2);
+    	if($serviceUnitAssets[$i] == 0) {
+
+				$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`, `problem`) VALUES ('{$id}', '{$assets[$i]}', '0', '{$problem[$i]}');";
+				$resulted = mysqli_query($dbc, $query);
+
+				//set asset status to for repair(9)
+				$query2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '9' WHERE (`assetID` = '{$assets[$i]}');";
+				$resulted2 = mysqli_query($dbc, $query2);
+    		}
+				
 	    }
     }
-    foreach ($serviceUnitAssets as $assets) {//insertion of assets with service unit
+    for ($i=0; $i < sizeof($serviceUnitAssets); $i++) { //insertion of assets with service unit
+
+    	if($serviceUnitAssets[$i] != 0){
+
     	//insertion to service table
 		$sql = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`)
 	                                VALUES ('{$details}', '{$date}', '{$userID}', '27', '1', '14', '1');";//status is set to 1 for pending status
@@ -76,20 +95,22 @@
 	    $serviceUnitID = $row['serviceUnitID'];
 	    
 	    //insert to service details
-    	$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`) VALUES ('{$id}', '{$assets}', '0');";
+    	$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`, `problem`) VALUES ('{$id}', '{$serviceUnitAssets[$i]}', '0', '{$problem[$i]}');";
     	$resulted = mysqli_query($dbc, $query);
 
     	//set asset status to for repair(9)
-		$query2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '9' WHERE (`assetID` = '{$assets}');";
+		$query2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '9' WHERE (`assetID` = '{$serviceUnitAssets[$i]}');";
 		$resulted2 = mysqli_query($dbc, $query2);
 
 		//Insert assets to serviceUnit Details also
-		$insertServiceUnitDetails = "INSERT INTO serviceUnitDetails (serviceUnitID, assetID, received) VALUES ('{$serviceUnitID}', '{$assets}', '0');";
+		$insertServiceUnitDetails = "INSERT INTO serviceUnitDetails (serviceUnitID, assetID, received) VALUES ('{$serviceUnitID}', '{$serviceUnitAssets[$i]}', '0');";
 		$resulted4 = mysqli_query($dbc, $insertServiceUnitDetails);
+    		
+    	}
     }
 
 	$message = "Form submitted!";
 	$_SESSION['submitMessage'] = $message;
 
-	//header('Location: '.$header);
+	header('Location: '.$header);
 ?>	
