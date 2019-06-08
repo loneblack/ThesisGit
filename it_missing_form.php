@@ -3,6 +3,10 @@
 	session_start();
 	require_once('db/mysql_connect.php');
 	$_SESSION['forReplenish']=array();
+	$mess=null;
+	if(isset($_SESSION['submitMessage'])){
+		$mess=$_SESSION['submitMessage'];
+	}
 	$replacementID=$_GET['id'];
 	
 	//GET ASSET CATEGORY
@@ -93,9 +97,9 @@
             <section class="wrapper">
                 <!-- page start-->
 				<?php
-                    if (isset($_SESSION['submitMessage'])){
+                    if (isset($mess)){
                         echo "<div style='text-align:center' class='alert alert-success'>
-								<strong><h3>{$_SESSION['submitMessage']}</h3></strong>
+								<strong><h3>{$mess}</h3></strong>
                             </div>";
 						unset($_SESSION['submitMessage']);
                     }
