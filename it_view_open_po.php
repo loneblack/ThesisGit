@@ -239,13 +239,18 @@
 													//GET DATE TODAY
 													$maxDate = new DateTime(date("Y-m-d"));
 													
-													
 													$query="SELECT pd.assetModelID as `assetModelID`,CONCAT(rb.name, ' ',rac.name) as `itemName`,pd.cost,pd.quantity,(pd.cost*pd.quantity) as `totalCost`,am.description as `assetModelDesc`,am.assetCategory as `assetCategory`,pd.expectedDeliveryDate FROM thesis.procurementdetails pd join assetmodel am on pd.assetModelID=am.assetModelID join ref_brand rb on am.brand=rb.brandID
 															join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID where pd.procurementID='{$procID}'";
 													$result=mysqli_query($dbc,$query);
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														$expDelDate=new DateTime($row['expectedDeliveryDate']);
+														if($maxDate>$expDelDate){
+															echo "<tr class='text-danger'>";
+														}
+														else{
+															echo "<tr>";
+														}
 														echo "
-															<tr>
 															<input type='hidden' name='assetCategoryID[]' value='{$row['assetCategory']}'>
 															<input type='hidden' name='assetModelID[]' value='{$row['assetModelID']}'>
 															<input type='hidden' name='qtyOrdered[]' value='{$row['quantity']}'>
