@@ -157,7 +157,10 @@
 
                                                         echo
                                                             "</td>
-                                                            <td>{$row['dateNeed']}</td>";
+                                                            <td>";
+															echo date('Y-m-d', strtotime($row['dateReceived']. ' + 7 days'));
+															
+															echo"</td>";
 
                                                         if($row['description']=="Pending"){ echo "<td><label class='label label-warning'>{$row['description']}</label></td>"; }
                                                         if($row['description']=="Ongoing"){ echo "<td><label class='label label-primary'>{$row['description']}</label></td>"; }
