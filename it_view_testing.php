@@ -566,19 +566,22 @@ $rowDate=mysqli_fetch_array($dddate,MYSQLI_ASSOC);
 												<thead>
 													<tr>
 														<th></th>
+														<th class="text-center">Property Code</th>
 														<th class="text-center">Brand</th>
-														<th>Model</th>
+														<th class="text-center">Model</th>
+														<th class="text-center">Category</th>
 														<th class="text-center">Comments</th>
-                                                        <th>Warranty (In Months)</th>
+                                                        <th class="text-center">Warranty (In Months)</th>
 													</tr>
 												</thead>
 												<tbody>
 													
 													<?php
 														$finDate = 0;
-														$query = "SELECT rb.name as `brand`,am.description as `assetModel`,atd.asset_assetID,atd.check,atd.comment FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID 
+														$query = "SELECT rac.name as `assetCatName`,rb.name as `brand`,am.description as `assetModel`,atd.asset_assetID,atd.check,atd.comment,a.propertyCode FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID 
 																												join assetmodel am on a.assetModel=am.assetModelID
-																												join ref_brand rb on am.brand=rb.brandID
+																												join ref_brand rb on am.brand=rb.brandID 
+																												join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
 																												where assettesting_testingID='{$testingID}'";         
 														$result = mysqli_query($dbc, $query);
 														while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
@@ -605,9 +608,10 @@ $rowDate=mysqli_fetch_array($dddate,MYSQLI_ASSOC);
 																}
 																	
 															echo "	disabled></td>
-																	
+																	<td class='text-center'>{$row['propertyCode']}</td>
 																	<td class='text-center'>{$row['brand']}</td>
-																	<td>{$row['assetModel']}</td>
+																	<td class='text-center'>{$row['assetModel']}</td>
+																	<td class='text-center'>{$row['assetCatName']}</td>
 																	<td class='text-center'><input type='text' class='form-control' value='";
 																if($row['check']=='0'){
 																	echo $row['comment'];

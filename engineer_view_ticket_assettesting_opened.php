@@ -438,6 +438,7 @@
                                                 <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                     <thead>
                                                         <tr>
+															<th style="text-align:center">Property Code</th>
                                                             <th style="text-align:center">Brand</th>
                                                             <th style="text-align:center">Model</th>
 															<th style="text-align:center">Category</th>
@@ -448,7 +449,7 @@
                                                     </thead>
                                                     <tbody>
                                                         <?php
-														$query = "SELECT rac.name as `assetCatName`,atd.asset_assetID as `assetID`,rb.name as `brand`, am.description as `model` FROM thesis.assettesting_details atd join assettesting at on atd.assettesting_testingID=at.testingID 
+														$query = "SELECT rac.name as `assetCatName`,atd.asset_assetID as `assetID`,rb.name as `brand`, am.description as `model`,a.propertyCode FROM thesis.assettesting_details atd join assettesting at on atd.assettesting_testingID=at.testingID 
 																	  join ticket t on at.testingID=t.testingID
 																	  join asset a on atd.asset_assetID=a.assetID
 																	  join assetmodel am on a.assetModel=am.assetModelID 
@@ -464,6 +465,7 @@
 															$idForEsc="ForEsc_".$row['assetID'];
 															$idEscEng="escalateEng_".$row['assetID'];
 															echo "<tr>
+																<td style='text-align:center'>{$row['propertyCode']}</td>
 																<td style='text-align:center'>{$row['brand']}</td>
 																<td style='text-align:center'>{$row['model']}</td>
 																<td style='text-align:center'>{$row['assetCatName']}</td>

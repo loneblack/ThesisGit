@@ -176,23 +176,31 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                     <table class="table table-bordered table-striped table-condensed table-hover" id="tableTest">
                                                         <thead>
                                                             <tr>
+																<th>Property Code</th>
                                                                 <th>Quantity</th>
                                                                 <th>Category</th>
+																<th>Brand</th>
                                                                 <th>Model Name</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <?php
 															//GET data by asset category and description
-															$queryGetRecDat = "SELECT count(rd.assetID) as `qty`,am.description as `modelName`,rac.name as `assetCatName` FROM thesis.receiving_details rd left join asset a on rd.assetID=a.assetID
+															$queryGetRecDat = "SELECT count(rd.assetID) as `qty`,am.description as `modelName`,rac.name as `assetCatName`,a.propertyCode FROM thesis.receiving_details rd left join asset a on rd.assetID=a.assetID
 																															left join assetmodel am on a.assetModel=am.assetModelID
-																															left join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																															left join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
+																															left join ref_brand rb on am.brand=rb.brandID 
                                                                                                                             where rd.receivingID='{$id}'
 																															group by a.assetModel";
                                                                   
 															$resultGetRecDat = mysqli_query($dbc, $queryGetRecDat);
 															while($rowGetRecDat = mysqli_fetch_array($resultGetRecDat, MYSQLI_ASSOC)){
 																echo "<tr>
+																		<td>
+																			<div class='col-lg-12'>
+                                                                                <input class='form-control' type='text' value='{$rowGetRecDat['propertyCode']}' disabled />
+                                                                            </div>
+                                                                        </td>
 																		<td>
 																			<div class='col-lg-12'>
                                                                                 <input class='form-control' type='number' value='{$rowGetRecDat['qty']}' disabled />
@@ -204,7 +212,13 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                                                 <input class='form-control' type='text' value='{$rowGetRecDat['assetCatName']}' disabled/>
                                                                             </div>
                                                                         </td>
-
+																		
+																		<td>
+                                                                            <div class='col-lg-12'>
+                                                                                <input class='form-control' type='text' value='{$rowGetRecDat['assetCatName']}' disabled/>
+                                                                            </div>
+                                                                        </td>
+																		
                                                                         <td style='padding-top:5px; padding-bottom:5px'>
                                                                             <div class='col-lg-12'>
                                                                                 <input class='form-control' type='text' value='{$rowGetRecDat['modelName']}' disabled/>

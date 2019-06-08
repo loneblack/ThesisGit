@@ -149,7 +149,7 @@
 			var currentRow = table.rows[i];
 			var createClickHandler = function(row) {
 				return function() {
-					var cell = row.getElementsByTagName("td")[2];
+					var cell = row.getElementsByTagName("td")[3];
 					var status = cell.textContent;
 					
 					//if(status == "Open"){
