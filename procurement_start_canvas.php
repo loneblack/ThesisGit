@@ -244,7 +244,7 @@
 																	echo "' value='";
 																	echo date("Y-m-d");
 																	echo "' required></td>
-																	<td><button type='button' class='btn btn-primary' onclick='addTest({$row['cavasItemID']},{$row['quantity']})'> Add </button></td>
+																	<td class='text-center'><button type='button' class='btn btn-primary' onclick='addTest({$row['cavasItemID']},{$row['quantity']})'> Add </button></td>
 																</tr>";
 															
 															
@@ -404,7 +404,11 @@
 	</script>
 
 	<script>
-        
+         //Delete buttons
+        function removeRow(o) {
+            var p = o.parentNode.parentNode;
+            p.parentNode.removeChild(p);
+        }
 
         function addTest(cavasItemID,maxQty) {
             var row_index = 0;
@@ -472,6 +476,9 @@
 				"<?php echo date("Y-m-d"); ?>" +
 				"' required>" +
 				"</td>" +
+				"<td class='text-center'>" +
+                "<button id='remove' class='btn btn-warning' onClick='removeRow(this)'>Remove</button> " +
+                "</td>" +
                 "</tr>";
             $('#tableTest tbody tr').eq(rowCount).after(tr);
         }
