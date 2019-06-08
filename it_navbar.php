@@ -65,6 +65,16 @@
 	$resultNumNotifMFD=mysqli_query($dbc,$queryNumNotifMFD);
 	$rowNumNotifMFD=mysqli_fetch_array($resultNumNotifMFD,MYSQLI_ASSOC);
 	
+	//GET NUMBER OF ASSETS THAT CAN BE SALVAGED
+	$queryNumNotifSalv="SELECT Count(*) as `numMarkForSalv` FROM asset a 
+                                                            JOIN assetmodel am ON a.assetmodel = am.assetmodelID 
+                                                            JOIN ref_assetstatus ras ON a.assetStatus = ras.id
+                                                            JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID 
+                                                            WHERE a.assetStatus = 10 AND (rac.assetCategoryID = 13 OR rac.assetCategoryID = 40 OR rac.assetCategoryID = 46);";
+	$resultNumNotifSalv=mysqli_query($dbc,$queryNumNotifSalv);
+	$rowNumNotifSalv=mysqli_fetch_array($resultNumNotifSalv,MYSQLI_ASSOC);
+	
+	
 ?>
 <?php  echo '<aside>
             <div id="sidebar" class="nav-collapse">
@@ -152,11 +162,19 @@
 						<li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="glyphicon glyphicon-trash"></i>
-                                <span>Disposal</span>
+                                <span>Disposal ';
+								if($rowNumNotifSalv['numMarkForSalv']>'0'){
+									echo '<span class="badge badge-light">'.$rowNumNotifSalv['numMarkForSalv'].'</span>';
+								}
+								echo '</span>
                             </a>
                             <ul class="sub">
                                 <li><a href="it_view_disposal_list.php">For Disposal</a></li>
-                                <li><a href="it_mark_salvage.php">Mark Assets For Salvage</a></li>
+                                <li><a href="it_mark_salvage.php">Mark Assets For Salvage ';
+								if($rowNumNotifSalv['numMarkForSalv']>'0'){
+									echo '<span class="badge badge-light">'.$rowNumNotifSalv['numMarkForSalv'].'</span>';
+								}
+								echo '</a></li>
                             </ul>
                         </li>
                         
