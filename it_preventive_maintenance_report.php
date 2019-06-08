@@ -111,103 +111,97 @@
                                                                     <table class='display table table-bordered table-striped' id=''>
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>Room #</th>
-                                                                                <th>Property Code</th>
+                                                                                <th>#</th>
+                                                                                <th>Building</th>
                                                                                 <th>Asset Category</th>
-                                                                                <th>Asset Status</th>
-                                                                                <th>Date Checked</th>
+                                                                                <th>Beginning Date Functional</th>
+                                                                                <th>Broken</th>
+                                                                                <th>Missing</th>
+                                                                                <th>End Date Functional</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody id='maintenance'>
                                                                             <?php
 																			if(isset($_POST['submit'])){
-																				if(!empty($_POST['startDate'])){
-																					if(!empty($_POST['endDate'])){
+																				if(!empty($_POST['startDate']) && !empty($_POST['endDate'])){
 																						$startDate=$_POST['startDate'];
 																						$endDate=$_POST['endDate'];
 																						
 																						//GET ALL DATE FROM START DATE TO END DATE
-																						$queryGetAllMainData="SELECT far.floorRoom,a.propertyCode,rac.name as `assetCat`,ras.description as `assetStat`,au.date FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
-																																																																											  join asset a on au.assetID=a.assetID
-																																																																											  join assetmodel am on a.assetModel=am.assetModelID
-																																																																											  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
-																																																																											  join ref_assetstatus ras on au.assetStatus=ras.id 
-																																																																											  join assetassignment aa on a.assetID=aa.assetID 
-																																																																											  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
-																																																																				where t.serviceType='28' and au.assetStatus!='17' and au.date BETWEEN '{$startDate}' AND '{$endDate}'";
+																						$queryGetAllMainData="SELECT b.name AS `building`, rac.name AS `ac`,
+                                                                                        COUNT(IF(au.assetStatus = 2 AND au.date <= '{$startDate}', a.assetmodel, null)) AS `start`,
+                                                                                        COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5, a.assetmodel, null)) AS `broken`,
+                                                                                        COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) AS `missing`,
+                                                                                        COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) AS `end`
+                                                                                        FROM ticket t
+                                                                                        JOIN assetaudit au ON t.ticketID = au.ticketID
+                                                                                        JOIN asset a ON au.assetID=a.assetID
+                                                                                        JOIN assetmodel am ON a.assetModel=am.assetModelID
+                                                                                        JOIN ref_assetcategory rac ON am.assetCategory=rac.assetCategoryID
+                                                                                        JOIN ref_assetstatus ras ON au.assetStatus=ras.id 
+                                                                                        JOIN assetassignment aa ON a.assetID=aa.assetID 
+                                                                                        JOIN building b ON aa.BuildingID = b.buildingID
+                                                                                        WHERE t.serviceType='28' AND au.assetStatus!='17'
+                                                                                        GROUP BY rac.name;";
 																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
-																						echo "<script>alert('{$startDate}');</script>";
-																					}
-																					else{
-																						$startDate=$_POST['startDate'];
+																				}
+                                                                                
+                                                                                if(empty($_POST['startDate']) && empty($_POST['endDate'])){
+																						$startDate=date("Y-m-d");
+																						$endDate=date("Y-m-d");
 																						
-																						//GET ALL DATE FROM START DATE TO END DATE
-																						$queryGetAllMainData="SELECT far.floorRoom,a.propertyCode,rac.name as `assetCat`,ras.description as `assetStat`,au.date FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
-																																																																												  join asset a on au.assetID=a.assetID
-																																																																												  join assetmodel am on a.assetModel=am.assetModelID
-																																																																												  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
-																																																																												  join ref_assetstatus ras on au.assetStatus=ras.id 
-																																																																												  join assetassignment aa on a.assetID=aa.assetID 
-																																																																												  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
-																																																																					where t.serviceType='28' and au.assetStatus!='17' and au.date >= '{$startDate}'";
+																						$queryGetAllMainData="SELECT b.name AS `building`, rac.name AS `ac`,
+                                                                                        COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) AS `start`,
+                                                                                        COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5, a.assetmodel, null)) AS `broken`,
+                                                                                        COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) AS `missing`,
+                                                                                        COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) AS `end`
+                                                                                        FROM ticket t
+                                                                                        JOIN assetaudit au ON t.ticketID = au.ticketID
+                                                                                        JOIN asset a ON au.assetID=a.assetID
+                                                                                        JOIN assetmodel am ON a.assetModel=am.assetModelID
+                                                                                        JOIN ref_assetcategory rac ON am.assetCategory=rac.assetCategoryID
+                                                                                        JOIN ref_assetstatus ras ON au.assetStatus=ras.id 
+                                                                                        JOIN assetassignment aa ON a.assetID=aa.assetID 
+                                                                                        JOIN building b ON aa.BuildingID = b.buildingID
+                                                                                        WHERE t.serviceType='28' AND au.assetStatus!='17'
+                                                                                        GROUP BY rac.name;";
 																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
-																					}
 																				}
-																				elseif(!empty($_POST['endDate'])){
-																					$endDate=$_POST['endDate'];
-																					//GET ALL DATE FROM START DATE TO END DATE
-																					$queryGetAllMainData="SELECT far.floorRoom,a.propertyCode,rac.name as `assetCat`,ras.description as `assetStat`,au.date FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
-																																																																												  join asset a on au.assetID=a.assetID
-																																																																												  join assetmodel am on a.assetModel=am.assetModelID
-																																																																												  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
-																																																																												  join ref_assetstatus ras on au.assetStatus=ras.id 
-																																																																												  join assetassignment aa on a.assetID=aa.assetID 
-																																																																												  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
-																																																																					where t.serviceType='28' and au.assetStatus!='17' and au.date <= '{$endDate}'";
-																					$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
+                                                                                
+                                                                                if(!empty($_POST['startDate']) && empty($_POST['endDate'])){
+																						$startDate=$_POST['startDate'];
+																						$endDate=date("Y-m-d");
+																						
+																						$queryGetAllMainData="SELECT b.name AS `building`, rac.name AS `ac`,
+                                                                                        COUNT(IF(au.assetStatus = 2 AND au.date <= '{$startDate}', a.assetmodel, null)) AS `start`,
+                                                                                        COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5, a.assetmodel, null)) AS `broken`,
+                                                                                        COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) AS `missing`,
+                                                                                        COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) AS `end`
+                                                                                        FROM ticket t
+                                                                                        JOIN assetaudit au ON t.ticketID = au.ticketID
+                                                                                        JOIN asset a ON au.assetID=a.assetID
+                                                                                        JOIN assetmodel am ON a.assetModel=am.assetModelID
+                                                                                        JOIN ref_assetcategory rac ON am.assetCategory=rac.assetCategoryID
+                                                                                        JOIN ref_assetstatus ras ON au.assetStatus=ras.id 
+                                                                                        JOIN assetassignment aa ON a.assetID=aa.assetID 
+                                                                                        JOIN building b ON aa.BuildingID = b.buildingID
+                                                                                        WHERE t.serviceType='28' AND au.assetStatus!='17'
+                                                                                        GROUP BY rac.name;";
+																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
 																				}
-																				else{
-																					$queryGetAllMainData="SELECT far.floorRoom,a.propertyCode,rac.name as `assetCat`,ras.description as `assetStat`,au.date FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
-																																																																										  join asset a on au.assetID=a.assetID
-																																																																										  join assetmodel am on a.assetModel=am.assetModelID
-																																																																										  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
-																																																																										  join ref_assetstatus ras on au.assetStatus=ras.id 
-																																																																										  join assetassignment aa on a.assetID=aa.assetID 
-																																																																										  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
-																																																																			where t.serviceType='28' and au.assetStatus!='17'";
-																					$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
-																				}
-																				while($rowGetAllMainData=mysqli_fetch_array($resultGetAllMainData,MYSQLI_ASSOC)){
+																				
+                                                                               $count = 1; while($rowGetAllMainData=mysqli_fetch_array($resultGetAllMainData,MYSQLI_ASSOC)){
                                                                                     
-                                                                                    if($rowGetAllMainData['assetStat'] == 'Missing'){
-                                                                                        echo "<tr>
-																						<td><font color='red'>{$rowGetAllMainData['floorRoom']}</font></td>
-																						<td><font color='red'>{$rowGetAllMainData['propertyCode']}</font></td>
-																						<td><font color='red'>{$rowGetAllMainData['assetCat']}</font></td>
-																						<td><font color='red'>{$rowGetAllMainData['assetStat']}</font></td>
-																						<td><font color='red'>{$rowGetAllMainData['date']}</font></td>
+                                                                                    echo "<tr>
+                                                                                        <td>{$count}</td>
+																						<td>{$rowGetAllMainData['building']}</font></td>
+																						<td>{$rowGetAllMainData['ac']}</td>
+																						<td>{$rowGetAllMainData['start']}</td>
+																						<td>{$rowGetAllMainData['broken']}</td>
+																						<td>{$rowGetAllMainData['missing']}</td>
+                                                                                        <td>{$rowGetAllMainData['end']}</td>
 																					   </tr>";
-                                                                                    }
-                                                                                    
-                                                                                    if($rowGetAllMainData['assetStat'] == 'Deployed'){
-                                                                                        echo "<tr>
-																						<td><font color='black'>{$rowGetAllMainData['floorRoom']}</font></td>
-																						<td><font color='black'>{$rowGetAllMainData['propertyCode']}</font></td>
-																						<td><font color='black'>{$rowGetAllMainData['assetCat']}</font></td>
-																						<td><font color='black'>{$rowGetAllMainData['assetStat']}</font></td>
-																						<td><font color='black'>{$rowGetAllMainData['date']}</font></td>
-																					   </tr>";
-                                                                                    }
-                                                                                    
-                                                                                    if($rowGetAllMainData['assetStat'] == 'For Repair'){
-                                                                                        echo "<tr>
-																						<td><font color='green'>{$rowGetAllMainData['floorRoom']}</font></td>
-																						<td><font color='green'>{$rowGetAllMainData['propertyCode']}</font></td>
-																						<td><font color='green'>{$rowGetAllMainData['assetCat']}</font></td>
-																						<td><font color='green'>{$rowGetAllMainData['assetStat']}</font></td>
-																						<td><font color='green'>{$rowGetAllMainData['date']}</font></td>
-																					   </tr>";
-                                                                                    }
+                                                                                   $count++;
 																				}
 																			}
 																		?>
