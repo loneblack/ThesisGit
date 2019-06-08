@@ -1268,6 +1268,15 @@ INSERT INTO `thesis`.`inventory` (`assetCategoryID`) VALUES ('49');
 INSERT INTO `thesis`.`inventory` (`assetCategoryID`) VALUES ('50');
 INSERT INTO `thesis`.`inventory` (`assetCategoryID`) VALUES ('51');
 INSERT INTO `thesis`.`inventory` (`assetCategoryID`) VALUES ('52');
+INSERT INTO `thesis`.`inventory` (`assetCategoryID`) VALUES ('53');
+INSERT INTO `thesis`.`inventory` (`assetCategoryID`) VALUES ('54');
+INSERT INTO `thesis`.`inventory` (`assetCategoryID`) VALUES ('55');
+INSERT INTO `thesis`.`inventory` (`assetCategoryID`) VALUES ('56');
+INSERT INTO `thesis`.`inventory` (`assetCategoryID`) VALUES ('57');
+INSERT INTO `thesis`.`inventory` (`assetCategoryID`) VALUES ('58');
+INSERT INTO `thesis`.`inventory` (`assetCategoryID`) VALUES ('59');
+INSERT INTO `thesis`.`inventory` (`assetCategoryID`) VALUES ('60');
+INSERT INTO `thesis`.`inventory` (`assetCategoryID`) VALUES ('61');
 
 UPDATE `thesis`.`inventory` SET `floorLevel`='1', `ceilingLevel`='300';
 

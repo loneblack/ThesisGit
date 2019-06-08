@@ -2,7 +2,24 @@
 <?php
 	session_start();
 	require_once('db/mysql_connect.php');
+	$_SESSION['forReplenish']=array();
 	$replacementID=$_GET['id'];
+	
+	//GET ASSET CATEGORY
+	$queryGetAssCat="SELECT * FROM thesis.replacement r join asset a on r.lostAssetID=a.assetID
+								join assetmodel am on a.assetModel=am.assetModelID
+								where r.replacementID='{$replacementID}'";
+    $resultGetAssCat=mysqli_query($dbc,$queryGetAssCat);
+	$rowGetAssCat=mysqli_fetch_array($resultGetAssCat,MYSQLI_ASSOC);
+	
+	//GET NUMBER OF ASSETS BASED ON THE ASSET CATEGORY OF THE LOST ASSET
+	$queryGetNumbAllAss="SELECT count(*) as `numOfAssets` FROM thesis.asset a left join assetmodel am on a.assetModel=am.assetModelID
+																			left join ref_brand rb on am.brand=rb.brandID
+																			left join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
+																			left join ref_assetstatus ras on a.assetStatus=ras.id 
+																			where am.assetCategory='{$rowGetAssCat['assetCategory']}' and a.assetStatus='1'";
+    $resultGetNumbAllAss=mysqli_query($dbc,$queryGetNumbAllAss);
+    $rowGetNumbAllAss=mysqli_fetch_array($resultGetNumbAllAss,MYSQLI_ASSOC);
 	
 	if(isset($_POST['submit'])){
 		//Update notifications
@@ -22,6 +39,11 @@
 		$message = "Form submitted!";
 		$_SESSION['submitMessage'] = $message; 
 		
+		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_missing_form.php?id=".$replacementID);
+	}
+	if(isset($_POST['proceedRep'])){
+		array_push($_SESSION['forReplenish'],$rowGetAssCat['assetCategory']);
+		header("Location: http://".$_SERVER['HTTP_HOST'].  dirname($_SERVER['PHP_SELF'])."/it_replenish.php");
 	}
 	
 ?>
@@ -88,7 +110,7 @@
                                     Replace Missing Items
                                 </header>
                                 <div class="panel-body">
-									<form method="post" action="<?php echo $_SERVER['PHP_SELF']." ?id=".$replacementID; ?>">
+									<form method="post">
                                     <section id="unseen">
                                         <h4>Items Missing</h4>
                                         <div class="adv-table">
@@ -147,14 +169,6 @@
                                                 </thead>
                                                 <tbody>
 													<?php
-														
-														//GET ASSET CATEGORY
-														$queryGetAssCat="SELECT * FROM thesis.replacement r join asset a on r.lostAssetID=a.assetID
-																		   join assetmodel am on a.assetModel=am.assetModelID
-																		   where r.replacementID='{$replacementID}'";
-                                                        $resultGetAssCat=mysqli_query($dbc,$queryGetAssCat);
-														$rowGetAssCat=mysqli_fetch_array($resultGetAssCat,MYSQLI_ASSOC);
-														
 														//GET ASSETS BASED ON THE ASSET CATEGORY OF THE LOST ASSET
 														$queryGetAllAss="SELECT *,rb.name as `brandName`,am.description as `modelName`,rac.name as `assetCatName`,am.itemSpecification as `modelSpec`,ras.description as `assetStat` FROM thesis.asset a left join assetmodel am on a.assetModel=am.assetModelID
 																			left join ref_brand rb on am.brand=rb.brandID
@@ -176,7 +190,19 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <button type="submit" name="submit" class="btn btn-success">Submit</button>
+										<?php
+											//IF STATEMENTS DEPENDING ON NUMBER OF ASSETS
+											if($rowGetNumbAllAss['numOfAssets']==0){
+												echo "<button type='submit' name='proceedRep' class='btn btn-success'>Proceed to Replenish</button>";
+											}
+											else{
+												echo "<button type='submit' name='submit' class='btn btn-success'>Submit</button>";
+											}
+										
+										
+										
+										?>
+                                        
                                         <button class="btn btn-danger">Back</button>
                                     </section>
 									</form>
