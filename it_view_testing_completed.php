@@ -566,17 +566,17 @@ $rowDate=mysqli_fetch_array($dddate,MYSQLI_ASSOC);
 												<thead>
 													<tr>
 														<th></th>
+                                                        <th class="text-center">Property Code</th>
 														<th class="text-center">Brand</th>
 														<th>Model</th>
 														<th class="text-center">Comments</th>
-                                                        <th>Warranty (In Months)</th>
 													</tr>
 												</thead>
 												<tbody>
 													
 													<?php
 														$finDate = 0;
-														$query = "SELECT rb.name as `brand`,am.description as `assetModel`,atd.asset_assetID,atd.check,atd.comment FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID 
+														$query = "SELECT a.propertyCode,rb.name as `brand`,am.description as `assetModel`,atd.asset_assetID,atd.check,atd.comment FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID 
 																												join assetmodel am on a.assetModel=am.assetModelID
 																												join ref_brand rb on am.brand=rb.brandID
 																												where assettesting_testingID='{$testingID}'";         
@@ -605,7 +605,7 @@ $rowDate=mysqli_fetch_array($dddate,MYSQLI_ASSOC);
 																}
 																	
 															echo "	disabled></td>
-																	
+																	<td class='text-center'>{$row['propertyCode']}</td>
 																	<td class='text-center'>{$row['brand']}</td>
 																	<td>{$row['assetModel']}</td>
 																	<td class='text-center'><input type='text' class='form-control' value='";
@@ -613,28 +613,9 @@ $rowDate=mysqli_fetch_array($dddate,MYSQLI_ASSOC);
 																	echo $row['comment'];
 																}	
 																	
-															echo "' disabled></td>
-                                                            <td><input class='form-control' type='number' name='warranty[]' min='3' ";
+															echo "' disabled></td> ";
 															
-															if($rowTesDat['remarks']=="Asset Request" && $rowTesDat['statusID']=='3'){
-																echo "value='{$finDate}' disabled ";
-															}
-															elseif($rowTesDat['remarks']=="Asset Request" && $rowTesDat['statusID']=='7'){
-																echo "value='3' ";
-															}
 															
-															if($row['check']=='0'){
-																echo "disabled ";
-															}
-															elseif($rowTesDat['remarks']!="Asset Request"){
-																echo "disabled ";
-															}
-															
-															echo "required/></td>";
-															
-															if($row['check']=='1'){
-																echo "<input type='hidden' name='assetPass[]' value='{$row['asset_assetID']}'>";
-															}
 															echo "</tr>";
 														}
 														
