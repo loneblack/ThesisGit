@@ -52,7 +52,7 @@
 	}
 	
 	if(isset($_POST['disapprove'])){
-		
+		//Proceed To Borrow
 		//Update notifications
 		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='22'";
 		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
@@ -73,6 +73,21 @@
 		$_SESSION['submitMessage']="Form submitted!";
 	}
 	
+	if(isset($_POST['disapprovenatalaga'])){
+		//DISAPPROVED NA TALAGA
+		//Update notifications
+		$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `requestID` = '{$requestID}' and `steps_id`='33'";
+		$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
+		
+		$query="UPDATE `thesis`.`request` SET `status`='6', `step`='33', `reasonForDisaprroval`='{$_POST['reasOfDisapprov']}' WHERE `requestID`='{$requestID}'";
+		$result=mysqli_query($dbc,$query);
+		
+		//INSERT TO NOTIFICATIONS TABLE
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`requestID`, `steps_id`, `isRead`) VALUES ('{$requestID}', '33', false);";
+		$resultNotif = mysqli_query($dbc, $sqlNotif);
+		
+		$_SESSION['submitMessage']="Form submitted!";
+	}
 ?>
 
 <head>
@@ -648,6 +663,11 @@
         }
 
         $('#disapprove').click(function() {
+            document.getElementById("reasOfDisapprov").required = true;
+
+
+        });
+		 $('#disapprovenatalaga').click(function() {
             document.getElementById("reasOfDisapprov").required = true;
 
 
