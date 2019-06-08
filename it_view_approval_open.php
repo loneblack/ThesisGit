@@ -393,11 +393,12 @@
                                                         <div class="row">
                                                             <div class="col-xs-4">
                                                             </div>
-                                                            <div class="col-xs-4">
+                                                            <div class="col-xs-6">
 
                                                                 <button type="submit" class="btn btn-success" id="approve" name="approve"><i class="fa fa-check"></i> Approve</button>
                                                                 &nbsp;&nbsp;
-                                                                <button type="submit" class="btn btn-danger" id="disapprove" name="disapprove"><i class="fa fa-ban"></i> Proceed To Borrow</button>
+                                                                <button type="submit" class="btn btn-warning" id="disapprove" name="disapprove"><i class="fa fa-envelope"></i> Proceed To Borrow</button>
+                                                                <button type="submit" class="btn btn-danger" id="disapprovenatalaga" name="disapprovenatalaga"><i class="fa fa-ban"></i> Disapprove</button>
                                                                 <!-- <button type="button" class="btn btn-danger" id="disapprove" data-toggle="modal" data-target="#myModal"><i class="fa fa-ban"></i> Disapprove</button> -->
 
 
