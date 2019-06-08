@@ -159,6 +159,17 @@
                                 <li><a href="it_mark_salvage.php">Mark Assets For Salvage</a></li>
                             </ul>
                         </li>
+                        
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-keyboard-o"></i>
+                                <span>Service Units</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="it_view_su_list.php">Service Units List</a></li>
+                                <li><a href="it_mark_su.php">Mark Assets For Service Units</a></li>
+                            </ul>
+                        </li>
 						
                         <li class="sub-menu">
                             <a href="javascript:;">
@@ -186,8 +197,8 @@
                                 <span>Reports</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="it_inventory_report_form.php">Asset Audit Report</a></li>
-                                <li><a href="it_preventive_maintenance_report.php">Preventive Maintenance Report</a></li>
+                                <li><a href="it_inventory_report_form.php">Inventory Report</a></li>
+                                <li><a href="it_preventive_maintenance_report.php">Maintenance Report</a></li>
                                 <li><a href="it_repair_report.php">Repair Report</a></li>
                             </ul>
                         </li>

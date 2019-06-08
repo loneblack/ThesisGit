@@ -70,7 +70,7 @@
                                         <div id="report">
                                             <div align="center">
                                                 <h3>Information and Technology Services Office</h3>
-                                                <h3>Asset Audit Report</h3>
+                                                <h3>Inventory Report</h3>
                                                 <h4>
                                                     <?php 
                                                 date_default_timezone_set('Asia/Manila');
@@ -88,16 +88,14 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th class="hidden"></th>
-                                                                    <th>Action</th>
-                                                                    <th>Date</th>
+                                                                    <th>#</th>
                                                                     <th>Asset Category</th>
-                                                                    <th>Property Code</th>
-                                                                    <th>Brand</th>
-                                                                    <th>Model</th>
-                                                                    <th>Building</th>
-                                                                    <th>Room Number</th>
-                                                                    <th>Office/ Department</th>
-                                                                    <th>User's Name</th>
+                                                                    <th>Beginning Qty</th>
+                                                                    <th>Acquired</th>
+                                                                    <th>Deployed</th>
+                                                                    <th>Disposed</th>
+                                                                    <th>Donated</th>
+                                                                    <th>End Qty</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -113,67 +111,68 @@
                                                                         $sDate = $_POST['startDate'];
                                                                         $eDate = $_POST['endDate'];
                                                                         
-                                                                        $queryDept="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
-                                                                        am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
-                                                                        JOIN ref_assetStatus ras ON aa.assetStatus = ras.id
-                                                                        JOIN asset a ON aa.assetID = a.assetID
-                                                                        JOIN assetmodel am ON a.assetModel = am.assetModelID
-                                                                        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
-                                                                        JOIN ref_brand rb ON am.brand = rb.brandID
-                                                                        JOIN assetassignment assass ON a.assetID = assass.assetID
-                                                                        JOIN building b ON assass.BuildingID = b.BuildingID
-                                                                        JOIN floorandroom far ON assass.FloorAndRoomID = far.FloorAndRoomID
-                                                                        LEFT JOIN department d ON assass.DepartmentID = d.DepartmentID
-                                                                        JOIN employee e ON assass.personresponsibleID = e.UserID WHERE aa.date BETWEEN '{$sDate}' AND '{$eDate}';";
+                                                                        $queryDept="SELECT rac.name AS `ac`, COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null)) AS `start`,
+                                                                        (COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) - COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null))) AS `acquire`,
+                                                                        COUNT(IF(aa.assetStatus = 2, a.assetmodel, null)) AS `deployed`,
+                                                                        COUNT(IF(aa.assetStatus = 7, a.assetmodel, null)) AS `disposed`,
+                                                                        COUNT(IF(aa.assetStatus = 6, a.assetmodel, null)) AS `donated`, 
+                                                                        COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) AS `end`
+                                                                        FROM ref_assetcategory rac
+                                                                        JOIN assetmodel am ON rac.assetCategoryID = am.assetcategory
+                                                                        JOIN asset a ON am.assetModelID = a.assetModel
+                                                                        JOIN assetaudit aa ON a.assetID = aa.assetID 
+                                                                        GROUP BY rac.assetCategoryID;
+                                                                        ";
 
                                                                         $resultDept=mysqli_query($dbc,$queryDept);
+                                                                        $count = 1;
                                                                         while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
                                                                             echo "<tr>
-                                                                                <td class='hidden'>{$rowDept['assetID']}</td>
-                                                                                <td>{$rowDept['assetStatus']}</td>
-                                                                                <td>{$rowDept['date']}</td>
-                                                                                <td>{$rowDept['assetCategory']}</td>
-                                                                                <td>{$rowDept['propertyCode']}</td>
-                                                                                <td>{$rowDept['brand']}</td>
-                                                                                <td>{$rowDept['model']}</td>
-                                                                                <td>{$rowDept['building']}</td>
-                                                                                <td>{$rowDept['floorRoom']}</td>
-                                                                                <td>{$rowDept['department']}</td>
-                                                                                <td>{$rowDept['employee']}</td>
+                                                                                <td>{$count}</td>
+                                                                                <td>{$rowDept['ac']}</td>
+                                                                                <td>{$rowDept['start']}</td>
+                                                                                <td>{$rowDept['acquire']}</td>
+                                                                                <td>{$rowDept['deployed']}</td>
+                                                                                <td>{$rowDept['disposed']}</td>
+                                                                                <td>{$rowDept['donated']}</td>
+                                                                                <td>{$rowDept['end']}</td>
                                                                                 </tr>";
+                                                                            $count++;
                                                                         }
                                                                     }
                                                                 }
                                                             
                                                                 if(empty($_POST['startDate']) && empty($_POST['endDate'])){
-                                                                    $queryDept="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
-                                                                        am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
-                                                                        JOIN ref_assetStatus ras ON aa.assetStatus = ras.id
-                                                                        JOIN asset a ON aa.assetID = a.assetID
-                                                                        JOIN assetmodel am ON a.assetModel = am.assetModelID
-                                                                        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
-                                                                        JOIN ref_brand rb ON am.brand = rb.brandID
-                                                                        JOIN assetassignment assass ON a.assetID = assass.assetID
-                                                                        JOIN building b ON assass.BuildingID = b.BuildingID
-                                                                        JOIN floorandroom far ON assass.FloorAndRoomID = far.FloorAndRoomID
-                                                                        LEFT JOIN department d ON assass.DepartmentID = d.DepartmentID
-                                                                        JOIN employee e ON assass.personresponsibleID = e.UserID;";
+                                                                    $sDate = date("Y-m-d");
+                                                                    $eDate = date("Y-m-d");
+                                                                    
+                                                                    $queryDept="SELECT rac.name AS `ac`, COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null)) AS `start`,
+                                                                        (COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) - COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null))) AS `acquire`,
+                                                                        COUNT(IF(aa.assetStatus = 2, a.assetmodel, null)) AS `deployed`,
+                                                                        COUNT(IF(aa.assetStatus = 7, a.assetmodel, null)) AS `disposed`,
+                                                                        COUNT(IF(aa.assetStatus = 6, a.assetmodel, null)) AS `donated`, 
+                                                                        COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) AS `end`
+                                                                        FROM ref_assetcategory rac
+                                                                        JOIN assetmodel am ON rac.assetCategoryID = am.assetcategory
+                                                                        JOIN asset a ON am.assetModelID = a.assetModel
+                                                                        JOIN assetaudit aa ON a.assetID = aa.assetID 
+                                                                        GROUP BY rac.assetCategoryID;
+                                                                        ";
 
                                                                         $resultDept=mysqli_query($dbc,$queryDept);
+                                                                        $count = 1;
                                                                         while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
                                                                             echo "<tr>
-                                                                                <td class='hidden'>{$rowDept['assetID']}</td>
-                                                                                <td>{$rowDept['assetStatus']}</td>
-                                                                                <td>{$rowDept['date']}</td>
-                                                                                <td>{$rowDept['assetCategory']}</td>
-                                                                                <td>{$rowDept['propertyCode']}</td>
-                                                                                <td>{$rowDept['brand']}</td>
-                                                                                <td>{$rowDept['model']}</td>
-                                                                                <td>{$rowDept['building']}</td>
-                                                                                <td>{$rowDept['floorRoom']}</td>
-                                                                                <td>{$rowDept['department']}</td>
-                                                                                <td>{$rowDept['employee']}</td>
+                                                                                <td>{$count}</td>
+                                                                                <td>{$rowDept['ac']}</td>
+                                                                                <td>{$rowDept['start']}</td>
+                                                                                <td>{$rowDept['acquire']}</td>
+                                                                                <td>{$rowDept['deployed']}</td>
+                                                                                <td>{$rowDept['disposed']}</td>
+                                                                                <td>{$rowDept['donated']}</td>
+                                                                                <td>{$rowDept['end']}</td>
                                                                                 </tr>";
+                                                                            $count++;
                                                                         }
                                                                 }
                                                                 
@@ -182,70 +181,73 @@
                                                                     
                                                                         $sDate = $_POST['startDate'];
                                                                         
-                                                                        $queryDept="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
-                                                                        am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
-                                                                        JOIN ref_assetStatus ras ON aa.assetStatus = ras.id
-                                                                        JOIN asset a ON aa.assetID = a.assetID
-                                                                        JOIN assetmodel am ON a.assetModel = am.assetModelID
-                                                                        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
-                                                                        JOIN ref_brand rb ON am.brand = rb.brandID
-                                                                        JOIN assetassignment assass ON a.assetID = assass.assetID
-                                                                        JOIN building b ON assass.BuildingID = b.BuildingID
-                                                                        JOIN floorandroom far ON assass.FloorAndRoomID = far.FloorAndRoomID
-                                                                        LEFT JOIN department d ON assass.DepartmentID = d.DepartmentID
-                                                                        JOIN employee e ON assass.personresponsibleID = e.UserID WHERE aa.date BETWEEN '{$sDate}' AND '3000-1-1';";
+                                                                        $eDate = date("Y-m-d");
+                                                                    
+                                                                    $queryDept="SELECT rac.name AS `ac`, COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null)) AS `start`,
+                                                                        (COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) - COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null))) AS `acquire`,
+                                                                        COUNT(IF(aa.assetStatus = 2, a.assetmodel, null)) AS `deployed`,
+                                                                        COUNT(IF(aa.assetStatus = 7, a.assetmodel, null)) AS `disposed`,
+                                                                        COUNT(IF(aa.assetStatus = 6, a.assetmodel, null)) AS `donated`, 
+                                                                        COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) AS `end`
+                                                                        FROM ref_assetcategory rac
+                                                                        JOIN assetmodel am ON rac.assetCategoryID = am.assetcategory
+                                                                        JOIN asset a ON am.assetModelID = a.assetModel
+                                                                        JOIN assetaudit aa ON a.assetID = aa.assetID 
+                                                                        GROUP BY rac.assetCategoryID;
+                                                                        ";
+
 
                                                                         $resultDept=mysqli_query($dbc,$queryDept);
+                                                                        $count = 1;
                                                                         while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
                                                                             echo "<tr>
-                                                                                <td class='hidden'>{$rowDept['assetID']}</td>
-                                                                                <td>{$rowDept['assetStatus']}</td>
-                                                                                <td>{$rowDept['date']}</td>
-                                                                                <td>{$rowDept['assetCategory']}</td>
-                                                                                <td>{$rowDept['propertyCode']}</td>
-                                                                                <td>{$rowDept['brand']}</td>
-                                                                                <td>{$rowDept['model']}</td>
-                                                                                <td>{$rowDept['building']}</td>
-                                                                                <td>{$rowDept['floorRoom']}</td>
-                                                                                <td>{$rowDept['department']}</td>
-                                                                                <td>{$rowDept['employee']}</td>
+                                                                                <td>{$count}</td>
+                                                                                <td>{$rowDept['ac']}</td>
+                                                                                <td>{$rowDept['start']}</td>
+                                                                                <td>{$rowDept['acquire']}</td>
+                                                                                <td>{$rowDept['deployed']}</td>
+                                                                                <td>{$rowDept['disposed']}</td>
+                                                                                <td>{$rowDept['donated']}</td>
+                                                                                <td>{$rowDept['end']}</td>
                                                                                 </tr>";
-                                                                    }
+                                                                            $count++;
+                                                                        }
                                                                 }
                                                             
                                                                 if(empty($_POST['startDate']) && isset($_POST['endDate'])){
                                                                     
-                                                                        $eDate = $_POST['endDate'];
+                                                                        $sDate = date("Y-m-d");
                                                                         
-                                                                        $queryDept="SELECT aa.id AS assetID, ras.description AS assetStatus, aa.date, a.propertyCode, rac.name AS assetCategory, rb.name AS brand,
-                                                                        am.description AS model, b.name AS building, far.floorRoom, d.name AS department, e.name AS employee FROM assetaudit aa
-                                                                        JOIN ref_assetStatus ras ON aa.assetStatus = ras.id
-                                                                        JOIN asset a ON aa.assetID = a.assetID
-                                                                        JOIN assetmodel am ON a.assetModel = am.assetModelID
-                                                                        JOIN ref_assetcategory rac ON am.assetCategory = rac.assetCategoryID
-                                                                        JOIN ref_brand rb ON am.brand = rb.brandID
-                                                                        JOIN assetassignment assass ON a.assetID = assass.assetID
-                                                                        JOIN building b ON assass.BuildingID = b.BuildingID
-                                                                        JOIN floorandroom far ON assass.FloorAndRoomID = far.FloorAndRoomID
-                                                                        LEFT JOIN department d ON assass.DepartmentID = d.DepartmentID
-                                                                        JOIN employee e ON assass.personresponsibleID = e.UserID WHERE aa.date BETWEEN '1000-1-1' AND '{$eDate}';";
+                                                                        $eDate = $_POST['endDate'];
+                                                                    
+                                                                    $queryDept="SELECT rac.name AS `ac`, COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null)) AS `start`,
+                                                                        (COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) - COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null))) AS `acquire`,
+                                                                        COUNT(IF(aa.assetStatus = 2, a.assetmodel, null)) AS `deployed`,
+                                                                        COUNT(IF(aa.assetStatus = 7, a.assetmodel, null)) AS `disposed`,
+                                                                        COUNT(IF(aa.assetStatus = 6, a.assetmodel, null)) AS `donated`, 
+                                                                        COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) AS `end`
+                                                                        FROM ref_assetcategory rac
+                                                                        JOIN assetmodel am ON rac.assetCategoryID = am.assetcategory
+                                                                        JOIN asset a ON am.assetModelID = a.assetModel
+                                                                        JOIN assetaudit aa ON a.assetID = aa.assetID 
+                                                                        GROUP BY rac.assetCategoryID;
+                                                                        ";
 
                                                                         $resultDept=mysqli_query($dbc,$queryDept);
+                                                                        $count = 1;
                                                                         while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
                                                                             echo "<tr>
-                                                                                <td class='hidden'>{$rowDept['assetID']}</td>
-                                                                                <td>{$rowDept['assetStatus']}</td>
-                                                                                <td>{$rowDept['date']}</td>
-                                                                                <td>{$rowDept['assetCategory']}</td>
-                                                                                <td>{$rowDept['propertyCode']}</td>
-                                                                                <td>{$rowDept['brand']}</td>
-                                                                                <td>{$rowDept['model']}</td>
-                                                                                <td>{$rowDept['building']}</td>
-                                                                                <td>{$rowDept['floorRoom']}</td>
-                                                                                <td>{$rowDept['department']}</td>
-                                                                                <td>{$rowDept['employee']}</td>
+                                                                                <td>{$count}</td>
+                                                                                <td>{$rowDept['ac']}</td>
+                                                                                <td>{$rowDept['start']}</td>
+                                                                                <td>{$rowDept['acquire']}</td>
+                                                                                <td>{$rowDept['deployed']}</td>
+                                                                                <td>{$rowDept['disposed']}</td>
+                                                                                <td>{$rowDept['donated']}</td>
+                                                                                <td>{$rowDept['end']}</td>
                                                                                 </tr>";
-                                                                    }
+                                                                            $count++;
+                                                                        }
                                                                 }
 															?>
                                                             </tbody>

@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<?php
+	session_start();
+	require_once('db/mysql_connect.php');
+?>
 <html lang="en">
 
 <head>
@@ -33,7 +37,7 @@
             <div class="brand">
 
                 <a href="#" class="logo">
-                    <img src="images/dlsulogo.png" alt="" width="200px" height="40px">
+                    Welcome IT Officer!
                 </a>
             </div>
 
@@ -49,38 +53,39 @@
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+				<?php
+                    if (isset($_SESSION['submitMessage'])){
 
-                <div class="row">
+                        echo "<div class='alert alert-success'>
+                                {$_SESSION['submitMessage']}
+							  </div>";
+                        unset($_SESSION['submitMessage']);
+                    }
+				?>
+                <div class="col-sm-12">
                     <div class="col-sm-12">
-                        <div class="col-sm-12">
+                        
+                        <div class="row">
+
+
                             <div class="row">
                                 <div class="col-sm-12">
                                     <section class="panel">
+										<form method="post" id="formSend" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                         <header class="panel-heading">
-                                            Inventory Report Form
+                                            View Service Units
+                                            <span class="tools pull-right">
+                                                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                            </span>
                                         </header>
-
-                                        <form method="POST" action="it_inventory_report.php">
-                                            <div class="form-group">
-                                                <div class="col-lg-6">
-                                                    Start Date: <input type="date" name="startDate" class="form-control" required>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    End Date: <input type="date" name="endDate" class="form-control" required>
-                                                </div><br><br>
-                                                <div align="center">
-                                                    <br><button class="btn btn-success" name="submit">Submit</button>
-                                                </div>
-                                            </div>
-                                        </form>
-
                                         <div class="panel-body">
-                                            <section id="unseen">
-                                            </section>
                                         </div>
+										</form>
                                     </section>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -91,9 +96,15 @@
 
     </section>
 
-    <!-- WAG GALAWIN PLS LANG -->
 
-    <!--Core js-->
+    <!-- WAG GALAWIN PLS LANG -->
+	
+	<script>
+	function Confirm() {
+		document.getElementById("formSend").submit();
+	}
+	</script>
+
     <script src="js/jquery.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
     <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
@@ -113,10 +124,6 @@
 
     <!--dynamic table initialization -->
     <script src="js/dynamic_table_init.js"></script>
-
-
-    <script>
-    </script>
 
 </body>
 
