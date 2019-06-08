@@ -68,9 +68,8 @@
                                                 <tr>
                                                     <th>Purchase Order #</th>
                                                     <th>Supplier</th>
-                                                    <!--<th>Expected Delivery Date</th>
-                                                    <th>Actual Delivery Date</th>-->
-                                                    <th>Status</th>
+													<th>Nearest Expected Arrival Date</th>
+                                                    <th>Status</th>   
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -82,9 +81,19 @@
 													$result=mysqli_query($dbc,$query);
 													
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														
+														//GET NEAREST EXPECTED ARRIVAL DATE
+														$queryExpArrDat="SELECT expectedDeliveryDate 
+																			FROM thesis.procurementdetails 
+																			where procurementID='{$row['procurementID']}' and expectedDeliveryDate>=CURDATE() 
+																			order by expectedDeliveryDate asc limit 1;";
+														$resultExpArrDat=mysqli_query($dbc,$queryExpArrDat);
+														$rowExpArrDat=mysqli_fetch_array($resultExpArrDat,MYSQLI_ASSOC);
+														
 														echo "<tr id='{$row['procurementID']}'>
 															<td>{$row['procurementID']}</td>
-															<td>{$row['supplierName']}</td>";
+															<td>{$row['supplierName']}</td>
+															<td>{$rowExpArrDat['expectedDeliveryDate']}</td>";
 															
 														if($row['status']=="Pending"){
 															echo "<td><span class='label label-warning label-mini'>{$row['status']}</span></td>";
@@ -96,7 +105,7 @@
 															echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
 														}
 														
-														echo "	
+														echo "
 														</tr>";
 													}
 												
@@ -104,21 +113,6 @@
 												
 												
 												?>
-												
-                                                <!-- <tr>
-                                                    <td>232323232</td>
-                                                    <td>1/1/2018</td>
-                                                    <td><span class="label label-success label-mini">Open</span></td>
-                                                    <td>Marvin Lao</td>
-                                                    <td>1/1/2018</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>232323232</td>
-                                                    <td>1/1/2018</td>
-                                                    <td><span class="label label-danger label-mini">Closed</span></td>
-                                                    <td>Marvin Lao</td>
-                                                    <td>1/1/2018</td>
-                                                </tr> -->
                                             </tbody>
                                         </table>
                                     </section>
