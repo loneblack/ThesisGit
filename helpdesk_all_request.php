@@ -157,7 +157,10 @@
 
                                                         echo
                                                             "</td>
-                                                            <td>{$row['dateNeed']}</td>";
+                                                            <td>";
+															echo date('Y-m-d', strtotime($row['dateReceived']. ' + 7 days'));
+															
+															echo"</td>";
 
                                                         if($row['description']=="Pending"){ echo "<td><label class='label label-warning'>{$row['description']}</label></td>"; }
                                                         if($row['description']=="Ongoing"){ echo "<td><label class='label label-primary'>{$row['description']}</label></td>"; }
@@ -227,17 +230,19 @@
                                                 
                                                 
                                                 <?php
+													
                                                     //view for salvage
-                                                    $query69 = "SELECT s.id, rs.description, e.name FROM salvage s 
+                                                    $query69 = "SELECT s.id, rs.description, e.name,s.dateCreated FROM salvage s 
                                                                 JOIN ref_status rs ON s.ref_status_statusID = rs.statusID
                                                                 JOIN user u ON s.userID = u.userID
                                                                 JOIN employee e ON u.userID = e.userID;";
                                                                   
                                                     $result69 = mysqli_query($dbc, $query69);
                                                     
+													
                                                     while ($row = mysqli_fetch_array($result69, MYSQLI_ASSOC))
                                                     {
-                                                      
+                                                     
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['id']}</td>
                                                             <td>{$count}</td>
@@ -248,7 +253,9 @@
 
                                                         echo
                                                             "</td>
-                                                            <td></td>";
+                                                            <td>";
+															echo date('Y-m-d',strtotime($row['dateCreated']. ' + 14 days'));
+															echo "</td>";
 
                                                         if($row['description']=="Pending"){ echo "<td><label class='label label-warning'>{$row['description']}</label></td>"; }
                                                         if($row['description']=="Ongoing"){ echo "<td><label class='label label-primary'>{$row['description']}</label></td>"; }
