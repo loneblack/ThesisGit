@@ -40,7 +40,7 @@
 	    //insertion to service table
 		$sql = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`)
 			                                VALUES ('{$details}', '{$date}', '{$userID}', '27', '1', '14', '0');";//status is set to 1 for pending status
-
+			
 		$result = mysqli_query($dbc, $sql);
 
 		//get the id of previously inserted service  
@@ -56,6 +56,7 @@
 
 				$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`, `problem`) VALUES ('{$id}', '{$assets[$i]}', '0', '{$problem[$i]}');";
 				$resulted = mysqli_query($dbc, $query);
+
 
 				//set asset status to for repair(9)
 				$query2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '9' WHERE (`assetID` = '{$assets[$i]}');";
@@ -73,6 +74,7 @@
 	                                VALUES ('{$details}', '{$date}', '{$userID}', '27', '1', '14', '1');";//status is set to 1 for pending status
 
 		$result = mysqli_query($dbc, $sql);
+		
 
 		//get the id of previously inserted service  
 		$sql1 = "SELECT MAX(id) as 'id' FROM thesis.service;";//status is set to 1 for pending status
@@ -84,7 +86,6 @@
 	    //insert to serviceUnit
     	$sql = "INSERT INTO `thesis`.`serviceUnit` (`serviceID`, `statusID`, `UserID`, `dateNeeded`)
 	                                VALUES ('{$id}', '1', '{$userID}', DATE_ADD(NOW(), INTERVAL 3 DAY));";//status is set to 1 for pending status
-
 		$result = mysqli_query($dbc, $sql);
 
 		//get newly inserted service unit
@@ -97,7 +98,6 @@
 	    //insert to service details
     	$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`, `problem`) VALUES ('{$id}', '{$serviceUnitAssets[$i]}', '0', '{$problem[$i]}');";
     	$resulted = mysqli_query($dbc, $query);
-
     	//set asset status to for repair(9)
 		$query2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '9' WHERE (`assetID` = '{$serviceUnitAssets[$i]}');";
 		$resulted2 = mysqli_query($dbc, $query2);
@@ -105,7 +105,6 @@
 		//Insert assets to serviceUnit Details also
 		$insertServiceUnitDetails = "INSERT INTO serviceUnitDetails (serviceUnitID, assetID, received) VALUES ('{$serviceUnitID}', '{$serviceUnitAssets[$i]}', '0');";
 		$resulted4 = mysqli_query($dbc, $insertServiceUnitDetails);
-    		
     	}
     }
 

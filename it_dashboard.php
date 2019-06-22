@@ -50,13 +50,6 @@
 	$_SESSION['bldg']='0';
 	
 	$queryGetAllMainData="SELECT far.floorRoom,a.propertyCode,rac.name as `assetCat`,ras.description as `assetStat`,au.date FROM thesis.ticket t join assetaudit au on t.ticketID=au.ticketID 
-																																																							  join asset a on au.assetID=a.assetID
-																																																							  join assetmodel am on a.assetModel=am.assetModelID
-																																																							  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
-																																																							  join ref_assetstatus ras on au.assetStatus=ras.id 
-																																																							  join assetassignment aa on a.assetID=aa.assetID 
-																																																							  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
-																																																where t.serviceType='28' and au.assetStatus!='17'";
 	$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
 	while($rowGetAllMainData=mysqli_fetch_array($resultGetAllMainData,MYSQLI_ASSOC)){
 		array_push($_SESSION['room'],$rowGetAllMainData['floorRoom']);	
@@ -479,8 +472,8 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                                                  $count++;
                                                             }
 
-                                                            //Request for Parts
-                                                            $queryRequestforParts = "SELECT * , r.id as 'requestPartsID' FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id JOIN ref_status st ON r.statusID = st.statusID JOIN employee e ON e.UserID = r.UserID JOIN ticket t on s.id = t.service_id;";
+                                                           //Request for Parts
+                                                            $queryRequestforParts = "SELECT * , r.id as 'requestPartsID', st.description FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id JOIN ref_status st ON r.statusID = st.statusID JOIN employee e ON e.UserID = r.UserID JOIN ticket t on s.id = t.service_id;";
 
                                                             $resultRequestforParts = mysqli_query($dbc, $queryRequestforParts);
                                                             while($row=mysqli_fetch_array($resultRequestforParts,MYSQLI_ASSOC)){
@@ -755,7 +748,7 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
                                 window.location.href = "it_view_repair_request_parts.php?id=" + ida;
                             } else if (id == "Ongoing") {
                                 window.location.href = "it_view_repair_request_parts_ongoing.php?id=" + ida;
-                            } else if (id == "Closed") {
+                            } else if (id == "Completed") {
                                 window.location.href = "it_view_repair_request_parts_closed.php?id=" + ida;
                             }
                         }
