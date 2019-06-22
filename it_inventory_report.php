@@ -111,7 +111,7 @@
                                                                         $sDate = $_POST['startDate'];
                                                                         $eDate = $_POST['endDate'];
                                                                         
-                                                                        $queryDept="SELECT rac.name AS `ac`, COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null)) AS `start`,
+                                                                        $queryDept="SELECT *, rac.name AS `ac`, COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null)) AS `start`,
                                                                         (COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) - COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null))) AS `acquire`,
                                                                         COUNT(IF(aa.assetStatus = 2, a.assetmodel, null)) AS `deployed`,
                                                                         COUNT(IF(aa.assetStatus = 7, a.assetmodel, null)) AS `disposed`,
