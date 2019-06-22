@@ -766,7 +766,6 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('4', 'FD-0012', 'AqdjQSg6', '56-CB-AD-08-F5-D3', '2');
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('5', 'PROCES-0021', 'uoChbm7F', 'E2-22-5C-D3-5E-AD', '2');
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('6', 'VIDCRD-0111', 'aVpifFQ5', 'A2-F4-ED-B2-EC-3D', '1');
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('7', 'PCKTWF-0001', 'PdpQ7RnL', '3A-72-58-81-44-2F', '2');
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('8', 'MNTR-0006', 'oYHsA8PJ', '6D-96-DF-DF-4B-4F', '1');
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('9', 'MEDPLAY-0001', 'VqZ6oEb3', '51-31-A4-F4-D6-3B', '1');
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('10', 'TABLET-0001', 'VQVc7xL6', '82-41-46-5F-40-1C', '1');
@@ -1017,16 +1016,16 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('32', 'AP-0004', 'BBAS5344', '', '16'); -- ID 223, Access Point
 INSERT INTO `thesis`.`asset` (`assetModel`,`propertyCode`,`serialNo`,`dateDelivered`,`assetStatus`) VALUES (32,'AP-0005','BBAS6344','2010-03-25 11:06:14',1); -- ID 224, Access Point
 
-INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0010', 'faggot', 'CB-F3-B2-D0-E2-40', '2'); -- ID 226, PC 
-	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0019', 'Zk8J3V27', '', '19'); -- ID 227, Hard Disk Drive
-	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0019', 'DoxjRye7', '', '19'); -- ID 228, Power Supply
-	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0019', 'BHsaDsix', '', '19'); -- ID 229, Processor
-	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('17', 'KB-0018', 'mysjGmci', '', '19'); -- ID 230, keyboard
-	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0019', 'ofo4Xkt2', '', '19'); -- ID 231, memory
-	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0018', 'VjtKutaR', '', '19'); -- ID 232, monitor
-	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0018', 'rotkeqi7', '', '19'); -- ID 233, motherboard
-	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0017', 'BJbYLatw', '', '19'); -- ID 234, mouse
-	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('36', 'VDCRD-0005', 'sPzaN2nS', '', '19'); -- ID 235, Video Card Graphics Card
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('24', 'PC-0010', 'faggot', 'CB-F3-B2-D0-E2-40', '2'); -- ID 225, PC 
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('28', 'HDD-0019', 'Zk8J3V27', '', '19'); -- ID 226, Hard Disk Drive
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('26', 'UPS-0019', 'DoxjRye7', '', '19'); -- ID 227, Power Supply
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('27', 'PRCS-0019', 'BHsaDsix', '', '19'); -- ID 228, Processor
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('17', 'KB-0018', 'mysjGmci', '', '19'); -- ID 229, keyboard
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('12', 'M-0019', 'ofo4Xkt2', '', '19'); -- ID 230, memory
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('14', 'MNTR-0018', 'VjtKutaR', '', '19'); -- ID 231, monitor
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0018', 'rotkeqi7', '', '19'); -- ID 232, motherboard
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0017', 'BJbYLatw', '', '19'); -- ID 233, mouse
+	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('36', 'VDCRD-0005', 'sPzaN2nS', '', '19'); -- ID 234, Video Card Graphics Card
 
 -- asset audit for new items
 INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');
@@ -1450,14 +1449,3 @@ INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (2, 225, 1); -- P
 	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (218, 14);	-- Motherboard
 	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (219, 14);	-- Mouse
 	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (220, 14);	-- Video Card Graphics Card
-
-	-- Faculty1 PC
-	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (227, 14);	-- Hard disk drive
-	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (228, 14);	-- Power supply
-	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (229, 14);	-- Processor
-	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (230, 14);	-- Keyboard
-	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (231, 14);	-- Memory
-	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (232, 14);	-- Monitor
-	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (233, 14);	-- Motherboard
-	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (234, 14);	-- Mouse
-	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (235, 14);	-- Video Card Graphics Card
