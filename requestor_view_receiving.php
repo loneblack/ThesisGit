@@ -259,6 +259,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                                     '<tr>
                                                                         <td>
                                                                                 <input class="form-control" name="assets[]"  type="checkbox" value="'. $requestedID[$i].'"'.$requestedCheck[$i].'/>
+                                                                                <input type="hidden" id="hiddenchk1[]"name="assets[]" value="0" >
                                                                         </td>
 
                                                                         <td style="width:1%">
@@ -282,7 +283,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                                         </td>
 
                                                                         <td style="padding-top:5px; padding-bottom:5px">
-                                                                             <input type="text" class="form-control" name="comments" id="comments">
+                                                                             <input type="text" class="form-control" name="comments[]" id="comments">
                                                                         </td>
                                                                     </tr>';
                                                             }

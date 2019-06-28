@@ -26,14 +26,29 @@
     		array_splice($serviceUnitAssets, ($i+1), 1);
     	}
     }
+    
+    $noServiceUnitAssets = 0;
+
     for ($i=0; $i < sizeof($serviceUnitAssets); $i++) { 
 
-    	$noServiceUnitAssets = 0;
 
-    	if($serviceUnitAssets[$i] == 0){
+    	if($serviceUnitAssets[$i] == 0 && $assets[$i] != 0){
     		$noServiceUnitAssets = 1;
+
     	}
+
+    	echo $i." - ";
+    	echo $serviceUnitAssets[$i]." - ";
+    	echo $assets[$i]." - ";
+    	echo $noServiceUnitAssets."|";
     }
+
+    echo "<br>";
+    print_r($serviceUnitAssets);
+    echo "<br>";
+    print_r($assets);
+    echo "<br>";
+    echo $noServiceUnitAssets."<br>";
 
 
     if($noServiceUnitAssets == 1){//insertion of assets without service unit
@@ -42,6 +57,8 @@
 			                                VALUES ('{$details}', '{$date}', '{$userID}', '27', '1', '14', '0');";//status is set to 1 for pending status
 			
 		$result = mysqli_query($dbc, $sql);
+
+		echo $sql." - no service unit <br>";
 
 		//get the id of previously inserted service  
 		$sql1 = "SELECT MAX(id) as 'id' FROM thesis.service;";//status is set to 1 for pending status
@@ -52,10 +69,11 @@
 
     for ($i=0; $i < sizeof($assets); $i++) {
 
-    	if($serviceUnitAssets[$i] == 0) {
+    	if($serviceUnitAssets[$i] == 0 &&  $assets[$i] != 0) {
 
 				$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`, `problem`) VALUES ('{$id}', '{$assets[$i]}', '0', '{$problem[$i]}');";
 				$resulted = mysqli_query($dbc, $query);
+				echo $sql." - no service unit details <br>";
 
 
 				//set asset status to for repair(9)
@@ -71,10 +89,10 @@
 
     	//insertion to service table
 		$sql = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`)
-	                                VALUES ('{$details}', '{$date}', '{$userID}', '27', '1', '14', '1');";//status is set to 1 for pending status
+	                                VALUES ('{$problem[$i]}', '{$date}', '{$userID}', '27', '1', '14', '1');";//status is set to 1 for pending status
 
 		$result = mysqli_query($dbc, $sql);
-		
+		echo $sql." - service unit <br>";
 
 		//get the id of previously inserted service  
 		$sql1 = "SELECT MAX(id) as 'id' FROM thesis.service;";//status is set to 1 for pending status
@@ -98,6 +116,8 @@
 	    //insert to service details
     	$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`, `problem`) VALUES ('{$id}', '{$serviceUnitAssets[$i]}', '0', '{$problem[$i]}');";
     	$resulted = mysqli_query($dbc, $query);
+
+    	echo $query." - service unit details<br>";
     	//set asset status to for repair(9)
 		$query2 = "UPDATE `thesis`.`asset` SET `assetStatus` = '9' WHERE (`assetID` = '{$serviceUnitAssets[$i]}');";
 		$resulted2 = mysqli_query($dbc, $query2);

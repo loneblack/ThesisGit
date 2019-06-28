@@ -3,6 +3,8 @@
     session_start();
     require_once("db/mysql_connect.php");
 
+    $closed = 0;
+
     $id = $_GET['id'];
     $userID = $_SESSION['userID'];
         
@@ -205,6 +207,8 @@
             $queryTickUp="UPDATE `thesis`.`ticket` SET `status`='7',`dateClosed` = '{$currDate}' WHERE `ticketID`='{$id}'";
             $resultTickUp=mysqli_query($dbc,$queryTickUp);
 
+            $closed = 1;
+
             //if all assets are repaired
             if($rowService['numAssets']==$rowService['repaired']){
                  
@@ -271,6 +275,9 @@
         }
 
         $header = $_SESSION['previousPage'];
+        if($closed == 1){
+            $header = "engineer_view_ticket_repair_closed.php?id=".$id;
+        }
         header('Location: '.$header);
     
 ?>

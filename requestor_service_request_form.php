@@ -204,24 +204,6 @@ $count = 0;
                                                                     
 
                                                                 ?>
-                                                                <tr style="display: none;">
-                                                                <td style='display:none'>{$count}</td>
-                                                                <td>
-                                                                        <input type='checkbox' id='chk1[]' name='assets[]'' value='{$row['assetID']}' onclick='checkBoxEnable(this);' >
-                                                                        <input type='hidden' id='hiddenchk1[]'name='assets[]' value='0' >
-                                                                     </td>
-                                                                <td>{$row['propertyCode']}</td>
-                                                                <td>{$row['brand']}</td>
-                                                                <td>{$row['category']}</td>
-                                                                <td>{$row['itemSpecification']}</td>
-                                                                <td>
-                                                                        <input type='text' class='form-control' id='{$row['assetID']}' name='problem[]'>
-                                                                        </td>
-                                                                <td style='text-align:center'>
-                                                                        <input id='chk2[]' value='{$row['assetID']}' type='checkbox' name='serviceUnit[]' disabled>
-                                                                        <input value='0' id='hiddenchk2[]' type='hidden' name='serviceUnit[]'>
-                                                                      </td>
-                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                         
