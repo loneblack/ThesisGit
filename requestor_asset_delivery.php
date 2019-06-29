@@ -63,9 +63,6 @@
                                     <section class="panel">
                                         <header class="panel-heading">
                                             Assets To Be Delivered
-                                            <span class="tools pull-right">
-                                                <a class="fa fa-plus" href="it_add_brand.php"></a>
-                                            </span>
                                         </header>
                                         <div class="panel-body">
                                             <section id="unseen">
