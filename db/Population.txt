@@ -659,6 +659,8 @@ INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `it
 
 INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('36', '4', '49', '8 Gbps', 'GTX 1060'); -- Video Card Graphics Card
 
+INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('37', '4', '49', '8 Gbps', 'Test_Asset'); -- Video Card Graphics Card
+
 -- user
 -- 1
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
@@ -1048,6 +1050,11 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('15', 'MOBO-0021', 'rotkeqi7', '', '19'); -- ID 252, motherboard
 	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('16', 'MOUS-0021', 'BJbYLatw', '', '19'); -- ID 253, mouse
 	INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('36', 'VDCRD-0021', 'sPzaN2nS', '', '19'); -- ID 254, Video Card Graphics Card
+
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('37', 'Test_Graphics', 'Testing', '', '1'); -- ID 255, Video Card Graphics Card
+
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('37', 'Test_Graphics1', 'Testing1', '', '1'); -- ID 256, Video Card Graphics Card
+
 
 -- asset audit for new items
 INSERT INTO `thesis`.`assetaudit` (`assetStatus`, `UserID`, `date`, `assetID`) VALUES ('1', '1', '2018-08-02', '1');
@@ -1501,3 +1508,18 @@ INSERT INTO COMPUTER (assetStatus, assetID, isComplete) VALUES (2, 245, 1); -- P
 	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (252, 17);	-- Motherboard
 	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (253, 17);	-- Mouse
 	INSERT INTO COMPUTERCOMPONENT (assetID, computerID) VALUES (254, 17);	-- Video Card Graphics Card
+
+-- request_borrow
+
+INSERT INTO `thesis`.`request_borrow` (`officeID`, `DepartmentID`, `BuildingID`, `FloorAndRoomID`, `startDate`, `endDate`, `personresponsibleID`, `dateCreated`, `statusID`, `steps`) VALUES ('25', '23', '7', '49', '2019-4-16', Now(), '9', Now(), '1', '25'); -- ID 1
+
+-- request
+INSERT INTO `thesis`.`request` (`description`, `DepartmentID`, `unitHead`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`) VALUES ('Academic purposes', '23', 'unitHead_test', '3', '2019-4-22', '49', '7', now(), '9', '1', '25'); -- ID 1
+
+-- requestor_receiving; receiving_details
+INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `borrowID`, `statusID`) VALUES ('9', '1', '1'); -- ID 1
+INSERT INTO `thesis`.`receiving_details` (`receivingID`, `assetID`, `received`) VALUES ('1', '255', '0'); -- ID 1
+
+
+INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `requestID`, `statusID`) VALUES ('9', '1', '1'); -- ID 2
+INSERT INTO `thesis`.`receiving_details` (`receivingID`, `assetID`, `received`) VALUES ('2', '255', '0'); -- ID 2
