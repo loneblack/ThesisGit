@@ -13,7 +13,7 @@
     $date = date('Y-m-d H:i:s', strtotime($value." ".$time));
 
     $assets = $_POST['assets'];
-    $comments = $_POST['comments'];
+    $select = $_POST['select'];
 
     for ($i=0; $i < sizeof($assets); $i++) { 
     	if($assets[$i] != 0){
@@ -31,36 +31,39 @@
 		$row = mysqli_fetch_array($result1, MYSQLI_ASSOC);
 
 		$receivingDetailsID = $row['id'];
+
+		if($select == 1){
+			
+			$sql = "UPDATE `thesis`.`receiving_details` SET
+		    	 `received` = '1'
+		    	  WHERE (`id` = '{$receivingDetailsID}');";
+			$result = mysqli_query($dbc, $sql);
+			
+			//UPDATE ASSET STATUS
+			$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='2' WHERE `assetID`='{$assets[$i]}'";
+			$resultStat=mysqli_query($dbc,$queryStat);
+			
+			//INSERT TO ASSET AUDIT
+			$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$assets[$i]}', '2');";
+			$resultAssAud=mysqli_query($dbc,$queryAssAud);
+		}
+		if($select == 2)
+		{//seet received to broken and set asset status to broken?
+			$sql = "UPDATE `thesis`.`receiving_details` SET
+		    	 `received` = '2'
+		    	  WHERE (`id` = '{$receivingDetailsID}');";
+			$result = mysqli_query($dbc, $sql);
+			
+			//UPDATE ASSET STATUS
+			$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='5' WHERE `assetID`='{$assets[$i]}'";
+			$resultStat=mysqli_query($dbc,$queryStat);
+			
+			//INSERT TO ASSET AUDIT
+			$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$assets[$i]}', '5');";
+			$resultAssAud=mysqli_query($dbc,$queryAssAud);
+		}
+
 		
-		if($assets[$i] == 0 && $comments == ""){
-			$sql = "UPDATE `thesis`.`receiving_details` SET
-		    	 `comments` = '{$comments[$i]}'
-		    	  WHERE (`id` = '{$receivingDetailsID}');";
-			$result = mysqli_query($dbc, $sql);
-			//UPDATE ASSET STATUS
-			$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='2' WHERE `assetID`='{$assets[$i]}'";
-			$resultStat=mysqli_query($dbc,$queryStat);
-			
-			//INSERT TO ASSET AUDIT
-			$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$assets[$i]}', '2');";
-			$resultAssAud=mysqli_query($dbc,$queryAssAud);
-		}
-		else
-		{
-			$sql = "UPDATE `thesis`.`receiving_details` SET
-		    	 `received` = '1', 
-		    	 `comments` = '{$comments[$i]}'
-		    	  WHERE (`id` = '{$receivingDetailsID}');";
-			$result = mysqli_query($dbc, $sql);
-			
-			//UPDATE ASSET STATUS
-			$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='2' WHERE `assetID`='{$assets[$i]}'";
-			$resultStat=mysqli_query($dbc,$queryStat);
-			
-			//INSERT TO ASSET AUDIT
-			$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$assets[$i]}', '2');";
-			$resultAssAud=mysqli_query($dbc,$queryAssAud);
-		}
 	}
 
     //if all checked change status to done

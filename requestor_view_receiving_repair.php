@@ -123,9 +123,6 @@ $requestedBrand = array();
 $requestedDescription = array();
 $requestedBrand = array();
 $requestedCheck = array();
-$notYetReceived = array();
-$received = array();
-$brokenProblem = array();
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
@@ -138,22 +135,9 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
         if($row['received'] == 1){
             array_push($requestedCheck, "checked disabled");
-            array_push($received, "selected");
-            array_push($notYetReceived, "");
-            array_push($brokenProblem, "");
         }
-        elseif($row['received'] == 2){
-            array_push($requestedCheck, "checked disabled");
-            array_push($received, "");
-            array_push($brokenProblem, "selected");
-            array_push($notYetReceived, "");
-        }
-        else{
+        else {
             array_push($requestedCheck, "");
-            array_push($notYetReceived, "selected");
-            array_push($received, "");
-            array_push($brokenProblem, "");
-
         }
 
         $count++;
@@ -259,28 +243,23 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                     <table class="table table-bordered table-striped table-condensed table-hover" id="mama">
                                                         <thead>
                                                             <tr>
-                                                                <th width="15%"></th>
+                                                                <th></th>
                                                                 <th>PropertyCode</th>
                                                                 <th>Category</th>
                                                                 <th>Brand</th>
                                                                 <th>Model and Specifications</th>
+                                                                <th>Comments</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <?php
 
                                                             for ($i=0; $i < $count; $i++) { 
-
-
                                                                 echo
                                                                     '<tr>
                                                                         <td>
-                                                                                <select class="form-control" name="select[]" '.$requestedCheck[$i].'>
-                                                                                    <option value="0" '.$notYetReceived[$i].'>Not yet received</option>
-                                                                                    <option value="1" '.$received[$i].'>Received</option>
-                                                                                    <option value="2" '.$brokenProblem[$i].'>Broken/ with problems</option>
-                                                                                </select>
-                                                                                <input type="hidden" id="hiddenchk1[]"name="assets[]" value="'. $requestedID[$i].'" >
+                                                                                <input class="form-control" name="assets[]"  type="checkbox" value="'. $requestedID[$i].'"'.$requestedCheck[$i].'/>
+                                                                                <input type="hidden" id="hiddenchk1[]"name="assets[]" value="0" >
                                                                         </td>
 
                                                                         <td style="width:1%">
@@ -303,6 +282,9 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                                               '.$requestedDescription[$i].' '.$requestedItemSpecification[$i].'
                                                                         </td>
 
+                                                                        <td style="padding-top:5px; padding-bottom:5px">
+                                                                             <input type="text" class="form-control" name="comments[]" id="comments">
+                                                                        </td>
                                                                     </tr>';
                                                             }
                                                             ?>
