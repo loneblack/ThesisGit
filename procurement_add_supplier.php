@@ -26,13 +26,15 @@
 		}
 		
 		//Email
+        /*
 		if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 			$email=FALSE;
 			$message.="Invalid email format. ";
 		}
+        
 		else
 			$email=$_POST['email'];
-		
+		*/
 		//Address
 		$address=$_POST['address'];
 		
@@ -130,7 +132,7 @@
                                             </div>
 
                                             <div class="form-group ">
-                                                <label for="email" class="control-label col-lg-3">Email (DLSU)</label>
+                                                <label for="email" class="control-label col-lg-3">Email </label>
                                                 <div class="col-lg-6">
                                                     <input class="form-control " id="email" name="email" type="email" value="<?php if (isset($_POST['email']) && !$flag) echo $_POST['email']; ?>" required />
                                                 </div>
