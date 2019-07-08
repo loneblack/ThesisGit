@@ -129,7 +129,7 @@
 																						
 																						//GET ALL DATE FROM START DATE TO END DATE
 																						$queryGetAllMainData="SELECT b.name AS `building`, rac.name AS `ac`,
-																						COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5, a.assetmodel, null)) AS `start`,
+																						COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
                                                                                         COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `broken`,
                                                                                         COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) AS `missing`,
                                                                                         COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) AS `end`
@@ -151,7 +151,7 @@
 																						$endDate=date("Y-m-d");
 																						
 																						$queryGetAllMainData="SELECT b.name AS `building`, rac.name AS `ac`,
-																						COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5, a.assetmodel, null)) AS `start`,
+																						COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
                                                                                         COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `broken`,
                                                                                         COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) AS `missing`,
                                                                                         COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) AS `end`
@@ -173,7 +173,7 @@
 																						$endDate=date("Y-m-d");
 																						
 																						$queryGetAllMainData="SELECT b.name AS `building`, rac.name AS `ac`,
-																						COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5, a.assetmodel, null)) AS `start`,
+																						COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
                                                                                         COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `broken`,
                                                                                         COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) AS `missing`,
                                                                                         COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) AS `end`
