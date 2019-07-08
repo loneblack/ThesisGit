@@ -188,6 +188,28 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         }
 
     }
+    if($serviceID > 0)//have request
+    {
+
+        $sql = "SELECT *, r.id, e.name, g.name as 'buildingName'
+                FROM thesis.requestor_receiving r 
+                JOIN service s ON r.serviceID = s.id 
+                JOIN employee e ON s.userID = e.UserID
+                JOIN floorandroom f ON e.FloorAndRoomID = f.FloorAndRoomID 
+                JOIN building g ON f.BuildingID = g.BuildingID
+                WHERE r.id = '{$id}';";
+        $result = mysqli_query($dbc, $sql);
+
+        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+            $building = $row['buildingName'];
+            $floorRoom = $row['floorRoom'];
+            $dateNeeded = $row['deliveryDate'];;
+            $requestor = $row['name'];
+
+        }
+
+    }
 	
 	
 ?>

@@ -202,7 +202,7 @@ require_once("db/mysql_connect.php");
                                                             <td style='display: none'>{$row['serviceUnitID']}</td>
                                                             <td style='display: none'>{$row['receivingID']}</td>
                                                             <td>{$count}</td>
-                                                            <td>Service Unit</td>
+                                                            <td>Repair</td>
                                                             <td style='display: none'>{$row['statusID']}</td>";
 
                                                         if($row['statusID'] == '1'){//pending
@@ -268,8 +268,20 @@ require_once("db/mysql_connect.php");
 
                     var cell = row.getElementsByTagName("td")[1];
                     var id2 = cell.textContent;
-					
-                    window.location.href = "requestor_view_receiving.php?id=" + id2;
+
+                    var cell = row.getElementsByTagName("td")[3];
+                    var id3 = cell.textContent;
+
+                    if(id3 == "Repair"){
+
+                         window.location.href = "requestor_view_receiving_repair.php?id=" + id2;
+
+                    }
+                    else{
+
+                        window.location.href = "requestor_view_receiving.php?id=" + id2;
+                        
+                    }
                     
                 };
             };

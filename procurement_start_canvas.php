@@ -155,7 +155,7 @@
 																	</div>
 
 																	<div class="form-group ">
-																		<label for="email">Email (DLSU)</label>
+																		<label for="email">Email</label>
 																		<div>
 																			<input class="form-control " id="email" name="email" pattern=".+dlsu.edu.ph" type="email" required />
 																		</div>

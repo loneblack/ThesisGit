@@ -336,7 +336,7 @@ $_SESSION['previousDash'] = "it_requests.php";
                                                             
                                                             }
                                                             //Request for Parts
-                                                            $queryRequestforParts = "SELECT * , r.id as 'requestPartsID' FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id JOIN ref_status st ON r.statusID = st.statusID JOIN employee e ON e.UserID = r.UserID JOIN ticket t on s.id = t.service_id;";
+                                                            $queryRequestforParts = "SELECT * , r.id as 'requestPartsID', st.description FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id JOIN ref_status st ON r.statusID = st.statusID JOIN employee e ON e.UserID = r.UserID JOIN ticket t on s.id = t.service_id;";
 
                                                             $resultRequestforParts = mysqli_query($dbc, $queryRequestforParts);
                                                             while($row=mysqli_fetch_array($resultRequestforParts,MYSQLI_ASSOC)){
@@ -601,7 +601,7 @@ $_SESSION['previousDash'] = "it_requests.php";
 								window.location.href = "it_view_repair_request_parts.php?id=" + ida;
                             } else if (id == "Ongoing") {
                                 window.location.href = "it_view_repair_request_parts_ongoing.php?id=" + ida;
-                            } else if (id == "Closed") {
+                            } else if (id == "Completed") {
                                 window.location.href = "it_view_repair_request_parts_closed.php?id=" + ida;
                             }
                         }
@@ -614,7 +614,7 @@ $_SESSION['previousDash'] = "it_requests.php";
                                 window.location.href = "it_view_service_replacement.php?id=" + ida;
                             } else if (id == "Pending") {
                                 window.location.href = "it_view_repair_request_parts_ongoing.php?id=" + ida;
-                            } else if (id == "Closed") {
+                            } else if (id == "Completed") {
                                 window.location.href = "it_view_repair_request_parts_closed.php?id=" + ida;
                             }
                         }
