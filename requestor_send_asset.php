@@ -99,13 +99,14 @@ $userID = $_SESSION['userID'];
                                                             $result=mysqli_query($dbc,$query);
                                                             while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
                                                                 echo "<tr>
-                                                                    <td><input type='checkbox' name='assets[]' value ='{$row['assetID']}'></td>
+                                                                    <td><input type='checkbox' name='assets[]' class='form-control' value ='{$row['assetID']}'>
+                                                                        <input type='hidden' name='assets[]' value ='0'</td>
                                                                     <td>{$row['propertyCode']}</td>
                                                                     <td>{$row['brand']}</td>
                                                                     <td>{$row['model']}</td>
                                                                     <td>{$row['enddate']}</td>
                                                                     <td>{$row['description']}</td>
-                                                                    <td>{$row['floorRoom']}</td>
+                                                                    <td><input type='text' class='form-control' size='20px' name='comments[]'></td>
                                                                 </tr>";
                                                             }
                                                         
