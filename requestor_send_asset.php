@@ -106,7 +106,7 @@ $userID = $_SESSION['userID'];
                                                                     <td>{$row['model']}</td>
                                                                     <td>{$row['enddate']}</td>
                                                                     <td>{$row['description']}</td>
-                                                                    <td><input type='text' class='form-control' size='20px' name='comments[]'></td>
+                                                                    <td><input type='text' class='form-control' name='comments[]'></td>
                                                                 </tr>";
                                                             }
                                                         
