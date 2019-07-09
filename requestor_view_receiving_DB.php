@@ -48,7 +48,7 @@
 			$resultAssAud=mysqli_query($dbc,$queryAssAud);
 		}
 		if($select == 2)
-		{//seet received to broken and set asset status to broken?
+		{//set received to broken and set asset status to broken
 			$sql = "UPDATE `thesis`.`receiving_details` SET
 		    	 `received` = '2'
 		    	  WHERE (`id` = '{$receivingDetailsID}');";

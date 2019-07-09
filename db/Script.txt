@@ -2214,3 +2214,47 @@ CREATE TABLE IF NOT EXISTS `thesis`.`serviceUnitAssets` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `thesis`.`assetReturn`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`assetReturn` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`assetReturn` (
+  `assetReturnID` INT NOT NULL AUTO_INCREMENT,
+  `UserID` INT(11) NOT NULL,
+  `dateTime` DATETIME NOT NULL,
+  `statusID` INT(11) NOT NULL,
+  PRIMARY KEY (`assetReturnID`),
+  INDEX `fk_assetReturn_user1_idx` (`UserID` ASC),
+  INDEX `fk_assetReturn_ref_status1_idx` (`statusID` ASC),
+  CONSTRAINT `fk_assetReturn_user1`
+    FOREIGN KEY (`UserID`)
+    REFERENCES `thesis`.`user` (`UserID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_assetReturn_ref_status1`
+    FOREIGN KEY (`statusID`)
+    REFERENCES `thesis`.`ref_status` (`statusID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`assetReturnDetails`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`assetReturnDetails` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`assetReturnDetails` (
+  `assetReturnDetailsID` INT NOT NULL AUTO_INCREMENT,
+  `assetReturnID` INT NOT NULL,
+  PRIMARY KEY (`assetReturnDetailsID`),
+  INDEX `fk_assetReturnDetails_assetReturn1_idx` (`assetReturnID` ASC),
+  CONSTRAINT `fk_assetReturnDetails_assetReturn1`
+    FOREIGN KEY (`assetReturnID`)
+    REFERENCES `thesis`.`assetReturn` (`assetReturnID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+

@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php
+require_once('db/mysql_connect.php');
+session_start();
+$userID = $_SESSION['userID'];
+?>
 <head>
     <meta charset="utf-8">
 
@@ -75,31 +79,41 @@
                                                             <th>Property Code</th>
                                                             <th>Brand</th>
                                                             <th>Model</th>
-                                                            <th>Deployment Date</th>
                                                             <th>Expected Return Date</th>
                                                             <th>Status</th>
                                                             <th>Comments</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <th><input type="checkbox"></th>
-                                                            <th>123 Testing</th>
-                                                            <th>Samsung</th>
-                                                            <th>Model</th>
-                                                            <th>5/24/2019</th>
-                                                            <th>6/22/2019</th>
-                                                            <th>
-                                                                <select class="form-control">
-                                                                    <option>Select</option>
-                                                                    <option>Working</option>
-                                                                    <option>Damaged</option>
-                                                                </select>
-                                                            </th>
-                                                            <th>
-                                                                <input class="form-control" type="text">
-                                                            </th>
-                                                        </tr>
+                                                    <?php
+                                                            $count = 1;
+                                                            $query="
+                                                                SELECT a.propertyCode, rb.name AS 'brand', am.description AS 'model', b.name, f.floorRoom, aa.startdate, aa.enddate, rs.description FROM thesis.assetassignment aa
+                                                                JOIN building b ON aa.BuildingID = b.buildingID
+                                                                JOIN floorandroom f ON aa.FloorAndRoomID = f.FloorAndRoomID
+                                                                JOIN employee e ON aa.personresponsibleID = e.employeeID
+                                                                JOIN asset a ON aa.assetID = a.assetID
+                                                                JOIN ref_assetstatus rs ON a.assetStatus = rs.id
+                                                                JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                WHERE (personresponsibleID = {$userID});";
+                                                            $result=mysqli_query($dbc,$query);
+                                                            while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                                echo "<tr>
+                                                                    <td><input type='checkbox'></td>
+                                                                    <td>{$row['propertyCode']}</td>
+                                                                    <td>{$row['brand']}</td>
+                                                                    <td>{$row['model']}</td>
+                                                                    <td>{$row['enddate']}</td>
+                                                                    <td>{$row['description']}</td>
+                                                                    <td>{$row['floorRoom']}</td>
+                                                                </tr>";
+                                                                $count++;
+                                                            }
+                                                        
+                                                        
+                                                        
+                                                        ?>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -125,24 +139,7 @@
 
     <!-- WAG GALAWIN PLS LANG -->
     <script>
-        function addRowHandlers() {
-            var table = document.getElementById("dynamic-table");
-            var rows = table.getElementsByTagName("tr");
-            for (i = 1; i < rows.length; i++) {
-                var currentRow = table.rows[i];
-                var createClickHandler = function(row) {
-                    return function() {
-                        var cell = row.getElementsByTagName("td")[0];
-                        var idx = cell.textContent;
 
-                        window.location.href = "it_user_assets.php?=";
-
-                    };
-                };
-                currentRow.onclick = createClickHandler(currentRow);
-            }
-        }
-        window.onload = addRowHandlers();
     </script>
 
     <script src="js/jquery.js"></script>
