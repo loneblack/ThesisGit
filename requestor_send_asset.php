@@ -86,9 +86,8 @@ $userID = $_SESSION['userID'];
                                                     </thead>
                                                     <tbody>
                                                     <?php
-                                                            $count = 1;
                                                             $query="
-                                                                SELECT a.propertyCode, rb.name AS 'brand', am.description AS 'model', b.name, f.floorRoom, aa.startdate, aa.enddate, rs.description FROM thesis.assetassignment aa
+                                                                SELECT a.assetID, a.propertyCode, rb.name AS 'brand', am.description AS 'model', b.name, f.floorRoom, aa.startdate, aa.enddate, rs.description FROM thesis.assetassignment aa
                                                                 JOIN building b ON aa.BuildingID = b.buildingID
                                                                 JOIN floorandroom f ON aa.FloorAndRoomID = f.FloorAndRoomID
                                                                 JOIN employee e ON aa.personresponsibleID = e.employeeID
@@ -100,7 +99,7 @@ $userID = $_SESSION['userID'];
                                                             $result=mysqli_query($dbc,$query);
                                                             while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
                                                                 echo "<tr>
-                                                                    <td><input type='checkbox'></td>
+                                                                    <td><input type='checkbox' name='assets[]' value ='{$row['assetID']}'></td>
                                                                     <td>{$row['propertyCode']}</td>
                                                                     <td>{$row['brand']}</td>
                                                                     <td>{$row['model']}</td>
@@ -108,10 +107,7 @@ $userID = $_SESSION['userID'];
                                                                     <td>{$row['description']}</td>
                                                                     <td>{$row['floorRoom']}</td>
                                                                 </tr>";
-                                                                $count++;
                                                             }
-                                                        
-                                                        
                                                         
                                                         ?>
                                                     </tbody>
