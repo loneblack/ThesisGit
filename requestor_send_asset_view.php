@@ -43,7 +43,7 @@
 
         </header>
         <!--header end-->
-        <?php include 'it_navbar.php' ?>
+        <?php include 'requestor_navbar.php' ?>
 
         <!--main content-->
         <section id="main-content">
@@ -90,14 +90,14 @@
                                                             <th>5/24/2019</th>
                                                             <th>6/22/2019</th>
                                                             <th>
-                                                                <select class="form-control" readonly>
+                                                                <select class="form-control" readonly style="width:100%">
                                                                     <option>Select</option>
                                                                     <option>Working</option>
                                                                     <option>Damaged</option>
                                                                 </select>
                                                             </th>
                                                             <th>
-                                                                <input class="form-control" type="text">
+                                                                <input style="width:100%" class="form-control" type="text" readonly>
                                                             </th>
                                                         </tr>
                                                     </tbody>
