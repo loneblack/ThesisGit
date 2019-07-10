@@ -62,7 +62,7 @@
                                         <header class="panel-heading">
                                             Receive Assets from User
                                             <span class="tools pull-right">
-                                                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                                                <a href="javascript:;" class="fa"></a>
                                             </span>
                                         </header>
                                         <div class="panel-body">
@@ -94,14 +94,14 @@
                                                             <th>5/24/2019</th>
                                                             <th>6/22/2019</th>
                                                             <th>
-                                                                <select class="form-control">
+                                                                <select class="form-control" style="width:100%">
                                                                     <option>Select</option>
                                                                     <option>Working</option>
                                                                     <option>Damaged</option>
                                                                 </select>
                                                             </th>
                                                             <th>
-                                                                <input class="form-control" type="text">
+                                                                <input style="width:100%" class="form-control" type="text">
                                                             </th>
                                                         </tr>
                                                     </tbody>
@@ -110,7 +110,7 @@
                                         </div>
                                         <div style="padding-left:10px; padding-bottom:5px">
                                             <button class="btn btn-success">Checkin</button>
-                                            <a href="it_bulk_checkin.php"><button class="btn btn-danger">Back</button></a>
+                                            <button class="btn btn-danger" onclick="window.history.back()">Back</button>
                                         </div>
                                     </section>
                                 </div>

@@ -63,6 +63,7 @@
                             <ul class="sub">
                                 <li><a href="requestor_assets.php">Asset List</a></li>
                                 <li><a href="requestor_asset_delivery.php">Asset Delivery</a></li>
+                                <li><a href="requestor_send_asset.php">Send Assets</a></li>
                             </ul>
                         </li>
    

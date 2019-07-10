@@ -137,10 +137,11 @@
                                 <li><a href="it_all_compound_assets.php">Compound Assets</a></li>
                                 <li><a href="it_bulk_checkin.php">Bulk Checkin</a></li>
                                 <li><a href="it_inventory.php">Replenish ';
-								if($numReplenish>'0'){
-									echo '<span class="badge badge-light">'.$numReplenish.'</span>';
-								}
-								echo '</a></li>
+    								if($numReplenish>'0'){
+    									echo '<span class="badge badge-light">'.$numReplenish.'</span>';
+    								}
+    								echo '</a></li>
+                                <li><a href="it_asset_receive.php">Receive Assets</a></li>
                             </ul>
                         </li>
 

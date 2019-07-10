@@ -1523,3 +1523,7 @@ INSERT INTO `thesis`.`receiving_details` (`receivingID`, `assetID`, `received`) 
 
 INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `requestID`, `statusID`) VALUES ('9', '1', '1'); -- ID 2
 INSERT INTO `thesis`.`receiving_details` (`receivingID`, `assetID`, `received`) VALUES ('2', '255', '0'); -- ID 2
+
+-- request procurement
+INSERT INTO `thesis`.`procurement` (`requestID`, `date`, `totalCost`, `status`, `deliveryDate`, `preparedBy`, `supplierID`) VALUES ('1', NOW(), '10000', '1', '2019-08-15', '18', '2'); -- ID 1
+
