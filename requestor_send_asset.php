@@ -47,7 +47,7 @@ $userID = $_SESSION['userID'];
 
         </header>
         <!--header end-->
-        <?php include 'it_navbar.php' ?>
+        <?php include 'requestor_navbar.php' ?>
 
         <!--main content-->
         <section id="main-content">
@@ -106,7 +106,7 @@ $userID = $_SESSION['userID'];
                                                                     <td>{$row['model']}</td>
                                                                     <td>{$row['enddate']}</td>
                                                                     <td>{$row['description']}</td>
-                                                                    <td><input type='text' class='form-control' name='comments[]'></td>
+                                                                    <td><input style='width:100%' type='text' class='form-control' name='comments[]'></td>
                                                                 </tr>";
                                                             }
                                                         
@@ -117,7 +117,7 @@ $userID = $_SESSION['userID'];
                                         </div>
                                         <div style="padding-left:10px; padding-bottom:5px">
                                             <button class="btn btn-success">Checkin</button>
-                                            <a href="it_bulk_checkin.php"><button class="btn btn-danger">Back</button></a>
+                                            <button class="btn btn-danger" onclick="window.history.back();">Back</button>
                                         </div>
                                     </section>
                                 </div>
