@@ -2225,6 +2225,8 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assetReturn` (
   `UserID` INT(11) NOT NULL,
   `dateTime` DATETIME NOT NULL,
   `statusID` INT(11) NOT NULL,
+  `comments` LONGTEXT NULL,
+  `assetReturncol` VARCHAR(45) NULL,
   PRIMARY KEY (`assetReturnID`),
   INDEX `fk_assetReturn_user1_idx` (`UserID` ASC),
   INDEX `fk_assetReturn_ref_status1_idx` (`statusID` ASC),
@@ -2257,4 +2259,3 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assetReturnDetails` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
