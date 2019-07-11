@@ -3,6 +3,7 @@
 	require_once('db/mysql_connect.php');
 
 	$header =  $_SESSION['previousPage'];
+	$userID = $_SESSION['userID'];
 
 	$assets=$_POST['assets'];
 	$comments=$_POST['comments'];
@@ -16,25 +17,25 @@
 	
 	$count = sizeof($assets);
 	
-	$queryx="INSERT INTO `thesis`.`canvas` (`requestID`, `status`) VALUES ('{$_SESSION['requestID']}', '1')";
-	$resultx=mysqli_query($dbc,$queryx);
+	//make an asset return enrty
+	$query="INSERT INTO `thesis`.`assetreturn` (`UserID`, `dateTime`, `statusID`) VALUES ('{$userID}', now(), '1');";
+	$result=mysqli_query($dbc,$query);
+
+	//get newly inserted data from table
+	$sql = "SELECT * FROM thesis.assetreturn ORDER BY assetReturnID DESC LIMIT 1;";
+	$result = mysqli_query($dbc, $sql);
+	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
+
+	$assetReturnID = $row['assetReturnID'];
 	
-	$queryy="SELECT * FROM thesis.canvas order by canvasID desc";
-	$resulty=mysqli_query($dbc,$queryy);
-	$rowy=mysqli_fetch_array($resulty,MYSQLI_ASSOC);
-	
-	//auto increment for canvasItemID
 	for ($i=0; $i < $count; $i++) { 
-		$querya="INSERT INTO `thesis`.`canvasitem` (`canvasID`, `quantity`, `description`, `assetCategory`, `assetModel`) VALUES ('{$rowy['canvasID']}', '{$quantityArray[$i]}', '{$desc[$i]}', '{$categoryArray[$i]}', '{$modelArray[$i]}')";
-		$resulta=mysqli_query($dbc,$querya);
+		if($assets != 0)
+		{
+			$querya="INSERT INTO `thesis`.`assetreturndetails` (`assetReturnID`, `comments`, `assetID`) VALUES ('{$assetReturnID}', '{$comments[$count]}', '{$assets[$count]}');";
+			$resulta=mysqli_query($dbc,$querya);
+		}
+		
 	}
-	
-	$queryz="UPDATE `thesis`.`request` SET `step`='3' WHERE `requestID`='{$_SESSION['requestID']}'";
-	$resultz=mysqli_query($dbc,$queryz);
-	
-	//INSERT TO NOTIFICATIONS TABLE
-	$sqlNotif = "INSERT INTO `thesis`.`notifications` (`requestID`, `steps_id`, `isRead`) VALUES ('{$_SESSION['requestID']}', '3', false);";
-	$resultNotif = mysqli_query($dbc, $sqlNotif);
 	
 	$message = "Form submitted!";
 	$_SESSION['submitMessage'] = $message;

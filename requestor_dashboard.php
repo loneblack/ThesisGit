@@ -446,6 +446,47 @@ require_once("db/mysql_connect.php");
                                                     
                                                   
                                                   ?>
+                                                   <?php
+                                                    //view for asset return
+                                                    $query = "SELECT * FROM thesis.assetreturn a
+                                                                JOIN ref_status rs 
+                                                                ON a.statusID = rs.statusID 
+                                                                WHERE UserID = '{$userID}';";
+                                                                  
+                                                    $result = mysqli_query($dbc, $query);
+                                                    
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                      
+                                                      echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$row['assetReturnID']}</td>
+                                                            <td>{$count}</td>
+                                                            <td>Asset Return</td>
+                                                            <td>{$row['dateTime']}</td>
+                                                            <td></td>
+                                                            <td style='display: none'>{$row['statusID']}</td>";
+
+                                                        if($row['statusID'] == '1'){//pending
+                                                            echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '2'){//ongoing
+                                                            echo "<td><span class='label label-info'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '3'){//completed
+                                                            echo "<td><span class='label label-success'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '4'){//disapproved
+                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
+                                                        }
+
+                                                        echo "<td></td>";
+                                                        echo "</tr>";
+
+                                                          $count++;
+                                                    }
+                                                    
+                                                  
+                                                  ?>
                                                   <?php
                                                     //GET after replacement SCHEDULE FOR DELIVERY (after replacement is done)
                                                     /*$query = "SELECT *, rr.id as 'receivingID', rr.statusID as 'receivingStatus' 
@@ -591,6 +632,9 @@ require_once("db/mysql_connect.php");
                         if(step == "Schedule For Delivery"){
                             window.location.href = "requestor_scheduling_request_for_repair.php?id=" + id;
                         }
+                    }
+                    else if(requestType == "Asset Return"){
+                        window.location.href = "requestor_send_asset_view.php?id=" + id;
                     }
                 };
             };
