@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php
+session_start();
+$id = $_GET['id'];
+?>
 <head>
     <meta charset="utf-8">
 
@@ -75,38 +78,61 @@
                                                             <th>Property Code</th>
                                                             <th>Brand</th>
                                                             <th>Model</th>
-                                                            <th>Deployment Date</th>
                                                             <th>Expected Return Date</th>
                                                             <th>Status</th>
                                                             <th>Comments</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <th><input type="checkbox" readonly></th>
-                                                            <th>123 Testing</th>
-                                                            <th>Samsung</th>
-                                                            <th>Model</th>
-                                                            <th>5/24/2019</th>
-                                                            <th>6/22/2019</th>
-                                                            <th>
-                                                                <select class="form-control" readonly style="width:100%">
-                                                                    <option>Select</option>
-                                                                    <option>Working</option>
-                                                                    <option>Damaged</option>
-                                                                </select>
-                                                            </th>
-                                                            <th>
-                                                                <input style="width:100%" class="form-control" type="text" readonly>
-                                                            </th>
-                                                        </tr>
+                                                    <?php
+
+                                                    $query = "  SELECT *, b.name as 'brandName', ac.name as 'categoryName', asts.description as 'statusName',  am.description as 'modelName'
+                                                                FROM thesis.assetreturndetails ard 
+                                                                JOIN assetreturn ar ON ar.assetReturnID = ard.assetReturnID
+                                                                JOIN asset a ON ard.assetID = a.assetID
+                                                                JOIN assetassignment aa ON aa.assetID = a.assetID
+                                                                JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                JOIN ref_assetcategory ac ON am.assetCategory = ac.assetCategoryID
+                                                                JOIN ref_brand b ON am.brand = b.brandID
+                                                                JOIN ref_assetStatus asts ON a.assetStatus = asts.id
+                                                                WHERE ard.assetReturnID = '{$id}';";
+                                                    $result = mysqli_query($dbc, $query);
+
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+
+                                                    ?>
+                                                    <tr>
+                                                    <td>
+                                                        <input type="checkbox" checked disabled>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['propertyCode']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['brandName']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['modelName']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['endDate']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <label><?php echo $row['statusName']; ?></label>
+                                                    </td>
+                                                    <td>
+                                                        <input style="width:100%" class="form-control" type="text" value = "<?php echo $row['comments']; ?>" readonly>
+                                                    </th>
+                                                    </tr>
+                                                    <?php }?>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                         <div style="padding-left:10px; padding-bottom:5px">
                                             <button class="btn btn-success">Checkin</button>
-                                            <a href="it_bulk_checkin.php"><button class="btn btn-danger">Back</button></a>
+                                            <a href="requestor_dashboard.php"><button class="btn btn-danger">Back</button></a>
                                         </div>
                                     </section>
                                 </div>
@@ -125,24 +151,7 @@
 
     <!-- WAG GALAWIN PLS LANG -->
     <script>
-        function addRowHandlers() {
-            var table = document.getElementById("dynamic-table");
-            var rows = table.getElementsByTagName("tr");
-            for (i = 1; i < rows.length; i++) {
-                var currentRow = table.rows[i];
-                var createClickHandler = function(row) {
-                    return function() {
-                        var cell = row.getElementsByTagName("td")[0];
-                        var idx = cell.textContent;
 
-                        window.location.href = "it_user_assets.php?=";
-
-                    };
-                };
-                currentRow.onclick = createClickHandler(currentRow);
-            }
-        }
-        window.onload = addRowHandlers();
     </script>
 
     <script src="js/jquery.js"></script>
