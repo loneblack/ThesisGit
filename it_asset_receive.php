@@ -75,7 +75,6 @@
                                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                                     <thead>
                                                         <tr>
-                                                            <th></th>
                                                             <th>Property Code</th>
                                                             <th>Brand</th>
                                                             <th>Model</th>
@@ -86,8 +85,10 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                    <?php
+                                                        $sql = "SELECT * FROM thesis.assetreturn;";
+                                                    ?>
                                                         <tr>
-                                                            <th><input type="checkbox"></th>
                                                             <th>123 Testing</th>
                                                             <th>Samsung</th>
                                                             <th>Model</th>

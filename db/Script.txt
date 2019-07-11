@@ -2225,8 +2225,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`assetReturn` (
   `UserID` INT(11) NOT NULL,
   `dateTime` DATETIME NOT NULL,
   `statusID` INT(11) NOT NULL,
-  `comments` LONGTEXT NULL,
-  `assetReturncol` VARCHAR(45) NULL,
   PRIMARY KEY (`assetReturnID`),
   INDEX `fk_assetReturn_user1_idx` (`UserID` ASC),
   INDEX `fk_assetReturn_ref_status1_idx` (`statusID` ASC),
@@ -2251,11 +2249,19 @@ DROP TABLE IF EXISTS `thesis`.`assetReturnDetails` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`assetReturnDetails` (
   `assetReturnDetailsID` INT NOT NULL AUTO_INCREMENT,
   `assetReturnID` INT NOT NULL,
+  `comments` LONGTEXT NULL,
+  `assetID` INT(11) NOT NULL,
   PRIMARY KEY (`assetReturnDetailsID`),
   INDEX `fk_assetReturnDetails_assetReturn1_idx` (`assetReturnID` ASC),
+  INDEX `fk_assetReturnDetails_asset1_idx` (`assetID` ASC),
   CONSTRAINT `fk_assetReturnDetails_assetReturn1`
     FOREIGN KEY (`assetReturnID`)
     REFERENCES `thesis`.`assetReturn` (`assetReturnID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_assetReturnDetails_asset1`
+    FOREIGN KEY (`assetID`)
+    REFERENCES `thesis`.`asset` (`assetID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

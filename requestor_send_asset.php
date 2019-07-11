@@ -4,6 +4,7 @@
 require_once('db/mysql_connect.php');
 session_start();
 $userID = $_SESSION['userID'];
+$_SESSION['previousPage'] = "requestor_send_asset.php";
 ?>
 <head>
     <meta charset="utf-8">
@@ -63,6 +64,7 @@ $userID = $_SESSION['userID'];
                             <div class="row">
                                 <div class="col-sm-12">
                                     <section class="panel">
+                                                <form method="post" action="requestor_send_asset_DB.php">
                                         <header class="panel-heading">
                                             Send Borrowed Assets
                                             <span class="tools pull-right">
@@ -72,6 +74,7 @@ $userID = $_SESSION['userID'];
                                         <div class="panel-body">
                                             
                                             <div class="adv-table">
+                                                    
                                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                                     <thead>
                                                         <tr>
@@ -119,6 +122,7 @@ $userID = $_SESSION['userID'];
                                             <button class="btn btn-success">Checkin</button>
                                             <button class="btn btn-danger" onclick="window.history.back();">Back</button>
                                         </div>
+                                                </form>
                                     </section>
                                 </div>
                             </div>
