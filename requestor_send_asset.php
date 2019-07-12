@@ -54,7 +54,18 @@ $_SESSION['previousPage'] = "requestor_send_asset.php";
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
+                <div>
+                <?php
+                    if (isset($_SESSION['submitMessage'])){
 
+                        echo "<div style='text-align:center' class='alert alert-success'>
+                                <strong><h3>{$_SESSION['submitMessage']}</h3></strong>
+                              </div>";
+
+                        unset($_SESSION['submitMessage']);
+                    }
+                ?>
+                </div>
                 <div class="col-sm-12">
                     <div class="col-sm-12">
 
@@ -64,6 +75,7 @@ $_SESSION['previousPage'] = "requestor_send_asset.php";
                             <div class="row">
                                 <div class="col-sm-12">
                                     <section class="panel">
+
                                                 <form method="post" action="requestor_send_asset_DB.php">
                                         <header class="panel-heading">
                                             Send Borrowed Assets
@@ -98,7 +110,9 @@ $_SESSION['previousPage'] = "requestor_send_asset.php";
                                                                 JOIN ref_assetstatus rs ON a.assetStatus = rs.id
                                                                 JOIN assetmodel am ON a.assetModel = am.assetModelID
                                                                 JOIN ref_brand rb ON am.brand = rb.brandID
-                                                                WHERE (personresponsibleID = {$userID});";
+                                                                WHERE (personresponsibleID = {$userID})
+                                                                AND (aa.statusID = 2)
+                                                                AND (rs.id = 2);";
                                                             $result=mysqli_query($dbc,$query);
                                                             while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
                                                                 echo "<tr>
@@ -106,7 +120,7 @@ $_SESSION['previousPage'] = "requestor_send_asset.php";
                                                                         <input type='hidden' name='assets[]' value ='0'</td>
                                                                     <td>{$row['propertyCode']}</td>
                                                                     <td>{$row['brand']}</td>
-                                                                    <td>{$row['model']}</td>
+                                                                    <td>{$row['model']}</td>    
                                                                     <td>{$row['enddate']}</td>
                                                                     <td>{$row['description']}</td>
                                                                     <td><input style='width:100%' type='text' class='form-control' name='comments[]'></td>

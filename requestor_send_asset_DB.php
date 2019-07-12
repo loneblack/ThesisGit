@@ -27,12 +27,25 @@
 	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 
 	$assetReturnID = $row['assetReturnID'];
+
 	
 	for ($i=0; $i < $count; $i++) { 
-		if($assets != 0)
+		if($assets[$i] != 0)
 		{
-			$querya="INSERT INTO `thesis`.`assetreturndetails` (`assetReturnID`, `comments`, `assetID`) VALUES ('{$assetReturnID}', '{$comments[$count]}', '{$assets[$count]}');";
+			//insert data to asset return details
+			$querya="INSERT INTO `thesis`.`assetreturndetails` (`assetReturnID`, `comments`, `assetID`) VALUES ('{$assetReturnID}', '{$comments[$i]}', '{$assets[$i]}');";
 			$resulta=mysqli_query($dbc,$querya);
+			echo $querya;
+
+			//set asset status to moving
+			$querya="UPDATE `thesis`.`asset` SET `assetStatus` = '3' WHERE (`assetID` = '{$assets[$i]}');";
+			$resulta=mysqli_query($dbc,$querya);
+			echo $querya;
+
+			//insert to audit
+			$querya="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('9', now(), '{$assets[$i]}', '3');";
+			$resulta=mysqli_query($dbc,$querya);
+			echo $querya;
 		}
 		
 	}

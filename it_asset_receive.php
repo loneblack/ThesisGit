@@ -75,36 +75,57 @@
                                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                                     <thead>
                                                         <tr>
-                                                            <th>Property Code</th>
-                                                            <th>Brand</th>
-                                                            <th>Model</th>
-                                                            <th>Deployment Date</th>
-                                                            <th>Expected Return Date</th>
-                                                            <th>Status</th>
-                                                            <th>Comments</th>
+                                                        <td style='display: none'>ID</td>
+                                                        <th>#</th>
+                                                        <th>Type of Request</th>
+                                                        <th>Date Made</th>
+                                                        <td style='display: none'>StatusID</td>
+                                                        <th>Status</th>
+                                                        <th>Person Requested</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                     <?php
-                                                        $sql = "SELECT * FROM thesis.assetreturn;";
-                                                    ?>
-                                                        <tr>
-                                                            <th>123 Testing</th>
-                                                            <th>Samsung</th>
-                                                            <th>Model</th>
-                                                            <th>5/24/2019</th>
-                                                            <th>6/22/2019</th>
-                                                            <th>
-                                                                <select class="form-control" style="width:100%">
-                                                                    <option>Select</option>
-                                                                    <option>Working</option>
-                                                                    <option>Damaged</option>
-                                                                </select>
-                                                            </th>
-                                                            <th>
-                                                                <input style="width:100%" class="form-control" type="text">
-                                                            </th>
-                                                        </tr>
+                                                    //view for asset return
+                                                    $query = "SELECT * FROM thesis.assetreturn a
+                                                                JOIN ref_status rs 
+                                                                ON a.statusID = rs.statusID
+                                                                JOIN employee e 
+                                                                ON a.UserID = e.UserID;";
+                                                                  
+                                                    $result = mysqli_query($dbc, $query);
+                                                    $count = 1;
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                      
+                                                      echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$row['assetReturnID']}</td>
+                                                            <td>{$count}</td>
+                                                            <td>Asset Return</td>
+                                                            <td>{$row['dateTime']}</td>
+                                                            <td style='display: none'>{$row['statusID']}</td>";
+
+                                                        if($row['statusID'] == '1'){//pending
+                                                            echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '2'){//ongoing
+                                                            echo "<td><span class='label label-info'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '3'){//completed
+                                                            echo "<td><span class='label label-success'>{$row['description']}</span></td>";
+                                                        }
+                                                        if($row['statusID'] == '4'){//disapproved
+                                                            echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
+                                                        }
+
+                                                        echo "<td>{$row['name']}</td>";
+                                                        echo "</tr>";
+
+                                                          $count++;
+                                                    }
+                                                    
+                                                  
+                                                  ?>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -140,7 +161,7 @@
                         var cell = row.getElementsByTagName("td")[0];
                         var idx = cell.textContent;
 
-                        window.location.href = "it_user_assets.php?=";
+                        window.location.href = "it_asset_receive_view.php?="+idx;
 
                     };
                 };
