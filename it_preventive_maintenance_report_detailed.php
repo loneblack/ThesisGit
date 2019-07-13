@@ -89,14 +89,31 @@
 
                                                                 <div class="adv-table" id="adv-table">
                                                                     <br>
-                                                                    <h5><b>Building: </b></h5>
+                                                                    <h4>Building: </h4>
+																	<h4>Asset Category:</h4>
                                                                     <br>
+																	<br>
+																	
+																	
+																	<?php
+																	
+																		//GET Asset of a given room
+																		
+																	
+																	
+																	
+																	
+																	?>
+																	
+																	
+																	<h5><b>Room: </b></h5>
+																	<br>
                                                                     <table class='display table table-bordered table-striped' id=''>
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>Asset ID</th>
+																				<th>Date</th>
+                                                                                <th>Property Code</th>
                                                                                 <th>Status</th>
-                                                                                <th>Room/Location</th>
                                                                                 <th>Comment</th>
                                                                             </tr>
                                                                         </thead>
