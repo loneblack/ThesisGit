@@ -168,14 +168,14 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
     if($requestID > 0)//have request
     {
 
-        $sql = "SELECT *, r.id, e.name as 'receivingID' 
-                FROM thesis.requestor_receiving r 
-                JOIN request_borrow b ON r.borrowID = b.borrowID 
-                JOIN building g ON b.BuildingID = g.BuildingID 
-                JOIN floorandroom f ON b.FloorAndRoomID = f.FloorAndRoomID 
+        $sql = "SELECT *, rr.id, e.name as 'receivingID' 
+                FROM thesis.requestor_receiving rr 
+                JOIN request r ON rr.requestID = r.requestID
+                JOIN building g ON r.BuildingID = g.BuildingID 
+                JOIN floorandroom f ON r.FloorAndRoomID = f.FloorAndRoomID 
                 JOIN user u ON r.UserID = u.UserID
                 JOIN employee e ON u.userID = e.UserID
-                WHERE r.id = '{$id}';";
+                WHERE rr.id = '{$id}';";
         $result = mysqli_query($dbc, $sql);
 
         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
