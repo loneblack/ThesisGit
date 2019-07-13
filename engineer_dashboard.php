@@ -74,10 +74,7 @@ if($everyTwoWeeks==$CurDate){
 			$resultGetAllFlrRm=mysqli_query($dbc,$queryGetAllFlrRm);
 			while ($rowGetAllFlrRm = mysqli_fetch_array($resultGetAllFlrRm, MYSQLI_ASSOC)){
 				//GET ALL ASSETS ASSIGNED ON A GIVEN FLOORROOM
-				$queryAssAssFlrRoom="SELECT * FROM thesis.assetassignment aa join asset a on aa.assetID=a.assetID 
-																			join assetmodel am on a.assetModel=am.assetModelID
-																			join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID 
-																			where aa.personresponsibleID is null and aa.FloorAndRoomID='{$rowGetAllFlrRm['FloorAndRoomID']}' and a.assetStatus='2' and rac.name != 'User Guide Poster'";
+				$queryAssAssFlrRoom="SELECT * FROM thesis.assetassignment aa join asset a on aa.assetID=a.assetID where aa.personresponsibleID is null and aa.FloorAndRoomID='{$rowGetAllFlrRm['FloorAndRoomID']}' and a.assetStatus='2'";
 				$resultAssAssFlrRoom=mysqli_query($dbc,$queryAssAssFlrRoom);
 				while ($rowAssAssFlrRoom = mysqli_fetch_array($resultAssAssFlrRoom, MYSQLI_ASSOC)){
 					//INSERT TO TICKETTED ASSETS
@@ -136,10 +133,7 @@ if($lastDayThisMonth==$CurDate){
 			$resultGetAllFlrRm=mysqli_query($dbc,$queryGetAllFlrRm);
 			while ($rowGetAllFlrRm = mysqli_fetch_array($resultGetAllFlrRm, MYSQLI_ASSOC)){
 				//GET ALL ASSETS ASSIGNED ON A GIVEN FLOORROOM
-				$queryAssAssFlrRoom="SELECT * FROM thesis.assetassignment aa join asset a on aa.assetID=a.assetID  
-																			join assetmodel am on a.assetModel=am.assetModelID 
-																			join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID  
-																			where aa.personresponsibleID is null and aa.FloorAndRoomID='{$rowGetAllFlrRm['FloorAndRoomID']}' and a.assetStatus='2' and rac.name != 'User Guide Poster'";
+				$queryAssAssFlrRoom="SELECT * FROM thesis.assetassignment aa join asset a on aa.assetID=a.assetID where aa.personresponsibleID is null and aa.FloorAndRoomID='{$rowGetAllFlrRm['FloorAndRoomID']}' and a.assetStatus='2'";
 				$resultAssAssFlrRoom=mysqli_query($dbc,$queryAssAssFlrRoom);
 				while ($rowAssAssFlrRoom = mysqli_fetch_array($resultAssAssFlrRoom, MYSQLI_ASSOC)){
 					//INSERT TO TICKETTED ASSETS
@@ -216,10 +210,7 @@ if($CurDate==$endOfTermDate){
 			$resultGetAllFlrRm=mysqli_query($dbc,$queryGetAllFlrRm);
 			while ($rowGetAllFlrRm = mysqli_fetch_array($resultGetAllFlrRm, MYSQLI_ASSOC)){
 				//GET ALL ASSETS ASSIGNED ON A GIVEN FLOORROOM
-				$queryAssAssFlrRoom="SELECT * FROM thesis.assetassignment aa join asset a on aa.assetID=a.assetID  
-																			 join assetmodel am on a.assetModel=am.assetModelID  
-																			 join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID   
-																			 where aa.personresponsibleID is null and aa.FloorAndRoomID='{$rowGetAllFlrRm['FloorAndRoomID']}' and a.assetStatus='2' and rac.name != 'User Guide Poster'";
+				$queryAssAssFlrRoom="SELECT * FROM thesis.assetassignment aa join asset a on aa.assetID=a.assetID where aa.personresponsibleID is null and aa.FloorAndRoomID='{$rowGetAllFlrRm['FloorAndRoomID']}' and a.assetStatus='2'";
 				$resultAssAssFlrRoom=mysqli_query($dbc,$queryAssAssFlrRoom);
 				while ($rowAssAssFlrRoom = mysqli_fetch_array($resultAssAssFlrRoom, MYSQLI_ASSOC)){
 					//INSERT TO TICKETTED ASSETS

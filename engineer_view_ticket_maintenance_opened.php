@@ -83,7 +83,7 @@
 				}
 				
 				//UPDATE TINYINT OF ASSETS THAT ARE DONE AT TESTING
-				$queryTickAssChk="UPDATE `thesis`.`ticketedasset` SET `checked`= true WHERE `ticketID`='{$id}' and `assetID`='{$asset}';";
+				$queryTickAssChk="UPDATE `thesis`.`ticketedasset` SET `checked`=true WHERE `ticketID`='{$id}' and `assetID`='{$asset}'";
 				$resultTickAssChk=mysqli_query($dbc,$queryTickAssChk);
 			}
 			
@@ -291,7 +291,7 @@
 															  join ref_assetcategory rac on am.assetCategory=rac.assetCategoryID
 															  join assetassignment aa on a.assetID=aa.assetID
 															  join floorandroom far on aa.FloorAndRoomID=far.FloorAndRoomID
-															  where ta.ticketID='{$id}' and ta.checked='0' and rac.name != 'User Guide Poster';";
+															  where ta.ticketID='{$id}' and ta.checked='0'and rac.name != 'User Guide Poster';";
 												$resultAssDat=mysqli_query($dbc,$queryAssDat);
 												while($rowAssDat=mysqli_fetch_array($resultAssDat,MYSQLI_ASSOC)){
 													echo "<tr>
