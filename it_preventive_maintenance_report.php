@@ -129,10 +129,10 @@
 																						
 																						//GET ALL DATE FROM START DATE TO END DATE
 																						$queryGetAllMainData="SELECT b.name AS `building`, rac.name AS `ac`,
-																						COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
+																						COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}' AND au.date>= '{$startDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
                                                                                         COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `broken`,
                                                                                         COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) AS `missing`,
-                                                                                        COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) AS `end`
+                                                                                        COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}' AND au.date>= '{$startDate}', a.assetmodel, null)) AS `end`
                                                                                         FROM ticket t
                                                                                         JOIN assetaudit au ON t.ticketID = au.ticketID
                                                                                         JOIN asset a ON au.assetID=a.assetID
@@ -147,14 +147,14 @@
 																				}
                                                                                 
                                                                                 if(empty($_POST['startDate']) && empty($_POST['endDate'])){
-																						$startDate=date("Y-m-d");
-																						$endDate=date("Y-m-d");
+																						//$startDate=date("Y-m-d");
+																						//$endDate=date("Y-m-d");
 																						
 																						$queryGetAllMainData="SELECT b.name AS `building`, rac.name AS `ac`,
-																						COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
+																						COUNT(IF(au.assetStatus = 2, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
                                                                                         COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `broken`,
                                                                                         COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) AS `missing`,
-                                                                                        COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) AS `end`
+                                                                                        COUNT(IF(au.assetStatus = 2, a.assetmodel, null)) AS `end`
                                                                                         FROM ticket t
                                                                                         JOIN assetaudit au ON t.ticketID = au.ticketID
                                                                                         JOIN asset a ON au.assetID=a.assetID
@@ -170,6 +170,28 @@
                                                                                 
                                                                                 if(!empty($_POST['startDate']) && empty($_POST['endDate'])){
 																						$startDate=$_POST['startDate'];
+																						$endDate=date("Y-m-d");
+																						
+																						$queryGetAllMainData="SELECT b.name AS `building`, rac.name AS `ac`,
+																						COUNT(IF(au.assetStatus = 2 AND au.date >= '{$startDate}' AND au.date <= '{$endDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
+                                                                                        COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `broken`,
+                                                                                        COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) AS `missing`,
+                                                                                        COUNT(IF(au.assetStatus = 2 AND au.date >= '{$startDate}' AND au.date <= '{$endDate}', a.assetmodel, null)) AS `end`
+                                                                                        FROM ticket t
+                                                                                        JOIN assetaudit au ON t.ticketID = au.ticketID
+                                                                                        JOIN asset a ON au.assetID=a.assetID
+                                                                                        JOIN assetmodel am ON a.assetModel=am.assetModelID
+                                                                                        JOIN ref_assetcategory rac ON am.assetCategory=rac.assetCategoryID
+                                                                                        JOIN ref_assetstatus ras ON au.assetStatus=ras.id 
+                                                                                        JOIN assetassignment aa ON a.assetID=aa.assetID 
+                                                                                        JOIN building b ON aa.BuildingID = b.buildingID
+                                                                                        WHERE t.serviceType='28' AND au.assetStatus!='17'
+                                                                                        GROUP BY rac.name;";
+																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
+																				}
+																				
+																				if(empty($_POST['startDate']) && !empty($_POST['endDate'])){
+																						//$startDate=$_POST['startDate'];
 																						$endDate=date("Y-m-d");
 																						
 																						$queryGetAllMainData="SELECT b.name AS `building`, rac.name AS `ac`,
