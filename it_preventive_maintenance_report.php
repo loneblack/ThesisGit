@@ -108,7 +108,7 @@
                                                                     </h5>
                                                                 </center>
                                                                 <div class="adv-table" id="adv-table">
-                                                                    <table class='display table table-bordered table-striped' id=''>
+                                                                    <table class='display table table-bordered table-striped' id='prevMaint'>
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>#</th>
@@ -128,7 +128,7 @@
 																						$endDate=$_POST['endDate'];
 																						
 																						//GET ALL DATE FROM START DATE TO END DATE
-																						$queryGetAllMainData="SELECT b.name AS `building`, rac.name AS `ac`,
+																						$queryGetAllMainData="SELECT b.BuildingID,rac.assetCategoryID,b.name AS `building`, rac.name AS `ac`,
 																						COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}' AND au.date>= '{$startDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
                                                                                         COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `broken`,
                                                                                         COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) AS `missing`,
@@ -146,11 +146,11 @@
 																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
 																				}
                                                                                 
-                                                                                if(empty($_POST['startDate']) && empty($_POST['endDate'])){
+                                                                                elseif(empty($_POST['startDate']) && empty($_POST['endDate'])){
 																						//$startDate=date("Y-m-d");
 																						//$endDate=date("Y-m-d");
 																						
-																						$queryGetAllMainData="SELECT b.name AS `building`, rac.name AS `ac`,
+																						$queryGetAllMainData="SELECT b.BuildingID,rac.assetCategoryID,b.name AS `building`, rac.name AS `ac`,
 																						COUNT(IF(au.assetStatus = 2, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
                                                                                         COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `broken`,
                                                                                         COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) AS `missing`,
@@ -168,11 +168,11 @@
 																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
 																				}
                                                                                 
-                                                                                if(!empty($_POST['startDate']) && empty($_POST['endDate'])){
+                                                                                elseif(!empty($_POST['startDate']) && empty($_POST['endDate'])){
 																						$startDate=$_POST['startDate'];
 																						$endDate=date("Y-m-d");
 																						
-																						$queryGetAllMainData="SELECT b.name AS `building`, rac.name AS `ac`,
+																						$queryGetAllMainData="SELECT b.BuildingID,rac.assetCategoryID,b.name AS `building`, rac.name AS `ac`,
 																						COUNT(IF(au.assetStatus = 2 AND au.date >= '{$startDate}' AND au.date <= '{$endDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
                                                                                         COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `broken`,
                                                                                         COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) AS `missing`,
@@ -190,11 +190,11 @@
 																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
 																				}
 																				
-																				if(empty($_POST['startDate']) && !empty($_POST['endDate'])){
+																				elseif(empty($_POST['startDate']) && !empty($_POST['endDate'])){
 																						//$startDate=$_POST['startDate'];
 																						$endDate=date("Y-m-d");
 																						
-																						$queryGetAllMainData="SELECT b.name AS `building`, rac.name AS `ac`,
+																						$queryGetAllMainData="SELECT b.BuildingID,rac.assetCategoryID,b.name AS `building`, rac.name AS `ac`,
 																						COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
                                                                                         COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `broken`,
                                                                                         COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) AS `missing`,
@@ -215,6 +215,8 @@
                                                                                $count = 1; while($rowGetAllMainData=mysqli_fetch_array($resultGetAllMainData,MYSQLI_ASSOC)){
                                                                                     
                                                                                     echo "<tr>
+																						<td style='display: none'>{$rowGetAllMainData['BuildingID']}</td>
+																						<td style='display: none'>{$rowGetAllMainData['assetCategoryID']}</td>
                                                                                         <td>{$count}</td>
 																						<td>{$rowGetAllMainData['building']}</font></td>
 																						<td>{$rowGetAllMainData['ac']}</td>
@@ -401,16 +403,18 @@
         }
 
         function addRowHandlers() {
-            var table = document.getElementById("dynamic-table");
+            var table = document.getElementById("prevMaint");
             var rows = table.getElementsByTagName("tr");
             for (i = 1; i < rows.length; i++) {
                 var currentRow = table.rows[i];
                 var createClickHandler = function(row) {
                     return function() {
                         var cell = row.getElementsByTagName("td")[0];
-                        var idx = cell.textContent;
+                        var bid = cell.textContent;
+						var cell1 = row.getElementsByTagName("td")[1];
+                        var acid = cell1.textContent;
 
-                        window.location.href = "it_inventory_specific.php?=";
+                        window.location.href = "it_preventive_maintenance_report_detailed.php?bid=" + bid + "&&acid=" + acid;
 
                     };
                 };
