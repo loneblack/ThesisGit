@@ -13,7 +13,7 @@ $id = $_GET['id'];
 $queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` =true WHERE `requestor_receiving_id` = '{$id}'";
 $resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
 
-/*
+
 
 
 $sql = "SELECT *, o.Name AS 'office', d.name AS 'department', z.name AS 'organization', b.name AS 'building' 
@@ -116,7 +116,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         }
         
     }
-    */
+    
 	
 	
 	//GET DELIVERY DATA
