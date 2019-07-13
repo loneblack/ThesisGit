@@ -322,13 +322,11 @@ require_once("db/mysql_connect.php");
                                                   ?>
 												  <?php
 													//GET ALL REQUEST SCHEDULE FOR DELIVERY (REQUEST TO PURCHASE AN ASSET)
-													$query = "SELECT rr.id,r.date,r.dateNeeded,s.description,rr.statusID FROM thesis.requestor_receiving rr join request r on rr.requestID=r.requestID
+													/*$query = "SELECT rr.id,r.date,r.dateNeeded,s.description,rr.statusID FROM thesis.requestor_receiving rr join request r on rr.requestID=r.requestID
 																				  join ref_status s ON rr.statusID = s.statusID
 																				  where rr.borrowID is null and rr.statusID!='3' and r.UserID='{$_SESSION['userID']}'";
                                                                   
-                                                    $result = mysqli_query($dbc, $query);
-                                                    
-                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    $result = mysqli_query($dbc, $query);while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                                     {
                                                       
                                                       echo "<tr class='gradeA'>
@@ -359,6 +357,8 @@ require_once("db/mysql_connect.php");
                                                           $count++;
                                                     }
 													
+                                                    */
+                                                    
 												  
 												  ?>
 
