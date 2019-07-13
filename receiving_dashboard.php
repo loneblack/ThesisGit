@@ -85,7 +85,7 @@ require_once("db/mysql_connect.php");
                                                     $count = 1;
                                                     // view for purchase request
 
-                                                    $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN request b ON r.requestID = b.requestID JOIN ref_status s ON r.statusID = s.statusID WHERE r.statusID != 3;";
+                                                    $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN request b ON r.requestID = b.requestID JOIN ref_status s ON r.statusID = s.statusID WHERE r.statusID != 3 and r.UserID='{$userID}';";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     
@@ -121,7 +121,7 @@ require_once("db/mysql_connect.php");
                                                         
                                                     }
 
-                                                    $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN request_borrow b ON r.borrowID = b.borrowID JOIN ref_status s ON r.statusID = s.statusID WHERE r.statusID != 3;";
+                                                    $query = "SELECT *, r.id as 'receivingID' FROM thesis.requestor_receiving r JOIN request_borrow b ON r.borrowID = b.borrowID JOIN ref_status s ON r.statusID = s.statusID WHERE r.statusID != 3 and b.personresponsibleID='{$userID}';";
                                                                   
                                                     $result = mysqli_query($dbc, $query);
                                                     

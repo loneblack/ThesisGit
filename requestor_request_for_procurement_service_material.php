@@ -183,14 +183,14 @@ $_SESSION['count'] = 0;
 																																								//$finDate = $date->format('Y-m-d');
 																																								//echo $finDate;
 																																																						
-																																							?>" />
+																																							?>" required />
                                                         </div>
                                                     </div>
                                                     
                                                     <div class="form-group ">
                                                         <label for="dateNeeded" class="control-label col-lg-3">Room</label>
                                                         <div class="col-lg-6">
-                                                            <select class="form-control" name="room" id="room">
+                                                            <select class="form-control" name="room" id="room" required>
                                                                 <option>Select</option>
                                                                 <?php
  
