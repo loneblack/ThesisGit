@@ -7,6 +7,7 @@
 
 	$assets=$_POST['assets'];
 	$comments=$_POST['comments'];
+	$status=$_POST['status'];
 
 	for ($i=0; $i < sizeof($assets); $i++) { 
 	   	if($assets[$i] != 0){
@@ -33,7 +34,7 @@
 		if($assets[$i] != 0)
 		{
 			//insert data to asset return details
-			$querya="INSERT INTO `thesis`.`assetreturndetails` (`assetReturnID`, `comments`, `assetID`) VALUES ('{$assetReturnID}', '{$comments[$i]}', '{$assets[$i]}');";
+			$querya="INSERT INTO `thesis`.`assetreturndetails` (`assetReturnID`, `comments`, `assetID`, `isWorking`) VALUES ('{$assetReturnID}', '{$comments[$i]}', '{$assets[$i]}', '{$status[$i]}');";
 			$resulta=mysqli_query($dbc,$querya);
 			echo $querya;
 

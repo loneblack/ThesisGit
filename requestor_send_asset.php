@@ -122,7 +122,12 @@ $_SESSION['previousPage'] = "requestor_send_asset.php";
                                                                     <td>{$row['brand']}</td>
                                                                     <td>{$row['model']}</td>    
                                                                     <td>{$row['enddate']}</td>
-                                                                    <td>{$row['description']}</td>
+                                                                    <td>
+                                                                        <select class='form-control' name='status[]'>
+                                                                            <option value = '1'>Working</option>
+                                                                            <option value = '0'>Damaged</option>
+                                                                        </select>
+                                                                    </td>
                                                                     <td><input style='width:100%' type='text' class='form-control' name='comments[]'></td>
                                                                 </tr>";
                                                             }

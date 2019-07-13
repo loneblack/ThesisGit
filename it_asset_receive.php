@@ -161,7 +161,7 @@
                         var cell = row.getElementsByTagName("td")[0];
                         var idx = cell.textContent;
 
-                        window.location.href = "it_asset_receive_view.php?="+idx;
+                        window.location.href = "it_asset_receive_view.php?id="+idx;
 
                     };
                 };

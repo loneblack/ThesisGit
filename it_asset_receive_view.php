@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php 
+session_start();
+$id = $_GET['id'];
 
+?>
 <head>
     <meta charset="utf-8">
 
@@ -59,6 +63,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <section class="panel">
+                                        <form action="it_asset_receive_view_DB.php" method="post">
                                         <header class="panel-heading">
                                             Receive Assets from User
                                             <span class="tools pull-right">
@@ -72,46 +77,86 @@
                                             <hr>
 
                                             <div class="adv-table">
+                                                    
                                                 <table class="display table table-bordered table-striped" id="dynamic-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th></th>
-                                                            <th>Property Code</th>
-                                                            <th>Brand</th>
-                                                            <th>Model</th>
-                                                            <th>Deployment Date</th>
-                                                            <th>Expected Return Date</th>
-                                                            <th>Status</th>
-                                                            <th>Comments</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th><input type="checkbox" readonly></th>
-                                                            <th>123 Testing</th>
-                                                            <th>Samsung</th>
-                                                            <th>Model</th>
-                                                            <th>5/24/2019</th>
-                                                            <th>6/22/2019</th>
-                                                            <th>
-                                                                <select class="form-control">
-                                                                    <option>Select</option>
-                                                                    <option>Working</option>
-                                                                    <option>Damaged</option>
-                                                                </select>
-                                                            </th>
-                                                            <th>
-                                                                <input class="form-control" type="text" readonly>
-                                                            </th>
-                                                        </tr>
-                                                    </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Property Code</th>
+                                                        <th>Brand</th>
+                                                        <th>Model</th>
+                                                        <th>Expected Return Date</th>
+                                                        <th>Status</th>
+                                                        <th>Comments</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <?php
+
+                                                    $query = "  SELECT *, b.name as 'brandName', ac.name as 'categoryName', asts.description as 'statusName',  am.description as 'modelName'
+                                                                FROM thesis.assetreturndetails ard 
+                                                                JOIN assetreturn ar ON ar.assetReturnID = ard.assetReturnID
+                                                                JOIN asset a ON ard.assetID = a.assetID
+                                                                JOIN assetassignment aa ON aa.assetID = a.assetID
+                                                                JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                JOIN ref_assetcategory ac ON am.assetCategory = ac.assetCategoryID
+                                                                JOIN ref_brand b ON am.brand = b.brandID
+                                                                JOIN ref_assetStatus asts ON a.assetStatus = asts.id
+                                                                WHERE ard.assetReturnID = '{$id}';";
+                                                    $result = mysqli_query($dbc, $query);
+
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                         $checkbox = "";
+                                                        if($row['received'] == 1){
+                                                            $checkbox = "checked disabled";
+                                                        }
+
+                                                    ?>
+                                                    <tr>
+                                                    <td>
+                                                        <input type="checkbox" name="assets[]" value ="<?php echo $row['assetID']; ?>" <?php echo $checkbox; ?> >
+                                                        <input type="hidden" name="assets[]" value ="0">
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['propertyCode']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['brandName']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['modelName']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['endDate']; ?>
+                                                    </td>
+                                                    <td>
+                                                    <?php
+                                                     if ($row['isWorking'] == 1) 
+                                                    {
+                                                        echo "Working";
+                                                    }else{
+                                                        echo "Damaged";
+                                                    }  
+                                                    ?>
+                                                    <input type="hidden" name="isWorking[]" value ="<?php echo $row['isWorking']; ?>">
+                                                    <input type="hidden" name="received[]" value ="<?php echo $row['received']; ?>">
+                                                    </td>
+                                                    <td>
+                                                        <input style="width:100%" class="form-control" type="text" name="comments[]" value = "<?php echo $row['comments']; ?>" readonly>
+                                                    </th>
+                                                    </tr>
+                                                    <?php }?>
+                                                    <input type="hidden" name="id" value="<?php echo $id;?>">
+                                                </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                         <div style="padding-left:10px; padding-bottom:5px">
-                                            <button class="btn btn-success">Checkin</button>
-                                            <a href="it_bulk_checkin.php"><button class="btn btn-danger">Back</button></a>
+                                            <button type="submit" class="btn btn-success">Checkin</button>
+                                            <a href="it_asset_receive.php"><button type="button" class="btn btn-danger">Back</button></a>
                                         </div>
+                                    </form>
                                     </section>
                                 </div>
                             </div>
@@ -129,24 +174,7 @@
 
     <!-- WAG GALAWIN PLS LANG -->
     <script>
-        function addRowHandlers() {
-            var table = document.getElementById("dynamic-table");
-            var rows = table.getElementsByTagName("tr");
-            for (i = 1; i < rows.length; i++) {
-                var currentRow = table.rows[i];
-                var createClickHandler = function(row) {
-                    return function() {
-                        var cell = row.getElementsByTagName("td")[0];
-                        var idx = cell.textContent;
 
-                        window.location.href = "it_user_assets.php?=";
-
-                    };
-                };
-                currentRow.onclick = createClickHandler(currentRow);
-            }
-        }
-        window.onload = addRowHandlers();
     </script>
 
     <script src="js/jquery.js"></script>

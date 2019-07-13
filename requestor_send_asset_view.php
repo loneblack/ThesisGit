@@ -119,7 +119,14 @@ $id = $_GET['id'];
                                                         <?php echo $row['endDate']; ?>
                                                     </td>
                                                     <td>
-                                                        <label><?php echo $row['statusName']; ?></label>
+                                                    <?php
+                                                     if ($row['isWorking'] == 1) 
+                                                    {
+                                                        echo "Working";
+                                                    }else{
+                                                        echo "Damaged";
+                                                    }  
+                                                    ?>
                                                     </td>
                                                     <td>
                                                         <input style="width:100%" class="form-control" type="text" value = "<?php echo $row['comments']; ?>" readonly>
