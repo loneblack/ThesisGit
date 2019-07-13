@@ -90,7 +90,6 @@
                                                                 <tr>
                                                                     <th>Date</th>
                                                                     <th>Asset Name</th>
-                                                                    <th>Movement</th>
                                                                     <th>Status</th>
                                                                 </tr>
                                                             </thead>
