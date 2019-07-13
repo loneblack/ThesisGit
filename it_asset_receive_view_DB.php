@@ -3,6 +3,7 @@ session_start();
 require_once('db/mysql_connect.php');
 
 $header = "it_asset_receive_view.php";
+$userID = $_SESSION['userID'];
 
 $id = $_POST['id'];
 $assets = $_POST['assets'];
@@ -23,6 +24,8 @@ for ($i=0; $i < sizeof($assets); $i++) {
  print_r($comments);
  print_r($received);
 
+ $forTesting = array();
+
 for ($i=0; $i < count($assets); $i++) { 
  
     //if asset is received (checked)
@@ -38,18 +41,26 @@ for ($i=0; $i < count($assets); $i++) {
         if($isWorking[$i] == 1){
 
         //update asset status to stocked (1)
+        $sql = "UPDATE `thesis`.`asset` SET `assetStatus` = '1' WHERE (`assetID` = '1');";
+        $result = mysqli_query($dbc,$sql);
 
         //insert to audit
-
+        $sql = "INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$userID}', now(), '{$assets[$i]}', '1');";
+        $result = mysqli_query($dbc,$sql);
         }
-        else
+        else // if asset is damaged
         {
 
         //update asset status to for Testing (8)
+        $sql = "UPDATE `thesis`.`asset` SET `assetStatus` = '8' WHERE (`assetID` = '1');";
+        $result = mysqli_query($dbc,$sql);
 
         //store asset Id to array for later 
+        array_push($forTesting, $assets[$i]);
 
         //insert to audit
+        $sql = "INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$userID}', now(), '{$assets[$i]}', '8');";
+        $result = mysqli_query($dbc,$sql);
         }
 
 
