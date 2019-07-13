@@ -66,28 +66,6 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <section class="panel">
-                                                        <form method="POST" action="">
-                                                            <div class="form-group">
-                                                                <div align="right">
-                                                                    <button class="btn btn-primary" onclick="printContent('report')"><i class="fa fa-print"></i> Print</button>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-lg-6">
-                                                                        <label class="col-sm-6 control-label col-lg-6" for="inputSuccess">Start Date</label>
-                                                                        <input type="date" name="startDate" id="startDate" class="form-control input-sm m-bot15" onChange="checkDate();">
-                                                                    </div>
-                                                                    <div class="col-lg-6">
-                                                                        <label class="col-sm-6 control-label col-lg-6" for="inputSuccess">End Date</label>
-                                                                        <input type="date" name="endDate" id="endDate" class="form-control input-sm m-bot15">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row" align="center">
-                                                                    <div class="col-lg-12">
-                                                                        <button type="submit" name="submit" class="btn btn-primary">Filter</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
 
                                                         <div id="report">
                                                             <div class="panel-body">
@@ -95,10 +73,11 @@
                                                                     <h3>Information Technology Services Office</h3>
                                                                 </center>
                                                                 <center>
-                                                                    <h3>Preventive Maintenance Report</h3>
+                                                                    <h3>Detailed Preventive Maintenance Report</h3>
                                                                 </center>
                                                                 <center>
                                                                     <h5>
+                                                                        <br>
                                                                         <?php 
 																		date_default_timezone_set('Asia/Manila');
 																		$timestamp = time();
@@ -107,17 +86,18 @@
 																		?>
                                                                     </h5>
                                                                 </center>
+
                                                                 <div class="adv-table" id="adv-table">
+                                                                    <br>
+                                                                    <h5><b>Building: </b></h5>
+                                                                    <br>
                                                                     <table class='display table table-bordered table-striped' id=''>
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>#</th>
-                                                                                <th>Building</th>
-                                                                                <th>Asset Category</th>
-                                                                                <th>Beginning Date Functional</th>
-                                                                                <th>Broken</th>
-                                                                                <th>Missing</th>
-                                                                                <th>End Date Functional</th>
+                                                                                <th>Asset ID</th>
+                                                                                <th>Status</th>
+                                                                                <th>Room/Location</th>
+                                                                                <th>Comment</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody id='maintenance'>
@@ -399,6 +379,7 @@
             }*/
 
         }
+        /*
 
         function addRowHandlers() {
             var table = document.getElementById("dynamic-table");
@@ -418,6 +399,7 @@
             }
         }
         window.onload = addRowHandlers();
+        */
 
         function printContent(el) {
             var restorepage = document.body.innerHTML;

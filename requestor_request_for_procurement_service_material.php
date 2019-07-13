@@ -183,14 +183,14 @@ $_SESSION['count'] = 0;
 																																								//$finDate = $date->format('Y-m-d');
 																																								//echo $finDate;
 																																																						
-																																							?>" />
+																																							?>" required />
                                                         </div>
                                                     </div>
                                                     
                                                     <div class="form-group ">
                                                         <label for="dateNeeded" class="control-label col-lg-3">Room</label>
                                                         <div class="col-lg-6">
-                                                            <select class="form-control" name="room" id="room">
+                                                            <select class="form-control" name="room" id="room" required>
                                                                 <option>Select</option>
                                                                 <?php
  
@@ -240,12 +240,12 @@ $_SESSION['count'] = 0;
                                                                 <td>
                                                                     <div class="col-lg-12">
                                                                         <input style="display: none" type="number" id="count" value="<?php echo $_SESSION['count'];?>" />
-                                                                        <input class="form-control" type="number"  name="quantity0" id="quantity0" min="1" step="1" placeholder="Quantity" />
+                                                                        <input class="form-control" type="number"  name="quantity0" id="quantity0" min="1" step="1" placeholder="Quantity" required />
                                                                     </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="col-lg-12">
-                                                                        <select class="form-control" name="category0" id="category0" onChange='changetextbox("0");'>
+                                                                        <select class="form-control" name="category0" id="category0" onChange='changetextbox("0");' required>
                                                                             <?php
  
                                                                                 $sql = "SELECT * FROM thesis.ref_assetcategory;";
@@ -293,7 +293,7 @@ $_SESSION['count'] = 0;
                                                 
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-0 col-lg-8">
-                                                        <button class="btn btn-primary" type="button"data-toggle="modal" data-target="#myModal">Save</button>
+                                                        <button class="btn btn-primary" type="button"data-toggle="modal" data-target="#myModal">Send</button>
                                                         <button class="btn btn-default" type="button">Cancel</button>
                                                     </div>
                                                 </div>
@@ -313,7 +313,7 @@ $_SESSION['count'] = 0;
                                                           <p>Are you sure about your request? Once you submit, this cannot be changed.</p>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button class="btn btn-primary" type="submit" onclick="getData('tblRequest');">Save</button>
+                                                            <button class="btn btn-primary" type="submit" onclick="getData('tblRequest');">Send</button>
                                                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                         </div>
                                                       </div>

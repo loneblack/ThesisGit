@@ -184,7 +184,83 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
                                                     <br>
                                                 </section>
+												<?php
+													//Check if Request Status is Requestor Schedule Delivery Date
+													
+													$queryChStat = "SELECT * FROM thesis.request where requestID='{$id}';";
+																			  
+													$resultChStat = mysqli_query($dbc, $queryChStat);
+													$rowChStat=mysqli_fetch_array($resultChStat, MYSQLI_ASSOC);
+													
+													if($rowChStat['step']=='24'||$rowChStat['step']=='25'){
+														echo "<section>
+															  <h4>Schedule for Delivery</h4>
+															  <table class='table table-bordered table-striped table-condensed table-hover' id='schedDel'>
+																<thead>
+																	<tr>
+																		<td style='display: none'>ID</td>
+																		<th>#</th>
+																		
+																		<th>Date Made</th>
+																		<th>Date Needed</th>
+																		<td style='display: none'>StatusID</td>
+																		<th>Status</th>
+																		
+																		<!-- <th>Description</th> -->
+																	</tr>
+																</thead>
+																<tbody>";
+														
+															//GET ALL REQUEST SCHEDULE FOR DELIVERY (REQUEST TO PURCHASE AN ASSET)
+															$query = "SELECT rr.id,r.date,r.dateNeeded,s.description,rr.statusID FROM thesis.requestor_receiving rr join request r on rr.requestID=r.requestID
+																							  join ref_status s ON rr.statusID = s.statusID
+																							  where rr.borrowID is null and rr.statusID!='3' and r.UserID='{$_SESSION['userID']}' and rr.requestID='{$id}'";
+																			  
+															$result = mysqli_query($dbc, $query);
+                                                            
+															while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+															{
+															  
+															  echo "<tr class='gradeA'>
+																	<td style='display: none'>{$row['id']}</td>
+																	<td>{$count}</td>
+																	
+																	<td>{$row['date']}</td>
+																	<td>{$row['dateNeeded']}</td>
+																	<td style='display: none'>{$row['statusID']}</td>";
 
+																if($row['statusID'] == '1'){//pending
+																	echo "<td><span class='label label-warning'>{$row['description']}</span></td>";
+																}
+																if($row['statusID'] == '2'){//ongoing
+																	echo "<td><span class='label label-info'>{$row['description']}</span></td>";
+																}
+																if($row['statusID'] == '3'){//completed
+																	echo "<td><span class='label label-success'>{$row['description']}</span></td>";
+																}
+																if($row['statusID'] == '4'){//disapproved
+																	echo "<td><span class='label label-danger'>{$row['description']}</span></td>";
+																}
+
+																//echo "<td></td>";
+																//echo "<td>{$row['name']}</td>";
+																echo "</tr>";
+
+																  $count++;
+															}
+														
+														
+														
+														echo " </tbody>
+																</table>
+
+
+																<br>
+															</section>";
+													}
+												
+												
+												?>
                                                 <div class="form-group">
                                                     <div class="col-lg-offset-3 col-lg-6">
                                                         <a href="requestor_dashboard.php"><button class="btn btn-default" type="button">Back</button></a>
@@ -207,7 +283,34 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
     
     <!-- WAG GALAWIN PLS LANG -->
-
+	<script>
+		function addRowHandlers() {
+        var table = document.getElementById("schedDel");
+        var rows = table.getElementsByTagName("tr");
+        for (i = 1; i < rows.length; i++) {
+            var currentRow = table.rows[i];
+            var createClickHandler = function(row) {
+                return function() {
+					var cell1 = row.getElementsByTagName("td")[0];
+                    var id = cell1.textContent;
+					
+					var cell2 = row.getElementsByTagName("td")[5];
+                    var step = cell2.textContent;
+					
+					if(step == "Pending"){
+						window.location.href = "requestor_scheduling_request_for_procurement_service_material.php?id=" + id;
+					}
+					
+					
+                };
+            };
+            currentRow.onclick = createClickHandler(currentRow);
+        }
+    }
+    window.onload = addRowHandlers();
+	
+	
+	</script>
     <!--Core js-->
     <script src="js/jquery.js"></script>
     <script src="bs3/js/bootstrap.min.js"></script>
