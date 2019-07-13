@@ -69,9 +69,9 @@ for ($i=0; $i < count($assets); $i++) {
 
 //count number of receuved and total assets
 
-//if all is received, close the return
+//if all is received, close assetreturn table
 
-//check the status of asset return if it is ongoing or pending
+//check the status of assetreturn if it is ongoing or pending
 //store the status id
 
 //if status is pending and if there is action, set asset return to ongoing
