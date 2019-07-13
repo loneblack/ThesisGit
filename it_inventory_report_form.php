@@ -5,7 +5,6 @@ session_start();
     
 if(isset($_POST['submit'])){
     $_SESSION['sDate'] = $_POST['startDate'];
-    $_SESSION['eDate'] = $_POST['endDate'];
 }
     
 ?>
@@ -77,7 +76,7 @@ if(isset($_POST['submit'])){
                                                     End Date: <input type="date" name="endDate" class="form-control" required>
                                                 </div><br><br>
                                                 <div align="center">
-                                                    <br><button class="btn btn-success" name="submit">Submit</button>
+                                                    <br><button class="btn btn-success" type="submit" name="submit">Submit</button>
                                                 </div>
                                             </div>
                                         </form>

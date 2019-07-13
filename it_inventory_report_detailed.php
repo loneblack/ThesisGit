@@ -3,6 +3,10 @@
 <?php
     session_start();
 	require_once("db/mysql_connect.php");
+    
+    $id = $_GET['id'];
+    $start = $_GET['sDate'];
+    $end = $_GET['eDate'];
 ?>
 
 <head>
@@ -61,7 +65,7 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Asset Audit Report
+                                            Detailed Asset Audit Report
                                         </header>
                                         <div align="right" style="padding-right:0.5%; padding-top:0.5%">
                                             <button class="btn btn-primary" onclick="printContent('report')"><i class="fa fa-print"></i> Print 
@@ -71,7 +75,7 @@
                                         <div id="report">
                                             <div align="center">
                                                 <h3>Information and Technology Services Office</h3>
-                                                <h3>Detailed Inventory Report</h3>
+                                                <h3>Detailed Asset Audit Report</h3>
                                                 <h4>
                                                     <?php 
                                                 date_default_timezone_set('Asia/Manila');
@@ -89,12 +93,36 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>Date</th>
-                                                                    <th>Asset Name</th>
+                                                                    <th>Property Code</th>
+                                                                    <th>Brand</th>
+                                                                    <th>Model</th>
                                                                     <th>Status</th>
+                                                                    <th>Action Made</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                <?php
                                                                 
+                                                                $queryDept="SELECT aa.date, a.propertyCode, rb.name,  am.description AS `specs`, ras.description, e.name AS `employee` FROM thesis.assetaudit aa
+                                                                JOIN asset a ON aa.assetID = a.assetID
+                                                                JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                JOIN ref_assetstatus ras ON aa.assetStatus = ras.id
+                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                JOIN employee e ON aa.UserID = e.UserID
+                                                                WHERE am.assetCategory = {$id} AND (aa.date >= '{$start}' AND aa.date <= '{$end}');";
+
+                                                                $resultDept=mysqli_query($dbc,$queryDept);
+                                                                while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
+                                                                    echo "<tr>
+                                                                        <td>{$rowDept['date']}</td>
+                                                                        <td>{$rowDept['propertyCode']}</td>
+                                                                        <td>{$rowDept['name']}</td>
+                                                                        <td>{$rowDept['specs']}</td>
+                                                                        <td>{$rowDept['description']}</td>
+                                                                        <td>{$rowDept['employee']}</td>
+                                                                        </tr>";
+                                                                }
+                                                                ?>
                                                             </tbody>
                                                         </table>
                                                     </div>

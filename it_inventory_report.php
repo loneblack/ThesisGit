@@ -3,6 +3,9 @@
 <?php
     session_start();
 	require_once("db/mysql_connect.php");
+    
+    $start = $_POST['startDate'];
+    $end = $_POST['endDate'];
 ?>
 
 <head>
@@ -88,6 +91,7 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th></th>
+                                                                    <th></th>
                                                                     <th>#</th>
                                                                     <th>Asset Category</th>
                                                                     <th>Beginning Qty</th>
@@ -121,6 +125,7 @@
                                                                         JOIN assetmodel am ON rac.assetCategoryID = am.assetcategory
                                                                         JOIN asset a ON am.assetModelID = a.assetModel
                                                                         JOIN assetaudit aa ON a.assetID = aa.assetID 
+                                                                        WHERE (aa.date >= '{$sDate}' AND aa.date <= '{$eDate}')
                                                                         GROUP BY rac.assetCategoryID;
                                                                         ";
 
@@ -129,6 +134,8 @@
                                                                         while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
                                                                             echo "<tr>
                                                                                 <td>{$rowDept['assetCategoryID']}</td>
+                                                                                <td>{$start}</td>
+                                                                                <td>{$end}</td>
                                                                                 <td>{$count}</td>
                                                                                 <td>{$rowDept['ac']}</td>
                                                                                 <td>{$rowDept['start']}</td>
@@ -307,7 +314,11 @@
                     return function() {
                         var cell = row.getElementsByTagName("td")[0];
                         var idx = cell.textContent;
-                        window.location.href = "it_inventory_report_detailed.php?id=" + idx;
+                        var cell2 = row.getElementsByTagName("td")[1];
+                        var sdate = cell2.textContent;
+                        var cell3 = row.getElementsByTagName("td")[2];
+                        var edate = cell3.textContent;
+                        window.location.href = "it_inventory_report_detailed.php?id=" + idx + "&sDate=" + sdate + "&eDate=" + edate;
 
                     };
                 };
