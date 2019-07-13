@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php 
+session_start();
+    
+if(isset($_POST['submit'])){
+    $_SESSION['sDate'] = $_POST['startDate'];
+    $_SESSION['eDate'] = $_POST['endDate'];
+}
+    
+?>
 <head>
     <meta charset="utf-8">
 

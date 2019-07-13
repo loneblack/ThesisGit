@@ -84,10 +84,10 @@
                                             <div class="panel-body">
                                                 <section id="unseen">
                                                     <div class="adv-table">
-                                                        <table class="display table table-bordered table-striped" id="">
+                                                        <table class="display table table-bordered table-striped" id="tibol">
                                                             <thead>
                                                                 <tr>
-                                                                    <th class="hidden"></th>
+                                                                    <th></th>
                                                                     <th>#</th>
                                                                     <th>Asset Category</th>
                                                                     <th>Beginning Qty</th>
@@ -128,6 +128,7 @@
                                                                         $count = 1;
                                                                         while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
                                                                             echo "<tr>
+                                                                                <td>{$rowDept['assetCategoryID']}</td>
                                                                                 <td>{$count}</td>
                                                                                 <td>{$rowDept['ac']}</td>
                                                                                 <td>{$rowDept['start']}</td>
@@ -163,6 +164,7 @@
                                                                         $count = 1;
                                                                         while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
                                                                             echo "<tr>
+                                                                                <td style='display:none;'>{$rowDept['assetCategoryID']}
                                                                                 <td>{$count}</td>
                                                                                 <td>{$rowDept['ac']}</td>
                                                                                 <td>{$rowDept['start']}</td>
@@ -201,6 +203,7 @@
                                                                         $count = 1;
                                                                         while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
                                                                             echo "<tr>
+                                                                                <td style='display:none;'>{$rowDept['assetCategoryID']}
                                                                                 <td>{$count}</td>
                                                                                 <td>{$rowDept['ac']}</td>
                                                                                 <td>{$rowDept['start']}</td>
@@ -237,6 +240,7 @@
                                                                         $count = 1;
                                                                         while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
                                                                             echo "<tr>
+                                                                                <td style='display:none;'>{$rowDept['assetCategoryID']}
                                                                                 <td>{$count}</td>
                                                                                 <td>{$rowDept['ac']}</td>
                                                                                 <td>{$rowDept['start']}</td>
@@ -294,12 +298,23 @@
 
 
     <script>
-        $('#dynamic-table').on('click', function() {
-            $('.brandID').on('click', function() {
-                var a = this.getAttribute("id");
-                window.location.href = "it_edit_brand.php?brandID=" + a;
-            })
-        })
+        function addRowHandlers() {
+            var table = document.getElementById("tibol");
+            var rows = table.getElementsByTagName("tr");
+            for (i = 1; i < rows.length; i++) {
+                var currentRow = table.rows[i];
+                var createClickHandler = function(row) {
+                    return function() {
+                        var cell = row.getElementsByTagName("td")[0];
+                        var idx = cell.textContent;
+                        window.location.href = "it_inventory_report_detailed.php?id=" + idx;
+
+                    };
+                };
+                currentRow.ondblclick = createClickHandler(currentRow);
+            }
+        }
+        window.onload = addRowHandlers();
 
         function myFunction() {
             window.print();
