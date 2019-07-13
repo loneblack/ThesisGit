@@ -44,7 +44,7 @@
 				$resultStat=mysqli_query($dbc,$queryStat);
 				
 				//INSERT TO ASSET AUDIT
-				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$asset}', '{$id}', '{$assetStat}');";
+				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`, `remarks`) VALUES ('{$_SESSION['userID']}', now(), '{$asset}', '{$id}', '{$assetStat}', '{$remarks}');";
 				$resultAssAud=mysqli_query($dbc,$queryAssAud);
 					
                 if($assetStat=='9'){
