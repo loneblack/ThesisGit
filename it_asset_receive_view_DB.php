@@ -4,6 +4,7 @@ require_once('db/mysql_connect.php');
 
 $header = "it_asset_receive_view.php";
 $userID = $_SESSION['userID'];
+$userID = $_SESSION['userID'];
 
 $id = $_POST['id'];
 $assets = $_POST['assets'];
@@ -29,11 +30,13 @@ for ($i=0; $i < sizeof($assets); $i++) {
 for ($i=0; $i < count($assets); $i++) { 
  
     //if asset is received (checked)
-    if($assets['$i'] != 0){
+    if($assets[$i] != 0){
 
         //update asset retrun id
         $sql = "UPDATE `thesis`.`assetreturndetails` SET `received` = '1' WHERE (`assetReturnID` = '{$id}') AND (`assetID` = '{$assets[$i]}');";
         $result = mysqli_query($dbc,$sql);
+
+        //end asset assignment
 
         $action = 1;
 
@@ -101,11 +104,23 @@ $count = count($forTesting);
 //make asset testing request if there are broken asset
 if($count > 0){
 
-    
 
+    $sql = "INSERT INTO `thesis`.`assettesting` (`statusID`, `startTestDate`, `endTestDate`, `PersonRequestedID`, `FloorAndRoomID`, `serviceType`) VALUES ('1', now(), date_add(now(), interval 7 day), '{$userID}', '59', '25');";
+    $result = mysqli_query($dbc,$sql);
+    echo $sql;
+
+    //get newly inserted data to table
+    $sql = "SELECT * FROM thesis.assettesting ORDER BY testingID DESC LIMIT 1;";
+    $result = mysqli_query($dbc,$sql);
+    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+    $testingID = $row['testingID'];
     for ($i=0; $i < $count; $i++) { 
     //insert stored asset ID as testing details
+    $queryAtd="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$testingID}', '{$forTesting[$count]}')";
+    $resultAtd=mysqli_query($dbc,$queryAtd);    
 
+    echo $queryAtd;
     }
 }
 

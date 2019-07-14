@@ -9,16 +9,28 @@
 	$comments=$_POST['comments'];
 	$status=$_POST['status'];
 
+	$message = "No asset Selected!";
+	$_SESSION['submitStatus'] = 0;
+
 	for ($i=0; $i < sizeof($assets); $i++) { 
 	   	if($assets[$i] != 0){
 	 		array_splice($assets, ($i+1), 1);
 	    }
     }
 
-	
+    $notEmpty = 0;
 	$count = sizeof($assets);
+    
+    for ($i=0; $i < $count; $i++) { 
+		if($assets[$i] != 0)
+		{
+			$notEmpty = 1;
+		}
+	}
+		
 	
-	//make an asset return enrty
+	if($notEmpty == 1){
+		//make an asset return enrty
 	$query="INSERT INTO `thesis`.`assetreturn` (`UserID`, `dateTime`, `statusID`) VALUES ('{$userID}', now(), '1');";
 	$result=mysqli_query($dbc,$query);
 
@@ -30,9 +42,12 @@
 	$assetReturnID = $row['assetReturnID'];
 
 	
+
+	
 	for ($i=0; $i < $count; $i++) { 
 		if($assets[$i] != 0)
 		{
+
 			//insert data to asset return details
 			$querya="INSERT INTO `thesis`.`assetreturndetails` (`assetReturnID`, `comments`, `assetID`, `isWorking`) VALUES ('{$assetReturnID}', '{$comments[$i]}', '{$assets[$i]}', '{$status[$i]}');";
 			$resulta=mysqli_query($dbc,$querya);
@@ -47,11 +62,15 @@
 			$querya="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('9', now(), '{$assets[$i]}', '3');";
 			$resulta=mysqli_query($dbc,$querya);
 			echo $querya;
+
+			$_SESSION['submitStatus'] = 1;
+			$message = "Form submitted!";
 		}
 		
 	}
-	
-	$message = "Form submitted!";
+
+
+	}
 	$_SESSION['submitMessage'] = $message;
 	
 	header('Location: '.$header);

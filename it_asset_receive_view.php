@@ -147,9 +147,9 @@ $id = $_GET['id'];
                                                     </th>
                                                     </tr>
                                                     <?php }?>
-                                                    <input type="hidden" name="id" value="<?php echo $id;?>">
                                                 </tbody>
                                                 </table>
+                                                <input type="hidden" name="id" value="<?php echo $id;?>">
                                             </div>
                                         </div>
                                         <div style="padding-left:10px; padding-bottom:5px">

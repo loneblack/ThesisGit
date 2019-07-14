@@ -58,7 +58,13 @@ $_SESSION['previousPage'] = "requestor_send_asset.php";
                 <?php
                     if (isset($_SESSION['submitMessage'])){
 
-                        echo "<div style='text-align:center' class='alert alert-success'>
+                        if($_SESSION['submitStatus'] == 1){
+                            $alert = "success";
+                        }
+                        else{
+                            $alert = "danger";
+                        }
+                        echo "<div style='text-align:center' class='alert alert-".$alert."'>
                                 <strong><h3>{$_SESSION['submitMessage']}</h3></strong>
                               </div>";
 
@@ -138,8 +144,8 @@ $_SESSION['previousPage'] = "requestor_send_asset.php";
                                             </div>
                                         </div>
                                         <div style="padding-left:10px; padding-bottom:5px">
-                                            <button class="btn btn-success">Checkin</button>
-                                            <button class="btn btn-danger" onclick="window.history.back();">Back</button>
+                                            <button type= "submit" class="btn btn-success">Checkin</button>
+                                            <button type = "button" class="btn btn-danger" onclick="window.history.back();">Back</button>
                                         </div>
                                                 </form>
                                     </section>
