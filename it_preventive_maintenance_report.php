@@ -3,6 +3,7 @@
 	require_once('db/mysql_connect.php');
 	session_start();
 	
+	
 ?>
 <html lang="en">
 
@@ -144,6 +145,8 @@
                                                                                         WHERE t.serviceType='28' AND au.assetStatus!='17'
                                                                                         GROUP BY rac.name;";
 																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
+																						$_SESSION['startDate']=$startDate;
+																						$_SESSION['endDate']=$endDate;
 																				}
                                                                                 
                                                                                 elseif(empty($_POST['startDate']) && empty($_POST['endDate'])){
@@ -166,6 +169,8 @@
                                                                                         WHERE t.serviceType='28' AND au.assetStatus!='17'
                                                                                         GROUP BY rac.name;";
 																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
+																						$_SESSION['startDate']=null;
+																						$_SESSION['endDate']=null;
 																				}
                                                                                 
                                                                                 elseif(!empty($_POST['startDate']) && empty($_POST['endDate'])){
@@ -188,6 +193,8 @@
                                                                                         WHERE t.serviceType='28' AND au.assetStatus!='17'
                                                                                         GROUP BY rac.name;";
 																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
+																						$_SESSION['startDate']=$startDate;
+																						$_SESSION['endDate']=$endDate;
 																				}
 																				
 																				elseif(empty($_POST['startDate']) && !empty($_POST['endDate'])){
@@ -210,6 +217,8 @@
                                                                                         WHERE t.serviceType='28' AND au.assetStatus!='17'
                                                                                         GROUP BY rac.name;";
 																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
+																						$_SESSION['startDate']=null;
+																						$_SESSION['endDate']=$endDate;
 																				}
 																				
                                                                                $count = 1; while($rowGetAllMainData=mysqli_fetch_array($resultGetAllMainData,MYSQLI_ASSOC)){
