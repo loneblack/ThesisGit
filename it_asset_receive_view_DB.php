@@ -67,18 +67,47 @@ for ($i=0; $i < count($assets); $i++) {
     }
 }
 
-//count number of receuved and total assets
+//count number of received and total assets
+$sql = "SELECT *, SUM(received) as 'totalReceived', COUNT(assetID) as 'totalCount' FROM thesis.assetreturndetails WHERE assetReturnID = '{$id}';";
+$result = mysqli_query($dbc,$sql);
+$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+$totalCount = $row['totalCount'];
+$totalReceived = $row['totalReceived'];
 
 //if all is received, close assetreturn table
+if ($totalReceived == $totalCount) {
+   $sql = "UPDATE `thesis`.`assetreturn` SET `statusID` = '3' WHERE (`assetReturnID` = '{$id}');";
+   $result = mysqli_query($dbc,$sql);
+}
 
-//check the status of assetreturn if it is ongoing or pending
+//check the status of assetreturn if it is ongoing or pending or closed
 //store the status id
+$sql = " SELECT * FROM thesis.assetreturn WHERE assetReturnID = '{$id}';";
+$result = mysqli_query($dbc,$sql);
+$row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+$status = $row['statusID'];
 
 //if status is pending and if there is action, set asset return to ongoing
+if($status == '1' && $action == 1)
+{
+    $sql = "UPDATE `thesis`.`assetreturn` SET `statusID` = '2' WHERE (`assetReturnID` = '{$id}');";
+    $result = mysqli_query($dbc,$sql);
+}
 
-//make asset testing request
+$count = count($forTesting);
 
-//insert stored asset ID as testing details
+//make asset testing request if there are broken asset
+if($count > 0){
+
+    
+
+    for ($i=0; $i < $count; $i++) { 
+    //insert stored asset ID as testing details
+
+    }
+}
 
 $message = "From Submitted!";
 
