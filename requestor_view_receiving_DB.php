@@ -32,13 +32,13 @@
 
 		$receivingDetailsID = $row['id'];
 
-		if($select == 1){
+		if($select[$i] == 1){
 			
 			$sql = "UPDATE `thesis`.`receiving_details` SET
 		    	 `received` = '1'
 		    	  WHERE (`id` = '{$receivingDetailsID}');";
 			$result = mysqli_query($dbc, $sql);
-			
+
 			//UPDATE ASSET STATUS
 			$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='2' WHERE `assetID`='{$assets[$i]}'";
 			$resultStat=mysqli_query($dbc,$queryStat);
@@ -47,7 +47,7 @@
 			$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$assets[$i]}', '2');";
 			$resultAssAud=mysqli_query($dbc,$queryAssAud);
 		}
-		if($select == 2)
+		if($select[$i] == 2)
 		{//set received to broken and set asset status to broken
 			$sql = "UPDATE `thesis`.`receiving_details` SET
 		    	 `received` = '2'
