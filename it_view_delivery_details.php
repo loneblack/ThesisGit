@@ -210,6 +210,28 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         }
 
     }
+    if($serviceUnitID > 0)//have service unit
+    {
+
+        $sql = "SELECT *, r.id, e.name, g.name as 'buildingName'
+                FROM thesis.requestor_receiving r 
+                JOIN serviceUnit s ON r.serviceUnitID = s.serviceUnitID 
+                JOIN employee e ON s.userID = e.UserID
+                JOIN floorandroom f ON e.FloorAndRoomID = f.FloorAndRoomID 
+                JOIN building g ON f.BuildingID = g.BuildingID
+                WHERE r.id = '{$id}';";
+        $result = mysqli_query($dbc, $sql);
+
+        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+
+            $building = $row['buildingName'];
+            $floorRoom = $row['floorRoom'];
+            $dateNeeded = $row['dateNeeded'];;
+            $requestor = $row['name'];
+
+        }
+
+    }
 	
 	
 ?>
@@ -288,7 +310,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 										<div class="form-group ">
 											<label for="deliveryDate" class="control-label col-lg-3"> Date Needed</label>
 											<div class="col-lg-6">
-												<input type="text" name="deliveryDate" class="form-control m-bot15" value='<?php echo $rowDelReq['deliveryDate']; ?>' disabled>
+												<input type="text" name="deliveryDate" class="form-control m-bot15" value='<?php echo $rowDelReq['deliveryDate']; echo $dateNeeded?>' disabled>
 											</div>
 										</div>
 										<hr>

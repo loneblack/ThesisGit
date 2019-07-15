@@ -12,7 +12,7 @@ $query =  "SELECT * FROM thesis.service s JOIN employee e ON s.UserID = e.UserID
 $result = mysqli_query($dbc, $query);
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-        
+        $dateNeeded = $row['dateNeeded'];
     }
 
 $assets = array();
@@ -78,7 +78,6 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-12">
-                            <button class="btn btn-default" style="font-size:12px" onclick="window.history.back();"><span class="glyphicon glyphicon-arrow-left"> Back</span></button>
                             <br>
                             <br>
                             <section class="panel">
@@ -102,11 +101,11 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                 <br>
                                                 <br>
                                                 <br>
-                                                <h5>Date Created:
+                                                <h5>Date Created: <?php echo $dateNeeded;?>
                                                 </h5>
                                             </div>
                                             <div class="col-md-8">
-                                                <h5>Comments:
+                                                <h5>Comments: For Delivery
                                                 </h5>
                                             </div>
                                             <div class="cp;-col-md-4"></div>
@@ -171,6 +170,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         </tbody>
                                     </table>
                                     <input style="display: none" type="number" id="count" name="count">
+                                    <a href="requestor_dashboard.php"> <button type = "button" class="btn btn-danger" style="font-size:12px" > Back</button></a>
                                 </div>
                             </section>
                             </form>
