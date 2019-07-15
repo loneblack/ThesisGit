@@ -138,7 +138,6 @@ $id = $_GET['id'];
                                             </div>
                                         </div>
                                         <div style="padding-left:10px; padding-bottom:5px">
-                                            <button class="btn btn-success">Checkin</button>
                                             <a href="requestor_dashboard.php"><button class="btn btn-danger">Back</button></a>
                                         </div>
                                     </section>

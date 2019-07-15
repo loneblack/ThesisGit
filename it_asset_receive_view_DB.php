@@ -4,7 +4,6 @@ require_once('db/mysql_connect.php');
 
 $header = "it_asset_receive_view.php";
 $userID = $_SESSION['userID'];
-$userID = $_SESSION['userID'];
 
 $id = $_POST['id'];
 $assets = $_POST['assets'];
@@ -36,7 +35,16 @@ for ($i=0; $i < count($assets); $i++) {
         $sql = "UPDATE `thesis`.`assetreturndetails` SET `received` = '1' WHERE (`assetReturnID` = '{$id}') AND (`assetID` = '{$assets[$i]}');";
         $result = mysqli_query($dbc,$sql);
 
+        //get requestor user id
+        $sql = "SELECT * FROM thesis.assetreturn WHERE assetReturnID = '{$id}';";
+        $result = mysqli_query($dbc,$sql);
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+        $personresponsibleID = $row['UserID'];
+
         //end asset assignment
+        $sql = "UPDATE `thesis`.`assetassignment` SET `statusID` = '3' WHERE (`assetID` = '{$assets[$i]}') AND (`personresponsibleID` = '{$personresponsibleID}');";
+        $result = mysqli_query($dbc,$sql);
 
         $action = 1;
 
@@ -117,7 +125,7 @@ if($count > 0){
     $testingID = $row['testingID'];
     for ($i=0; $i < $count; $i++) { 
     //insert stored asset ID as testing details
-    $queryAtd="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$testingID}', '{$forTesting[$count]}')";
+    $queryAtd="INSERT INTO `thesis`.`assettesting_details` (`assettesting_testingID`, `asset_assetID`) VALUES ('{$testingID}', '{$forTesting[$i]}')";
     $resultAtd=mysqli_query($dbc,$queryAtd);    
 
     echo $queryAtd;
@@ -128,5 +136,5 @@ $message = "From Submitted!";
 
 $_SESSION['submitMessage'] = $message;
 
-//header("Location: ".$header);
+header("Location: ".$header);
 ?>
