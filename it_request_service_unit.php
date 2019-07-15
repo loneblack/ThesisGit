@@ -4,7 +4,7 @@
 session_start();
 $userID = $_SESSION['userID'];
 $id = $_GET['id'];
-$_SESSION['previousPage'] = "it_request_service_unit.php?id={$id}";
+$_SESSION['previousPage'] = "it_request_service_unit_ongoing.php?id={$id}";
 require_once("db/mysql_connect.php");
 
 

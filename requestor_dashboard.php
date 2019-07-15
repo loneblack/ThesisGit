@@ -583,10 +583,10 @@ require_once("db/mysql_connect.php");
                     }
 
                     if(requestType == 'Service Unit'){
-                        if(step == "placeholder"){
-                            window.location.href = "requestor_view_service_unit_request.php?id=" + id +"&requestType=" + requestType;
+                        if(step == "Pending"){
+                            window.location.href = "requestor_view_service_unit_pending.php?id=" + id;
                         }
-                        else if(step == "Request Pending"){
+                        else if(step == "Ongoing"){
                             window.location.href = "requestor_view_service_unit_ongoing.php?id=" + id;
                         }
                     }
