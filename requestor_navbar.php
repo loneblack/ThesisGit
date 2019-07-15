@@ -64,6 +64,7 @@
                                 <li><a href="requestor_assets.php">Asset List</a></li>
                                 <li><a href="requestor_asset_delivery.php">Asset Delivery</a></li>
                                 <li><a href="requestor_send_asset.php">Send Assets</a></li>
+                                <li><a href="requestor_send_service_unit.php">Send Service Unit</a></li>
                             </ul>
                         </li>
    
