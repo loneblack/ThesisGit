@@ -493,6 +493,52 @@ require_once("db/mysql_connect.php");
                                                   
                                                   ?>
                                                   <?php
+                                                    //view for service unit return
+                                                    $query = "SELECT *, s.name as 'stepname', st.description as 'statusName' 
+                                                                FROM thesis.serviceunit su
+                                                            JOIN service sr
+                                                                ON sr.id = su.serviceID
+                                                            JOIN ref_status st 
+                                                                ON su.statusID = st.statusID
+                                                            JOIN ref_steps s 
+                                                                ON steps = s.id
+                                                            WHERE su.UserID = '{$userID}'
+                                                            AND returned != 0;";
+                                                                  
+                                                    $result = mysqli_query($dbc, $query);
+                                                    
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+                                                      
+                                                        echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$row['serviceUnitID']}</td>
+                                                            <td>{$count}</td>";
+                                                            
+                                                        echo "<td>Service Unit Return</td>";
+                                                        echo "<td>{$row['dateReturn']}</td>
+                                                            <td></td>
+                                                            <td style='display: none'>{$row['statusID']}</td>";
+
+                                                        if($row['returned'] == '1'){//pending
+                                                            echo "<td><span class='label label-warning'>Pending</span></td>";
+                                                        }
+                                                        if($row['returned'] == '2'){//ongoing
+                                                            echo "<td><span class='label label-info'>Ongoing</span></td>";
+                                                        }
+                                                        if($row['returned'] == '3'){//completed
+                                                            echo "<td><span class='label label-success'>Completed</span></td>";
+                                                        }
+
+
+                                                        echo "<td>{$row['details']}</td>";
+                                                        
+                                                        echo "</tr>";
+
+                                                          $count++;
+                                                    }
+
+                                                  ?> 
+                                                  <?php
                                                     //GET after replacement SCHEDULE FOR DELIVERY (after replacement is done)
                                                     /*$query = "SELECT *, rr.id as 'receivingID', rr.statusID as 'receivingStatus' 
                                                                 FROM thesis.requestor_receiving rr 
@@ -594,6 +640,9 @@ require_once("db/mysql_connect.php");
                         else if(step == "Ongoing"){
                             window.location.href = "requestor_view_service_unit_ongoing.php?id=" + id;
                         }
+                        else if(step == "Completed"){
+                            window.location.href = "requestor_view_service_unit_completed.php?id=" + id;
+                        }
                     }
 
                     else if(requestType == "Borrow"){
@@ -640,6 +689,9 @@ require_once("db/mysql_connect.php");
                     }
                     else if(requestType == "Asset Return"){
                         window.location.href = "requestor_send_asset_view.php?id=" + id;
+                    }
+                    else if(requestType == "Service Unit Return"){
+                        window.location.href = "requestor_send_service_unit_view.php?id=" + id;
                     }
                 };
             };

@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-require_once('db/mysql_connect.php');
 session_start();
-$userID = $_SESSION['userID'];
-$_SESSION['previousPage'] = "requestor_send_service_unit.php";
+$id = $_GET['id'];
 ?>
 <head>
     <meta charset="utf-8">
@@ -54,24 +52,7 @@ $_SESSION['previousPage'] = "requestor_send_service_unit.php";
         <section id="main-content">
             <section class="wrapper">
                 <!-- page start-->
-                <div>
-                <?php
-                    if (isset($_SESSION['submitMessage'])){
 
-                        if($_SESSION['submitStatus'] == 1){
-                            $alert = "success";
-                        }
-                        else{
-                            $alert = "danger";
-                        }
-                        echo "<div style='text-align:center' class='alert alert-".$alert."'>
-                                <strong><h3>{$_SESSION['submitMessage']}</h3></strong>
-                              </div>";
-
-                        unset($_SESSION['submitMessage']);
-                    }
-                ?>
-                </div>
                 <div class="col-sm-12">
                     <div class="col-sm-12">
 
@@ -81,10 +62,8 @@ $_SESSION['previousPage'] = "requestor_send_service_unit.php";
                             <div class="row">
                                 <div class="col-sm-12">
                                     <section class="panel">
-
-                                                <form method="post" action="requestor_send_service_unit_DB.php">
                                         <header class="panel-heading">
-                                            Send Borrowed Service Units
+                                            Send Borrowed Assets
                                             <span class="tools pull-right">
                                                 <a href="javascript:;" class="fa fa-chevron-down"></a>
                                             </span>
@@ -92,59 +71,74 @@ $_SESSION['previousPage'] = "requestor_send_service_unit.php";
                                         <div class="panel-body">
                                             
                                             <div class="adv-table">
-                                                    
                                                 <table class="display table table-bordered table-striped" id="dynamic-table">
                                                     <thead>
                                                         <tr>
                                                             <th></th>
                                                             <th>Property Code</th>
                                                             <th>Brand</th>
-                                                            <th>Specifications</th>
+                                                            <th>Model</th>
+                                                            <th>Expected Return Date</th>
                                                             <th>Status</th>
                                                             <th>Comments</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                     <?php
-                                                            $query="
-                                                                SELECT *, rb.name as 'brandName'  
-                                                                FROM thesis.serviceunit su
-                                                                JOIN serviceunitassets sua ON sua.serviceUnitID = su.serviceUnitID
+
+                                                    $query = "  SELECT *, b.name as 'brandName', ac.name as 'categoryName', asts.description as 'statusName',  am.description as 'modelName'
+                                                                FROM thesis.serviceunitassets sua 
+                                                                JOIN serviceunit su ON su.serviceUnitID = sua.serviceUnitID
                                                                 JOIN asset a ON sua.assetID = a.assetID
                                                                 JOIN assetmodel am ON a.assetModel = am.assetModelID
-                                                                JOIN ref_brand rb ON am.brand = rb.brandID
-                                                                WHERE (`UserID` = '{$userID}')
-                                                                AND (`su`.`received` = '1')
-                                                                AND (`returned` = '0');";
-                                                            $result=mysqli_query($dbc,$query);
-                                                            while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
-                                                                echo "<tr>
-                                                                    <td><input type='checkbox' name='assets[]' class='form-control' value ='{$row['assetID']}'>
-                                                                        <input type='hidden' name='assets[]' value ='0'</td>
-                                                                        <input type='hidden' name='serviceUnitID[]' value ='{$row['serviceUnitID']}'</td>
-                                                                    <td>{$row['propertyCode']}</td>
-                                                                    <td>{$row['brandName']}</td>
-                                                                    <td>{$row['itemSpecification']}</td>    
-                                                                    <td>
-                                                                        <select class='form-control' name='status[]'>
-                                                                            <option value = '1'>Working</option>
-                                                                            <option value = '0'>Damaged</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input style='width:100%' type='text' class='form-control' name='comments[]'></td>
-                                                                </tr>";
-                                                            }
-                                                        
-                                                        ?>
+                                                                JOIN ref_assetcategory ac ON am.assetCategory = ac.assetCategoryID
+                                                                JOIN ref_brand b ON am.brand = b.brandID
+                                                                JOIN ref_assetStatus asts ON a.assetStatus = asts.id
+                                                                WHERE sua.serviceUnitID = '{$id}';";
+                                                    $result = mysqli_query($dbc, $query);
+
+                                                    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
+                                                    {
+
+                                                    ?>
+                                                    <tr>
+                                                    <td>
+                                                        <input type="checkbox" checked disabled>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['propertyCode']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['brandName']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['modelName']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $row['endDate']; ?>
+                                                    </td>
+                                                    <td>
+                                                    <?php
+                                                     if ($row['isWorking'] == 1) 
+                                                    {
+                                                        echo "Working";
+                                                    }else{
+                                                        echo "Damaged";
+                                                    }  
+                                                    ?>
+                                                    </td>
+                                                    <td>
+                                                        <input style="width:100%" class="form-control" type="text" value = "<?php echo $row['comments']; ?>" readonly>
+                                                    </th>
+                                                    </tr>
+                                                    <?php }?>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                         <div style="padding-left:10px; padding-bottom:5px">
-                                            <button type= "submit" class="btn btn-success">Checkin</button>
-                                            <button type = "button" class="btn btn-danger" onclick="window.history.back();">Back</button>
+                                            <a href="requestor_dashboard.php"><button class="btn btn-danger">Back</button></a>
                                         </div>
-                                                </form>
                                     </section>
                                 </div>
                             </div>

@@ -67,6 +67,9 @@
                                         </header>
                                         <div class="panel-body">
 
+                                            <h4>Requestor: </h4>
+                                            <h4>Date: </h4>
+                                            <hr>
 
                                             <div class="adv-table">
                                                 <table class="display table table-bordered table-striped" id="dynamic-table">

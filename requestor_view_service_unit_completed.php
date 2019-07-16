@@ -4,7 +4,7 @@
 session_start();
 $userID = $_SESSION['userID'];
 $id = $_GET['id'];
-$_SESSION['previousPage'] = "it_request_service_unit?id={$id}";
+
 require_once("db/mysql_connect.php");
 
 
@@ -12,7 +12,8 @@ $query =  "SELECT * FROM thesis.service s JOIN employee e ON s.UserID = e.UserID
 $result = mysqli_query($dbc, $query);
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-        
+        $dateNeeded = $row['dateNeeded'];
+        $startDate = $row['startDate'];
     }
 
 $assets = array();
@@ -25,6 +26,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     array_push($assets, $row['IDasset']);
     array_push($assetCategoryID, $row['assetCategory']);
 }
+
 ?>
 
 <head>
@@ -67,7 +69,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 
         </header>
         <!--header end-->
-        <?php include 'it_navbar.php' ?>
+        <?php include 'requestor_navbar.php' ?>
 
         <!--main content-->
         <section id="main-content">
@@ -81,16 +83,6 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                             <br>
                             <section class="panel">
                                 <header style="padding-bottom:20px" class="panel-heading wht-bg">
-                                    <?php
-                                        if (isset($_SESSION['submitMessage'])){
-
-                                            echo "<div style='text-align:center' class='alert alert-success'><h5><strong>
-                                                    {$_SESSION['submitMessage']}
-                                                  </strong></h5></div>";
-
-                                            unset($_SESSION['submitMessage']);
-                                        }
-                                    ?>
                                     <h4 class="gen-case" style="float:right">
                                     </h4>
                                     <h4>Request For Service Unit</h4>
@@ -101,20 +93,20 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <img src="images/chat-avatar2.jpg" alt="">
-                                                <strong>Helpdesk</strong>
+                                                <strong>Me</strong>
                                                 to
-                                                <strong>me</strong>
+                                                <strong>IT Office</strong>
                                             </div>
                                             <div class="col-md-4">
-                                                <button style="float:right" class="btn btn-info">Ongoing</button>
+                                                <button style="float:right" class="btn btn-success">Completed</button>
                                                 <br>
                                                 <br>
                                                 <br>
-                                                <h5>Date Created:
+                                                <h5>Date Received: <?php echo $startDate;?>
                                                 </h5>
                                             </div>
                                             <div class="col-md-8">
-                                                <h5>Comments:
+                                                <h5>Comments: Received
                                                 </h5>
                                             </div>
                                             <div class="cp;-col-md-4"></div>
@@ -127,70 +119,13 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                 </div>
                             </section>
 
-                            <section class="panel">
-                                <div class="panel-body">
-                                    <h4>Assets to be Repaired</h4>
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Property Code</th>
-                                                <th>Asset/ Software Name</th>
-                                                <th>Building</th>
-                                                <th>Room</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                                    
-                                        for ($i=0; $i < count($assets); $i++) { 
-
-                                            
-                                            $query3 =  "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
-                                                    FROM asset a 
-                                                        JOIN assetModel m
-                                                    ON assetModel = assetModelID
-                                                        JOIN ref_brand br
-                                                    ON brand = brandID
-                                                        JOIN ref_assetcategory c
-                                                    ON assetCategory = assetCategoryID
-                                                        JOIN ref_assetstatus s
-                                                    ON a.assetStatus = s.id
-                                                        JOIN assetassignment aa
-                                                    ON a.assetID = aa.assetID
-                                                        JOIN building b
-                                                    ON aa.BuildingID = b.BuildingID
-                                                        JOIN floorandroom f
-                                                    ON aa.FloorAndRoomID = f.FloorAndRoomID 
-                                                        WHERE a.assetID = {$assets[$i]};";
-
-                                            $result3 = mysqli_query($dbc, $query3);  
-
-                                            while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
-
-                                               echo "
-                                                <tr>
-                                                <td>{$row['propertyCode']}</td>
-                                                <td>{$row['brand']} {$row['category']} {$row['description']}</td>
-                                                <td>{$row['building']}</td>
-                                                <td>{$row['floorroom']}</td>
-                                                <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
-                                                </tr>";
-                                            }  
-
-                                        }
-                                        ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </section>
-
                         </div>
 
                         <div class="col-sm-12">
                             <section class="panel">
                                 <div class="panel-body ">
                                     <div>
-                                        <h4>Service Unit to Be Given</h4>
+                                        <h4>Service Unit Received</h4>
                                     </div>
 
                                     <table class="table table-bordered table table-hover" id="addtable">
@@ -236,10 +171,10 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         </tbody>
                                     </table>
                                     <input style="display: none" type="number" id="count" name="count">
+                                    <a href="requestor_dashboard.php"> <button type = "button" class="btn btn-danger" style="font-size:12px" > Back</button></a>
                                 </div>
                             </section>
                             </form>
-                            <a href="it_dashboard.php"><button type="button" class="btn btn-danger">Back</button></a>
                         </div>
                         
                         

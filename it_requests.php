@@ -285,12 +285,19 @@ $_SESSION['previousDash'] = "it_requests.php";
                                                                     }
                                                             
                                                            		echo "
-                                                                    <td>Service Unit</td>
-                                                                    <td>{$row['stepname']}</td>
+                                                                    <td>Service Unit</td>";
+
+                                                                if($row['description']=='Ongoing'){
+                                                                    echo "<td>For Delivery</td>";
+                                                                 }else{
+                                                                    echo "<td>{$row['stepname']}</td>";
+                                                                 } 
+
+                                                                   echo "
                                                                     <td>{$row['requestedby']}</td>
                                                                     <td>{$row['dateReceived']}</td>
                                                                     <td>{$row['details']}</td>
-                                                                </tr>";
+                                                                    </tr>";
                                                                 
                                                                  $count++;
 															}
