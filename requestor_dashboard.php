@@ -369,7 +369,7 @@ require_once("db/mysql_connect.php");
 
 													<?php
 													//GET ALL REQUEST SCHEDULE FOR DELIVERY (REQUEST TO BORROW)
-													$query = "SELECT rr.id,rb.dateCreated,rb.startDate,s.description,rr.statusID FROM thesis.requestor_receiving rr join request_borrow rb on rr.borrowID=rb.borrowID
+													/*$query = "SELECT rr.id,rb.dateCreated,rb.startDate,s.description,rr.statusID FROM thesis.requestor_receiving rr join request_borrow rb on rr.borrowID=rb.borrowID
 																				  join ref_status s ON rr.statusID = s.statusID 
 																				  where rr.requestID is null and rr.statusID!='3'";
                                                                   
@@ -406,7 +406,7 @@ require_once("db/mysql_connect.php");
                                                           $count++;
                                                     }
 													
-												  
+												  */
 												  ?>
                                                    <?php
                                                     //GET after repair SCHEDULE FOR DELIVERY (after repair is done)
