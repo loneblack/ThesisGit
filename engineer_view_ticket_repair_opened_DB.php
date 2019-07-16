@@ -67,6 +67,20 @@
             $queryAssetAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$userID}', now(), '{$assets}', '{$id}', '{$assetStatus}');";
             $resultAssetAudit=mysqli_query($dbc,$queryAssetAudit);
 
+            // check if asset is refurbishable
+            $queryCheckRefurbishable = "SELECT * FROM thesis.asset a JOIN assetmodel am ON a.assetModel = am.assetModelID WHERE a.assetID = '{$asset}';";
+            $resultCheckRefurbishable = mysqli_query($dbc, $queryCheckRefurbishable);
+            $rowCheckRefurbishable = mysqli_fetch_array($resultCheckRefurbishable, MYSQLI_ASSOC);
+
+            //if asset is refurbishable. set status for refurbish
+            if($rowCheckRefurbishable['assetCategory'] == '13' || $rowCheckRefurbishable['assetCategory'] == '40' || $rowCheckRefurbishable['assetCategory'] == '46' ){
+                $queryAssetStatus="UPDATE `thesis`.`asset` SET `assetStatus` = '10' WHERE (`assetID` = '{$asset}');";
+                $resultAssetStatus=mysqli_query($dbc,$queryAssetStatus);
+
+                $queryAssetAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$userID}', now(), '{$assets}', '{$id}', '10');";
+                $resultAssetAudit=mysqli_query($dbc,$queryAssetAudit);
+            }
+
             if($assetStatus == 22 || $assetStatus == 23 || $assetStatus == 4 || $assetStatus == 24){
                 //set checked in ticketed asset
                 $queryTicketedAsset="UPDATE `thesis`.`ticketedasset` SET `checked` = '1' WHERE (`assetID` = '{$asset}');";

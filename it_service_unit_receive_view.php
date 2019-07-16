@@ -74,7 +74,7 @@ $dateReturn = $row['dateReturn'];
                             <div class="row">
                                 <div class="col-sm-12">
                                     <section class="panel">
-                                        <form action="it_asset_receive_view_DB.php" method="post">
+                                        <form action="it_service_unit_receive_view_DB.php" method="post">
                                         <header class="panel-heading">
                                             Receive Service unit from User
                                             <span class="tools pull-right">
