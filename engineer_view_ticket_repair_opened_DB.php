@@ -72,13 +72,27 @@
             $resultCheckRefurbishable = mysqli_query($dbc, $queryCheckRefurbishable);
             $rowCheckRefurbishable = mysqli_fetch_array($resultCheckRefurbishable, MYSQLI_ASSOC);
 
-            //if asset is refurbishable. set status for refurbish
-            if($rowCheckRefurbishable['assetCategory'] == '13' || $rowCheckRefurbishable['assetCategory'] == '40' || $rowCheckRefurbishable['assetCategory'] == '46' ){
-                $queryAssetStatus="UPDATE `thesis`.`asset` SET `assetStatus` = '10' WHERE (`assetID` = '{$asset}');";
-                $resultAssetStatus=mysqli_query($dbc,$queryAssetStatus);
+            if($assetStatus == 4){//if broken not fixable
 
-                $queryAssetAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$userID}', now(), '{$assets}', '{$id}', '10');";
-                $resultAssetAudit=mysqli_query($dbc,$queryAssetAudit);
+                //if asset is refurbishable. set status for refurbish
+                if($rowCheckRefurbishable['assetCategory'] == '13' || $rowCheckRefurbishable['assetCategory'] == '40' || $rowCheckRefurbishable['assetCategory'] == '46' ){
+                    $queryAssetStatus="UPDATE `thesis`.`asset` SET `assetStatus` = '10' WHERE (`assetID` = '{$asset}');";
+                    $resultAssetStatus=mysqli_query($dbc,$queryAssetStatus);
+
+                    $queryAssetAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$userID}', now(), '{$assets}', '{$id}', '10');";
+                    $resultAssetAudit=mysqli_query($dbc,$queryAssetAudit);
+                }
+                else{
+
+                    $queryAssetStatus="UPDATE `thesis`.`asset` SET `assetStatus` = '11' WHERE (`assetID` = '{$asset}');";
+                    $resultAssetStatus=mysqli_query($dbc,$queryAssetStatus);
+
+                    $queryAssetAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$userID}', now(), '{$assets}', '{$id}', '11');";
+                    $resultAssetAudit=mysqli_query($dbc,$queryAssetAudit);
+                }
+
+                //end asset assignment 
+                //set replacement asset
             }
 
             if($assetStatus == 22 || $assetStatus == 23 || $assetStatus == 4 || $assetStatus == 24){
