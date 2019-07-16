@@ -66,6 +66,6 @@
 	}
 	$_SESSION['submitMessage'] = $message;
 	
-	//header('Location: '.$header);
+	header('Location: '.$header);
 
 ?>
