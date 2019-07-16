@@ -15,6 +15,8 @@
     $assets = $_POST['assets'];
     $select = $_POST['select'];
 
+    $brokenAssets = array();
+
     for ($i=0; $i < sizeof($assets); $i++) { 
     	if($assets[$i] != 0){
     		array_splice($assets, ($i+1), 1);
@@ -61,9 +63,31 @@
 			//INSERT TO ASSET AUDIT
 			$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$assets[$i]}', '5');";
 			$resultAssAud=mysqli_query($dbc,$queryAssAud);
+
+
+			//store assets to array for creating a repair request
+			array_push($brokenAssets, $assets[$i]);
+		}
+	}
+
+	if(count($brokenAssets > 0)){
+
+	//add repair request for broken assets
+	$sqlService = "INSERT INTO `thesis`.`service` (`details`, `dateNeed`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`) VALUES ('Broken upon receiving', 'now()', 'userID', '27', '1', '14', '0');";
+	$resultService=mysqli_query($dbc,$sqlService);
+
+	//get newly inserted data from service
+	$sqlServiceInsert = "SELECT * FROM `thesis`.`service` ORDER BY id DESC LIMIT 1;";
+   	$resultServiceInsert = mysqli_query($dbc, $sqlServiceInsert);
+	$rowServiceInsert = mysqli_fetch_array($resultServiceInsert, MYSQLI_ASSOC);
+
+	$serviceID = $rowServiceInsert['id'];
+
+		for ($i=0; $i < count($brokenAssets; $i++) { 
+			$sqlServiceDetails = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`, `problem`) VALUES ('{$serviceID}', '$brokenAssets[$i]', '0', 'broken upon receiving');";
+			$resultService=mysqli_query($dbc,$sqlService);
 		}
 
-		
 	}
 
     //if all checked change status to done
