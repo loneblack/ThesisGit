@@ -83,9 +83,9 @@
 
 	$serviceID = $rowServiceInsert['id'];
 
-		for ($i=0; $i < count($brokenAssets; $i++) { 
+		for ($i=0; $i < count($brokenAssets); $i++) { 
 			$sqlServiceDetails = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`, `problem`) VALUES ('{$serviceID}', '$brokenAssets[$i]', '0', 'broken upon receiving');";
-			$resultService=mysqli_query($dbc,$sqlService);
+			$resultService = mysqli_query($dbc,$sqlService);
 		}
 
 	}
