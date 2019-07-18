@@ -280,9 +280,11 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                                                     <option value="1" '.$received[$i].'>Received</option>
                                                                                     <option value="2" '.$brokenProblem[$i].'>Broken/ with problems</option>
                                                                                 </select>
-                                                                                <input type="hidden" id="hiddenchk1[]"name="assets[]" value="'. $requestedID[$i].'" >
+                                                                                <input type="hidden" id="hiddenchk1[]"name="select[]" value="0" >
                                                                         </td>
-
+                                                                        <td style="display:none;">
+                                                                            <input type="text" id="hiddenchk1[]"name="assets[]" value="'. $requestedID[$i].'" >
+                                                                        </td>
                                                                         <td style="width:1%">
 
                                                                             '.$requestedPropertyCode[$i].'                                                                       

@@ -17,13 +17,14 @@
 
     $brokenAssets = array();
 
-    for ($i=0; $i < sizeof($assets); $i++) { 
-    	if($assets[$i] != 0){
-    		array_splice($assets, ($i+1), 1);
+	print_r($assets);
+	print_r($select);    
+    for ($i=0; $i < sizeof($select); $i++) { 
+    	if($select[$i] != 0){
+    		array_splice($select, ($i+1), 1);
     	}
     }
 
-    
    	//Updating of received assets
 	//insert assets to service details from select box
 	for ($i=0; $i <sizeof($assets) ; $i++) { 
@@ -31,9 +32,9 @@
 		$sql1 = "SELECT * FROM thesis.receiving_details WHERE receivingID = '{$receivingID}' AND assetID = '{$assets[$i]}';";
 		$result1 = mysqli_query($dbc, $sql1);
 		$row = mysqli_fetch_array($result1, MYSQLI_ASSOC);
-
+		echo $sql1;
 		$receivingDetailsID = $row['id'];
-
+		echo $receivingDetailsID;
 		if($select[$i] == 1){
 			
 			$sql = "UPDATE `thesis`.`receiving_details` SET
@@ -41,6 +42,7 @@
 		    	  WHERE (`id` = '{$receivingDetailsID}');";
 			$result = mysqli_query($dbc, $sql);
 
+			echo $sql;
 			//UPDATE ASSET STATUS
 			$queryStat="UPDATE `thesis`.`asset` SET `assetStatus`='2' WHERE `assetID`='{$assets[$i]}'";
 			$resultStat=mysqli_query($dbc,$queryStat);
