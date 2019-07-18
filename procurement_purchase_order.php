@@ -137,7 +137,7 @@
 					<div class='text-center invoice-btn'>
 						
 							<button type="submit" class="btn btn-success btn-lg" name="submit"><i class='fa fa-check'></i> Send </button>
-                            <button class="btn btn-primary btn-lg" onclick="printContent('poform')"><i class="fa fa-print"></i> Print</button>
+                            <!--<button class="btn btn-primary btn-lg" onclick="printContent('poform')"><i class="fa fa-print"></i> Print</button>-->
 						
 					</div>
 					<?php
@@ -149,7 +149,11 @@
 							group by cid.supplier_supplierID";
 						$result=mysqli_query($dbc,$query);
 						
+						$code="poform";
+						$num=0;
 						while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+							$divID=$code.$num;
+							$num++;
 							echo "<div class='row'>
 							<div class='col-sm-12'>
 								<div class='col-sm-12'>
@@ -157,10 +161,11 @@
 										<header class='panel-heading'>
 											Purchase Order
 										</header>
+										<button class='btn btn-primary btn-lg' onclick=\"printContent('".$divID."')\" style=\"float: right;\"><i class='fa fa-print'></i> Print</button>
 										<div class='panel-body'>
                                             <h3>Instructions: Print the Purchase Order and let the Approver Sign it.</h3>
 											<section id='unseen'>
-                                                <div id='poform'>
+                                                <div id='".$divID."'>
 												<div class='row invoice-to'>
 													<div class='col-md-4 col-sm-4 pull-left'>
 														<h4>Purchase Order To:</h4>
