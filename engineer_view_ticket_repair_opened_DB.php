@@ -220,13 +220,43 @@
         
         //GET QTY of Assets of a SERVICE
         $queryService="SELECT  count(ticketID) as `numAssets`
-                        , count(IF(checked = 1 AND assetStatus = 4, ta.ticketID, null)) as `broken`
+                        , count(IF(checked = 1 AND assetStatus = 10, ta.ticketID, null)) as `refurbish`
+                        , count(IF(checked = 1 AND assetStatus = 11, ta.ticketID, null)) as `disposal`
                         , count(IF(checked = 1 AND assetStatus = 22, ta.ticketID, null)) as `false`
                         , count(IF(checked = 1 AND assetStatus = 23, ta.ticketID, null)) as `repaired`
                         , count(IF(checked = 1 AND assetStatus = 24, ta.ticketID, null)) as `replacement`
                 FROM thesis.ticketedasset ta JOIN asset a ON ta.assetID = a.assetID where ticketID='{$id}';";
         $resultService=mysqli_query($dbc,$queryService);
         $rowService=mysqli_fetch_array($resultService,MYSQLI_ASSOC);
+
+
+        $arrayRefurbish = array();
+        $arrayDisposal = array();
+        $arrayFalse= array();
+        $arrayRepaired = array();
+        $arrayRepalcement = array();
+        $queryArray = "SELECT * FROM thesis.ticketedasset ta JOIN asset a ON ta.assetID = a.assetID where ticketID='{$id}';";
+        $resultArray=mysqli_query($dbc,$queryArray);
+        while ($rowArray=mysqli_fetch_array($resultArray,MYSQLI_ASSOC)){
+
+            if($rowArray['assetStatus'] == 10){
+                array_push($arrayRefurbish, $rowArray['assetID']);
+            }
+            if($rowArray['assetStatus'] == 11){
+                array_push($arrayDisposal, $rowArray['assetID']);
+            }
+            if($rowArray['assetStatus'] == 22){
+                array_push($arrayFalse, $rowArray['assetID']);
+            }
+            if($rowArray['assetStatus'] == 23){
+                array_push($arrayRepaired, $rowArray['assetID']);
+            }
+            if($rowArray['assetStatus'] == 24){
+                array_push($arrayRepalcement, $rowArray['assetID']);
+            }
+        }
+
+
         
         //UPDATE TICKET STATUS 
         
@@ -265,7 +295,7 @@
                 $resultNotif = mysqli_query($dbc, $sqlNotif);
             }
             //all assets for replacement
-            elseif($rowService['numAssets']==($rowService['replacement'] + $rowService['broken'])){
+            elseif($rowService['numAssets']==($rowService['replacement'])){
                 $queryComp="UPDATE `thesis`.`service` SET `steps`='32', `dateNeed` = DATE_ADD(NOW(), INTERVAL 3 DAY) WHERE `id`='{$rowServID['service_id']}'";
                 $resultComp=mysqli_query($dbc,$queryComp);
 
@@ -287,10 +317,55 @@
                     $resultAssetAudit=mysqli_query($dbc,$queryAssetAudit);
                 }
             }
+            //if there are atleast 1 repaired/false report
+            elseif(count($arrayRepaired) > 0 || count($arrayFalse) > 0 ){
 
-            else{
+                //send repaired/ false report back to user for receiving
+
+                //receiving - make receiving table
+                $queryReceiving="INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `serviceID`, `statusID`) VALUES ('{$requestedBY}', '{$serviceID}', '1');";
+                $resultReceiving=mysqli_query($dbc,$queryReceiving);
+
+                //get newly inserted receiving data
+                $queryGetReceiving="SELECT * FROM `thesis`.`requestor_receiving` where serviceID='{$serviceID}' order by id desc limit 1";
+                $resultGetReceiving=mysqli_query($dbc,$queryGetReceiving);
+                $rowGetReceiving=mysqli_fetch_array($resultGetReceiving,MYSQLI_ASSOC);
+
+                foreach ($arrayRepaired as $asset) {
+                    //receiving - make receiving details table
+                    $queryReceiving="INSERT INTO `thesis`.`receiving_details` (`receivingID`, `assetID`, `received`) VALUES ('{$rowGetReceiving['id']}', '{$asset}', '0');";
+                    $resultReceiving=mysqli_query($dbc,$queryReceiving);
+
+                }
+                foreach ($arrayFalse as $asset) {
+                    //receiving - make receiving details table
+                    $queryReceiving="INSERT INTO `thesis`.`receiving_details` (`receivingID`, `assetID`, `received`) VALUES ('{$rowGetReceiving['id']}', '{$asset}', '0');";
+                    $resultReceiving=mysqli_query($dbc,$queryReceiving);
+
+                }
+
+
+            //set status to partially repaired
             $queryComp="UPDATE `thesis`.`service` SET `steps`='31' WHERE `id`='{$rowServID['service_id']}'";
             $resultComp=mysqli_query($dbc,$queryComp);
+            }
+
+            //if there are broken not fixable assets (for disposal/ for refurbish)
+            //create replacement for those broken assets
+            if(count($arrayDisposal) > 0 || count($arrayRefurbish) > 0 ){
+
+                foreach ($$arrayDisposal as $asset) {
+                   $sqlReplacement = "INSERT INTO `thesis`.`replacement` (`lostAssetID`, `BuildingID`, `FloorAndRoomID`, `dateTiimeLost`, `userID`, `statusID`, `stepID`) 
+                    VALUES ('{$asset}', 'ITroom', 'ITroom', now(), '{requestedBY}', '1', '14');";
+                    $resultReplacement=mysqli_query($dbc,$queryReplacement);
+                }
+                foreach ($$arrayRefurbish as $asset) {
+                   $sqlReplacement = "INSERT INTO `thesis`.`replacement` (`lostAssetID`, `BuildingID`, `FloorAndRoomID`, `dateTiimeLost`, `userID`, `statusID`, `stepID`) 
+                    VALUES ('{$asset}', 'ITroom', 'ITroom', now(), '{requestedBY}', '1', '14');";
+                    $resultReplacement=mysqli_query($dbc,$queryReplacement);
+                }
+                
+
             }
 
 

@@ -466,7 +466,11 @@ while ($row1 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $totalAssets = $row1
 
                                                                 if($row['description']=='Ongoing'){
                                                                     echo "<td>For Delivery</td>";
-                                                                 }else{
+                                                                 }
+                                                                 else if($row['description']=='Pending'){
+                                                                    echo "<td>Reqest Pending</td>";
+                                                                 }
+                                                                 else{
                                                                     echo "<td>{$row['stepname']}</td>";
                                                                  } 
 

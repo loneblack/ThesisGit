@@ -289,7 +289,11 @@ $_SESSION['previousDash'] = "it_requests.php";
 
                                                                 if($row['description']=='Ongoing'){
                                                                     echo "<td>For Delivery</td>";
-                                                                 }else{
+                                                                 }
+                                                                 else if($row['description']=='Pending'){
+                                                                    echo "<td>Reqest Pending</td>";
+                                                                 }
+                                                                 else{
                                                                     echo "<td>{$row['stepname']}</td>";
                                                                  } 
 
