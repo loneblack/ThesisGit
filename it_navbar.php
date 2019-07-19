@@ -218,7 +218,6 @@
                             <ul class="sub">
                                 <li><a href="it_inventory_report_form.php">Asset Audit Report</a></li>
                                 <li><a href="it_preventive_maintenance_report.php">Maintenance Report</a></li>
-                                <li><a href="it_repair_report.php">Repair Report</a></li>
                             </ul>
                         </li>
                         
