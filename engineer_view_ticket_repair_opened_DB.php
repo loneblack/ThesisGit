@@ -91,8 +91,6 @@
                     $resultAssetAudit=mysqli_query($dbc,$queryAssetAudit);
                 }
 
-                //end asset assignment 
-                //set replacement asset
             }
 
             if($assetStatus == 22 || $assetStatus == 23 || $assetStatus == 4 || $assetStatus == 24){
