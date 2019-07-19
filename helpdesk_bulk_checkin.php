@@ -161,8 +161,9 @@
                                                             LEFT JOIN employee e ON aa.personresponsibleID = e.employeeID
                                                             LEFT JOIN building b ON aa.BuildingID = b.BuildingID
                                                             LEFT JOIN floorandroom fr ON aa.FloorAndRoomID = fr.FloorAndRoomID
-                                                            WHERE (rac.name = 'laptop' OR rac.name = 'VGA Cable' OR rac.name='Projector' OR rac.name='Cable' OR rac.name = 'HDMI') AND ras.id = 2
-                                                            AND aa.personresponsibleID IS NOT NULL;";
+                                                            WHERE (rac.name = 'Laptop' OR rac.name = 'VGA Cable' OR rac.name='Projector' OR rac.name = 'HDMI Cable' OR rac.name = 'Extension') AND ras.id = 2
+                                                            AND aa.personresponsibleID IS NOT NULL
+                                                            GROUP BY a.assetID;";
                                                             $result=mysqli_query($dbc,$query);
 
                                                             while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){

@@ -16,7 +16,7 @@
         $checkinDate = $_POST['checkinDate'];
 		
 		if(!isset($message)){
-			
+			 
             $queryGetDept = "SELECT DepartmentID FROM department_list WHERE employeeID = '{$user}' limit 1;";
             $resultGetDept = mysqli_query($dbc, $queryGetDept);
             $rowGetDept = mysqli_fetch_array($resultGetDept, MYSQLI_ASSOC);
