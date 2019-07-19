@@ -341,7 +341,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                         <h4><h4>Request For Parts (if needed)</h4></h4>
                                     </div>
 
-                                    <table class="table table-bordered table table-hover" id="addtable">
+                                     <table class="table table-bordered table table-hover" id="addtable">
                                     <thead>
                                         <tr>
                                             <th style="display: none">AssetID</th>
@@ -349,16 +349,41 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             <th>Category</th>
                                             <th>Specification</th>
                                             <th>Delivery Status</th>
+                                            <th>Add Remove</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php 
+                                            $checkExistingReqeust = "SELECT * FROM thesis.requestparts WHERE serviceID = '{$serviceID}';";
+                                            $resultExistingRequest = mysqli_query($dbc, $checkExistingReqeust); 
+
+                                        if(mysqli_num_rows($resultExistingRequest) == 0) {
+                                        ?>
                                         <tr>
                                             <td>
-                                                <input type='number' min='0' step='1' class='form-control' name='quantity0' disabled>
+                                                <input type='number' min='0' step='1' class='form-control' name='quantity0'>
                                             </td>
                                             <td width="300">
-                                                <select class="form-control" name = "category0" disabled>
+                                                <select class="form-control" name = "category0">
                                                     <option>Select Category</option>
+                                                    <option value="2">Accessories</option>
+                                                    <option value="3">Adapter</option>
+                                                    <option value="6">Batery</option>
+                                                    <option value="16">Hard Disk Drive (External)</option>
+                                                    <option value="17">Hard Disk Drive (Internal)</option>
+                                                    <option value="18">Keyboard</option>
+                                                    <option value="19">LAN Card</option>
+                                                    <option value="22">Memory</option>
+                                                    <option value="23">Monitor</option>
+                                                    <option value="24">Motherboard</option>
+                                                    <option value="25">Mouse</option>
+                                                    <option value="28">Non-IT Equipment</option>
+                                                    <option value="29">Optical Drive (External)</option>
+                                                    <option value="30">Optical Drive (Internal)</option>
+                                                    <option value="32">Power Supply</option>
+                                                    <option value="34">Processor</option>
+                                                    <option value="49">Video Card</option>
+                                                    <!-- 
                                                     <?php 
 
                                                         $sql = "SELECT * FROM thesis.ref_assetcategory;";
@@ -372,22 +397,23 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                         }
 
                                                     ?>
+                                                     -->
                                                 </select>
                                             </td>
                                             <td>
-                                                <input class='form-control' name='specification0' disabled>
+                                                <input class='form-control' name='specification0'>
                                             </td>
                                             <td>
-                                                <select class="form-control" id="delivery" name="delivery" disabled>
+                                                <select class="form-control" id="delivery" name="delivery" readonly>
                                                     <option value="0">Pending</option>
                                                 </select>
                                             </td>
-                                            
+                                            <td style="text-align:center" width='10px'><button class="btn btn-primary" type="button" onclick="addTest(1)">Add</button></td>
                                         </tr>
-
+                                        <?php } ?>
                                         <?php 
 
-                                        $sql = "SELECT * FROM thesis.requestParts WHERE serviceID = '{$serviceID}';";
+                                        $sql = "SELECT *, rpd.id as 'detailsID' FROM thesis.requestparts_details rpd JOIN requestparts rp ON rpd.requestPartsID = rp.id WHERE serviceID = '{$serviceID}';";
                                         $result = mysqli_query($dbc, $sql);
                                         while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                                         {
@@ -405,7 +431,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             }
                                             echo
                                             "<tr>
-                                                <td style='display: none'><input type='number' name='detailsID[]' value ='{$row['id']}'></td>
+                                                <td style='display: none'><input type='number' name='detailsID[]' value ='{$row['detailsID']}'></td>
                                                 <td>
                                                     <input type='number' min='0' step='1' class='form-control' name='quantity' value =  '{$row['quantity']}'readonly>
                                                 </td>
@@ -445,7 +471,6 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                 <input style="display: none" type="number" id="count" name = "count">
                                 </div>
                             </section>
-                            <button type="submit" name="submit" id="submit" class="btn btn-success">Send</button>
                             <a href="engineer_all_ticket.php"><button type="button" class="btn btn-danger">Back</button></a>
                         </form>
                     </div>

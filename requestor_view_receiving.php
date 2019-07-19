@@ -3,6 +3,7 @@
 <?php
 session_start();
 require_once("db/mysql_connect.php");
+$_SESSION['previousPage'] = "requestor_view_receiving.php?id=";
 
 $id = $_GET['id'];
 $startDate = "";

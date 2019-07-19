@@ -64,7 +64,7 @@
             $queryAssetStatus="UPDATE `thesis`.`asset` SET `assetStatus` = '{$assetStatus}' WHERE (`assetID` = '{$asset}');";
             $resultAssetStatus=mysqli_query($dbc,$queryAssetStatus);
 
-            $queryAssetAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$userID}', now(), '{$assets}', '{$id}', '{$assetStatus}');";
+            $queryAssetAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$userID}', now(), '{$asset}', '{$id}', '{$assetStatus}');";
             $resultAssetAudit=mysqli_query($dbc,$queryAssetAudit);
 
             // check if asset is refurbishable
@@ -79,7 +79,7 @@
                     $queryAssetStatus="UPDATE `thesis`.`asset` SET `assetStatus` = '10' WHERE (`assetID` = '{$asset}');";
                     $resultAssetStatus=mysqli_query($dbc,$queryAssetStatus);
 
-                    $queryAssetAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$userID}', now(), '{$assets}', '{$id}', '10');";
+                    $queryAssetAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$userID}', now(), '{$asset}', '{$id}', '10');";
                     $resultAssetAudit=mysqli_query($dbc,$queryAssetAudit);
                 }
                 else{
@@ -87,7 +87,7 @@
                     $queryAssetStatus="UPDATE `thesis`.`asset` SET `assetStatus` = '11' WHERE (`assetID` = '{$asset}');";
                     $resultAssetStatus=mysqli_query($dbc,$queryAssetStatus);
 
-                    $queryAssetAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$userID}', now(), '{$assets}', '{$id}', '11');";
+                    $queryAssetAudit="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$userID}', now(), '{$asset}', '{$id}', '11');";
                     $resultAssetAudit=mysqli_query($dbc,$queryAssetAudit);
                 }
 
@@ -115,11 +115,20 @@
                 $resultComputer=mysqli_query($dbc,$getComputer);
                 $rowComputer = mysqli_fetch_array($resultComputer, MYSQLI_ASSOC);
 
-                $queryAddComponent = "INSERT INTO thesis.computercomponent VALUES ('{$assets[$i]}', '{$destinations[$i]}');";
+                $queryAddComponent = "INSERT INTO thesis.computercomponent VALUES ('{$assets[$i]}', '{$rowComputer['computerID']}');";
                 $resultAddComponent=mysqli_query($dbc,$queryAddComponent);
+
 
                 $queryUpdateAssetStatus = "UPDATE `thesis`.`asset` SET `assetStatus` = '19' WHERE (`assetID` = '{$assets[$i]}');";
                 $resultUpdateAssetStatus=mysqli_query($dbc,$queryUpdateAssetStatus);
+
+                $getRequestPartsID = "SELECT * FROM thesis.requestparts WHERE serviceID = '{$serviceID}';";
+                $resultRequestPartsID=mysqli_query($dbc,$getRequestPartsID);
+                $rowRequestPartsID = mysqli_fetch_array($resultRequestPartsID, MYSQLI_ASSOC);
+
+                //remove requested parts if added
+                $queryRemoveFromRequestParts = "DELETE FROM thesis.requestparts_assets WHERE assetID = '{$assets[$i]}' AND requestPartsID = '{$rowRequestPartsID['id']}';";
+                $resultRemoveFromRequestParts=mysqli_query($dbc,$queryRemoveFromRequestParts);
 
             }
             else if($actions[$i] == 2){//remmoved

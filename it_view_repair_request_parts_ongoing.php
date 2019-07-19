@@ -4,7 +4,7 @@
 session_start();
 $userID = $_SESSION['userID'];
 $id = $_GET['id'];
-$_SESSION['previousPage'] = "it_view_repair_request_parts.php?id={$id}";
+$_SESSION['previousPage'] = "it_view_repair_request_parts_ongoing.php?id={$id}";
 require_once("db/mysql_connect.php");
 
 $query =  "SELECT * FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id JOIN employee e ON r.UserID = e.UserID JOIN ref_status rs ON r.statusID = rs.statusID WHERE r.id = {$id};";

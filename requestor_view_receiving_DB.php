@@ -162,7 +162,7 @@
 	   echo $sql;
 	}
 
-    $header = "requestor_view_receiving.php?id=".$receivingID;
+    $header = $_SESSION['previousPage'].$receivingID;
 	$message = "Form submitted!";
 	$_SESSION['submitMessage'] = $message;
 

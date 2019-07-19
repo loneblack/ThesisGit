@@ -3,6 +3,7 @@
 <?php
 session_start();
 require_once("db/mysql_connect.php");
+$_SESSION['previousPage'] = "requestor_view_receiving_repair.php?id=";
 
 $id = $_GET['id'];
 $startDate = "";
@@ -123,6 +124,9 @@ $requestedBrand = array();
 $requestedDescription = array();
 $requestedBrand = array();
 $requestedCheck = array();
+$notYetReceived = array();
+$received = array();
+$brokenProblem = array();
 
 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
@@ -133,13 +137,26 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
         array_push($requestedPropertyCode, $row['propertyCode']);
         array_push($requestedItemSpecification, $row['itemSpecification']);
 
+        
         if($row['received'] == 1){
             array_push($requestedCheck, "checked disabled");
+            array_push($received, "selected");
+            array_push($notYetReceived, "");
+            array_push($brokenProblem, "");
         }
-        else {
+        elseif($row['received'] == 2){
+            array_push($requestedCheck, "checked disabled");
+            array_push($received, "");
+            array_push($brokenProblem, "selected");
+            array_push($notYetReceived, "");
+        }
+        else{
             array_push($requestedCheck, "");
-        }
+            array_push($notYetReceived, "selected");
+            array_push($received, "");
+            array_push($brokenProblem, "");
 
+        }
         $count++;
 
     }
@@ -258,10 +275,15 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                                                                 echo
                                                                     '<tr>
                                                                         <td>
-                                                                                <input class="form-control" name="assets[]"  type="checkbox" value="'. $requestedID[$i].'"'.$requestedCheck[$i].'/>
-                                                                                <input type="hidden" id="hiddenchk1[]"name="assets[]" value="0" >
+                                                                                 <select class="form-control" name="select[]" '.$requestedCheck[$i].'>
+                                                                                    <option value="0" '.$notYetReceived[$i].'>Not yet received</option>
+                                                                                    <option value="1" '.$received[$i].'>Received</option>
+                                                                                </select>
+                                                                                <input type="hidden" id="hiddenchk1[]"name="select[]" value="0" >
                                                                         </td>
-
+                                                                         <td style="display:none;">
+                                                                            <input type="text" id="hiddenchk1[]"name="assets[]" value="'. $requestedID[$i].'" >
+                                                                        </td>
                                                                         <td style="width:1%">
 
                                                                             '.$requestedPropertyCode[$i].'                                                                       
