@@ -4,8 +4,9 @@
 	session_start();
 	$bid = $_GET['bid'];
 	$acid = $_GET['acid'];
-	$startDate=$_SESSION['startDate'];
-	$endDate=$_SESSION['endDate'];
+	$startDate=$_GET['sDate'];
+	$endDate=$_GET['eDate'];
+	$case=$_GET['caseNo'];
 	
 	//GET BUILDING NAME
 	$queryBldgName="SELECT * FROM thesis.building where BuildingID='{$bid}'";
@@ -137,8 +138,8 @@
 																						</thead>
 																						<tbody id='maintenance'>";
 																							//GET Asset of a given room
-																								
-																								if(isset($startDate)&&isset($endDate)){
+																								$queryGetAllMainData=null;
+																								if($case==1){
 																									$queryGetAllMainData="Select au.date,a.propertyCode,ras.description as `assetStat`,au.remarks,am.description as `modelName`
 																														From assetaudit au 
 																														left join asset a on au.assetID=a.assetID 
@@ -148,11 +149,27 @@
 																														left JOIN assetassignment aa ON au.assetID=aa.assetID 
 																														left JOIN building b ON aa.BuildingID = b.BuildingID 
 																														left join floorandroom far on b.BuildingID= far.BuildingID
-																														where aa.FloorAndRoomID='{$rowGetFlRoom['FloorAndRoomID']}' and t.serviceType='28' AND au.assetStatus!='17' and AND au.date <= '{$endDate}' AND au.date>= '{$startDate}' and am.assetCategory='{$acid}'   
+																														where aa.FloorAndRoomID='{$rowGetFlRoom['FloorAndRoomID']}' and t.serviceType='28' AND au.assetStatus!='17' AND au.date <= '{$endDate}' AND au.date>= '{$startDate}' and am.assetCategory='{$acid}'   
 																														group by au.date,a.propertyCode
 																														";
 																								}
-																								elseif(!isset($startDate)&&isset($endDate)){
+																								
+																								elseif($case==3){
+																									$queryGetAllMainData="Select au.date,a.propertyCode,ras.description as `assetStat`,au.remarks,am.description as `modelName`
+																														From assetaudit au 
+																														left join asset a on au.assetID=a.assetID 
+																														left join assetmodel am on a.assetModel=am.assetModelID 
+																														left join ref_assetstatus ras on au.assetStatus=ras.id 
+																														left join ticket t on au.ticketID=t.ticketID  
+																														left JOIN assetassignment aa ON au.assetID=aa.assetID 
+																														left JOIN building b ON aa.BuildingID = b.BuildingID 
+																														left join floorandroom far on b.BuildingID= far.BuildingID
+																														where aa.FloorAndRoomID='{$rowGetFlRoom['FloorAndRoomID']}' and t.serviceType='28' AND au.assetStatus!='17' AND au.date <= now() AND au.date>= '{$startDate}' and am.assetCategory='{$acid}'   
+																														group by au.date,a.propertyCode
+																														";
+																								}
+																								
+																								elseif($case==4){
 																									$queryGetAllMainData="Select au.date,a.propertyCode,ras.description as `assetStat`,au.remarks,am.description as `modelName`
 																														From assetaudit au 
 																														left join asset a on au.assetID=a.assetID 

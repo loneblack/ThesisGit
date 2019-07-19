@@ -124,6 +124,7 @@
                                                                         <tbody id='maintenance'>
                                                                             <?php
 																			if(isset($_POST['submit'])){
+																				
 																				if(!empty($_POST['startDate']) && !empty($_POST['endDate'])){
 																						$startDate=$_POST['startDate'];
 																						$endDate=$_POST['endDate'];
@@ -147,6 +148,8 @@
 																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
 																						$_SESSION['startDate']=$startDate;
 																						$_SESSION['endDate']=$endDate;
+																						$_SESSION['case']=1;
+																						
 																				}
                                                                                 
                                                                                 elseif(empty($_POST['startDate']) && empty($_POST['endDate'])){
@@ -171,6 +174,7 @@
 																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
 																						$_SESSION['startDate']=null;
 																						$_SESSION['endDate']=null;
+																						$_SESSION['case']=2;
 																				}
                                                                                 
                                                                                 elseif(!empty($_POST['startDate']) && empty($_POST['endDate'])){
@@ -178,10 +182,10 @@
 																						$endDate=date("Y-m-d");
 																						
 																						$queryGetAllMainData="SELECT b.BuildingID,rac.assetCategoryID,b.name AS `building`, rac.name AS `ac`,
-																						COUNT(IF(au.assetStatus = 2 AND au.date >= '{$startDate}' AND au.date <= '{$endDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
+																						COUNT(IF(au.assetStatus = 2 AND au.date >= '{$startDate}' AND au.date <= now(), a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
                                                                                         COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `broken`,
                                                                                         COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) AS `missing`,
-                                                                                        COUNT(IF(au.assetStatus = 2 AND au.date >= '{$startDate}' AND au.date <= '{$endDate}', a.assetmodel, null)) AS `end`
+                                                                                        COUNT(IF(au.assetStatus = 2 AND au.date >= '{$startDate}' AND au.date <= now(), a.assetmodel, null)) AS `end`
                                                                                         FROM ticket t
                                                                                         JOIN assetaudit au ON t.ticketID = au.ticketID
                                                                                         JOIN asset a ON au.assetID=a.assetID
@@ -195,11 +199,12 @@
 																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
 																						$_SESSION['startDate']=$startDate;
 																						$_SESSION['endDate']=$endDate;
+																						$_SESSION['case']=3;
 																				}
 																				
 																				elseif(empty($_POST['startDate']) && !empty($_POST['endDate'])){
 																						//$startDate=$_POST['startDate'];
-																						$endDate=date("Y-m-d");
+																						$endDate=$_POST['endDate'];
 																						
 																						$queryGetAllMainData="SELECT b.BuildingID,rac.assetCategoryID,b.name AS `building`, rac.name AS `ac`,
 																						COUNT(IF(au.assetStatus = 2 AND au.date <= '{$endDate}', a.assetmodel, null)) + COUNT(IF(au.assetStatus = 18, a.assetmodel, null)) + COUNT(IF(au.assetStatus = 4 OR au.assetStatus = 5 or au.assetStatus =  9, a.assetmodel, null)) AS `start`,
@@ -219,6 +224,7 @@
 																						$resultGetAllMainData=mysqli_query($dbc,$queryGetAllMainData);
 																						$_SESSION['startDate']=null;
 																						$_SESSION['endDate']=$endDate;
+																						$_SESSION['case']=4;
 																				}
 																				
                                                                                $count = 1; while($rowGetAllMainData=mysqli_fetch_array($resultGetAllMainData,MYSQLI_ASSOC)){
@@ -226,6 +232,9 @@
                                                                                     echo "<tr>
 																						<td style='display: none'>{$rowGetAllMainData['BuildingID']}</td>
 																						<td style='display: none'>{$rowGetAllMainData['assetCategoryID']}</td>
+																						<td style='display: none'>{$_SESSION['startDate']}</td>
+																						<td style='display: none'>{$_SESSION['endDate']}</td>
+																						<td style='display: none'>{$_SESSION['case']}</td>
                                                                                         <td>{$count}</td>
 																						<td>{$rowGetAllMainData['building']}</font></td>
 																						<td>{$rowGetAllMainData['ac']}</td>
@@ -422,8 +431,14 @@
                         var bid = cell.textContent;
 						var cell1 = row.getElementsByTagName("td")[1];
                         var acid = cell1.textContent;
+						var cell2 = row.getElementsByTagName("td")[2];
+                        var sDate = cell2.textContent;
+						var cell3 = row.getElementsByTagName("td")[3];
+                        var eDate = cell3.textContent;
+						var cell4 = row.getElementsByTagName("td")[4];
+                        var caseNo = cell4.textContent;
 
-                        window.location.href = "it_preventive_maintenance_report_detailed.php?bid=" + bid + "&&acid=" + acid;
+                        window.location.href = "it_preventive_maintenance_report_detailed.php?bid=" + bid + "&&acid=" + acid + "&&sDate=" + sDate + "&&eDate=" + eDate + "&&caseNo=" + caseNo;
 
                     };
                 };

@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <?php
 	session_start();
+	//FOR MAINTENANCE REPORTS
+	$_SESSION['case']=null;
+	$_SESSION['startDate']=null;
+	$_SESSION['endDate']=null;
+	
+	
     $userID = $_SESSION['userID'];
     $_SESSION['previousDash'] = "it_dashboard.php";
 	require_once('db/mysql_connect.php');
