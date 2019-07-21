@@ -129,7 +129,7 @@ $_SESSION['previousPage'] = "requestor_send_asset.php";
                                                                     <td>{$row['model']}</td>    
                                                                     <td>{$row['enddate']}</td>
                                                                     <td>
-                                                                        <select class='form-control' name='status[]'>
+                                                                        <select style='width:100%' class='form-control' name='status[]'>
                                                                             <option value = '1'>Working</option>
                                                                             <option value = '0'>Damaged</option>
                                                                         </select>

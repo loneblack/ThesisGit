@@ -141,7 +141,7 @@ $_SESSION['previousPage'] = "requestor_send_service_unit.php";
                                             </div>
                                         </div>
                                         <div style="padding-left:10px; padding-bottom:5px">
-                                            <button type= "submit" class="btn btn-success">Checkin</button>
+                                            <button type= "submit" class="btn btn-success">Send</button>
                                             <button type = "button" class="btn btn-danger" onclick="window.history.back();">Back</button>
                                         </div>
                                                 </form>

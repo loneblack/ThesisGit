@@ -143,7 +143,7 @@
 																			<td>{$rowGetListBuil['name']}</td>
 																			<td>{$rowGetListBuil['roomtype']}</td>
 																			<td class='col-lg-5'> 
-																			<select class='form-control' name='engineer[]'>
+																			<select style='width:100%' class='form-control' name='engineer[]'>
 																				<option value='0'>Select Engineer</option>";
 																				
 																				//GET LIST OF ENGINEERS
