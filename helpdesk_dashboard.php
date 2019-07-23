@@ -25,7 +25,7 @@ while ($row4 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $Open = $row4['count
 //$result5=mysqli_query($dbc,$query5);
 //while ($row5 = mysqli_fetch_array($result5, MYSQLI_ASSOC)){ $OnHold = $row5['count']; }   
 
-$query6="SELECT COUNT(*) as `count` FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.priority = 'Urgent';";
+$query6="SELECT COUNT(*) as `count` FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.priority = 'Urgent' and t.status!='7';";
 $result6=mysqli_query($dbc,$query6);
 while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['count']; }                           
 
@@ -306,6 +306,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
+					window.onload = addRowHandlers();
                 }
             };
             xmlhttp.open("GET", "showUrgentTickets.php", true);
@@ -317,6 +318,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
+					window.onload = addRowHandlers();
                 }
             };
             xmlhttp.open("GET", "showOngoingTickets.php", true);
@@ -328,6 +330,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
+					window.onload = addRowHandlers();
                 }
             };
             xmlhttp.open("GET", "showDueTodayTickets.php", true);
@@ -339,6 +342,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
+					window.onload = addRowHandlers();
                 }
             };
             xmlhttp.open("GET", "showOverdueTickets.php", true);
@@ -350,6 +354,7 @@ while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['cou
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
+					window.onload = addRowHandlers();
                 }
             };
             xmlhttp.open("GET", "showUnresolvedTickets.php", true);

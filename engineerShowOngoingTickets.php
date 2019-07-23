@@ -14,7 +14,7 @@
                                                                 ON t.serviceType = st.id
                                                             JOIN employee e 
                                                                 ON t.requestedBy = e.UserID
-                                                            WHERE au.UserID = '{$_SESSION['userID']}' and t.status != 7 
+                                                            WHERE au.UserID = '{$_SESSION['userID']}' and t.status = 3 
                                                             ORDER BY dateCreated DESC LIMIT 10;";
                                                                   
                                                     $result = mysqli_query($dbc, $query);

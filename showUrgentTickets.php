@@ -5,7 +5,7 @@
                                                             JOIN thesis.ref_ticketstatus rts ON t.status=rts.ticketID
                                                             JOIN thesis.ref_servicetype rst ON t.serviceType=rst.id
                                                             JOIN employee e ON t.requestedBy = e.UserID 
-															WHERE t.priority = 'Urgent' 
+															WHERE t.priority = 'Urgent' and t.status != 7 
                                                             ORDER BY dateCreated LIMIT 10;";
     $result=mysqli_query($dbc,$query);
                                                 

@@ -14,7 +14,7 @@
                                                                 ON t.serviceType = st.id
                                                             JOIN employee e 
                                                                 ON t.requestedBy = e.UserID
-                                                            WHERE au.UserID = '{$_SESSION['userID']}' and t.status != 7 and (DATE(t.dueDate) = DATE(now()))  
+                                                            WHERE au.UserID = '{$_SESSION['userID']}' and t.status = 6  
                                                             ORDER BY dateCreated DESC LIMIT 10;";
                                                                   
                                                     $result = mysqli_query($dbc, $query);

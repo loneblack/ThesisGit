@@ -20,10 +20,10 @@ $query3="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s
 $result3=mysqli_query($dbc,$query3);
 while ($row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC)){ $DueToday = $row3['count']; }   
 
-//OPEN
-//$query4="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.status = 1 AND assigneeUserID = {$userID};";
-//$result4=mysqli_query($dbc,$query4);
-//while ($row4 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $Open = $row4['count']; }   
+//ONGOING
+$query4="SELECT COUNT(*) as `count` FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.status = 3;";
+$result4=mysqli_query($dbc,$query4);
+while ($row4 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $Ongoing = $row4['count']; }   
 
 //ON HOLD
 $query5="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.status = 6 AND assigneeUserID = {$userID};";
@@ -304,11 +304,12 @@ if($CurDate==$endOfTermDate){
 
 
                             <div class="row">
+							
                                 <a onClick='showUnresolvedTickets()'>
                                     <div class="col-md-2">
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon orange"><i class="fa fa-gavel"></i></span>
-                                            <div class="mini-stat-info"><br>
+                                            <div class="mini-stat-info">
                                                 <span><?php echo $Unresolved;?></span>
                                                 Unresolved
                                             </div>
@@ -340,33 +341,33 @@ if($CurDate==$endOfTermDate){
                                     </div>
                                 </a>
 
-                                <!--<a href="#">
+                                <a onClick='showOngoingTickets()'>
                                     <div class="col-md-2">
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon green"><i class="fa fa-eye"></i></span>
                                             <div class="mini-stat-info">
-                                                <span><?php echo $Open;?></span>
-                                                Open
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>-->
-
-
-                                <a href="#">
-                                    <div class="col-md-2">
-                                        <div class="mini-stat clearfix">
-                                            <span class="mini-stat-icon orange"><i class="fa fa-times-circle-o"></i></span>
-                                            <div class="mini-stat-info">
-                                                <span><?php echo $OnHold;?></span>
-                                                On Hold
+                                                <span>
+                                                    <?php echo $Ongoing;?></span>
+                                                Ongoing
                                             </div>
                                         </div>
                                     </div>
                                 </a>
 
+                                <!--<a onClick='showOnholdTickets()'>
+                                    <div class="col-md-2">
+                                        <div class="mini-stat clearfix">
+                                            <span class="mini-stat-icon orange"><i class="fa fa-times-circle-o"></i></span>
+                                            <div class="mini-stat-info">
+                                                <span><?php //echo $OnHold;?></span>
+                                                On Hold
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a> -->
 
-                                <a href="#">
+
+                                <a onClick='showUrgentTickets()'>
                                     <div class="col-md-2">
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon orange"><i class="fa fa-exclamation"></i></span>
@@ -377,6 +378,20 @@ if($CurDate==$endOfTermDate){
                                         </div>
                                     </div>
                                 </a>
+								
+								<a onClick='window.location = "engineer_dashboard.php"'>
+                                    <div class="col-md-2">
+                                        <div class="mini-stat clearfix">
+                                            <span class="mini-stat-icon tar"><i class="fa fa-arrows-alt"></i></span>
+                                            <div class="mini-stat-info">
+                                                <span>
+                                                    --</span>
+                                                Default View
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+								
                             </div>
 
 
@@ -519,20 +534,22 @@ if($CurDate==$endOfTermDate){
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
+					window.onload = addRowHandlers();
                 }
             };
-            xmlhttp.open("GET", "showUrgentTickets.php", true);
+            xmlhttp.open("GET", "engineerShowUrgentTickets.php", true);
             xmlhttp.send();
         }
 
-        function showOngoingTickets() {
+        function showOnholdTickets() {
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
+					window.onload = addRowHandlers();
                 }
             };
-            xmlhttp.open("GET", "showOngoingTickets.php", true);
+            xmlhttp.open("GET", "engineerShowOnholdTickets.php", true);
             xmlhttp.send();
         }
 
@@ -541,6 +558,7 @@ if($CurDate==$endOfTermDate){
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
+					window.onload = addRowHandlers();
                 }
             };
             xmlhttp.open("GET", "engineerShowDueTodayTickets.php", true);
@@ -552,6 +570,7 @@ if($CurDate==$endOfTermDate){
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
+					window.onload = addRowHandlers();
                 }
             };
             xmlhttp.open("GET", "engineerShowOverdueTickets.php", true);
@@ -563,13 +582,26 @@ if($CurDate==$endOfTermDate){
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("ticketList").innerHTML = this.responseText;
+					window.onload = addRowHandlers();
                 }
             };
             xmlhttp.open("GET", "engineerShowUnresolvedTickets.php", true);
             xmlhttp.send();
+			
         }
 	
-	
+		function showOngoingTickets() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("ticketList").innerHTML = this.responseText;
+					window.onload = addRowHandlers();
+                }
+            };
+            xmlhttp.open("GET", "engineerShowOngoingTickets.php", true);
+            xmlhttp.send();
+        }
+		
        function addRowHandlers() {
             var table = document.getElementById("dynamic-table");
             var rows = table.getElementsByTagName("tr");
