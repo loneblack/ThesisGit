@@ -5,27 +5,33 @@ session_start();
 $userID = $_SESSION['userID'];
 require_once("db/mysql_connect.php");
 
+//UNRESOLVED
 $query1="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.status != 7 AND assigneeUserID = {$userID};";
 $result1=mysqli_query($dbc,$query1);
 while ($row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC)){ $Unresolved = $row1['count']; }
 
-$query2="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE (t.dueDate < now()) AND assigneeUserID = {$userID};";
+//OVERDUE
+$query2="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE (t.dueDate < now()) AND assigneeUserID = {$userID} and t.status != 7;";
 $result2=mysqli_query($dbc,$query2);
 while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){ $Overdue = $row2['count']; }   
 
-$query3="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE (DATE(t.dueDate) = DATE(now())) AND assigneeUserID = {$userID};";
+//DUE TODAY
+$query3="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE (DATE(t.dueDate) = DATE(now())) AND assigneeUserID = {$userID} and t.status != 7;";
 $result3=mysqli_query($dbc,$query3);
 while ($row3 = mysqli_fetch_array($result3, MYSQLI_ASSOC)){ $DueToday = $row3['count']; }   
 
-$query4="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.status = 1 AND assigneeUserID = {$userID};";
-$result4=mysqli_query($dbc,$query4);
-while ($row4 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $Open = $row4['count']; }   
+//OPEN
+//$query4="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.status = 1 AND assigneeUserID = {$userID};";
+//$result4=mysqli_query($dbc,$query4);
+//while ($row4 = mysqli_fetch_array($result4, MYSQLI_ASSOC)){ $Open = $row4['count']; }   
 
+//ON HOLD
 $query5="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.status = 6 AND assigneeUserID = {$userID};";
 $result5=mysqli_query($dbc,$query5);
 while ($row5 = mysqli_fetch_array($result5, MYSQLI_ASSOC)){ $OnHold = $row5['count']; }   
 
-$query6="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.priority = 'Urgent' AND assigneeUserID = {$userID};";
+//URGENT
+$query6="SELECT COUNT(*) as 'count' FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.priority = 'Urgent' AND assigneeUserID = {$userID} and t.status != 7;";
 $result6=mysqli_query($dbc,$query6);
 while ($row6 = mysqli_fetch_array($result6, MYSQLI_ASSOC)){ $Urgent = $row6['count']; }     
 
@@ -298,7 +304,7 @@ if($CurDate==$endOfTermDate){
 
 
                             <div class="row">
-                                <a href="#">
+                                <a onClick='showUnresolvedTickets()'>
                                     <div class="col-md-2">
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon orange"><i class="fa fa-gavel"></i></span>
@@ -310,7 +316,7 @@ if($CurDate==$endOfTermDate){
                                     </div>
                                 </a>
 
-                                <a href="#">
+                                <a onClick='showOverdueTickets()'>
                                     <div class="col-md-2">
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon orange"><i class="fa fa-clock-o"></i></span>
@@ -322,7 +328,7 @@ if($CurDate==$endOfTermDate){
                                     </div>
                                 </a>
 
-                                <a href="#">
+                                <a onClick='showDueTodayTickets()'>
                                     <div class="col-md-2">
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon pink"><i class="fa fa-clock-o"></i></span>
@@ -334,7 +340,7 @@ if($CurDate==$endOfTermDate){
                                     </div>
                                 </a>
 
-                                <a href="#">
+                                <!--<a href="#">
                                     <div class="col-md-2">
                                         <div class="mini-stat clearfix">
                                             <span class="mini-stat-icon green"><i class="fa fa-eye"></i></span>
@@ -344,7 +350,7 @@ if($CurDate==$endOfTermDate){
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+                                </a>-->
 
 
                                 <a href="#">
@@ -408,7 +414,7 @@ if($CurDate==$endOfTermDate){
                                                     <th>Requested By</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id='ticketList'>
 
                                                  <?php
                                                     $count = 1;
@@ -508,6 +514,62 @@ if($CurDate==$endOfTermDate){
    </script>
 
     <script>
+		function showUrgentTickets() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("ticketList").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "showUrgentTickets.php", true);
+            xmlhttp.send();
+        }
+
+        function showOngoingTickets() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("ticketList").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "showOngoingTickets.php", true);
+            xmlhttp.send();
+        }
+
+        function showDueTodayTickets() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("ticketList").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "engineerShowDueTodayTickets.php", true);
+            xmlhttp.send();
+        }
+
+        function showOverdueTickets() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("ticketList").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "engineerShowOverdueTickets.php", true);
+            xmlhttp.send();
+        }
+
+        function showUnresolvedTickets() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("ticketList").innerHTML = this.responseText;
+                }
+            };
+            xmlhttp.open("GET", "engineerShowUnresolvedTickets.php", true);
+            xmlhttp.send();
+        }
+	
+	
        function addRowHandlers() {
             var table = document.getElementById("dynamic-table");
             var rows = table.getElementsByTagName("tr");
