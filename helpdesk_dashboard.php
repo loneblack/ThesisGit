@@ -5,7 +5,7 @@ session_start();
 $userID = $_SESSION['userID'];
 require_once("db/mysql_connect.php");
 
-$query1="SELECT COUNT(*) as `count` FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.status = 2;";
+$query1="SELECT COUNT(*) as `count` FROM thesis.ticket t JOIN ref_ticketstatus s ON t.status = s.ticketID WHERE t.status != 7;";
 $result1=mysqli_query($dbc,$query1);
 while ($row1 = mysqli_fetch_array($result1, MYSQLI_ASSOC)){ $Unresolved = $row1['count']; }
 
