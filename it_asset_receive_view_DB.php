@@ -2,7 +2,7 @@
 session_start();
 require_once('db/mysql_connect.php');
 
-$header = "it_asset_receive_view.php";
+$header = "it_asset_receive.php";
 $userID = $_SESSION['userID'];
 
 $id = $_POST['id'];
@@ -46,13 +46,21 @@ for ($i=0; $i < count($assets); $i++) {
         $sql = "UPDATE `thesis`.`assetassignment` SET `statusID` = '3' WHERE (`assetID` = '{$assets[$i]}') AND (`personresponsibleID` = '{$personresponsibleID}');";
         $result = mysqli_query($dbc,$sql);
 
+        //update asset status to stockced (1)
+        $sql = "UPDATE `thesis`.`asset` SET `assetStatus` = '1' WHERE (`assetID` = '$assets[$i]');";
+        $result = mysqli_query($dbc,$sql);
+
+        //insert to audit
+        $sql = "INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$userID}', now(), '{$assets[$i]}', '1');";
+        $result = mysqli_query($dbc,$sql);
+
         $action = 1;
 
         //if asset is working
         if($isWorking[$i] == 1){
 
         //update asset status to stocked (1)
-        $sql = "UPDATE `thesis`.`asset` SET `assetStatus` = '1' WHERE (`assetID` = '1');";
+        $sql = "UPDATE `thesis`.`asset` SET `assetStatus` = '1' WHERE (`assetID` = '$assets[$i]');";
         $result = mysqli_query($dbc,$sql);
 
         //insert to audit
@@ -63,7 +71,7 @@ for ($i=0; $i < count($assets); $i++) {
         {
 
         //update asset status to for Testing (8)
-        $sql = "UPDATE `thesis`.`asset` SET `assetStatus` = '8' WHERE (`assetID` = '1');";
+        $sql = "UPDATE `thesis`.`asset` SET `assetStatus` = '8' WHERE (`assetID` = '$assets[$i]');";
         $result = mysqli_query($dbc,$sql);
 
         //store asset Id to array for later 
