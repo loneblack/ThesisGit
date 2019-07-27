@@ -207,6 +207,10 @@
 
                                                 <section>
                                                     <h4>Requested Services/Materials</h4>
+                                                    
+                                                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#reqAss">View Requestor's Assets</button> <br><br>
+
+                                                    
                                                     <table class="table table-bordered table-striped table-condensed table-hover" >
                                                         <thead>
                                                             <tr>
@@ -268,11 +272,6 @@
 
                                                     <br>
                                                 </section>
-
-                                                <!-- <section>
-                                                    <input type="checkbox" name="check" disabled> Check the checkbox if you would like the IT Team to choose the closest specifications to your request in case the suppliers would not have assets that are the same as your specifications. Leave it unchecked if you yourself would like to choose the specifications that are the closest to your specifications.
-                                                    <br><br><br>
-                                                </section> -->
                                                 
 
                                                     <section>
@@ -414,7 +413,6 @@
                                                                 &nbsp;&nbsp;
                                                                 <button type="submit" class="btn btn-warning" id="disapprove" name="disapprove"><i class="fa fa-envelope"></i> Proceed To Borrow</button>
                                                                 <button type="submit" class="btn btn-danger" id="disapprovenatalaga" name="disapprovenatalaga"><i class="fa fa-ban"></i> Disapprove</button>
-                                                                <!-- <button type="button" class="btn btn-danger" id="disapprove" data-toggle="modal" data-target="#myModal"><i class="fa fa-ban"></i> Disapprove</button> -->
 
 
                                                             </div>
@@ -439,7 +437,7 @@
 
 
                                                                     <div class="adv-table" id="ctable">
-                                                                        <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                                        <table class="display table table-bordered table-striped" id="dynamic-table2">
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th></th>
@@ -471,6 +469,69 @@
                                                     </div>
                                                 </div>
                                                 <!-- Modal End-->
+                                            
+                                            
+                                            
+                                                <div id="reqAss" class="modal fade" role="dialog">
+                                                    <div class="modal-dialog">
+
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                <h4 class="modal-title">Requestor's Assets</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                
+                                                                <div class="adv-table">
+                                                                    <table class="display table table-bordered table-striped" id="dynamic-table1">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Property Code</th>
+                                                                                <th>Brand</th>
+                                                                                <th>Model</th>
+                                                                                <th>Status</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <?php
+                                                                            $query="
+                                                                                SELECT a.propertyCode, rb.name AS 'brand', am.description AS 'model', b.name, f.floorRoom, aa.startdate, aa.enddate, rs.description FROM thesis.assetassignment aa
+                                                                                JOIN building b ON aa.BuildingID = b.buildingID
+                                                                                JOIN floorandroom f ON aa.FloorAndRoomID = f.FloorAndRoomID
+                                                                                JOIN employee e ON aa.personresponsibleID = e.employeeID
+                                                                                JOIN asset a ON aa.assetID = a.assetID
+                                                                                JOIN ref_assetstatus rs ON a.assetStatus = rs.id
+                                                                                JOIN assetmodel am ON a.assetModel = am.assetModelID
+                                                                                JOIN ref_brand rb ON am.brand = rb.brandID
+                                                                                WHERE (personresponsibleID = {$rowReq['UserID']});";
+                                                                            $result=mysqli_query($dbc,$query);
+                                                                            while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                                                echo "<tr>
+                                                                                    <td>{$row['propertyCode']}</td>
+                                                                                    <td>{$row['brand']}</td>
+                                                                                    <td>{$row['model']}</td>
+                                                                                    <td>{$row['description']}</td>
+                                                                                </tr>";
+                                                                            }
+
+
+
+                                                                        ?>
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                
+                                                                
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
 											
                                             
                                         </div>
@@ -679,6 +740,15 @@
     </script>
 	
 	<!--common script init for all pages-->
+    <script src="js/jquery.js"></script>
+    <script src="bs3/js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
+    <script src="js/jquery.nicescroll.js"></script>
+    <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+    <script src="js/dynamic_table_init.js"></script>
     <script src="js/scripts.js"></script>
 	
 </body>
