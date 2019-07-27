@@ -1,5 +1,10 @@
 <!DOCTYPE html>
-
+<?php
+	session_start(); 
+	require_once('db/mysql_connect.php');
+	$userID = $_SESSION['userID'];
+	
+?>
 <html lang="en">
 
 <head>
@@ -21,7 +26,13 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
 </head>
-
+ <?php
+            $count = 1;
+            $query = "SELECT e.name AS `naame` FROM employee e JOIN user u ON e.userID = u.userID WHERE e.userID = {$userID};";
+            $result = mysqli_query($dbc, $query);
+            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            $name = $row['naame'];
+        ?>    
 <body>
 
     <section id="container">
@@ -34,9 +45,9 @@
                    <img src="images/dlsulogo.png" alt="" width="200px" height="40px">
                 </a>
             </div>
-
-            <div class="nav notify-row" id="top_menu">
-
+			
+			<div class="nav notify-row" id="top_menu">
+                <h4>Welcome! <?php echo $name; ?></h4>
             </div>
 
         </header>
