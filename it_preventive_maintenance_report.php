@@ -60,7 +60,7 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Preventive Maintenance Report
+                                            Maintenance Summary Report
 
                                         </header>
                                         <div class="panel-body">
@@ -96,7 +96,7 @@
                                                                     <h3>Information Technology Services Office</h3>
                                                                 </center>
                                                                 <center>
-                                                                    <h3>Preventive Maintenance Report</h3>
+                                                                    <h3>Maintenance Summary Report</h3>
                                                                 </center>
                                                                 <center>
                                                                     <h5>

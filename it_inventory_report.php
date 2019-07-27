@@ -66,21 +66,24 @@
                                         <header class="panel-heading">
                                             Asset Audit Report
                                         </header>
-                                        <div align="right">
-                                            <button class="btn btn-primary" onclick="printContent('report')"><i class="fa fa-print"></i> Print</button>
-                                        </div>
-
                                         <div id="report">
-                                            <div align="center">
-                                                <h3>Information and Technology Services Office</h3>
-                                                <h3>Inventory Report</h3>
-                                                <h4>
-                                                    <?php 
+                                        <div align="right">
+                                            <?php 
                                                 date_default_timezone_set('Asia/Manila');
                                                 $timestamp = time();
                                                 echo "\n"; 
                                                 echo(date("F d, Y h:i:s A", $timestamp)); 
                                                 ?>
+                                        </div>
+                                            <div align="center">
+                                                <h3>Information and Technology Services Office</h3>
+                                                <h3>Asset Audit Report</h3>
+                                                <h4>
+                                                    <?php
+                                                    
+                                                    echo $start ."---". $end; 
+                                                    
+                                                    ?>
                                                 </h4>
                                             </div>
 
@@ -113,18 +116,16 @@
                                                                         $sDate = $_POST['startDate'];
                                                                         $eDate = $_POST['endDate'];
                                                                         
-                                                                        $queryDept="SELECT *, rac.name AS `ac`, COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null)) AS `start`,
-                                                                        (COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) - COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null))) AS `acquire`,
+                                                                        $queryDept="SELECT rac.assetCategoryID, rac.name AS `ac`, COUNT(a.assetModel) AS `start`,
                                                                         COUNT(IF(aa.assetStatus = 2, a.assetmodel, null)) AS `deployed`,
                                                                         COUNT(IF(aa.assetStatus = 7, a.assetmodel, null)) AS `disposed`,
                                                                         COUNT(IF(aa.assetStatus = 6, a.assetmodel, null)) AS `donated`, 
-                                                                        COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) AS `end`
+                                                                        COUNT(a.assetModel) - COUNT(IF(aa.assetStatus = 7, a.assetmodel, null)) - COUNT(IF(aa.assetStatus = 6, a.assetmodel, null)) AS `end`																	
                                                                         FROM ref_assetcategory rac
-                                                                        JOIN assetmodel am ON rac.assetCategoryID = am.assetcategory
-                                                                        JOIN asset a ON am.assetModelID = a.assetModel
-                                                                        JOIN assetaudit aa ON a.assetID = aa.assetID 
-                                                                        WHERE (aa.date >= '{$sDate}' AND aa.date <= '{$eDate}')
-                                                                        GROUP BY rac.assetCategoryID;
+                                                                        LEFT JOIN assetmodel am ON am.assetcategory = rac.assetCategoryID
+                                                                        LEFT JOIN asset a ON a.assetModel = am.assetModelID
+                                                                        LEFT JOIN assetaudit aa ON aa.assetID = a.assetID
+                                                                        GROUP BY rac.name;
                                                                         ";
 
                                                                         $resultDept=mysqli_query($dbc,$queryDept);
@@ -136,9 +137,19 @@
                                                                                 <td style='display:none;'>{$end}</td>
                                                                                 <td>{$count}</td>
                                                                                 <td>{$rowDept['ac']}</td>
-                                                                                <td>{$rowDept['start']}</td>
-                                                                                <td>{$rowDept['acquire']}</td>
-                                                                                <td>{$rowDept['deployed']}</td>
+                                                                                <td>{$rowDept['start']}</td>";
+                                                                                
+                                                                                $final = $rowDept['end'] - $rowDept['start'];
+                                                                            
+                                                                                if($rowDept['start'] >= $rowDept['end']){
+                                                                                    echo "<td>0</td>";
+                                                                                }
+                                                                            
+                                                                                if($rowDept['start'] < $rowDept['end']){
+                                                                                    echo "<td>{$final}</td>";
+                                                                                }
+                                                                                
+                                                                            echo"<td>{$rowDept['deployed']}</td>
                                                                                 <td>{$rowDept['disposed']}</td>
                                                                                 <td>{$rowDept['donated']}</td>
                                                                                 <td>{$rowDept['end']}</td>
@@ -147,117 +158,6 @@
                                                                         }
                                                                     }
                                                                 }
-                                                            
-                                                                if(empty($_POST['startDate']) && empty($_POST['endDate'])){
-                                                                    $sDate = date("Y-m-d");
-                                                                    $eDate = date("Y-m-d");
-                                                                    
-                                                                    $queryDept="SELECT rac.name AS `ac`, COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null)) AS `start`,
-                                                                        (COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) - COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null))) AS `acquire`,
-                                                                        COUNT(IF(aa.assetStatus = 2, a.assetmodel, null)) AS `deployed`,
-                                                                        COUNT(IF(aa.assetStatus = 7, a.assetmodel, null)) AS `disposed`,
-                                                                        COUNT(IF(aa.assetStatus = 6, a.assetmodel, null)) AS `donated`, 
-                                                                        COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) AS `end`
-                                                                        FROM ref_assetcategory rac
-                                                                        JOIN assetmodel am ON rac.assetCategoryID = am.assetcategory
-                                                                        JOIN asset a ON am.assetModelID = a.assetModel
-                                                                        JOIN assetaudit aa ON a.assetID = aa.assetID 
-                                                                        GROUP BY rac.assetCategoryID;
-                                                                        ";
-
-                                                                        $resultDept=mysqli_query($dbc,$queryDept);
-                                                                        $count = 1;
-                                                                        while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
-                                                                            echo "<tr>
-                                                                                <td style='display:none;'>{$rowDept['assetCategoryID']}</td>
-                                                                                <td>{$count}</td>
-                                                                                <td>{$rowDept['ac']}</td>
-                                                                                <td>{$rowDept['start']}</td>
-                                                                                <td>{$rowDept['acquire']}</td>
-                                                                                <td>{$rowDept['deployed']}</td>
-                                                                                <td>{$rowDept['disposed']}</td>
-                                                                                <td>{$rowDept['donated']}</td>
-                                                                                <td>{$rowDept['end']}</td>
-                                                                                </tr>";
-                                                                            $count++;
-                                                                        }
-                                                                }
-                                                                
-                                                            
-                                                                if(isset($_POST['startDate']) && empty($_POST['endDate'])){
-                                                                    
-                                                                        $sDate = $_POST['startDate'];
-                                                                        
-                                                                        $eDate = date("Y-m-d");
-                                                                    
-                                                                    $queryDept="SELECT rac.name AS `ac`, COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null)) AS `start`,
-                                                                        (COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) - COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null))) AS `acquire`,
-                                                                        COUNT(IF(aa.assetStatus = 2, a.assetmodel, null)) AS `deployed`,
-                                                                        COUNT(IF(aa.assetStatus = 7, a.assetmodel, null)) AS `disposed`,
-                                                                        COUNT(IF(aa.assetStatus = 6, a.assetmodel, null)) AS `donated`, 
-                                                                        COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) AS `end`
-                                                                        FROM ref_assetcategory rac
-                                                                        JOIN assetmodel am ON rac.assetCategoryID = am.assetcategory
-                                                                        JOIN asset a ON am.assetModelID = a.assetModel
-                                                                        JOIN assetaudit aa ON a.assetID = aa.assetID 
-                                                                        GROUP BY rac.assetCategoryID;
-                                                                        ";
-
-
-                                                                        $resultDept=mysqli_query($dbc,$queryDept);
-                                                                        $count = 1;
-                                                                        while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
-                                                                            echo "<tr>
-                                                                                <td style='display:none;'>{$rowDept['assetCategoryID']}</td>
-                                                                                <td>{$count}</td>
-                                                                                <td>{$rowDept['ac']}</td>
-                                                                                <td>{$rowDept['start']}</td>
-                                                                                <td>{$rowDept['acquire']}</td>
-                                                                                <td>{$rowDept['deployed']}</td>
-                                                                                <td>{$rowDept['disposed']}</td>
-                                                                                <td>{$rowDept['donated']}</td>
-                                                                                <td>{$rowDept['end']}</td>
-                                                                                </tr>";
-                                                                            $count++;
-                                                                        }
-                                                                }
-                                                            
-                                                                if(empty($_POST['startDate']) && isset($_POST['endDate'])){
-                                                                    
-                                                                        $sDate = date("Y-m-d");
-                                                                        
-                                                                        $eDate = $_POST['endDate'];
-                                                                    
-                                                                    $queryDept="SELECT rac.name AS `ac`, COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null)) AS `start`,
-                                                                        (COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) - COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$sDate}', a.assetmodel, null))) AS `acquire`,
-                                                                        COUNT(IF(aa.assetStatus = 2, a.assetmodel, null)) AS `deployed`,
-                                                                        COUNT(IF(aa.assetStatus = 7, a.assetmodel, null)) AS `disposed`,
-                                                                        COUNT(IF(aa.assetStatus = 6, a.assetmodel, null)) AS `donated`, 
-                                                                        COUNT(IF(aa.assetStatus != 6 AND aa.assetStatus !=7 AND aa.date <= '{$eDate}', a.assetmodel, null)) AS `end`
-                                                                        FROM ref_assetcategory rac
-                                                                        JOIN assetmodel am ON rac.assetCategoryID = am.assetcategory
-                                                                        JOIN asset a ON am.assetModelID = a.assetModel
-                                                                        JOIN assetaudit aa ON a.assetID = aa.assetID 
-                                                                        GROUP BY rac.assetCategoryID;
-                                                                        ";
-
-                                                                        $resultDept=mysqli_query($dbc,$queryDept);
-                                                                        $count = 1;
-                                                                        while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
-                                                                            echo "<tr>
-                                                                                <td style='display:none;'>{$rowDept['assetCategoryID']}</td>
-                                                                                <td>{$count}</td>
-                                                                                <td>{$rowDept['ac']}</td>
-                                                                                <td>{$rowDept['start']}</td>
-                                                                                <td>{$rowDept['acquire']}</td>
-                                                                                <td>{$rowDept['deployed']}</td>
-                                                                                <td>{$rowDept['disposed']}</td>
-                                                                                <td>{$rowDept['donated']}</td>
-                                                                                <td>{$rowDept['end']}</td>
-                                                                                </tr>";
-                                                                            $count++;
-                                                                        }
-                                                                }
 															?>
                                                             </tbody>
                                                         </table>
@@ -265,6 +165,9 @@
                                                 </section>
                                             </div>
                                         </div>
+                                        <div align="center">
+                                                        <button class="btn btn-primary" onclick="printContent('report')"><i class="fa fa-print"></i> Print</button>
+                                                    </div>
                                     </section>
                                 </div>
                             </div>
@@ -303,27 +206,27 @@
 
 
     <script>
-        function addRowHandlers() {
-            var table = document.getElementById("tibol");
-            var rows = table.getElementsByTagName("tr");
-            for (i = 1; i < rows.length; i++) {
-                var currentRow = table.rows[i];
-                var createClickHandler = function(row) {
-                    return function() {
-                        var cell = row.getElementsByTagName("td")[0];
-                        var idx = cell.textContent;
-                        var cell2 = row.getElementsByTagName("td")[1];
-                        var sdate = cell2.textContent;
-                        var cell3 = row.getElementsByTagName("td")[2];
-                        var edate = cell3.textContent;
-                        window.location.href = "it_inventory_report_detailed.php?id=" + idx + "&sDate=" + sdate + "&eDate=" + edate;
-
-                    };
-                };
-                currentRow.ondblclick = createClickHandler(currentRow);
-            }
-        }
-        window.onload = addRowHandlers();
+//        function addRowHandlers() {
+//            var table = document.getElementById("tibol");
+//            var rows = table.getElementsByTagName("tr");
+//            for (i = 1; i < rows.length; i++) {
+//                var currentRow = table.rows[i];
+//                var createClickHandler = function(row) {
+//                    return function() {
+//                        var cell = row.getElementsByTagName("td")[0];
+//                        var idx = cell.textContent;
+//                        var cell2 = row.getElementsByTagName("td")[1];
+//                        var sdate = cell2.textContent;
+//                        var cell3 = row.getElementsByTagName("td")[2];
+//                        var edate = cell3.textContent;
+//                        window.location.href = "it_inventory_report_detailed.php?id=" + idx + "&sDate=" + sdate + "&eDate=" + edate;
+//
+//                    };
+//                };
+//                currentRow.ondblclick = createClickHandler(currentRow);
+//            }
+//        }
+//        window.onload = addRowHandlers();
 
         function myFunction() {
             window.print();
