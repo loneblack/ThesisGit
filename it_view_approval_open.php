@@ -437,7 +437,7 @@
 
 
                                                                     <div class="adv-table" id="ctable">
-                                                                        <table class="display table table-bordered table-striped" id="dynamic-table2">
+                                                                        <table class="display table table-bordered table-striped" id="dynamic-table1">
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th></th>
@@ -484,7 +484,7 @@
                                                             <div class="modal-body">
                                                                 
                                                                 <div class="adv-table">
-                                                                    <table class="display table table-bordered table-striped" id="dynamic-table1">
+                                                                    <table class="display table table-bordered table-striped" id="dynamic-table">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Property Code</th>
@@ -526,9 +526,9 @@
                                                                 
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                               
                                                             </div>
-                                                        </div>
+                                                        </div> 
 
                                                     </div>
                                                 </div>
@@ -568,6 +568,7 @@
         $(function() {
 
         });
+		
 		
 		function addTest() {
 
@@ -675,12 +676,14 @@
             xmlhttp.open("GET", "removeRecommAssetData_ajax.php?assetID=" + recommAsset, true);
             xmlhttp.send();
         }
-
+		
         function setAssetCatID(assetCatID) {
+		
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
+                if (this.readyState == 4 && this.status == 200) {		
                     document.getElementById("assetList").innerHTML = this.responseText;
+					
                 }
             };
             xmlhttp.open("GET", "setAssetCatIDForIt_view_approval_ajax.php?category=" + assetCatID, true);
@@ -693,6 +696,7 @@
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
+					
                     document.getElementById("assetList").innerHTML = this.responseText;
                 }
             };
@@ -709,7 +713,8 @@
 
             }
         });
-
+		
+		
 
         function getRooms(val) {
             $.ajax({
@@ -749,6 +754,7 @@
     <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
     <script src="js/dynamic_table_init.js"></script>
+	<script src="js/dynamic_table1_init.js"></script>
     <script src="js/scripts.js"></script>
 	
 </body>
