@@ -143,8 +143,8 @@
 																			<td>{$rowGetListBuil['name']}</td>
 																			<td>{$rowGetListBuil['roomtype']}</td>
 																			<td class='col-lg-5'> 
-																			<select style='width:100%' class='form-control' name='engineer[]'>
-																				<option value='0'>Select Engineer</option>";
+																			<select style='width:100%' class='form-control' name='engineer[]' required>
+																				<option value=''>Select Engineer</option>";
 																				
 																				//GET LIST OF ENGINEERS
 																				$queryGetListEng = "SELECT * FROM thesis.employee e join user u on e.UserID=u.UserID where u.userType='4'";

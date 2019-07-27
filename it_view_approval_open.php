@@ -434,10 +434,7 @@
 
                                                             <form class="form-inline" method="post" action="<?php echo $_SERVER['PHP_SELF']." ?requestID=".$requestID; ?>">
                                                                 <div class="modal-body">
-
-
-                                                                    <div class="adv-table" id="ctable">
-                                                                        <table class="display table table-bordered table-striped" id="dynamic-table1">
+                                                                        <table class="display table table-bordered table-striped">
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th></th>
@@ -453,8 +450,6 @@
 
                                                                             </tbody>
                                                                         </table>
-                                                                    </div>
-
                                                                 </div>
                                                                 <br><br>
                                                                 <div class="modal-footer">
