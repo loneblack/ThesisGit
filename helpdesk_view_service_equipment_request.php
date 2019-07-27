@@ -67,7 +67,7 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 
         if(!isset($message)){
 			//Update notifications
-			$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `borrowID` = '{$id}' and `steps_id`='13'";
+			$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `borrowID` = '{$id}' and `steps_id`='9'";
 			$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
 			
             //GET ASSET TEST DATA
@@ -75,15 +75,10 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
             $resultAssTest=mysqli_query($dbc,$queryAssTest);
             $rowAssTest=mysqli_fetch_array($resultAssTest, MYSQLI_ASSOC);
 
-            if($assigned=='0'){
-                $querya="INSERT INTO `thesis`.`ticket` (`status`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`, `requestedBY`) VALUES ('{$status}', '{$_SESSION['userID']}', now(), now(), '{$startDate}', '{$priority}', '25', 'Test the selected assets for borrow', 'Test the selected assets for borrow', 'Test the selected assets for borrow', '{$personresponsibleID}')";
-                $resulta=mysqli_query($dbc,$querya);
-            }
-            else{
-                $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`, `requestedBY`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$startDate}', '{$priority}', '25', 'Test the selected assets for borrow', 'Test the selected assets for borrow', 'Test the selected assets for borrow', '{$personresponsibleID}')";
-                $resulta=mysqli_query($dbc,$querya);
-            }
-        
+           
+            $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`, `requestedBY`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$startDate}', '{$priority}', '25', 'Test the selected assets for borrow', 'Test the selected assets for borrow', 'Test the selected assets for borrow', '{$personresponsibleID}')";
+            $resulta=mysqli_query($dbc,$querya);
+            
             $queryaa="SELECT * FROM `thesis`.`ticket` order by ticketID desc limit 1";
             $resultaa=mysqli_query($dbc,$queryaa);
             $rowaa=mysqli_fetch_array($resultaa,MYSQLI_ASSOC);

@@ -81,7 +81,11 @@
                                             <tbody>
 												<?php 
                                                     $count = 1;
-													//GET DELIVER DATA
+													
+													
+													//PENDING STATUS 
+													
+													//GET PENDING DELIVERY DATA
 													$queryDeliv="SELECT d.id as `deliveryID`,r.requestID,r.description,r.dateNeeded,rs.description as `statusDesc`,e.name as `empName` FROM thesis.delivery d join procurement p on d.procurementID=p.procurementID
 																																join request r on p.requestID=r.requestID
 																																join ref_status rs on r.status=rs.statusID 
@@ -96,21 +100,14 @@
 															<td>{$rowDeliv['description']}</td>
 															<td>Procurement of Service and Material</td>
 															<td>{$rowDeliv['dateNeeded']}</td>";
-															if($rowDeliv['statusDesc']=="Pending"){ echo "<td><label class='label label-warning'>{$rowDeliv['statusDesc']}</label></td>"; }
-															if($rowDeliv['statusDesc']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowDeliv['statusDesc']}</label></td>"; }
-															if($rowDeliv['statusDesc']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowDeliv['statusDesc']}</label></td>"; }
-															if($rowDeliv['statusDesc']=="Completed"){ echo "<td><label class='label label-success'>{$rowDeliv['statusDesc']}</label></td>"; }    
+															echo "<td><label class='label label-warning'>Pending</label></td>"; 
 															echo"<td>{$rowDeliv['empName']}</td>";
 															echo"</tr>";
 
                                                         $count++;
 													}
 													
-												?>
-												
-												<?php 
-													
-													//GET DONATION REQUEST
+													//PENDING DONATION REQUEST
 													$queryDon="SELECT *,rs.description as `statusDesc`,e.name as `empName` FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID JOIN employee e ON d.user_UserID = e.UserID where d.stepsID='9' ";
 													$resultDon=mysqli_query($dbc,$queryDon);
 													while($rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC)){
@@ -120,10 +117,7 @@
 															<td>{$rowDon['purpose']}</td>
 															<td>Donation</td>
 															<td>{$rowDon['dateNeed']}</td>";
-															if($rowDon['statusDesc']=="Pending"){ echo "<td><label class='label label-warning'>{$rowDon['statusDesc']}</label></td>"; }
-															if($rowDon['statusDesc']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowDon['statusDesc']}</label></td>"; }
-															if($rowDon['statusDesc']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowDon['statusDesc']}</label></td>"; }
-															if($rowDon['statusDesc']=="Completed"){ echo "<td><label class='label label-success'>{$rowDon['statusDesc']}</label></td>"; }
+															echo "<td><label class='label label-warning'>Pending</label></td>"; 
 															echo "
 															<td>{$rowDon['empName']}</td>
 															</tr>";
@@ -131,7 +125,88 @@
                                                             $count++;
 													}
 													
-												?>	
+													//PENDING BORROW 
+                                                    $queryTest="SELECT * FROM  request_borrow b
+                                                                JOIN ref_status s
+                                                                ON b.statusID = s.statusID
+                                                                JOIN employee e ON e.UserID = b.personresponsibleID where b.steps='9' 
+                                                                ORDER BY borrowID DESC;";
+                                                    $resultTest=mysqli_query($dbc,$queryTest);
+                                                    while($rowStep=mysqli_fetch_array($resultTest,MYSQLI_ASSOC)){
+                                                        echo "<tr class='gradeA'>
+                                                                <td style='display: none'>{$rowStep['borrowID']}</td>
+                                                                <td>{$count}</td>
+                                                                <td>Borrow these items</td>
+                                                                <td>Borrow</td>
+                                                                <td>{$rowStep['startDate']}</td>";
+																echo "<td><label class='label label-warning'>Pending</label></td>"; 
+																echo "<td>{$rowStep['name']}</td>"; 
+																echo "</tr>";
+                                                    }
+													
+													//COMPLETED 
+													
+													//GET COMPLETED DELIVERY DATA
+													$queryDeliv="SELECT d.id as `deliveryID`,r.requestID,r.description,r.dateNeeded,rs.description as `statusDesc`,e.name as `empName` FROM thesis.delivery d join procurement p on d.procurementID=p.procurementID
+																																join request r on p.requestID=r.requestID
+																																join ref_status rs on r.status=rs.statusID 
+																																join user u on r.UserID=u.UserID 
+																																join employee e on u.UserID= e.UserID
+																																where d.status='For Testing'";
+													$resultDeliv=mysqli_query($dbc,$queryDeliv);
+													while($rowDeliv=mysqli_fetch_array($resultDeliv,MYSQLI_ASSOC)){
+														echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$rowDeliv['deliveryID']}</td>
+															<td>{$count}</td>
+															<td>{$rowDeliv['description']}</td>
+															<td>Procurement of Service and Material</td>
+															<td>{$rowDeliv['dateNeeded']}</td>";
+															echo "<td><label class='label label-success'>Completed</label></td>"; 
+															echo"<td>{$rowDeliv['empName']}</td>";
+															echo"</tr>";
+
+                                                        $count++;
+													}
+													
+													//COMPLETED DONATION REQUEST
+													$queryDon="SELECT *,rs.description as `statusDesc`,e.name as `empName` FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID JOIN employee e ON d.user_UserID = e.UserID where d.stepsID!='9' ";
+													$resultDon=mysqli_query($dbc,$queryDon);
+													while($rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC)){
+														echo "<tr class='gradeA'>
+                                                            <td style='display: none'>{$rowDon['donationID']}</td>
+															<td>{$count}</td>
+															<td>{$rowDon['purpose']}</td>
+															<td>Donation</td>
+															<td>{$rowDon['dateNeed']}</td>";
+															echo "<td><label class='label label-success'>Completed</label></td>"; 
+															echo "
+															<td>{$rowDon['empName']}</td>
+															</tr>";
+
+                                                            $count++;
+													}
+													
+													//COMPLETED BORROW 
+                                                    $queryTest="SELECT * FROM  request_borrow b
+                                                                JOIN ref_status s
+                                                                ON b.statusID = s.statusID
+                                                                JOIN employee e ON e.UserID = b.personresponsibleID where b.steps='13' or b.statusID='3' 
+                                                                ORDER BY borrowID DESC;";
+                                                    $resultTest=mysqli_query($dbc,$queryTest);
+                                                    while($rowStep=mysqli_fetch_array($resultTest,MYSQLI_ASSOC)){
+                                                        echo "<tr class='gradeA'>
+                                                                <td style='display: none'>{$rowStep['borrowID']}</td>
+                                                                <td>{$count}</td>
+                                                                <td>Borrow these items</td>
+                                                                <td>Borrow</td>
+                                                                <td>{$rowStep['startDate']}</td>";
+																echo "<td><label class='label label-success'>Completed</label></td>"; 
+																echo "<td>{$rowStep['name']}</td>"; 
+																echo "</tr>";
+                                                    }
+												?>
+												
+												
 												<?php
                                                     //view for service
                                                     $query = "SELECT *, sr.id as 'serviceID' , e.name as 'requestedby'
@@ -172,32 +247,7 @@
                                                           $count++;
                                                     }
                                                   ?>
-                                                <?php 
-                                                    
-                                                    //view for borrow request
-                                                    $queryTest="SELECT * FROM  request_borrow b
-                                                                JOIN ref_status s
-                                                                ON b.statusID = s.statusID
-                                                                JOIN employee e ON e.UserID = b.personresponsibleID
-                                                                ORDER BY borrowID DESC;";
-                                                    $resultTest=mysqli_query($dbc,$queryTest);
-                                                    while($rowStep=mysqli_fetch_array($resultTest,MYSQLI_ASSOC)){
-                                                        echo "<tr class='gradeA'>
-                                                                <td style='display: none'>{$rowStep['borrowID']}</td>
-                                                                <td>{$count}</td>
-                                                                <td>Borrow these items</td>
-                                                                <td>Borrow</td>
-                                                                <td>{$rowStep['startDate']}</td>";
-
-                                                        if($rowStep['description']=="Pending"){ echo "<td><label class='label label-warning'>{$rowStep['description']}</label></td>"; }
-                                                        if($rowStep['description']=="Ongoing"){ echo "<td><label class='label label-primary'>{$rowStep['description']}</label></td>"; }
-                                                        if($rowStep['description']=="Incomplete"){ echo "<td><label class='label label-danger'>{$rowStep['description']}</label></td>"; }
-                                                        if($rowStep['description']=="Completed"){ echo "<td><label class='label label-success'>{$rowStep['description']}</label></td>"; }
-                                                        echo "<td>{$rowStep['name']}</td>"; 
-                                                        echo "</tr>";
-                                                        }
-
-                                                ?>
+                                                
 												
 												<?php 
 													

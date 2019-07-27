@@ -74,7 +74,7 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
         $result=mysqli_query($dbc,$query);
 	   
 		//INSERT TO NOTIFICATIONS TABLE
-		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`borrowID`, `steps_id`, `isRead`) VALUES ('{$id}', '13', false);";
+		$sqlNotif = "INSERT INTO `thesis`.`notifications` (`borrowID`, `steps_id`, `isRead`) VALUES ('{$id}', '9', false);";
 		$resultNotif = mysqli_query($dbc, $sqlNotif);
 	   
         //insert to assset testing
