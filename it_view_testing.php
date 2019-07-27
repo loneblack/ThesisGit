@@ -177,11 +177,11 @@
 					$resultUpdPOData=mysqli_query($dbc,$queryUpdPOData);
 				
 					//UPDATE ASSET STATUS
-					$queryProp="UPDATE `thesis`.`asset` SET `assetStatus`='7' WHERE `assetID`='{$row0['assetID']}'";
+					$queryProp="UPDATE `thesis`.`asset` SET `assetStatus`='25' WHERE `assetID`='{$row0['assetID']}'";
 					$resultProp=mysqli_query($dbc,$queryProp);
 					
 					//INSERT TO ASSET AUDIT
-					$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$row0['assetID']}', '7');";
+					$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$row0['assetID']}', '25');";
 					$resultAssAud=mysqli_query($dbc,$queryAssAud);
 
 				}
