@@ -113,43 +113,49 @@
                                                                         $sDate = $_POST['startDate'];
                                                                         $eDate = $_POST['endDate'];
                                                                         
-                                                                        $queryDept="SELECT rac.assetCategoryID, rac.name AS `ac`, COUNT(a.assetModel) AS `start`,
-                                                                        COUNT(IF(aa.assetStatus = 2, a.assetmodel, null)) AS `deployed`,
-                                                                        COUNT(IF(aa.assetStatus = 7, a.assetmodel, null)) AS `disposed`,
-                                                                        COUNT(IF(aa.assetStatus = 6, a.assetmodel, null)) AS `donated`, 
-                                                                        COUNT(a.assetModel) - COUNT(IF(aa.assetStatus = 7, a.assetmodel, null)) - COUNT(IF(aa.assetStatus = 6, a.assetmodel, null)) AS `end`																	
-                                                                        FROM ref_assetcategory rac
-                                                                        LEFT JOIN assetmodel am ON am.assetcategory = rac.assetCategoryID
-                                                                        LEFT JOIN asset a ON a.assetModel = am.assetModelID
-                                                                        LEFT JOIN assetaudit aa ON aa.assetID = a.assetID
+                                                                        $queryDept="SELECT s.name AS `supplier`, rac.name AS `asset_cat`, SUM(dd.quantity) AS `requested` FROM deliverydetails dd
+                                                                        LEFT JOIN delivery d ON d.id = dd.deliveryID
+                                                                        LEFT JOIN procurement p ON d.procurementID = p.procurementID
+                                                                        LEFT JOIN supplier s ON p.supplierID = s.supplierID
+                                                                        LEFT JOIN ref_assetcategory rac ON dd.ref_assetCategoryID = rac.assetCategoryID
+                                                                        LEFT JOIN procurementdetails pd ON p.procurementID = pd.procurementID
                                                                         GROUP BY rac.name;
                                                                         ";
-
+                                                                        
+                                                                        $req = array();
+                                                                        $ret = 0;
+                                                                        
                                                                         $resultDept=mysqli_query($dbc,$queryDept);
-                                                                        $count = 1;
+                                                                        $count = 0;
                                                                         while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
                                                                             echo "<tr>
-                                                                                <td style='display:none;'>{$rowDept['assetCategoryID']}</td>
-                                                                                <td style='display:none;'>{$start}</td>
-                                                                                <td style='display:none;'>{$end}</td>
-                                                                                <td>{$count}</td>
-                                                                                <td>{$rowDept['ac']}</td>
-                                                                                <td>{$rowDept['start']}</td>";
+                                                                                <td>{$rowDept['supplier']}</td>
+                                                                                <td>{$rowDept['asset_cat']}</td>
+                                                                                <td>{$rowDept['requested']}</td>";
+                                                                                $req[$count] = $rowDept['requested'];
+                                                                            $count++;
+                                                                        }
+                                                                        
+                                                                        $query="SELECT COUNT(aa.assetStatus) AS `returned` FROM deliverydetails dd
+                                                                        JOIN ref_assetcategory rac ON dd.ref_assetCategoryID = rac.assetCategoryID
+                                                                        JOIN deliverydetailsassets dda ON dd.deliverydetailsID = dda.deliverydetails_deliverydetailsID
+                                                                        JOIN assetaudit aa ON aa.assetID = dda.asset_assetID
+                                                                        WHERE aa.assetStatus = '25'
+                                                                        GROUP BY rac.name;
+                                                                        ";
+                                                        
+                                                                        
+                                                                        $result=mysqli_query($dbc,$query);
+                                                                        $count = 0;
+                                                                        $total = 0;
+                                                                        while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                                            echo "
+                                                                                <td>{$row['returned']}</td>
+                                                                                <td>";
                                                                                 
-                                                                                $final = $rowDept['end'] - $rowDept['start'];
-                                                                            
-                                                                                if($rowDept['start'] >= $rowDept['end']){
-                                                                                    echo "<td>0</td>";
-                                                                                }
-                                                                            
-                                                                                if($rowDept['start'] < $rowDept['end']){
-                                                                                    echo "<td>{$final}</td>";
-                                                                                }
+                                                                                echo $row['returned']/$req[$count] * 100;
                                                                                 
-                                                                            echo"<td>{$rowDept['deployed']}</td>
-                                                                                <td>{$rowDept['disposed']}</td>
-                                                                                <td>{$rowDept['donated']}</td>
-                                                                                <td>{$rowDept['end']}</td>
+                                                                                "</td>
                                                                                 </tr>";
                                                                             $count++;
                                                                         }
