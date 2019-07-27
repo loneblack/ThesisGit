@@ -142,7 +142,7 @@
 			$queryg="SELECT a.supplierID,ad.requestID,a.assetModel FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID 
 												  join assetdocument ad on a.assetID=ad.assetID
 												  join assetmodel am on a.assetModel=am.assetModelID
-												  where atd.assettesting_testingID='{$testingID}' and atd.check='0' 
+												  where atd.assettesting_testingID='{$testingID}' and atd.check='0'            
 												  group by a.supplierID";
 			$resultg=mysqli_query($dbc,$queryg);
 			
@@ -158,13 +158,13 @@
 				$resulta=mysqli_query($dbc,$querya);
 				
 				//GET ALL DEFECT ASSETS
-				$query0="SELECT atd.asset_assetID as `assetID`, count(atd.asset_assetID) as `qty`, a.unitCost,(count(atd.asset_assetID)*a.unitCost) as `totalCost`,am.assetCategory,a.assetModel FROM thesis.assettesting_details atd 
+				$query0="SELECT atd.asset_assetID as `assetID`,am.assetCategory,a.assetModel FROM thesis.assettesting_details atd 
 												  join asset a on atd.asset_assetID=a.assetID 
 												  join assetmodel am on a.assetModel=am.assetModelID
-												  where atd.assettesting_testingID='{$testingID}' and atd.check='0' and a.supplierID='{$rowg['supplierID']}'
-												  group by a.assetModel";
+												  where atd.assettesting_testingID='{$testingID}' and atd.check='0' 
+												  ";
 				$result0=mysqli_query($dbc,$query0);
-				$totalCost=0;
+				
 				while($row0=mysqli_fetch_array($result0,MYSQLI_ASSOC))
 				{
 					//GET DELIVERY DATA
@@ -173,7 +173,7 @@
 					$rowGetDelData=mysqli_fetch_array($resultGetDelData,MYSQLI_ASSOC);
 					
 					//UPDATE DELIVERY DETAILS DATA
-					$queryUpdPOData="UPDATE `thesis`.`deliverydetails` SET `itemsReceived`=quantity-1 where assetModelID='{$row0['assetModel']}' and DeliveryID='{$rowGetDelData['DeliveryID']}'";
+					$queryUpdPOData="UPDATE `thesis`.`deliverydetails` SET `itemsReceived`=itemsReceived-1 where assetModelID='{$row0['assetModel']}' and DeliveryID='{$rowGetDelData['DeliveryID']}'";
 					$resultUpdPOData=mysqli_query($dbc,$queryUpdPOData);
 				
 					//UPDATE ASSET STATUS
