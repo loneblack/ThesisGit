@@ -88,14 +88,15 @@ $_SESSION['previousDash'] = "it_requests.php";
                                                             $count = 1;
 															$key = "Fusion";
 															require_once('db/mysql_connect.php');
-
-                                                            //Request Purchase
+															
+															//PENDING 
+                                                            //PENDING ASSET REQUEST
 															$query="SELECT *,r.description as 'details', r.requestID,rstp.name as `step`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`
                                                                                 FROM thesis.request r 
                                                                                 join ref_status rs on r.status=rs.statusID
                                                                                 join ref_steps rstp on r.step=rstp.id
                                                                                 join user u on r.UserID=u.UserID
-                                                                                WHERE status !=6 AND r.step !=1;";
+                                                                                WHERE r.status !='6' AND r.step !='1' and r.status='1';";
 															$result=mysqli_query($dbc,$query);
 															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 																echo "<tr> 
@@ -130,10 +131,10 @@ $_SESSION['previousDash'] = "it_requests.php";
 																$count++;
 																
 															}
-															//Donation
+															//PENDING DONATION 
 															$queryDon="SELECT * , rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`,rstp.name as `step`,d.dateCreated FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID
 																																		join ref_steps rstp on d.stepsID=rstp.id
-																																		join user u on d.user_UserID=u.UserID";
+																																		join user u on d.user_UserID=u.UserID where d.statusID='1'";
 															$resultDon=mysqli_query($dbc,$queryDon);
 															
 															while($rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC)){
@@ -167,50 +168,12 @@ $_SESSION['previousDash'] = "it_requests.php";
 																</tr>";
 																$count++;
 															}
-															//Donation for outsiders
-															
-															$queryDonOut="SELECT * , rs.description as `statusDesc`,rstp.name as `step`,d.dateCreated,d.contactPerson FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID
-																																		join ref_steps rstp on d.stepsID=rstp.id
-                                                                                                                                        where d.user_UserID is null and d.statusID!=6";
-															$resultDonOut=mysqli_query($dbc,$queryDonOut);
-															
-															while($rowDonOut=mysqli_fetch_array($resultDonOut,MYSQLI_ASSOC)){
-																echo "<tr>
-                                                                    <td style='display: none'>{$rowDonOut['donationID']}</td>
-                                                                    <td>{$count}</td>
-																	<td>{$rowDonOut['dateNeed']}</td>";
-																	
-																	if($rowDon['statusDesc']=='Pending'){
-																		echo "<td><span class='label label-warning label-mini'>{$rowDonOut['statusDesc']}</span></td>";
-																	}
-																	elseif($rowDon['statusDesc']=='Incomplete'){
-																		echo "<td><span class='label label-danger label-mini'>{$rowDonOut['statusDesc']}</span></td>";
-																	}
-																	elseif($rowDon['statusDesc']=='Completed'){
-																		echo "<td><span class='label label-success label-mini'>{$rowDonOut['statusDesc']}</span></td>";
-																	}
-																	//elseif($row['statusDesc']=='Ongoing'){
-																		//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
-																	//}
-																	else{
-																		echo "<td><span class='label label-default label-mini'>{$rowDonOut['statusDesc']}</span></td>";
-																	}
-																	
-																echo "
-																	<td>Donation</td>
-																	<td>{$rowDonOut['step']}</td>
-																	<td>{$rowDonOut['contactPerson']}</td>
-																	<td>{$rowDonOut['dateCreated']}</td>
-																</tr>";
-																$count++;
-															}																		
-																																		
-															
-															 //Borrow
+																											
+															 //PENDING BORROW 
                                                             $query="SELECT *, t.name as `stepName`, CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `Requestor` FROM thesis.request_borrow r 
                                                                       JOIN ref_status s ON r.statusID = s.statusID
                                                                       JOIN ref_steps t ON r.steps = t.id
-                                                                      join user u on r.personresponsibleID=u.UserID;";
+                                                                      join user u on r.personresponsibleID=u.UserID where r.statusID='1';";
                                                             $result=mysqli_query($dbc,$query);
                                                             while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
                                                                 echo "<tr> 
@@ -240,6 +203,372 @@ $_SESSION['previousDash'] = "it_requests.php";
                                                                     <td>{$row['Requestor']}</td>
                                                                     <td>{$row['dateCreated']}</td>
                                                                     <td>{$row['purpose']}</td>
+                                                                </tr>";
+                                                                
+                                                                $count++;
+                                                                
+                                                            
+                                                            }
+															
+															//PENDING REPLACEMENT 
+															$queryGetRep="SELECT *,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `Requestor`,rs.description as `statusDesc`,rstp.name as `stepName` FROM thesis.replacement r 
+																			JOIN ref_status rs ON r.statusID = rs.statusID
+																			JOIN user u on r.userID=u.UserID
+																			JOIN ref_steps rstp on r.stepID=rstp.id where r.statusID='1'";
+                                                            $resultGetRep=mysqli_query($dbc,$queryGetRep);
+                                                            while($rowGetRep=mysqli_fetch_array($resultGetRep,MYSQLI_ASSOC)){
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$rowGetRep['replacementID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$rowGetRep['dateNeeded']}</td>";
+																	
+																	if($row['statusDesc']=='Pending'){
+																		echo "<td><span class='label label-warning label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Incomplete'){
+																		echo "<td><span class='label label-danger label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Completed'){
+																		echo "<td><span class='label label-success label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+																	//elseif($row['statusDesc']=='Ongoing'){
+																		//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	//}
+																	else{
+																		echo "<td><span class='label label-default label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+                                                                    
+                                                                echo "
+                                                                    <td>Replacement</td>
+                                                                    <td>{$rowGetRep['stepName']}</td>
+                                                                    <td>{$rowGetRep['Requestor']}</td>
+                                                                    <td>{$rowGetRep['dateTiimeLost']}</td>
+                                                                    <td>{$rowGetRep['description']}</td>
+                                                                </tr>";
+                                                                
+                                                                $count++;
+                                                                
+                                                            
+                                                            }
+															
+															
+															//ONGOING 
+															//ONGOING ASSET REQUEST
+															$query="SELECT *,r.description as 'details', r.requestID,rstp.name as `step`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`
+                                                                                FROM thesis.request r 
+                                                                                join ref_status rs on r.status=rs.statusID
+                                                                                join ref_steps rstp on r.step=rstp.id
+                                                                                join user u on r.UserID=u.UserID
+                                                                                WHERE r.status !='6' AND r.step !='1' and r.status='2';";
+															$result=mysqli_query($dbc,$query);
+															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+																echo "<tr> 
+                                                                    <td style='display: none'>{$row['requestID']}</td>
+                                                                    <td>{$count}</td>
+																	<td>{$row['dateNeeded']}</td>";
+																	
+																	if($row['statusDesc']=='Pending'){
+																		echo "<td><span class='label label-warning label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Incomplete'){
+																		echo "<td><span class='label label-danger label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Completed'){
+																		echo "<td><span class='label label-success label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	//elseif($row['statusDesc']=='Ongoing'){
+																		//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	//}
+																	else{
+																		echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	
+																echo "
+																	<td>Asset Request</td>
+																	<td>{$row['step']}</td>
+																	<td>{$row['requestor']}</td>
+																	<td>{$row['requestedDate']}</td>
+                                                                    <td>{$row['details']}</td>
+																</tr>";
+																
+																$count++;
+																
+															}
+															//ONGOING DONATION 
+															$queryDon="SELECT * , rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`,rstp.name as `step`,d.dateCreated FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID
+																																		join ref_steps rstp on d.stepsID=rstp.id
+																																		join user u on d.user_UserID=u.UserID where d.statusID='2'";
+															$resultDon=mysqli_query($dbc,$queryDon);
+															
+															while($rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC)){
+																echo "<tr>
+                                                                    <td style='display: none'>{$rowDon['donationID']}</td>
+                                                                    <td>{$count}</td>
+																	<td>{$rowDon['dateNeed']}</td>";
+																	
+																	if($rowDon['statusDesc']=='Pending'){
+																		echo "<td><span class='label label-warning label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	elseif($rowDon['statusDesc']=='Incomplete'){
+																		echo "<td><span class='label label-danger label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	elseif($rowDon['statusDesc']=='Completed'){
+																		echo "<td><span class='label label-success label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	//elseif($row['statusDesc']=='Ongoing'){
+																		//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	//}
+																	else{
+																		echo "<td><span class='label label-default label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	
+																echo "
+																	<td>Donation</td>
+																	<td>{$rowDon['step']}</td>
+																	<td>{$rowDon['requestor']}</td>
+																	<td>{$rowDon['dateCreated']}</td>
+                                                                    <td>{$rowDon['purpose']}</td>
+																</tr>";
+																$count++;
+															}
+																											
+															 //ONGOING BORROW 
+                                                            $query="SELECT *, t.name as `stepName`, CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `Requestor` FROM thesis.request_borrow r 
+                                                                      JOIN ref_status s ON r.statusID = s.statusID
+                                                                      JOIN ref_steps t ON r.steps = t.id
+                                                                      join user u on r.personresponsibleID=u.UserID where r.statusID='2';";
+                                                            $result=mysqli_query($dbc,$query);
+                                                            while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$row['borrowID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$row['startDate']}</td>";
+                                                                    
+                                                                    if($row['description']=='Pending'){
+                                                                        echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Incomplete'){
+                                                                        echo "<td><span class='label label-danger label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Completed'){
+                                                                        echo "<td><span class='label label-success label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    //elseif($row['description']=='Ongoing'){
+                                                                        //echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    //}
+                                                                    else{
+                                                                        echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    
+                                                                echo "
+                                                                    <td>Borrow</td>
+                                                                    <td>{$row['stepName']}</td>
+                                                                    <td>{$row['Requestor']}</td>
+                                                                    <td>{$row['dateCreated']}</td>
+                                                                    <td>{$row['purpose']}</td>
+                                                                </tr>";
+                                                                
+                                                                $count++;
+                                                                
+                                                            
+                                                            }
+															
+															//ONGOING REPLACEMENT 
+															$queryGetRep="SELECT *,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `Requestor`,rs.description as `statusDesc`,rstp.name as `stepName` FROM thesis.replacement r 
+																			JOIN ref_status rs ON r.statusID = rs.statusID
+																			JOIN user u on r.userID=u.UserID
+																			JOIN ref_steps rstp on r.stepID=rstp.id where r.statusID='2'";
+                                                            $resultGetRep=mysqli_query($dbc,$queryGetRep);
+                                                            while($rowGetRep=mysqli_fetch_array($resultGetRep,MYSQLI_ASSOC)){
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$rowGetRep['replacementID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$rowGetRep['dateNeeded']}</td>";
+																	
+																	if($row['statusDesc']=='Pending'){
+																		echo "<td><span class='label label-warning label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Incomplete'){
+																		echo "<td><span class='label label-danger label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Completed'){
+																		echo "<td><span class='label label-success label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+																	//elseif($row['statusDesc']=='Ongoing'){
+																		//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	//}
+																	else{
+																		echo "<td><span class='label label-default label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+                                                                    
+                                                                echo "
+                                                                    <td>Replacement</td>
+                                                                    <td>{$rowGetRep['stepName']}</td>
+                                                                    <td>{$rowGetRep['Requestor']}</td>
+                                                                    <td>{$rowGetRep['dateTiimeLost']}</td>
+                                                                    <td>{$rowGetRep['description']}</td>
+                                                                </tr>";
+                                                                
+                                                                $count++;
+                                                                
+                                                            
+                                                            }
+															
+															//COMPLETED 
+															//COMPLETED ASSET REQUEST
+															$query="SELECT *,r.description as 'details', r.requestID,rstp.name as `step`,r.recipient,r.date as `requestedDate`,r.dateNeeded,rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`
+                                                                                FROM thesis.request r 
+                                                                                join ref_status rs on r.status=rs.statusID
+                                                                                join ref_steps rstp on r.step=rstp.id
+                                                                                join user u on r.UserID=u.UserID
+                                                                                WHERE r.status !='6' AND r.step !='1' and r.status='3';";
+															$result=mysqli_query($dbc,$query);
+															while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+																echo "<tr> 
+                                                                    <td style='display: none'>{$row['requestID']}</td>
+                                                                    <td>{$count}</td>
+																	<td>{$row['dateNeeded']}</td>";
+																	
+																	if($row['statusDesc']=='Pending'){
+																		echo "<td><span class='label label-warning label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Incomplete'){
+																		echo "<td><span class='label label-danger label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Completed'){
+																		echo "<td><span class='label label-success label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	//elseif($row['statusDesc']=='Ongoing'){
+																		//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	//}
+																	else{
+																		echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	}
+																	
+																echo "
+																	<td>Asset Request</td>
+																	<td>{$row['step']}</td>
+																	<td>{$row['requestor']}</td>
+																	<td>{$row['requestedDate']}</td>
+                                                                    <td>{$row['details']}</td>
+																</tr>";
+																
+																$count++;
+																
+															}
+															//COMPLETED DONATION 
+															$queryDon="SELECT * , rs.description as `statusDesc`,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `requestor`,rstp.name as `step`,d.dateCreated FROM thesis.donation d join ref_status rs on d.statusID=rs.statusID
+																																		join ref_steps rstp on d.stepsID=rstp.id
+																																		join user u on d.user_UserID=u.UserID where d.statusID='3'";
+															$resultDon=mysqli_query($dbc,$queryDon);
+															
+															while($rowDon=mysqli_fetch_array($resultDon,MYSQLI_ASSOC)){
+																echo "<tr>
+                                                                    <td style='display: none'>{$rowDon['donationID']}</td>
+                                                                    <td>{$count}</td>
+																	<td>{$rowDon['dateNeed']}</td>";
+																	
+																	if($rowDon['statusDesc']=='Pending'){
+																		echo "<td><span class='label label-warning label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	elseif($rowDon['statusDesc']=='Incomplete'){
+																		echo "<td><span class='label label-danger label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	elseif($rowDon['statusDesc']=='Completed'){
+																		echo "<td><span class='label label-success label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	//elseif($row['statusDesc']=='Ongoing'){
+																		//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	//}
+																	else{
+																		echo "<td><span class='label label-default label-mini'>{$rowDon['statusDesc']}</span></td>";
+																	}
+																	
+																echo "
+																	<td>Donation</td>
+																	<td>{$rowDon['step']}</td>
+																	<td>{$rowDon['requestor']}</td>
+																	<td>{$rowDon['dateCreated']}</td>
+                                                                    <td>{$rowDon['purpose']}</td>
+																</tr>";
+																$count++;
+															}
+																											
+															 //COMPLETED BORROW 
+                                                            $query="SELECT *, t.name as `stepName`, CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `Requestor` FROM thesis.request_borrow r 
+                                                                      JOIN ref_status s ON r.statusID = s.statusID
+                                                                      JOIN ref_steps t ON r.steps = t.id
+                                                                      join user u on r.personresponsibleID=u.UserID where r.statusID='3';";
+                                                            $result=mysqli_query($dbc,$query);
+                                                            while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$row['borrowID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$row['startDate']}</td>";
+                                                                    
+                                                                    if($row['description']=='Pending'){
+                                                                        echo "<td><span class='label label-warning label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Incomplete'){
+                                                                        echo "<td><span class='label label-danger label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    elseif($row['description']=='Completed'){
+                                                                        echo "<td><span class='label label-success label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    //elseif($row['description']=='Ongoing'){
+                                                                        //echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    //}
+                                                                    else{
+                                                                        echo "<td><span class='label label-default label-mini'>{$row['description']}</span></td>";
+                                                                    }
+                                                                    
+                                                                echo "
+                                                                    <td>Borrow</td>
+                                                                    <td>{$row['stepName']}</td>
+                                                                    <td>{$row['Requestor']}</td>
+                                                                    <td>{$row['dateCreated']}</td>
+                                                                    <td>{$row['purpose']}</td>
+                                                                </tr>";
+                                                                
+                                                                $count++;
+                                                                
+                                                            
+                                                            }
+															
+															//COMPLETED REPLACEMENT 
+															$queryGetRep="SELECT *,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `Requestor`,rs.description as `statusDesc`,rstp.name as `stepName` FROM thesis.replacement r 
+																			JOIN ref_status rs ON r.statusID = rs.statusID
+																			JOIN user u on r.userID=u.UserID
+																			JOIN ref_steps rstp on r.stepID=rstp.id where r.statusID='3'";
+                                                            $resultGetRep=mysqli_query($dbc,$queryGetRep);
+                                                            while($rowGetRep=mysqli_fetch_array($resultGetRep,MYSQLI_ASSOC)){
+                                                                echo "<tr> 
+                                                                    <td style='display: none'>{$rowGetRep['replacementID']}</td>
+                                                                    <td>{$count}</td>
+                                                                    <td>{$rowGetRep['dateNeeded']}</td>";
+																	
+																	if($row['statusDesc']=='Pending'){
+																		echo "<td><span class='label label-warning label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Incomplete'){
+																		echo "<td><span class='label label-danger label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+																	elseif($row['statusDesc']=='Completed'){
+																		echo "<td><span class='label label-success label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+																	//elseif($row['statusDesc']=='Ongoing'){
+																		//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
+																	//}
+																	else{
+																		echo "<td><span class='label label-default label-mini'>{$rowGetRep['statusDesc']}</span></td>";
+																	}
+                                                                    
+                                                                echo "
+                                                                    <td>Replacement</td>
+                                                                    <td>{$rowGetRep['stepName']}</td>
+                                                                    <td>{$rowGetRep['Requestor']}</td>
+                                                                    <td>{$rowGetRep['dateTiimeLost']}</td>
+                                                                    <td>{$rowGetRep['description']}</td>
                                                                 </tr>";
                                                                 
                                                                 $count++;
@@ -306,46 +635,7 @@ $_SESSION['previousDash'] = "it_requests.php";
                                                                  $count++;
 															}
 
-															//Replacement 
-															$queryGetRep="SELECT *,CONCAT(Convert(AES_DECRYPT(u.firstName,'{$key}')USING utf8), ' ', Convert(AES_DECRYPT(u.lastName,'{$key}')USING utf8)) as `Requestor`,rs.description as `statusDesc`,rstp.name as `stepName` FROM thesis.replacement r 
-																			JOIN ref_status rs ON r.statusID = rs.statusID
-																			JOIN user u on r.userID=u.UserID
-																			JOIN ref_steps rstp on r.stepID=rstp.id";
-                                                            $resultGetRep=mysqli_query($dbc,$queryGetRep);
-                                                            while($rowGetRep=mysqli_fetch_array($resultGetRep,MYSQLI_ASSOC)){
-                                                                echo "<tr> 
-                                                                    <td style='display: none'>{$rowGetRep['replacementID']}</td>
-                                                                    <td>{$count}</td>
-                                                                    <td>{$rowGetRep['dateNeeded']}</td>";
-																	
-																	if($row['statusDesc']=='Pending'){
-																		echo "<td><span class='label label-warning label-mini'>{$rowGetRep['statusDesc']}</span></td>";
-																	}
-																	elseif($row['statusDesc']=='Incomplete'){
-																		echo "<td><span class='label label-danger label-mini'>{$rowGetRep['statusDesc']}</span></td>";
-																	}
-																	elseif($row['statusDesc']=='Completed'){
-																		echo "<td><span class='label label-success label-mini'>{$rowGetRep['statusDesc']}</span></td>";
-																	}
-																	//elseif($row['statusDesc']=='Ongoing'){
-																		//echo "<td><span class='label label-default label-mini'>{$row['statusDesc']}</span></td>";
-																	//}
-																	else{
-																		echo "<td><span class='label label-default label-mini'>{$rowGetRep['statusDesc']}</span></td>";
-																	}
-                                                                    
-                                                                echo "
-                                                                    <td>Replacement</td>
-                                                                    <td>{$rowGetRep['stepName']}</td>
-                                                                    <td>{$rowGetRep['Requestor']}</td>
-                                                                    <td>{$rowGetRep['dateTiimeLost']}</td>
-                                                                    <td>{$rowGetRep['description']}</td>
-                                                                </tr>";
-                                                                
-                                                                $count++;
-                                                                
-                                                            
-                                                            }
+															
                                                             //Request for Parts
                                                             $queryRequestforParts = "SELECT * , r.id as 'requestPartsID', st.description FROM thesis.requestparts r JOIN service s ON r.serviceID = s.id JOIN ref_status st ON r.statusID = st.statusID JOIN employee e ON e.UserID = r.UserID JOIN ticket t on s.id = t.service_id;";
 

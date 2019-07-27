@@ -433,7 +433,7 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 																				<div class="modal-body">
 
 																					<div class="adv-table" id="ctable">
-																						<table class="display table table-bordered table-striped" id="dynamic-table">
+																						<table class="display table table-bordered table-striped">
 																							<thead>
 																								<tr>
 																									<th></th>

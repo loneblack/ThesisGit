@@ -75,9 +75,11 @@
                                             <tbody>
 												<?php
 													require_once('db/mysql_connect.php');
+													
+													//INCOMPLETE PO
 													$query="SELECT p.procurementID,s.name as `supplierName`,rs.description as `status` FROM thesis.procurement p join ref_status rs on p.status=rs.statusID
 																																								 join employee e on p.preparedBy=e.employeeID
-																																								 join supplier s on p.supplierID=s.supplierID";
+																																								 join supplier s on p.supplierID=s.supplierID where p.status='4'";
 													$result=mysqli_query($dbc,$query);
 													
 													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
@@ -109,8 +111,76 @@
 														</tr>";
 													}
 												
-												
-												
+													//PENDING PO
+													
+													$query="SELECT p.procurementID,s.name as `supplierName`,rs.description as `status` FROM thesis.procurement p join ref_status rs on p.status=rs.statusID
+																																								 join employee e on p.preparedBy=e.employeeID
+																																								 join supplier s on p.supplierID=s.supplierID where p.status='1'";
+													$result=mysqli_query($dbc,$query);
+													
+													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														
+														//GET NEAREST EXPECTED ARRIVAL DATE
+														$queryExpArrDat="SELECT expectedDeliveryDate 
+																			FROM thesis.procurementdetails 
+																			where procurementID='{$row['procurementID']}' and expectedDeliveryDate>=CURDATE() 
+																			order by expectedDeliveryDate asc limit 1;";
+														$resultExpArrDat=mysqli_query($dbc,$queryExpArrDat);
+														$rowExpArrDat=mysqli_fetch_array($resultExpArrDat,MYSQLI_ASSOC);
+														
+														echo "<tr id='{$row['procurementID']}'>
+															<td>{$row['procurementID']}</td>
+															<td>{$row['supplierName']}</td>
+															<td>{$rowExpArrDat['expectedDeliveryDate']}</td>";
+															
+														if($row['status']=="Pending"){
+															echo "<td><span class='label label-warning label-mini'>{$row['status']}</span></td>";
+														}
+														elseif($row['status']=="Completed"){
+															echo "<td><span class='label label-success label-mini'>{$row['status']}</span></td>";
+														}
+														else{
+															echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
+														}
+														
+														echo "
+														</tr>";
+													}
+													
+													//COMPLETE PO
+													$query="SELECT p.procurementID,s.name as `supplierName`,rs.description as `status` FROM thesis.procurement p join ref_status rs on p.status=rs.statusID
+																																								 join employee e on p.preparedBy=e.employeeID
+																																								 join supplier s on p.supplierID=s.supplierID where p.status='3'";
+													$result=mysqli_query($dbc,$query);
+													
+													while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
+														
+														//GET NEAREST EXPECTED ARRIVAL DATE
+														$queryExpArrDat="SELECT expectedDeliveryDate 
+																			FROM thesis.procurementdetails 
+																			where procurementID='{$row['procurementID']}' and expectedDeliveryDate>=CURDATE() 
+																			order by expectedDeliveryDate asc limit 1;";
+														$resultExpArrDat=mysqli_query($dbc,$queryExpArrDat);
+														$rowExpArrDat=mysqli_fetch_array($resultExpArrDat,MYSQLI_ASSOC);
+														
+														echo "<tr id='{$row['procurementID']}'>
+															<td>{$row['procurementID']}</td>
+															<td>{$row['supplierName']}</td>
+															<td>{$rowExpArrDat['expectedDeliveryDate']}</td>";
+															
+														if($row['status']=="Pending"){
+															echo "<td><span class='label label-warning label-mini'>{$row['status']}</span></td>";
+														}
+														elseif($row['status']=="Completed"){
+															echo "<td><span class='label label-success label-mini'>{$row['status']}</span></td>";
+														}
+														else{
+															echo "<td><span class='label label-danger label-mini'>{$row['status']}</span></td>";
+														}
+														
+														echo "
+														</tr>";
+													}
 												
 												?>
                                             </tbody>
