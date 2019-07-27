@@ -66,7 +66,6 @@ require_once("db/mysql_connect.php");
                                         <table class="display table table-bordered table-striped" id="dynamic-table">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
                                                     <th>Delivered To</th>
 													<th>Building</th>
 													<th>Floor</th>
@@ -91,7 +90,6 @@ require_once("db/mysql_connect.php");
 													while($rowDelReq = mysqli_fetch_array($resultDelReq, MYSQLI_ASSOC)){
 														echo "<tr class='gradeA'>
 															<td style='display: none'>{$rowDelReq['reqRecID']}</td>
-															<td>{$rowDelReq['reqRecID']}</td>
 															<td>{$rowDelReq['deliveredTo']}</td>
 															<td>{$rowDelReq['building']}</td>
 															<td>{$rowDelReq['floorRoom']}</td>
@@ -122,7 +120,6 @@ require_once("db/mysql_connect.php");
 													while($rowDelReq1 = mysqli_fetch_array($resultDelReq1, MYSQLI_ASSOC)){
 														echo "<tr class='gradeA'>
 															<td style='display: none'>{$rowDelReq1['reqRecID']}</td>
-															<td>{$rowDelReq1['reqRecID']}</td>
 															<td>{$rowDelReq1['deliveredTo']}</td>
 															<td>{$rowDelReq1['building']}</td>
 															<td>{$rowDelReq1['floorRoom']}</td>
@@ -152,7 +149,6 @@ require_once("db/mysql_connect.php");
                                                     while($rowDelReq1 = mysqli_fetch_array($resultDelReq1, MYSQLI_ASSOC)){
                                                         echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$rowDelReq1['reqRecID']}</td>
-                                                            <td>{$rowDelReq1['reqRecID']}</td>
                                                             <td>{$rowDelReq1['deliveredTo']}</td>
                                                             <td>{$rowDelReq1['building']}</td>
                                                             <td>{$rowDelReq1['floorRoom']}</td>
