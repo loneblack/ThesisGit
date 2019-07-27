@@ -139,7 +139,7 @@
 			$rowEmp=mysqli_fetch_array($resultEmp,MYSQLI_ASSOC);
 			
 			//GET EACH SUPPLIER
-			$queryg="SELECT a.supplierID,ad.requestID FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID 
+			$queryg="SELECT a.supplierID,ad.requestID,a.assetModel FROM thesis.assettesting_details atd join asset a on atd.asset_assetID=a.assetID 
 												  join assetdocument ad on a.assetID=ad.assetID
 												  join assetmodel am on a.assetModel=am.assetModelID
 												  where atd.assettesting_testingID='{$testingID}' and atd.check='0' 
@@ -148,18 +148,14 @@
 			
 			while($rowg=mysqli_fetch_array($resultg,MYSQLI_ASSOC))
 			{
-				//CREATE PO
-				$query3="INSERT INTO `thesis`.`procurement` (`requestID`, `date`, `status`, `preparedBy`, `supplierID`) VALUES ('{$rowg['requestID']}', now(), '1', '{$rowEmp['employeeID']}', '{$rowg['supplierID']}')";
-				$result3=mysqli_query($dbc,$query3);
+				//GET PO
+				$queryGetPO="SELECT d.procurementID FROM thesis.ticket t join delivery d on t.delivery_id=d.id where t.testingID='{$testingID}'";
+				$resultGetPO=mysqli_query($dbc,$queryGetPO);
+				$rowGetPO=mysqli_fetch_array($resultGetPO,MYSQLI_ASSOC);
 				
-				//GET CREATED Proc ID
-				$queryProcID="SELECT * FROM thesis.procurement order by procurementID desc limit 1";
-				$resultProcID=mysqli_query($dbc,$queryProcID);
-				$rowProcID=mysqli_fetch_array($resultProcID,MYSQLI_ASSOC);
-				
-				//INSERT TO NOTIFICATIONS TABLE
-				$sqlNotif = "INSERT INTO `thesis`.`notifications` (`isRead`, `procurementID`) VALUES (false, '{$rowProcID['procurementID']}');";
-				$resultNotif = mysqli_query($dbc, $sqlNotif);
+				//UPDATE PO STATUS
+				$querya="UPDATE `thesis`.`procurement` SET `status`='4' WHERE `procurementID`='{$rowGetPO['procurementID']}'";
+				$resulta=mysqli_query($dbc,$querya);
 				
 				//GET ALL DEFECT ASSETS
 				$query0="SELECT atd.asset_assetID as `assetID`, count(atd.asset_assetID) as `qty`, a.unitCost,(count(atd.asset_assetID)*a.unitCost) as `totalCost`,am.assetCategory,a.assetModel FROM thesis.assettesting_details atd 
@@ -171,10 +167,15 @@
 				$totalCost=0;
 				while($row0=mysqli_fetch_array($result0,MYSQLI_ASSOC))
 				{
-					//INSERT PO DETAILS
-					$query2="INSERT INTO `thesis`.`procurementdetails` (`procurementID`, `quantity`, `cost`, `subtotal`, `assetCategoryID`, `assetModelID`) VALUES ('{$rowProcID['procurementID']}', '{$row0['qty']}', '{$row0['unitCost']}', '{$row0['totalCost']}', '{$row0['assetCategory']}', '{$row0['assetModel']}')";
-					$result2=mysqli_query($dbc,$query2);
+					//GET DELIVERY DATA
+					$queryGetDelData="SELECT * FROM thesis.delivery d join deliverydetails dd on d.id=dd.DeliveryID where dd.assetModelID='{$row0['assetModel']}' and d.procurementID='{$rowGetPO['procurementID']}' order by d.id desc limit 1";
+					$resultGetDelData=mysqli_query($dbc,$queryGetDelData);
+					$rowGetDelData=mysqli_fetch_array($resultGetDelData,MYSQLI_ASSOC);
 					
+					//UPDATE DELIVERY DETAILS DATA
+					$queryUpdPOData="UPDATE `thesis`.`deliverydetails` SET `itemsReceived`=quantity-1 where assetModelID='{$row0['assetModel']}' and DeliveryID='{$rowGetDelData['DeliveryID']}'";
+					$resultUpdPOData=mysqli_query($dbc,$queryUpdPOData);
+				
 					//UPDATE ASSET STATUS
 					$queryProp="UPDATE `thesis`.`asset` SET `assetStatus`='7' WHERE `assetID`='{$row0['assetID']}'";
 					$resultProp=mysqli_query($dbc,$queryProp);
@@ -182,14 +183,8 @@
 					//INSERT TO ASSET AUDIT
 					$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$row0['assetID']}', '7');";
 					$resultAssAud=mysqli_query($dbc,$queryAssAud);
-					
-					$totalCost=$totalCost+$row0['totalCost'];
+
 				}
-				
-				//UPDATE TOTAL COST OF PO
-				$queryTotC="UPDATE `thesis`.`procurement` SET `totalCost`='{$totalCost}' WHERE `procurementID`='{$rowProcID['procurementID']}'";
-				$resultTotC=mysqli_query($dbc,$queryTotC);
-				
 				
 			}
 			

@@ -72,7 +72,7 @@
 				}
 				
 				//Create ticket
-				$queryCreTick="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `requestedBy`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$rowLatAssTest['testingID']}', '{$category}', '{$rowReq['UserID']}')";
+				$queryCreTick="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `testingID`, `serviceType`, `requestedBy`, `delivery_id`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$dueDate}', '{$priority}', '{$rowLatAssTest['testingID']}', '{$category}', '{$rowReq['UserID']}', '{$deliveryID}')";
 				$resultCreTick=mysqli_query($dbc,$queryCreTick);
 				
 				//Get Latest ticket
