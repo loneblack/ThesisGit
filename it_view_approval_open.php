@@ -749,7 +749,7 @@
     <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
     <script src="js/dynamic_table_init.js"></script>
-	<script src="js/dynamic_table1_init.js"></script>
+	
     <script src="js/scripts.js"></script>
 	
 </body>
