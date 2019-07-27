@@ -106,6 +106,7 @@
 																								echo $row['schoolName'];
 																							}
 																							?></b></h5>
+                                            <h5><b>Contact Person: <?php echo $row['contactPerson']; ?></b></h5>
                                             <h5><b>Contact Number: <?php echo $row['contactNumber']; ?></b></h5>
                                             <h5><b>Date Time Needed: <?php echo $row['dateNeed']; ?></b></h5>
                                             <h5><b>Purpose: <?php echo $row['purpose']; ?></b></h5>

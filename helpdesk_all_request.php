@@ -148,7 +148,7 @@
                                                       echo "<tr class='gradeA'>
                                                             <td style='display: none'>{$row['serviceID']}</td>
                                                             <td>{$count}</td>
-                                                            <td>{$row['details']}</td>
+                                                            <td>Repair these items</td>
                                                             <td>";
 
                                                        if($row['serviceType']=='27') echo "Repair";
@@ -185,7 +185,7 @@
                                                         echo "<tr class='gradeA'>
                                                                 <td style='display: none'>{$rowStep['borrowID']}</td>
                                                                 <td>{$count}</td>
-                                                                <td>{$rowStep['purpose']}</td>
+                                                                <td>Borrow these items</td>
                                                                 <td>Borrow</td>
                                                                 <td>{$rowStep['startDate']}</td>";
 

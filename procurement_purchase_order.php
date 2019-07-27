@@ -141,7 +141,7 @@
 						
 					</div>
 					<?php
-						
+						$totall = 0;
 						$query="SELECT cid.supplier_supplierID as `supplierID`,s.name as `supplierName`,s.address FROM thesis.canvasitem ci 
 							join canvasitemdetails cid on ci.cavasItemID=cid.cavasItemID 
 							join supplier s on cid.supplier_supplierID=s.supplierID
@@ -150,7 +150,9 @@
 						$result=mysqli_query($dbc,$query);
 						
 						$code="poform";
-						$num=0;
+						$num=0.00;
+                        settype($num, "float");
+                        
 						while($row=mysqli_fetch_array($result,MYSQLI_ASSOC)){
 							$divID=$code.$num;
 							$num++;
@@ -210,10 +212,15 @@
 															<td class='text-center'>₱ {$rowa['totalPrice']}</td>
 															<td class='text-center'>{$rowa['expectedDate']}</td>
 														</tr>";
+                                                        
+                                                        $totall += $rowa['totalPrice']; 
 													}
 													
 													echo "</tbody>
 												</table>
+                                                
+                                                <h3>Total:     ₱"; echo $totall; echo "</h3>
+                                                
                                                 </div>
 											</section>
 										</div>

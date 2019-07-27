@@ -280,6 +280,7 @@
 																								echo $rowDon['schoolName'];
 																							}
 																							?> </b></h5>
+                                    <h5><b>Contact Person: <?php echo $rowDon['contactPerson']; ?></b></h5>
                                     <h5><b>Contact Number: <?php echo $rowDon['contactNumber']; ?></b></h5>
                                     <h5><b>Date Time Needed: <?php echo $rowDon['dateNeed']; ?></b></h5>
                                     <h5><b>Purpose: <?php echo $rowDon['purpose']; ?></b></h5>
