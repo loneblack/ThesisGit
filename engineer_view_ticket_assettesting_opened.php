@@ -35,9 +35,38 @@
 	
 		$testStat=$_POST['testStat'];
 		$listOfTestAss=$_POST['listOfTestAss'];
-			
+		$comments=$_POST['comments'];
+		
+		$mi = new MultipleIterator();
+		$mi->attachIterator(new ArrayIterator($testStat));
+		$mi->attachIterator(new ArrayIterator($listOfTestAss));
+		$mi->attachIterator(new ArrayIterator($comments));
+		
 		//Check the dropdown for asset status
-		for($i=0;$i<sizeOf($testStat);$i++){
+		foreach($mi as $value){
+			list($testStat, $listOfTestAss, $comments) = $value;
+			//For functioning assets
+			if($testStat=='1'){
+				$query5="UPDATE `thesis`.`assettesting_details` SET `check`='1' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$listOfTestAss}'";
+				$result5=mysqli_query($dbc,$query5);
+				
+				//INSERT TO ASSET AUDIT
+				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$listOfTestAss}', '{$ticketID}', '8');";
+				$resultAssAud=mysqli_query($dbc,$queryAssAud);
+			}
+			//For defected assets
+			elseif($testStat=='3'){
+				$query5="UPDATE `thesis`.`assettesting_details` SET `check`='0',`comment`='{$comments}' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$listOfTestAss}'";
+				$result5=mysqli_query($dbc,$query5);
+
+				//INSERT TO ASSET AUDIT
+				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`, `remarks`) VALUES ('{$_SESSION['userID']}', now(), '{$listOfTestAss}', '{$ticketID}', '8', '{$comments}');";
+				$resultAssAud=mysqli_query($dbc,$queryAssAud);
+			}
+		}
+		
+		
+		/*for($i=0;$i<sizeOf($testStat);$i++){
 			//For functioning assets
 			if($testStat[$i]=='1'){
 				$query5="UPDATE `thesis`.`assettesting_details` SET `check`='1' WHERE `assettesting_testingID`='{$row7['testingID']}' and asset_assetID='{$listOfTestAss[$i]}'";
@@ -56,7 +85,7 @@
 				$queryAssAud="INSERT INTO `thesis`.`assetaudit` (`UserID`, `date`, `assetID`, `ticketID`, `assetStatus`) VALUES ('{$_SESSION['userID']}', now(), '{$listOfTestAss[$i]}', '{$ticketID}', '8');";
 				$resultAssAud=mysqli_query($dbc,$queryAssAud);
 			}
-		}
+		}*/
 		
 		//For escalation code
 		if(isset($_POST['escEngineer'])){
@@ -492,7 +521,7 @@
 																
 																echo "</select>
 																</td>
-																<td><input style='text' id='{$row['assetID']}' name='comments[]' class='form-control comments'></td>
+																<td><input type='text' id='{$row['assetID']}' name='comments[]' class='form-control comments'></td>
 																<input type='hidden' id='{$idDisapp}' name='disapprovedAsset[]' value='{$row['assetID']}'>
 																<input type='hidden' id='{$idWorking}' name='workingAsset[]' value='{$row['assetID']}'>
 																<input type='hidden' id='{$idForEsc}' name='forEscAsset[]' value='{$row['assetID']}'>
@@ -764,7 +793,7 @@
 			//Working stat
 			if(document.getElementById(selectID).value == "1"){
 				//comments
-				document.getElementById(x).disabled = true;
+				document.getElementById(x).readOnly = true;
 				
 				//for asset stat
 				document.getElementById(forEsc).disabled = true;
@@ -775,7 +804,7 @@
 			//Escalate stat
             else if(document.getElementById(selectID).value == "2"){
 				//comments
-				document.getElementById(x).disabled = true;
+				document.getElementById(x).readOnly = true;
 				
 				//for asset stat
 				document.getElementById(forEsc).disabled = false;
@@ -786,7 +815,7 @@
             }
 			else{
 				//comments
-				document.getElementById(x).disabled = false;
+				document.getElementById(x).readOnly = false;
 				
 				//for asset stat
 				document.getElementById(forEsc).disabled = true;
