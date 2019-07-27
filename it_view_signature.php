@@ -264,8 +264,7 @@
 
                                                                 <button type="submit" class="btn btn-success" id="approve" name="approve"><i class="fa fa-check"></i> Approve</button>
                                                                 &nbsp;&nbsp;
-                                                                <button type="submit" class="btn btn-danger" id="disapprove" name="disapprove"><i class="fa fa-ban"></i> Deny</button>
-                                                                <!-- <button type="button" class="btn btn-danger" id="disapprove" data-toggle="modal" data-target="#myModal"><i class="fa fa-ban"></i> Disapprove</button> -->
+                                                                <button type="submit" class="btn btn-danger" id="disapprove" name="disapprove"><i class="fa fa-ban"></i> Disapprove</button>
 
 
                                                             </div>
