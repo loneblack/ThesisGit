@@ -27,8 +27,15 @@
 			$resultTestStat=mysqli_query($dbc,$queryTestStat);
 			
 			//GET PASSED ASSETS
-			$assetPass=$_POST['assetPass'];
-			$warranty=$_POST['warranty'];
+			$assetPass=null;
+			$warranty=null;
+			if(isset($_POST['assetPass'])){
+				$assetPass=$_POST['assetPass'];
+			}
+			if(isset($_POST['warranty'])){
+				$warranty=$_POST['warranty'];
+			}
+			
 			//$query1="SELECT rb.name as `brand`,am.description as `assetModelName`,atd.asset_assetID as `assetID`,atd.comment,a.assetModel,am.assetCategory FROM thesis.assettesting_details atd 
 			//																									join asset a on atd.asset_assetID=a.assetID 
 			//																									join assetmodel am on a.assetModel=am.assetModelID
@@ -61,7 +68,8 @@
 			}
 
 			//Functioning asset
-			foreach(array_combine($assetPass, $warranty) as $assPass => $war){
+			if(isset($_POST['assetPass'])&&isset($_POST['warranty'])){
+				foreach(array_combine($assetPass, $warranty) as $assPass => $war){
 				//GENERATE PROPERTY CODE
 				
 				//UPDATE ASSET STATUS
@@ -120,7 +128,9 @@
 				$queryInsWar = "INSERT INTO `thesis`.`warranty` (`dateAcquired`, `dateExpired`, `assetID`, `supplierID`) VALUES ('{$rowGetAssInf['dateDelivered']}', '{$finDateExp}', '{$assPass}', '{$rowGetAssInf['supplierID']}')";
 				$resultInsWar = mysqli_query($dbc,$queryInsWar);
 
-			}	
+				}	
+			}
+			
 			//Defect asset 
 			
 			//GET EMPLOYEEID
@@ -565,7 +575,7 @@ $rowDate=mysqli_fetch_array($dddate,MYSQLI_ASSOC);
 											<table class="table table-invoice">
 												<thead>
 													<tr>
-														<th></th>
+														<th class="text-center">Asset Status</th>
 														<th class="text-center">Property Code</th>
 														<th class="text-center">Brand</th>
 														<th class="text-center">Model</th>
@@ -601,13 +611,15 @@ $rowDate=mysqli_fetch_array($dddate,MYSQLI_ASSOC);
 															}
 															
 															echo "<tr>
-																	<td class='text-center'><input type='checkbox' ";
+																	<td class='text-center'>";
 																
 																if($row['check']=='1'){
-																	echo "checked";
+																	echo "Working";
 																}
-																	
-															echo "	disabled></td>
+																else{
+																	echo "Defective";
+																}	
+															echo "</td>
 																	<td class='text-center'>{$row['propertyCode']}</td>
 																	<td class='text-center'>{$row['brand']}</td>
 																	<td class='text-center'>{$row['assetModel']}</td>

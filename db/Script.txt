@@ -847,132 +847,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `thesis`.`ticket`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `thesis`.`ticket` ;
-
-CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
-  `ticketID` INT(11) NOT NULL AUTO_INCREMENT,
-  `status` INT(11) NOT NULL,
-  `assigneeUserID` INT(11) NULL DEFAULT NULL,
-  `creatorUserID` INT(11) NULL DEFAULT NULL,
-  `lastUpdateDate` DATETIME NOT NULL,
-  `dateCreated` DATETIME NOT NULL,
-  `dateClosed` DATETIME NULL DEFAULT NULL,
-  `dueDate` DATETIME NULL DEFAULT NULL,
-  `priority` VARCHAR(45) NOT NULL,
-  `summary` VARCHAR(45) NULL DEFAULT NULL,
-  `details` LONGTEXT NULL,
-  `description` VARCHAR(45) NULL DEFAULT NULL,
-  `testingID` INT(11) NULL DEFAULT NULL,
-  `serviceType` INT(11) NULL DEFAULT NULL,
-  `others` LONGTEXT NULL DEFAULT NULL,
-  `comment` LONGTEXT NULL,
-  `service_id` INT(11) NULL,
-  `assignmentID` INT NULL,
-  `requestedBy` INT(11) NULL,
-  `salvage_id` INT NULL,
-  `donationID` INT NULL,
-  PRIMARY KEY (`ticketID`),
-  INDEX `fk_Ticket_ref_TicketStatus1_idx` (`status` ASC),
-  INDEX `fk_Ticket_User1_idx` (`creatorUserID` ASC),
-  INDEX `fk_Ticket_User2_idx` (`assigneeUserID` ASC),
-  INDEX `fk_ticket_assettesting1_idx` (`testingID` ASC),
-  INDEX `fk_ticket_ref_servicetype1_idx` (`serviceType` ASC),
-  INDEX `fk_ticket_service1_idx` (`service_id` ASC),
-  INDEX `fk_ticket_engineer_assignment1_idx` (`assignmentID` ASC),
-  INDEX `fk_ticket_User3_idx` (`requestedBy` ASC),
-  INDEX `fk_ticket_salvage1_idx` (`salvage_id` ASC),
-  INDEX `fk_ticket_donation1_idx` (`donationID` ASC),
-  CONSTRAINT `fk_Ticket_User1`
-    FOREIGN KEY (`creatorUserID`)
-    REFERENCES `thesis`.`user` (`UserID`),
-  CONSTRAINT `fk_Ticket_ref_TicketStatus1`
-    FOREIGN KEY (`status`)
-    REFERENCES `thesis`.`ref_ticketstatus` (`ticketID`),
-  CONSTRAINT `fk_ticket_User2`
-    FOREIGN KEY (`assigneeUserID`)
-    REFERENCES `thesis`.`user` (`UserID`),
-  CONSTRAINT `fk_ticket_assettesting1`
-    FOREIGN KEY (`testingID`)
-    REFERENCES `thesis`.`assettesting` (`testingID`),
-  CONSTRAINT `fk_ticket_ref_servicetype1`
-    FOREIGN KEY (`serviceType`)
-    REFERENCES `thesis`.`ref_servicetype` (`id`),
-  CONSTRAINT `fk_ticket_service1`
-    FOREIGN KEY (`service_id`)
-    REFERENCES `thesis`.`service` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ticket_engineer_assignment1`
-    FOREIGN KEY (`assignmentID`)
-    REFERENCES `thesis`.`engineer_assignment` (`assignmentID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ticket_User3`
-    FOREIGN KEY (`requestedBy`)
-    REFERENCES `thesis`.`user` (`UserID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ticket_salvage1`
-    FOREIGN KEY (`salvage_id`)
-    REFERENCES `thesis`.`salvage` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ticket_donation1`
-    FOREIGN KEY (`donationID`)
-    REFERENCES `thesis`.`donation` (`donationID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `thesis`.`assetaudit`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `thesis`.`assetaudit` ;
-
-CREATE TABLE IF NOT EXISTS `thesis`.`assetaudit` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `UserID` INT(11) NOT NULL,
-  `date` DATETIME NULL DEFAULT NULL,
-  `assetID` INT(11) NULL DEFAULT NULL,
-  `assetAssignmentID` INT(11) NULL DEFAULT NULL,
-  `computerID` INT(11) NULL DEFAULT NULL,
-  `ticketID` INT(11) NULL DEFAULT NULL,
-  `assetStatus` INT(11) NOT NULL,
-  `remarks` VARCHAR(100) NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_assetaudit_assetassignment1_idx` (`assetAssignmentID` ASC),
-  INDEX `fk_assetaudit_computer1_idx` (`computerID` ASC),
-  INDEX `fk_assetaudit_asset1_idx` (`assetID` ASC),
-  INDEX `fk_assetaudit_user1_idx` (`UserID` ASC),
-  INDEX `fk_assetaudit_ticket1_idx` (`ticketID` ASC),
-  INDEX `fk_assetaudit_ref_assetstatus1_idx` (`assetStatus` ASC),
-  CONSTRAINT `fk_assetaudit_asset1`
-    FOREIGN KEY (`assetID`)
-    REFERENCES `thesis`.`asset` (`assetID`),
-  CONSTRAINT `fk_assetaudit_assetassignment1`
-    FOREIGN KEY (`assetAssignmentID`)
-    REFERENCES `thesis`.`assetassignment` (`AssetAssignmentID`),
-  CONSTRAINT `fk_assetaudit_computer1`
-    FOREIGN KEY (`computerID`)
-    REFERENCES `thesis`.`computer` (`computerID`),
-  CONSTRAINT `fk_assetaudit_ref_assetstatus1`
-    FOREIGN KEY (`assetStatus`)
-    REFERENCES `thesis`.`ref_assetstatus` (`id`),
-  CONSTRAINT `fk_assetaudit_ticket1`
-    FOREIGN KEY (`ticketID`)
-    REFERENCES `thesis`.`ticket` (`ticketID`),
-  CONSTRAINT `fk_assetaudit_user1`
-    FOREIGN KEY (`UserID`)
-    REFERENCES `thesis`.`user` (`UserID`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `thesis`.`request`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `thesis`.`request` ;
@@ -1070,6 +944,158 @@ CREATE TABLE IF NOT EXISTS `thesis`.`procurement` (
     REFERENCES `thesis`.`supplier` (`supplierID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`Delivery`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`Delivery` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`Delivery` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `status` VARCHAR(45) NULL,
+  `procurementID` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Delivery_procurement1_idx` (`procurementID` ASC),
+  CONSTRAINT `fk_Delivery_procurement1`
+    FOREIGN KEY (`procurementID`)
+    REFERENCES `thesis`.`procurement` (`procurementID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`ticket`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`ticket` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`ticket` (
+  `ticketID` INT(11) NOT NULL AUTO_INCREMENT,
+  `status` INT(11) NOT NULL,
+  `assigneeUserID` INT(11) NULL DEFAULT NULL,
+  `creatorUserID` INT(11) NULL DEFAULT NULL,
+  `lastUpdateDate` DATETIME NOT NULL,
+  `dateCreated` DATETIME NOT NULL,
+  `dateClosed` DATETIME NULL DEFAULT NULL,
+  `dueDate` DATETIME NULL DEFAULT NULL,
+  `priority` VARCHAR(45) NOT NULL,
+  `summary` VARCHAR(45) NULL DEFAULT NULL,
+  `details` LONGTEXT NULL,
+  `description` VARCHAR(45) NULL DEFAULT NULL,
+  `testingID` INT(11) NULL DEFAULT NULL,
+  `serviceType` INT(11) NULL DEFAULT NULL,
+  `others` LONGTEXT NULL DEFAULT NULL,
+  `comment` LONGTEXT NULL,
+  `service_id` INT(11) NULL,
+  `assignmentID` INT NULL,
+  `requestedBy` INT(11) NULL,
+  `salvage_id` INT NULL,
+  `donationID` INT NULL,
+  `delivery_id` INT NULL,
+  PRIMARY KEY (`ticketID`),
+  INDEX `fk_Ticket_ref_TicketStatus1_idx` (`status` ASC),
+  INDEX `fk_Ticket_User1_idx` (`creatorUserID` ASC),
+  INDEX `fk_Ticket_User2_idx` (`assigneeUserID` ASC),
+  INDEX `fk_ticket_assettesting1_idx` (`testingID` ASC),
+  INDEX `fk_ticket_ref_servicetype1_idx` (`serviceType` ASC),
+  INDEX `fk_ticket_service1_idx` (`service_id` ASC),
+  INDEX `fk_ticket_engineer_assignment1_idx` (`assignmentID` ASC),
+  INDEX `fk_ticket_User3_idx` (`requestedBy` ASC),
+  INDEX `fk_ticket_salvage1_idx` (`salvage_id` ASC),
+  INDEX `fk_ticket_donation1_idx` (`donationID` ASC),
+  INDEX `fk_ticket_Delivery1_idx` (`delivery_id` ASC),
+  CONSTRAINT `fk_Ticket_User1`
+    FOREIGN KEY (`creatorUserID`)
+    REFERENCES `thesis`.`user` (`UserID`),
+  CONSTRAINT `fk_Ticket_ref_TicketStatus1`
+    FOREIGN KEY (`status`)
+    REFERENCES `thesis`.`ref_ticketstatus` (`ticketID`),
+  CONSTRAINT `fk_ticket_User2`
+    FOREIGN KEY (`assigneeUserID`)
+    REFERENCES `thesis`.`user` (`UserID`),
+  CONSTRAINT `fk_ticket_assettesting1`
+    FOREIGN KEY (`testingID`)
+    REFERENCES `thesis`.`assettesting` (`testingID`),
+  CONSTRAINT `fk_ticket_ref_servicetype1`
+    FOREIGN KEY (`serviceType`)
+    REFERENCES `thesis`.`ref_servicetype` (`id`),
+  CONSTRAINT `fk_ticket_service1`
+    FOREIGN KEY (`service_id`)
+    REFERENCES `thesis`.`service` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ticket_engineer_assignment1`
+    FOREIGN KEY (`assignmentID`)
+    REFERENCES `thesis`.`engineer_assignment` (`assignmentID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ticket_User3`
+    FOREIGN KEY (`requestedBy`)
+    REFERENCES `thesis`.`user` (`UserID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ticket_salvage1`
+    FOREIGN KEY (`salvage_id`)
+    REFERENCES `thesis`.`salvage` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ticket_donation1`
+    FOREIGN KEY (`donationID`)
+    REFERENCES `thesis`.`donation` (`donationID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ticket_Delivery1`
+    FOREIGN KEY (`delivery_id`)
+    REFERENCES `thesis`.`Delivery` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `thesis`.`assetaudit`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `thesis`.`assetaudit` ;
+
+CREATE TABLE IF NOT EXISTS `thesis`.`assetaudit` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `UserID` INT(11) NOT NULL,
+  `date` DATETIME NULL DEFAULT NULL,
+  `assetID` INT(11) NULL DEFAULT NULL,
+  `assetAssignmentID` INT(11) NULL DEFAULT NULL,
+  `computerID` INT(11) NULL DEFAULT NULL,
+  `ticketID` INT(11) NULL DEFAULT NULL,
+  `assetStatus` INT(11) NOT NULL,
+  `remarks` VARCHAR(100) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_assetaudit_assetassignment1_idx` (`assetAssignmentID` ASC),
+  INDEX `fk_assetaudit_computer1_idx` (`computerID` ASC),
+  INDEX `fk_assetaudit_asset1_idx` (`assetID` ASC),
+  INDEX `fk_assetaudit_user1_idx` (`UserID` ASC),
+  INDEX `fk_assetaudit_ticket1_idx` (`ticketID` ASC),
+  INDEX `fk_assetaudit_ref_assetstatus1_idx` (`assetStatus` ASC),
+  CONSTRAINT `fk_assetaudit_asset1`
+    FOREIGN KEY (`assetID`)
+    REFERENCES `thesis`.`asset` (`assetID`),
+  CONSTRAINT `fk_assetaudit_assetassignment1`
+    FOREIGN KEY (`assetAssignmentID`)
+    REFERENCES `thesis`.`assetassignment` (`AssetAssignmentID`),
+  CONSTRAINT `fk_assetaudit_computer1`
+    FOREIGN KEY (`computerID`)
+    REFERENCES `thesis`.`computer` (`computerID`),
+  CONSTRAINT `fk_assetaudit_ref_assetstatus1`
+    FOREIGN KEY (`assetStatus`)
+    REFERENCES `thesis`.`ref_assetstatus` (`id`),
+  CONSTRAINT `fk_assetaudit_ticket1`
+    FOREIGN KEY (`ticketID`)
+    REFERENCES `thesis`.`ticket` (`ticketID`),
+  CONSTRAINT `fk_assetaudit_user1`
+    FOREIGN KEY (`UserID`)
+    REFERENCES `thesis`.`user` (`UserID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -1768,25 +1794,6 @@ CREATE TABLE IF NOT EXISTS `thesis`.`recommended_assets` (
   CONSTRAINT `fk_recommended_assets_asset1`
     FOREIGN KEY (`assetID`)
     REFERENCES `thesis`.`asset` (`assetID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `thesis`.`Delivery`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `thesis`.`Delivery` ;
-
-CREATE TABLE IF NOT EXISTS `thesis`.`Delivery` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `status` VARCHAR(45) NULL,
-  `procurementID` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_Delivery_procurement1_idx` (`procurementID` ASC),
-  CONSTRAINT `fk_Delivery_procurement1`
-    FOREIGN KEY (`procurementID`)
-    REFERENCES `thesis`.`procurement` (`procurementID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
