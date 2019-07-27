@@ -119,6 +119,8 @@ INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('21', 'For 
 INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('22', 'False Report');
 INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('23', 'Repaired');
 INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('24', 'For Replacement - Supplier');
+INSERT INTO `thesis`.`ref_assetstatus` (`id`, `description`) VALUES ('25', 'Returned to Supplier');
+
 
 -- ref_status
 INSERT INTO `thesis`.`ref_status` (`statusID`, `description`) VALUES ('1', 'Pending');
@@ -661,6 +663,8 @@ INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `it
 
 INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('37', '4', '49', '8 Gbps', 'Test_Asset'); -- Video Card Graphics Card
 
+INSERT INTO `thesis`.`assetmodel` (`assetModelID`, `brand`, `assetCategory`, `itemSpecification`, `description`) VALUES ('38', '1', '1', 'Test Asset', 'Test Asset'); -- Access Point for Testing
+
 -- user
 -- 1
 INSERT INTO `thesis`.`User`(`userName`, `password`, `userType`, `firstName`, `lastName`, id)
@@ -1054,6 +1058,8 @@ INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddr
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('37', 'Test_Graphics', 'Testing', '', '1'); -- ID 255, Video Card Graphics Card
 
 INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('37', 'Test_Graphics1', 'Testing1', '', '1'); -- ID 256, Video Card Graphics Card
+
+INSERT INTO `thesis`.`asset` (`assetModel`, `propertyCode`, `serialNo`, `macAddress`, `assetStatus`) VALUES ('38', 'AP-0006', 'Testing', '', '25'); -- ID 257, Access Point for Testing
 
 
 -- asset audit for new items
