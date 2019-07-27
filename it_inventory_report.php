@@ -90,8 +90,6 @@
                                                         <table class="display table table-bordered table-striped" id="tibol">
                                                             <thead>
                                                                 <tr>
-                                                                    <th></th>
-                                                                    <th></th>
                                                                     <th>#</th>
                                                                     <th>Asset Category</th>
                                                                     <th>Beginning Qty</th>
@@ -133,9 +131,9 @@
                                                                         $count = 1;
                                                                         while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
                                                                             echo "<tr>
-                                                                                <td>{$rowDept['assetCategoryID']}</td>
-                                                                                <td>{$start}</td>
-                                                                                <td>{$end}</td>
+                                                                                <td style='display:none;'>{$rowDept['assetCategoryID']}</td>
+                                                                                <td style='display:none;'>{$start}</td>
+                                                                                <td style='display:none;'>{$end}</td>
                                                                                 <td>{$count}</td>
                                                                                 <td>{$rowDept['ac']}</td>
                                                                                 <td>{$rowDept['start']}</td>
@@ -171,7 +169,7 @@
                                                                         $count = 1;
                                                                         while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
                                                                             echo "<tr>
-                                                                                <td style='display:none;'>{$rowDept['assetCategoryID']}
+                                                                                <td style='display:none;'>{$rowDept['assetCategoryID']}</td>
                                                                                 <td>{$count}</td>
                                                                                 <td>{$rowDept['ac']}</td>
                                                                                 <td>{$rowDept['start']}</td>
@@ -210,7 +208,7 @@
                                                                         $count = 1;
                                                                         while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
                                                                             echo "<tr>
-                                                                                <td style='display:none;'>{$rowDept['assetCategoryID']}
+                                                                                <td style='display:none;'>{$rowDept['assetCategoryID']}</td>
                                                                                 <td>{$count}</td>
                                                                                 <td>{$rowDept['ac']}</td>
                                                                                 <td>{$rowDept['start']}</td>
@@ -247,7 +245,7 @@
                                                                         $count = 1;
                                                                         while($rowDept=mysqli_fetch_array($resultDept,MYSQLI_ASSOC)){
                                                                             echo "<tr>
-                                                                                <td style='display:none;'>{$rowDept['assetCategoryID']}
+                                                                                <td style='display:none;'>{$rowDept['assetCategoryID']}</td>
                                                                                 <td>{$count}</td>
                                                                                 <td>{$rowDept['ac']}</td>
                                                                                 <td>{$rowDept['start']}</td>

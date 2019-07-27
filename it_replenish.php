@@ -155,7 +155,7 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Stock List
+                                            Replenish Inventory Form
 
                                         </header>
                                         <div class="panel-body">
@@ -173,7 +173,7 @@
                                                                                 <th>Floor</th>
                                                                                 <th>Ceiling</th>
                                                                                 <th>Total Quantity</th>
-                                                                                <th>To Buy</th>
+                                                                                <th>Total Quantity to Order</th>
 																				<th>Item Specifications</th>
                                                                                 <!--<th>Brand</th>
                                                                                 <th>Model</th>
