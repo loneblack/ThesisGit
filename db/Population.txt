@@ -1523,11 +1523,14 @@ INSERT INTO `thesis`.`request_borrow` (`officeID`, `DepartmentID`, `BuildingID`,
 INSERT INTO `thesis`.`request` (`description`, `DepartmentID`, `unitHead`, `employeeID`, `date`, `FloorAndRoomID`, `BuildingID`, `dateNeeded`, `UserID`, `status`, `step`) VALUES ('Academic purposes', '23', 'unitHead_test', '3', '2019-4-22', '49', '7', now(), '9', '1', '25'); -- ID 1
 
 -- requestor_receiving; receiving_details
+INSERT INTO `thesis`.`receiving` (`id`, `datetime`, `comments`, `UserID`, `statusID`) VALUES ('1', NOW(), 'for_testing', '9', '1');
+
+
 INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `borrowID`, `statusID`) VALUES ('9', '1', '1'); -- ID 1
 INSERT INTO `thesis`.`receiving_details` (`receivingID`, `assetID`, `received`) VALUES ('1', '255', '0'); -- ID 1
 
 
-INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `requestID`, `statusID`) VALUES ('9', '1', '1'); -- ID 2
+INSERT INTO `thesis`.`requestor_receiving` (`UserID`, `requestID`, `deliverydate`, `statusID`) VALUES ('9', '1', NOW(), '1'); -- ID 2
 INSERT INTO `thesis`.`receiving_details` (`receivingID`, `assetID`, `received`) VALUES ('2', '255', '0'); -- ID 2
 
 -- request procurement
