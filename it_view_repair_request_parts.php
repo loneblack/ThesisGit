@@ -41,6 +41,20 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
     array_push($specifications, $row['specifications']);
 }
 
+$components = array();
+$source = array();
+
+$queryComponents = "SELECT *, cc.assetID as'componentID', c.assetID as 'sourceID' 
+                        FROM thesis.ticketedasset t 
+                    JOIN computer c ON c.assetID = t.assetID
+                    JOIN computercomponent cc ON c.computerID = cc.computerID
+                    WHERE ticketID = '{$id}';";
+$resultComponents = mysqli_query($dbc, $queryComponents);
+
+while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
+    array_push($components, $row['componentID']);
+    array_push($source, $row['sourceID']);
+}
 ?>
 
 <head>
@@ -158,23 +172,30 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                             for ($i=0; $i < count($assets); $i++) { 
 
                                                 
-                                                $query3 =  "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
-                                                        FROM asset a 
-                                                            JOIN assetModel m
-                                                        ON assetModel = assetModelID
-                                                            JOIN ref_brand br
-                                                        ON brand = brandID
-                                                            JOIN ref_assetcategory c
-                                                        ON assetCategory = assetCategoryID
-                                                            JOIN ref_assetstatus s
-                                                        ON a.assetStatus = s.id
-                                                            JOIN assetassignment aa
-                                                        ON a.assetID = aa.assetID
-                                                            JOIN building b
-                                                        ON aa.BuildingID = b.BuildingID
-                                                            JOIN floorandroom f
-                                                        ON aa.FloorAndRoomID = f.FloorAndRoomID 
-                                                            WHERE a.assetID = {$assets[$i]};";
+                                                $query3 =  "SELECT a.assetStatus, a.assetID, propertyCode, 
+                                                            br.name AS 'brand', 
+                                                            ac.name as 'category', 
+                                                            itemSpecification, s.id, m.description, 
+                                                            b.name as 'building', 
+                                                            f.floorroom, c.computerID
+                                                            FROM asset a 
+                                                                JOIN assetModel m
+                                                            ON assetModel = assetModelID
+                                                                JOIN ref_brand br
+                                                            ON brand = brandID
+                                                                JOIN ref_assetcategory ac
+                                                            ON assetCategory = assetCategoryID
+                                                                JOIN ref_assetstatus s
+                                                            ON a.assetStatus = s.id
+                                                                JOIN assetassignment aa
+                                                            ON a.assetID = aa.assetID
+                                                                JOIN building b
+                                                            ON aa.BuildingID = b.BuildingID
+                                                                JOIN floorandroom f
+                                                            ON aa.FloorAndRoomID = f.FloorAndRoomID 
+                                                                LEFT JOIN computer c
+                                                            ON a.assetID = c.assetID
+                                                                WHERE a.assetID =  {$assets[$i]};";
 
                                                 $result3 = mysqli_query($dbc, $query3);  
 
@@ -186,6 +207,35 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                     <td>{$row['brand']} {$row['category']} {$row['description']}</td>
                                                     <td>{$row['building']}</td>
                                                     <td>{$row['floorroom']}</td>
+                                                    <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
+                                                    </tr>";
+                                                }  
+
+                                            }
+                                            ?>
+                                            <?php
+                                                        
+                                            for ($i=0; $i < count($components); $i++) { 
+
+                                                //display the components
+                                                $query3 =  "SELECT assetStatus, a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, m.description
+                                                    FROM asset a 
+                                                        JOIN assetModel m
+                                                    ON assetModel = assetModelID
+                                                        JOIN ref_brand br
+                                                    ON brand = brandID
+                                                        JOIN ref_assetcategory c
+                                                    ON assetCategory = assetCategoryID
+                                                        WHERE a.assetID = {$components[$i]};";
+
+
+                                                $result3 = mysqli_query($dbc, $query3);  
+                                                
+                                                while ($row = mysqli_fetch_array($result3, MYSQLI_ASSOC)){
+                                                 echo "
+                                                    <tr>
+                                                    <td>{$row['propertyCode']}</td>
+                                                    <td>{$row['brand']} {$row['category']} {$row['description']}</td>
                                                     <td style = 'display: none'><input type='number' name='assetID[]' value ='{$row['assetID']}'></td>
                                                     </tr>";
                                                 }  

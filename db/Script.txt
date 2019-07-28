@@ -2066,6 +2066,7 @@ DROP TABLE IF EXISTS `thesis`.`requestParts_assets` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`requestParts_assets` (
   `requestPartsID` INT NOT NULL,
   `assetID` INT(11) NOT NULL,
+  `received` TINYINT NOT NULL DEFAULT 0,
   INDEX `fk_requestParts_assets_requestParts1_idx` (`requestPartsID` ASC),
   INDEX `fk_requestParts_assets_asset1_idx` (`assetID` ASC),
   CONSTRAINT `fk_requestParts_assets_requestParts1`
@@ -2089,6 +2090,7 @@ DROP TABLE IF EXISTS `thesis`.`requestParts_assets` ;
 CREATE TABLE IF NOT EXISTS `thesis`.`requestParts_assets` (
   `requestPartsID` INT NOT NULL,
   `assetID` INT(11) NOT NULL,
+  `received` TINYINT NOT NULL DEFAULT 0,
   INDEX `fk_requestParts_assets_requestParts1_idx` (`requestPartsID` ASC),
   INDEX `fk_requestParts_assets_asset1_idx` (`assetID` ASC),
   CONSTRAINT `fk_requestParts_assets_requestParts1`

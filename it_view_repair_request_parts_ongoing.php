@@ -333,7 +333,7 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                             <button type="submit" name="submit" id="submit" class="btn btn-success" disabled>Send</button>
                         </form>
                         
-                            <button onclick="window.history.back();" type="button" class="btn btn-danger">Back</button>
+                            <button onclick="window.location.href='it_dashboard.php';" type="button" class="btn btn-danger">Back</button>
                             <div style="display:inline; float:right">
                             <button class="btn btn-info" onclick="window.location.href='it_replacement.php'" disabled>Give Replacement</button>
                             <button onclick="window.location.href='it_order_parts.php';" class="btn btn-info" disabled>Order parts</button>

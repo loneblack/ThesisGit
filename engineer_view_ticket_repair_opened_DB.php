@@ -388,6 +388,6 @@
         if($closed == 1){
             $header = "engineer_view_ticket_repair_closed.php?id=".$id;
         }
-        header('Location: '.$header);
+        //header('Location: '.$header);
     
 ?>

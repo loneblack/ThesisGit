@@ -725,7 +725,7 @@ while ($row = mysqli_fetch_array($resultComponents, MYSQLI_ASSOC)){
 
 				+ "</select></td>" +
                 "<td><input class='form-control' name='specification"+ count +"'></td>" +
-                "<td><select class='form-control' name='deliveryStatus[]"+ count +"' id='deliveryStatus'><option value='0'>Pending</option><option value='1'>Delivered</option></td>" +
+                "<td><select class='form-control' name='deliveryStatus[]"+ count +"' id='deliveryStatus' readonly><option value='0'>Pending</option><option value='1'>Delivered</option></td>" +
                 "<td style='text-align:center'><button class='btn btn-danger' onclick='removeRow(this)'> Remove </button></td>" +
                 "</tr>";
             $('#addtable tbody tr').eq(rowCount).after(tr);

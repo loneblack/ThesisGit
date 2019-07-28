@@ -12,8 +12,10 @@
     $result = mysqli_query($dbc, $sql);
 
     foreach($assets as $asset){
-    	$sql = "INSERT INTO `thesis`.`requestparts_assets` VALUES ('{$id}', '{$asset}');";
+    	$sql = "INSERT INTO `thesis`.`requestparts_assets` VALUES ('{$id}', '{$asset}', '0');";
     	$result = mysqli_query($dbc, $sql);
+
+    	echo $sql;
 
     	$sql = "UPDATE `thesis`.`asset` SET `assetStatus` = '3' WHERE (`assetID` = '{$asset}');";
     	$result = mysqli_query($dbc, $sql);
