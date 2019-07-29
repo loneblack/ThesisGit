@@ -75,9 +75,11 @@
 	if(count($brokenAssets > 0)){
 
 	//add repair request for broken assets
-	$sqlService = "INSERT INTO `thesis`.`service` (`details`, `dateNeed`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`) VALUES ('Broken upon receiving', 'now()', 'userID', '27', '1', '14', '0');";
+	$sqlService = "INSERT INTO `thesis`.`service` (`details`, `dateNeed`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`) 
+					VALUES ('Broken upon receiving', now(), '{$userID}', '27', '1', '14', '0');";
 	$resultService=mysqli_query($dbc,$sqlService);
 
+	echo $sqlService;
 	//get newly inserted data from service
 	$sqlServiceInsert = "SELECT * FROM `thesis`.`service` ORDER BY id DESC LIMIT 1;";
    	$resultServiceInsert = mysqli_query($dbc, $sqlServiceInsert);
@@ -87,7 +89,8 @@
 
 		for ($i=0; $i < count($brokenAssets); $i++) { 
 			$sqlServiceDetails = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`, `problem`) VALUES ('{$serviceID}', '$brokenAssets[$i]', '0', 'broken upon receiving');";
-			$resultService = mysqli_query($dbc,$sqlService);
+			$resultServiceDetails = mysqli_query($dbc,$sqlServiceDetails);
+			echo $sqlServiceDetails;
 		}
 
 	}
@@ -99,7 +102,7 @@
 	$rowTotal = mysqli_fetch_array($resultTotal, MYSQLI_ASSOC);
 
 	//check received assets
-	$sqlReceived = "SELECT COUNT(*) as 'received' FROM thesis.receiving_details WHERE receivingID = '{$receivingID}' AND received = 1;";
+	$sqlReceived = "SELECT COUNT(*) as 'received' FROM thesis.receiving_details WHERE receivingID = '{$receivingID}' AND (received = 1 OR received = 2);";
 	$resultReceived = mysqli_query($dbc, $sqlReceived);
 	$rowReceived = mysqli_fetch_array($resultReceived, MYSQLI_ASSOC);
 
@@ -166,5 +169,5 @@
 	$message = "Form submitted!";
 	$_SESSION['submitMessage'] = $message;
 
-	header('Location: '.$header);
+	//header('Location: '.$header);
 ?>	
