@@ -27,8 +27,8 @@
             //Check if there's an asset needed for repair
             if(in_array('9', $assetStat)){
                 //insertion to service table
-	            $queryGenRepairReq = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`)
-	                    VALUES ('Repair needed on the following assets', now(), '{$_SESSION['userID']}', '27', '1', '14');";
+	            $queryGenRepairReq = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`)
+			                                VALUES ('Repair needed on the following assets', now(), '{$_SESSION['userID']}', '27', '1', '14', '0');";
                 $resultGenRepairReq=mysqli_query($dbc,$queryGenRepairReq);
             }
             
@@ -52,9 +52,9 @@
 					$queryGetLatRep="SELECT * FROM thesis.service where serviceType='27' order by id desc limit 1";
 					$resultGetLatRep=mysqli_query($dbc,$queryGetLatRep);
 					$rowGetLatRep=mysqli_fetch_array($resultGetLatRep,MYSQLI_ASSOC);
-					 
+					  
 					//insert asset to service details
-					$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`) VALUES ('{$rowGetLatRep['id']}', '{$asset}');";
+					$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`, `problem`) VALUES ('{$rowGetLatRep['id']}', '{$asset}', '0', '{$remarks}');";
 					$resulted = mysqli_query($dbc, $query);
                 }
 				elseif($assetStat=='18'){
