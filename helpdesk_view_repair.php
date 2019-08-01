@@ -279,19 +279,19 @@ while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
                                                             
                                                             $query3 =  "SELECT a.assetID, propertyCode, br.name AS 'brand', c.name as 'category', itemSpecification, s.id, m.description, b.name as 'building', f.floorroom
                                                                     FROM asset a 
-                                                                        JOIN assetModel m
+                                                                        LEFT JOIN assetModel m
                                                                     ON assetModel = assetModelID
-                                                                        JOIN ref_brand br
+                                                                        LEFT JOIN ref_brand br
                                                                     ON brand = brandID
-                                                                        JOIN ref_assetcategory c
+                                                                        LEFT JOIN ref_assetcategory c
                                                                     ON assetCategory = assetCategoryID
-                                                                        JOIN ref_assetstatus s
+                                                                        LEFT JOIN ref_assetstatus s
                                                                     ON a.assetStatus = s.id
-                                                                        JOIN assetassignment aa
+                                                                        LEFT JOIN assetassignment aa
                                                                     ON a.assetID = aa.assetID
-                                                                        JOIN building b
+                                                                        LEFT JOIN building b
                                                                     ON aa.BuildingID = b.BuildingID
-                                                                        JOIN floorandroom f
+                                                                        LEFT JOIN floorandroom f
                                                                     ON aa.FloorAndRoomID = f.FloorAndRoomID 
                                                                         WHERE a.assetID = {$assets[$i]};";
 

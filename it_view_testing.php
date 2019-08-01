@@ -377,6 +377,25 @@
 				$resultReceivingDetails = mysqli_query($dbc,$queryReceivingDetails);
 			}
 			
+			//GET FAILED TEST ASSET
+			$queryFailTest="SELECT * FROM thesis.assettesting_details where assettesting_testingID='{$testingID}' and `check`='0'";
+			$resultFailTest=mysqli_query($dbc,$queryFailTest);
+			while($rowFailTest=mysqli_fetch_array($resultFailTest,MYSQLI_ASSOC)){
+				//GENERATE REPAIR REQUEST 
+				$queryGenRepairReq = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`)
+	                    VALUES ('Repair needed on the following assets', now(), '{$_SESSION['userID']}', '27', '1', '14', '0');";
+				$resultGenRepairReq=mysqli_query($dbc,$queryGenRepairReq);
+					
+				//Get Latest Repair Request
+				$queryGetLatRep="SELECT * FROM thesis.service where serviceType='27' order by id desc limit 1";
+				$resultGetLatRep=mysqli_query($dbc,$queryGetLatRep);
+				$rowGetLatRep=mysqli_fetch_array($resultGetLatRep,MYSQLI_ASSOC);
+					 
+				//insert asset to service details
+				$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`, `problem`) VALUES ('{$rowGetLatRep['id']}', '{$rowFailTest['asset_assetID']}', '0', '{$rowFailTest['comment']}');";
+				$resulted = mysqli_query($dbc, $query);
+			}
+
 			//GET ALL ASSET TESTING PER BORROWID
 			
 			//UPDATE BORROW STEP
@@ -433,8 +452,8 @@
 				//FAILED THE TEST
 				else{
 					//GENERATE REPAIR REQUEST 
-					$queryGenRepairReq = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`)
-	                    VALUES ('Repair needed on the following assets', now(), '{$_SESSION['userID']}', '27', '1', '14');";
+					$queryGenRepairReq = "INSERT INTO `thesis`.`service` (`details`, `dateReceived`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`)
+	                    VALUES ('Repair needed on the following assets', now(), '{$_SESSION['userID']}', '27', '1', '14', '0');";
 					$resultGenRepairReq=mysqli_query($dbc,$queryGenRepairReq);
 					
 					 //Get Latest Repair Request
@@ -443,7 +462,7 @@
 					$rowGetLatRep=mysqli_fetch_array($resultGetLatRep,MYSQLI_ASSOC);
 					 
 					//insert asset to service details
-					$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`) VALUES ('{$rowGetLatRep['id']}', '{$rowCheckAssPass['assetID']}');";
+					$query = "INSERT INTO `thesis`.`servicedetails` (`serviceID`, `asset`, `replaced`, `problem`) VALUES ('{$rowGetLatRep['id']}', '{$rowCheckAssPass['assetID']}', '0', '{$rowCheckAssPass['comment']}');";
 					$resulted = mysqli_query($dbc, $query);
 					
 					//CHANGE REPLACEMENT STEP BACK TO Assigning of New Replacement

@@ -70,12 +70,15 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 			$queryUpdNotif="UPDATE `thesis`.`notifications` SET `isRead` = true WHERE `borrowID` = '{$id}' and `steps_id`='9'";
 			$resultUpdNotif=mysqli_query($dbc,$queryUpdNotif);
 			
+			//Update status,steps
+			$query="UPDATE `thesis`.`request_borrow` SET `steps`='13' WHERE (`borrowID` = '{$id}');";
+			$result=mysqli_query($dbc,$query);
+			
             //GET ASSET TEST DATA
             $queryAssTest="SELECT * FROM thesis.assettesting where borrowID='{$id}'";
             $resultAssTest=mysqli_query($dbc,$queryAssTest);
             $rowAssTest=mysqli_fetch_array($resultAssTest, MYSQLI_ASSOC);
 
-           
             $querya="INSERT INTO `thesis`.`ticket` (`status`, `assigneeUserID`, `creatorUserID`, `lastUpdateDate`, `dateCreated`, `dueDate`, `priority`, `serviceType`, `summary`, `description`, `details`, `requestedBY`) VALUES ('{$status}', '{$assigned}', '{$_SESSION['userID']}', now(), now(), '{$startDate}', '{$priority}', '25', 'Test the selected assets for borrow', 'Test the selected assets for borrow', 'Test the selected assets for borrow', '{$personresponsibleID}')";
             $resulta=mysqli_query($dbc,$querya);
             
@@ -105,8 +108,8 @@ while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
 				$resultAssAud=mysqli_query($dbc,$queryAssAud);
             }
 
-            $sql = "UPDATE `thesis`.`service` SET `status` = '2' WHERE (`id` = '{$id}');";
-            $output = mysqli_query($dbc, $sql);
+            //$sql = "UPDATE `thesis`.`service` SET `status` = '2' WHERE (`id` = '{$id}');";
+            //$output = mysqli_query($dbc, $sql);
         
             $message = "Ticket Created";
             $_SESSION['submitMessage'] = $message;
