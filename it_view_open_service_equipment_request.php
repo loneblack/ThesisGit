@@ -70,7 +70,7 @@ while ($row2 = mysqli_fetch_array($result2, MYSQLI_ASSOC)){
 		$a=sizeOf($propCode);
 		
 		//Update status,steps
-        $query="UPDATE `thesis`.`request_borrow` SET `statusID` = '2', `steps`='13' WHERE (`borrowID` = '{$id}');";
+        $query="UPDATE `thesis`.`request_borrow` SET `statusID` = '2', `steps`='9' WHERE (`borrowID` = '{$id}');";
         $result=mysqli_query($dbc,$query);
 	   
 		//INSERT TO NOTIFICATIONS TABLE
