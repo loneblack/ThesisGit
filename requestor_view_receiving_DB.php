@@ -72,7 +72,7 @@
 		}
 	}
 
-	if(count($brokenAssets > 0)){
+	if(count($brokenAssets) > 0){
 
 	//add repair request for broken assets
 	$sqlService = "INSERT INTO `thesis`.`service` (`details`, `dateNeed`, `UserID`, `serviceType`, `status`, `steps`, `replacementUnit`) 
