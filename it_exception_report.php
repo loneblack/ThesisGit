@@ -64,7 +64,7 @@
                                 <div class="col-sm-12">
                                     <section class="panel">
                                         <header class="panel-heading">
-                                            Asset Audit Report
+                                            Exception Report
                                         </header>
                                         <div id="report">
                                         <div align="right">
